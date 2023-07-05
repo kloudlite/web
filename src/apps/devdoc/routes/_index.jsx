@@ -1,4 +1,7 @@
+import {Outlet} from "@remix-run/react";
 
 export default ()=>{
-    return <div>Hi</div>
+    return <div>
+        Hello1
+    </div>
 }
