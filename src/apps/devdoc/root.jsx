@@ -2,7 +2,7 @@ import Root, {links as baseLinks} from "~/lib/app-setup/root"
 import authStylesUrl from "./styles/index.css";
 import { Link } from "@remix-run/react";
 import { Sidebar } from "./components/sidebar";
-import {BrandLogo} from "~/components/branding/brand-logo";
+import {BrandLogo} from "~/root/src/stories/components/branding/brand-logo";
 import {Header} from "./components/header";
 
 export const links = ()=>{
