@@ -1,7 +1,8 @@
-import tw from "../../tailwind.config"
+import tailwindBase from "./tailwind-base";
+
 export default {
-    ...tw,
+    ...tailwindBase,
     content: [
-        "./components/**/*.{js,ts,jsx,tsx,mdx}",
+        "./components/**/*.{js,ts,jsx,tsx}",
     ]
 }
