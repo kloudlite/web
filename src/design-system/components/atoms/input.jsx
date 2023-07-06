@@ -1,8 +1,7 @@
 import classNames from "classnames"
 import PropTypes from "prop-types";
-import React, { cloneElement, forwardRef, useEffect, useId, useState } from "react";
+import React, { useRef,cloneElement, forwardRef, useEffect, useId, useState } from "react";
 import { CaretUpFill, CaretDownFill, XCircleFill, EyeSlash, Eye } from "@jengaicons/react";
-import { useRef } from "react";
 
 
 export const NumberInput = (props = { label, disabled, message, extra, placeholder, value: '', onChange, error: false, className, step, min, max }) => {
@@ -210,7 +209,7 @@ export const TextInputBase = forwardRef((props = { label, disabled, message, ext
   );
 })
 
-export const TextInput = React.forwardRef((props = {
+export const TextInput = forwardRef((props = {
   label,
   disabled,
   extra,
