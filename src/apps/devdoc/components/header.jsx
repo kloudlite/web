@@ -1,8 +1,8 @@
-import {BrandLogo} from "~/root/src/stories/components/branding/brand-logo.jsx";
+import {BrandLogo} from "~/components/branding/brand-logo.jsx";
 import {Link} from "@remix-run/react";
-import {TextInput} from "~/root/src/stories/components/atoms/input.jsx";
+import {TextInput} from "~/components/atoms/input.jsx";
 import {Search} from "@jengaicons/react";
-import {Chip} from "~/root/src/stories/components/atoms/chip.jsx";
+import {Chip} from "~/components/atoms/chip.jsx";
 
 export const Header = () => {
     return <div className={"border-b sticky h-docHeaderHeight top-0 z-40 backdrop-blur bg-white/80"}>
