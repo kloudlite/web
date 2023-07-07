@@ -4,16 +4,13 @@ import PropTypes from 'prop-types';
 import { createRef, useRef, useState } from "react";
 import {
     Toolbar,
+    ToolbarButton,
     ToolbarTextField,
     ToolbarToggleButton,
     ToolbarToggleGroup,
     ToolbarToggleIconButton
 } from "../atoms/toolbar"
 
-
-// your-button.jsx
-import React from 'react';
-import { Slot } from '@radix-ui/react-slot';
 
 export const Filters = ({ onFilterTextChange, filterActions }) => {
 
@@ -29,7 +26,6 @@ export const Filters = ({ onFilterTextChange, filterActions }) => {
 
         />
 
-        <Abc ref={ref} name="hello world" />
         {filterActions && filterActions}
         {/* <ToggleGroup value={"left"}>
             <ToggleGroup.Button content={"Hello world"} value={"left"} />
@@ -100,14 +96,14 @@ export const Filters = ({ onFilterTextChange, filterActions }) => {
 
         <div>
             <Toolbar>
-                <ToolbarTextField placeholder={"Hello"} />
-                <ToolbarToggleGroup type={"single"} value={"hi"} onValueChange={(e) => { console.log(e); }}>
+                <ToolbarTextField placeholder={"Hello"} prefixIcon={Search} />
+                <ToolbarToggleGroup type={"single"} value={"hi"} onClick={(e) => { console.log(e); }}>
                     <ToolbarToggleButton value={"hi"} content="hi" />
                     <ToolbarToggleButton value={"hi1"} content="hi1" />
                     <ToolbarToggleButton value={"hi2"} content="hi2" />
                     <ToolbarToggleIconButton value={"hi3"} icon={SearchFill} />
                 </ToolbarToggleGroup>
-
+                <ToolbarButton />
             </Toolbar>
         </div>
 

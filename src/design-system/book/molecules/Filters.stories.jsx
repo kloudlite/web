@@ -19,53 +19,7 @@ export default {
 export const DefaultFilter = {
     args: {
         filterActions: <>
-            <ButtonGroup
-                items={
-                    [
-                        {
-                            label: "Provider",
-                            value: "provider",
-                            key: "provider",
-                            suffix: CaretDownFill
-                        },
-                        {
-                            label: "Region",
-                            value: "region",
-                            key: "region",
-                            suffix: CaretDownFill
-                        },
-                        {
-                            label: "Status",
-                            value: "status",
-                            key: "status",
-                            suffix: CaretDownFill
-                        }
-                    ]
-                }
-            />
-            <Button
-                label="Sortby"
-                prefix={ArrowsDownUp}
-                variant={"basic"}
-            />
-            <ButtonGroup
-                selectable
-                value={"list"}
-                items={
-                    [
-                        {
-                            value: "list",
-                            key: "list",
-                            prefix: List
-                        },
-                        {
-                            value: "grid",
-                            key: "grid",
-                            prefix: SquaresFour
-                        }
-                    ]
-                }
-            />
+
         </>
     }
 }

@@ -1,5 +1,3 @@
-import classNames from "classnames"
-
 export const SubHeader = ({ title, actions }) => {
     return (<div>
         <div className="flex flex-col justify-center max-w-296 m-auto">
