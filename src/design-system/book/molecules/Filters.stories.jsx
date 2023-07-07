@@ -26,26 +26,26 @@ export const DefaultFilter = {
                             label: "Provider",
                             value: "provider",
                             key: "provider",
-                            disclosureComp: CaretDownFill
+                            suffix: CaretDownFill
                         },
                         {
                             label: "Region",
                             value: "region",
                             key: "region",
-                            disclosureComp: CaretDownFill
+                            suffix: CaretDownFill
                         },
                         {
                             label: "Status",
                             value: "status",
                             key: "status",
-                            disclosureComp: CaretDownFill
+                            suffix: CaretDownFill
                         }
                     ]
                 }
             />
             <Button
                 label="Sortby"
-                IconComp={ArrowsDownUp}
+                prefix={ArrowsDownUp}
                 variant={"basic"}
             />
             <ButtonGroup
@@ -56,12 +56,12 @@ export const DefaultFilter = {
                         {
                             value: "list",
                             key: "list",
-                            icon: List
+                            prefix: List
                         },
                         {
                             value: "grid",
                             key: "grid",
-                            icon: SquaresFour
+                            prefix: SquaresFour
                         }
                     ]
                 }

@@ -32,14 +32,14 @@ export const ActionButton = ({
                     {
                         "text-text-primary bodyMd-medium": active,
                         "text-text-disabled": disabled,
-                        "text-text-danger hover:text-text-on-primary active:text-text-on-primary": critical,
+                        "text-text-critical hover:text-text-on-primary active:text-text-on-primary": critical,
                     },
                     {
                         "pointer-events-none": disabled,
                     },
                     {
                         "bg-none hover:bg-surface-hovered active:bg-surface-pressed": !active && !disabled && !critical,
-                        "bg-none hover:bg-surface-danger-hovered active:bg-surface-danger-pressed": !active && !disabled && critical,
+                        "bg-none hover:bg-surface-critical-hovered active:bg-surface-critical-pressed": !active && !disabled && critical,
                         "bg-none": disabled,
                         "bg-surface-primary-selected": !critical && active,
                     })} onClick={!critical ? onClick : null}>

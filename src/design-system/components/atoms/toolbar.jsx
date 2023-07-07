@@ -8,7 +8,9 @@ import * as SeparatorPrimitive from '@radix-ui/react-separator';
 import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
 import { createToggleGroupScope } from '@radix-ui/react-toggle-group';
 import { useDirection } from '@radix-ui/react-direction';
-import {TextInput} from "./input.jsx";
+import { TextInput } from "./input.jsx";
+import { Button, ButtonBase, IconButton } from './button.jsx';
+import classNames from 'classnames';
 
 
 const TOOLBAR_NAME = 'Toolbar';
@@ -44,6 +46,7 @@ export const Toolbar = React.forwardRef(
                         dir={direction}
                         {...toolbarProps}
                         ref={forwardedRef}
+                        className={classNames("flex flex-row gap-2")}
                     />
                 </RovingFocusGroup.Root>
             </ToolbarProvider>
@@ -103,12 +106,14 @@ export const ToolbarTextField = React.forwardRef(
         const { __scopeToolbar, ...inputProps } = props;
         const rovingFocusGroupScope = useRovingFocusGroupScope(__scopeToolbar);
         return (
-            <RovingFocusGroup.Item asChild {...rovingFocusGroupScope} focusable onFocus={()=>{
-                console.log("Hi")
-            }}>
+            <RovingFocusGroup.Item asChild {...rovingFocusGroupScope} focusable>
                 <TextInput
                     {...inputProps}
                     ref={forwardedRef}
+                    onChange={(e) => {
+                        if (props.onChange)
+                            props.onChange(e)
+                    }}
                 />
             </RovingFocusGroup.Item>
         );
@@ -150,6 +155,7 @@ export const ToolbarToggleGroup = React.forwardRef(
         const { __scopeToolbar, ...toggleGroupProps } = props;
         const context = useToolbarContext(TOGGLE_GROUP_NAME, __scopeToolbar);
         const toggleGroupScope = useToggleGroupScope(__scopeToolbar);
+        const [value, setValue] = React.useState(props.value)
         return (
             <ToggleGroupPrimitive.Root
                 data-orientation={context.orientation}
@@ -158,6 +164,21 @@ export const ToolbarToggleGroup = React.forwardRef(
                 {...toggleGroupProps}
                 ref={forwardedRef}
                 rovingFocus={false}
+                className={classNames("flex flex-row")}
+
+                onValueChange={(e) => {
+                    if (e) setValue(e);
+                    if (props.onValueChange && e)
+                        props.onValueChange(e)
+                }}
+                value={value}
+
+                children={props.children.map((child, index) => {
+                    return React.cloneElement(child, {
+                        selected: child.props.value == value,
+                        key: `toggle-group-item-${index}`
+                    })
+                })}
             />
         );
     }
@@ -169,9 +190,9 @@ ToolbarToggleGroup.displayName = TOGGLE_GROUP_NAME;
  * ToolbarToggleItem
  * -----------------------------------------------------------------------------------------------*/
 
-const TOGGLE_ITEM_NAME = 'ToolbarToggleItem';
+const TOGGLE_BUTTON_NAME = 'ToolbarToggleButton';
 
-export const ToolbarToggleItem = React.forwardRef(
+export const ToolbarToggleButton = React.forwardRef(
     (props, forwardedRef) => {
         const { __scopeToolbar, ...toggleItemProps } = props;
         const toggleGroupScope = useToggleGroupScope(__scopeToolbar);
@@ -179,10 +200,30 @@ export const ToolbarToggleItem = React.forwardRef(
 
         return (
             <ToolbarButton asChild {...scope}>
-                <ToggleGroupPrimitive.Item {...toggleGroupScope} {...toggleItemProps} ref={forwardedRef} />
+                <ToggleGroupPrimitive.Item {...toggleGroupScope} {...toggleItemProps} ref={forwardedRef} asChild>
+                    <Button variant={"basic"} {...props} noRounded className={classNames("-ml-px first:rounded-l last:rounded-r first:ml-0")} />
+                </ToggleGroupPrimitive.Item>
             </ToolbarButton>
         );
     }
 );
 
-ToolbarToggleItem.displayName = TOGGLE_ITEM_NAME;
+const TOGGLE_ICON_BUTTON_NAME = 'ToolbarToggleIconButton';
+export const ToolbarToggleIconButton = React.forwardRef(
+    (props, forwardedRef) => {
+        const { __scopeToolbar, ...toggleItemProps } = props;
+        const toggleGroupScope = useToggleGroupScope(__scopeToolbar);
+        const scope = { __scopeToolbar: props.__scopeToolbar };
+
+        return (
+            <ToolbarButton asChild {...scope}>
+                <ToggleGroupPrimitive.Item {...toggleGroupScope} {...toggleItemProps} ref={forwardedRef} asChild>
+                    <IconButton variant={"basic"} {...props} noRounded className={classNames("-ml-px first:rounded-l last:rounded-r first:ml-0")} />
+                </ToggleGroupPrimitive.Item>
+            </ToolbarButton>
+        );
+    }
+);
+
+ToolbarToggleButton.displayName = TOGGLE_BUTTON_NAME;
+ToolbarToggleIconButton.displayName = TOGGLE_ICON_BUTTON_NAME;

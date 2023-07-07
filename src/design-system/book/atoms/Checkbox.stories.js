@@ -17,7 +17,7 @@ export const Checked = {
 
 export const DisabledChecked = {
   args: {
-    label: "Disabled",
+    label: "Disabled Checked",
     disabled: true,
     checked: true
   }
@@ -25,7 +25,7 @@ export const DisabledChecked = {
 
 export const DisabledUnchecked = {
   args: {
-    label: "Disabled",
+    label: "Disabled Unchecked",
     disabled: true,
     checked: false
   }
@@ -33,9 +33,16 @@ export const DisabledUnchecked = {
 
 export const Indeterminate = {
   args: {
-    label: "Disabled",
-    // disabled: true,
+    label: "Indeterminate",
     checked: "indeterminate",
     indeterminate: true
+  }
+}
+
+export const Critical = {
+  args: {
+    label: "Critical",
+    checked: true,
+    error: true
   }
 }

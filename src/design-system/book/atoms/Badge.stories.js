@@ -1,5 +1,5 @@
 import { Badge } from "../../components/atoms/badge";
-import { CaretDownFill } from "@jengaicons/react";
+import { Info as InfoIcon } from "@jengaicons/react";
 
 
 export default {
@@ -10,34 +10,34 @@ export default {
 };
 
 export const Neutral = {
-  args:{
-    type:"neutral",
-    label:"Neutral"
+  args: {
+    type: "neutral",
+    label: "Neutral"
   }
 }
 export const Danger = {
-  args:{
-    type:"danger",
-    label:"Danger"
+  args: {
+    type: "danger",
+    label: "Danger"
   }
 }
 export const Info = {
-  args:{
-    type:"info",
-    label:"Info"
+  args: {
+    type: "info",
+    label: "Info"
   }
 }
 export const Success = {
-  args:{
-    type:"success",
-    label:"Success",
-    IconComp: CaretDownFill
+  args: {
+    type: "success",
+    label: "Success",
+    icon: InfoIcon
   }
 }
 export const Warning = {
-  args:{
-    type:"warning",
-    label:"Warning"
+  args: {
+    type: "warning",
+    label: "Warning"
   }
 }
 

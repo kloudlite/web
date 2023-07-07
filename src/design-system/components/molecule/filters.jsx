@@ -1,31 +1,35 @@
-import { Search } from "@jengaicons/react"
-import { TextInput } from "../atoms/input"
+import { Search, SearchFill } from "@jengaicons/react"
+import { Abc, TextInput } from "../atoms/input"
 import PropTypes from 'prop-types';
-import { useState } from "react";
+import { createRef, useRef, useState } from "react";
 import {
     Toolbar,
-    ToolbarButton,
-    ToolbarLink,
     ToolbarTextField,
+    ToolbarToggleButton,
     ToolbarToggleGroup,
-    ToolbarToggleItem
+    ToolbarToggleIconButton
 } from "../atoms/toolbar"
 
 
-
+// your-button.jsx
+import React from 'react';
+import { Slot } from '@radix-ui/react-slot';
 
 export const Filters = ({ onFilterTextChange, filterActions }) => {
 
     const [selected, setSelected] = useState("hi")
     const [helloWorld, setHelloworld] = useState(true)
-
+    let ref = useRef(null)
     return <div className="flex flex-row items-center gap-2 w-full flex-wrap">
         <TextInput
             placeholder={'Filters'}
             prefixIcon={Search}
             onChange={onFilterTextChange}
             className={'flex-1 min-w-32'}
+
         />
+
+        <Abc ref={ref} name="hello world" />
         {filterActions && filterActions}
         {/* <ToggleGroup value={"left"}>
             <ToggleGroup.Button content={"Hello world"} value={"left"} />
@@ -96,17 +100,17 @@ export const Filters = ({ onFilterTextChange, filterActions }) => {
 
         <div>
             <Toolbar>
-                <ToolbarToggleGroup type={"single"} value={"hi"}>
-                    <ToolbarToggleItem value={"hi"}>Hi</ToolbarToggleItem>
-                    <ToolbarToggleItem value={"hi2"}>Hi2</ToolbarToggleItem>
-                </ToolbarToggleGroup>
-                <ToolbarButton>Hi</ToolbarButton>
-                <ToolbarButton>Hi</ToolbarButton>
-                <ToolbarButton>Hi</ToolbarButton>
-                <ToolbarLink href={"http://google.com"}>Hello</ToolbarLink>
                 <ToolbarTextField placeholder={"Hello"} />
+                <ToolbarToggleGroup type={"single"} value={"hi"} onValueChange={(e) => { console.log(e); }}>
+                    <ToolbarToggleButton value={"hi"} content="hi" />
+                    <ToolbarToggleButton value={"hi1"} content="hi1" />
+                    <ToolbarToggleButton value={"hi2"} content="hi2" />
+                    <ToolbarToggleIconButton value={"hi3"} icon={SearchFill} />
+                </ToolbarToggleGroup>
+
             </Toolbar>
         </div>
+
     </div>
 }
 

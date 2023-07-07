@@ -26,9 +26,9 @@ export const ButtonGroup = ({ items, size, value, onChange, selectable }) => {
           sharpRight={sharpRight}
           selected={(child.value == currentValue) && selectable}
           className={classnames({ "-ml-px": (sharpLeft || sharpRight) })}
-          IconComp={child.icon}
-          iconOnly={!child.label && child.icon}
-          DisclosureComp={child.label && child.disclosureComp}
+          prefix={child.prefix}
+          iconOnly={!child.label && child.prefix}
+          suffix={child.label && child.suffix}
           onClick={() => {
             setCurrentValue(child.value);
           }}

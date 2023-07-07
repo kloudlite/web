@@ -1,7 +1,7 @@
-import classNames from "classnames"
 import PropTypes from "prop-types";
-import React, { useRef,cloneElement, forwardRef, useEffect, useId, useState } from "react";
+import React, { useRef, cloneElement, forwardRef, useEffect, useId, useState } from "react";
 import { CaretUpFill, CaretDownFill, XCircleFill, EyeSlash, Eye } from "@jengaicons/react";
+import { cn } from "../utils";
 
 
 export const NumberInput = (props = { label, disabled, message, extra, placeholder, value: '', onChange, error: false, className, step, min, max }) => {
@@ -24,7 +24,7 @@ export const NumberInput = (props = { label, disabled, message, extra, placehold
 
   }, [v])
 
-  return <div className={classNames("flex flex-col",
+  return <div className={cn("flex flex-col",
     {
       "gap-1": props.label || props.extra
     })}>
@@ -32,9 +32,9 @@ export const NumberInput = (props = { label, disabled, message, extra, placehold
       <label className="flex-1 select-none bodyMd-medium" htmlFor={id}>{props.label}</label>
       {props.extra && <div className="bodyMd">{cloneElement(props.extra)}</div>}
     </div>
-    <div className={classNames("transition-all flex relative", "ring-offset-1 focus-within:ring-2 focus-within:ring-border-focus rounded border overflow-hidden",
+    <div className={cn("transition-all flex relative", "ring-offset-1 focus-within:ring-2 focus-within:ring-border-focus rounded border overflow-hidden",
       {
-        "bg-surface-danger-subdued border-border-danger text-text-danger placeholder:text-critical-400": props.error,
+        "bg-surface-critical-subdued border-border-critical text-text-critical placeholder:text-critical-400": props.error,
         "text-text-default border-border-default": !props.error
       }
     )}>
@@ -45,7 +45,7 @@ export const NumberInput = (props = { label, disabled, message, extra, placehold
         type="number"
         autoComplete="off"
         inputMode="numeric"
-        className={classNames(
+        className={cn(
           "outline-none flex-1",
           "outline-none disabled:bg-surface-input disabled:text-text-disabled",
           "rounded px-3 py-2 bodyMd ",
@@ -58,9 +58,9 @@ export const NumberInput = (props = { label, disabled, message, extra, placehold
         min={props.min}
         max={props.max}
       />
-      <div className={classNames("flex flex-col absolute right-0 top-0 bottom-0 justify-center items-center",
+      <div className={cn("flex flex-col absolute right-0 top-0 bottom-0 justify-center items-center",
         {
-          "bg-surface-danger-subdued divide-border-danger divide-y rounded-r border-l border-border-danger text-text-danger placeholder:text-critical-400": props.error,
+          "bg-surface-critical-subdued divide-border-critical divide-y rounded-r border-l border-border-critical text-text-critical placeholder:text-critical-400": props.error,
           "text-text-default border-l border-border-default divide-border-default divide-y": !props.error
         })}
         tabIndex={-1}>
@@ -72,25 +72,25 @@ export const NumberInput = (props = { label, disabled, message, extra, placehold
           onClick={() => {
             setV((v) => v + step);
             ref.current.focus();
-          }} className={classNames("flex-1 p-0.5 disabled:text-icon-disabled hover:bg-surface-hovered active:bg-surface-pressed")} ><CaretUpFill size={16} color="currentColor" /></button>
+          }} className={cn("flex-1 p-0.5 disabled:text-icon-disabled hover:bg-surface-hovered active:bg-surface-pressed")} ><CaretUpFill size={16} color="currentColor" /></button>
         <button
           aria-controls={id}
           aria-label={`Decrease ${props.label}`}
           tabIndex={-1}
           onClick={() => {
             setV((v) => v - step);
-          }} className={classNames("flex-1 p-0.5 disabled:text-icon-disabled hover:bg-surface-hovered active:bg-surface-pressed")}><CaretDownFill size={16} color="currentColor" /></button>
+          }} className={cn("flex-1 p-0.5 disabled:text-icon-disabled hover:bg-surface-hovered active:bg-surface-pressed")}><CaretDownFill size={16} color="currentColor" /></button>
       </div>
     </div>
 
-    {props.message && <span className={classNames("bodySm", {
-      "text-text-danger": props.error,
+    {props.message && <span className={cn("bodySm", {
+      "text-text-critical": props.error,
       "text-text-default": !props.error
     })}>{props.message}</span>}
   </div>
 }
 
-export const TextInputBase = forwardRef((props = { label, disabled, message, extra, placeholder, value: '', onChange, error: false, prefix, suffix,prefixIcon, suffixIcon, showclear, className, component, type, onKeyDown, autoComplete }, ref) => {
+export const TextInputBase = forwardRef((props = { label, disabled, message, extra, placeholder, value: '', onChange, error: false, prefix, suffix, prefixIcon, suffixIcon, showclear, className, component, type, onKeyDown, autoComplete }, ref) => {
 
   const [val, setVal] = useState(props.value || '')
   const [type, setType] = useState(props.type || "text")
@@ -98,19 +98,19 @@ export const TextInputBase = forwardRef((props = { label, disabled, message, ext
 
   let id = useId()
 
-  let {prefix:Prefix, suffix:Suffix} = props
-  const {prefixIcon:PrefixIcon, suffixIcon:SuffixIcon} = props
-  if(PrefixIcon){
-    Prefix = <PrefixIcon size={20} color={"currentColor"}/>
+  let { prefix: Prefix, suffix: Suffix } = props
+  const { prefixIcon: PrefixIcon, suffixIcon: SuffixIcon } = props
+  if (PrefixIcon) {
+    Prefix = <PrefixIcon size={20} color={"currentColor"} />
   }
-  if(SuffixIcon){
-    Suffix = <SuffixIcon size={20} color={"currentColor"}/>
+  if (SuffixIcon) {
+    Suffix = <SuffixIcon size={20} color={"currentColor"} />
   }
 
   const Component = props.component || "input"
 
   return (
-    <div className={classNames("flex flex-col",
+    <div className={cn("flex flex-col",
       {
         "gap-1": props.label || props.extra
       },
@@ -118,41 +118,41 @@ export const TextInputBase = forwardRef((props = { label, disabled, message, ext
     )}>
       <div className="flex items-center">
         <label className="flex-1 select-none bodyMd-medium" htmlFor={id}>{props.label}</label>
-        <div className={classNames(
+        <div className={cn(
           {
             "h-6": props.label || props.extra
           }
         )}>{props.extra && cloneElement(props.extra)}</div>
       </div>
-      <div className={(classNames("transition-all px-3 rounded border flex flex-row items-center relative ring-offset-1 focus-within:ring-2 focus-within:ring-border-focus ",
+      <div className={(cn("transition-all px-3 rounded border flex flex-row items-center relative ring-offset-1 focus-within:ring-2 focus-within:ring-border-focus ",
         {
-          "text-text-danger bg-surface-danger-subdued border-border-danger": props.error,
+          "text-text-critical bg-surface-critical-subdued border-border-critical": props.error,
           "text-text-default border-border-default bg-surface-input": !props.error,
           "text-text-disabled border-border-disabled bg-surface-input": props.disabled,
           "pr-0": props.component != "input"
         }))}>
-        {Prefix && <div className={classNames("pr-2 bodyMd",
+        {Prefix && <div className={cn("pr-2 bodyMd",
           {
             "text-text-strong": typeof (Prefix) !== "object" && !props.error && !props.disabled,
-            "text-text-danger": props.error,
+            "text-text-critical": props.error,
             "text-text-disabled": props.disabled
           })}>{Prefix}</div>}
         <Component
           type={type}
           placeholder={props.placeholder}
           id={id}
-          className={classNames(
-            "outline-none disabled:bg-surface-input disabled:text-text-disabled",
+          className={cn(
+            "outline-none disabled:bg-surface-input disabled:text-text-disabled flex-1",
             "rounded py-2 bodyMd ",
             {
-              "text-text-danger bg-surface-danger-subdued placeholder:text-critical-400": props.error,
+              "text-text-critical bg-surface-critical-subdued placeholder:text-critical-400": props.error,
               "text-text-default bg-surface-input": !props.error
             }
           )}
           value={val}
           onChange={(e) => {
             setVal(e.target.value);
-            if(onChange) {
+            if (onChange) {
               onChange(e);
             }
           }}
@@ -161,12 +161,12 @@ export const TextInputBase = forwardRef((props = { label, disabled, message, ext
           onKeyDown={props.onKeyDown}
           autoComplete={props.autoComplete}
         />
-        {Suffix && <div className={classNames("pl-2 bodyMd",
+        {Suffix && <div className={cn("pl-2 bodyMd",
           {
-            "text-text-danger": props.error,
+            "text-text-critical": props.error,
             "text-text-strong": !props.error && !props.disabled,
             "text-text-disabled": props.disabled
-          })}>{ Suffix}</div>}
+          })}>{Suffix}</div>}
         {
           props.showclear && !props.disabled && <button
             tabIndex={-1}
@@ -174,7 +174,7 @@ export const TextInputBase = forwardRef((props = { label, disabled, message, ext
               setVal('')
               console.log('button');
             }}
-            className={classNames('outline-none flex items-center rounded justify-center',
+            className={cn('outline-none flex items-center rounded justify-center',
               {
                 "cursor-default": props.disabled
               })}>
@@ -188,7 +188,7 @@ export const TextInputBase = forwardRef((props = { label, disabled, message, ext
               setType((prev) => prev == "text" ? "password" : "text")
               console.log('button');
             }}
-            className={classNames('outline-none flex items-center rounded justify-center',
+            className={cn('outline-none flex items-center rounded justify-center',
               {
                 "cursor-default": props.disabled
               })}>
@@ -198,8 +198,8 @@ export const TextInputBase = forwardRef((props = { label, disabled, message, ext
       </div>
 
       {props.message && (
-        <div className={classNames("bodySm", {
-          "text-text-danger": props.error,
+        <div className={cn("bodySm", {
+          "text-text-critical": props.error,
           "text-text-default": !props.error
         })}>
           {props.message}
@@ -207,6 +207,15 @@ export const TextInputBase = forwardRef((props = { label, disabled, message, ext
       )}
     </div>
   );
+})
+export const Xyz = forwardRef(({ name }, ref) => {
+  useEffect(() => {
+    console.log(ref);
+  }, [ref.current])
+  return <div ref={ref}>{name},{JSON.stringify(ref.current?.innerHTML)}</div>
+})
+export const Abc = forwardRef(({ name = "hi", ...etc }, ref) => {
+  return <Xyz name={name} ref={ref} />
 })
 
 export const TextInput = forwardRef((props = {
@@ -216,16 +225,18 @@ export const TextInput = forwardRef((props = {
   placeholder,
   value: '',
   onChange,
-  error, message, prefix, suffix, prefixIcon, suffixIcon, showclear, className }, ref) => {
+  error, message, prefix, suffix, prefixIcon, suffixIcon, showclear, className
+}, ref) => {
+
   return <TextInputBase {...props} component={'input'} type="text" ref={ref} />
 })
 
-export const TextArea = (props = { label, disabled, extra, placeholder, value: '', onChange, error, message,prefixIcon, suffixIcon, className }) => {
+export const TextArea = (props = { label, disabled, extra, placeholder, value: '', onChange, error, message, prefixIcon, suffixIcon, className }) => {
   let ref = useRef(null)
   return <TextInputBase {...props} component={'textarea'} ref={ref} type="text" />
 }
 
-export const PasswordInput = (props = { label, disabled, extra, placeholder, value: '', onChange, error,prefixIcon, message,suffixIcon, className }) => {
+export const PasswordInput = (props = { label, disabled, extra, placeholder, value: '', onChange, error, prefixIcon, message, suffixIcon, className }) => {
   let ref = useRef(null)
   return <TextInputBase {...props} component={'input'} ref={ref} type="password" />
 }
