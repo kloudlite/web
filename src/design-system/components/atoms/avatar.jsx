@@ -1,38 +1,12 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from "classnames";
+import { cn } from '../utils';
 
 const colors = {
-  "one": [
-    "#D4D4D8",
-    "#FFFFFF",
-    "#8C9196",
-    "#111827"
-  ],
-  "two": [
-    "#D97706",
-    "#FDE68A",
-    "#b45309",
-    "#b45309"
-  ],
-  "three": [
-    "#16A34A",
-    "#BBF7D0",
-    "#15803d",
-    "#15803d",
-  ],
-  "four": [
-    "#DC2626",
-    "#FECACA",
-    "#B91C1C",
-    "#B91C1C",
-  ],
-  "five": [
-    "#0d9488",
-    "#99F6E4",
-    "#0f766e",
-    "#0f766e",
-  ],
+  "one": ["fill-text-soft", "text-text-soft"],
+  "two": ["fill-icon-warning", "text-icon-warning"],
+  "three": ["fill-icon-success", "text-icon-success"],
+  "four": ["fill-icon-critical", "text-icon-critical"],
+  "five": ["fill-icon-secondary", "text-icon-secondary"],
 }
 
 
@@ -44,57 +18,30 @@ export const AvatarBase = ({ label, size, color }) => {
 
   return <div
     className={
-      classNames(
-        "relative",
+      cn(
+        "relative flex flex-row items-center justify-center",
         "outline-none transition-all",
         "rounded-full",
+        "border border-border-default",
         {
-          "w-16 h-16": size === "large",
-          "w-10 h-10": size === "medium",
-          "w-8 h-8": size === "small",
-          "w-6 h-6": size === "extra-small",
+          "w-16 h-16 p-2": size === "large",
+          "w-10 h-10 p-1": size === "medium",
+          "w-8 h-8 p-1": size === "small",
+          "w-6 h-6 p-1": size === "extra-small",
         }
       )
     }
   >
-    {!label && <svg className={classNames(
-      {
-        "w-16 h-16": size === "large",
-        "w-10 h-10": size === "medium",
-        "w-8 h-8": size === "small",
-        "w-6 h-6": size === "extra-small",
-      }
-    )} viewBox="0 0 62 61" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="1" y="0.5" width="60" height="60" rx="30" fill={colors[color][1]} />
-      <path fillRule="evenodd" clipRule="evenodd" d="M31.0002 27.3571C36.0446 27.3571 40.1339 23.1358 40.1339 17.9286C40.1339 12.7213 36.0446 8.5 31.0002 8.5C25.9558 8.5 21.8665 12.7213 21.8665 17.9286C21.8665 23.1358 25.9558 27.3571 31.0002 27.3571ZM31.0002 52.5C38.6749 52.5 45.5322 48.8162 50 43.0717C45.5322 37.3269 38.6747 33.6429 30.9998 33.6429C23.3251 33.6429 16.4678 37.3267 12 43.0712C16.4678 48.816 23.3253 52.5 31.0002 52.5Z" fill={colors[color][2]} />
-      <rect x="1" y="0.5" width="60" height="60" rx="30" stroke={colors[color][0]} />
-    </svg>}
+    {!label && <svg viewBox="0 0 42 49" fill="none" xmlns="http://www.w3.org/2000/svg" className={cn(`${colors[color][0]}`)}>
+      <path fillRule="evenodd" clipRule="evenodd" d="M21.0002 21.0714C26.5756 21.0714 31.0953 16.4664 31.0953 10.7857C31.0953 5.10507 26.5756 0.5 21.0002 0.5C15.4248 0.5 10.9051 5.10507 10.9051 10.7857C10.9051 16.4664 15.4248 21.0714 21.0002 21.0714ZM21.0002 48.5C29.4828 48.5 37.0619 44.4813 42 38.2145C37.062 31.9475 29.4826 27.9286 20.9998 27.9286C12.5172 27.9286 4.93805 31.9473 0 38.214C4.93804 44.4811 12.5174 48.5 21.0002 48.5Z" />
+    </svg>
+    }
     {label &&
-      <div className={classNames(
-        {
-          "w-16 h-16": size === "large",
-          "w-10 h-10": size === "medium",
-          "w-8 h-8": size === "small",
-          "w-6 h-6": size === "extra-small",
-        }, "relative"
-      )}>
-        <svg className={classNames(
-          {
-            "w-16 h-16": size === "large",
-            "w-10 h-10": size === "medium",
-            "w-8 h-8": size === "small",
-            "w-6 h-6": size === "extra-small",
-          }
-        )} viewBox="0 0 62 61" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="1" y="0.5" width="60" height="60" rx="30" fill={colors[color][1]} />
-          <rect x="1" y="0.5" width="60" height="60" rx="30" stroke={colors[color][0]} />
-        </svg>
-        <div className={classNames("absolute top-0 bottom-0 left-0 right-0 flex justify-center items-center", {
-          "headingLg": size === "large",
-          "bodyLg": size === "medium" || size === "small",
-          "bodySm": size === "extra-small",
-        })} style={{ color: colors[color][3] }}>{ab()}</div>
-      </div>
+      <div className={cn(`${colors[color][1]}`, {
+        "headingLg": size === "large",
+        "bodyLg": size === "medium" || size === "small",
+        "bodySm": size === "extra-small",
+      })}>{ab()}</div>
     }
   </div>
 }

@@ -160,7 +160,7 @@ export default {
                     "hovered": "#27272A",
                     "pressed": "#18181B",
                 },
-                "danger": {
+                "critical": {
                     "default": "#EF4444",
                     "subdued": "#fee2e2",
                     "hovered": "#dc2626",
@@ -187,7 +187,7 @@ export default {
                 "soft": "#71717A",
                 "strong": "#4B5563",
                 "disabled": "#9ca3af",
-                "danger": "#DC2626",
+                "critical": "#DC2626",
                 "warning": "#D97706",
                 "success": "#16A34A",
                 "primary": "#2563EB",
@@ -201,7 +201,7 @@ export default {
                 "soft": "#71717A",
                 "strong": "#4B5563",
                 "disabled": "#9ca3af",
-                "danger": "#DC2626",
+                "critical": "#DC2626",
                 "warning": "#D97706",
                 "success": "#16A34A",
                 "primary": "#2563EB",
@@ -210,7 +210,7 @@ export default {
             },
             "border": {
                 "default": "#D4D4D8",
-                "danger": "#DC2626",
+                "critical": "#DC2626",
                 "warning": "#D97706",
                 "success": "#16A34A",
                 "primary": "#2563EB",

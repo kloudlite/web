@@ -1,17 +1,17 @@
 import PropTypes from "prop-types";
 import { useEffect, useId, useState } from 'react';
-import classNames from "classnames";
 import * as RG from '@radix-ui/react-radio-group';
+import { cn } from "../utils";
 
 
 const RadioGroupItem = (props) => {
   let id = useId()
-  return <div className={classNames("flex items-center w-fit",
+  return <div className={cn("flex items-center w-fit",
     {
       "cursor-pointer": !props.disabled
     })}>
     <RG.Item
-      className={classNames("w-5 h-5 outline-none rounded-full border ring-border-focus ring-offset-1 focus:ring-2 transition-all flex items-center justify-center border-border-default",
+      className={cn("w-4 h-4 outline-none rounded-full border ring-border-focus ring-offset-1 focus:ring-2 transition-all flex items-center justify-center border-border-default",
         {
           "hover:bg-surface-hovered": !props.disabled,
           "data-[state=checked]:border-border-primary": !props.disabled,
@@ -22,8 +22,8 @@ const RadioGroupItem = (props) => {
       disabled={props.disabled}
     >
       <RG.Indicator
-        className={classNames(
-          "block w-3 h-3  rounded-full",
+        className={cn(
+          "block w-2 h-2 rounded-full",
           {
             "bg-icon-disabled": props.disabled,
             "bg-surface-primary-default": !props.disabled,
@@ -32,7 +32,7 @@ const RadioGroupItem = (props) => {
       />
     </RG.Item>
     {props.label && <label
-      className={classNames({
+      className={cn({
         "text-text-disabled": props.disabled,
         "text-text-default cursor-pointer": !props.disabled,
       }, "bodyMd-medium pl-2 select-none")}

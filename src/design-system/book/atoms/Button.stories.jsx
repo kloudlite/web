@@ -14,8 +14,8 @@ export const BaseButton = {
   args: {
     variant: 'basic',
     label: 'Button',
-    IconComp: CalendarCheckFill,
-    DisclosureComp: CaretDownFill,
+    prefix: CalendarCheckFill,
+    suffix: CaretDownFill,
   },
 };
 
