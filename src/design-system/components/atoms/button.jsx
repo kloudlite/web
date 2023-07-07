@@ -203,7 +203,8 @@ export const Button = forwardRef(({
   LinkComponent,
   ...props
 }, ref) => {
-  return <ButtonBase ref={ref} LinkComponent={LinkComponent} iconOnly={false} block={block} content={content} noBorder={noBorder} suffix={suffix} variant={variant} size={size} onClick={onClick} href={href} type={type} disabled={disabled} sharpLeft={sharpLeft} sharpRight={sharpRight} noRing={noRing} noRounded={noRounded} prefix={prefix} className={className} {...props} />
+  console.log(props);
+  return <ButtonBase {...props} ref={ref} LinkComponent={LinkComponent} iconOnly={false} block={block} content={content} noBorder={noBorder} suffix={suffix} variant={variant} size={size} onClick={onClick} href={href} type={type} disabled={disabled} sharpLeft={sharpLeft} sharpRight={sharpRight} noRing={noRing} noRounded={noRounded} prefix={prefix} className={className} />
 })
 
 Button.propTypes = {

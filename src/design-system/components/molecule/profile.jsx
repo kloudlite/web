@@ -1,15 +1,15 @@
 import { AvatarBase } from "../atoms/avatar.jsx";
 import PropTypes from "prop-types";
-import classNames from "classnames";
 import { forwardRef } from "react";
 import { BounceIt } from "../bounce-it.jsx";
+import { cn } from "../utils.jsx";
 
 export const Profile = forwardRef(({ name, subtitle, color, size, ...props }, ref) => {
   return <BounceIt className="w-fit">
     <button
       {...props}
       ref={ref}
-      className={classNames("flex py-0.5 px-1 gap-2 items-center ring-offset-1 outline-none transition-all rounded focus-visible:ring-2 focus-visible:ring-border-focus")}>
+      className={cn("flex py-0.5 px-1 gap-2 items-center ring-offset-1 outline-none transition-all rounded focus-visible:ring-2 focus-visible:ring-border-focus")}>
       <AvatarBase label={name} color={color} size={size} />
       <div className="flex flex-col gap-y-1  items-start">
         <div className={"bodyMd-medium"}>{name}</div>

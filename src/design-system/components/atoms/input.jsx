@@ -4,7 +4,7 @@ import { CaretUpFill, CaretDownFill, XCircleFill, EyeSlash, Eye } from "@jengaic
 import { cn } from "../utils";
 
 
-export const NumberInput = (props = { label, disabled, message, extra, placeholder, value: '', onChange, error: false, className, step, min, max }) => {
+export const NumberInput = (props) => {
 
   const [v, setV] = useState(props.value || props.min || 0)
   const ref = useRef();
@@ -90,7 +90,7 @@ export const NumberInput = (props = { label, disabled, message, extra, placehold
   </div>
 }
 
-export const TextInputBase = forwardRef((props = { label, disabled, message, extra, placeholder, value: '', onChange, error: false, prefix, suffix, prefixIcon, suffixIcon, showclear, className, component, type, onKeyDown, autoComplete }, ref) => {
+export const TextInputBase = forwardRef((props, ref) => {
 
   const [val, setVal] = useState(props.value || '')
   const [type, setType] = useState(props.type || "text")
@@ -152,8 +152,8 @@ export const TextInputBase = forwardRef((props = { label, disabled, message, ext
           value={val}
           onChange={(e) => {
             setVal(e.target.value);
-            if (onChange) {
-              onChange(e);
+            if (props.onChange) {
+              props.onChange(e);
             }
           }}
           disabled={props.disabled}
@@ -218,25 +218,17 @@ export const Abc = forwardRef(({ name = "hi", ...etc }, ref) => {
   return <Xyz name={name} ref={ref} />
 })
 
-export const TextInput = forwardRef((props = {
-  label,
-  disabled,
-  extra,
-  placeholder,
-  value: '',
-  onChange,
-  error, message, prefix, suffix, prefixIcon, suffixIcon, showclear, className
-}, ref) => {
+export const TextInput = forwardRef((props, ref) => {
 
   return <TextInputBase {...props} component={'input'} type="text" ref={ref} />
 })
 
-export const TextArea = (props = { label, disabled, extra, placeholder, value: '', onChange, error, message, prefixIcon, suffixIcon, className }) => {
+export const TextArea = (props) => {
   let ref = useRef(null)
   return <TextInputBase {...props} component={'textarea'} ref={ref} type="text" />
 }
 
-export const PasswordInput = (props = { label, disabled, extra, placeholder, value: '', onChange, error, prefixIcon, message, suffixIcon, className }) => {
+export const PasswordInput = (props) => {
   let ref = useRef(null)
   return <TextInputBase {...props} component={'input'} ref={ref} type="password" />
 }

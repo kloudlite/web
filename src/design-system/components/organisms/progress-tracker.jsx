@@ -1,17 +1,17 @@
-import classNames from "classnames"
 import PropTypes from "prop-types"
+import { cn } from "../utils"
 
 
 const trackerLineColor = "#D4D4D8"
 
 const ProgressTrackerItem = ({ label, active }) => {
     return (
-        <div className={classNames("flex flex-row gap-x-3 items-center",
+        <div className={cn("flex flex-row gap-x-3 items-center",
             {
                 "bodyMd-semibold text-text-default": active,
                 "bodyMd text-text-disabled": !active
             })}>
-            <div className={classNames("w-2.5 h-2.5 rounded-full flex items-center justify-center")}>
+            <div className={cn("w-2.5 h-2.5 rounded-full flex items-center justify-center")}>
                 {active && <svg width="10" height="10" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" className="fill-icon-primary">
                     <circle cx="5" cy="5" r="5" />
                 </svg>}

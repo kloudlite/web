@@ -1,17 +1,17 @@
-import classNames from "classnames"
 import PropTypes from "prop-types"
 import { NavTabs } from "../atoms/tabs"
 import { BrandLogo } from "../branding/brand-logo"
 import { Button } from "../atoms/button"
 import { Profile } from "../molecule/profile"
 import { BellFill, CaretDownFill } from "@jengaicons/react"
+import { cn } from "../utils"
 
 export const TopBar = ({ tab, actions, logo, fixed, fullwidth, linkComponent }) => {
-  return (<div className={classNames("border-b border-border-default bg-surface-subdued px-2.5 z-10",
+  return (<div className={cn("border-b border-border-default bg-surface-subdued px-2.5 z-10",
     {
       "fixed top-0 left-0 right-0": fixed
     })}>
-    <div className={classNames("flex flex-col m-auto",
+    <div className={cn("flex flex-col m-auto",
       {
         "max-w-[1184px]": !fullwidth
       })}>
@@ -37,7 +37,7 @@ TopBar.propTypes = {
 TopBar.defaultProps = {
   logo: <BrandLogo detailed size={20} />,
   actions: <>
-    <Button content={"Nuveo"} variant={"basic"} DisclosureComp={CaretDownFill} />
+    <Button content={"Nuveo"} variant={"basic"} suffix={CaretDownFill} />
     <div className="h-3.75 w-px bg-border-default mx-4"></div>
     <div className="flex flex-row gap-2 items-center justify-center">
       <Button content={<BellFill size={20} />} variant="plain" size="large" />
