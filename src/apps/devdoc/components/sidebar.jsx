@@ -1,100 +1,208 @@
+import {Link} from "@remix-run/react";
+import {TextInput} from "~/components/atoms/input.jsx";
+import {Chip} from "~/components/atoms/chip.jsx";
+import {Search} from "@jengaicons/react";
+
 const BaseSidebar = ({items})=>{
     return (
-        items.map((item)=>{
-            return (
-                <div key={item.label}>{item.label}</div>
-            )
-        })
+        <div className={"overflow-scroll fixed bottom-0 top-docHeaderHeight w-docSidebarWidth left-[max(0px,calc(50%-40rem))] p-4"}>
+            <div className={"sticky top-0"}>
+                <TextInput placeholder={"Search"} prefixIcon={Search} suffix={<Chip label={"C+K"} />}  />
+            </div>
+            <div className={"flex flex-col gap-6"}>
+                {
+                    items.map((item)=>{
+                        return (
+                            <div key={item.label}>
+                                <span className={"uppercase text-sm"}>{item.label}</span>
+                                <div>
+                                    {
+                                        (item.items||[]).map((subitem)=>{
+                                            return (
+                                                <div key={subitem.href} className={"pl-4"}>
+                                                    <Link to={subitem.href} className={"text-sm"}>{subitem.label}</Link>
+                                                    <div>
+                                                        {
+                                                            (subitem.items||[]).map((subsubitem)=>{
+                                                                return (
+                                                                    <div key={subsubitem.href} className={"pl-4"}>
+                                                                        <Link to={subsubitem.href} className={"text-sm"} >{subsubitem.label}</Link>
+                                                                    </div>
+                                                                )
+                                                            })
+                                                        }
+                                                    </div>
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                </div>
+                            </div>
+                        )
+                    })
+                }
+            </div>
+        </div>
     )
 }
 
 export const Sidebar = ()=>{
     return <BaseSidebar items={[
         {
-            label: "INTRODUCTION",
+            label: "Introduction",
             items: [
                 {
-                    label: "What is Kloudlite?"
+                    label: "What is Kloudlite?",
+                    href:"/what-is-kloudlite",
                 },
                 {
-                    label: "How Kloudlite Works?"
+                    label: "How Kloudlite Works?",
+                    href:"/how-kloudlite-works",
                 },
                 {
-                    label: "Basic Concepts"
-                }
+                    label: "Basic Concepts",
+                    href: "/basic-concepts",
+                },
+                {
+                    label: "Getting Started",
+                    items: [
+                        {
+                            label: "Create Cluster",
+                            href: "/getting-started/create-cluster"
+                        },
+                        {
+                            label: "Setup Project",
+                            href: "/getting-started/setup-project"
+                        },
+                        {
+                            label: "Create Database",
+                            href: "/getting-started/create-database"
+                        },
+                        {
+                            label: "Setup Application",
+                            href: "/getting-started/setup-application"
+                        },
+                        {
+                            label: "Configs & Secrets",
+                            href: "/getting-started/configs-and-secrets"
+                        }
+                    ]
+                },
+                {
+                    label: "What next?",
+                    href: "/what-next"
+                },
             ]
         },
+        {
+            label: "Usage",
+            items: [
+                {
+                    label: "Interfaces",
+                    items:[
+                        {
+                            label: "Web",
+                            href: "/interfaces/web"
+                        },
+                        {
+                            label: "GitOps",
+                            href: "/interfaces/gitops"
+                        },
+                        {
+                            label: "CLI",
+                            href: "/interfaces/cli"
+                        }
+                    ]
+                },
+                {
+                    label: "For Developers",
+                    items: [
+                        {
+                            label: "New Remote Local",
+                            href: "/for-developers/new-remote-local"
+                        },
+                        {
+                            label: "Local Environment Setup",
+                            href: "/for-developers/local-environment-setup"
+                        }
+                    ],
+                },
+                {
+                    label: "For Platform Engineers",
+                    items: [
+                        {
+                            label: "Clusters",
+                            href: "/for-platform-engineers/clusters"
+                        },
+                        {
+                            label: "Autoscaling",
+                            href: "/for-platform-engineers/autoscaling"
+                        },
+                        {
+                            label: "Cost Optimization",
+                            href: "/for-platform-engineers/cost-optimization"
+                        },
+                        {
+                            label: "Multi-Cloud",
+                            href: "/for-platform-engineers/multi-cloud"
+                        },
+                        {
+                            label: "Self Managed Services",
+                            href: "/for-platform-engineers/self-managed-services"
+                        },
+                        {
+                            label: "Domain Management",
+                            href: "/for-platform-engineers/domain-management"
+                        }
+                    ]
+                }
+            ],
+        },
+        {
+            label: "Security & Compliance",
+            items: [
+                {
+                    label:"Backup & Restore",
+                    href: "/security-and-compliance/backup-and-restore"
+                },
+                {
+                    label:"SOC2",
+                    href: "/security-and-compliance/soc2"
+                },
+                {
+                    label:"GDPR",
+                    href: "/security-and-compliance/gdpr"
+                },
+                {
+                    label:"Encryption",
+                    href: "/security-and-compliance/encryption"
+                },
+            ]
+        },
+        {
+            label: "Resources",
+            items:[
+                {
+                    label: "API Reference",
+                    href: "/api-reference"
+                },
+                {
+                    label: "FAQ",
+                    href: "/faq"
+                },
+                {
+                    label: "Roadmap",
+                    href: "/roadmap"
+                },
+                {
+                    label: "Github",
+                    href: "/github"
+                },
+                {
+                    label: "Help & Support",
+                    href: "/help-and-support"
+                }
+            ]
+        }
     ]} />
-}
-
-const _AppSidebar = ()=>{
-    return <div className={"overflow-scroll fixed bottom-0 top-docHeaderHeight w-docSidebarWidth left-[max(0px,calc(50%-40rem))]"}>
-        <div>
-            <div>INTRODUCTION</div>
-            <div>What is Kloudlite?</div>
-            <div>How Kloudlite Works?</div>
-            <div>Basic Concepts</div>
-            <div>
-                <div>Getting Started</div>
-                <ul>
-                    <li>- Create Cluster</li>
-                    <li>- Setup Project</li>
-                    <li>- Create Database</li>
-                    <li>- Setup Application</li>
-                    <li>- Configs & Secrets</li>
-                </ul>
-            </div>
-            <div>What next?</div>
-        </div>
-        <div>
-            <div>USAGE</div>
-            <div>
-                <div>INTERFACE</div>
-                <div>web</div>
-                <div>GitOps</div>
-                <div>cli</div>
-            </div>
-            <div>For Developers</div>
-            <ul>
-                <li>- New Remote Local!</li>
-                <li>- Sync Configs & Secrets</li>
-                <li>- Local project Setup</li>
-            </ul>
-            <div>For Platform Engineers</div>
-            <ul>
-                <li>Clusters</li>
-                <li>Autoscaling</li>
-                <li>Cost Optimisation</li>
-                <li>
-                    <div>Supported Providers</div>
-                    <ul>
-                        <li>AWS</li>
-                        <li>GCP</li>
-                        <li>Azure</li>
-                        <li>Digital Ocean</li>
-                        <li>Linode</li>
-                        <li>Hetzner</li>
-                    </ul>
-                </li>
-                <li>Self Managed Services</li>
-                <li>Domain Management</li>
-                <li>Audit Logs</li>
-            </ul>
-        </div>
-        <div>
-            <div>SECURITY AND COMPLIANCE</div>
-            <div>Backup & Restore</div>
-            <div>SOC2</div>
-            <div>GDPR</div>
-            <div>Encryption</div>
-        </div>
-        <div>
-            <div>USEFUL RESOURCES</div>
-            <div>API</div>
-            <div>FAQ</div>
-            <div>Roadmap</div>
-            <div>Github</div>
-            <div>Help & Support</div>
-        </div>
-    </div>
 }

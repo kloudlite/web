@@ -14,7 +14,6 @@ export const Header = () => {
                 <Link prefetch to={"/help"}>Help</Link>
             </div>
             <div className={"flex flex-row gap-4 p-4 items-center"}>
-                <TextInput placeholder={"Search"} prefixIcon={Search} suffix={<Chip label={"C+K"} />}  />
                 <Link prefetch to={"https://google.com"}>Feedback</Link>
                 <Link to={"https://google.com"}>Login</Link>
                 <Link to={"https://google.com"}>Signup</Link>
