@@ -1,24 +1,20 @@
 import { Search, SearchFill } from "@jengaicons/react"
-import { TextInput } from "../atoms/input"
 import PropTypes from 'prop-types';
 import { createRef, useRef, useState } from "react";
 import Toolbar from "../atoms/toolbar";
+import ChipGroup from "../atoms/chip"
+
 
 
 
 export const Filters = ({ onFilterTextChange, filterActions }) => {
-
-    const [selected, setSelected] = useState("hi")
-    const [helloWorld, setHelloworld] = useState(true)
-    let ref = useRef(null)
+    const [chips, setChips] = useState([
+        { label: "hello", type: ChipGroup.ChipType.REMOVABLE, id: 0 },
+        { label: "hi", type: ChipGroup.ChipType.REMOVABLE, id: 1 },
+        { label: "apple", type: ChipGroup.ChipType.REMOVABLE, id: 2 },
+        { label: "ball", type: ChipGroup.ChipType.CLICKABLE, id: 3 },
+    ])
     return <div className="flex flex-row items-center gap-2 w-full flex-wrap">
-        <TextInput
-            placeholder={'Filters'}
-            prefixIcon={Search}
-            onChange={onFilterTextChange}
-            className={'flex-1 min-w-32'}
-
-        />
 
         {filterActions && filterActions}
         {/* <ToggleGroup value={"left"}>
@@ -97,7 +93,13 @@ export const Filters = ({ onFilterTextChange, filterActions }) => {
                 </Toolbar.ButtonGroup>
             </Toolbar>
         </div>
-
+        <div>
+            <ChipGroup onRemove={(e) => {
+                setChips(chips.filter((c) => c.id != e))
+            }}>
+                {chips.map((chip, index) => <ChipGroup.Chip key={index} id={chip.id} label={chip.label} type={chip.type} />)}
+            </ChipGroup>
+        </div>
     </div>
 }
 
