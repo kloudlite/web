@@ -1,10 +1,6 @@
-import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
-import classnames from "classnames";
-import { MagicWandFill, XFill } from '@jengaicons/react';
-import { AriaButton } from './button';
-import { useFocusRing } from 'react-aria';
-
+import { XFill } from '@jengaicons/react';
+import { cn } from '../utils';
 
 export const ChipTypes = Object.freeze({
     BASIC: "BASIC",
@@ -13,29 +9,20 @@ export const ChipTypes = Object.freeze({
 })
 
 
-
-
 export const Chip = ({ label, disabled, type = ChipTypes.BASIC, onClose, prefix, onClick }) => {
-    let { isFocusVisible, focusProps } = useFocusRing();
-    let props = {
-    }
+
     let Component = "div"
     if (type === ChipTypes.CLICKABLE) {
         Component = "button"
     }
 
-
     let Prefix = prefix
-
-
-
 
     return (
         <Component
-            {...focusProps}
-            {...props}
-            className={classnames(
+            className={cn(
                 "rounded border bodySm-medium py-px flex items-center transition-all outline-none flex-row gap-1.5 ring-offset-1",
+                "focus-within:ring-2 focus-within:ring-border-focus",
                 "w-fit",
                 {
                     "text-text-default": !disabled,
@@ -56,10 +43,11 @@ export const Chip = ({ label, disabled, type = ChipTypes.BASIC, onClose, prefix,
                     "px-2": type != ChipTypes.REMOVABLE
                 },
                 {
-                    "hover:bg-surface-hovered active:bg-surface-pressed ": type === ChipTypes.CLICKABLE,
-                    "focus-visible:ring-2 focus:ring-border-focus": isFocusVisible && type === ChipTypes.CLICKABLE
+                    "hover:bg-surface-hovered active:bg-surface-pressed focus-visible:ring-2 focus:ring-border-focus": type === ChipTypes.CLICKABLE,
                 }
-            )}>
+            )}
+            onClick={onClick}
+        >
             {
                 Prefix && type != ChipTypes.CLICKABLE && ((typeof Prefix == "string") ? <span className='bodySm text-text-soft'>{Prefix}</span> : <Prefix size={16} color="currentColor" />)
             }
@@ -67,19 +55,15 @@ export const Chip = ({ label, disabled, type = ChipTypes.BASIC, onClose, prefix,
                 {label}
             </span>
             {
-                type == ChipTypes.REMOVABLE && <AriaButton
+                type == ChipTypes.REMOVABLE && <button
                     disabled={disabled}
                     onClick={onClose}
-                    {...focusProps}
-                    className={classnames('outline-none flex items-center rounded-sm ring-offset-0 justify-center hover:bg-surface-hovered active:bg-surface-pressed',
+                    className={cn('outline-none flex items-center rounded-sm ring-offset-0 justify-center hover:bg-surface-hovered active:bg-surface-pressed',
                         {
                             "cursor-default": disabled
-                        },
-                        {
-                            "focus-visible:ring-2 focus:ring-border-focus": isFocusVisible
                         })}>
                     <XFill size={16} color="currentColor" />
-                </AriaButton>
+                </button>
             }
         </Component>
     );

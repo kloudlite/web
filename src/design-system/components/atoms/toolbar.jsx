@@ -9,7 +9,7 @@ import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
 import { createToggleGroupScope } from '@radix-ui/react-toggle-group';
 import { useDirection } from '@radix-ui/react-direction';
 import { TextInput } from "./input.jsx";
-import { Button, ButtonBase, IconButton } from './button.jsx';
+import { Button, IconButton } from './button.jsx';
 import classNames from 'classnames';
 
 
@@ -26,7 +26,7 @@ const useToggleGroupScope = createToggleGroupScope();
 const [ToolbarProvider, useToolbarContext] = createToolbarContext(TOOLBAR_NAME);
 
 
-export const Toolbar = React.forwardRef(
+const Toolbar = React.forwardRef(
     (props, forwardedRef) => {
         const { __scopeToolbar, orientation = 'horizontal', dir, loop = true, ...toolbarProps } = props;
         const rovingFocusGroupScope = useRovingFocusGroupScope(__scopeToolbar);
@@ -63,7 +63,7 @@ Toolbar.displayName = TOOLBAR_NAME;
 const SEPARATOR_NAME = 'ToolbarSeparator';
 
 
-export const ToolbarSeparator = React.forwardRef(
+const ToolbarSeparator = React.forwardRef(
     (props, forwardedRef) => {
         const { __scopeToolbar, ...separatorProps } = props;
         const context = useToolbarContext(SEPARATOR_NAME, __scopeToolbar);
@@ -106,7 +106,7 @@ ToolbarButtonBase.displayName = BUTTON_NAME;
  * -----------------------------------------------------------------------------------------------*/
 const TOOLBAR_BUTTON_NAME = 'ToolbarButton';
 
-export const ToolbarButton = React.forwardRef(
+const ToolbarButton = React.forwardRef(
     (props, forwardedRef) => {
         const { __scopeToolbar, ...buttonProps } = props;
         const rovingFocusGroupScope = useRovingFocusGroupScope(__scopeToolbar);
@@ -122,7 +122,7 @@ ToolbarButton.displayName = TOOLBAR_BUTTON_NAME;
 
 const LINK_NAME = 'ToolbarLink';
 
-export const ToolbarTextField = React.forwardRef(
+const ToolbarTextField = React.forwardRef(
     (props, forwardedRef) => {
         const { __scopeToolbar, ...inputProps } = props;
         const rovingFocusGroupScope = useRovingFocusGroupScope(__scopeToolbar);
@@ -138,7 +138,7 @@ export const ToolbarTextField = React.forwardRef(
 );
 
 
-export const ToolbarLink = React.forwardRef(
+const ToolbarLink = React.forwardRef(
     (props, forwardedRef) => {
         const { __scopeToolbar, ...linkProps } = props;
         const rovingFocusGroupScope = useRovingFocusGroupScope(__scopeToolbar);
@@ -159,18 +159,18 @@ export const ToolbarLink = React.forwardRef(
 ToolbarLink.displayName = LINK_NAME;
 
 /* -------------------------------------------------------------------------------------------------
- * ToolbarToggleGroup
+ * ToolbarButtonGroup
  * -----------------------------------------------------------------------------------------------*/
 
-const TOGGLE_GROUP_NAME = 'ToolbarToggleGroup';
+const BUTTON_GROUP_NAME = 'ToolbarButtonGroup';
 
-export const ToolbarToggleGroup = React.forwardRef(
+const ToolbarButtonGroup = React.forwardRef(
     (
         { selectable, ...props },
         forwardedRef
     ) => {
         const { __scopeToolbar, ...toggleGroupProps } = props;
-        const context = useToolbarContext(TOGGLE_GROUP_NAME, __scopeToolbar);
+        const context = useToolbarContext(BUTTON_GROUP_NAME, __scopeToolbar);
         const toggleGroupScope = useToggleGroupScope(__scopeToolbar);
         const [value, setValue] = React.useState(props.value)
         return (
@@ -193,26 +193,30 @@ export const ToolbarToggleGroup = React.forwardRef(
                 }}
                 value={value}
 
-                children={props.children.map((child, index) => {
+                children={Array.isArray(props.children) ? props.children.map((child, index) => {
                     return React.cloneElement(child, {
                         selected: child.props.value == value && !!selectable,
                         key: `toggle-group-item-${index}`
                     })
+                }) : React.cloneElement(props.children, {
+                    selected: props.children.props.value == value && !!selectable,
+                    key: `toggle-group-item-${0}`
                 })}
+                type='single'
             />
         );
     }
 );
 
-ToolbarToggleGroup.displayName = TOGGLE_GROUP_NAME;
+ToolbarButtonGroup.displayName = BUTTON_GROUP_NAME;
 
 /* -------------------------------------------------------------------------------------------------
  * ToolbarToggleItem
  * -----------------------------------------------------------------------------------------------*/
 
-const TOGGLE_BUTTON_NAME = 'ToolbarToggleButton';
+const BUTTON_GROUP_BUTTON_NAME = 'ButtonGroupButton';
 
-export const ToolbarToggleButton = React.forwardRef(
+const ToolbarButtonGroupButton = React.forwardRef(
     (props, forwardedRef) => {
         const { __scopeToolbar, ...toggleItemProps } = props;
         const toggleGroupScope = useToggleGroupScope(__scopeToolbar);
@@ -228,8 +232,8 @@ export const ToolbarToggleButton = React.forwardRef(
     }
 );
 
-const TOGGLE_ICON_BUTTON_NAME = 'ToolbarToggleIconButton';
-export const ToolbarToggleIconButton = React.forwardRef(
+const BUTTON_GROUP_ICON_BUTTON_NAME = 'ToolbarButtonGroupIconButton';
+const ToolbarButtonGroupIconButton = React.forwardRef(
     (props, forwardedRef) => {
         const { __scopeToolbar, ...toggleItemProps } = props;
         const toggleGroupScope = useToggleGroupScope(__scopeToolbar);
@@ -245,11 +249,14 @@ export const ToolbarToggleIconButton = React.forwardRef(
     }
 );
 
-ToolbarToggleButton.displayName = TOGGLE_BUTTON_NAME;
-ToolbarToggleIconButton.displayName = TOGGLE_ICON_BUTTON_NAME;
+ToolbarButtonGroupButton.displayName = BUTTON_GROUP_BUTTON_NAME;
+ToolbarButtonGroupIconButton.displayName = BUTTON_GROUP_ICON_BUTTON_NAME;
 
-/* -------------------------------------------------------------------------------------------------
- * ToolbarButtonGroup
- * -----------------------------------------------------------------------------------------------*/
+ToolbarButtonGroup.Button = ToolbarButtonGroupButton
+ToolbarButtonGroup.IconButton = ToolbarButtonGroupIconButton
+Toolbar.ButtonGroup = ToolbarButtonGroup
+Toolbar.Button = ToolbarButton
+Toolbar.TextInput = ToolbarTextField
+Toolbar.Separator = ToolbarSeparator
 
-
+export default Toolbar

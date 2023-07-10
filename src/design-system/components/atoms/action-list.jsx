@@ -28,7 +28,7 @@ export const ActionButton = ({
             <LinkComponent
                 to={href}
                 className={classnames(
-                    "w-[inherit] rounded border bodyMd flex gap-1 items-center justify-between cursor-pointer outline-none border-none px-4 py-2 ring-offset-1 focus-visible:ring-2 focus:ring-border-focus",
+                    "w-[inherit] border bodyMd flex gap-1 items-center justify-between cursor-pointer outline-none border-none px-4 py-2 ring-offset-1 focus-visible:ring-2 focus:ring-border-focus",
                     {
                         "text-text-primary bodyMd-medium": active,
                         "text-text-disabled": disabled,

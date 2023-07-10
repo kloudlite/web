@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { useEffect, useId, useState } from 'react';
-import * as RG from '@radix-ui/react-radio-group';
+import * as RadioGroupPrimitive from '@radix-ui/react-radio-group';
 import { cn } from "../utils";
 
 
@@ -10,7 +10,7 @@ const RadioGroupItem = (props) => {
     {
       "cursor-pointer": !props.disabled
     })}>
-    <RG.Item
+    <RadioGroupPrimitive.Item
       className={cn("w-4 h-4 outline-none rounded-full border ring-border-focus ring-offset-1 focus:ring-2 transition-all flex items-center justify-center border-border-default",
         {
           "hover:bg-surface-hovered": !props.disabled,
@@ -21,7 +21,7 @@ const RadioGroupItem = (props) => {
       id={id}
       disabled={props.disabled}
     >
-      <RG.Indicator
+      <RadioGroupPrimitive.Indicator
         className={cn(
           "block w-2 h-2 rounded-full",
           {
@@ -30,7 +30,7 @@ const RadioGroupItem = (props) => {
           },
         )}
       />
-    </RG.Item>
+    </RadioGroupPrimitive.Item>
     {props.label && <label
       className={cn({
         "text-text-disabled": props.disabled,
@@ -48,14 +48,14 @@ export const RadioGroup = (props) => {
   useEffect(() => {
     if (props.onChange) props.onChange(value)
   }, [value])
-  return <RG.Root className="flex flex-col gap-y-3" value={value} aria-label={props.label} disabled={props.disabled}
+  return <RadioGroupPrimitive.Root className="flex flex-col gap-y-3" value={value} aria-label={props.label} disabled={props.disabled}
     onValueChange={(e) => {
       setValue(e);
       console.log(e);
     }}>
     <span className="bodyMd-medium">{props.label}</span>
     {props.items && props.items.map((item) => <RadioGroupItem label={item.label} value={item.value} disabled={item.disabled || props.disabled} key={item.key} />)}
-  </RG.Root>
+  </RadioGroupPrimitive.Root>
 }
 
 RadioGroup.propTypes = {

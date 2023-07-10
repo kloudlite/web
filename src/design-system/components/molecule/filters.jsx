@@ -1,15 +1,9 @@
 import { Search, SearchFill } from "@jengaicons/react"
-import { Abc, TextInput } from "../atoms/input"
+import { TextInput } from "../atoms/input"
 import PropTypes from 'prop-types';
 import { createRef, useRef, useState } from "react";
-import {
-    Toolbar,
-    ToolbarButton,
-    ToolbarTextField,
-    ToolbarToggleButton,
-    ToolbarToggleGroup,
-    ToolbarToggleIconButton
-} from "../atoms/toolbar"
+import Toolbar from "../atoms/toolbar";
+
 
 
 export const Filters = ({ onFilterTextChange, filterActions }) => {
@@ -96,14 +90,11 @@ export const Filters = ({ onFilterTextChange, filterActions }) => {
 
         <div>
             <Toolbar>
-                <ToolbarTextField placeholder={"Hello"} prefixIcon={Search} />
-                <ToolbarToggleGroup type={"single"} value={"hi"} onClick={(e) => { console.log(e); }}>
-                    <ToolbarToggleButton value={"hi"} content="hi" />
-                    <ToolbarToggleButton value={"hi1"} content="hi1" />
-                    <ToolbarToggleButton value={"hi2"} content="hi2" />
-                    <ToolbarToggleIconButton value={"hi3"} icon={SearchFill} />
-                </ToolbarToggleGroup>
-                <ToolbarButton />
+                <Toolbar.TextInput placeholder="Filter" prefixIcon={Search} />
+                <Toolbar.ButtonGroup selectable value={"hello"}>
+                    {/* <Toolbar.ButtonGroup.Button content={"hello"} value={"hello"} /> */}
+                    <Toolbar.ButtonGroup.Button content={"hi"} value={"hi"} />
+                </Toolbar.ButtonGroup>
             </Toolbar>
         </div>
 

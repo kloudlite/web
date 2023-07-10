@@ -153,7 +153,7 @@ export default {
                     "subdued": "#dbeafe",
                     "hovered": "#2563eb",
                     "pressed": "#1D4ED8",
-                    "selected": "#BFDBFE",
+                    "selected": "#DBEAFE",
                 },
                 "tertiary": {
                     "default": "#3F3F46",

@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
-import classNames from "classnames";
 import { useState, useEffect, useId } from 'react';
-import * as SW from '@radix-ui/react-switch';
+import * as SwitchPrimitive from '@radix-ui/react-switch';
+import { cn } from "../utils";
 
 export const Switch = (props) => {
 
@@ -14,8 +14,8 @@ export const Switch = (props) => {
 
   return (
     <div className='flex gap-2 items-center w-fit'>
-      <SW.Root
-        className={classNames(
+      <SwitchPrimitive.Root
+        className={cn(
           "transition-all w-12 rounded-full border flex items-center p-0.5 cursor-pointer",
           "ring-border-focus ring-offset-1 focus:ring-2",
           {
@@ -32,12 +32,12 @@ export const Switch = (props) => {
         disabled={props.disabled}
         onCheckedChange={(e) => { setChecked(e) }}
       >
-        <SW.Thumb
-          className={classNames(
+        <SwitchPrimitive.Thumb
+          className={cn(
             "group rounded-full translate-x-0 transition-all duration-200 data-[state=checked]:translate-x-full",
           )}
         >
-          <svg width="21" height="21" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" className={classNames(
+          <svg width="21" height="21" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" className={cn(
             {
               "group-data-[disabled]:fill-icon-disabled": props.disabled
             },
@@ -48,11 +48,11 @@ export const Switch = (props) => {
             <circle cx="11" cy="11" r="10.5" />
           </svg>
 
-        </SW.Thumb>
+        </SwitchPrimitive.Thumb>
 
-      </SW.Root>
+      </SwitchPrimitive.Root>
       {props.label && <label
-        className={classNames({
+        className={cn({
           "text-text-disabled": props.disabled,
           "text-text-default cursor-pointer": !props.disabled,
         }, "bodyMd-medium select-none")}
@@ -62,9 +62,6 @@ export const Switch = (props) => {
     </div>
   );
 }
-
-
-
 
 Switch.propTypes = {
   onChange: PropTypes.func,
