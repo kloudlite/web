@@ -172,7 +172,6 @@ export const TextInputBase = forwardRef((props, ref) => {
             tabIndex={-1}
             onClick={() => {
               setVal('')
-              console.log('button');
             }}
             className={cn('outline-none flex items-center rounded justify-center',
               {
@@ -186,7 +185,6 @@ export const TextInputBase = forwardRef((props, ref) => {
             tabIndex={-1}
             onClick={() => {
               setType((prev) => prev == "text" ? "password" : "text")
-              console.log('button');
             }}
             className={cn('outline-none flex items-center rounded justify-center',
               {
@@ -207,15 +205,6 @@ export const TextInputBase = forwardRef((props, ref) => {
       )}
     </div>
   );
-})
-export const Xyz = forwardRef(({ name }, ref) => {
-  useEffect(() => {
-    console.log(ref);
-  }, [ref.current])
-  return <div ref={ref}>{name},{JSON.stringify(ref.current?.innerHTML)}</div>
-})
-export const Abc = forwardRef(({ name = "hi", ...etc }, ref) => {
-  return <Xyz name={name} ref={ref} />
 })
 
 export const TextInput = forwardRef((props, ref) => {
