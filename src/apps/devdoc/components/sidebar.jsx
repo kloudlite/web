@@ -50,10 +50,11 @@ export const Sidebar = ()=>{
     return <BaseSidebar items={[
         {
             label: "Introduction",
+            href:"/introduction",
             items: [
                 {
                     label: "What is Kloudlite?",
-                    href:"/what-is-kloudlite",
+                    href:"/introduction/what-is-kloudlite",
                 },
                 {
                     label: "How Kloudlite Works?",
@@ -65,6 +66,7 @@ export const Sidebar = ()=>{
                 },
                 {
                     label: "Getting Started",
+                    href: "/getting-started",
                     items: [
                         {
                             label: "Create Cluster",
@@ -96,9 +98,11 @@ export const Sidebar = ()=>{
         },
         {
             label: "Usage",
+            href: "/usage",
             items: [
                 {
                     label: "Interfaces",
+                    href: "/interfaces",
                     items:[
                         {
                             label: "Web",
@@ -116,6 +120,7 @@ export const Sidebar = ()=>{
                 },
                 {
                     label: "For Developers",
+                    href: "/for-developers",
                     items: [
                         {
                             label: "New Remote Local",
@@ -129,6 +134,7 @@ export const Sidebar = ()=>{
                 },
                 {
                     label: "For Platform Engineers",
+                    href: "/for-platform-engineers",
                     items: [
                         {
                             label: "Clusters",
@@ -160,6 +166,7 @@ export const Sidebar = ()=>{
         },
         {
             label: "Security & Compliance",
+            href: "/security-and-compliance",
             items: [
                 {
                     label:"Backup & Restore",
@@ -181,6 +188,7 @@ export const Sidebar = ()=>{
         },
         {
             label: "Resources",
+            href: "/resources",
             items:[
                 {
                     label: "API Reference",
