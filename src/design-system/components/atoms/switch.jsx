@@ -17,7 +17,7 @@ export const Switch = (props) => {
       <SwitchPrimitive.Root
         className={cn(
           "transition-all w-12 rounded-full border flex items-center p-0.5 cursor-pointer",
-          "ring-border-focus ring-offset-1 focus:ring-2",
+          "ring-border-focus ring-offset-1 focus:ring-2 outline-none",
           {
             "data-[state=unchecked]:bg-surface-default data-[state=unchecked]:border-border-default": !props.disabled
           },

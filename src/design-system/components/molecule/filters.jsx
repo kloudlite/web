@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { createRef, useRef, useState } from "react";
 import Toolbar from "../atoms/toolbar";
 import ChipGroup from "../atoms/chip"
+import { OptionList, OptionListGroup } from "../atoms/dropdown";
+import { Button } from "../atoms/button";
 
 
 
@@ -17,10 +19,6 @@ export const Filters = ({ onFilterTextChange, filterActions }) => {
     return <div className="flex flex-row items-center gap-2 w-full flex-wrap">
 
         {filterActions && filterActions}
-        {/* <ToggleGroup value={"left"}>
-            <ToggleGroup.Button content={"Hello world"} value={"left"} />
-            <ToggleGroup.Button content={"Hello world"} value={"right"} />
-        </ToggleGroup>
 
         <OptionListGroup>
             <OptionList
@@ -28,11 +26,8 @@ export const Filters = ({ onFilterTextChange, filterActions }) => {
                 filter
                 onFilterChange={(e) => { console.log(e) }}
             >
-                <OptionList.CheckboxItem checked={helloWorld} onValueChange={setHelloworld}>
-                    Hello world
-                </OptionList.CheckboxItem>
                 <OptionList.Separator />
-                <OptionList.RadioGroup value={selected} onValueChange={setSelected}>
+                <OptionList.RadioGroup>
                     <OptionList.RadioGroupItem value="hello">
                         Hello
                     </OptionList.RadioGroupItem>
@@ -44,9 +39,6 @@ export const Filters = ({ onFilterTextChange, filterActions }) => {
             <OptionList
                 trigger={<Button variant="outline" content="Menu" />}
             >
-                <OptionList.CheckboxItem>
-                    Hello world
-                </OptionList.CheckboxItem>
                 <OptionList.Separator />
                 <OptionList.RadioGroup value="hi">
                     <OptionList.RadioGroupItem value="hello">
@@ -62,9 +54,6 @@ export const Filters = ({ onFilterTextChange, filterActions }) => {
         <OptionList
             trigger={<Button variant="outline" content="Menu" />}
         >
-            <OptionList.CheckboxItem>
-                Hello world
-            </OptionList.CheckboxItem>
             <OptionList.Separator />
             <OptionList.RadioGroup value="hi">
                 <OptionList.RadioGroupItem value="hello">
@@ -76,19 +65,17 @@ export const Filters = ({ onFilterTextChange, filterActions }) => {
             </OptionList.RadioGroup>
         </OptionList>
 
-        <ToastProvider>
+        {/* <ToastProvider>
             <Toast show />
             <Toast show />
             <Toast show />
         </ToastProvider> */}
 
-        {/* <Popover /> */}
-
         <div>
             <Toolbar>
                 <Toolbar.TextInput placeholder="Filter" prefixIcon={Search} />
                 <Toolbar.ButtonGroup selectable value={"hello"}>
-                    {/* <Toolbar.ButtonGroup.Button content={"hello"} value={"hello"} /> */}
+                    <Toolbar.ButtonGroup.Button content={"hello"} value={"hello"} />
                     <Toolbar.ButtonGroup.Button content={"hi"} value={"hi"} />
                 </Toolbar.ButtonGroup>
             </Toolbar>
