@@ -24,7 +24,7 @@ export const ErrorTextArea = {
     label: "Default",
     value: "Hello",
     error: true,
-    extra: <Button label="Link" variant={'primary-plain'} />,
+    extra: <Button content="Link" variant={'primary-plain'} />,
     message: <span className="flex flex-row items-center gap-x-1"><Info size={16} color="currentColor" /> Required</span>
   }
 }

@@ -2,9 +2,10 @@ import { Search, SearchFill } from "@jengaicons/react"
 import PropTypes from 'prop-types';
 import { createRef, useRef, useState } from "react";
 import Toolbar from "../atoms/toolbar";
-import ChipGroup from "../atoms/chip"
-import { OptionList, OptionListGroup } from "../atoms/dropdown";
+import ChipGroup from "../atoms/chip-group"
+import OptionList from "../atoms/option-list";
 import { Button } from "../atoms/button";
+import ButtonGroup from "../atoms/button-group";
 
 
 
@@ -20,51 +21,6 @@ export const Filters = ({ onFilterTextChange, filterActions }) => {
 
         {filterActions && filterActions}
 
-        <OptionListGroup>
-            <OptionList
-                trigger={<Button variant="outline" content="Menu" />}
-                filter
-                onFilterChange={(e) => { console.log(e) }}
-            >
-                <OptionList.Separator />
-                <OptionList.RadioGroup>
-                    <OptionList.RadioGroupItem value="hello">
-                        Hello
-                    </OptionList.RadioGroupItem>
-                    <OptionList.RadioGroupItem value="hi">
-                        Hi
-                    </OptionList.RadioGroupItem>
-                </OptionList.RadioGroup>
-            </OptionList>
-            <OptionList
-                trigger={<Button variant="outline" content="Menu" />}
-            >
-                <OptionList.Separator />
-                <OptionList.RadioGroup value="hi">
-                    <OptionList.RadioGroupItem value="hello">
-                        Hello
-                    </OptionList.RadioGroupItem>
-                    <OptionList.RadioGroupItem value="hi">
-                        Hi
-                    </OptionList.RadioGroupItem>
-                </OptionList.RadioGroup>
-            </OptionList>
-        </OptionListGroup>
-
-        <OptionList
-            trigger={<Button variant="outline" content="Menu" />}
-        >
-            <OptionList.Separator />
-            <OptionList.RadioGroup value="hi">
-                <OptionList.RadioGroupItem value="hello">
-                    Hello
-                </OptionList.RadioGroupItem>
-                <OptionList.RadioGroupItem value="hi">
-                    Hi
-                </OptionList.RadioGroupItem>
-            </OptionList.RadioGroup>
-        </OptionList>
-
         {/* <ToastProvider>
             <Toast show />
             <Toast show />
@@ -74,12 +30,23 @@ export const Filters = ({ onFilterTextChange, filterActions }) => {
         <div>
             <Toolbar>
                 <Toolbar.TextInput placeholder="Filter" prefixIcon={Search} />
-                <Toolbar.ButtonGroup selectable value={"hello"}>
+                <Toolbar.ButtonGroup value={"hello"} selectable>
                     <Toolbar.ButtonGroup.Button content={"hello"} value={"hello"} />
                     <Toolbar.ButtonGroup.Button content={"hi"} value={"hi"} />
+                    <OptionList>
+                        <OptionList.Trigger>
+                            <Toolbar.ButtonGroup.Button content={"hwllo world"} />
+                        </OptionList.Trigger>
+                        <OptionList.Content>
+                            <OptionList.CheckboxItem>
+                                hello
+                            </OptionList.CheckboxItem>
+                        </OptionList.Content>
+                    </OptionList>
                 </Toolbar.ButtonGroup>
             </Toolbar>
         </div>
+
         <div>
             <ChipGroup onRemove={(e) => {
                 setChips(chips.filter((c) => c.id != e))
@@ -87,6 +54,21 @@ export const Filters = ({ onFilterTextChange, filterActions }) => {
                 {chips.map((chip, index) => <ChipGroup.Chip key={index} id={chip.id} label={chip.label} type={chip.type} />)}
             </ChipGroup>
         </div>
+
+        <ButtonGroup>
+            <ButtonGroup.Button content={"hello"} />
+            <ButtonGroup.Button content={"hello"} />
+            <OptionList>
+                <OptionList.Trigger>
+                    <ButtonGroup.Button content={"hwllo world"} />
+                </OptionList.Trigger>
+                <OptionList.Content>
+                    <OptionList.CheckboxItem>
+                        hello
+                    </OptionList.CheckboxItem>
+                </OptionList.Content>
+            </OptionList>
+        </ButtonGroup>
     </div>
 }
 

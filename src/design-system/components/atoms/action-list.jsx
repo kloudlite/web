@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import classnames from "classnames";
 import { LayoutGroup, motion } from 'framer-motion';
 import { DefaultLinkComp } from './_link';
+import { cn } from '../utils';
 
 export const ActionButton = ({
     label,
@@ -18,7 +18,7 @@ export const ActionButton = ({
 }) => {
 
     return (
-        <div className={classnames("w-full flex flex-row gap-x-1")}>
+        <div className={cn("w-full flex flex-row gap-x-1")}>
             {
                 active && <motion.div layoutId='line' className='w-0.5 bg-icon-primary rounded'></motion.div>
             }
@@ -27,7 +27,7 @@ export const ActionButton = ({
             }
             <LinkComponent
                 to={href}
-                className={classnames(
+                className={cn(
                     "w-[inherit] rounded border bodyMd flex gap-1 items-center justify-between cursor-pointer outline-none border-none px-4 py-2 ring-offset-1 focus-visible:ring-2 focus:ring-border-focus",
                     {
                         "text-text-primary bodyMd-medium": active,
@@ -67,7 +67,7 @@ export const ActionList = ({ items, value, onChange, layoutId, LinkComponent }) 
         if (onChange) onChange(active)
     }, [active])
     return (
-        <div className={classnames('flex flex-col gap-y-1')}>
+        <div className={cn('flex flex-col gap-y-1')}>
             <LayoutGroup id={layoutId}>
                 {items.map((child, index) => {
                     return <ActionButton

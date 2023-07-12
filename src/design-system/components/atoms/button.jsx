@@ -1,8 +1,8 @@
 import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import classnames from "classnames";
 import { DefaultLinkComp } from './_link';
-import { BounceIt } from '../bounce-it';
+import { motion } from 'framer-motion';
+import { cn } from '../utils';
 
 export const ButtonStyles = [
   'outline',
@@ -64,10 +64,12 @@ export const ButtonBase = forwardRef(({
   let Prefix = prefix
 
   return (
-    <Component
+    <motion.button
+      initial={{ scale: 1 }}
+      whileTap={{ scale: 0.99 }}
       ref={ref}
       type={type}
-      className={classnames(
+      className={cn(
         {
           "w-full": block,
           "w-fit": !block
@@ -149,7 +151,7 @@ export const ButtonBase = forwardRef(({
       {prefix && <Prefix size={iconOnly ? 20 : 16} color="currentColor" />}
       {!iconOnly && content}
       {suffix && !iconOnly && <Suffix size={16} color="currentColor" />}
-    </Component>
+    </motion.button>
   );
 })
 
