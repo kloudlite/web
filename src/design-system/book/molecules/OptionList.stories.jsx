@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowUp, InfoFill, SearchFill } from "@jengaicons/react";
+import { ArrowDown, ArrowUp, Search } from "@jengaicons/react";
 import OptionList from "../../components/atoms/option-list";
 import { Button } from "../../components/atoms/button";
 import { useState } from "react";
@@ -21,7 +21,7 @@ const OptionListHook = () => {
             <Button content={"menu"} variant={"basic"} selected={open} />
         </OptionList.Trigger>
         <OptionList.Content >
-            <OptionList.TextInput placeholder={"Filter"} prefixIcon={SearchFill} />
+            <OptionList.TextInput placeholder={"Filter"} prefixIcon={Search} />
             {/* <OptionList.Separator /> */}
             <OptionList.Item>
                 This is test Item 1
@@ -73,7 +73,7 @@ const ProfileOptionListHook = () => {
             <Profile name="this is profile" />
         </OptionList.Trigger>
         <OptionList.Content >
-            <OptionList.TextInput placeholder={"Filter"} prefixIcon={SearchFill} />
+            <OptionList.TextInput placeholder={"Filter"} prefixIcon={Search} />
             {/* <OptionList.Separator /> */}
             <OptionList.Item>
                 This is test Item 1

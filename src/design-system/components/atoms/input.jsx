@@ -101,10 +101,10 @@ export const TextInputBase = forwardRef((props, ref) => {
   let { prefix: Prefix, suffix: Suffix } = props
   const { prefixIcon: PrefixIcon, suffixIcon: SuffixIcon } = props
   if (PrefixIcon) {
-    Prefix = <PrefixIcon size={20} color={"currentColor"} />
+    Prefix = <PrefixIcon size={16} color={"currentColor"} />
   }
   if (SuffixIcon) {
-    Suffix = <SuffixIcon size={20} color={"currentColor"} />
+    Suffix = <SuffixIcon size={16} color={"currentColor"} />
   }
 
   const Component = props.component || "input"
@@ -178,7 +178,7 @@ export const TextInputBase = forwardRef((props, ref) => {
               {
                 "cursor-default": props.disabled
               })}>
-            <XCircleFill size={20} color="currentColor" />
+            <XCircleFill size={16} color="currentColor" />
           </button>
         }
         {
