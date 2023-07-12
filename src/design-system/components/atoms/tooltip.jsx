@@ -1,26 +1,26 @@
-import React, { useState } from 'react';
-import * as T from '@radix-ui/react-tooltip';
+import { useState } from 'react';
+import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 import { AnimatePresence, motion } from 'framer-motion';
 
 
 export const TooltipProvider = ({ delayDuration = 0, children }) => (
-    <T.Provider delayDuration={delayDuration}>
+    <TooltipPrimitive.Provider delayDuration={delayDuration}>
         {children}
-    </T.Provider>
+    </TooltipPrimitive.Provider>
 )
 
 export const Tooltip = ({ children, content }) => {
     const [open, setOpen] = useState(false)
     return (
-        <T.Root open={open} onOpenChange={setOpen}>
-            <T.Trigger asChild>
+        <TooltipPrimitive.Root open={open} onOpenChange={setOpen}>
+            <TooltipPrimitive.Trigger asChild>
                 {children}
-            </T.Trigger>
+            </TooltipPrimitive.Trigger>
 
             <AnimatePresence>
                 {open &&
-                    <T.Portal forceMount>
-                        <T.Content
+                    <TooltipPrimitive.Portal forceMount>
+                        <TooltipPrimitive.Content
                             asChild
                             sideOffset={5}
                         >
@@ -33,13 +33,13 @@ export const Tooltip = ({ children, content }) => {
                             >
                                 {content}
                             </motion.div>
-                        </T.Content>
-                    </T.Portal>
+                        </TooltipPrimitive.Content>
+                    </TooltipPrimitive.Portal>
                 }
 
             </AnimatePresence>
 
-        </T.Root>
+        </TooltipPrimitive.Root>
     );
 };
 

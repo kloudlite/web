@@ -54,11 +54,15 @@ const ChipBase = forwardRef(({ id, label, disabled, type = ChipTypes.BASIC, onCl
                 <RovingFocusGroup.Item asChild focusable active={active}>
                     <button
                         disabled={disabled}
-                        onClick={() => {
+                        onClick={(e) => {
                             if (onClose)
                                 onClose(id)
                         }}
                         onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                                e.stopPropagation()
+                                e.preventDefault()
+                            }
                             if (e.key === "Backspace" || e.key === "Delete") {
                                 if (onClose)
                                     onClose(id)
@@ -76,7 +80,7 @@ const ChipBase = forwardRef(({ id, label, disabled, type = ChipTypes.BASIC, onCl
     );
 })
 
-export const Chip = ({ id, label, disabled, type = ChipTypes.BASIC, prefix, onClick, onClose, active = false }) => {
+const Chip = ({ id, label, disabled, type = ChipTypes.BASIC, prefix, onClick, onClose, active = false }) => {
 
     let Component = "div"
     if (type === ChipTypes.CLICKABLE) {
@@ -126,7 +130,7 @@ const ChipGroup = ({ onClick, onRemove, children }) => {
 
 ChipGroup.Chip = Chip
 ChipGroup.ChipType = ChipTypes
-export default ChipGroup
+
 
 Chip.propTypes = {
     id: PropTypes.any.isRequired,
@@ -150,8 +154,7 @@ ChipGroup.propTypes = {
 }
 
 ChipGroup.defaultProps = {
-    children: <>
-        <ChipGroup.Chip id={0} label='hello' />
-        <ChipGroup.Chip id={1} label='hi' type={ChipGroup.ChipType.REMOVABLE} />
-    </>
+
 }
+
+export default ChipGroup

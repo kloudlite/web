@@ -160,6 +160,7 @@ export const TextInputBase = forwardRef((props, ref) => {
           ref={ref}
           onKeyDown={props.onKeyDown}
           autoComplete={props.autoComplete}
+        // {...tempProps}
         />
         {Suffix && <div className={cn("pl-2 bodyMd",
           {

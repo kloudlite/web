@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { XFill } from '@jengaicons/react';
-import { Button } from '../atoms/button.jsx';
+import { Button, IconButton } from '../atoms/button.jsx';
 import * as Dialog from '@radix-ui/react-dialog';
 import { useEffect, useState } from 'react';
 
@@ -15,8 +15,7 @@ export const Popup = ({ header, show, onClose, secondaryAction, action, children
                 <Dialog.Title className="headingMd p-5 border-b border-border-default flex flex-row items-center justify-between">
                     {header}
                     <Dialog.Close asChild>
-
-                        <Button variant={'plain'} size='small' onClick={onClose} content={<XFill size={20} />} />
+                        <IconButton onClick={onClose} icon={XFill} variant={"plain"} />
                     </Dialog.Close>
                 </Dialog.Title>
                 <div className="p-5 bodyMd">{children}</div>

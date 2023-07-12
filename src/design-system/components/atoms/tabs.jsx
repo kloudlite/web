@@ -1,20 +1,20 @@
 import { useState } from "react"
 import { LayoutGroup } from "framer-motion"
 import { useEffect } from "react";
-import classNames from "classnames";
 import { motion } from "framer-motion";
 import PropTypes from "prop-types";
 import { DefaultLinkComp } from './_link';
+import { cn } from "../utils";
 
 
 export const NavTab = ({ href, label, active, fitted, onClick, LinkComponent = DefaultLinkComp }) => {
 
-  return <div className={classNames("outline-none flex flex-col relative group bodyMd-medium hover:text-text-default active:text-text-default ",
+  return <div className={cn("outline-none flex flex-col relative group bodyMd-medium hover:text-text-default active:text-text-default ",
     {
       "text-text-default": active,
       "text-text-soft": !active
     })}>
-    <LinkComponent onClick={onClick} to={href} className={classNames("outline-none flex flex-col rounded ring-offset-1 focus-visible:ring-2 focus-visible:ring-border-focus",
+    <LinkComponent onClick={onClick} to={href} className={cn("outline-none flex flex-col rounded ring-offset-1 focus-visible:ring-2 focus-visible:ring-border-focus",
       {
         "p-4": !fitted,
         "pt-2 pb-3": fitted,
@@ -22,7 +22,7 @@ export const NavTab = ({ href, label, active, fitted, onClick, LinkComponent = D
       {label}
     </LinkComponent>
     {
-      active && <motion.div layoutId="underline" className={classNames("h-1 bg-surface-primary-pressed z-10 absolute bottom-0 w-full")}></motion.div>
+      active && <motion.div layoutId="underline" className={cn("h-1 bg-surface-primary-pressed z-10 absolute bottom-0 w-full")}></motion.div>
     }
     <div className="h-1 group-hover:bg-border-default group-active:bg-border-tertiary bg-none transition-all absolute bottom-0 w-full z-0"></div>
   </div>

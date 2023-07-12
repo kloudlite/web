@@ -1,11 +1,11 @@
-import classNames from "classnames"
 import { Button } from "../atoms/button"
 import PropTypes from 'prop-types';
+import { cn } from "../utils";
 
 export const EmptyState = ({ image, heading, children, footer, action, secondaryAction }) => {
     return (
         <div className="flex flex-col items-center shadow-card border border-border-default rounded">
-            <div className={classNames("flex flex-col items-center pt-20 pb-5 px-5")}>
+            <div className={cn("flex flex-col items-center pt-20 pb-5 px-5")}>
                 {image ?
                     <img src={image} className="max-h-43 max-w-37" />
                     : <div className="h-43 w-37 bg-surface-hovered"></div>}
