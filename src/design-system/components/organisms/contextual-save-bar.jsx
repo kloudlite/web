@@ -18,8 +18,8 @@ export const ContextualSaveBar = ({ logo, logoWidth, message, saveAction, discar
                 <div></div>
             </>}
             <div className="gap-x-2 flex flex-row items-center">
-                {discardAction && <Button label="Discard" onClick={discardAction} variant={'secondary-outline'} />}
-                {saveAction && <Button label="Save" onClick={saveAction} variant={'basic'} />}
+                {discardAction && <Button content="Discard" onClick={discardAction} variant={'secondary-outline'} />}
+                {saveAction && <Button content="Publish" onClick={saveAction} variant={'basic'} />}
             </div>
         </div>
     </div>

@@ -15,7 +15,7 @@ export const TopBar = ({ tab, actions, logo, fixed, fullwidth, linkComponent }) 
       {
         "max-w-[1184px]": !fullwidth
       })}>
-      <div className="flex flex-row items-center justify-between py-2">
+      <div className="flex flex-row items-center justify-between py-3">
         {logo && logo}
         <div className="flex flex-row items-center justify-center">
           {actions && actions}
