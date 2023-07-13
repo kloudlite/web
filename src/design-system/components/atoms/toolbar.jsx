@@ -46,7 +46,7 @@ const Toolbar = React.forwardRef(
                         dir={direction}
                         {...toolbarProps}
                         ref={forwardedRef}
-                        className={cn("flex flex-row gap-2")}
+                        className={cn("flex flex-row gap-lg")}
                     />
                 </RovingFocusGroup.Root>
             </ToolbarProvider>
@@ -228,7 +228,7 @@ const ToolbarButtonGroupButton = React.forwardRef(
         return (
             <ToolbarButtonBase asChild {...scope}>
                 <ToggleGroupPrimitive.Item {...toggleGroupScope} {...toggleItemProps} ref={forwardedRef} asChild>
-                    <Button variant={"basic"} {...props} noRounded className={cn("-ml-px first:rounded-l last:rounded-r first:ml-0")} {...extraProps} />
+                    <Button variant={"basic"} {...props} noRounded className={cn("-ml-xs first:rounded-l last:rounded-r first:ml-0")} {...extraProps} />
                 </ToggleGroupPrimitive.Item>
             </ToolbarButtonBase>
         );
@@ -248,7 +248,7 @@ const ToolbarButtonGroupIconButton = React.forwardRef(
         return (
             <ToolbarButtonBase asChild {...scope}>
                 <ToggleGroupPrimitive.Item {...toggleGroupScope} {...toggleItemProps} ref={forwardedRef} asChild>
-                    <IconButton variant={"basic"} {...props} noRounded className={cn("-ml-px first:rounded-l last:rounded-r first:ml-0")} {...extraProps} />
+                    <IconButton variant={"basic"} {...props} noRounded className={cn("-ml-xs first:rounded-l last:rounded-r first:ml-0")} {...extraProps} />
                 </ToggleGroupPrimitive.Item>
             </ToolbarButtonBase>
         );
