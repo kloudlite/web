@@ -26,7 +26,7 @@ export const NumberInput = (props) => {
 
   return <div className={cn("flex flex-col",
     {
-      "gap-1": props.label || props.extra
+      "gap-md": props.label || props.extra
     })}>
     <div className="flex">
       <label className="flex-1 select-none bodyMd-medium" htmlFor={id}>{props.label}</label>
@@ -47,8 +47,8 @@ export const NumberInput = (props) => {
         inputMode="numeric"
         className={cn(
           "outline-none flex-1",
-          "outline-none disabled:bg-surface-input disabled:text-text-disabled",
-          "rounded px-3 py-2 bodyMd ",
+          "outline-none disabled:bg-surface-basic-input disabled:text-text-disabled",
+          "rounded px-xl py-lg bodyMd ",
           "no-spinner"
         )}
         value={v}
@@ -72,14 +72,14 @@ export const NumberInput = (props) => {
           onClick={() => {
             setV((v) => v + step);
             ref.current.focus();
-          }} className={cn("flex-1 p-0.5 disabled:text-icon-disabled hover:bg-surface-hovered active:bg-surface-pressed")} ><CaretUpFill size={16} color="currentColor" /></button>
+          }} className={cn("flex-1 p-sm disabled:text-icon-disabled hover:bg-surface-basic-hovered active:bg-surface-basic-pressed")} ><CaretUpFill size={16} color="currentColor" /></button>
         <button
           aria-controls={id}
           aria-label={`Decrease ${props.label}`}
           tabIndex={-1}
           onClick={() => {
             setV((v) => v - step);
-          }} className={cn("flex-1 p-0.5 disabled:text-icon-disabled hover:bg-surface-hovered active:bg-surface-pressed")}><CaretDownFill size={16} color="currentColor" /></button>
+          }} className={cn("flex-1 p-sm disabled:text-icon-disabled hover:bg-surface-basic-hovered active:bg-surface-basic-pressed")}><CaretDownFill size={16} color="currentColor" /></button>
       </div>
     </div>
 
@@ -112,7 +112,7 @@ export const TextInputBase = forwardRef((props, ref) => {
   return (
     <div className={cn("flex flex-col",
       {
-        "gap-1": props.label || props.extra
+        "gap-md": props.label || props.extra
       },
       props.className
     )}>
@@ -120,18 +120,18 @@ export const TextInputBase = forwardRef((props, ref) => {
         <label className="flex-1 select-none bodyMd-medium" htmlFor={id}>{props.label}</label>
         <div className={cn(
           {
-            "h-6": props.label || props.extra
+            "h-4xl": props.label || props.extra
           }
         )}>{props.extra && cloneElement(props.extra)}</div>
       </div>
-      <div className={(cn("transition-all px-3 rounded border flex flex-row items-center relative ring-offset-1 focus-within:ring-2 focus-within:ring-border-focus ",
+      <div className={(cn("transition-all px-xl rounded border flex flex-row items-center relative ring-offset-1 focus-within:ring-2 focus-within:ring-border-focus ",
         {
           "text-text-critical bg-surface-critical-subdued border-border-critical": props.error,
-          "text-text-default border-border-default bg-surface-input": !props.error,
-          "text-text-disabled border-border-disabled bg-surface-input": props.disabled,
+          "text-text-default border-border-default bg-surface-basic-input": !props.error,
+          "text-text-disabled border-border-disabled bg-surface-basic-input": props.disabled,
           "pr-0": props.component != "input"
         }))}>
-        {Prefix && <div className={cn("pr-2 bodyMd",
+        {Prefix && <div className={cn("pr-lg bodyMd",
           {
             "text-text-strong": typeof (Prefix) !== "object" && !props.error && !props.disabled,
             "text-text-critical": props.error,
@@ -142,11 +142,11 @@ export const TextInputBase = forwardRef((props, ref) => {
           placeholder={props.placeholder}
           id={id}
           className={cn(
-            "outline-none disabled:bg-surface-input disabled:text-text-disabled flex-1",
-            "rounded py-2 bodyMd ",
+            "outline-none disabled:bg-surface-basic-input disabled:text-text-disabled flex-1",
+            "rounded py-lg bodyMd ",
             {
               "text-text-critical bg-surface-critical-subdued placeholder:text-critical-400": props.error,
-              "text-text-default bg-surface-input": !props.error
+              "text-text-default bg-surface-basic-input": !props.error
             }
           )}
           value={val}
@@ -160,9 +160,8 @@ export const TextInputBase = forwardRef((props, ref) => {
           ref={ref}
           onKeyDown={props.onKeyDown}
           autoComplete={props.autoComplete}
-        // {...tempProps}
         />
-        {Suffix && <div className={cn("pl-2 bodyMd",
+        {Suffix && <div className={cn("pl-lg bodyMd",
           {
             "text-text-critical": props.error,
             "text-text-strong": !props.error && !props.disabled,

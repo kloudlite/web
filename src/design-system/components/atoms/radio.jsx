@@ -11,9 +11,9 @@ const RadioGroupItem = (props) => {
       "cursor-pointer": !props.disabled
     })}>
     <RadioGroupPrimitive.Item
-      className={cn("w-4 h-4 outline-none rounded-full border ring-border-focus ring-offset-1 focus:ring-2 transition-all flex items-center justify-center border-border-default",
+      className={cn("w-2xl h-2xl outline-none rounded-full border ring-border-focus ring-offset-1 focus:ring-2 transition-all flex items-center justify-center border-border-default",
         {
-          "hover:bg-surface-hovered": !props.disabled,
+          "hover:bg-surface-basic-hovered": !props.disabled,
           "data-[state=checked]:border-border-primary": !props.disabled,
           "data-[disabled]:border-border-disabled": props.disabled
         })}
@@ -23,7 +23,7 @@ const RadioGroupItem = (props) => {
     >
       <RadioGroupPrimitive.Indicator
         className={cn(
-          "block w-2 h-2 rounded-full",
+          "block w-lg h-lg rounded-full",
           {
             "bg-icon-disabled": props.disabled,
             "bg-surface-primary-default": !props.disabled,
@@ -35,7 +35,7 @@ const RadioGroupItem = (props) => {
       className={cn({
         "text-text-disabled": props.disabled,
         "text-text-default cursor-pointer": !props.disabled,
-      }, "bodyMd-medium pl-2 select-none")}
+      }, "bodyMd-medium pl-lg select-none")}
       htmlFor={id}>
       {props.label}
     </label>}
@@ -48,7 +48,7 @@ export const RadioGroup = (props) => {
   useEffect(() => {
     if (props.onChange) props.onChange(value)
   }, [value])
-  return <RadioGroupPrimitive.Root className="flex flex-col gap-y-3" value={value} aria-label={props.label} disabled={props.disabled}
+  return <RadioGroupPrimitive.Root className="flex flex-col gap-y-xl" value={value} aria-label={props.label} disabled={props.disabled}
     onValueChange={(e) => {
       setValue(e);
       console.log(e);

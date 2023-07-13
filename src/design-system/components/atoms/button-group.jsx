@@ -8,20 +8,20 @@ import PropTypes from "prop-types";
 
 const Button = forwardRef((props, ref) => {
     return <ButtonGroupPrimitive.Item value={props.value} asChild ref={ref}>
-        <ButtonBase {...props} variant={'basic'} noRounded className={cn("-ml-px first:rounded-l last:rounded-r first:ml-0")} />
+        <ButtonBase {...props} variant={'basic'} noRounded className={cn("-ml-xs first:rounded-l last:rounded-r first:ml-0")} />
     </ButtonGroupPrimitive.Item>
 })
 
 const IconButton = forwardRef((props, ref) => {
     return <ButtonGroupPrimitive.Item value={props.value} asChild ref={ref}>
-        <ButtonBase {...props} variant={'basic'} iconOnly={true} prefix={props.icon} noRounded className={cn("-ml-px first:rounded-l last:rounded-r first:ml-0")} />
+        <ButtonBase {...props} variant={'basic'} iconOnly={true} prefix={props.icon} noRounded className={cn("-ml-xs first:rounded-l last:rounded-r first:ml-0")} />
     </ButtonGroupPrimitive.Item>
 })
 
 const ButtonGroup = ({ children, value = "", selectable = false, onValueChange, onClick }) => {
     const [v, setV] = useState(value)
     return <ButtonGroupPrimitive.Root
-        className="bg-surface-default rounded shadow-button flex flex-row w-fit"
+        className="bg-surface-basic-default rounded shadow-button flex flex-row w-fit"
         onClick={(e) => {
             if (onClick)
                 onClick(v)

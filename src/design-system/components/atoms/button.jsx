@@ -80,7 +80,7 @@ export const ButtonBase = forwardRef(({
         },
         "relative ring-offset-1",
         "outline-none shadow-button",
-        "flex flex-row gap-2 items-center justify-center",
+        "flex flex-row gap-lg items-center justify-center",
         "disabled:text-text-disabled",
         {
           ...(noRing ? {} : {
@@ -108,21 +108,21 @@ export const ButtonBase = forwardRef(({
           })
         },
         {
-          "bg-surface-default hover:bg-surface-hovered active:bg-surface-pressed disabled:bg-surface-default": variant === "basic",
-          "bg-surface-pressed hover:bg-surface-pressed active:bg-surface-pressed disabled:bg-surface-default": variant === "basic" && selected,
-          "bg-surface-primary-default hover:bg-surface-primary-hovered active:bg-surface-primary-pressed disabled:bg-surface-default": variant === "primary",
-          "bg-surface-secondary-default hover:bg-surface-secondary-hovered active:bg-surface-secondary-pressed disabled:bg-surface-default": variant === "secondary",
-          "bg-surface-critical-default hover:bg-surface-critical-hovered active:bg-surface-critical-pressed disabled:bg-surface-default": variant === "critical",
+          "bg-surface-basic-default hover:bg-surface-basic-hovered active:bg-surface-basic-pressed disabled:bg-surface-basic-default": variant === "basic",
+          "bg-surface-basic-pressed hover:bg-surface-basic-pressed active:bg-surface-basic-pressed disabled:bg-surface-basic-default": variant === "basic" && selected,
+          "bg-surface-primary-default hover:bg-surface-primary-hovered active:bg-surface-primary-pressed disabled:bg-surface-basic-default": variant === "primary",
+          "bg-surface-secondary-default hover:bg-surface-secondary-hovered active:bg-surface-secondary-pressed disabled:bg-surface-basic-default": variant === "secondary",
+          "bg-surface-critical-default hover:bg-surface-critical-hovered active:bg-surface-critical-pressed disabled:bg-surface-basic-default": variant === "critical",
           "bg-none hover:bg-surface-critical-subdued active:bg-surface-critical-subdued": variant === "critical-outline",
           "bg-none hover:bg-surface-primary-subdued active:bg-surface-primary-subdued": variant === "primary-outline",
           "bg-none hover:bg-surface-secondary-subdued active:bg-surface-secondary-subdued": variant === "secondary-outline",
-          "bg-none hover:bg-surface-hovered active:bg-surface-pressed": variant === "outline",
-          "bg-surface-pressed shadow-none hover:bg-surface-hovered active:bg-surface-pressed hover:shadow-button active:shadow-button": variant === "outline" && selected,
-          "bg-none shadow-none active:bg-surface-pressed active:shadow-button": variant === "plain" && !iconOnly,
+          "bg-none hover:bg-surface-basic-hovered active:bg-surface-basic-pressed": variant === "outline",
+          "bg-surface-basic-pressed shadow-none hover:bg-surface-basic-hovered active:bg-surface-basic-pressed hover:shadow-button active:shadow-button": variant === "outline" && selected,
+          "bg-none shadow-none active:bg-surface-basic-pressed active:shadow-button": variant === "plain" && !iconOnly,
           "bg-none shadow-none active:bg-surface-primary-pressed active:shadow-button": variant === "primary-plain",
           "bg-none shadow-none active:bg-surface-secondary-pressed active:shadow-button": variant === "secondary-plain",
           "bg-none shadow-none active:bg-surface-critical-pressed active:shadow-button": variant === "critical-plain",
-          "bg-none shadow-none hover:bg-surface-hovered active:bg-surface-pressed active:shadow-button": variant === "plain" && iconOnly,
+          "bg-none shadow-none hover:bg-surface-basic-hovered active:bg-surface-basic-pressed active:shadow-button": variant === "plain" && iconOnly,
         },
         {
           "text-text-default": (variant === "basic" || variant === "plain" || variant === "outline"),
@@ -139,9 +139,9 @@ export const ButtonBase = forwardRef(({
           "hover:underline": variant === "plain" || variant === "primary-plain" || variant === "critical-plain" || variant === "secondary-plain",
         },
         {
-          "px-4 py-2": !iconOnly && !(variant === "plain" || variant === "primary-plain" || variant === "critical-plain" || variant === "secondary-plain"),
-          "px-1 py-0.5": !iconOnly && (variant === "plain" || variant === "primary-plain" || variant === "critical-plain" || variant === "secondary-plain"),
-          "p-2": iconOnly
+          "px-2xl py-lg": !iconOnly && !(variant === "plain" || variant === "primary-plain" || variant === "critical-plain" || variant === "secondary-plain"),
+          "px-md py-sm": !iconOnly && (variant === "plain" || variant === "primary-plain" || variant === "critical-plain" || variant === "secondary-plain"),
+          "p-lg": iconOnly
         },
         className
       )}

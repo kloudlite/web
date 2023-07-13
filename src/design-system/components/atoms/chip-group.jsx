@@ -23,7 +23,7 @@ const ChipBase = forwardRef(({ id, label, disabled, type = ChipTypes.BASIC, onCl
         <Component
             {...extraProps}
             className={cn(
-                "rounded border bodySm-medium py-px flex items-center transition-all outline-none flex-row gap-1.5 ring-offset-1",
+                "rounded border bodySm-medium py-px flex items-center transition-all outline-none flex-row gap-md ring-offset-1",
                 "focus-within:ring-2 focus-within:ring-border-focus",
                 "w-fit",
                 {
@@ -38,14 +38,14 @@ const ChipBase = forwardRef(({ id, label, disabled, type = ChipTypes.BASIC, onCl
                     "border-border-disabled": disabled,
                 },
                 {
-                    "bg-surface-default": !disabled,
+                    "bg-surface-basic-default": !disabled,
                 },
                 {
-                    "pr-1 pl-2": type === ChipTypes.REMOVABLE,
-                    "px-2": type != ChipTypes.REMOVABLE
+                    "pr-md pl-lg py-md": type === ChipTypes.REMOVABLE,
+                    "px-lg py-md": type != ChipTypes.REMOVABLE
                 },
                 {
-                    "hover:bg-surface-hovered active:bg-surface-pressed focus-visible:ring-2 focus:ring-border-focus": type === ChipTypes.CLICKABLE,
+                    "hover:bg-surface-basic-hovered active:bg-surface-basic-pressed focus-visible:ring-2 focus:ring-border-focus": type === ChipTypes.CLICKABLE,
                 }
             )}
             onClick={onClick}
@@ -77,7 +77,7 @@ const ChipBase = forwardRef(({ id, label, disabled, type = ChipTypes.BASIC, onCl
                                     onClose(id)
                             }
                         }}
-                        className={cn('outline-none flex items-center rounded-sm ring-offset-0 justify-center hover:bg-surface-hovered active:bg-surface-pressed',
+                        className={cn('outline-none flex items-center rounded-sm ring-offset-0 justify-center hover:bg-surface-basic-hovered active:bg-surface-basic-pressed',
                             {
                                 "cursor-default": disabled
                             })}>
@@ -109,7 +109,7 @@ const ChipGroup = ({ onClick, onRemove, children }) => {
     return <RovingFocusGroup.Root loop ref={ref} onEntryFocus={(e) => {
         setActive(true)
     }} >
-        <div className={cn("flex flex-row gap-2")}>
+        <div className={cn("flex flex-row gap-lg")}>
             {Array.isArray(children)
                 ?
                 children.map((child, index) => cloneElement(child, {

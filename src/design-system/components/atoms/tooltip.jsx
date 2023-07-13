@@ -29,7 +29,7 @@ export const Tooltip = ({ children, content }) => {
                                 animate={{ y: 0, opacity: 1 }}
                                 exit={{ y: -2, opacity: 0 }}
                                 transition={{ duration: 0.3, ease: 'anticipate' }}
-                                className="bodySm-default text-text-default px-2 py-1 shadow-popover bg-surface-default rounded"
+                                className="bodySm-default text-text-default px-lg py-md shadow-popover bg-surface-basic-default rounded"
                             >
                                 {content}
                             </motion.div>
