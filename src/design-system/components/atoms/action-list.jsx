@@ -18,17 +18,17 @@ export const ActionButton = ({
 }) => {
 
     return (
-        <div className={cn("w-full flex flex-row gap-x-1")}>
+        <div className={cn("w-full flex flex-row gap-x-md")}>
             {
-                active && <motion.div layoutId='line' className='w-0.5 bg-icon-primary rounded'></motion.div>
+                active && <motion.div layoutId='line' className='w-sm bg-icon-primary rounded'></motion.div>
             }
             {
-                !active && <motion.div layoutId='line_1' className='w-0.5 bg-transparent rounded'></motion.div>
+                !active && <motion.div layoutId='line_1' className='w-sm bg-transparent rounded'></motion.div>
             }
             <LinkComponent
                 to={href}
                 className={cn(
-                    "w-[inherit] rounded border bodyMd flex gap-1 items-center justify-between cursor-pointer outline-none border-none px-4 py-2 ring-offset-1 focus-visible:ring-2 focus:ring-border-focus",
+                    "w-[inherit] rounded border bodyMd flex gap-md items-center justify-between cursor-pointer outline-none border-none px-2xl py-lg ring-offset-1 focus-visible:ring-2 focus:ring-border-focus",
                     {
                         "text-text-primary bodyMd-medium": active,
                         "text-text-disabled": disabled,
@@ -38,12 +38,12 @@ export const ActionButton = ({
                         "pointer-events-none": disabled,
                     },
                     {
-                        "bg-none hover:bg-surface-hovered active:bg-surface-pressed": !active && !disabled && !critical,
+                        "bg-none hover:bg-surface-basic-hovered active:bg-surface-basic-pressed": !active && !disabled && !critical,
                         "bg-none hover:bg-surface-critical-hovered active:bg-surface-critical-pressed": !active && !disabled && critical,
                         "bg-none": disabled,
                         "bg-surface-primary-selected": !critical && active,
                     })} onClick={!critical ? onClick : null}>
-                <div className='flex flex-row items-center gap-1'>
+                <div className='flex flex-row items-center gap-md'>
                     {
                         LeftIconComp && <LeftIconComp size={16} color="currentColor" />
                     }
@@ -53,7 +53,7 @@ export const ActionButton = ({
                     RightIconComp && <RightIconComp size={16} color="currentColor" />
                 }
                 {
-                    !RightIconComp && rightEmptyPlaceholder && <div className='w-4 h-4'></div>
+                    !RightIconComp && rightEmptyPlaceholder && <div className='w-2xl h-2xl'></div>
                 }
             </LinkComponent>
         </div>
@@ -67,7 +67,7 @@ export const ActionList = ({ items, value, onChange, layoutId, LinkComponent }) 
         if (onChange) onChange(active)
     }, [active])
     return (
-        <div className={cn('flex flex-col gap-y-1')}>
+        <div className={cn('flex flex-col gap-y-md')}>
             <LayoutGroup id={layoutId}>
                 {items.map((child, index) => {
                     return <ActionButton

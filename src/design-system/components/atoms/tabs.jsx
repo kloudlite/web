@@ -16,15 +16,15 @@ export const NavTab = ({ href, label, active, fitted, onClick, LinkComponent = D
     })}>
     <LinkComponent onClick={onClick} to={href} className={cn("outline-none flex flex-col rounded ring-offset-1 focus-visible:ring-2 focus-visible:ring-border-focus",
       {
-        "p-4": !fitted,
-        "pt-2 pb-3": fitted,
+        "p-2xl": !fitted,
+        "pt-lg pb-xl": fitted,
       })}>
       {label}
     </LinkComponent>
     {
-      active && <motion.div layoutId="underline" className={cn("h-1 bg-surface-primary-pressed z-10 absolute bottom-0 w-full")}></motion.div>
+      active && <motion.div layoutId="underline" className={cn("h-md bg-surface-primary-pressed z-10 absolute bottom-0 w-full")}></motion.div>
     }
-    <div className="h-1 group-hover:bg-border-default group-active:bg-border-tertiary bg-none transition-all absolute bottom-0 w-full z-0"></div>
+    <div className="h-md group-hover:bg-border-default group-active:bg-border-tertiary bg-none transition-all absolute bottom-0 w-full z-0"></div>
   </div>
 }
 
@@ -36,7 +36,7 @@ export const NavTabs = ({ items, fitted, onChange, layoutId, value, LinkComponen
       onChange(active)
     }
   }, [active])
-  return <div className="flex flex-row gap-6">
+  return <div className="flex flex-row gap-4xl">
     <LayoutGroup id={layoutId}>
       {items.map((child, index) => {
         return <NavTab

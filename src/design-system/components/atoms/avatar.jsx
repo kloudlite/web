@@ -10,12 +10,7 @@ const colors = {
 }
 
 
-export const AvatarBase = ({ label, size, color }) => {
-  const ab = (() => {
-    const words = label.split(' ');
-    return words.map(word => word.charAt(0).toUpperCase()).join('');
-  })
-
+export const AvatarBase = ({ size, color }) => {
   return <div
     className={
       cn(
@@ -24,10 +19,10 @@ export const AvatarBase = ({ label, size, color }) => {
         "rounded-full bg-surface-basic-default",
         "border border-border-default",
         {
-          "w-16 h-16 p-2": size === "large",
-          "w-10 h-10 p-1": size === "medium",
-          "w-8 h-8 p-1": size === "small",
-          "w-6 h-6 p-1": size === "extra-small",
+          "w-8xl h-8xl p-lg": size === "large",
+          "w-6xl h-6xl p-md": size === "medium",
+          "w-5xl h-5xl p-md": size === "small",
+          "w-4xl h-4xl p-md": size === "extra-small",
         }
       )
     }
@@ -59,12 +54,11 @@ export const AvatarBase = ({ label, size, color }) => {
   </div>
 }
 
-export const Avatar = ({ label, size, color }) => {
-  return <AvatarBase label={label} size={size} color={color} />
+export const Avatar = ({ size, color }) => {
+  return <AvatarBase size={size} color={color} />
 };
 
 Avatar.propTypes = {
-  label: PropTypes.string.isRequired,
   size: PropTypes.oneOf([
     "large", "medium", "small", "extra-small",
   ]),
@@ -78,7 +72,6 @@ Avatar.propTypes = {
 };
 
 Avatar.defaultProps = {
-  label: "test",
   size: "medium",
   color: "one"
 };

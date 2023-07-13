@@ -16,17 +16,17 @@ export const Checkbox = (props) => {
   return (
     <div className="flex items-center justify-center w-fit">
       <CheckboxPrimitive.Root
-        className={cn("rounded flex flex-row items-center justify-center border w-4 h-4 outline-none transition-all cursor-pointer",
+        className={cn("rounded flex flex-row items-center justify-center border w-2xl h-2xl outline-none transition-all cursor-pointer",
           "ring-border-focus ring-offset-1 focus:ring-2",
           {
             "border-border-disabled !cursor-default": props.disabled,
           },
           {
-            "bg-surface-default border-border-default": !checked && !props.disabled && !props.error,
+            "bg-surface-basic-default border-border-default": !checked && !props.disabled && !props.error,
             "bg-surface-critical-subdued border-border-critical": !checked && !props.disabled && props.error,
             "bg-surface-primary-default border-border-primary": checked && !props.error && !props.disabled,
             "bg-surface-critical-default border-border-critical": checked && props.error && !props.disabled,
-            "hover:bg-surface-hovered": !checked && !props.disabled
+            "hover:bg-surface-basic-hovered": !checked && !props.disabled
           })}
         defaultChecked
         id={id}
@@ -67,7 +67,7 @@ export const Checkbox = (props) => {
               "text-text-disabled": props.disabled,
               "text-text-default cursor-pointer": !props.disabled && !props.error,
               "text-text-critical cursor-pointer": !props.disabled && props.error,
-            }, "bodyMd pl-2 select-none")}
+            }, "bodyMd pl-lg select-none")}
           htmlFor={id}>
           {props.label}
         </label>

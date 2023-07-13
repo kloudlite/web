@@ -13,19 +13,19 @@ export const Switch = (props) => {
   }, [checked])
 
   return (
-    <div className='flex gap-2 items-center w-fit'>
+    <div className='flex gap-lg items-center w-fit'>
       <SwitchPrimitive.Root
         className={cn(
-          "transition-all w-12 rounded-full border flex items-center p-0.5 cursor-pointer",
+          "transition-all w-7xl rounded-full border flex items-center p-sm cursor-pointer",
           "ring-border-focus ring-offset-1 focus:ring-2 outline-none",
           {
-            "data-[state=unchecked]:bg-surface-default data-[state=unchecked]:border-border-default": !props.disabled
+            "data-[state=unchecked]:bg-surface-basic-default data-[state=unchecked]:border-border-default": !props.disabled
           },
           {
             "data-[state=checked]:bg-surface-primary-default data-[state=checked]:border-border-primary": !props.disabled
           },
           {
-            "data-[disabled]:bg-surface-default data-[disabled]:border-border-disabled data-[disabled]:!cursor-default": props.disabled
+            "data-[disabled]:bg-surface-basic-default data-[disabled]:border-border-disabled data-[disabled]:!cursor-default": props.disabled
           }
         )}
         id={id}
@@ -42,7 +42,7 @@ export const Switch = (props) => {
               "group-data-[disabled]:fill-icon-disabled": props.disabled
             },
             {
-              "group-data-[state=unchecked]:fill-surface-primary-default group-data-[state=checked]:fill-surface-default": !props.disabled
+              "group-data-[state=unchecked]:fill-surface-primary-default group-data-[state=checked]:fill-surface-basic-default": !props.disabled
             }
           )}>
             <circle cx="11" cy="11" r="10.5" />

@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 export const Thumbnail = ({ src, size, rounded }) => {
   return (<div className={
     classNames("rounded border border-border-default overflow-clip", {
-      "w-8 h-8": size === "extra-small",
-      "w-10 h-10": size === "small",
-      "w-16 h-16": size === "medium",
-      "w-20 h-20": size === "large",
+      "w-5xl h-5xl": size === "extra-small",
+      "w-6xl h-6xl": size === "small",
+      "w-8xl h-8xl": size === "medium",
+      "w-9xl h-9xl": size === "large",
     }, {
       "rounded-full": rounded,
       "rounded-md": !rounded,
