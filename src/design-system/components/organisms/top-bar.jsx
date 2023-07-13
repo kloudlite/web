@@ -7,7 +7,7 @@ import { BellFill, CaretDownFill } from "@jengaicons/react"
 import { cn } from "../utils"
 
 export const TopBar = ({ tab, actions, logo, fixed, fullwidth, linkComponent }) => {
-  return (<div className={cn("border-b border-border-default bg-surface-subdued px-2.5 z-10",
+  return (<div className={cn("border-b border-border-default bg-surface-basic-subdued px-2.5 z-10",
     {
       "fixed top-0 left-0 right-0": fixed
     })}>

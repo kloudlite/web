@@ -82,8 +82,10 @@ const OptionMenuTextInputItem = React.forwardRef(({ onChange, ...props }, ref) =
             <TextInputBase component={'input'} ref={searchRef} autoComplete={"off"}
 
                 onChange={(e) => { onChange && onChange(e.target.value) }} onKeyDown={(e) => {
-                    e.stopPropagation()
+                    if (e.key != "Escape")
+                        e.stopPropagation()
                 }} />
+
         </OptionMenuPrimitive.Item>
     )
 })
@@ -177,7 +179,7 @@ OptionMenuLabel.displayName = OptionMenuPrimitive.Label.displayName
 const OptionMenuSeparator = React.forwardRef(({ className, ...props }, ref) => (
     <OptionMenuPrimitive.Separator
         ref={ref}
-        className={cn("h-px bg-border-disabled", className)}
+        className={cn("h-px bg-border-disabled my-1", className)}
         {...props}
     />
 ))
