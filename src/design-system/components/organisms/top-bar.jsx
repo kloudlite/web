@@ -9,7 +9,7 @@ import { cn } from "../utils"
 export const TopBar = ({ tab, actions, logo, fixed, fullwidth, linkComponent }) => {
   return (<div className={cn("border-b border-border-default bg-surface-basic-subdued px-xl z-10",
     {
-      "fixed top-0 left-0 right-0": fixed
+      "sticky top-0 left-0 right-0": fixed
     })}>
     <div className={cn("flex flex-col m-auto",
       {
