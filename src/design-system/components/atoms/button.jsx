@@ -1,8 +1,8 @@
 import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { motion } from 'framer-motion';
-import { DefaultLinkComp } from './_link';
 import { cn } from '../utils';
+import { DefaultLinkComp } from './_link';
 
 export const ButtonStyles = [
   'outline',
@@ -93,18 +93,18 @@ export const ButtonBase = forwardRef(
             ...(noRing
               ? {}
               : {
-                'focus-visible:ring-2 focus:ring-border-focus focus:z-10': true,
-              }),
+                  'focus-visible:ring-2 focus:ring-border-focus focus:z-10': true,
+                }),
           },
           {
             ...(noRounded
               ? {}
               : {
-                'rounded-none': sharpLeft && sharpRight,
-                'rounded-r': sharpLeft && !sharpRight,
-                'rounded-l': !sharpLeft && sharpRight,
-                rounded: !sharpLeft && !sharpRight,
-              }),
+                  'rounded-none': sharpLeft && sharpRight,
+                  'rounded-r': sharpLeft && !sharpRight,
+                  'rounded-l': !sharpLeft && sharpRight,
+                  rounded: !sharpLeft && !sharpRight,
+                }),
           },
           'transition-all',
           'disabled:pointer-events-none',
@@ -112,26 +112,26 @@ export const ButtonBase = forwardRef(
             ...(noBorder
               ? { 'border-none': true }
               : {
-                'border-border-default disabled:border-border-disabled':
-                  variant === 'basic' || variant === 'outline',
-                'border-border-primary disabled:border-border-disabled':
-                  variant === 'primary' || variant === 'primary-outline',
-                'border-border-secondary disabled:border-border-disabled':
-                  variant === 'secondary' || variant === 'secondary-outline',
-                'border-border-critical disabled:border-border-disabled':
-                  variant === 'critical-outline' || variant === 'critical',
-                'border-none':
-                  variant === 'plain' ||
-                  variant === 'primary-plain' ||
-                  variant === 'critical-plain' ||
-                  variant === 'secondary-plain',
-                border: !(
-                  variant === 'plain' ||
-                  variant === 'primary-plain' ||
-                  variant === 'critical-plain' ||
-                  variant === 'secondary-plain'
-                ),
-              }),
+                  'border-border-default disabled:border-border-disabled':
+                    variant === 'basic' || variant === 'outline',
+                  'border-border-primary disabled:border-border-disabled':
+                    variant === 'primary' || variant === 'primary-outline',
+                  'border-border-secondary disabled:border-border-disabled':
+                    variant === 'secondary' || variant === 'secondary-outline',
+                  'border-border-critical disabled:border-border-disabled':
+                    variant === 'critical-outline' || variant === 'critical',
+                  'border-none':
+                    variant === 'plain' ||
+                    variant === 'primary-plain' ||
+                    variant === 'critical-plain' ||
+                    variant === 'secondary-plain',
+                  border: !(
+                    variant === 'plain' ||
+                    variant === 'primary-plain' ||
+                    variant === 'critical-plain' ||
+                    variant === 'secondary-plain'
+                  ),
+                }),
           },
           {
             'bg-surface-basic-default hover:bg-surface-basic-hovered active:bg-surface-basic-pressed disabled:bg-surface-basic-default':
@@ -243,27 +243,25 @@ export const IconButton = forwardRef(
       ...props
     },
     ref
-  ) => {
-    return (
-      <ButtonBase
-        {...props}
-        ref={ref}
-        iconOnly
-        label=""
-        variant={variant}
-        onClick={onClick}
-        href={href}
-        type={type}
-        disabled={disabled}
-        sharpLeft={sharpLeft}
-        sharpRight={sharpRight}
-        noRing={noRing}
-        noRounded={noRounded}
-        prefix={icon}
-        className={className}
-      />
-    );
-  }
+  ) => (
+    <ButtonBase
+      {...props}
+      ref={ref}
+      iconOnly
+      label=""
+      variant={variant}
+      onClick={onClick}
+      href={href}
+      type={type}
+      disabled={disabled}
+      sharpLeft={sharpLeft}
+      sharpRight={sharpRight}
+      noRing={noRing}
+      noRounded={noRounded}
+      prefix={icon}
+      className={className}
+    />
+  )
 );
 
 export const Button = forwardRef(
@@ -288,31 +286,29 @@ export const Button = forwardRef(
       ...props
     },
     ref
-  ) => {
-    return (
-      <ButtonBase
-        {...props}
-        ref={ref}
-        LinkComponent={LinkComponent}
-        iconOnly={false}
-        block={block}
-        content={content}
-        noBorder={noBorder}
-        suffix={suffix}
-        variant={variant}
-        onClick={onClick}
-        href={href}
-        type={type}
-        disabled={disabled}
-        sharpLeft={sharpLeft}
-        sharpRight={sharpRight}
-        noRing={noRing}
-        noRounded={noRounded}
-        prefix={prefix}
-        className={className}
-      />
-    );
-  }
+  ) => (
+    <ButtonBase
+      {...props}
+      ref={ref}
+      LinkComponent={LinkComponent}
+      iconOnly={false}
+      block={block}
+      content={content}
+      noBorder={noBorder}
+      suffix={suffix}
+      variant={variant}
+      onClick={onClick}
+      href={href}
+      type={type}
+      disabled={disabled}
+      sharpLeft={sharpLeft}
+      sharpRight={sharpRight}
+      noRing={noRing}
+      noRounded={noRounded}
+      prefix={prefix}
+      className={className}
+    />
+  )
 );
 
 Button.propTypes = {
