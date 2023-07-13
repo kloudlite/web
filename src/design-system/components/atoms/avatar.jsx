@@ -21,7 +21,7 @@ export const AvatarBase = ({ label, size, color }) => {
       cn(
         "relative flex flex-row items-center justify-center",
         "outline-none transition-all",
-        "rounded-full",
+        "rounded-full bg-surface-basic-default",
         "border border-border-default",
         {
           "w-16 h-16 p-2": size === "large",

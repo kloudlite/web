@@ -2,7 +2,7 @@ import { useState } from "react";
 import ChipGroup from "../../components/atoms/chip-group";
 
 export default {
-  title: 'Atom/ChipGroup',
+  title: 'Atoms/ChipGroup',
   component: ChipGroup,
   tags: ['autodocs'],
   argTypes: {},

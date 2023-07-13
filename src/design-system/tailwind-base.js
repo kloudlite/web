@@ -141,6 +141,13 @@ export default {
                 "hovered": "#F4F4F5",
                 "pressed": "#E4E4E7",
                 "input": "#FFFFFF",
+                "basic": {
+                    "default": "#FFFFFF",
+                    "subdued": "#F3F4F6",
+                    "hovered": "#F4F4F5",
+                    "pressed": "#E4E4E7",
+                    "input": "#FFFFFF",
+                },
                 "secondary": {
                     "default": "#14B8A6",
                     "subdued": "#ccfbf1",

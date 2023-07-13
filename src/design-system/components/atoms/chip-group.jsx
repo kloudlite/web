@@ -3,6 +3,7 @@ import { XFill } from '@jengaicons/react';
 import { cn } from '../utils';
 import * as RovingFocusGroup from '@radix-ui/react-roving-focus';
 import { cloneElement, forwardRef, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 
 const ChipTypes = Object.freeze({
     BASIC: "BASIC",
@@ -11,8 +12,16 @@ const ChipTypes = Object.freeze({
 })
 
 const ChipBase = forwardRef(({ id, label, disabled, type = ChipTypes.BASIC, onClose, Prefix, onClick, Component, active = false, ...props }, ref) => {
+    let extraProps = {}
+    if (type == ChipTypes.CLICKABLE) {
+        extraProps = {
+            initial: { scale: 1 },
+            whileTap: { scale: 0.99 }
+        }
+    }
     return (
         <Component
+            {...extraProps}
             className={cn(
                 "rounded border bodySm-medium py-px flex items-center transition-all outline-none flex-row gap-1.5 ring-offset-1",
                 "focus-within:ring-2 focus-within:ring-border-focus",
@@ -84,7 +93,7 @@ const Chip = ({ id, label, disabled, type = ChipTypes.BASIC, prefix, onClick, on
 
     let Component = "div"
     if (type === ChipTypes.CLICKABLE) {
-        Component = "button"
+        Component = motion.button
     }
     if (type == ChipTypes.CLICKABLE)
         return <RovingFocusGroup.Item asChild focusable active={active}>
