@@ -9,9 +9,9 @@ export const Profile = forwardRef(({ name, subtitle, color, size, ...props }, re
     <button
       {...props}
       ref={ref}
-      className={cn("flex py-0.5 px-1 gap-2 items-center ring-offset-1 outline-none transition-all rounded focus-visible:ring-2 focus-visible:ring-border-focus")}>
+      className={cn("flex py-sm px-md gap-lg items-center ring-offset-1 outline-none transition-all rounded focus-visible:ring-2 focus-visible:ring-border-focus")}>
       <AvatarBase label={name} color={color} size={size} />
-      <div className="flex flex-col gap-y-1  items-start">
+      <div className="flex flex-col gap-y-md  items-start">
         <div className={"bodyMd-medium"}>{name}</div>
         {subtitle && <div className={"bodySm text-text-soft"}>{subtitle}</div>}
       </div>
