@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { cn } from "../utils";
 
 export const EmptyState = ({ image, heading, children, footer, action, secondaryAction }) => {
+    console.log(action);
     return (
         <div className="flex flex-col items-center shadow-card border border-border-default rounded">
-            <div className={cn("flex flex-col items-center pt-20 pb-5 px-5")}>
+            <div className={cn("flex flex-col items-center px-5 py-16 gap-8")}>
                 {image ?
                     <img src={image} className="max-h-43 max-w-37" />
                     : <div className="h-43 w-37 bg-surface-hovered"></div>}
@@ -16,7 +17,7 @@ export const EmptyState = ({ image, heading, children, footer, action, secondary
                     </div>}
                     {(action || secondaryAction) && <div className="flex flex-row items-center justify-center gap-2">
                         {secondaryAction && <Button content={secondaryAction?.title} variant={"outline"} onClick={secondaryAction?.click} />}
-                        {action && <Button content={action?.title} variant={"primary"} onClick={action?.click} />}
+                        {action && <Button content={action?.title} variant={"primary"} onClick={action?.click} LinkComponent={action?.LinkComponent} href={action.href} />}
                     </div>}
                     {footer && <div className="bodySm text-text-soft">{footer}</div>}
                 </div>

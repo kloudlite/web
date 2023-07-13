@@ -48,13 +48,13 @@ export const ButtonBase = forwardRef(({
   ...props
 }, ref) => {
 
-  let Component = "button"
+  let Component = motion.button
   let extraProps = {}
 
   extraProps.onClick = onClick
 
   if (href) {
-    Component = LinkComponent
+    Component = motion(LinkComponent)
     extraProps.to = href
   } else {
     extraProps.disabled = disabled
@@ -64,7 +64,7 @@ export const ButtonBase = forwardRef(({
   let Prefix = prefix
 
   return (
-    <motion.button
+    <Component
       initial={{ scale: 1 }}
       whileTap={{ scale: 0.99 }}
       ref={ref}
@@ -151,7 +151,7 @@ export const ButtonBase = forwardRef(({
       {prefix && <Prefix size={iconOnly ? 20 : 16} color="currentColor" />}
       {!iconOnly && content}
       {suffix && !iconOnly && <Suffix size={16} color="currentColor" />}
-    </motion.button>
+    </Component>
   );
 })
 
