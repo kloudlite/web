@@ -1,4 +1,4 @@
-import { Switch } from "../../components/atoms/switch";
+import { Switch } from '../../components/atoms/switch';
 
 export default {
   title: 'Atoms/Switch',
@@ -9,22 +9,20 @@ export default {
 
 export const On = {
   args: {
-    checked: true
-  }
-}
+    checked: true,
+  },
+};
 
 export const Off = {
   args: {
     checked: false,
-    onChange: (e) => console.log(e)
-  }
-}
+    onChange: (e) => console.log(e),
+  },
+};
 
 export const SwitchDisabled = {
   args: {
     checked: true,
-    disabled: true
-  }
-}
-
-
+    disabled: true,
+  },
+};

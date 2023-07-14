@@ -1,21 +1,20 @@
-import classNames from "classnames";
-import PropTypes from "prop-types";
+import classNames from 'classnames';
 
 export const cn = (...props) => {
-    return classNames(...props)
-}
+  return classNames(...props);
+};
 
-export const klogger = (type = "log", [...message]) => {
-    switch (type) {
-        case "log":
-            console.log(...message)
-            break
-        case "error":
-            console.error(...message)
-            break
-        case "warn":
-            console.warn(...message)
-            break
-    }
-}
-
+export const klogger = ([...message], type = 'log') => {
+  switch (type) {
+    case 'error':
+      console.error(...message);
+      break;
+    case 'warn':
+      console.warn(...message);
+      break;
+    case 'log':
+    default:
+      console.log(...message);
+      break;
+  }
+};

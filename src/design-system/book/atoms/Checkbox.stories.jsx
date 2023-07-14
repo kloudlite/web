@@ -1,4 +1,4 @@
-import { Checkbox } from "../../components/atoms/checkbox";
+import { Checkbox } from '../../components/atoms/checkbox';
 
 export default {
   title: 'Atoms/Checkbox',
@@ -9,40 +9,40 @@ export default {
 
 export const Checked = {
   args: {
-    label: "Checked",
+    label: 'Checked',
     checked: true,
-    onChange: (e) => console.log(e)
-  }
-}
+    onChange: (e) => console.log(e),
+  },
+};
 
 export const DisabledChecked = {
   args: {
-    label: "Disabled Checked",
+    label: 'Disabled Checked',
     disabled: true,
-    checked: true
-  }
-}
+    checked: true,
+  },
+};
 
 export const DisabledUnchecked = {
   args: {
-    label: "Disabled Unchecked",
+    label: 'Disabled Unchecked',
     disabled: true,
-    checked: false
-  }
-}
+    checked: false,
+  },
+};
 
 export const Indeterminate = {
   args: {
-    label: "Indeterminate",
-    checked: "indeterminate",
-    indeterminate: true
-  }
-}
+    label: 'Indeterminate',
+    checked: 'indeterminate',
+    indeterminate: true,
+  },
+};
 
 export const Critical = {
   args: {
-    label: "Critical",
+    label: 'Critical',
     checked: true,
-    error: true
-  }
-}
+    error: true,
+  },
+};

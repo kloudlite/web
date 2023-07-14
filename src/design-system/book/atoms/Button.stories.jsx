@@ -1,6 +1,5 @@
+import { CalendarCheckFill, CaretDownFill } from '@jengaicons/react';
 import { Button } from '../../components/atoms/button.jsx';
-import { CalendarCheckFill, CaretDownFill } from "@jengaicons/react";
-
 
 export default {
   title: 'Atoms/Button',
@@ -8,7 +7,6 @@ export default {
   tags: ['autodocs'],
   argTypes: {},
 };
-
 
 export const BaseButton = {
   args: {

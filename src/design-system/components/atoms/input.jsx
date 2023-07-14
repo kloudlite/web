@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, {
+import {
   useRef,
   cloneElement,
   forwardRef,
@@ -17,15 +17,25 @@ import {
 import { cn } from '../utils';
 
 export const NumberInput = (props) => {
-  const [v, setV] = useState(props.value || props.min || 0);
+  const {
+    value,
+    min,
+    onChange,
+    label,
+    extra,
+    error,
+    disabled,
+    max,
+    message,
+    step = 1,
+  } = props;
+  const [v, setV] = useState(value || min || 0);
   const ref = useRef();
   const id = useId();
 
-  const step = props.step || 1;
-
   useEffect(() => {
-    if (props.onChange) {
-      props.onChange({
+    if (onChange) {
+      onChange({
         target: {
           ...ref.current,
           value: v,
@@ -37,16 +47,14 @@ export const NumberInput = (props) => {
   return (
     <div
       className={cn('flex flex-col', {
-        'gap-md': props.label || props.extra,
+        'gap-md': label || extra,
       })}
     >
       <div className="flex">
         <label className="flex-1 select-none bodyMd-medium" htmlFor={id}>
-          {props.label}
+          {label}
         </label>
-        {props.extra && (
-          <div className="bodyMd">{cloneElement(props.extra)}</div>
-        )}
+        {extra && <div className="bodyMd">{cloneElement(extra)}</div>}
       </div>
       <div
         className={cn(
@@ -54,15 +62,15 @@ export const NumberInput = (props) => {
           'ring-offset-1 focus-within:ring-2 focus-within:ring-border-focus rounded border overflow-hidden',
           {
             'bg-surface-critical-subdued border-border-critical text-text-critical placeholder:text-critical-400':
-              props.error,
-            'text-text-default border-border-default': !props.error,
+              error,
+            'text-text-default border-border-default': !error,
           }
         )}
       >
         <input
           ref={ref}
           id={id}
-          disabled={props.disabled}
+          disabled={disabled}
           type="number"
           autoComplete="off"
           inputMode="numeric"
@@ -76,27 +84,27 @@ export const NumberInput = (props) => {
           onChange={(e) => {
             setV(e.target.value);
           }}
-          min={props.min}
-          max={props.max}
+          min={min}
+          max={max}
         />
         <div
           className={cn(
             'flex flex-col absolute right-0 top-0 bottom-0 justify-center items-center',
             {
               'bg-surface-critical-subdued divide-border-critical divide-y rounded-r border-l border-border-critical text-text-critical placeholder:text-critical-400':
-                props.error,
+                error,
               'text-text-default border-l border-border-default divide-border-default divide-y':
-                !props.error,
+                !error,
             }
           )}
           tabIndex={-1}
         >
           <button
             aria-controls={id}
-            aria-label={`Increase ${props.label}`}
+            aria-label={`Increase ${label}`}
             tabIndex={-1}
             onClick={() => {
-              setV((v) => v + step);
+              setV((_v) => _v + step);
               ref.current.focus();
             }}
             className={cn(
@@ -107,10 +115,10 @@ export const NumberInput = (props) => {
           </button>
           <button
             aria-controls={id}
-            aria-label={`Decrease ${props.label}`}
+            aria-label={`Decrease ${label}`}
             tabIndex={-1}
             onClick={() => {
-              setV((v) => v - step);
+              setV((_v) => _v - step);
             }}
             className={cn(
               'flex-1 p-sm disabled:text-icon-disabled hover:bg-surface-basic-hovered active:bg-surface-basic-pressed'
@@ -121,14 +129,14 @@ export const NumberInput = (props) => {
         </div>
       </div>
 
-      {props.message && (
+      {message && (
         <span
           className={cn('bodySm', {
-            'text-text-critical': props.error,
-            'text-text-default': !props.error,
+            'text-text-critical': error,
+            'text-text-default': !error,
           })}
         >
-          {props.message}
+          {message}
         </span>
       )}
     </div>
@@ -136,8 +144,24 @@ export const NumberInput = (props) => {
 };
 
 export const TextInputBase = forwardRef((props, ref) => {
-  const [val, setVal] = useState(props.value || '');
-  const [type, setType] = useState(props.type || 'text');
+  const {
+    value,
+    type,
+    component,
+    extra,
+    className,
+    error,
+    disabled,
+    label,
+    onKeyDown,
+    autoComplete,
+    onChange,
+    message,
+    showclear,
+    placeholder,
+  } = props;
+  const [val, setVal] = useState(value || '');
+  const [t, setT] = useState(type || 'text');
 
   const id = useId();
 
@@ -150,28 +174,28 @@ export const TextInputBase = forwardRef((props, ref) => {
     Suffix = <SuffixIcon size={16} color="currentColor" />;
   }
 
-  const Component = props.component || 'input';
+  const Component = component || 'input';
 
   return (
     <div
       className={cn(
         'flex flex-col',
         {
-          'gap-md': props.label || props.extra,
+          'gap-md': label || extra,
         },
-        props.className
+        className
       )}
     >
       <div className="flex items-center">
         <label className="flex-1 select-none bodyMd-medium" htmlFor={id}>
-          {props.label}
+          {label}
         </label>
         <div
           className={cn({
-            'h-4xl': props.label || props.extra,
+            'h-4xl': label || extra,
           })}
         >
-          {props.extra && cloneElement(props.extra)}
+          {extra && cloneElement(extra)}
         </div>
       </div>
       <div
@@ -179,12 +203,12 @@ export const TextInputBase = forwardRef((props, ref) => {
           'transition-all px-xl rounded border flex flex-row items-center relative ring-offset-1 focus-within:ring-2 focus-within:ring-border-focus ',
           {
             'text-text-critical bg-surface-critical-subdued border-border-critical':
-              props.error,
+              error,
             'text-text-default border-border-default bg-surface-basic-input':
-              !props.error,
+              !error,
             'text-text-disabled border-border-disabled bg-surface-basic-input':
-              props.disabled,
-            'pr-0': props.component != 'input',
+              disabled,
+            'pr-0': component !== 'input',
           }
         )}
       >
@@ -192,51 +216,51 @@ export const TextInputBase = forwardRef((props, ref) => {
           <div
             className={cn('pr-lg bodyMd', {
               'text-text-strong':
-                typeof Prefix !== 'object' && !props.error && !props.disabled,
-              'text-text-critical': props.error,
-              'text-text-disabled': props.disabled,
+                typeof Prefix !== 'object' && !error && !disabled,
+              'text-text-critical': error,
+              'text-text-disabled': disabled,
             })}
           >
             {Prefix}
           </div>
         )}
         <Component
-          type={type}
-          placeholder={props.placeholder}
+          type={t}
+          placeholder={placeholder}
           id={id}
           className={cn(
             'outline-none disabled:bg-surface-basic-input disabled:text-text-disabled flex-1',
             'rounded py-lg bodyMd ',
             {
               'text-text-critical bg-surface-critical-subdued placeholder:text-critical-400':
-                props.error,
-              'text-text-default bg-surface-basic-input': !props.error,
+                error,
+              'text-text-default bg-surface-basic-input': !error,
             }
           )}
           value={val}
           onChange={(e) => {
             setVal(e.target.value);
-            if (props.onChange) {
-              props.onChange(e);
+            if (onChange) {
+              onChange(e);
             }
           }}
-          disabled={props.disabled}
+          disabled={disabled}
           ref={ref}
-          onKeyDown={props.onKeyDown}
-          autoComplete={props.autoComplete}
+          onKeyDown={onKeyDown}
+          autoComplete={autoComplete}
         />
         {Suffix && (
           <div
             className={cn('pl-lg bodyMd', {
-              'text-text-critical': props.error,
-              'text-text-strong': !props.error && !props.disabled,
-              'text-text-disabled': props.disabled,
+              'text-text-critical': error,
+              'text-text-strong': !error && !disabled,
+              'text-text-disabled': disabled,
             })}
           >
             {Suffix}
           </div>
         )}
-        {props.showclear && !props.disabled && (
+        {showclear && !disabled && (
           <button
             tabIndex={-1}
             onClick={() => {
@@ -245,23 +269,23 @@ export const TextInputBase = forwardRef((props, ref) => {
             className={cn(
               'outline-none flex items-center rounded justify-center',
               {
-                'cursor-default': props.disabled,
+                'cursor-default': disabled,
               }
             )}
           >
             <XCircleFill size={16} color="currentColor" />
           </button>
         )}
-        {props.type === 'password' && !props.disabled && (
+        {type === 'password' && !disabled && (
           <button
             tabIndex={-1}
             onClick={() => {
-              setType((prev) => (prev == 'text' ? 'password' : 'text'));
+              setT((prev) => (prev === 'text' ? 'password' : 'text'));
             }}
             className={cn(
               'outline-none flex items-center rounded justify-center',
               {
-                'cursor-default': props.disabled,
+                'cursor-default': disabled,
               }
             )}
           >
@@ -274,23 +298,27 @@ export const TextInputBase = forwardRef((props, ref) => {
         )}
       </div>
 
-      {props.message && (
+      {message && (
         <div
           className={cn('bodySm', {
-            'text-text-critical': props.error,
-            'text-text-default': !props.error,
+            'text-text-critical': error,
+            'text-text-default': !error,
           })}
         >
-          {props.message}
+          {message}
         </div>
       )}
     </div>
   );
 });
 
+TextInputBase.displayName = 'TextInputBase';
+
 export const TextInput = forwardRef((props, ref) => {
   return <TextInputBase {...props} component="input" type="text" ref={ref} />;
 });
+
+TextInput.displayName = 'TextInput';
 
 export const TextArea = (props) => {
   const ref = useRef(null);
@@ -312,21 +340,22 @@ const BaseInputProps = {
   value: PropTypes.string,
   onChange: PropTypes.func,
   error: PropTypes.bool,
-  message: PropTypes.string,
-  extra: PropTypes.elementType,
+  message: PropTypes.object,
+  extra: PropTypes.object,
   className: PropTypes.string,
   disabled: PropTypes.bool,
 };
 
 TextInput.propTypes = {
-  ...BaseInputProps,
-  prefix: PropTypes.object,
-  suffix: PropTypes.object,
-  prefixIcon: PropTypes.object,
-  suffixIcon: PropTypes.object,
+  placeholder: PropTypes.string,
+  value: PropTypes.string,
+  error: PropTypes.bool,
+  disabled: PropTypes.bool,
+  prefix: PropTypes.string,
+  suffix: PropTypes.string,
 };
 
-TextInput.propTypes = {
+TextArea.propTypes = {
   ...BaseInputProps,
 };
 
@@ -338,4 +367,7 @@ TextInput.defaultProps = {
   placeholder: '',
   value: '',
   disabled: false,
+  prefix: null,
+  suffix: null,
+  error: false,
 };
