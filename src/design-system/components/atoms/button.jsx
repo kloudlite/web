@@ -42,6 +42,7 @@ export const ButtonBase = forwardRef((props, ref) => {
     iconOnly,
     className,
     content,
+    ...mprops
   } = props;
   const extraProps = {};
 
@@ -59,14 +60,14 @@ export const ButtonBase = forwardRef((props, ref) => {
 
   return (
     <Component
-      {...props}
+      {...mprops}
       initial={{ scale: 1 }}
       whileTap={{ scale: 0.99 }}
       ref={ref}
       type={type}
       className={cn(
         {
-          'w-full': block,
+          'w-full': !!block,
           'w-fit': !block,
         },
         {
@@ -221,16 +222,24 @@ export const ButtonBase = forwardRef((props, ref) => {
 ButtonBase.displayName = 'ButtonBase';
 
 export const IconButton = forwardRef((props, ref) => {
-  const { icon } = props;
+  const { icon, block } = props;
   return (
-    <ButtonBase {...props} ref={ref} iconOnly label={null} prefix={icon} />
+    <ButtonBase
+      {...props}
+      ref={ref}
+      iconOnly
+      label={null}
+      prefix={icon}
+      block={!!block}
+    />
   );
 });
 
 IconButton.displayName = 'IconButton';
 
 export const Button = forwardRef((props, ref) => {
-  return <ButtonBase {...props} iconOnly={false} ref={ref} />;
+  const { block } = props;
+  return <ButtonBase {...props} iconOnly={false} ref={ref} block={!!block} />;
 });
 
 Button.displayName = 'Button';
@@ -254,8 +263,8 @@ Button.propTypes = {
   onClick: PropTypes.func,
   href: PropTypes.string,
   disabled: PropTypes.bool,
+  block: PropTypes.bool,
   type: PropTypes.oneOf(['button', 'submit']),
-  LinkComponent: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
 };
 
 Button.defaultProps = {
@@ -264,8 +273,8 @@ Button.defaultProps = {
   type: 'button',
   content: 'button',
   href: null,
+  block: false,
   disabled: false,
-  LinkComponent: null,
 };
 
 IconButton.propTypes = {
@@ -289,7 +298,6 @@ IconButton.propTypes = {
    */
   disabled: PropTypes.bool,
   type: PropTypes.oneOf(['button', 'submit']),
-  LinkComponent: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
 };
 
 IconButton.defaultProps = {
@@ -298,5 +306,4 @@ IconButton.defaultProps = {
   type: 'button',
   href: null,
   disabled: false,
-  LinkComponent: null,
 };

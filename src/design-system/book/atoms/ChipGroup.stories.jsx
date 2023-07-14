@@ -17,6 +17,7 @@ const ChipGroupRemovableHook = () => {
   return (
     <ChipGroup onRemove={(e) => setChips(chips.filter((c) => c.id !== e))}>
       {chips.map((chip, index) => (
+        // eslint-disable-next-line react/no-array-index-key
         <ChipGroup.Chip {...chip} key={index} />
       ))}
     </ChipGroup>
