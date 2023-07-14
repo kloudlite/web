@@ -1,4 +1,4 @@
-import {Profile} from "../../components/molecule/profile.jsx";
+import { Profile } from '../../components/molecule/profile.jsx';
 
 export default {
   title: 'Molecules/Profile',
@@ -9,9 +9,8 @@ export default {
 
 export const ProfileAvatar = {
   args: {
-    name: "Karthik Th",
-    subtitle: "subtitle",
-    color: "one"
+    name: 'Karthik Th',
+    subtitle: 'subtitle',
+    color: 'one',
   },
 };
-

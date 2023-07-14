@@ -1,14 +1,12 @@
-import { Popup } from "../../components/molecule/popup"
+import { Popup } from '../../components/molecule/popup';
 
-export default{
-    title: "Molecules/Popup",
-    component: Popup,
-    tags: ['autodocs'],
-    argTypes: {}
-}
+export default {
+  title: 'Molecules/Popup',
+  component: Popup,
+  tags: ['autodocs'],
+  argTypes: {},
+};
 
 export const DefaultPopup = {
-    args:{
-        
-    }
-}
+  args: {},
+};

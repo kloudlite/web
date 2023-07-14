@@ -1,5 +1,4 @@
-import {Avatar} from "../../components/atoms/avatar";
-
+import { Avatar } from '../../components/atoms/avatar';
 
 export default {
   title: 'Atoms/Avatar',
@@ -9,15 +8,14 @@ export default {
 };
 
 export const InitialAvatar = {
-  args:{
-    size: "medium"
-  }
-}
-
-export const BasicAvatar = {
   args: {
-    label: "Karthik Th",
-    size: "medium"
+    size: 'medium',
   },
 };
 
+export const BasicAvatar = {
+  args: {
+    label: 'Karthik Th',
+    size: 'medium',
+  },
+};

@@ -1,6 +1,5 @@
-import { Badge } from "../../components/atoms/badge";
-import { Info as InfoIcon } from "@jengaicons/react";
-
+import { Info as InfoIcon } from '@jengaicons/react';
+import { Badge } from '../../components/atoms/badge';
 
 export default {
   title: 'Atoms/Badge',
@@ -11,35 +10,32 @@ export default {
 
 export const Neutral = {
   args: {
-    type: "neutral",
-    label: "Neutral"
-  }
-}
+    type: 'neutral',
+    label: 'Neutral',
+  },
+};
 export const Danger = {
   args: {
-    type: "danger",
-    label: "Danger"
-  }
-}
+    type: 'danger',
+    label: 'Danger',
+  },
+};
 export const Info = {
   args: {
-    type: "info",
-    label: "Info"
-  }
-}
+    type: 'info',
+    label: 'Info',
+  },
+};
 export const Success = {
   args: {
-    type: "success",
-    label: "Success",
-    icon: InfoIcon
-  }
-}
+    type: 'success',
+    label: 'Success',
+    icon: InfoIcon,
+  },
+};
 export const Warning = {
   args: {
-    type: "warning",
-    label: "Warning"
-  }
-}
-
-
-
+    type: 'warning',
+    label: 'Warning',
+  },
+};

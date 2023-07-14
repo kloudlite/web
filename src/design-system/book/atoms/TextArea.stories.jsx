@@ -1,7 +1,6 @@
-import { Button } from "../../components/atoms/button";
-import { TextArea } from "../../components/atoms/input";
-import { Info, Search } from "@jengaicons/react";
-
+import { Info } from '@jengaicons/react';
+import { Button } from '../../components/atoms/button';
+import { TextArea } from '../../components/atoms/input';
 
 export default {
   title: 'Atoms/Textarea',
@@ -10,29 +9,32 @@ export default {
   argTypes: {},
 };
 
-
 export const DefaultTextArea = {
   args: {
-    label: "Default",
-    value: "Hello",
-    className: 'w-full'
-  }
-}
+    label: 'Default',
+    value: 'Hello',
+    className: 'w-full',
+  },
+};
 
 export const ErrorTextArea = {
   args: {
-    label: "Default",
-    value: "Hello",
+    label: 'Default',
+    value: 'Hello',
     error: true,
-    extra: <Button content="Link" variant={'primary-plain'} />,
-    message: <span className="flex flex-row items-center gap-x-1"><Info size={16} color="currentColor" /> Required</span>
-  }
-}
+    extra: <Button content="Link" variant="primary-plain" />,
+    message: (
+      <span className="flex flex-row items-center gap-x-1">
+        <Info size={16} color="currentColor" /> Required
+      </span>
+    ),
+  },
+};
 
 export const DisabledTextArea = {
   args: {
-    label: "Default",
-    value: "Hello",
-    disabled: true
-  }
-}
+    label: 'Default',
+    value: 'Hello',
+    disabled: true,
+  },
+};
