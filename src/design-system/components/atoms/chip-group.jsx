@@ -11,102 +11,98 @@ const ChipTypes = Object.freeze({
   CLICKABLE: 'CLICKABLE',
 });
 
-const ChipBase = forwardRef(
-  (
-    {
-      id,
-      label,
-      disabled,
-      type = ChipTypes.BASIC,
-      onClose,
-      Prefix,
-      onClick,
-      Component,
-      active = false,
-      ...props
-    },
-    ref
-  ) => {
-    let extraProps = {};
-    if (type === ChipTypes.CLICKABLE) {
-      extraProps = {
-        initial: { scale: 1 },
-        whileTap: { scale: 0.99 },
-      };
-    }
-    return (
-      <Component
-        {...extraProps}
-        className={cn(
-          'rounded border bodySm-medium py-px flex items-center transition-all outline-none flex-row gap-md ring-offset-1',
-          'focus-within:ring-2 focus-within:ring-border-focus',
-          'w-fit',
-          {
-            'text-text-default': !disabled,
-            'text-text-disabled': disabled,
-          },
-          {
-            'pointer-events-none': disabled,
-          },
-          {
-            'border-border-default': !disabled,
-            'border-border-disabled': disabled,
-          },
-          {
-            'bg-surface-basic-default': !disabled,
-          },
-          {
-            'pr-md pl-lg py-md': type === ChipTypes.REMOVABLE,
-            'px-lg py-md': type !== ChipTypes.REMOVABLE,
-          },
-          {
-            'hover:bg-surface-basic-hovered active:bg-surface-basic-pressed focus-visible:ring-2 focus:ring-border-focus':
-              type === ChipTypes.CLICKABLE,
-          }
-        )}
-        onClick={onClick}
-        {...props}
-        ref={ref}
-      >
-        {Prefix &&
-          type !== ChipTypes.CLICKABLE &&
-          (typeof Prefix === 'string' ? (
-            <span className="bodySm text-text-soft">{Prefix}</span>
-          ) : (
-            <Prefix size={16} color="currentColor" />
-          ))}
-        <span className="flex items-center">{label}</span>
-        {type === ChipTypes.REMOVABLE && (
-          <RovingFocusGroup.Item asChild focusable active={active}>
-            <button
-              disabled={disabled}
-              onClick={(_e) => {
-                if (onClose) onClose(id);
-              }}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  e.stopPropagation();
-                  e.preventDefault();
-                }
-                if (e.key === 'Backspace' || e.key === 'Delete') {
-                  if (onClose) onClose(id);
-                }
-              }}
-              className={cn(
-                'outline-none flex items-center rounded-sm ring-offset-0 justify-center hover:bg-surface-basic-hovered active:bg-surface-basic-pressed',
-                {
-                  'cursor-default': disabled,
-                }
-              )}
-            >
-              <XFill size={16} color="currentColor" />
-            </button>
-          </RovingFocusGroup.Item>
-        )}
-      </Component>
-    );
+const ChipBase = forwardRef((props, ref) => {
+  const {
+    mid,
+    label,
+    disabled,
+    type = ChipTypes.BASIC,
+    onClose,
+    Prefix,
+    onClick,
+    Component,
+    active = false,
+    ...mprops
+  } = props;
+  let extraProps = {};
+  if (type === ChipTypes.CLICKABLE) {
+    extraProps = {
+      initial: { scale: 1 },
+      whileTap: { scale: 0.99 },
+    };
   }
-);
+  return (
+    <Component
+      {...extraProps}
+      {...mprops}
+      className={cn(
+        'rounded border bodySm-medium py-px flex items-center transition-all outline-none flex-row gap-md ring-offset-1',
+        'focus-within:ring-2 focus-within:ring-border-focus',
+        'w-fit',
+        {
+          'text-text-default': !disabled,
+          'text-text-disabled': disabled,
+        },
+        {
+          'pointer-events-none': disabled,
+        },
+        {
+          'border-border-default': !disabled,
+          'border-border-disabled': disabled,
+        },
+        {
+          'bg-surface-basic-default': !disabled,
+        },
+        {
+          'pr-md pl-lg py-md': type === ChipTypes.REMOVABLE,
+          'px-lg py-md': type !== ChipTypes.REMOVABLE,
+        },
+        {
+          'hover:bg-surface-basic-hovered active:bg-surface-basic-pressed focus-visible:ring-2 focus:ring-border-focus':
+            type === ChipTypes.CLICKABLE,
+        }
+      )}
+      onClick={onClick}
+      ref={ref}
+    >
+      {Prefix &&
+        type !== ChipTypes.CLICKABLE &&
+        (typeof Prefix === 'string' ? (
+          <span className="bodySm text-text-soft">{Prefix}</span>
+        ) : (
+          <Prefix size={16} color="currentColor" />
+        ))}
+      <span className="flex items-center">{label}</span>
+      {type === ChipTypes.REMOVABLE && (
+        <RovingFocusGroup.Item asChild focusable active={active}>
+          <button
+            disabled={disabled}
+            onClick={(_e) => {
+              if (onClose) onClose(mid);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.stopPropagation();
+                e.preventDefault();
+              }
+              if (e.key === 'Backspace' || e.key === 'Delete') {
+                if (onClose) onClose(mid);
+              }
+            }}
+            className={cn(
+              'outline-none flex items-center rounded-sm ring-offset-0 justify-center hover:bg-surface-basic-hovered active:bg-surface-basic-pressed',
+              {
+                'cursor-default': disabled,
+              }
+            )}
+          >
+            <XFill size={16} color="currentColor" />
+          </button>
+        </RovingFocusGroup.Item>
+      )}
+    </Component>
+  );
+});
 
 ChipBase.displayName = 'ChipBase';
 
@@ -128,7 +124,7 @@ const Chip = ({
     return (
       <RovingFocusGroup.Item asChild focusable active={active}>
         <ChipBase
-          id={id}
+          mid={id}
           label={label}
           disabled={disabled}
           type={type}
@@ -142,7 +138,7 @@ const Chip = ({
     );
   return (
     <ChipBase
-      id={id}
+      mid={id}
       label={label}
       disabled={disabled}
       type={type}
