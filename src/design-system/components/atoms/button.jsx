@@ -161,6 +161,8 @@ export const ButtonBase = forwardRef((props, ref) => {
             variant === 'critical-plain',
           'bg-none shadow-none hover:bg-surface-basic-hovered active:bg-surface-basic-pressed active:shadow-button':
             variant === 'plain' && iconOnly,
+          'bg-surface-basic-pressed shadow-none hover:bg-surface-basic-hovered active:bg-surface-basic-pressed active:shadow-button':
+            variant === 'plain' && iconOnly && selected,
         },
         {
           'text-text-default':
