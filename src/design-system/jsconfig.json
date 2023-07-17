@@ -10,9 +10,6 @@
         "paths": {
             "~/components/*": [
                 "./components/*"
-            ],
-            "~/book/*": [
-                "./book/*"
             ]
         }
     },
