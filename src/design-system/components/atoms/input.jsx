@@ -159,14 +159,19 @@ export const TextInputBase = forwardRef((props, ref) => {
     message,
     showclear,
     placeholder,
+    prefix,
+    suffix,
+    prefixIcon: PrefixIcon,
+    suffixIcon: SuffixIcon,
+    ...extraProps
   } = props;
   const [val, setVal] = useState(value || '');
   const [t, setT] = useState(type || 'text');
 
   const id = useId();
+  let Prefix = prefix;
+  let Suffix = suffix;
 
-  let { prefix: Prefix, suffix: Suffix } = props;
-  const { prefixIcon: PrefixIcon, suffixIcon: SuffixIcon } = props;
   if (PrefixIcon) {
     Prefix = <PrefixIcon size={16} color="currentColor" />;
   }
@@ -179,7 +184,7 @@ export const TextInputBase = forwardRef((props, ref) => {
   return (
     <div
       className={cn(
-        'flex flex-col',
+        'flex flex-col ',
         {
           'gap-md': label || extra,
         },
@@ -200,7 +205,7 @@ export const TextInputBase = forwardRef((props, ref) => {
       </div>
       <div
         className={cn(
-          'transition-all px-xl rounded border flex flex-row items-center relative ring-offset-1 focus-within:ring-2 focus-within:ring-border-focus ',
+          'transition-all  px-xl rounded border flex flex-row items-center relative ring-offset-1 focus-within:ring-2 focus-within:ring-border-focus ',
           {
             'text-text-critical bg-surface-critical-subdued border-border-critical':
               error,
@@ -229,7 +234,7 @@ export const TextInputBase = forwardRef((props, ref) => {
           placeholder={placeholder}
           id={id}
           className={cn(
-            'outline-none disabled:bg-surface-basic-input disabled:text-text-disabled flex-1',
+            'outline-none  disabled:bg-surface-basic-input disabled:text-text-disabled flex-1',
             'rounded py-lg bodyMd ',
             {
               'text-text-critical bg-surface-critical-subdued placeholder:text-critical-400':
@@ -248,6 +253,7 @@ export const TextInputBase = forwardRef((props, ref) => {
           ref={ref}
           onKeyDown={onKeyDown}
           autoComplete={autoComplete}
+          {...extraProps}
         />
         {Suffix && (
           <div

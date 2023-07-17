@@ -1,7 +1,13 @@
 import PropTypes from 'prop-types';
 import { XFill } from '@jengaicons/react';
 import * as RovingFocusGroup from '@radix-ui/react-roving-focus';
-import React, { cloneElement, forwardRef, useRef, useState } from 'react';
+import React, {
+  cloneElement,
+  forwardRef,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '../utils';
 
@@ -58,7 +64,7 @@ const ChipBase = forwardRef((props, ref) => {
           'px-lg py-md': type !== ChipTypes.REMOVABLE,
         },
         {
-          'hover:bg-surface-basic-hovered active:bg-surface-basic-pressed focus-visible:ring-2 focus:ring-border-focus':
+          'hover:bg-surface-basic-hovered active:bg-surface-basic-pressed focus-visible:ring-2 focus-visible:ring-border-focus':
             type === ChipTypes.CLICKABLE,
         }
       )}
@@ -78,15 +84,15 @@ const ChipBase = forwardRef((props, ref) => {
           <button
             disabled={disabled}
             onClick={(_e) => {
-              if (onClose) onClose(mid);
+              if (onClose) onClose(mid, false);
             }}
             onKeyDown={(e) => {
-              if (e.key === 'Enter') {
+              if (e.key === 'Enter' || e.key === ' ') {
                 e.stopPropagation();
                 e.preventDefault();
               }
               if (e.key === 'Backspace' || e.key === 'Delete') {
-                if (onClose) onClose(mid);
+                if (onClose) onClose(mid, true);
               }
             }}
             className={cn(
@@ -151,26 +157,31 @@ const Chip = ({
   );
 };
 
+Chip.displayName = 'Chip';
+
 const ChipGroup = ({ onClick, onRemove, children }) => {
+  const [keyRemovable, setKeyRemovable] = useState(false);
+  const [lastRemovedIndex, setLastRemovedIndex] = useState(null);
   const ref = useRef(null);
-  const [active, setActive] = useState(false);
+
+  useEffect(() => {
+    if (keyRemovable && children.length > 0) {
+      if (lastRemovedIndex === children.length)
+        ref.current?.children[lastRemovedIndex - 1]?.lastChild?.focus();
+      else ref.current?.children[lastRemovedIndex]?.lastChild?.focus();
+    }
+  }, [children]);
   return (
-    <RovingFocusGroup.Root
-      loop
-      ref={ref}
-      onEntryFocus={() => {
-        setActive(true);
-      }}
-    >
-      <div className={cn('flex flex-row gap-lg')}>
+    <RovingFocusGroup.Root loop>
+      <div className={cn('flex flex-row gap-lg')} ref={ref}>
         {React.Children.map(children, (child, index) => {
           return cloneElement(child, {
             onClick,
-            active: active && index === 0,
-            onClose: (e) => {
+            onClose: (e, iskey) => {
+              setKeyRemovable(iskey);
+              setLastRemovedIndex(index);
               if (onRemove) {
                 onRemove(e);
-                ref.current.focus();
               }
             },
           });

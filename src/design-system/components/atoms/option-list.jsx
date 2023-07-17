@@ -44,7 +44,10 @@ const OptionMenuItem = React.forwardRef(({ className, ...props }, ref) => (
     {...props}
     onMouseMove={(e) => e.preventDefault()}
     onMouseEnter={(e) => e.preventDefault()}
-    onMouseLeave={(e) => e.preventDefault()}
+    onMouseLeave={(e) => {
+      e.preventDefault();
+      e.target.blur();
+    }}
     onPointerLeave={(e) => e.preventDefault()}
     onPointerEnter={(e) => e.preventDefault()}
     onPointerMove={(e) => e.preventDefault()}
@@ -124,7 +127,10 @@ const OptionMenuCheckboxItem = React.forwardRef(
       {...props}
       onMouseMove={(e) => e.preventDefault()}
       onMouseEnter={(e) => e.preventDefault()}
-      onMouseLeave={(e) => e.preventDefault()}
+      onMouseLeave={(e) => {
+        e.preventDefault();
+        e.target.blur();
+      }}
       onPointerLeave={(e) => e.preventDefault()}
       onPointerEnter={(e) => e.preventDefault()}
       onPointerMove={(e) => e.preventDefault()}
@@ -174,7 +180,10 @@ const OptionMenuRadioItem = React.forwardRef(
       {...props}
       onMouseMove={(e) => e.preventDefault()}
       onMouseEnter={(e) => e.preventDefault()}
-      onMouseLeave={(e) => e.preventDefault()}
+      onMouseLeave={(e) => {
+        e.preventDefault();
+        e.target.blur();
+      }}
       onPointerLeave={(e) => e.preventDefault()}
       onPointerEnter={(e) => e.preventDefault()}
       onPointerMove={(e) => e.preventDefault()}
@@ -203,7 +212,7 @@ OptionMenuRadioItem.displayName = OptionMenuPrimitive.RadioItem.displayName;
 const OptionMenuSeparator = React.forwardRef(({ className, ...props }, ref) => (
   <OptionMenuPrimitive.Separator
     ref={ref}
-    className={cn('h-xs bg-border-disabled my-xs', className)}
+    className={cn('h-xs bg-border-disabled my-md', className)}
     {...props}
   />
 ));
