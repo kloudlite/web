@@ -76,7 +76,7 @@ const ChipBase = forwardRef((props, ref) => {
         (typeof Prefix === 'string' ? (
           <span className="bodySm text-text-soft">{Prefix}</span>
         ) : (
-          <Prefix size={16} color="currentColor" />
+          <Prefix size={12} color="currentColor" />
         ))}
       <span className="flex items-center">{label}</span>
       {type === ChipTypes.REMOVABLE && (
@@ -102,7 +102,7 @@ const ChipBase = forwardRef((props, ref) => {
               }
             )}
           >
-            <XFill size={16} color="currentColor" />
+            <XFill size={12} color="currentColor" />
           </button>
         </RovingFocusGroup.Item>
       )}
