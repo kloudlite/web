@@ -1,4 +1,5 @@
-import Pagination from '~/components/molecule/pagination';
+import { useState } from 'react';
+import Pagination from '../../components/molecule/pagination';
 
 export default {
   title: 'Molecules/Pagination',
@@ -7,6 +8,30 @@ export default {
   argTypes: {},
 };
 
+const PaginationHook = ({}) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+
+  const onPageChanged = (e) => {
+    setTimeout(() => {
+      setCurrentPage(e);
+    }, 500);
+  };
+
+  const onItemsPerPageChanged = (e) => {
+    setItemsPerPage(e);
+  };
+
+  return (
+    <Pagination
+      onPageChanged={onPageChanged}
+      currentPage={currentPage}
+      totalItems={200}
+      itemsPerPage={itemsPerPage}
+      onItemsPerPageChanged={onItemsPerPageChanged}
+    />
+  );
+};
 export const DefaultPagination = {
-  args: {},
+  render: () => <PaginationHook />,
 };

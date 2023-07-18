@@ -153,6 +153,8 @@ export const ButtonBase = forwardRef((props, ref) => {
             variant === 'outline' && selected,
           'bg-none shadow-none active:bg-surface-basic-pressed active:shadow-button':
             variant === 'plain' && !iconOnly,
+          'bg-surface-basic-pressed shadow-none active:bg-surface-basic-pressed active:shadow-button':
+            variant === 'plain' && !iconOnly && selected,
           'bg-none shadow-none active:bg-surface-primary-pressed active:shadow-button':
             variant === 'primary-plain',
           'bg-none shadow-none active:bg-surface-secondary-pressed active:shadow-button':
@@ -192,6 +194,9 @@ export const ButtonBase = forwardRef((props, ref) => {
             variant === 'primary-plain' ||
             variant === 'critical-plain' ||
             variant === 'secondary-plain',
+        },
+        {
+          underline: selected && !iconOnly && variant === 'plain',
         },
         {
           'px-2xl py-lg':
