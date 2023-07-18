@@ -4,9 +4,9 @@ import { cn } from '../utils';
 const ProgressTrackerItem = ({ label, active }) => {
   return (
     <div
-      className={cn('flex flex-row gap-x-xl items-center', {
-        'bodyMd-semibold text-text-default': active,
-        'bodyMd text-text-disabled': !active,
+      className={cn('flex flex-row gap-x-xl items-center bodyMd', {
+        'text-text-default': active,
+        'text-text-disabled': !active,
       })}
     >
       <div
