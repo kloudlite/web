@@ -1,7 +1,7 @@
 import { Link } from '@remix-run/react';
 import { TextInput } from '~/components/atoms/input.jsx';
 import { Search } from '@jengaicons/react';
-import { Chip } from '~/components/atoms/chip.jsx';
+import * as Chips from '~/components/atoms/chips.jsx';
 
 const BaseSidebar = ({ items }) => {
   return (
@@ -10,7 +10,11 @@ const BaseSidebar = ({ items }) => {
         <TextInput
           placeholder="Search"
           prefixIcon={Search}
-          suffix={<Chip label="C+K" />}
+          suffix={
+            <Chips.ChipGroup>
+              <Chips.Chip label="C+K" item="hi" />
+            </Chips.ChipGroup>
+          }
         />
       </div>
       <div className="flex flex-col gap-6">

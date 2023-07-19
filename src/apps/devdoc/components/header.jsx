@@ -2,7 +2,7 @@ import { BrandLogo } from '~/components/branding/brand-logo.jsx';
 import { Link } from '@remix-run/react';
 import { TextInput } from '~/components/atoms/input.jsx';
 import { Search } from '@jengaicons/react';
-import { Chip } from '~/components/atoms/chip-group.jsx';
+import * as Chips from '~/components/atoms/chips.jsx';
 
 export const Header = () => {
   return (
@@ -24,7 +24,11 @@ export const Header = () => {
           <TextInput
             placeholder="Search"
             prefixIcon={Search}
-            suffix={<Chip label="C+K" />}
+            suffix={
+              <Chips.ChipGroup>
+                <Chips.Chip label="C+K" item="sample" />
+              </Chips.ChipGroup>
+            }
           />
 
           <Link prefetch to="https://google.com">

@@ -357,8 +357,10 @@ TextInput.propTypes = {
   value: PropTypes.string,
   error: PropTypes.bool,
   disabled: PropTypes.bool,
-  prefix: PropTypes.string,
-  suffix: PropTypes.string,
+  prefixIcon: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+  suffixIcon: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+  prefix: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  suffix: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
 
 TextArea.propTypes = {
@@ -375,5 +377,7 @@ TextInput.defaultProps = {
   disabled: false,
   prefix: null,
   suffix: null,
+  prefixIcon: null,
+  suffixIcon: null,
   error: false,
 };
