@@ -11,7 +11,7 @@ export const TopBar = ({ tab, actions, logo, fixed, linkComponent }) => {
         }
       )}
     >
-      <div className={cn('flex flex-col m-auto')}>
+      <div className={cn('flex flex-col m-auto max-w-8xl')}>
         <div className="flex flex-row items-center justify-between gap-9xl py-xl px-3xl md:px-0">
           {logo && logo}
           <div className="flex flex-row items-center justify-center">
@@ -26,6 +26,7 @@ export const TopBar = ({ tab, actions, logo, fixed, linkComponent }) => {
             items={tab.items}
             onChange={tab.onChange}
             LinkComponent={linkComponent}
+            className="px-3xl md:px-0"
           />
         )}
       </div>

@@ -55,6 +55,7 @@ export const NavTabs = ({
   layoutId,
   value,
   LinkComponent,
+  className,
 }) => {
   const [active, setActive] = useState(value);
   useEffect(() => {
@@ -63,7 +64,12 @@ export const NavTabs = ({
     }
   }, [active]);
   return (
-    <div className="navbar flex flex-row gap-4xl snap-proximity snap-x overflow-x-scroll">
+    <div
+      className={cn(
+        'navbar flex flex-row gap-4xl overflow-x-scroll',
+        className
+      )}
+    >
       <LayoutGroup id={layoutId}>
         {items.map((child) => {
           return (
