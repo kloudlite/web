@@ -11,6 +11,11 @@ input:-webkit-autofill:active {
     -webkit-box-shadow: 0 0 0px 1000px white inset !important;
 }
 
+*{
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: transparent;
+}
+
 .heading4xl {
     @apply font-bold text-[40px] leading-[48px];
 }
@@ -81,6 +86,14 @@ input:-webkit-autofill:active {
 
 .slider {
     @apply w-[100%] h-[100%] bg-[#F5F5F5] rounded-[10px] overflow-hidden;
+}
+
+.navbar::-webkit-scrollbar{
+    display: none;
+}
+.navbar{
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
 
 

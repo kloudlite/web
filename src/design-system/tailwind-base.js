@@ -132,48 +132,6 @@ export default {
   darkMode: 'class',
   theme: {
     extend: {
-      keyframes: {
-        slideOut: {
-          from: { transform: 'translateX(0)' },
-          to: { transform: 'translateX(100%)' },
-        },
-        slideIn: {
-          from: { transform: 'translateX(100%)' },
-          to: { transform: 'translateX(0)' },
-        },
-        swipeOut: {
-          from: { transform: 'translateX(var(--radix-toast-swipe-end-x))' },
-          to: { transform: 'translateX(100%)' },
-        },
-        slideDownAndFade: {
-          from: { opacity: 0, transform: 'translateY(-2px)' },
-          to: { opacity: 1, transform: 'translateY(0)' },
-        },
-        slideLeftAndFade: {
-          from: { opacity: 0, transform: 'translateX(2px)' },
-          to: { opacity: 1, transform: 'translateX(0)' },
-        },
-        slideUpAndFade: {
-          from: { opacity: 0, transform: 'translateY(2px)' },
-          to: { opacity: 1, transform: 'translateY(0)' },
-        },
-        slideRightAndFade: {
-          from: { opacity: 0, transform: 'translateX(-2px)' },
-          to: { opacity: 1, transform: 'translateX(0)' },
-        },
-      },
-      animation: {
-        slideOut: 'slideOut 150ms ease-out',
-        slideIn: 'slideIn 150ms cubic-bezier(0.16, 1, 0.3, 1)',
-        swipeOut: 'swipeOut 100ms ease-out',
-        slideDownAndFade:
-          'slideDownAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
-        slideLeftAndFade:
-          'slideLeftAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
-        slideUpAndFade: 'slideUpAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
-        slideRightAndFade:
-          'slideRightAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
-      },
       boxShadow: {
         button: '0px 1px 4px rgba(0, 0, 0, 0.05)',
         card: [
@@ -198,19 +156,13 @@ export default {
         ],
       },
       maxWidth: {
-        92: '23rem',
-        95: '23.75rem',
-        153: '38.25rem',
-        296: '74rem', // 1184px
+        '8xl': '90rem',
       },
       minWidth: {
-        32: '8rem',
-        48: '12rem',
-        72: '18rem',
+        '8xl': '90rem',
       },
       width: {
-        48: '12rem',
-        92: '23rem',
+        '8xl': '90rem',
       },
     },
     fontFamily: {
@@ -219,8 +171,10 @@ export default {
     screens: {
       sm: '490px',
       md: '768px',
-      lg: '1040px',
-      xl: '1440px',
+      lg: '1024px',
+      xl: '1280px',
+      '2xl': '1440px',
+      '3xl': '1920px',
     },
     spacing: {
       0: '0px',
@@ -327,6 +281,7 @@ export default {
         success: primitives.colors.green['600'],
         purple: primitives.colors.purple['500'],
       },
+      transparent: 'transparent',
     },
   },
   plugins: [],
