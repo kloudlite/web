@@ -64,38 +64,37 @@ const OptionMenuTextInputItem = React.forwardRef(
     };
 
     return (
-      <OptionMenuPrimitive.Item
-        ref={ref}
-        className={cn(
-          'group relative flex flex-row items-center bodyMd cursor-default select-none py-lg px-xl text-text-default outline-none transition-colors focus:bg-surface-basic-hovered data-[disabled]:pointer-events-none data-[disabled]:text-text-disabled'
-        )}
-        onSelect={setSearchFocus}
-        onClick={() => setSearchFocus()}
-        onPointerUp={setSearchFocus}
-        onPointerDown={() => setSearchFocus()}
-        onMouseMove={(e) => e.preventDefault()}
-        onMouseEnter={(e) => e.preventDefault()}
-        onMouseLeave={(e) => e.preventDefault()}
-        onPointerMove={(e) => e.preventDefault()}
-        onPointerLeave={(e) => e.preventDefault()}
-        onFocus={() => {
-          searchRef.current.focus();
-        }}
-        {...props}
-        asChild
-      >
-        <TextInputBase
-          component="input"
-          ref={searchRef}
-          autoComplete="off"
-          onChange={(e) => {
-            if (onChange) onChange(e.target.value);
+      <div className="py-lg px-xl">
+        <OptionMenuPrimitive.Item
+          ref={ref}
+          onSelect={setSearchFocus}
+          onClick={() => setSearchFocus()}
+          onPointerUp={setSearchFocus}
+          onPointerDown={() => setSearchFocus()}
+          onMouseMove={(e) => e.preventDefault()}
+          onMouseEnter={(e) => e.preventDefault()}
+          onMouseLeave={(e) => e.preventDefault()}
+          onPointerMove={(e) => e.preventDefault()}
+          onPointerLeave={(e) => e.preventDefault()}
+          onFocus={() => {
+            searchRef.current.focus();
           }}
-          onKeyDown={(e) => {
-            if (e.key !== 'Escape') e.stopPropagation();
-          }}
-        />
-      </OptionMenuPrimitive.Item>
+          {...props}
+          asChild
+        >
+          <TextInputBase
+            component="input"
+            ref={searchRef}
+            autoComplete="off"
+            onChange={(e) => {
+              if (onChange) onChange(e.target.value);
+            }}
+            onKeyDown={(e) => {
+              if (e.key !== 'Escape') e.stopPropagation();
+            }}
+          />
+        </OptionMenuPrimitive.Item>
+      </div>
     );
   }
 );

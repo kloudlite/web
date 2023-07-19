@@ -183,13 +183,9 @@ export const TextInputBase = forwardRef((props, ref) => {
 
   return (
     <div
-      className={cn(
-        'flex flex-col ',
-        {
-          'gap-md': label || extra,
-        },
-        className
-      )}
+      className={cn('flex flex-col ', {
+        'gap-md': label || extra,
+      })}
     >
       <div className="flex items-center">
         <label className="flex-1 select-none bodyMd-medium" htmlFor={id}>
@@ -205,7 +201,7 @@ export const TextInputBase = forwardRef((props, ref) => {
       </div>
       <div
         className={cn(
-          'transition-all  px-xl rounded border flex flex-row items-center relative ring-offset-1 focus-within:ring-2 focus-within:ring-border-focus ',
+          'transition-all px-xl rounded border flex flex-row items-center relative ring-offset-1 focus-within:ring-2 focus-within:ring-border-focus ',
           {
             'text-text-critical bg-surface-critical-subdued border-border-critical':
               error,
@@ -214,7 +210,8 @@ export const TextInputBase = forwardRef((props, ref) => {
             'text-text-disabled border-border-disabled bg-surface-basic-input':
               disabled,
             'pr-0': component !== 'input',
-          }
+          },
+          className
         )}
       >
         {Prefix && (
@@ -234,12 +231,11 @@ export const TextInputBase = forwardRef((props, ref) => {
           placeholder={placeholder}
           id={id}
           className={cn(
-            'outline-none  disabled:bg-surface-basic-input disabled:text-text-disabled flex-1',
-            'rounded py-lg bodyMd ',
+            'outline-none flex-1',
+            'rounded py-lg bodyMd bg-transparent',
             {
-              'text-text-critical bg-surface-critical-subdued placeholder:text-critical-400':
-                error,
-              'text-text-default bg-surface-basic-input': !error,
+              'text-text-critical placeholder:text-critical-400': error,
+              'text-text-default': !error,
             }
           )}
           value={val}

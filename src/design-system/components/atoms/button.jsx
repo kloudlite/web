@@ -110,11 +110,13 @@ export const ButtonBase = forwardRef((props, ref) => {
             ? { 'border-none': true }
             : {
                 'border-border-default disabled:border-border-disabled':
-                  variant === 'basic' || variant === 'outline',
+                  variant === 'basic' ||
+                  variant === 'outline' ||
+                  variant === 'secondary-outline',
                 'border-border-primary disabled:border-border-disabled':
                   variant === 'primary' || variant === 'primary-outline',
                 'border-border-secondary disabled:border-border-disabled':
-                  variant === 'secondary' || variant === 'secondary-outline',
+                  variant === 'secondary',
                 'border-border-critical disabled:border-border-disabled':
                   variant === 'critical-outline' || variant === 'critical',
                 'border-none':
@@ -178,12 +180,11 @@ export const ButtonBase = forwardRef((props, ref) => {
             variant === 'critical' ||
             variant === 'secondary' ||
             variant === 'secondary-outline',
-          'text-text-critical hover':
+          'text-text-critical':
             variant === 'critical-outline' || variant === 'critical-plain',
           'text-text-primary':
             variant === 'primary-outline' || variant === 'primary-plain',
-          'text-text-secondary':
-            variant === 'secondary-plain' || variant === 'secondary-outline',
+          'text-text-secondary': variant === 'secondary-plain',
         },
         {
           'focus:underline': noRing,

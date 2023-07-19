@@ -15,7 +15,7 @@ export const NavTab = ({
   return (
     <div
       className={cn(
-        'outline-none flex flex-col relative group bodyMd-medium hover:text-text-default active:text-text-default ',
+        'outline-none flex flex-col relative group bodyMd-medium hover:text-text-default active:text-text-default snap-start',
         {
           'text-text-default': active,
           'text-text-soft': !active,
@@ -26,7 +26,7 @@ export const NavTab = ({
         onClick={onClick}
         to={href}
         className={cn(
-          'outline-none flex flex-col rounded ring-offset-1 focus-visible:ring-2 focus-visible:ring-border-focus',
+          'outline-none flex flex-col rounded ring-offset-1 focus-visible:ring-2 focus-visible:ring-border-focus w-max',
           {
             'p-2xl': !fitted,
             'pt-lg pb-xl': fitted,
@@ -63,7 +63,7 @@ export const NavTabs = ({
     }
   }, [active]);
   return (
-    <div className="flex flex-row gap-4xl">
+    <div className="navbar flex flex-row gap-4xl snap-proximity snap-x overflow-x-scroll">
       <LayoutGroup id={layoutId}>
         {items.map((child) => {
           return (
