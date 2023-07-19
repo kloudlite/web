@@ -11,7 +11,7 @@ import React, {
 import { motion } from 'framer-motion';
 import { cn } from '../utils';
 
-const ChipTypes = Object.freeze({
+export const ChipType = Object.freeze({
   BASIC: 'BASIC',
   REMOVABLE: 'REMOVABLE',
   CLICKABLE: 'CLICKABLE',
@@ -19,11 +19,11 @@ const ChipTypes = Object.freeze({
 
 const ChipBase = forwardRef((props, ref) => {
   const {
-    mid,
+    item,
     label,
     disabled,
-    type = ChipTypes.BASIC,
-    onClose,
+    type = ChipType.BASIC,
+    onRemove,
     Prefix,
     onClick,
     Component,
@@ -31,7 +31,7 @@ const ChipBase = forwardRef((props, ref) => {
     ...mprops
   } = props;
   let extraProps = {};
-  if (type === ChipTypes.CLICKABLE) {
+  if (type === ChipType.CLICKABLE) {
     extraProps = {
       initial: { scale: 1 },
       whileTap: { scale: 0.99 },
@@ -60,31 +60,31 @@ const ChipBase = forwardRef((props, ref) => {
           'bg-surface-basic-default': !disabled,
         },
         {
-          'pr-md pl-lg py-md': type === ChipTypes.REMOVABLE,
-          'px-lg py-md': type !== ChipTypes.REMOVABLE,
+          'pr-md pl-lg py-md': type === ChipType.REMOVABLE,
+          'px-lg py-md': type !== ChipType.REMOVABLE,
         },
         {
           'hover:bg-surface-basic-hovered active:bg-surface-basic-pressed focus-visible:ring-2 focus-visible:ring-border-focus':
-            type === ChipTypes.CLICKABLE,
+            type === ChipType.CLICKABLE,
         }
       )}
       onClick={onClick}
       ref={ref}
     >
       {Prefix &&
-        type !== ChipTypes.CLICKABLE &&
+        type !== ChipType.CLICKABLE &&
         (typeof Prefix === 'string' ? (
           <span className="bodySm text-text-soft">{Prefix}</span>
         ) : (
           <Prefix size={12} color="currentColor" />
         ))}
       <span className="flex items-center">{label}</span>
-      {type === ChipTypes.REMOVABLE && (
+      {type === ChipType.REMOVABLE && (
         <RovingFocusGroup.Item asChild focusable active={active}>
           <button
             disabled={disabled}
             onClick={(_e) => {
-              if (onClose) onClose(mid, false);
+              if (onRemove) onRemove(item, false);
             }}
             onKeyDown={(e) => {
               if (e.key === 'Enter' || e.key === ' ') {
@@ -92,7 +92,7 @@ const ChipBase = forwardRef((props, ref) => {
                 e.preventDefault();
               }
               if (e.key === 'Backspace' || e.key === 'Delete') {
-                if (onClose) onClose(mid, true);
+                if (onRemove) onRemove(item, true);
               }
             }}
             className={cn(
@@ -112,46 +112,46 @@ const ChipBase = forwardRef((props, ref) => {
 
 ChipBase.displayName = 'ChipBase';
 
-const Chip = ({
-  id,
+export const Chip = ({
+  item,
   label,
   disabled,
-  type = ChipTypes.BASIC,
+  type = ChipType.BASIC,
   prefix,
   onClick,
-  onClose,
+  onRemove,
   active = false,
 }) => {
   let Component = 'div';
-  if (type === ChipTypes.CLICKABLE) {
+  if (type === ChipType.CLICKABLE) {
     Component = motion.button;
   }
-  if (type === ChipTypes.CLICKABLE)
+  if (type === ChipType.CLICKABLE)
     return (
       <RovingFocusGroup.Item asChild focusable active={active}>
         <ChipBase
-          mid={id}
+          item={item}
           label={label}
           disabled={disabled}
           type={type}
           Prefix={prefix}
           Component={Component}
           onClick={onClick}
-          onClose={onClose}
+          onRemove={onRemove}
           active={active}
         />
       </RovingFocusGroup.Item>
     );
   return (
     <ChipBase
-      mid={id}
+      item={item}
       label={label}
       disabled={disabled}
       type={type}
       Prefix={prefix}
       Component={Component}
       onClick={onClick}
-      onClose={onClose}
+      onRemove={onRemove}
       active={active}
     />
   );
@@ -159,7 +159,7 @@ const Chip = ({
 
 Chip.displayName = 'Chip';
 
-const ChipGroup = ({ onClick, onRemove, children }) => {
+export const ChipGroup = ({ onClick, onRemove, children }) => {
   const [keyRemovable, setKeyRemovable] = useState(false);
   const [lastRemovedIndex, setLastRemovedIndex] = useState(null);
   const ref = useRef(null);
@@ -177,7 +177,7 @@ const ChipGroup = ({ onClick, onRemove, children }) => {
         {React.Children.map(children, (child, index) => {
           return cloneElement(child, {
             onClick,
-            onClose: (e, iskey) => {
+            onRemove: (e, iskey) => {
               setKeyRemovable(iskey);
               setLastRemovedIndex(index);
               if (onRemove) {
@@ -191,25 +191,21 @@ const ChipGroup = ({ onClick, onRemove, children }) => {
   );
 };
 
-ChipGroup.Chip = Chip;
-ChipGroup.ChipType = ChipTypes;
-
 Chip.propTypes = {
-  id: PropTypes.string.isRequired,
+  // eslint-disable-next-line react/forbid-prop-types
+  item: PropTypes.object.isRequired,
   label: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
-  onClose: PropTypes.func,
+  onRemove: PropTypes.func,
   type: PropTypes.oneOf([
-    ChipTypes.BASIC,
-    ChipTypes.CLICKABLE,
-    ChipTypes.REMOVABLE,
+    ChipType.BASIC,
+    ChipType.CLICKABLE,
+    ChipType.REMOVABLE,
   ]),
 };
 
 Chip.defaultProps = {
-  onClose: null,
+  onRemove: null,
   disabled: false,
-  type: ChipTypes.BASIC,
+  type: ChipType.BASIC,
 };
-
-export default ChipGroup;
