@@ -1,56 +1,53 @@
 import { useState } from 'react';
-import ChipGroup from '../../components/atoms/chip-group';
+import * as Chips from '../../components/atoms/chips';
 
 export default {
   title: 'Atoms/ChipGroup',
-  component: ChipGroup,
+  component: Chips.ChipGroup,
   tags: ['autodocs'],
   argTypes: {},
 };
 
 const ChipGroupRemovableHook = () => {
   const [chips, setChips] = useState([
-    { id: 2, label: 'Mango', type: ChipGroup.ChipType.REMOVABLE },
-    { id: 3, label: 'Dog', type: ChipGroup.ChipType.REMOVABLE },
-    { id: 4, label: 'Cat', type: ChipGroup.ChipType.REMOVABLE },
+    { id: 2, label: 'Mango', type: Chips.ChipType.REMOVABLE },
+    { id: 3, label: 'Dog', type: Chips.ChipType.REMOVABLE },
+    { id: 4, label: 'Cat', type: Chips.ChipType.REMOVABLE },
   ]);
   return (
-    <ChipGroup onRemove={(e) => setChips(chips.filter((c) => c.id !== e))}>
-      {chips.map((chip, index) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <ChipGroup.Chip {...chip} key={index} />
+    <Chips.ChipGroup onRemove={(e) => setChips(chips.filter((c) => c !== e))}>
+      {chips.map((chip) => (
+        <Chips.Chip {...chip} item={chip} key={chip.id} />
       ))}
-    </ChipGroup>
+    </Chips.ChipGroup>
   );
 };
 
 const ChipGroupBasicHook = () => {
   const [chips, _setChips] = useState([
-    { id: 0, label: 'Apple', type: ChipGroup.ChipType.BASIC },
-    { id: 1, label: 'Orange', type: ChipGroup.ChipType.BASIC },
+    { id: 0, label: 'Apple', type: Chips.ChipType.BASIC },
+    { id: 1, label: 'Orange', type: Chips.ChipType.BASIC },
   ]);
   return (
-    <ChipGroup>
-      {chips.map((chip, index) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <ChipGroup.Chip {...chip} key={index} />
+    <Chips.ChipGroup>
+      {chips.map((chip) => (
+        <Chips.Chip {...chip} item={chip} key={chip.id} />
       ))}
-    </ChipGroup>
+    </Chips.ChipGroup>
   );
 };
 
 const ChipGroupClickableHook = () => {
   const [chips, _setChips] = useState([
-    { id: 5, label: 'Volleyball', type: ChipGroup.ChipType.CLICKABLE },
-    { id: 5, label: 'Football', type: ChipGroup.ChipType.CLICKABLE },
+    { id: 5, label: 'Volleyball', type: Chips.ChipType.CLICKABLE },
+    { id: 6, label: 'Football', type: Chips.ChipType.CLICKABLE },
   ]);
   return (
-    <ChipGroup>
-      {chips.map((chip, index) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <ChipGroup.Chip {...chip} key={index} />
+    <Chips.ChipGroup>
+      {chips.map((chip) => (
+        <Chips.Chip {...chip} item={chip} key={chip.id} />
       ))}
-    </ChipGroup>
+    </Chips.ChipGroup>
   );
 };
 
