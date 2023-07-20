@@ -3,7 +3,7 @@ import * as ToastRadix from '@radix-ui/react-toast';
 import { Button } from '../atoms/button';
 import { cn } from '../utils';
 
-export const ToastProvider = ({ children, duration }) => {
+export const ToastProvider = ({ children, duration = 500 }) => {
   return (
     <ToastRadix.Provider swipeDirection="right" duration={duration}>
       {children}
