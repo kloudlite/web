@@ -13,13 +13,13 @@ export const ContextualSaveBar = ({
   return (
     <div
       className={classNames(
-        'transition-all bg-surface-secondary-pressed py-xl px-3xl md:px-6xl lg:px-9xl xl:px-11xl',
+        'transition-all bg-surface-secondary-pressed py-xl px-3xl md:px-0',
         {
           'sticky top-0 left-0 right-0 z-40': fixed,
         }
       )}
     >
-      <div className="flex flex-row items-center justify-between m-auto gap-lg md:gap-0">
+      <div className="flex flex-row items-center justify-between m-auto max-w-8xl gap-lg md:gap-0">
         {logo && (
           <div
             className="hidden md:block lg:block xl:block"
