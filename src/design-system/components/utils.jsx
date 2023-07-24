@@ -1,5 +1,7 @@
 import classNames from 'classnames';
 
+export { v4 as uuid } from 'uuid';
+
 export const cn = (...props) => {
   return classNames(...props);
 };
