@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Spinner } from '@jengaicons/react';
 import { cn } from '../utils';
 
 export const ButtonStyles = [
@@ -42,6 +43,7 @@ export const ButtonBase = forwardRef((props, ref) => {
     iconOnly,
     className,
     content,
+    loading = false,
     ...mprops
   } = props;
   const extraProps = {};
@@ -220,6 +222,20 @@ export const ButtonBase = forwardRef((props, ref) => {
       )}
       {...extraProps}
     >
+      <AnimatePresence>
+        {loading && (
+          <motion.span
+            initial={{ width: 0 }}
+            animate={{ width: 'auto', paddingRight: 0 }}
+            exit={{ width: 0 }}
+            className="flex items-center justify-center aspect-square overflow-hidden"
+          >
+            <span className="animate-spin">
+              <Spinner color="currentColor" weight={2} size={18} />
+            </span>
+          </motion.span>
+        )}
+      </AnimatePresence>
       {prefix && <Prefix size={iconOnly ? 20 : 16} color="currentColor" />}
       {!iconOnly && content}
       {suffix && !iconOnly && <Suffix size={16} color="currentColor" />}
