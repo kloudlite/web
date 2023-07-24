@@ -125,13 +125,25 @@ const primitives = {
     20: '80px',
     24: '96px',
     32: '128px',
+    40: '140px',
+    48: '192px',
+    60: '240px',
   },
 };
 
-export default {
+const config = {
   darkMode: 'class',
   theme: {
     extend: {
+      keyframes: {
+        animation: {
+          'spin-slow': 'indeterminate 1s infinite linear',
+        },
+        indeterminate: {
+          '40%': { transform: 'translateX(0) scaleX(0.4)' },
+          '100%': { transform: 'translateX(100%) scaleX(0.5)' },
+        },
+      },
       boxShadow: {
         button: '0px 1px 4px rgba(0, 0, 0, 0.05)',
         card: [
@@ -193,6 +205,9 @@ export default {
       '9xl': primitives.spacing['20'],
       '10xl': primitives.spacing['24'],
       '11xl': primitives.spacing['32'],
+      '12xl': primitives.spacing['40'],
+      '13xl': primitives.spacing['48'],
+      '14xl': primitives.spacing['60'],
     },
     colors: {
       surface: {
@@ -286,3 +301,7 @@ export default {
   },
   plugins: [],
 };
+
+export const LightTitlebarColor = config.theme.colors.surface.basic.subdued;
+
+export default config;
