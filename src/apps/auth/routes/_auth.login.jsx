@@ -15,7 +15,9 @@ import useForm from '~/root/lib/client/hooks/use-form';
 import Yup from '~/root/lib/server/helpers/yup';
 import logger from '~/root/lib/client/helpers/log';
 import { assureNotLoggedIn } from '~/root/lib/server/helpers/minimal-auth';
-import { useEffect } from 'react';
+import { toast } from '~/components/molecule/toast';
+import { useReload } from '~/root/lib/client/helpers/reloader';
+import { useAPIClient } from '../server/utils/api-provider';
 import { GQLServerHandler } from '../server/gql/saved-queries';
 
 const CustomGoogleIcon = (props) => {
@@ -23,17 +25,29 @@ const CustomGoogleIcon = (props) => {
 };
 
 const LoginWithEmail = () => {
-  const { values, errors, handleChange, handleSubmit } = useForm({
+  const api = useAPIClient();
+  const reloadPage = useReload();
+  const { values, errors, handleChange, handleSubmit, isLoading } = useForm({
     initialValues: {
       email: '',
       password: '',
     },
-    validationSchema: Yup.object(),
-    onSubmit: async (val) => {
-      console.log(val);
-    },
-    whileLoading: () => {
-      console.log('loading please wait');
+    validationSchema: Yup.object({
+      email: Yup.string().required().email(),
+      password: Yup.string().trim().required(),
+    }),
+    onSubmit: async (v) => {
+      try {
+        const { errors: _errors } = await api.login({
+          email: v.email,
+          password: v.password,
+        });
+        toast.success('logged in success fully');
+        reloadPage();
+      } catch (err) {
+        toast.error(err.message);
+        logger.error('error', err);
+      }
     },
   });
 
@@ -66,6 +80,7 @@ const LoginWithEmail = () => {
         }
       />
       <Button
+        loading={isLoading}
         size="large"
         variant="primary"
         content={<span className="bodyLg-medium">Continue with Email</span>}
@@ -194,7 +209,7 @@ const Login = () => {
   );
 };
 
-const restActions = async ({ ctx }) => {
+const restActions = async (ctx) => {
   const { data, errors } = await GQLServerHandler({
     headers: ctx.request.headers,
   }).loginPageInitUrls();
@@ -215,6 +230,6 @@ const restActions = async ({ ctx }) => {
 };
 
 export const loader = async (ctx) =>
-  (await assureNotLoggedIn({ ctx })) || restActions({ ctx });
+  (await assureNotLoggedIn(ctx)) || restActions(ctx);
 
 export default Login;

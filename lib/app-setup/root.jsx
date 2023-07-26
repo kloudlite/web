@@ -12,9 +12,13 @@ import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import ProgressContainer, {
   useProgress,
 } from '~/components/atoms/progress-bar';
-import { ToastProvider } from '~/components/molecule/toast';
+import reactToast from 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from '~/components/molecule/toast';
 
-export const links = () => [{ rel: 'stylesheet', href: stylesUrl }];
+export const links = () => [
+  { rel: 'stylesheet', href: stylesUrl },
+  { rel: 'stylesheet', href: reactToast },
+];
 
 const EmptyWrapper = Fragment;
 
@@ -56,7 +60,6 @@ const Root = ({ Wrapper = EmptyWrapper }) => {
             nonce: undefined, // optional, default undefined
           }}
           container={{
-            // optional to render inside custom element
             element: 'captcha',
             parameters: {
               badge: '[inline|bottomright|bottomleft]', // optional, default undefined
@@ -66,11 +69,10 @@ const Root = ({ Wrapper = EmptyWrapper }) => {
         >
           <ProgressContainer>
             <NonIdleProgressBar />
-            <ToastProvider>
-              <Wrapper>
-                <Outlet />
-              </Wrapper>
-            </ToastProvider>
+            <ToastContainer />
+            <Wrapper>
+              <Outlet context={{}} />
+            </Wrapper>
           </ProgressContainer>
         </GoogleReCaptchaProvider>
         <Scripts />

@@ -45,6 +45,7 @@ export const ButtonBase = forwardRef((props, ref) => {
     content,
     size = 'md',
     loading = false,
+    size = 'md',
     ...mprops
   } = props;
   const extraProps = {};
@@ -87,7 +88,7 @@ export const ButtonBase = forwardRef((props, ref) => {
         },
         'relative ring-offset-1',
         'outline-none shadow-button',
-        'flex flex-row gap-lg items-center justify-center',
+        'flex flex-row items-center justify-center',
         'disabled:text-text-disabled',
         {
           ...(noRing
@@ -244,15 +245,19 @@ export const ButtonBase = forwardRef((props, ref) => {
             exit={{ width: 0 }}
             className="flex items-center justify-center aspect-square overflow-hidden"
           >
-            <span className="animate-spin">
-              <Spinner color="currentColor" weight={2} size={18} />
+            <span className="flex justify-center items-center pr-lg">
+              <span className="animate-spin aspect-square">
+                <Spinner color="currentColor" weight={2} size={15} />
+              </span>
             </span>
           </motion.span>
         )}
       </AnimatePresence>
-      {prefix && <Prefix size={iconOnly ? 20 : 16} color="currentColor" />}
-      {!iconOnly && content}
-      {suffix && !iconOnly && <Suffix size={16} color="currentColor" />}
+      <span className="flex flex-row items-center justify-center gap-lg">
+        {prefix && <Prefix size={iconOnly ? 20 : 16} color="currentColor" />}
+        {!iconOnly && content}
+        {suffix && !iconOnly && <Suffix size={16} color="currentColor" />}
+      </span>
     </Component>
   );
 });

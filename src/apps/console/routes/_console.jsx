@@ -11,8 +11,9 @@ import {
   useMatch,
   useLocation,
   useMatches,
+  useLoaderData,
+  useOutletContext,
 } from '@remix-run/react';
-import { useEffect } from 'react';
 import { Button, IconButton } from '~/components/atoms/button';
 import Container from '~/components/atoms/container';
 import OptionList from '~/components/atoms/option-list';
@@ -20,6 +21,8 @@ import { BrandLogo } from '~/components/branding/brand-logo';
 import { Profile } from '~/components/molecule/profile';
 import { TopBar } from '~/components/organisms/top-bar';
 import { LightTitlebarColor } from '~/design-system/tailwind-base';
+import withContext from '~/root/lib/app-setup/with-contxt';
+import { setupConsoleContext } from '../server/utils/auth-utils';
 
 export const meta = () => {
   return [
@@ -83,6 +86,9 @@ const Console = () => {
     location.pathname
   );
 
+  const loaderData = useLoaderData();
+  const rootContext = useOutletContext();
+
   const matches = useMatches();
   return (
     <div className="flex flex-col">
@@ -120,10 +126,18 @@ const Console = () => {
         }
       />
       <Container>
-        <Outlet />
+        <Outlet context={{ ...rootContext, ...loaderData }} />
       </Container>
     </div>
   );
+};
+
+const restActions = (ctx) => {
+  return withContext(ctx, {});
+};
+
+export const loader = async (ctx) => {
+  return (await setupConsoleContext(ctx)) || restActions(ctx);
 };
 
 export default Console;
