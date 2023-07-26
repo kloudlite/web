@@ -131,6 +131,10 @@ const primitives = {
   },
 };
 
+const width = {
+  '8xl': '90rem',
+};
+
 const config = {
   darkMode: 'class',
   theme: {
@@ -167,15 +171,9 @@ const config = {
           '0px 0px 0px 1px rgba(63, 63, 68, 0.05)',
         ],
       },
-      maxWidth: {
-        '8xl': '90rem',
-      },
-      minWidth: {
-        '8xl': '90rem',
-      },
-      width: {
-        '8xl': '90rem',
-      },
+      maxWidth: { ...width },
+      minWidth: { ...width },
+      width: { ...width },
     },
     fontFamily: {
       sans: ['Inter', 'sans-serif'],
@@ -214,9 +212,10 @@ const config = {
         basic: {
           default: primitives.colors.grey['50'],
           subdued: primitives.colors.grey['100'],
-          hovered: primitives.colors.zinc['100'],
+          hovered: primitives.colors.zinc['50'],
           pressed: primitives.colors.zinc['200'],
           input: primitives.colors.grey['50'],
+          active: primitives.colors.zinc['200'],
         },
         primary: {
           default: primitives.colors.blue['500'],
@@ -297,11 +296,13 @@ const config = {
         purple: primitives.colors.purple['500'],
       },
       transparent: 'transparent',
+      white: 'white',
     },
   },
   plugins: [],
 };
 
 export const LightTitlebarColor = config.theme.colors.surface.basic.subdued;
+export const ChipGroupPaddingTop = config.theme.spacing.xl;
 
 export default config;
