@@ -306,4 +306,5 @@ const config = {
 
 export const LightTitlebarColor = config.theme.colors.surface.basic.subdued;
 export const ChipGroupPaddingTop = config.theme.spacing.xl;
+
 export default config;
