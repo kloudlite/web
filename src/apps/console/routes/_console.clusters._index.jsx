@@ -289,7 +289,7 @@ export const ResourceItem = ({
 
   const listView = () => (
     <>
-      <div className="hidden md:flex flex-row items-center justify-between gap-3xl">
+      <div className="hidden md:flex flex-row items-center justify-between gap-3xl w-full">
         <div className="flex flex-1 flex-row items-center gap-xl">
           <ThumbnailComponent />
           <div className="flex flex-col gap-sm">{TitleComponent()}</div>
