@@ -88,13 +88,19 @@ input:-webkit-autofill:active {
     @apply w-[100%] h-[100%] bg-[#F5F5F5] rounded-[10px] overflow-hidden;
 }
 
-.navbar::-webkit-scrollbar{
+.no-scrollbar-base::-webkit-scrollbar{
     display: none;
 }
-.navbar{
+
+.no-scrollbar-base{
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
 }
+
+.no-scrollbar{
+    @apply no-scrollbar-base 
+}
+
 
 
 .no-spinner::-webkit-inner-spin-button,
@@ -107,23 +113,6 @@ input:-webkit-autofill:active {
     -moz-appearance: textfield;
 }
 
-.toast[data-animation=entering] {
-    -webkit-animation-name: slide-in;
-    animation-name: slide-in;
-    -webkit-animation-duration: 0.2s;
-    animation-duration: 0.2s;
-}
-
-.toast[data-animation=queued] {
-    animation-name: fade-in;
-    -webkit-animation-duration: 0.2s;
-    animation-duration: 0.2s;
-}
-
-.toast[data-animation=exiting] {
-    animation-name: slide-out;
-}
-
 select{
     background-image: url("data:image/svg+xml,%3Csvg width='17' height='16' viewBox='0 0 17 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M13.5 5.5L8.5 10.5L3.5 5.5' stroke='%23111827' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
     background-position: right 0.5rem center;
@@ -131,90 +120,4 @@ select{
     background-size: 16px 16px;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
-}
-
-@keyframes fade-in {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes slide-in {
-    from {
-        transform: translateX(200px);
-    }
-
-    to {
-        transform: translateX(0);
-    }
-}
-
-@keyframes DialogFadeIn {
-    from {
-        opacity: 0;
-        transform: translate(-49%, -49%) scale(0.96);
-    }
-
-    to {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-    }
-}
-
-@keyframes DialogFadeOut {
-    from {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
-    }
-
-    to {
-        opacity: 0;
-        transform: translate(-49%, -49%) scale(0.96);
-    }
-}
-
-.DialogOverlay[data-state='open'],
-.DialogContent[data-state='open'] {
-    animation: DialogFadeIn 200ms ease-out;
-}
-
-.DialogOverlay[data-state='closed'],
-.DialogContent[data-state='closed'] {
-    animation: DialogFadeOut 200ms ease-in;
-}
-
-@keyframes OptionFadeIn {
-    from {
-        opacity: 0;
-        transform: translateX(1%) scale(0.98);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0%) scale(1);
-    }
-}
-
-@keyframes OptionFadeOut {
-    from {
-        opacity: 1;
-        transform: translateX(0%) scale(1);
-    }
-
-    to {
-        opacity: 0;
-        transform: translateX(1%) scale(0.98);
-    }
-}
-
-.OptionContent[data-state='open'] {
-    animation: OptionFadeIn 200ms ease-out;
-}
-
-.OptionContent[data-state='closed'] {
-    animation: OptionFadeOut 200ms ease-in;
 }

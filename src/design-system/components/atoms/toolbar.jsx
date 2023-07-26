@@ -53,7 +53,7 @@ const Toolbar = React.forwardRef((props, forwardedRef) => {
           dir={direction}
           {...toolbarProps}
           ref={forwardedRef}
-          className={cn('flex flex-row gap-lg')}
+          className={cn('flex flex-row gap-lg w-full')}
         />
       </RovingFocusGroup.Root>
     </ToolbarProvider>
@@ -126,6 +126,24 @@ const ToolbarButton = React.forwardRef((props, forwardedRef) => {
 });
 
 ToolbarButton.displayName = TOOLBAR_BUTTON_NAME;
+
+const TOOLBAR_ICON_BUTTON_NAME = 'ToolbarIconButton';
+
+const ToolbarIconButton = React.forwardRef((props, forwardedRef) => {
+  const { __scopeToolbar, ...buttonProps } = props;
+  const rovingFocusGroupScope = useRovingFocusGroupScope(__scopeToolbar);
+  return (
+    <RovingFocusGroup.Item
+      asChild
+      {...rovingFocusGroupScope}
+      focusable={!props.disabled}
+    >
+      <IconButton {...buttonProps} ref={forwardedRef} />
+    </RovingFocusGroup.Item>
+  );
+});
+
+ToolbarIconButton.displayName = TOOLBAR_ICON_BUTTON_NAME;
 
 const TEXTFIELD_NAME = 'TextField';
 
@@ -273,6 +291,7 @@ ToolbarButtonGroup.Button = ToolbarButtonGroupButton;
 ToolbarButtonGroup.IconButton = ToolbarButtonGroupIconButton;
 Toolbar.ButtonGroup = ToolbarButtonGroup;
 Toolbar.Button = ToolbarButton;
+Toolbar.IconButton = ToolbarIconButton;
 Toolbar.TextInput = ToolbarTextField;
 Toolbar.Separator = ToolbarSeparator;
 

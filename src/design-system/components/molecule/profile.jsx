@@ -16,8 +16,8 @@ export const Profile = forwardRef(
           )}
         >
           <AvatarBase label={name} color={color} size={size} />
-          <div className="flex flex-col gap-y-md  items-start">
-            <div className="bodyMd-medium">{name}</div>
+          <div className=" flex-col items-start hidden md:flex">
+            <div className="bodyMd-medium gap-y-md">{name}</div>
             {subtitle && (
               <div className="bodySm text-text-soft">{subtitle}</div>
             )}

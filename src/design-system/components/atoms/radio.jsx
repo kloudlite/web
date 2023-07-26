@@ -5,14 +5,27 @@ import { cn } from '../utils';
 import { BounceIt } from '../bounce-it';
 
 export const RadioItem = (props) => {
-  const { disabled, value, label, withBounceEffect } = props;
+  const {
+    disabled,
+    value,
+    label,
+    className,
+    withBounceEffect,
+    labelPlacement = 'right',
+  } = props;
   const id = useId();
   const rend = () => {
     return (
       <div
-        className={cn('flex items-center w-fit', {
-          'cursor-pointer': !disabled,
-        })}
+        className={cn(
+          'flex items-center w-fit',
+          {
+            'cursor-pointer': !disabled,
+            'flex-row-reverse': labelPlacement === 'left',
+            'flex-row': labelPlacement === 'right',
+          },
+          className
+        )}
       >
         <RadioGroupPrimitive.Item
           className={cn(
@@ -41,7 +54,7 @@ export const RadioItem = (props) => {
                 'text-text-disabled': disabled,
                 'text-text-default cursor-pointer': !disabled,
               },
-              'bodyMd-medium pl-lg select-none'
+              'bodyMd-medium pl-lg select-none flex-1'
             )}
             htmlFor={id}
           >
@@ -55,14 +68,14 @@ export const RadioItem = (props) => {
 };
 
 export const RadioGroup = (props) => {
-  const { value: v, onChange, label, disabled, children } = props;
+  const { value: v, onChange, label, disabled, children, className } = props;
   const [value, setValue] = useState(v);
   useEffect(() => {
     if (onChange) onChange(value);
   }, [value]);
   return (
     <RadioGroupPrimitive.Root
-      className="flex flex-col gap-y-xl"
+      className={cn('flex flex-col gap-y-xl', className)}
       value={value}
       aria-label={label}
       disabled={disabled}
@@ -77,8 +90,8 @@ export const RadioGroup = (props) => {
 };
 
 RadioItem.propTypes = {
-  label: PropTypes.string,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  label: PropTypes.any,
+  value: PropTypes.any,
   disabled: PropTypes.bool,
   withBounceEffect: PropTypes.bool,
 };
@@ -91,7 +104,7 @@ RadioItem.defaultProps = {
 };
 
 RadioGroup.propTypes = {
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   onChange: PropTypes.func,
   disabled: PropTypes.bool,
 };
@@ -99,4 +112,5 @@ RadioGroup.propTypes = {
 RadioGroup.defaultProps = {
   onChange: () => {},
   disabled: false,
+  label: null,
 };

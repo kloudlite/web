@@ -27,6 +27,7 @@ export const NumberInput = (props) => {
     disabled,
     max,
     message,
+    size = 'md',
     step = 1,
   } = props;
   const [v, setV] = useState(value || min || 0);
@@ -77,8 +78,12 @@ export const NumberInput = (props) => {
           className={cn(
             'outline-none flex-1',
             'outline-none disabled:bg-surface-basic-input disabled:text-text-disabled',
-            'rounded px-xl py-lg bodyMd ',
-            'no-spinner'
+            'rounded px-xl bodyMd ',
+            'no-spinner',
+            {
+              'py-xl': size === 'lg',
+              'py-lg': size === 'md',
+            }
           )}
           value={v}
           onChange={(e) => {
@@ -159,6 +164,7 @@ export const TextInputBase = forwardRef((props, ref) => {
     message,
     showclear,
     placeholder,
+    size = 'md',
     prefix,
     suffix,
     prefixIcon: PrefixIcon,
@@ -201,7 +207,7 @@ export const TextInputBase = forwardRef((props, ref) => {
       </div>
       <div
         className={cn(
-          'transition-all px-xl rounded border flex flex-row items-center relative ring-offset-1 focus-within:ring-2 focus-within:ring-border-focus ',
+          'transition-all px-lg rounded border flex flex-row items-center relative ring-offset-1 focus-within:ring-2 focus-within:ring-border-focus ',
           {
             'text-text-critical bg-surface-critical-subdued border-border-critical':
               error,
@@ -231,11 +237,15 @@ export const TextInputBase = forwardRef((props, ref) => {
           placeholder={placeholder}
           id={id}
           className={cn(
-            'outline-none flex-1',
-            'rounded py-lg bodyMd bg-transparent',
+            'outline-none flex-1 w-full',
+            'rounded bodyMd bg-transparent',
             {
               'text-text-critical placeholder:text-critical-400': error,
               'text-text-default': !error,
+            },
+            {
+              'py-xl': size === 'lg',
+              'py-lg': size === 'md',
             }
           )}
           value={val}
@@ -264,6 +274,7 @@ export const TextInputBase = forwardRef((props, ref) => {
         )}
         {showclear && !disabled && (
           <button
+            type="button"
             tabIndex={-1}
             onClick={() => {
               setVal('');
@@ -280,6 +291,7 @@ export const TextInputBase = forwardRef((props, ref) => {
         )}
         {type === 'password' && !disabled && (
           <button
+            type="button"
             tabIndex={-1}
             onClick={() => {
               setT((prev) => (prev === 'text' ? 'password' : 'text'));
@@ -336,35 +348,32 @@ export const PasswordInput = (props) => {
   );
 };
 
-const BaseInputProps = {
-  label: PropTypes.string,
-  placeholder: PropTypes.string,
-  value: PropTypes.string,
-  onChange: PropTypes.func,
-  error: PropTypes.bool,
-  message: PropTypes.object,
-  extra: PropTypes.object,
-  className: PropTypes.string,
-  disabled: PropTypes.bool,
-};
-
 TextInput.propTypes = {
   placeholder: PropTypes.string,
   value: PropTypes.string,
   error: PropTypes.bool,
   disabled: PropTypes.bool,
+  size: PropTypes.oneOf(['md', 'lg']),
   prefixIcon: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   suffixIcon: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   prefix: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   suffix: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
 
-TextArea.propTypes = {
-  ...BaseInputProps,
-};
+TextArea.propTypes = {};
 
 NumberInput.propTypes = {
-  ...BaseInputProps,
+  value: PropTypes.string,
+  error: PropTypes.bool,
+  disabled: PropTypes.bool,
+  size: PropTypes.oneOf(['md', 'lg']),
+};
+
+NumberInput.defaultProps = {
+  value: 0,
+  disabled: false,
+  error: false,
+  size: 'md',
 };
 
 TextInput.defaultProps = {
@@ -376,4 +385,5 @@ TextInput.defaultProps = {
   prefixIcon: null,
   suffixIcon: null,
   error: false,
+  size: 'md',
 };

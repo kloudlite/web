@@ -24,6 +24,7 @@ const reducer = (state, action) => {
   }
 };
 
+
 const ToastItem = ({ autoClose, duration, content, id, toastType }) => {
   const [open, setOpen] = useState(true);
   useEffect(() => {
@@ -56,22 +57,16 @@ const ToastItem = ({ autoClose, duration, content, id, toastType }) => {
             <ToastRadix.Title className="bodyMd-medium truncate">
               {content}
             </ToastRadix.Title>
-            {/* <ToastRadix.Action asChild altText="undo">
-              <Button
-                content={<span className="text-text-on-primary">Undo</span>}
-                variant="plain"
-                className="text-text-on-primary"
-              />
-            </ToastRadix.Action> */}
+
             <ToastRadix.Action asChild altText="close">
               <button>
                 <X size={12} color="currentColor" />
               </button>
             </ToastRadix.Action>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </ToastRadix.Root>
+          </ToastRadix.Root>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 
@@ -89,6 +84,11 @@ export const ToastProvider = ({ children }) => {
         )}
       >
         {toasts.map((toast) => (
+          <AnimatedToast toast={toast} key={toast.id} />
+        ))}
+        {children}
+      </context.Provider>
+      <ToastRadix.Viewport className="flex flex-col gap-lg fixed w-13xl bottom-8xl left-11xl m-0 list-none z-[2147483647] outline-none" />
           <ToastItem key={toast.id} {...toast} />
         ))}
         {children}

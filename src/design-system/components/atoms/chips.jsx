@@ -42,7 +42,7 @@ const ChipBase = forwardRef((props, ref) => {
       {...extraProps}
       {...mprops}
       className={cn(
-        'rounded border bodySm-medium py-px flex items-center transition-all outline-none flex-row gap-md ring-offset-1',
+        'rounded border bodySm-medium py-px flex items-center transition-all outline-none flex-row gap-md ring-offset-1 h-fit',
         'focus-within:ring-2 focus-within:ring-border-focus',
         'w-fit',
         {
@@ -159,7 +159,7 @@ export const Chip = ({
 
 Chip.displayName = 'Chip';
 
-export const ChipGroup = ({ onClick, onRemove, children }) => {
+export const ChipGroup = ({ onClick, onRemove, children, className }) => {
   const [keyRemovable, setKeyRemovable] = useState(false);
   const [lastRemovedIndex, setLastRemovedIndex] = useState(null);
   const ref = useRef(null);
@@ -172,8 +172,8 @@ export const ChipGroup = ({ onClick, onRemove, children }) => {
     }
   }, [children]);
   return (
-    <RovingFocusGroup.Root loop>
-      <div className={cn('flex flex-row gap-lg')} ref={ref}>
+    <RovingFocusGroup.Root loop asChild>
+      <div className={cn('flex flex-row gap-lg', className)} ref={ref}>
         {React.Children.map(children, (child, index) => {
           return cloneElement(child, {
             onClick,

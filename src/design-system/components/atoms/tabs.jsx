@@ -15,7 +15,7 @@ export const NavTab = ({
   return (
     <div
       className={cn(
-        'outline-none flex flex-col relative group bodyMd-medium hover:text-text-default active:text-text-default snap-start',
+        'outline-none flex flex-col relative group bodyMd-medium hover:text-text-default active:text-text-default',
         {
           'text-text-default': active,
           'text-text-soft': !active,
@@ -28,7 +28,7 @@ export const NavTab = ({
         className={cn(
           'outline-none flex flex-col rounded ring-offset-1 focus-visible:ring-2 focus-visible:ring-border-focus w-max',
           {
-            'p-2xl': !fitted,
+            'px-2xl': !fitted,
             'pt-lg pb-xl': fitted,
           }
         )}
@@ -66,24 +66,29 @@ export const NavTabs = ({
   return (
     <div
       className={cn(
-        'navbar flex flex-row gap-4xl overflow-x-scroll',
+        'no-scrollbar flex flex-row md:gap-4xl overflow-x-scroll py-[3px] pl-[3px] -my-[3px] -ml-[3px]',
+        'snap-x',
         className
       )}
     >
       <LayoutGroup id={layoutId}>
         {items.map((child) => {
           return (
-            <NavTab
-              onClick={() => {
-                setActive(child.value);
-              }}
-              fitted={fitted}
+            <div
               key={child.key}
-              href={child.href}
-              label={child.label}
-              active={active === child.value}
-              LinkComponent={LinkComponent}
-            />
+              className="px-xl first:pl-3xl last:pr-3xl md:first:pl-0 md:first:pr-0 md:px-0 snap-start"
+            >
+              <NavTab
+                onClick={() => {
+                  setActive(child.value);
+                }}
+                fitted={fitted}
+                href={child.href}
+                label={child.label}
+                active={value === child.value}
+                LinkComponent={LinkComponent}
+              />
+            </div>
           );
         })}
       </LayoutGroup>
