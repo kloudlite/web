@@ -42,6 +42,7 @@ export const ButtonBase = forwardRef((props, ref) => {
     iconOnly,
     className,
     content,
+    size = 'md',
     ...mprops
   } = props;
   const extraProps = {};
@@ -119,6 +120,8 @@ export const ButtonBase = forwardRef((props, ref) => {
                   variant === 'secondary',
                 'border-border-critical disabled:border-border-disabled':
                   variant === 'critical-outline' || variant === 'critical',
+                'border-border-purple': variant === 'purple',
+                'border-border-tertiary': variant === 'tertiary',
                 'border-none':
                   variant === 'plain' ||
                   variant === 'primary-plain' ||
@@ -153,33 +156,33 @@ export const ButtonBase = forwardRef((props, ref) => {
             variant === 'outline',
           'bg-surface-basic-pressed shadow-none hover:bg-surface-basic-hovered active:bg-surface-basic-pressed hover:shadow-button active:shadow-button':
             variant === 'outline' && selected,
-          'bg-none shadow-none active:bg-surface-basic-pressed active:shadow-button':
-            variant === 'plain' && !iconOnly,
-          'bg-surface-basic-pressed shadow-none active:bg-surface-basic-pressed active:shadow-button':
+          'bg-none shadow-none':
+            (variant === 'plain' ||
+              variant === 'primary-plain' ||
+              variant === 'secondary-plain' ||
+              variant === 'critical-plain') &&
+            !iconOnly,
+          'bg-surface-basic-pressed shadow-none active:shadow-button':
             variant === 'plain' && !iconOnly && selected,
-          'bg-none shadow-none active:bg-surface-primary-pressed active:shadow-button':
-            variant === 'primary-plain',
-          'bg-none shadow-none active:bg-surface-secondary-pressed active:shadow-button':
-            variant === 'secondary-plain',
-          'bg-none shadow-none active:bg-surface-critical-pressed active:shadow-button':
-            variant === 'critical-plain',
           'bg-none shadow-none hover:bg-surface-basic-hovered active:bg-surface-basic-pressed active:shadow-button':
             variant === 'plain' && iconOnly,
           'bg-surface-basic-pressed shadow-none hover:bg-surface-basic-hovered active:bg-surface-basic-pressed active:shadow-button':
             variant === 'plain' && iconOnly && selected,
+          'bg-surface-purple-default hover:bg-surface-purple-hovered active:bg-surface-purple-pressed':
+            variant === 'purple',
+          'bg-surface-tertiary-default hover:bg-surface-tertiary-hovered active:bg-surface-tertiary-pressed':
+            variant === 'tertiary',
         },
         {
           'text-text-default':
             variant === 'basic' || variant === 'plain' || variant === 'outline',
-          'active:text-text-on-primary':
-            variant === 'primary-plain' ||
-            variant === 'critical-plain' ||
-            variant === 'secondary-plain',
           'text-text-on-primary':
             variant === 'primary' ||
             variant === 'critical' ||
             variant === 'secondary' ||
-            variant === 'secondary-outline',
+            variant === 'secondary-outline' ||
+            variant === 'tertiary' ||
+            variant === 'purple',
           'text-text-critical':
             variant === 'critical-outline' || variant === 'critical-plain',
           'text-text-primary':
@@ -200,20 +203,31 @@ export const ButtonBase = forwardRef((props, ref) => {
           underline: selected && !iconOnly && variant === 'plain',
         },
         {
-          'px-2xl py-lg':
-            !iconOnly &&
+          ...(!iconOnly &&
             !(
               variant === 'plain' ||
               variant === 'primary-plain' ||
               variant === 'critical-plain' ||
               variant === 'secondary-plain'
-            ),
-          'px-md py-sm':
-            !iconOnly &&
+            ) && {
+              'py-md px-lg': size === 'sm',
+              'py-lg px-2xl': size === 'md',
+              'py-xl px-4xl': size === 'lg',
+              'py-2xl px-6xl': size === 'xl',
+              'py-2xl px-9xl': size === '2xl',
+            }),
+        },
+        {
+          ...(!iconOnly &&
             (variant === 'plain' ||
               variant === 'primary-plain' ||
               variant === 'critical-plain' ||
-              variant === 'secondary-plain'),
+              variant === 'secondary-plain') && {
+              'py-sm px-md': size === 'md',
+              'py-md px-lg': size === 'lg',
+            }),
+        },
+        {
           'p-lg': iconOnly,
         },
         className
@@ -266,7 +280,10 @@ Button.propTypes = {
     'primary-plain',
     'secondary-plain',
     'critical-plain',
+    'purple',
+    'tertiary',
   ]),
+  size: PropTypes.oneOf(['sm', 'md', 'lg', 'xl', '2xl']),
   content: PropTypes.oneOfType([PropTypes.string, PropTypes.any]),
   onClick: PropTypes.func,
   href: PropTypes.string,
@@ -283,6 +300,7 @@ Button.defaultProps = {
   href: null,
   block: false,
   disabled: false,
+  size: 'md',
 };
 
 IconButton.propTypes = {
