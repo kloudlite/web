@@ -24,7 +24,7 @@ const OptionMenuContent = React.forwardRef(
         align="end"
         loop
         className={cn(
-          'OptionContent z-50 border border-border-default shadow-popover bg-surface-basic-default rounded min-w-48 overflow-hidden py-lg',
+          'OptionContent z-50 border border-border-default shadow-popover bg-surface-basic-default rounded min-w-[160px] overflow-hidden py-lg',
           className
         )}
         {...props}
