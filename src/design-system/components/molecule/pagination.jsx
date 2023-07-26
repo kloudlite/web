@@ -96,7 +96,7 @@ const Pagination = (props) => {
   };
 
   return (
-    <div className="flex flex-row items-center gap-3xl">
+    <div className="flex flex-row items-center gap-3xl w-full">
       <div className="flex flex-row items-center flex-1 gap-lg text-icon-default bodyMd">
         <label htmlFor={itemsPerPageId}>Item per page</label>
         <select
