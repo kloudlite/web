@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
-
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useContext, useMemo, useState } from 'react';
 import useScreenSize from '../hooks/useScreen';
 
 const context = createContext();
