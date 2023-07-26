@@ -24,7 +24,6 @@ const reducer = (state, action) => {
   }
 };
 
-
 const ToastItem = ({ autoClose, duration, content, id, toastType }) => {
   const [open, setOpen] = useState(true);
   useEffect(() => {
@@ -57,7 +56,6 @@ const ToastItem = ({ autoClose, duration, content, id, toastType }) => {
             <ToastRadix.Title className="bodyMd-medium truncate">
               {content}
             </ToastRadix.Title>
-
             <ToastRadix.Action asChild altText="close">
               <button>
                 <X size={12} color="currentColor" />
@@ -69,6 +67,7 @@ const ToastItem = ({ autoClose, duration, content, id, toastType }) => {
     </AnimatePresence>
   );
 };
+
 
 export const ToastProvider = ({ children }) => {
   const [toasts, dispatch] = useReducer(reducer, []);

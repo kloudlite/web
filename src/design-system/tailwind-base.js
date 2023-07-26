@@ -214,9 +214,10 @@ const config = {
         basic: {
           default: primitives.colors.grey['50'],
           subdued: primitives.colors.grey['100'],
-          hovered: primitives.colors.zinc['100'],
+          hovered: primitives.colors.zinc['50'],
           pressed: primitives.colors.zinc['200'],
           input: primitives.colors.grey['50'],
+          active: primitives.colors.zinc['200'],
         },
         primary: {
           default: primitives.colors.blue['500'],
@@ -297,11 +298,13 @@ const config = {
         purple: primitives.colors.purple['500'],
       },
       transparent: 'transparent',
+      white: 'white',
     },
   },
   plugins: [],
 };
 
 export const LightTitlebarColor = config.theme.colors.surface.basic.subdued;
+export const ChipGroupPaddingTop = config.theme.spacing.xl;
 
 export default config;
