@@ -22,6 +22,7 @@ export const TopBar = ({ tab, actions, logo, fixed, linkComponent }) => {
         {tab && (
           <div className="-mx-3xl md:mx-0">
             <NavTabs
+              basePath={tab.basePath}
               value={tab.value}
               layoutId={tab.layoutId}
               fitted={tab.fitted}

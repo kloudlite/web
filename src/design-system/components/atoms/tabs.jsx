@@ -56,6 +56,7 @@ export const NavTabs = ({
   value,
   LinkComponent,
   className,
+  basePath,
 }) => {
   const [active, setActive] = useState(value);
   useEffect(() => {
@@ -83,7 +84,7 @@ export const NavTabs = ({
                   setActive(child.value);
                 }}
                 fitted={fitted}
-                href={child.href}
+                href={basePath + child.href}
                 label={child.label}
                 active={value === child.value}
                 LinkComponent={LinkComponent}
