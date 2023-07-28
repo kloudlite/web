@@ -4,7 +4,7 @@ import { cn } from '../utils';
 const ProgressTrackerItem = ({ label, active }) => {
   return (
     <div
-      className={cn('flex flex-row gap-x-xl items-center bodyMd', {
+      className={cn('flex flex-row gap-x-xl items-center headingMd', {
         'text-text-default': active,
         'text-text-disabled': !active,
       })}
@@ -48,7 +48,7 @@ export const ProgressTracker = ({ items }) => {
       {items &&
         items.map((item, index) => {
           return (
-            <div className="flex flex-col" key={item.key}>
+            <div className="flex flex-col" key={item.id}>
               <ProgressTrackerItem active={item.active} label={item.label} />
               {index !== items.length - 1 && (
                 <div className="flex items-center justify-center w-[10px]">
@@ -81,6 +81,7 @@ ProgressTracker.propTypes = {
     PropTypes.shape({
       label: PropTypes.string.isRequired,
       active: PropTypes.bool,
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     })
   ).isRequired,
 };
