@@ -29,6 +29,8 @@ export const ActionButton = ({
         className={cn(
           'w-[inherit] rounded border bodyMd flex gap-md items-center justify-between cursor-pointer outline-none border-none px-2xl py-lg ring-offset-1 focus-visible:ring-2 focus:ring-border-focus',
           {
+            'text-text-soft hover:text-text-default':
+              !active && !disabled && !critical,
             'text-text-primary bodyMd-medium': active,
             'text-text-disabled': disabled,
             'text-text-critical hover:text-text-on-primary active:text-text-on-primary':
@@ -43,7 +45,7 @@ export const ActionButton = ({
             'bg-none hover:bg-surface-critical-hovered active:bg-surface-critical-pressed':
               !active && !disabled && critical,
             'bg-none': disabled,
-            'bg-surface-primary-selected': !critical && active,
+            'bg-surface-basic-active': !critical && active,
           }
         )}
         onClick={!critical ? onClick : null}

@@ -2,6 +2,7 @@ import * as PrimitiveAlertDialog from '@radix-ui/react-alert-dialog';
 import { X } from '@jengaicons/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Button as NativeButton, IconButton } from '../atoms/button';
+import { cn } from '../utils';
 
 export const Header = ({ children }) => {
   return (
@@ -34,24 +35,30 @@ export const Button = (props) => {
   );
 };
 
-export const Dialog = ({ show, onOpenChange, children }) => {
+export const Dialog = ({ show, onOpenChange, children, backdrop = true }) => {
   return (
     <PrimitiveAlertDialog.Root open={show} onOpenChange={onOpenChange}>
       <AnimatePresence>
         {show && (
           <PrimitiveAlertDialog.Portal forceMount>
-            <PrimitiveAlertDialog.Overlay
-              className="fixed inset-0"
-              asChild
-              forceMount
-            />
+            <PrimitiveAlertDialog.Overlay asChild forceMount>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2, ease: 'anticipate' }}
+                className={cn('fixed inset-0', {
+                  'bg-text-default/60': backdrop,
+                })}
+              />
+            </PrimitiveAlertDialog.Overlay>
             <PrimitiveAlertDialog.Content asChild forceMount>
               <motion.div
                 initial={{ x: '-50%', y: '-47%', opacity: 0 }}
                 animate={{ x: '-50%', y: '-50%', opacity: 1 }}
                 exit={{ x: '-50%', y: '-47%', opacity: 0 }}
-                transition={{ duration: 0.3, ease: 'linear' }}
-                className="outline-none transform overflow-hidden rounded bg-surface-basic-default shadow-modal border border-border-default fixed top-1/2 left-1/2 w-[90vw] max-w-[450px]"
+                transition={{ duration: 0.3, ease: 'anticipate' }}
+                className="outline-none transform overflow-hidden rounded bg-surface-basic-default shadow-modal border border-border-default fixed top-1/2 left-1/2 w-[612px] max-w-[612px]"
               >
                 {children}
               </motion.div>

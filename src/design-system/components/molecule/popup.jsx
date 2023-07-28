@@ -1,73 +1,73 @@
-import PropTypes from 'prop-types';
-import { XFill } from '@jengaicons/react';
 import * as Dialog from '@radix-ui/react-dialog';
-import { useState } from 'react';
-import { Button, IconButton } from '../atoms/button.jsx';
+import { X } from '@jengaicons/react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Button as NativeButton, IconButton } from '../atoms/button';
+import { cn } from '../utils';
 
-export const Popup = ({
-  header,
-  show,
-  onClose,
-  secondaryAction,
-  action,
-  children,
-}) => {
-  const [open, setOpen] = useState(show);
-
+export const Header = ({ children }) => {
   return (
-    <Dialog.Root open={open} onOpenChange={setOpen}>
-      <Dialog.Portal>
-        <Dialog.Overlay className="DialogOverlay bg-blackA9 data-[state=open]:animate-overlayShow fixed inset-0" />
-        <Dialog.Content className="DialogContent outline-none transform overflow-hidden rounded bg-surface-basic-default shadow-modal border border-border-default transition-all fixed top-1/2 left-1/2 w-[90vw] max-w-[450px] -translate-x-1/2 -translate-y-1/2">
-          <Dialog.Title className="headingMd p-5 border-b border-border-default flex flex-row items-center justify-between">
-            {header}
-            <Dialog.Close asChild>
-              <IconButton onClick={onClose} icon={XFill} variant="plain" />
-            </Dialog.Close>
-          </Dialog.Title>
-          <div className="p-5 bodyMd">{children}</div>
-          {(action || secondaryAction) && (
-            <div className="flex flex-row gap-2 p-5 justify-end">
-              {secondaryAction && (
-                <Dialog.Close asChild>
-                  <Button
-                    content={secondaryAction.content}
-                    variant="outline"
-                    onClick={secondaryAction.onAction}
-                  />
-                </Dialog.Close>
-              )}
-              {action && (
-                <Button content={action.content} onClick={action.onAction} />
-              )}
-            </div>
-          )}
-        </Dialog.Content>
-      </Dialog.Portal>
+    <div className="border-b border-border-default p-3xl flex flex-row items-center justify-between">
+      <Dialog.Title className="headingLg text-text-strong">
+        {children}
+      </Dialog.Title>
+      <Dialog.Close asChild>
+        <IconButton variant="plain" icon={X} />
+      </Dialog.Close>
+    </div>
+  );
+};
+
+export const Content = ({ children }) => {
+  return <div className="p-3xl">{children}</div>;
+};
+
+export const Footer = ({ children }) => {
+  return (
+    <div className="p-3xl flex flex-row justify-end gap-lg">{children}</div>
+  );
+};
+
+export const Button = (props) => {
+  return (
+    <Dialog.Close asChild>
+      <NativeButton {...props} />
+    </Dialog.Close>
+  );
+};
+
+const Popup = ({ show, onOpenChange, children, backdrop = true }) => {
+  return (
+    <Dialog.Root open={show} onOpenChange={onOpenChange}>
+      <AnimatePresence>
+        {show && (
+          <Dialog.Portal forceMount>
+            <Dialog.Overlay className="fixed inset-0" asChild forceMount>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2, ease: 'anticipate' }}
+                className={cn('fixed inset-0', {
+                  'bg-text-default/60': backdrop,
+                })}
+              />
+            </Dialog.Overlay>
+            <Dialog.Content asChild forceMount>
+              <motion.div
+                initial={{ x: '-50%', y: '-47%', opacity: 0 }}
+                animate={{ x: '-50%', y: '-50%', opacity: 1 }}
+                exit={{ x: '-50%', y: '-47%', opacity: 0 }}
+                transition={{ duration: 0.3, ease: 'anticipate' }}
+                className="outline-none transform overflow-hidden rounded bg-surface-basic-default shadow-modal border border-border-default fixed top-1/2 left-1/2 w-[90vw] max-w-[450px]"
+              >
+                {children}
+              </motion.div>
+            </Dialog.Content>
+          </Dialog.Portal>
+        )}
+      </AnimatePresence>
     </Dialog.Root>
   );
 };
 
-Popup.propTypes = {
-  onClose: PropTypes.func,
-  action: PropTypes.shape({
-    content: PropTypes.string.isRequired,
-    onAction: PropTypes.func,
-  }),
-  secondaryAction: PropTypes.shape({
-    content: PropTypes.string.isRequired,
-    onAction: PropTypes.func,
-  }),
-};
-
-Popup.defaultProps = {
-  action: {
-    content: 'Ok',
-    onAction: () => {},
-  },
-  secondaryAction: {
-    content: 'Cancel',
-    onAction: () => {},
-  },
-  onClose: () => {},
-};
+export default Popup;
