@@ -1,3 +1,5 @@
+import plugin from 'tailwindcss/plugin';
+
 const primitives = {
   colors: {
     amber: {
@@ -129,6 +131,25 @@ const primitives = {
     48: '192px',
     60: '240px',
   },
+  fontSize: {
+    xs: '12px',
+    sm: '14px',
+    md: '16px',
+    lg: '20px',
+    xl: '24px',
+    '2xl': '28px',
+    '3xl': '32px',
+    '4xl': '40px',
+  },
+  lineHeight: {
+    xs: '16px',
+    sm: '20px',
+    md: '24px',
+    lg: '28px',
+    xl: '32px',
+    '2xl': '40px',
+    '3xl': '48px',
+  },
 };
 
 const width = {
@@ -186,6 +207,8 @@ const config = {
       '2xl': '1440px',
       '3xl': '1920px',
     },
+    fontSize: { ...primitives.fontSize },
+    lineHeight: { ...primitives.lineHeight },
     spacing: {
       0: '0px',
       xs: primitives.spacing['025'],
@@ -299,7 +322,36 @@ const config = {
       white: 'white',
     },
   },
-  plugins: [],
+  plugins: [
+    // plugin(({ addComponents, theme }) => {
+    //   console.log(theme('fontWeight'));
+    //   addComponents({
+    //     '.bodySm': {
+    //       fontSize: theme('fontSize.xs'),
+    //       lineHeight: theme('lineHeight.xs'),
+    //       fontWeight: theme('fontWeight.normal'),
+    //     },
+    //     '.bodySm-medium': {
+    //       fontSize: theme('fontSize.xs'),
+    //       lineHeight: theme('lineHeight.xs'),
+    //       fontWeight: theme('fontWeight.medium'),
+    //     },
+    //     '.bodyMd': {
+    //       fontSize: theme('fontSize.sm'),
+    //       lineHeight: theme('lineHeight.sm'),
+    //       fontWeight: theme('fontWeight.normal'),
+    //     },
+    //     '.abcd': {
+    //       '@apply .bodyMd underline': {},
+    //     },
+    //     '.bodyLg': {
+    //       fontSize: theme('fontSize.md'),
+    //       lineHeight: theme('lineHeight.sm'),
+    //       fontWeight: theme('fontWeight.normal'),
+    //     },
+    //   });
+    // }),
+  ],
 };
 
 export const LightTitlebarColor = config.theme.colors.surface.basic.subdued;
