@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { XFill } from '@jengaicons/react';
+import { Spinner, XFill } from '@jengaicons/react';
 import * as RovingFocusGroup from '@radix-ui/react-roving-focus';
 import React, {
   cloneElement,
@@ -22,16 +22,16 @@ const ChipBase = forwardRef((props, ref) => {
     item,
     label,
     disabled,
-    type = ChipType.BASIC,
+    compType = ChipType.BASIC,
     onRemove,
     Prefix,
     onClick,
     Component,
-    active = false,
+    loading,
     ...mprops
   } = props;
   let extraProps = {};
-  if (type === ChipType.CLICKABLE) {
+  if (compType === ChipType.CLICKABLE) {
     extraProps = {
       initial: { scale: 1 },
       whileTap: { scale: 0.99 },
@@ -60,27 +60,32 @@ const ChipBase = forwardRef((props, ref) => {
           'bg-surface-basic-default': !disabled,
         },
         {
-          'pr-md pl-lg py-md': type === ChipType.REMOVABLE,
-          'px-lg py-md': type !== ChipType.REMOVABLE,
+          'pr-md pl-lg py-md': compType === ChipType.REMOVABLE,
+          'px-lg py-md': compType !== ChipType.REMOVABLE,
         },
         {
           'hover:bg-surface-basic-hovered active:bg-surface-basic-pressed focus-visible:ring-2 focus-visible:ring-border-focus':
-            type === ChipType.CLICKABLE,
+            compType === ChipType.CLICKABLE,
         }
       )}
       onClick={onClick}
       ref={ref}
     >
       {Prefix &&
-        type !== ChipType.CLICKABLE &&
+        !loading &&
         (typeof Prefix === 'string' ? (
           <span className="bodySm text-text-soft">{Prefix}</span>
         ) : (
           <Prefix size={12} color="currentColor" />
         ))}
+      {loading && (
+        <span className="animate-spin">
+          <Spinner size={12} color="currentColor" />
+        </span>
+      )}
       <span className="flex items-center">{label}</span>
-      {type === ChipType.REMOVABLE && (
-        <RovingFocusGroup.Item asChild focusable active={active}>
+      {compType === ChipType.REMOVABLE && (
+        <RovingFocusGroup.Item asChild focusable>
           <button
             disabled={disabled}
             onClick={(_e) => {
@@ -112,50 +117,59 @@ const ChipBase = forwardRef((props, ref) => {
 
 ChipBase.displayName = 'ChipBase';
 
-export const Chip = ({
-  item,
-  label,
-  disabled,
-  type = ChipType.BASIC,
-  prefix,
-  onClick,
-  onRemove,
-  active = false,
-}) => {
-  let Component = 'div';
-  if (type === ChipType.CLICKABLE) {
-    Component = motion.button;
-  }
-  if (type === ChipType.CLICKABLE)
+export const Chip = forwardRef(
+  (
+    {
+      item,
+      label,
+      disabled,
+      type = ChipType.BASIC,
+      prefix,
+      onClick,
+      onRemove,
+      isInGroup,
+      loading = false,
+    },
+    ref
+  ) => {
+    let Component = 'div';
+    if (type === ChipType.CLICKABLE) {
+      Component = motion.button;
+    }
+    if (type === ChipType.CLICKABLE && isInGroup)
+      return (
+        <RovingFocusGroup.Item asChild focusable ref={ref}>
+          <ChipBase
+            item={item}
+            label={label}
+            disabled={disabled}
+            compType={type}
+            Prefix={prefix}
+            Component={Component}
+            onClick={onClick}
+            onRemove={onRemove}
+            type="button"
+            loading={loading}
+          />
+        </RovingFocusGroup.Item>
+      );
     return (
-      <RovingFocusGroup.Item asChild focusable active={active}>
-        <ChipBase
-          item={item}
-          label={label}
-          disabled={disabled}
-          type={type}
-          Prefix={prefix}
-          Component={Component}
-          onClick={onClick}
-          onRemove={onRemove}
-          active={active}
-        />
-      </RovingFocusGroup.Item>
+      <ChipBase
+        item={item}
+        label={label}
+        disabled={disabled}
+        compType={type}
+        Prefix={prefix}
+        Component={Component}
+        onClick={onClick}
+        onRemove={onRemove}
+        type="button"
+        ref={ref}
+        loading={loading}
+      />
     );
-  return (
-    <ChipBase
-      item={item}
-      label={label}
-      disabled={disabled}
-      type={type}
-      Prefix={prefix}
-      Component={Component}
-      onClick={onClick}
-      onRemove={onRemove}
-      active={active}
-    />
-  );
-};
+  }
+);
 
 Chip.displayName = 'Chip';
 
@@ -177,6 +191,7 @@ export const ChipGroup = ({ onClick, onRemove, children, className }) => {
         {React.Children.map(children, (child, index) => {
           return cloneElement(child, {
             onClick,
+            isInGroup: true,
             onRemove: (e, iskey) => {
               setKeyRemovable(iskey);
               setLastRemovedIndex(index);
