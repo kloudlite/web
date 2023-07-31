@@ -34,11 +34,11 @@ Profile.propTypes = {
   name: PropTypes.string.isRequired,
   subtitle: PropTypes.string,
   color: PropTypes.oneOf(['one', 'two', 'three', 'four', 'five']),
-  size: PropTypes.oneOf(['large', 'medium', 'small', 'extra-small']),
+  size: PropTypes.oneOf(['lg', 'md', 'sm', 'xs']),
 };
 
 Profile.defaultProps = {
   subtitle: 'subtitle',
   color: 'one',
-  size: 'medium',
+  size: 'md',
 };

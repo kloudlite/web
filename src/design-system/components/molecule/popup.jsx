@@ -23,7 +23,9 @@ export const Content = ({ children }) => {
 
 export const Footer = ({ children }) => {
   return (
-    <div className="p-3xl flex flex-row justify-end gap-lg">{children}</div>
+    <div className="p-3xl flex flex-row justify-end gap-lg bg-surface-basic-subdued">
+      {children}
+    </div>
   );
 };
 
@@ -35,19 +37,24 @@ export const Button = (props) => {
   );
 };
 
-const Popup = ({ show, onOpenChange, children, backdrop = true }) => {
+export const PopupRoot = ({
+  show,
+  onOpenChange,
+  children,
+  backdrop = true,
+}) => {
   return (
     <Dialog.Root open={show} onOpenChange={onOpenChange}>
       <AnimatePresence>
         {show && (
           <Dialog.Portal forceMount>
-            <Dialog.Overlay className="fixed inset-0" asChild forceMount>
+            <Dialog.Overlay asChild forceMount>
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2, ease: 'anticipate' }}
-                className={cn('fixed inset-0', {
+                className={cn('fixed inset-0 z-40', {
                   'bg-text-default/60': backdrop,
                 })}
               />
@@ -58,7 +65,7 @@ const Popup = ({ show, onOpenChange, children, backdrop = true }) => {
                 animate={{ x: '-50%', y: '-50%', opacity: 1 }}
                 exit={{ x: '-50%', y: '-47%', opacity: 0 }}
                 transition={{ duration: 0.3, ease: 'anticipate' }}
-                className="outline-none transform overflow-hidden rounded bg-surface-basic-default shadow-modal border border-border-default fixed top-1/2 left-1/2 w-[90vw] max-w-[450px]"
+                className="z-50 outline-none transform overflow-hidden rounded bg-surface-basic-default shadow-modal border border-border-default fixed top-1/2 left-1/2 w-[612px] max-w-[612px]"
               >
                 {children}
               </motion.div>
@@ -69,5 +76,3 @@ const Popup = ({ show, onOpenChange, children, backdrop = true }) => {
     </Dialog.Root>
   );
 };
-
-export default Popup;
