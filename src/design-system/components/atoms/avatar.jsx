@@ -18,14 +18,14 @@ export const AvatarBase = ({ size, color }) => {
         'rounded-full bg-surface-basic-default',
         'border border-border-default',
         {
-          'w-8xl h-8xl p-lg': size === 'large',
-          'w-6xl h-6xl p-md': size === 'medium',
-          'w-5xl h-5xl p-md': size === 'small',
-          'w-4xl h-4xl p-md': size === 'extra-small',
+          'w-8xl h-8xl p-lg': size === 'lg',
+          'w-6xl h-6xl p-md': size === 'md',
+          'w-5xl h-5xl p-md': size === 'sm',
+          'w-4xl h-4xl p-md': size === 'xs',
         }
       )}
     >
-      {size === 'large' && (
+      {size === 'lg' && (
         <svg
           width="42"
           height="49"
@@ -41,7 +41,7 @@ export const AvatarBase = ({ size, color }) => {
           />
         </svg>
       )}
-      {size === 'medium' && (
+      {size === 'md' && (
         <svg
           width="28"
           height="31"
@@ -57,7 +57,7 @@ export const AvatarBase = ({ size, color }) => {
           />
         </svg>
       )}
-      {size === 'small' && (
+      {size === 'sm' && (
         <svg
           width="22"
           height="25"
@@ -73,7 +73,7 @@ export const AvatarBase = ({ size, color }) => {
           />
         </svg>
       )}
-      {size === 'extra-small' && (
+      {size === 'xs' && (
         <svg
           width="16"
           height="17"
@@ -98,11 +98,11 @@ export const Avatar = ({ size, color }) => {
 };
 
 Avatar.propTypes = {
-  size: PropTypes.oneOf(['large', 'medium', 'small', 'extra-small']),
+  size: PropTypes.oneOf(['lg', 'md', 'sm', 'xs']),
   color: PropTypes.oneOf(['one', 'two', 'three', 'four', 'five']),
 };
 
 Avatar.defaultProps = {
-  size: 'medium',
+  size: 'md',
   color: 'one',
 };

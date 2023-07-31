@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useEffect, useId, useState } from 'react';
+import React, { cloneElement, useEffect, useId, useState } from 'react';
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group';
 import { cn } from '../utils';
 import { BounceIt } from '../bounce-it';
@@ -8,7 +8,7 @@ export const RadioItem = (props) => {
   const {
     disabled,
     value,
-    label,
+    children,
     className,
     withBounceEffect,
     labelPlacement = 'right',
@@ -47,20 +47,18 @@ export const RadioItem = (props) => {
             })}
           />
         </RadioGroupPrimitive.Item>
-        {label && (
-          <label
-            className={cn(
-              {
-                'text-text-disabled': disabled,
-                'text-text-default cursor-pointer': !disabled,
-              },
-              'bodyMd-medium pl-lg select-none flex-1'
-            )}
-            htmlFor={id}
-          >
-            {label}
-          </label>
-        )}
+        <label
+          className={cn(
+            {
+              'text-text-disabled': disabled,
+              'text-text-default cursor-pointer': !disabled,
+            },
+            'bodyMd-medium pl-lg select-none flex-1'
+          )}
+          htmlFor={id}
+        >
+          {children}
+        </label>
       </div>
     );
   };
@@ -68,7 +66,15 @@ export const RadioItem = (props) => {
 };
 
 export const RadioGroup = (props) => {
-  const { value: v, onChange, label, disabled, children, className } = props;
+  const {
+    value: v,
+    onChange,
+    label,
+    disabled,
+    children,
+    className,
+    labelPlacement = 'right',
+  } = props;
   const [value, setValue] = useState(v);
   useEffect(() => {
     if (onChange) onChange(value);
@@ -84,20 +90,20 @@ export const RadioGroup = (props) => {
       }}
     >
       <span className="bodyMd-medium">{label}</span>
-      {children}
+      {React.Children.map(children, (child) =>
+        cloneElement(child, { labelPlacement })
+      )}
     </RadioGroupPrimitive.Root>
   );
 };
 
 RadioItem.propTypes = {
-  label: PropTypes.any,
   value: PropTypes.any,
   disabled: PropTypes.bool,
   withBounceEffect: PropTypes.bool,
 };
 
 RadioItem.defaultProps = {
-  label: '',
   value: '',
   disabled: false,
   withBounceEffect: true,
