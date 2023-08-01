@@ -1,19 +1,24 @@
-import { useEffect, useState } from 'react';
+import React, {
+  cloneElement,
+  useEffect,
+  useId,
+  useMemo,
+  useState,
+} from 'react';
 import PropTypes from 'prop-types';
 import { LayoutGroup, motion } from 'framer-motion';
 import { DefaultLinkComp } from './_link';
 import { cn } from '../utils';
 
 export const ActionButton = ({
-  label,
+  children,
   disabled,
   critical,
   active,
   onClick,
   href,
-  LeftIconComp,
-  RightIconComp,
-  rightEmptyPlaceholder,
+  prefix,
+  suffix,
   LinkComponent = DefaultLinkComp,
 }) => {
   return (
@@ -27,11 +32,12 @@ export const ActionButton = ({
       <LinkComponent
         to={href}
         className={cn(
-          'w-[inherit] rounded border bodyMd flex gap-md items-center justify-between cursor-pointer outline-none border-none px-2xl py-lg ring-offset-1 focus-visible:ring-2 focus:ring-border-focus',
+          'w-[inherit] rounded border flex gap-md items-center justify-between cursor-pointer outline-none border-none px-2xl py-lg ring-offset-1 focus-visible:ring-2 focus:ring-border-focus',
           {
             'text-text-soft hover:text-text-default':
               !active && !disabled && !critical,
             'text-text-primary bodyMd-medium': active,
+            bodyMd: !active,
             'text-text-disabled': disabled,
             'text-text-critical hover:text-text-on-primary active:text-text-on-primary':
               critical,
@@ -51,57 +57,42 @@ export const ActionButton = ({
         onClick={!critical ? onClick : null}
       >
         <div className="flex flex-row items-center gap-md">
-          {LeftIconComp && <LeftIconComp size={16} color="currentColor" />}
-          {label}
+          {prefix && <prefix size={16} color="currentColor" />}
+          {children}
         </div>
-        {RightIconComp && <RightIconComp size={16} color="currentColor" />}
-        {!RightIconComp && rightEmptyPlaceholder && (
-          <div className="w-2xl h-2xl" />
-        )}
+        {suffix && <suffix size={16} color="currentColor" />}
       </LinkComponent>
     </div>
   );
 };
 
-export const ActionList = ({
-  items,
-  value,
-  onChange,
-  layoutId,
-  LinkComponent,
-}) => {
+export const ActionRoot = (props) => {
+  const { children, value, onChange, LinkComponent } = props;
   const [active, setActive] = useState(value);
   useEffect(() => {
     if (onChange) onChange(active);
   }, [active]);
+
+  let id = useId();
+  id = useMemo(() => id, [props]);
   return (
     <div className={cn('flex flex-col gap-y-md')}>
-      <LayoutGroup id={layoutId}>
-        {items.map((child) => {
-          return (
-            <ActionButton
-              critical={child.critical}
-              label={child.label}
-              href={child.href}
-              LeftIconComp={child.LeftIconComp}
-              RightIconComp={child.RightIconComp}
-              rightEmptyPlaceholder={!child.RightIconComp}
-              key={child.key}
-              active={child.value === active}
-              LinkComponent={LinkComponent}
-              onClick={() => {
-                setActive(child.value);
-              }}
-            />
-          );
-        })}
+      <LayoutGroup id={id}>
+        {React.Children.map(children, (child) =>
+          cloneElement(child, {
+            LinkComponent,
+            active: child.props.value === value,
+            onClick: () => {
+              setActive(child.props?.value);
+            },
+          })
+        )}
       </LayoutGroup>
     </div>
   );
 };
 
 ActionButton.propTypes = {
-  label: PropTypes.string.isRequired,
   href: PropTypes.string.isRequired,
   active: PropTypes.bool,
   onClick: PropTypes.func,
@@ -114,17 +105,8 @@ ActionButton.defaultProps = {
   disabled: false,
 };
 
-ActionList.propTypes = {
-  items: PropTypes.arrayOf(
-    PropTypes.shape({
-      label: PropTypes.string.isRequired,
-      value: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
-        .isRequired,
-      key: PropTypes.string,
-    })
-  ).isRequired,
+ActionRoot.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
-  layoutId: PropTypes.string.isRequired,
 };
 
-ActionList.defaultProps = {};
+ActionRoot.defaultProps = {};
