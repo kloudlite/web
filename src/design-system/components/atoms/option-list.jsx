@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import * as OptionMenuPrimitive from './_dropdown-primitive';
 import { TextInputBase } from './input';
 import { cn } from '../utils';
@@ -16,20 +17,35 @@ const OptionMenuTrigger = React.forwardRef(({ ...props }, ref) => (
 OptionMenuTrigger.displayName = 'OptionMenuTrigger';
 
 const OptionMenuContent = React.forwardRef(
-  ({ className, sideOffset = 4, ...props }, ref) => (
-    <OptionMenuPrimitive.Portal>
-      <OptionMenuPrimitive.Content
-        ref={ref}
-        sideOffset={sideOffset}
-        align="end"
-        loop
-        className={cn(
-          'OptionContent z-50 border border-border-default shadow-popover bg-surface-basic-default rounded min-w-[160px] overflow-hidden py-lg',
-          className
-        )}
-        {...props}
-      />
-    </OptionMenuPrimitive.Portal>
+  ({ className, sideOffset = 4, children, open, ...props }, ref) => (
+    <AnimatePresence>
+      {open && (
+        <OptionMenuPrimitive.Portal forceMount>
+          <OptionMenuPrimitive.Content
+            ref={ref}
+            sideOffset={sideOffset}
+            align="end"
+            loop
+            forceMount
+            asChild
+            {...props}
+          >
+            <motion.div
+              initial={{ x: 0, y: -3, opacity: 0 }}
+              animate={{ x: 0, y: 0, opacity: 1 }}
+              exit={{ x: 0, y: -3, opacity: 0 }}
+              transition={{ duration: 0.3, ease: 'anticipate' }}
+              className={cn(
+                'z-50 border border-border-default shadow-popover bg-surface-basic-default rounded min-w-[160px] overflow-hidden py-lg',
+                className
+              )}
+            >
+              {children}
+            </motion.div>
+          </OptionMenuPrimitive.Content>
+        </OptionMenuPrimitive.Portal>
+      )}
+    </AnimatePresence>
   )
 );
 OptionMenuContent.displayName = OptionMenuPrimitive.Content.displayName;
@@ -225,7 +241,11 @@ const OptionList = ({ ...props }) => {
   }, [open]);
   return (
     <OptionMenu open={open} onOpenChange={setOpen}>
-      {props.children}
+      {React.Children.map(props.children, (child) =>
+        React.cloneElement(child, {
+          open,
+        })
+      )}
     </OptionMenu>
   );
 };
