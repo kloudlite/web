@@ -75,6 +75,7 @@ export const ActionRoot = (props) => {
 
   let id = useId();
   id = useMemo(() => id, [props]);
+
   return (
     <div className={cn('flex flex-col gap-y-md')}>
       <LayoutGroup id={id}>
