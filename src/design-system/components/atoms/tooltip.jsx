@@ -12,9 +12,7 @@ export const Tooltip = ({ children, content }) => {
   const [open, setOpen] = useState(false);
   return (
     <TooltipPrimitive.Root open={open} onOpenChange={setOpen}>
-      <TooltipPrimitive.Trigger asChild item={{ name: 1 }}>
-        {children}
-      </TooltipPrimitive.Trigger>
+      <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
 
       <AnimatePresence>
         {open && (
