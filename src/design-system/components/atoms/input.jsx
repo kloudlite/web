@@ -240,7 +240,7 @@ export const TextInputBase = forwardRef((props, ref) => {
             'outline-none flex-1 w-full',
             'rounded bodyMd bg-transparent',
             {
-              'text-text-critical placeholder:text-critical-400': error,
+              'text-text-critical placeholder:text-text-critical/70': error,
               'text-text-default': !error,
             },
             {
