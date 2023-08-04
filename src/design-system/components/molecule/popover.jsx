@@ -12,7 +12,7 @@ export const Content = ({ children, align = 'center' }) => {
     <PopoverPrimitive.Portal>
       <PopoverPrimitive.Content
         align={align}
-        className="outline-none transform overflow-hidden rounded bg-surface-basic-default shadow-modal border border-border-default w-[300px]"
+        className="outline-none transform overflow-hidden rounded bg-surface-basic-default shadow-modal border border-border-default w-[300px] z-[99]"
         sideOffset={5}
       >
         <div className="p-3xl">{children}</div>
