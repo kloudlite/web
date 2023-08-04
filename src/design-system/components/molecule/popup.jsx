@@ -30,10 +30,16 @@ export const Footer = ({ children }) => {
 };
 
 export const Button = (props) => {
+  const { closable } = props;
   return (
-    <Dialog.Close asChild>
-      <NativeButton {...props} />
-    </Dialog.Close>
+    <>
+      {closable && (
+        <Dialog.Close asChild>
+          <NativeButton {...props} />
+        </Dialog.Close>
+      )}
+      {!closable && <NativeButton {...props} />}
+    </>
   );
 };
 
