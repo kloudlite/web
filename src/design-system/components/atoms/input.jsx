@@ -171,7 +171,6 @@ export const TextInputBase = forwardRef((props, ref) => {
     suffixIcon: SuffixIcon,
     ...extraProps
   } = props;
-  const [val, setVal] = useState(value || '');
   const [t, setT] = useState(type || 'text');
 
   const id = useId();
@@ -194,7 +193,10 @@ export const TextInputBase = forwardRef((props, ref) => {
       })}
     >
       <div className="flex items-center">
-        <label className="flex-1 select-none bodyMd-medium" htmlFor={id}>
+        <label
+          className="flex-1 select-none bodyMd-medium text-text-default"
+          htmlFor={id}
+        >
           {label}
         </label>
         <div
@@ -248,9 +250,8 @@ export const TextInputBase = forwardRef((props, ref) => {
               'py-lg': size === 'md',
             }
           )}
-          value={val}
+          value={value}
           onChange={(e) => {
-            setVal(e.target.value);
             if (onChange) {
               onChange(e);
             }
@@ -277,7 +278,7 @@ export const TextInputBase = forwardRef((props, ref) => {
             type="button"
             tabIndex={-1}
             onClick={() => {
-              setVal('');
+              if (onChange) onChange({ target: { value: '' } });
             }}
             className={cn(
               'outline-none flex items-center rounded justify-center',

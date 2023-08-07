@@ -34,5 +34,3 @@ export const Tooltip = ({ children, content }) => {
     </TooltipPrimitive.Root>
   );
 };
-
-export default Tooltip;

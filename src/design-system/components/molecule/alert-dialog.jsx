@@ -42,7 +42,16 @@ export const DialogRoot = ({
   backdrop = true,
 }) => {
   return (
-    <PrimitiveAlertDialog.Root open={show} onOpenChange={onOpenChange}>
+    <PrimitiveAlertDialog.Root
+      open={show}
+      onOpenChange={(e) => {
+        if (e) {
+          onOpenChange(show);
+        } else {
+          onOpenChange(false);
+        }
+      }}
+    >
       <AnimatePresence>
         {show && (
           <PrimitiveAlertDialog.Portal forceMount>
