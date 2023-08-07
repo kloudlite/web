@@ -50,7 +50,17 @@ export const PopupRoot = ({
   backdrop = true,
 }) => {
   return (
-    <Dialog.Root open={show} onOpenChange={onOpenChange}>
+    <Dialog.Root
+      open={show}
+      onOpenChange={(e) => {
+        console.log(e);
+        if (e) {
+          onOpenChange(show);
+        } else {
+          onOpenChange(false);
+        }
+      }}
+    >
       <AnimatePresence>
         {show && (
           <Dialog.Portal forceMount>

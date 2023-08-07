@@ -2,8 +2,12 @@
 import { useEffect, useId, useMemo, useState } from 'react';
 import { cn } from '../utils';
 
-export const Option = ({ children, value }) => {
-  return <option value={value}>{children}</option>;
+export const Option = ({ children, value, ...props }) => {
+  return (
+    <option value={value} {...props}>
+      {children}
+    </option>
+  );
 };
 export const Select = (props) => {
   const {
@@ -14,6 +18,8 @@ export const Select = (props) => {
     children,
     label,
     block = true,
+    error,
+    ...extraProps
   } = props;
   const [value, setValue] = useState(v);
   useEffect(() => {
@@ -29,17 +35,13 @@ export const Select = (props) => {
         </label>
       )}
       <select
-        name="itemperpage"
+        {...extraProps}
         id={id}
         disabled={disabled}
         value={value}
         onChange={({ target }) => setValue(target.value)}
         className={cn(
-          'bodyMd py-lg pl-lg pr-5xl text-text-default border-border-default bg-surface-basic-input transition-all rounded border flex flex-row items-center relative outline-none disabled:bg-surface-basic-input disabled:text-text-disabled ring-offset-1 focus-within:ring-2 focus-within:ring-border-focus appearance-none',
-          {
-            'text-text-disabled border-border-disabled bg-surface-basic-input':
-              disabled,
-          },
+          'bodyMd py-lg pl-lg pr-5xl text-text-default border-border-default bg-surface-basic-input transition-all rounded border flex flex-row items-center relative outline-none disabled:bg-surface-basic-input disabled:text-text-disabled disabled:border-border-disabled ring-offset-1 focus-within:ring-2 focus-within:ring-border-focus appearance-none',
           {
             'w-full': block,
           },

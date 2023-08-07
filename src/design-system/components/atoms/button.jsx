@@ -17,13 +17,15 @@ export const ButtonStyles = [
   'primary-plain',
   'secondary-plain',
   'critical-plain',
+  'purple',
+  'tertiary',
+  'warning',
 ];
 export const IconButtonStyles = ['outline', 'basic', 'plain'];
 
 export const AriaButton = 'button';
 
 export const ButtonBase = forwardRef((props, ref) => {
-  let Component = motion.button;
   const {
     onClick,
     href,
@@ -47,11 +49,13 @@ export const ButtonBase = forwardRef((props, ref) => {
     loading = false,
     ...mprops
   } = props;
-  const extraProps = {};
 
+  const extraProps = {};
   extraProps.onClick = onClick;
 
-  if (props.href) {
+  let Component = motion.button;
+
+  if (href) {
     Component = motion(LinkComponent);
     extraProps.to = href;
   } else {
@@ -123,6 +127,7 @@ export const ButtonBase = forwardRef((props, ref) => {
                 'border-border-critical disabled:border-border-disabled':
                   variant === 'critical-outline' || variant === 'critical',
                 'border-border-purple': variant === 'purple',
+                'border-border-warning': variant === 'warning',
                 'border-border-tertiary': variant === 'tertiary',
                 'border-none':
                   variant === 'plain' ||
@@ -174,6 +179,8 @@ export const ButtonBase = forwardRef((props, ref) => {
             variant === 'purple',
           'bg-surface-tertiary-default hover:bg-surface-tertiary-hovered active:bg-surface-tertiary-pressed':
             variant === 'tertiary',
+          'bg-surface-warning-default hover:bg-surface-warning-hovered active:bg-surface-warning-pressed':
+            variant === 'warning',
         },
         {
           'text-text-default':
@@ -184,7 +191,8 @@ export const ButtonBase = forwardRef((props, ref) => {
             variant === 'secondary' ||
             variant === 'secondary-outline' ||
             variant === 'tertiary' ||
-            variant === 'purple',
+            variant === 'purple' ||
+            variant === 'warning',
           'text-text-critical':
             variant === 'critical-outline' || variant === 'critical-plain',
           'text-text-primary':
@@ -283,22 +291,7 @@ export const Button = forwardRef((props, ref) => {
 Button.displayName = 'Button';
 
 Button.propTypes = {
-  variant: PropTypes.oneOf([
-    'outline',
-    'basic',
-    'plain',
-    'primary',
-    'primary-outline',
-    'secondary',
-    'secondary-outline',
-    'critical',
-    'critical-outline',
-    'primary-plain',
-    'secondary-plain',
-    'critical-plain',
-    'purple',
-    'tertiary',
-  ]),
+  variant: PropTypes.oneOf(ButtonStyles),
   size: PropTypes.oneOf(['sm', 'md', 'lg', 'xl', '2xl']),
   content: PropTypes.oneOfType([PropTypes.string, PropTypes.any]),
   onClick: PropTypes.func,
