@@ -15,10 +15,15 @@ const Pagination = (props) => {
     currentPage = 3,
     totalItems = 90,
     itemsPerPage = 15,
-    onPageChanged,
+    onPageChanged = (_) => {},
     onItemsPerPageChanged,
     disabled = false,
     itemPerPageDisabled = false,
+    onClickNext = (_) => {},
+    onClickPrev = (_) => {},
+    isNextDisabled = false,
+    isPrevDisabled = false,
+    showNumbers = true,
   } = props;
 
   const [focusItem, setFocusItem] = useState(null);
@@ -98,6 +103,7 @@ const Pagination = (props) => {
   return (
     <div className="flex flex-row items-center gap-3xl w-full">
       <div className="flex flex-row items-center flex-1 gap-lg text-icon-default bodyMd">
+        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
         <label htmlFor={itemsPerPageId}>Item per page</label>
         <select
           name="itemperpage"
@@ -122,10 +128,14 @@ const Pagination = (props) => {
           ))}
         </select>
 
-        <span>
-          {currentPage * itemsPerPage - itemsPerPage + 1} -{' '}
-          {currentPage * itemsPerPage} of {totalItems} items
-        </span>
+        {showNumbers ? (
+          <span>
+            {currentPage * itemsPerPage - itemsPerPage + 1} -{' '}
+            {currentPage * itemsPerPage} of {totalItems} items
+          </span>
+        ) : (
+          <span> total {totalItems} items</span>
+        )}
       </div>
       <RovingFocusGroup.Root loop>
         <div className="flex flex-row items-center gap-xl">
@@ -134,80 +144,99 @@ const Pagination = (props) => {
               content="Previous"
               prefix={ChevronLeft}
               variant="plain"
-              onClick={() => onPageChanged && onPageChanged(currentPage - 1)}
-              disabled={currentPage < 2 || disabled}
+              onClick={() => {
+                if (onPageChanged) {
+                  onPageChanged(currentPage - 1);
+                }
+                onClickPrev();
+              }}
+              disabled={
+                (showNumbers && currentPage < 2) || disabled || isPrevDisabled
+              }
             />
           </RovingFocusGroup.Item>
-          <div className="flex flex-row items-center gap-lg" ref={ref}>
-            {startPages.map((sP) => (
-              <RovingFocusGroup.Item asChild focusable key={sP}>
-                <Button
-                  content={sP.toString().padStart(2, '0')}
-                  variant="plain"
-                  selected={sP === currentPage}
-                  onClick={() => onPageChanged && onPageChanged(sP)}
-                  disabled={disabled}
-                  value={sP}
-                  onKeyDown={(e) => {
-                    if (e.key === ' ' || e.key === 'Enter') {
-                      restoreFocus(sP);
-                    }
-                  }}
-                />
-              </RovingFocusGroup.Item>
-            ))}
-            <div className="flex flex-row items-center gap-lg">
-              {middlePages.length > 0 && (
-                <span className="bodyMd text-text-default">.....</span>
-              )}
-              {middlePages.map((mP) => (
-                <RovingFocusGroup.Item asChild focusable key={mP}>
+          {showNumbers && (
+            <div className="flex flex-row items-center gap-lg" ref={ref}>
+              {startPages.map((sP) => (
+                <RovingFocusGroup.Item asChild focusable key={sP}>
                   <Button
-                    content={mP.toString().padStart(2, '0')}
+                    content={sP.toString().padStart(2, '0')}
                     variant="plain"
-                    key={mP}
-                    selected={mP === currentPage}
-                    onClick={() => onPageChanged && onPageChanged(mP)}
+                    selected={sP === currentPage}
+                    onClick={() => onPageChanged && onPageChanged(sP)}
                     disabled={disabled}
-                    value={mP}
+                    value={sP}
                     onKeyDown={(e) => {
                       if (e.key === ' ' || e.key === 'Enter') {
-                        restoreFocus(mP);
+                        restoreFocus(sP);
                       }
                     }}
                   />
                 </RovingFocusGroup.Item>
               ))}
-              {totalPages >= 7 && (
-                <span className="bodyMd text-text-default">.....</span>
-              )}
+              <div className="flex flex-row items-center gap-lg">
+                {middlePages.length > 0 && (
+                  <span className="bodyMd text-text-default">.....</span>
+                )}
+                {middlePages.map((mP) => (
+                  <RovingFocusGroup.Item asChild focusable key={mP}>
+                    <Button
+                      content={mP.toString().padStart(2, '0')}
+                      variant="plain"
+                      key={mP}
+                      selected={mP === currentPage}
+                      onClick={() => onPageChanged && onPageChanged(mP)}
+                      disabled={disabled}
+                      value={mP}
+                      onKeyDown={(e) => {
+                        if (e.key === ' ' || e.key === 'Enter') {
+                          restoreFocus(mP);
+                        }
+                      }}
+                    />
+                  </RovingFocusGroup.Item>
+                ))}
+                {totalPages >= 7 && (
+                  <span className="bodyMd text-text-default">.....</span>
+                )}
+              </div>
+              {endPages.map((eP) => (
+                <RovingFocusGroup.Item asChild focusable key={eP}>
+                  <Button
+                    content={eP.toString().padStart(2, '0')}
+                    variant="plain"
+                    key={eP}
+                    selected={eP === currentPage}
+                    onClick={() => onPageChanged && onPageChanged(eP)}
+                    disabled={disabled}
+                    value={eP}
+                    onKeyDown={(e) => {
+                      if (e.key === ' ' || e.key === 'Enter') {
+                        restoreFocus(eP);
+                      }
+                    }}
+                  />
+                </RovingFocusGroup.Item>
+              ))}
             </div>
-            {endPages.map((eP) => (
-              <RovingFocusGroup.Item asChild focusable key={eP}>
-                <Button
-                  content={eP.toString().padStart(2, '0')}
-                  variant="plain"
-                  key={eP}
-                  selected={eP === currentPage}
-                  onClick={() => onPageChanged && onPageChanged(eP)}
-                  disabled={disabled}
-                  value={eP}
-                  onKeyDown={(e) => {
-                    if (e.key === ' ' || e.key === 'Enter') {
-                      restoreFocus(eP);
-                    }
-                  }}
-                />
-              </RovingFocusGroup.Item>
-            ))}
-          </div>
+          )}
+
           <RovingFocusGroup.Item asChild focusable>
             <Button
               content="Next"
               suffix={ChevronRight}
               variant="plain"
-              onClick={() => onPageChanged && onPageChanged(currentPage + 1)}
-              disabled={currentPage >= totalPages || disabled}
+              onClick={() => {
+                if (onPageChanged) {
+                  onPageChanged(currentPage + 1);
+                }
+                onClickNext();
+              }}
+              disabled={
+                (showNumbers && currentPage >= totalPages) ||
+                disabled ||
+                isNextDisabled
+              }
             />
           </RovingFocusGroup.Item>
         </div>
