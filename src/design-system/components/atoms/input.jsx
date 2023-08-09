@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/display-name */
 import PropTypes from 'prop-types';
 import {
   useRef,
@@ -329,9 +331,36 @@ export const TextInputBase = forwardRef((props, ref) => {
 
 TextInputBase.displayName = 'TextInputBase';
 
-export const TextInput = forwardRef((props, ref) => {
-  return <TextInputBase {...props} component="input" type="text" ref={ref} />;
-});
+const _false = false;
+
+export const TextInput =
+  (_false
+    ? ({
+        value = '',
+        type = '',
+        component = null,
+        extra = null,
+        className = '',
+        error = false,
+        disabled = false,
+        label = '',
+        onKeyDown = (_) => {},
+        autoComplete = false,
+        onChange = (_) => {},
+        message = '',
+        showclear = false,
+        placeholder = '',
+        size = 'md',
+        prefix = null,
+        suffix = null,
+        prefixIcon = null,
+        suffixIcon = null,
+        ...extraProps
+      }) => null
+    : _false) ||
+  forwardRef((props, ref) => {
+    return <TextInputBase {...props} component="input" type="text" ref={ref} />;
+  });
 
 TextInput.displayName = 'TextInput';
 
