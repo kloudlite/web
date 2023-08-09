@@ -17,7 +17,7 @@ export const Badge = ({ type, label, icon }) => {
           'border-border-warning bg-surface-warning-subdued text-text-warning':
             type === 'warning',
           'border-border-critical bg-surface-critical-subdued text-text-critical':
-            type === 'danger',
+            type === 'critical',
         }
       )}
     >
@@ -28,7 +28,7 @@ export const Badge = ({ type, label, icon }) => {
 };
 
 Badge.propTypes = {
-  type: PropTypes.oneOf(['neutral', 'info', 'success', 'warning', 'danger']),
+  type: PropTypes.oneOf(['neutral', 'info', 'success', 'warning', 'critical']),
   label: PropTypes.string.isRequired,
 };
 
