@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/display-name */
 import PropTypes from 'prop-types';
 import { Spinner, XFill } from '@jengaicons/react';
 import * as RovingFocusGroup from '@radix-ui/react-roving-focus';
@@ -117,59 +119,74 @@ const ChipBase = forwardRef((props, ref) => {
 
 ChipBase.displayName = 'ChipBase';
 
-export const Chip = forwardRef(
-  (
-    {
-      item,
-      label,
-      disabled,
-      type = ChipType.BASIC,
-      prefix,
-      onClick,
-      onRemove,
-      isInGroup,
-      loading = false,
-    },
-    ref
-  ) => {
-    let Component = 'div';
-    if (type === ChipType.CLICKABLE) {
-      Component = motion.button;
-    }
-    if (type === ChipType.CLICKABLE && isInGroup)
+const _false = false;
+export const Chip =
+  (_false
+    ? ({
+        item = {},
+        label = '',
+        disabled = false,
+        type = ChipType.BASIC,
+        prefix = null,
+        onClick = (_) => {},
+        onRemove = (_) => {},
+        isInGroup = false,
+        loading = false,
+      } = {}) => null
+    : _false) ||
+  forwardRef(
+    (
+      {
+        item,
+        label,
+        disabled,
+        type = ChipType.BASIC,
+        prefix,
+        onClick,
+        onRemove,
+        isInGroup,
+        loading = false,
+      },
+      ref
+    ) => {
+      let Component = 'div';
+      if (type === ChipType.CLICKABLE) {
+        Component = motion.button;
+      }
+      if (type === ChipType.CLICKABLE && isInGroup)
+        return (
+          <RovingFocusGroup.Item asChild focusable ref={ref}>
+            <ChipBase
+              item={item}
+              label={label}
+              disabled={disabled}
+              compType={type}
+              Prefix={prefix}
+              Component={Component}
+              onClick={onClick}
+              onRemove={onRemove}
+              type="button"
+              loading={loading}
+            />
+          </RovingFocusGroup.Item>
+        );
       return (
-        <RovingFocusGroup.Item asChild focusable ref={ref}>
-          <ChipBase
-            item={item}
-            label={label}
-            disabled={disabled}
-            compType={type}
-            Prefix={prefix}
-            Component={Component}
-            onClick={onClick}
-            onRemove={onRemove}
-            type="button"
-            loading={loading}
-          />
-        </RovingFocusGroup.Item>
+        <ChipBase
+          item={item}
+          label={label}
+          disabled={disabled}
+          compType={type}
+          Prefix={prefix}
+          Component={Component}
+          onClick={onClick}
+          onRemove={onRemove}
+          type="button"
+          ref={ref}
+          loading={loading}
+        />
       );
-    return (
-      <ChipBase
-        item={item}
-        label={label}
-        disabled={disabled}
-        compType={type}
-        Prefix={prefix}
-        Component={Component}
-        onClick={onClick}
-        onRemove={onRemove}
-        type="button"
-        ref={ref}
-        loading={loading}
-      />
-    );
-  }
-);
+    }
+  );
 
 Chip.displayName = 'Chip';
 
