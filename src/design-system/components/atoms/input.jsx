@@ -186,8 +186,6 @@ export const TextInputBase = forwardRef((props, ref) => {
 
   const Component = component || 'input';
 
-  console.log(extraProps);
-
   return (
     <div
       className={cn('flex flex-col ', {

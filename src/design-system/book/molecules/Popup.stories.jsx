@@ -1,5 +1,5 @@
 import { Button } from '~/components/atoms/button';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Popup from '~/components/molecule/popup';
 
 export default {
@@ -11,9 +11,6 @@ export default {
 
 const PopupHook = () => {
   const [show, setShow] = useState(false);
-  useEffect(() => {
-    console.log(show);
-  }, [show]);
   return (
     <div>
       <Button
