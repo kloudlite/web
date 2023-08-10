@@ -166,6 +166,7 @@ export const TextInputBase = forwardRef((props, ref) => {
     showclear,
     placeholder,
     size = 'md',
+    resize = true,
     prefix,
     suffix,
     prefixIcon: PrefixIcon,
@@ -249,6 +250,9 @@ export const TextInputBase = forwardRef((props, ref) => {
             {
               'py-xl': size === 'lg',
               'py-lg': size === 'md',
+            },
+            {
+              'resize-none': !resize,
             }
           )}
           value={value}
@@ -365,8 +369,15 @@ TextInput.displayName = 'TextInput';
 
 export const TextArea = (props) => {
   const ref = useRef(null);
+  const { resize } = props;
   return (
-    <TextInputBase {...props} component="textarea" ref={ref} type="text" />
+    <TextInputBase
+      {...props}
+      component="textarea"
+      ref={ref}
+      type="text"
+      resize={resize}
+    />
   );
 };
 
