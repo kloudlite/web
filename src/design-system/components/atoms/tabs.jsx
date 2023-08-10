@@ -11,7 +11,11 @@ export const NavTab = ({
   fitted,
   onClick,
   LinkComponent = DefaultLinkComp,
+  variant,
+  size,
+  prefix,
 }) => {
+  const Prefix = prefix;
   return (
     <div
       className={cn(
@@ -19,6 +23,10 @@ export const NavTab = ({
         {
           'text-text-default': active,
           'text-text-soft': !active,
+          'hover:bg-surface-basic-hovered active:bg-surface-basic-pressed rounded-lg':
+            variant === 'filled',
+          'bg-surface-basic-default border border-border-default shadow-button':
+            variant === 'filled' && active,
         }
       )}
     >
@@ -26,16 +34,22 @@ export const NavTab = ({
         onClick={onClick}
         to={href}
         className={cn(
-          'outline-none flex flex-col rounded ring-offset-1 focus-visible:ring-2 focus-visible:ring-border-focus w-max',
+          'gap-lg outline-none flex flex-row items-center rounded ring-offset-1 focus-visible:ring-2 focus-visible:ring-border-focus w-max',
           {
-            'px-2xl': !fitted,
-            'pt-lg pb-xl': fitted,
+            ...((!fitted || variant === 'filled') && {
+              'px-2xl py-lg': size === 'md',
+              'px-lg py-md': size === 'sm',
+            }),
+            ...(fitted && {
+              'py-lg': variant !== 'filled',
+            }),
           }
         )}
       >
+        {prefix && <Prefix size={16} />}
         {label}
       </LinkComponent>
-      {active && (
+      {active && variant === 'plain' && (
         <motion.div
           layoutId="underline"
           className={cn(
@@ -43,12 +57,16 @@ export const NavTab = ({
           )}
         />
       )}
-      <div className="h-md group-hover:bg-border-default group-active:bg-border-tertiary bg-none transition-all absolute bottom-0 w-full z-0" />
+      {variant === 'plain' && (
+        <div className="h-md group-hover:bg-border-default group-active:bg-border-tertiary bg-none transition-all absolute bottom-0 w-full z-0" />
+      )}
     </div>
   );
 };
 
 export const NavTabs = ({
+  variant = 'plain',
+  size = 'md',
   items,
   fitted,
   onChange,
@@ -88,6 +106,9 @@ export const NavTabs = ({
                 label={child.label}
                 active={value === child.value}
                 LinkComponent={LinkComponent}
+                variant={variant}
+                size={size}
+                prefix={child.prefix}
               />
             </div>
           );
@@ -110,10 +131,14 @@ NavTabs.propTypes = {
   layoutId: PropTypes.string.isRequired,
   items: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
   fitted: PropTypes.bool,
+  variant: PropTypes.oneOf(['plain', 'filled']),
+  size: PropTypes.oneOf(['md', 'sm']),
 };
 
 NavTabs.defaultProps = {
   fitted: false,
+  variant: 'plain',
+  size: 'md',
 };
 
 NavTab.defaultProps = {

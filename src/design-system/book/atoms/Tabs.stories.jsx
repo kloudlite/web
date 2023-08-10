@@ -1,8 +1,9 @@
-import { NavTabs } from '../../components/atoms/tabs';
+import { LineSegments } from '@jengaicons/react';
+import * as Tabs from '../../components/atoms/tabs';
 
 export default {
   title: 'Atoms/Tabs',
-  component: NavTabs,
+  component: Tabs.NavTabs,
   tags: ['autodocs'],
 };
 
@@ -19,6 +20,7 @@ export const PrimaryTabs = {
         href: '#',
         key: 'projects',
         value: 'projects',
+        prefix: LineSegments,
       },
       {
         label: 'Cluster',

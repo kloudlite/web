@@ -4,7 +4,7 @@ import * as AlertDialog from '~/components/molecule/alert-dialog';
 
 export default {
   title: 'Molecules/AlertDialog',
-  component: AlertDialog.Dialog,
+  component: AlertDialog.DialogRoot,
   tags: ['autodocs'],
   argTypes: {},
 };
@@ -23,7 +23,7 @@ const DialogHook = () => {
           console.log(show);
         }}
       />{' '}
-      <AlertDialog.Dialog show={show} onOpenChange={setShow}>
+      <AlertDialog.DialogRoot show={show} onOpenChange={setShow}>
         <AlertDialog.Header>This is a sample dialog</AlertDialog.Header>
         <AlertDialog.Content>
           Contrary to popular belief, Lorem Ipsum is not simply random text. It
@@ -43,7 +43,7 @@ const DialogHook = () => {
           <AlertDialog.Button content="Cancel" variant="basic" />
           <AlertDialog.Button content="Delete" variant="critical" />
         </AlertDialog.Footer>
-      </AlertDialog.Dialog>
+      </AlertDialog.DialogRoot>
     </div>
   );
 };

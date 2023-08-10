@@ -18,7 +18,7 @@ export const Header = ({ children }) => {
 };
 
 export const Content = ({ children }) => {
-  return <div className="p-3xl">{children}</div>;
+  return <div className="p-3xl bodyMd">{children}</div>;
 };
 
 export const Footer = ({ children }) => {

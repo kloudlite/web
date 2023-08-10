@@ -32,7 +32,7 @@ export const ActionButton = ({
       <LinkComponent
         to={href}
         className={cn(
-          'w-[inherit] rounded border flex gap-md items-center justify-between cursor-pointer outline-none border-none px-2xl py-lg ring-offset-1 focus-visible:ring-2 focus:ring-border-focus',
+          'transition-all w-[inherit] rounded border flex gap-md items-center justify-between cursor-pointer outline-none border-none px-2xl py-lg ring-offset-1 focus-visible:ring-2 focus:ring-border-focus',
           {
             'text-text-soft hover:text-text-default':
               !active && !disabled && !critical,
