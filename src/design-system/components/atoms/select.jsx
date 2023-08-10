@@ -2,7 +2,7 @@
 import { useEffect, useId, useMemo, useState } from 'react';
 import { cn } from '../utils';
 
-export const Option = ({ children, value, ...props }) => {
+export const Option = ({ children, value = '', ...props }) => {
   return (
     <option value={value} {...props}>
       {children}

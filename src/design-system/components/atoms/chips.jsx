@@ -190,7 +190,12 @@ export const Chip =
 
 Chip.displayName = 'Chip';
 
-export const ChipGroup = ({ onClick, onRemove, children, className }) => {
+export const ChipGroup = ({
+  onClick = (_) => null,
+  onRemove = (_) => null,
+  children = null,
+  className = '',
+}) => {
   const [keyRemovable, setKeyRemovable] = useState(false);
   const [lastRemovedIndex, setLastRemovedIndex] = useState(null);
   const ref = useRef(null);

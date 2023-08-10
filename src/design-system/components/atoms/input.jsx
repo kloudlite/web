@@ -18,20 +18,19 @@ import {
 } from '@jengaicons/react';
 import { cn } from '../utils';
 
-export const NumberInput = (props) => {
-  const {
-    value,
-    min,
-    onChange,
-    label,
-    extra,
-    error,
-    disabled,
-    max,
-    message,
-    size = 'md',
-    step = 1,
-  } = props;
+export const NumberInput = ({
+  value,
+  min,
+  onChange,
+  label,
+  extra,
+  error,
+  disabled,
+  max,
+  message,
+  size = 'md',
+  step = 1,
+}) => {
   const [v, setV] = useState(value || min || 0);
   const ref = useRef();
   const id = useId();
@@ -337,7 +336,7 @@ export const TextInput =
   (_false
     ? ({
         value = '',
-        type = '',
+        type = 'password' || 'number',
         component = null,
         extra = null,
         className = '',

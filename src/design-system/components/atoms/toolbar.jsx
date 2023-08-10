@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/display-name */
 /* eslint-disable react/jsx-pascal-case */
 import * as React from 'react';
 import { composeEventHandlers } from '@radix-ui/primitive';
@@ -24,41 +26,45 @@ const useToggleGroupScope = createToggleGroupScope();
 
 const [ToolbarProvider, useToolbarContext] = createToolbarContext(TOOLBAR_NAME);
 
-const Toolbar = React.forwardRef((props, forwardedRef) => {
-  const {
-    __scopeToolbar,
-    orientation = 'horizontal',
-    dir,
-    loop = true,
-    ...toolbarProps
-  } = props;
-  const rovingFocusGroupScope = useRovingFocusGroupScope(__scopeToolbar);
-  const direction = useDirection(dir);
-  return (
-    <ToolbarProvider
-      scope={__scopeToolbar}
-      orientation={orientation}
-      dir={direction}
-    >
-      <RovingFocusGroup.Root
-        asChild
-        {...rovingFocusGroupScope}
+const _false = false;
+
+const Toolbar =
+  (_false ? ({ children = null }) => null : _false) ||
+  React.forwardRef((props, forwardedRef) => {
+    const {
+      __scopeToolbar,
+      orientation = 'horizontal',
+      dir,
+      loop = true,
+      ...toolbarProps
+    } = props;
+    const rovingFocusGroupScope = useRovingFocusGroupScope(__scopeToolbar);
+    const direction = useDirection(dir);
+    return (
+      <ToolbarProvider
+        scope={__scopeToolbar}
         orientation={orientation}
         dir={direction}
-        loop={loop}
       >
-        <Primitive.div
-          role="toolbar"
-          aria-orientation={orientation}
+        <RovingFocusGroup.Root
+          asChild
+          {...rovingFocusGroupScope}
+          orientation={orientation}
           dir={direction}
-          {...toolbarProps}
-          ref={forwardedRef}
-          className={cn('flex flex-row gap-lg w-full')}
-        />
-      </RovingFocusGroup.Root>
-    </ToolbarProvider>
-  );
-});
+          loop={loop}
+        >
+          <Primitive.div
+            role="toolbar"
+            aria-orientation={orientation}
+            dir={direction}
+            {...toolbarProps}
+            ref={forwardedRef}
+            className={cn('flex flex-row gap-lg w-full')}
+          />
+        </RovingFocusGroup.Root>
+      </ToolbarProvider>
+    );
+  });
 
 Toolbar.displayName = TOOLBAR_NAME;
 
@@ -184,8 +190,9 @@ ToolbarLink.displayName = LINK_NAME;
 
 const BUTTON_GROUP_NAME = 'ToolbarButtonGroup';
 
-const ToolbarButtonGroup = React.forwardRef(
-  ({ selectable, ...props }, forwardedRef) => {
+const ToolbarButtonGroup =
+  (_false ? ({ value = '', children = null }) => null : _false) ||
+  React.forwardRef(({ selectable, ...props }, forwardedRef) => {
     const { __scopeToolbar, ...toggleGroupProps } = props;
     const context = useToolbarContext(BUTTON_GROUP_NAME, __scopeToolbar);
     const toggleGroupScope = useToggleGroupScope(__scopeToolbar);
@@ -216,8 +223,7 @@ const ToolbarButtonGroup = React.forwardRef(
         })}
       </ToggleGroupPrimitive.Root>
     );
-  }
-);
+  });
 
 ToolbarButtonGroup.displayName = BUTTON_GROUP_NAME;
 
