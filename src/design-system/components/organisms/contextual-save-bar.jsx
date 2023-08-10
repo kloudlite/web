@@ -5,12 +5,12 @@ import { BrandLogo } from '../branding/brand-logo';
 import Container from '../atoms/container';
 
 export const ContextualSaveBar = ({
-  logo,
-  logoWidth,
-  message,
-  saveAction,
-  discardAction,
-  fixed,
+  logo = null,
+  logoWidth = 124,
+  message = '',
+  saveAction = (_) => _,
+  discardAction = (_) => _,
+  fixed = false,
 }) => {
   return (
     <div
@@ -27,7 +27,7 @@ export const ContextualSaveBar = ({
             <Link
               to="/"
               className="hidden md:block lg:block xl:block"
-              width={logoWidth || 124}
+              width={logoWidth}
             >
               {logo}
             </Link>

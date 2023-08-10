@@ -1,11 +1,16 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/display-name */
 import PropTypes from 'prop-types';
 import { forwardRef } from 'react';
 import { AvatarBase } from '../atoms/avatar.jsx';
 import { BounceIt } from '../bounce-it.jsx';
-import { cn } from '../utils.jsx';
+import { _false, cn } from '../utils.jsx';
 
-export const Profile = forwardRef(
-  ({ name, subtitle, color, size, ...props }, ref) => {
+export const Profile =
+  (_false
+    ? ({ name = '', size = '', subtitle = '', color = '', ...props }) => null
+    : _false) ||
+  forwardRef(({ name, subtitle, color, size, ...props }, ref) => {
     return (
       <BounceIt className="w-fit">
         <button
@@ -25,8 +30,7 @@ export const Profile = forwardRef(
         </button>
       </BounceIt>
     );
-  }
-);
+  });
 
 Profile.displayName = 'Profile';
 

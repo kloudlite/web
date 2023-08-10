@@ -122,17 +122,22 @@ ChipBase.displayName = 'ChipBase';
 const _false = false;
 export const Chip =
   (_false
-    ? ({
-        item = {},
-        label = '',
-        disabled = false,
-        type = ChipType.BASIC,
-        prefix = null,
-        onClick = (_) => {},
-        onRemove = (_) => {},
-        isInGroup = false,
-        loading = false,
-      } = {}) => null
+    ? (
+        {
+          item,
+          label,
+          disabled = false,
+          type = ChipType.BASIC || ChipType.CLICKABLE || ChipType.REMOVABLE,
+          prefix = null,
+          onClick = (_) => {},
+          onRemove = (_) => {},
+          isInGroup = false,
+          loading = false,
+        } = {
+          label: '',
+          item: {},
+        }
+      ) => null
     : _false) ||
   forwardRef(
     (

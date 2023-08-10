@@ -1,7 +1,12 @@
 import { ArrowLeft } from '@jengaicons/react';
 import { IconButton } from '../atoms/button';
 
-export const SubHeader = ({ title, actions, backUrl, LinkComponent }) => {
+export const SubHeader = ({
+  title = '',
+  actions = null,
+  backUrl = '',
+  LinkComponent = null,
+}) => {
   return (
     <div className="flex flex-row items-center justify-between pb-3xl pt-6xl gap-xl">
       <div className="flex flex-row items-center gap-xl">
