@@ -23,7 +23,7 @@ const OptionListHook = ({ isIconButton }) => {
   const [apple, setApple] = useState(false);
   const [orange, setOrange] = useState(false);
   return (
-    <OptionList open={open} onOpenChange={setOpen}>
+    <OptionList.Root open={open} onOpenChange={setOpen}>
       {!isIconButton && (
         <OptionList.Trigger>
           <ButtonGroup.Button content="menu" variant="basic" selected={open} />
@@ -99,7 +99,7 @@ const OptionListHook = ({ isIconButton }) => {
           </OptionList.RadioGroupItem>
         </OptionList.RadioGroup>
       </OptionList.Content>
-    </OptionList>
+    </OptionList.Root>
   );
 };
 

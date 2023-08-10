@@ -16,7 +16,7 @@ import {
   EyeSlash,
   Eye,
 } from '@jengaicons/react';
-import { cn } from '../utils';
+import { _false, cn } from '../utils';
 
 export const NumberInput = ({
   value,
@@ -334,32 +334,32 @@ export const TextInputBase = forwardRef((props, ref) => {
 
 TextInputBase.displayName = 'TextInputBase';
 
-const _false = false;
-
 export const TextInput =
   (_false
-    ? ({
-        value = '',
-        type = 'password' || 'number',
-        component = null,
-        extra = null,
-        className = '',
-        error = false,
-        disabled = false,
-        label = '',
-        onKeyDown = (_) => {},
-        autoComplete = false,
-        onChange = (_) => {},
-        message = '',
-        showclear = false,
-        placeholder = '',
-        size = 'md',
-        prefix = null,
-        suffix = null,
-        prefixIcon = null,
-        suffixIcon = null,
-        ...extraProps
-      }) => null
+    ? (
+        {
+          value,
+          type = 'password' || 'number',
+          component = null,
+          extra = null,
+          className = '',
+          error = false,
+          disabled = false,
+          label = '',
+          onKeyDown = (_) => {},
+          autoComplete = false,
+          onChange = (_) => {},
+          message = '',
+          showclear = false,
+          placeholder = '',
+          size = 'md',
+          prefix = null,
+          suffix = null,
+          prefixIcon = null,
+          suffixIcon = null,
+          ...extraProps
+        } = { value: '' }
+      ) => null
     : _false) ||
   forwardRef((props, ref) => {
     return <TextInputBase {...props} component="input" type="text" ref={ref} />;

@@ -11,15 +11,17 @@ import { DefaultLinkComp } from './_link';
 import { cn } from '../utils';
 
 export const ActionButton = ({
-  children,
-  disabled,
-  critical,
-  active,
-  onClick,
-  href,
-  prefix,
-  suffix,
+  children = null,
+  disabled = false,
+  critical = false,
+  active = false,
+  onClick = (_) => _,
+  href = '',
+  prefix = null,
+  suffix = null,
   LinkComponent = DefaultLinkComp,
+  // eslint-disable-next-line no-unused-vars
+  value = '',
 }) => {
   return (
     <div className={cn('w-full flex flex-row gap-x-md')}>
@@ -66,8 +68,13 @@ export const ActionButton = ({
   );
 };
 
-export const ActionRoot = (props) => {
-  const { children, value, onChange, LinkComponent } = props;
+export const ActionRoot = (
+  { children, value, onChange = (_) => _, LinkComponent = DefaultLinkComp } = {
+    children: null,
+    value: '',
+  }
+) => {
+  const props = { children, value, onChange, LinkComponent };
   const [active, setActive] = useState(value);
   useEffect(() => {
     if (onChange) onChange(active);

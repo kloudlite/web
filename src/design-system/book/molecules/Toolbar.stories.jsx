@@ -16,7 +16,7 @@ const OptionListHook = () => {
   const [apple, setApple] = useState(false);
   const [orange, setOrange] = useState(false);
   return (
-    <OptionList open={open} onOpenChange={setOpen}>
+    <OptionList.Root open={open} onOpenChange={setOpen}>
       <OptionList.Trigger>
         <Toolbar.ButtonGroup.Button
           content="menu"
@@ -85,21 +85,21 @@ const OptionListHook = () => {
           </OptionList.RadioGroupItem>
         </OptionList.RadioGroup>
       </OptionList.Content>
-    </OptionList>
+    </OptionList.Root>
   );
 };
 
 export const DefaultToolbar = {
   render: () => (
-    <Toolbar>
+    <Toolbar.Root>
       <Toolbar.TextInput placeholder="filter" />
-      <Toolbar.ButtonGroup value="hello">
+      <Toolbar.ButtonGroup.Root value="hello">
         <Toolbar.ButtonGroup.Button content="button1" />
         <Toolbar.ButtonGroup.Button content="button2" />
         <OptionListHook />
         <Toolbar.ButtonGroup.IconButton icon={InfoFill} />
-      </Toolbar.ButtonGroup>
+      </Toolbar.ButtonGroup.Root>
       <Toolbar.Button content="this is a button" />
-    </Toolbar>
+    </Toolbar.Root>
   ),
 };

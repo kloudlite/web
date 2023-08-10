@@ -270,20 +270,25 @@ export const ButtonBase = forwardRef((props, ref) => {
 ButtonBase.displayName = 'ButtonBase';
 
 const _false = false;
-export const IconButton =
-  (_false
-    ? ({
-        icon = null,
+export const IconButtonType = _false
+  ? (
+      {
+        icon,
         variant = '',
         disabled = false,
         ref = null,
-        iconOnly = null,
-        label = null,
-        prefix = null,
         block = false,
         onClick = (_) => _,
-      } = {}) => null
-    : _false) ||
+        selected = false,
+        onMouseDown = (_) => _,
+        onPointerDown = (_) => _,
+      } = {
+        icon: null,
+      }
+    ) => null
+  : _false;
+export const IconButton =
+  IconButtonType ||
   forwardRef((props, ref) => {
     const { icon, block } = props;
     return (
@@ -300,25 +305,35 @@ export const IconButton =
 
 IconButton.displayName = 'IconButton';
 
-export const Button =
-  (_false
-    ? ({
-        content = '',
+export const ButtonType = _false
+  ? (
+      {
+        content,
         size = '',
         icon = null,
         variant = '',
         disabled = false,
         ref = null,
         iconOnly = null,
-        label = null,
         prefix = null,
         block = false,
         onClick = (_) => _,
         loading = false,
         suffix = null,
         type = 'button',
-      } = {}) => null
-    : _false) ||
+        href = '',
+        LinkComponent = null,
+        selected = false,
+        onMouseDown = (_) => _,
+        onMousePointer = (_) => _,
+      } = {
+        content: null,
+      }
+    ) => null
+  : _false;
+
+export const Button =
+  ButtonType ||
   forwardRef((props, ref) => {
     const { block } = props;
     return <ButtonBase {...props} iconOnly={false} ref={ref} block={!!block} />;
