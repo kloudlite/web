@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/display-name */
 import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -267,26 +269,60 @@ export const ButtonBase = forwardRef((props, ref) => {
 
 ButtonBase.displayName = 'ButtonBase';
 
-export const IconButton = forwardRef((props, ref) => {
-  const { icon, block } = props;
-  return (
-    <ButtonBase
-      {...props}
-      ref={ref}
-      iconOnly
-      label={null}
-      prefix={icon}
-      block={!!block}
-    />
-  );
-});
+const _false = false;
+export const IconButton =
+  (_false
+    ? ({
+        icon = null,
+        variant = '',
+        disabled = false,
+        ref = null,
+        iconOnly = null,
+        label = null,
+        prefix = null,
+        block = false,
+        onClick = (_) => _,
+      } = {}) => null
+    : _false) ||
+  forwardRef((props, ref) => {
+    const { icon, block } = props;
+    return (
+      <ButtonBase
+        {...props}
+        ref={ref}
+        iconOnly
+        label={null}
+        prefix={icon}
+        block={!!block}
+      />
+    );
+  });
 
 IconButton.displayName = 'IconButton';
 
-export const Button = forwardRef((props, ref) => {
-  const { block } = props;
-  return <ButtonBase {...props} iconOnly={false} ref={ref} block={!!block} />;
-});
+export const Button =
+  (_false
+    ? ({
+        content = '',
+        size = '',
+        icon = null,
+        variant = '',
+        disabled = false,
+        ref = null,
+        iconOnly = null,
+        label = null,
+        prefix = null,
+        block = false,
+        onClick = (_) => _,
+        loading = false,
+        suffix = null,
+        type = 'button',
+      } = {}) => null
+    : _false) ||
+  forwardRef((props, ref) => {
+    const { block } = props;
+    return <ButtonBase {...props} iconOnly={false} ref={ref} block={!!block} />;
+  });
 
 Button.displayName = 'Button';
 

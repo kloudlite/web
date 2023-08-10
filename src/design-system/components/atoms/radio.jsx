@@ -4,15 +4,14 @@ import * as RadioGroupPrimitive from '@radix-ui/react-radio-group';
 import { cn } from '../utils';
 import { BounceIt } from '../bounce-it';
 
-export const RadioItem = (props) => {
-  const {
-    disabled,
-    value,
-    children,
-    className,
-    withBounceEffect,
-    labelPlacement = 'right',
-  } = props;
+export const RadioItem = ({
+  disabled,
+  value,
+  children,
+  className,
+  withBounceEffect,
+  labelPlacement = 'right',
+}) => {
   const id = useId();
   const rend = () => {
     return (
@@ -65,29 +64,22 @@ export const RadioItem = (props) => {
   return withBounceEffect ? <BounceIt>{rend()}</BounceIt> : rend();
 };
 
-export const RadioGroup = (props) => {
-  const {
-    value: v,
-    onChange,
-    label,
-    disabled,
-    children,
-    className,
-    labelPlacement = 'right',
-  } = props;
-  const [value, setValue] = useState(v);
-  useEffect(() => {
-    if (onChange) onChange(value);
-  }, [value]);
+export const RadioGroup = ({
+  value,
+  onChange = (_) => {},
+  label,
+  disabled,
+  children,
+  className,
+  labelPlacement = 'right',
+}) => {
   return (
     <RadioGroupPrimitive.Root
       className={cn('flex flex-col gap-y-xl', className)}
       value={value}
       aria-label={label}
       disabled={disabled}
-      onValueChange={(e) => {
-        setValue(e);
-      }}
+      onValueChange={onChange}
     >
       <span className="bodyMd-medium">{label}</span>
       {React.Children.map(children, (child) =>
