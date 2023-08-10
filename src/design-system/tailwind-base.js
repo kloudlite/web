@@ -320,6 +320,7 @@ const config = {
       },
       transparent: 'transparent',
       white: 'white',
+      black: 'black',
     },
   },
   plugins: [
