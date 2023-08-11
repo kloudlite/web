@@ -19,10 +19,14 @@ export const ActionButton = ({
   href = '',
   prefix = null,
   suffix = null,
-  LinkComponent = DefaultLinkComp,
+  LinkComponent,
   // eslint-disable-next-line no-unused-vars
   value = '',
 }) => {
+  if (!LinkComponent) {
+    // eslint-disable-next-line no-param-reassign
+    LinkComponent = DefaultLinkComp;
+  }
   return (
     <div className={cn('w-full flex flex-row gap-x-md')}>
       {active && (
@@ -69,7 +73,7 @@ export const ActionButton = ({
 };
 
 export const ActionRoot = (
-  { children, value, onChange = (_) => _, LinkComponent = DefaultLinkComp } = {
+  { children, value, onChange = (_) => _, LinkComponent = null } = {
     children: null,
     value: '',
   }

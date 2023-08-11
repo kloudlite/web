@@ -334,49 +334,94 @@ export const TextInputBase = forwardRef((props, ref) => {
 
 TextInputBase.displayName = 'TextInputBase';
 
+export const TextInputType = _false
+  ? (
+      {
+        value,
+        name = '',
+        type = 'password' || 'number',
+        extra = null,
+        className = '',
+        error = false,
+        disabled = false,
+        label = '',
+        onKeyDown = (_) => {},
+        autoComplete = false,
+        onChange = (_) => {},
+        message = '',
+        showclear = false,
+        placeholder = '',
+        size = 'md',
+        prefix = null,
+        suffix = null,
+        prefixIcon = null,
+        suffixIcon = null,
+        ...extraProps
+      } = { value: '' }
+    ) => null
+  : _false;
+
 export const TextInput =
-  (_false
-    ? (
-        {
-          value,
-          type = 'password' || 'number',
-          component = null,
-          extra = null,
-          className = '',
-          error = false,
-          disabled = false,
-          label = '',
-          onKeyDown = (_) => {},
-          autoComplete = false,
-          onChange = (_) => {},
-          message = '',
-          showclear = false,
-          placeholder = '',
-          size = 'md',
-          prefix = null,
-          suffix = null,
-          prefixIcon = null,
-          suffixIcon = null,
-          ...extraProps
-        } = { value: '' }
-      ) => null
-    : _false) ||
+  TextInputType ||
   forwardRef((props, ref) => {
     return <TextInputBase {...props} component="input" type="text" ref={ref} />;
   });
 
 TextInput.displayName = 'TextInput';
 
-export const TextArea = (props) => {
+export const TextArea = (
+  {
+    value,
+    name = '',
+    extra = null,
+    className = '',
+    error = false,
+    disabled = false,
+    label = '',
+    onKeyDown = (_) => {},
+    autoComplete = false,
+    onChange = (_) => {},
+    message = '',
+    placeholder = '',
+    prefix = null,
+    prefixIcon = null,
+    resize = false,
+    rows = '3',
+    onClick = (_) => _,
+    onMouseDown = (_) => _,
+    onPointerDown = (_) => _,
+    ...etc
+  } = { value: '' }
+) => {
   const ref = useRef(null);
-  const { resize } = props;
   return (
     <TextInputBase
-      {...props}
+      {...{
+        value,
+        name,
+        extra,
+        className,
+        error,
+        disabled,
+        label,
+        onKeyDown,
+        autoComplete,
+        onChange,
+        message,
+        placeholder,
+        prefix,
+        prefixIcon,
+        resize,
+
+        rows,
+        onClick,
+        onMouseDown,
+        onPointerDown,
+        ...etc,
+      }}
       component="textarea"
       ref={ref}
       type="text"
-      resize={resize}
     />
   );
 };
