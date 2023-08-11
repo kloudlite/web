@@ -314,7 +314,6 @@ export const ButtonType = _false
         variant = '',
         disabled = false,
         ref = null,
-        iconOnly = null,
         prefix = null,
         block = false,
         onClick = (_) => _,
@@ -326,6 +325,8 @@ export const ButtonType = _false
         selected = false,
         onMouseDown = (_) => _,
         onMousePointer = (_) => _,
+        onPointerDown = (_) => _,
+        className = '',
       } = {
         content: null,
       }

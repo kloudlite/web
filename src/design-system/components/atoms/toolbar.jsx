@@ -11,7 +11,7 @@ import * as SeparatorPrimitive from '@radix-ui/react-separator';
 import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
 import { createToggleGroupScope } from '@radix-ui/react-toggle-group';
 import { useDirection } from '@radix-ui/react-direction';
-import { TextInput as _TextInput } from './input.jsx';
+import { TextInputType, TextInput as _TextInput } from './input.jsx';
 import {
   ButtonType,
   IconButtonType,
@@ -163,32 +163,7 @@ ToolbarIconButton.displayName = TOOLBAR_ICON_BUTTON_NAME;
 const TEXTFIELD_NAME = 'TextField';
 
 const ToolbarTextField =
-  (_false
-    ? (
-        {
-          value,
-          type = 'password' || 'number',
-          component = null,
-          extra = null,
-          className = '',
-          error = false,
-          disabled = false,
-          label = '',
-          onKeyDown = (_) => {},
-          autoComplete = false,
-          onChange = (_) => {},
-          message = '',
-          showclear = false,
-          placeholder = '',
-          size = 'md',
-          prefix = null,
-          suffix = null,
-          prefixIcon = null,
-          suffixIcon = null,
-          ...extraProps
-        } = { value: '' }
-      ) => null
-    : _false) ||
+  TextInputType ||
   React.forwardRef((props, forwardedRef) => {
     const { __scopeToolbar, ...inputProps } = props;
     const rovingFocusGroupScope = useRovingFocusGroupScope(__scopeToolbar);
@@ -227,7 +202,14 @@ ToolbarLink.displayName = LINK_NAME;
 const BUTTON_GROUP_NAME = 'ToolbarButtonGroup';
 
 const ToolbarButtonGroup =
-  (_false ? ({ value = '', children = null }) => null : _false) ||
+  (_false
+    ? ({
+        value = '',
+        children = null,
+        onValueChange = (_) => _,
+        selectable = false,
+      }) => null
+    : _false) ||
   React.forwardRef(({ selectable, ...props }, forwardedRef) => {
     const { __scopeToolbar, ...toggleGroupProps } = props;
     const context = useToolbarContext(BUTTON_GROUP_NAME, __scopeToolbar);
@@ -269,62 +251,77 @@ ToolbarButtonGroup.displayName = BUTTON_GROUP_NAME;
 
 const BUTTON_GROUP_BUTTON_NAME = 'ButtonGroupButton';
 
-const ToolbarButtonGroupButton = React.forwardRef((props, forwardedRef) => {
-  const { __scopeToolbar, ...toggleItemProps } = props;
-  const toggleGroupScope = useToggleGroupScope(__scopeToolbar);
-  const scope = { __scopeToolbar: props.__scopeToolbar };
-  const extraProps = {};
-  if (props['is-menu-button']) {
-    extraProps.selected = props['data-state'] === 'open';
-  }
-  return (
-    <ToolbarButtonBase asChild {...scope}>
-      <ToggleGroupPrimitive.Item
-        {...toggleGroupScope}
-        {...toggleItemProps}
-        ref={forwardedRef}
-        asChild
-      >
-        <_Button
-          {...props}
-          noRounded
-          className={cn('-ml-xs first:rounded-l last:rounded-r first:ml-0')}
-          variant="basic"
-          {...extraProps}
-        />
-      </ToggleGroupPrimitive.Item>
-    </ToolbarButtonBase>
-  );
-});
+const ToolbarButtonGroupButton =
+  (_false
+    ? (
+        { content, variant = '', suffix = null, prefix = null } = {
+          content: '',
+        }
+      ) => null
+    : _false) ||
+  React.forwardRef((props, forwardedRef) => {
+    const { __scopeToolbar, ...toggleItemProps } = props;
+    const toggleGroupScope = useToggleGroupScope(__scopeToolbar);
+    const scope = { __scopeToolbar: props.__scopeToolbar };
+    const extraProps = {};
+    if (props['is-menu-button']) {
+      extraProps.selected = props['data-state'] === 'open';
+    }
+    return (
+      <ToolbarButtonBase asChild {...scope}>
+        <ToggleGroupPrimitive.Item
+          {...toggleGroupScope}
+          {...toggleItemProps}
+          ref={forwardedRef}
+          asChild
+        >
+          <_Button
+            {...props}
+            noRounded
+            className={cn('-ml-xs first:rounded-l last:rounded-r first:ml-0')}
+            variant="basic"
+            {...extraProps}
+          />
+        </ToggleGroupPrimitive.Item>
+      </ToolbarButtonBase>
+    );
+  });
 
 const BUTTON_GROUP_ICON_BUTTON_NAME = 'ToolbarButtonGroupIconButton';
-const ToolbarButtonGroupIconButton = React.forwardRef((props, forwardedRef) => {
-  const { __scopeToolbar, ...toggleItemProps } = props;
-  const toggleGroupScope = useToggleGroupScope(__scopeToolbar);
-  const scope = { __scopeToolbar: props.__scopeToolbar };
-  const extraProps = {};
-  if (props['is-menu-button']) {
-    extraProps.selected = props['data-state'] === 'open';
-  }
-  return (
-    <ToolbarButtonBase asChild {...scope}>
-      <ToggleGroupPrimitive.Item
-        {...toggleGroupScope}
-        {...toggleItemProps}
-        ref={forwardedRef}
-        asChild
-      >
-        <_IconButton
-          {...props}
-          variant="basic"
-          noRounded
-          className={cn('-ml-xs first:rounded-l last:rounded-r first:ml-0')}
-          {...extraProps}
-        />
-      </ToggleGroupPrimitive.Item>
-    </ToolbarButtonBase>
-  );
-});
+const ToolbarButtonGroupIconButton = _false
+  ? (
+      { icon, disabled = false, onClick = (_) => _, value = '' } = {
+        icon: null,
+      }
+    ) => null
+  : _false ||
+    React.forwardRef((props, forwardedRef) => {
+      const { __scopeToolbar, ...toggleItemProps } = props;
+      const toggleGroupScope = useToggleGroupScope(__scopeToolbar);
+      const scope = { __scopeToolbar: props.__scopeToolbar };
+      const extraProps = {};
+      if (props['is-menu-button']) {
+        extraProps.selected = props['data-state'] === 'open';
+      }
+      return (
+        <ToolbarButtonBase asChild {...scope}>
+          <ToggleGroupPrimitive.Item
+            {...toggleGroupScope}
+            {...toggleItemProps}
+            ref={forwardedRef}
+            asChild
+          >
+            <_IconButton
+              {...props}
+              variant="basic"
+              noRounded
+              className={cn('-ml-xs first:rounded-l last:rounded-r first:ml-0')}
+              {...extraProps}
+            />
+          </ToggleGroupPrimitive.Item>
+        </ToolbarButtonBase>
+      );
+    });
 
 ToolbarButtonGroupButton.displayName = BUTTON_GROUP_BUTTON_NAME;
 ToolbarButtonGroupIconButton.displayName = BUTTON_GROUP_ICON_BUTTON_NAME;
