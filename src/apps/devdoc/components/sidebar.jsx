@@ -8,6 +8,7 @@ const BaseSidebar = ({ items }) => {
     <div className="overflow-scroll fixed bottom-0 top-docHeaderHeight w-docSidebarWidth left-[max(0px,calc(50%-40rem))] p-4">
       <div className="sticky top-0">
         <TextInput
+          value=""
           placeholder="Search"
           prefixIcon={Search}
           suffix={
