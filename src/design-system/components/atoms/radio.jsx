@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
-import React, { cloneElement, useEffect, useId, useState } from 'react';
+import React, { cloneElement, useId } from 'react';
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group';
 import { cn } from '../utils';
 import { BounceIt } from '../bounce-it';
 
-export const RadioItem = ({
+export const Item = ({
   disabled,
   value,
   children,
@@ -64,7 +64,7 @@ export const RadioItem = ({
   return withBounceEffect ? <BounceIt>{rend()}</BounceIt> : rend();
 };
 
-export const RadioGroup = ({
+export const Root = ({
   value,
   onChange = (_) => {},
   label,
@@ -89,25 +89,32 @@ export const RadioGroup = ({
   );
 };
 
-RadioItem.propTypes = {
-  value: PropTypes.any,
+const Radio = {
+  Root,
+  Item,
+};
+
+export default Radio;
+
+Item.propTypes = {
+  value: PropTypes.string,
   disabled: PropTypes.bool,
   withBounceEffect: PropTypes.bool,
 };
 
-RadioItem.defaultProps = {
+Item.defaultProps = {
   value: '',
   disabled: false,
   withBounceEffect: true,
 };
 
-RadioGroup.propTypes = {
+Root.propTypes = {
   label: PropTypes.string,
   onChange: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-RadioGroup.defaultProps = {
+Root.defaultProps = {
   onChange: () => {},
   disabled: false,
   label: null,

@@ -10,7 +10,7 @@ export const Option = ({ children, value = '', ...props }) => {
   );
 };
 
-export const Select = (props) => {
+export const Root = (props) => {
   const {
     disabled,
     value: v,
@@ -18,6 +18,7 @@ export const Select = (props) => {
     className,
     children,
     label,
+    size = 'md',
     block = true,
     error,
     ...extraProps
@@ -45,6 +46,8 @@ export const Select = (props) => {
           'bodyMd py-lg pl-lg pr-5xl text-text-default border-border-default bg-surface-basic-input transition-all rounded border flex flex-row items-center relative outline-none disabled:bg-surface-basic-input disabled:text-text-disabled disabled:border-border-disabled ring-offset-1 focus-within:ring-2 focus-within:ring-border-focus appearance-none',
           {
             'w-full': block,
+            'py-lg': size === 'md',
+            'py-xl': size === 'lg',
           },
           className
         )}
@@ -54,3 +57,10 @@ export const Select = (props) => {
     </div>
   );
 };
+
+const Select = {
+  Root,
+  Option,
+};
+
+export default Select;
