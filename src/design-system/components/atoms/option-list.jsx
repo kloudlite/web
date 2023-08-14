@@ -2,9 +2,11 @@
 /* eslint-disable react/display-name */
 import * as React from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { Link } from '@remix-run/react';
 import * as OptionMenuPrimitive from './_dropdown-primitive';
 import { TextInputBase } from './input';
 import { _false, cn } from '../utils';
+import Tabs from './tabs';
 
 const OptionMenu = OptionMenuPrimitive.Root;
 
@@ -31,11 +33,12 @@ const OptionMenuContent =
         sideOffset = 4,
         children = null,
         open = false,
+        compact = false,
         ...props
       }) => null
     : _false) ||
   React.forwardRef(
-    ({ className, sideOffset = 4, children, open, ...props }, ref) => (
+    ({ className, sideOffset = 4, children, open, compact, ...props }, ref) => (
       <AnimatePresence>
         {open && (
           <OptionMenuPrimitive.Portal forceMount>
@@ -54,7 +57,10 @@ const OptionMenuContent =
                 exit={{ x: 0, y: -3, opacity: 0 }}
                 transition={{ duration: 0.3, ease: 'anticipate' }}
                 className={cn(
-                  'z-50 border border-border-default shadow-popover bg-surface-basic-default rounded min-w-[160px] overflow-hidden py-lg',
+                  'z-50 border border-border-default shadow-popover bg-surface-basic-default rounded min-w-[160px] overflow-hidden',
+                  {
+                    'py-lg': !compact,
+                  },
                   className
                 )}
               >
@@ -116,6 +122,7 @@ const OptionMenuTextInputItem =
           suffix = null,
           prefixIcon = null,
           suffixIcon = null,
+          compact = false,
           ...extraProps
         } = { value: '' }
       ) => null
@@ -128,7 +135,11 @@ const OptionMenuTextInputItem =
     };
 
     return (
-      <div className="py-lg px-xl">
+      <div
+        className={cn({
+          'py-lg px-xl': !props.compact,
+        })}
+      >
         <OptionMenuPrimitive.Item
           ref={ref}
           onSelect={setSearchFocus}
@@ -305,6 +316,63 @@ const OptionMenuSeparator = React.forwardRef(({ className, ...props }, ref) => (
 ));
 OptionMenuSeparator.displayName = OptionMenuPrimitive.Separator.displayName;
 
+const OptionMenuTabs = React.forwardRef(({ onChange, ...props }, ref) => {
+  const tabRef = React.useRef(null);
+  console.log('tab menu');
+  return (
+    <div
+      className={cn({
+        'py-lg px-xl': !props.compact,
+      })}
+    >
+      <OptionMenuPrimitive.Item
+        // ref={ref}
+        onSelect={(e) => e.preventDefault()}
+        onClick={(e) => console.log(e)}
+        onPointerUp={(e) => e.preventDefault()}
+        onPointerDown={(e) => e.preventDefault()}
+        onMouseMove={(e) => e.preventDefault()}
+        onMouseEnter={(e) => e.preventDefault()}
+        onMouseLeave={(e) => e.preventDefault()}
+        onPointerMove={(e) => e.preventDefault()}
+        onPointerLeave={(e) => e.preventDefault()}
+        {...props}
+        asChild
+        // onFocus={(e) => {
+        //   tabRef.current.focus();
+        //   console.log(tabRef.current.children[0].querySelector('a').focus());
+        // }}
+      >
+        <Tabs.Root ref={ref} variant="filled" value="env" LinkComponent={Link}>
+          {[
+            { label: 'Environments', value: 'env' },
+            {
+              label: 'Workspace',
+              value: 'work',
+            },
+          ].map((item, index) => {
+            console.log(item);
+            return (
+              <Tabs.Tab
+                {...item}
+                key={index}
+                onKeyDown={(e) => {
+                  if (e.key === 'Tab') {
+                    e.preventDefault();
+                    e.stopPropagation();
+                  }
+                  console.log(e);
+                }}
+              />
+            );
+          })}
+        </Tabs.Root>
+      </OptionMenuPrimitive.Item>
+    </div>
+  );
+});
+OptionMenuTextInputItem.displayName = OptionMenuPrimitive.Item.displayName;
+
 const Root = ({ ...props }) => {
   const [open, setOpen] = React.useState(props.open);
 
@@ -332,6 +400,7 @@ const OptionList = {
   Trigger: OptionMenuTrigger,
   TextInput: OptionMenuTextInputItem,
   Item: OptionMenuItem,
+  Tabs: OptionMenuTabs,
 };
 
 export default OptionList;
