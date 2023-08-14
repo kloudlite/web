@@ -1,21 +1,34 @@
-import { useState, useEffect } from 'react';
+import React, {
+  useState,
+  useEffect,
+  forwardRef,
+  useId,
+  useMemo,
+  cloneElement,
+} from 'react';
 import { LayoutGroup, motion } from 'framer-motion';
 import PropTypes from 'prop-types';
-import { DefaultLinkComp } from './_link';
+import * as RovingFocusGroup from '@radix-ui/react-roving-focus';
 import { cn } from '../utils';
+import { DefaultLinkComp } from './_link';
 
-export const NavTab = ({
+const Tab = ({
   href,
   label,
   active,
   fitted,
   onClick,
-  LinkComponent = DefaultLinkComp,
+  LinkComponent,
   variant,
   size,
   prefix,
+  onKeyDown,
 }) => {
   const Prefix = prefix;
+  if (!LinkComponent) {
+    // eslint-disable-next-line no-param-reassign
+    LinkComponent = DefaultLinkComp;
+  }
   return (
     <div
       className={cn(
@@ -30,25 +43,38 @@ export const NavTab = ({
         }
       )}
     >
-      <LinkComponent
-        onClick={onClick}
-        to={href}
-        className={cn(
-          'gap-lg outline-none flex flex-row items-center rounded ring-offset-1 focus-visible:ring-2 focus-visible:ring-border-focus w-max',
-          {
-            ...((!fitted || variant === 'filled') && {
-              'px-2xl py-lg': size === 'md',
-              'px-lg py-md': size === 'sm',
-            }),
-            ...(fitted && {
-              'py-lg': variant !== 'filled',
-            }),
-          }
-        )}
+      <RovingFocusGroup.Item
+        asChild
+        focusable
+        // onKeyDown={(e) => {
+        //   if (['ArrowDown', 'ArrowUp'].includes(e.key)) {
+        //     e.preventDefault();
+        //     // e.stopPropagation();
+        //   }
+        // }}
+        onKeyDown={onKeyDown}
       >
-        {prefix && <Prefix size={16} />}
-        {label}
-      </LinkComponent>
+        <LinkComponent
+          onClick={onClick}
+          to={href}
+          className={cn(
+            'gap-lg outline-none flex flex-row items-center ring-offset-1 focus-visible:ring-2 focus-visible:ring-border-focus w-max',
+            {
+              ...((!fitted || variant === 'filled') && {
+                'px-2xl py-lg': size === 'md',
+                'px-lg py-md': size === 'sm',
+                'rounded-lg': true,
+              }),
+              ...(fitted && {
+                'py-lg': variant !== 'filled',
+              }),
+            }
+          )}
+        >
+          {prefix && <Prefix size={16} />}
+          {label}
+        </LinkComponent>
+      </RovingFocusGroup.Item>
       {active && variant === 'plain' && (
         <motion.div
           layoutId="underline"
@@ -64,84 +90,93 @@ export const NavTab = ({
   );
 };
 
-export const NavTabs = ({
-  variant = 'plain',
-  size = 'md',
-  items,
-  fitted,
-  onChange,
-  layoutId,
-  value,
-  LinkComponent,
-  className,
-  basePath,
-}) => {
-  const [active, setActive] = useState(value);
-  useEffect(() => {
-    if (onChange) {
-      onChange(active);
-    }
-  }, [active]);
-  return (
-    <div
-      className={cn(
-        'no-scrollbar flex flex-row md:gap-4xl overflow-x-scroll py-[3px] pl-[3px] -my-[3px] -ml-[3px]',
-        'snap-x',
-        className
-      )}
-    >
-      <LayoutGroup id={layoutId}>
-        {items.map((child) => {
-          return (
-            <div
-              key={child.key}
-              className="px-xl first:pl-3xl last:pr-3xl md:first:pl-0 md:first:pr-0 md:px-0 snap-start"
-            >
-              <NavTab
-                onClick={() => {
-                  setActive(child.value);
-                }}
-                fitted={fitted}
-                href={basePath + child.href}
-                label={child.label}
-                active={value === child.value}
-                LinkComponent={LinkComponent}
-                variant={variant}
-                size={size}
-                prefix={child.prefix}
-              />
-            </div>
-          );
-        })}
-      </LayoutGroup>
-    </div>
-  );
+const Root = forwardRef(
+  (
+    {
+      variant = 'plain',
+      size = 'md',
+      fitted,
+      onChange,
+      value,
+      LinkComponent,
+      className,
+      basePath,
+      children,
+    },
+    ref
+  ) => {
+    const [active, setActive] = useState(value);
+    let id = useId();
+    id = useMemo(() => id, [children, value, basePath, size, variant]);
+    useEffect(() => {
+      if (onChange) {
+        onChange(active);
+      }
+    }, [active]);
+
+    return (
+      <RovingFocusGroup.Root
+        orientation="horizontal"
+        loop
+        className={cn(
+          'no-scrollbar flex flex-row md:gap-4xl overflow-x-scroll py-[3px] pl-[3px] -my-[3px] -ml-[3px]',
+          'snap-x',
+          className
+        )}
+        ref={ref}
+      >
+        <LayoutGroup id={id}>
+          {React.Children.map(children, (child) => {
+            return (
+              <div className="px-xl first:pl-3xl last:pr-3xl md:first:pl-0 md:first:pr-0 md:px-0 snap-start">
+                {cloneElement(child, {
+                  onClick: () => {
+                    setActive(child.props.value);
+                  },
+                  fitted,
+                  href: basePath + child.props.href,
+                  label: child.props.label,
+                  active: value === child.props.value,
+                  LinkComponent,
+                  variant,
+                  size,
+                  prefix: child.props.prefix,
+                })}
+              </div>
+            );
+          })}
+        </LayoutGroup>
+      </RovingFocusGroup.Root>
+    );
+  }
+);
+
+const Tabs = {
+  Tab,
+  Root,
 };
 
-NavTab.propTypes = {
+export default Tabs;
+
+Tab.propTypes = {
   label: PropTypes.string.isRequired,
   active: PropTypes.bool,
   fitted: PropTypes.bool,
 };
 
-NavTabs.propTypes = {
-  /**
-   * LayoutId should be provided in order to prevent multiple tabs to share same instance.
-   */
-  layoutId: PropTypes.string.isRequired,
-  items: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+Root.propTypes = {
   fitted: PropTypes.bool,
   variant: PropTypes.oneOf(['plain', 'filled']),
   size: PropTypes.oneOf(['md', 'sm']),
 };
 
-NavTabs.defaultProps = {
+Root.defaultProps = {
   fitted: false,
   variant: 'plain',
   size: 'md',
 };
 
-NavTab.defaultProps = {
+Tab.defaultProps = {
   active: false,
   fitted: false,
 };

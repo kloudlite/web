@@ -1,5 +1,5 @@
 import Container from '../atoms/container';
-import { NavTabs } from '../atoms/tabs';
+import Tabs from '../atoms/tabs';
 import { cn } from '../utils';
 
 export const TopBar = ({
@@ -33,15 +33,17 @@ export const TopBar = ({
         </div>
         {tab && (
           <div className="-mx-3xl md:mx-0">
-            <NavTabs
+            <Tabs.Root
               basePath={tab.basePath}
               value={tab.value}
-              layoutId={tab.layoutId}
               fitted={tab.fitted}
-              items={tab.items}
               onChange={tab.onChange}
               LinkComponent={linkComponent}
-            />
+            >
+              {tab.items?.map((tabitem, index) => {
+                return <Tabs.Tab {...tabitem} key={index} />;
+              })}
+            </Tabs.Root>
           </div>
         )}
       </Container>
