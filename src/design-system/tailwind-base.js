@@ -194,7 +194,6 @@ const config = {
       },
       maxWidth: { ...width },
       minWidth: { ...width },
-      width: { ...width },
     },
     fontFamily: {
       sans: ['Inter', 'sans-serif'],
@@ -234,11 +233,11 @@ const config = {
       surface: {
         basic: {
           default: primitives.colors.grey['50'],
-          subdued: primitives.colors.grey['100'],
+          subdued: primitives.colors.zinc['50'],
           hovered: primitives.colors.zinc['50'],
           pressed: primitives.colors.zinc['200'],
           input: primitives.colors.grey['50'],
-          active: primitives.colors.zinc['200'],
+          active: primitives.colors.zinc['100'],
         },
         primary: {
           default: primitives.colors.blue['500'],
@@ -307,8 +306,8 @@ const config = {
         success: primitives.colors.green['600'],
       },
       border: {
-        default: primitives.colors.zinc['300'],
-        disabled: primitives.colors.zinc['200'],
+        default: primitives.colors.zinc['200'],
+        disabled: primitives.colors.zinc['100'],
         primary: primitives.colors.blue['600'],
         focus: primitives.colors.blue['400'],
         secondary: primitives.colors.teal['600'],
