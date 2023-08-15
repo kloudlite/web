@@ -52,12 +52,15 @@ const OptionMenuContent =
               {...props}
             >
               <motion.div
-                initial={{ x: 0, y: -3, opacity: 0 }}
-                animate={{ x: 0, y: 0, opacity: 1 }}
-                exit={{ x: 0, y: -3, opacity: 0 }}
+                // initial={{ x: 0, y: -3, opacity: 0 }}
+                // animate={{ x: 0, y: 0, opacity: 1 }}
+                // exit={{ x: 0, y: -3, opacity: 0 }}
+                initial={{ opacity: 0, scale: 0.85 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.85 }}
                 transition={{ duration: 0.3, ease: 'anticipate' }}
                 className={cn(
-                  'z-50 border border-border-default shadow-popover bg-surface-basic-default rounded min-w-[160px] overflow-hidden',
+                  'z-50 border border-border-default shadow-popover bg-surface-basic-default rounded min-w-[160px] overflow-hidden origin-top',
                   {
                     'py-lg': !compact,
                   },
