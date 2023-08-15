@@ -13,7 +13,7 @@ export const TopBar = ({
   return (
     <div
       className={cn(
-        'border-b border-border-default bg-surface-basic-subdued z-40',
+        'border-b border-border-default bg-surface-basic-default z-40',
         {
           'sticky top-0 left-0 right-0': fixed,
         }
