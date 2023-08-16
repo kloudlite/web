@@ -19,7 +19,7 @@ export const SubHeader = ({
         )}
         <div className="text-text-strong heading2xl">{title}</div>
       </div>
-      <div className="flex flex-row items-center justify-center">
+      <div className="flex flex-row items-center justify-center min-h-[38px]">
         {actions && actions}
       </div>
     </div>

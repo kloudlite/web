@@ -34,7 +34,7 @@ export const Button = (props) => {
   );
 };
 
-export const Popover = ({ children, onOpenChange, show }) => (
+export const Popover = ({ children, onOpenChange, show = false }) => (
   <PopoverPrimitive.Root open={show} onOpenChange={onOpenChange}>
     {children}
   </PopoverPrimitive.Root>
