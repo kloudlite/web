@@ -206,8 +206,8 @@ const config = {
       '2xl': '1440px',
       '3xl': '1920px',
     },
-    fontSize: { ...primitives.fontSize },
-    lineHeight: { ...primitives.lineHeight },
+    // fontSize: { ...primitives.fontSize },
+    // lineHeight: { ...primitives.lineHeight },
     spacing: {
       0: '0px',
       xs: primitives.spacing['025'],
