@@ -164,9 +164,7 @@ const OptionMenuTextInputItem =
             component="input"
             ref={searchRef}
             autoComplete="off"
-            onChange={(e) => {
-              if (onChange) onChange(e.target.value);
-            }}
+            onChange={onChange}
             onKeyDown={(e) => {
               if (e.key !== 'Escape') e.stopPropagation();
             }}
