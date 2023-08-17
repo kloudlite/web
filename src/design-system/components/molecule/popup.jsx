@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Button as NativeButton, IconButton } from '../atoms/button';
 import { cn } from '../utils';
 
-export const Header = ({ children, showclose = true }) => {
+const Header = ({ children, showclose = true }) => {
   return (
     <div className="border-b border-border-default p-3xl flex flex-row items-center justify-between">
       <Dialog.Title className="headingLg text-text-strong">
@@ -19,11 +19,11 @@ export const Header = ({ children, showclose = true }) => {
   );
 };
 
-export const Content = ({ children }) => {
+const Content = ({ children }) => {
   return <div className="p-3xl">{children}</div>;
 };
 
-export const Footer = ({ children }) => {
+const Footer = ({ children }) => {
   return (
     <div className="p-3xl flex flex-row justify-end gap-lg bg-surface-basic-subdued">
       {children}
@@ -31,7 +31,7 @@ export const Footer = ({ children }) => {
   );
 };
 
-export const Button = (props) => {
+const Button = (props) => {
   const { closable } = props;
   return (
     <>
@@ -45,12 +45,7 @@ export const Button = (props) => {
   );
 };
 
-export const PopupRoot = ({
-  show,
-  onOpenChange,
-  children,
-  backdrop = true,
-}) => {
+const PopupRoot = ({ show, onOpenChange, children, backdrop = true }) => {
   return (
     <Dialog.Root
       open={show}
@@ -94,3 +89,13 @@ export const PopupRoot = ({
     </Dialog.Root>
   );
 };
+
+const Popup = {
+  Root: PopupRoot,
+  Header,
+  Content,
+  Footer,
+  Button,
+};
+
+export default Popup;
