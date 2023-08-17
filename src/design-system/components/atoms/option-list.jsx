@@ -7,6 +7,7 @@ import * as OptionMenuPrimitive from './_dropdown-primitive';
 import { TextInputBase } from './input';
 import { _false, cn } from '../utils';
 import Tabs from './tabs';
+import { DefaultLinkComp } from './_link';
 
 const OptionMenu = OptionMenuPrimitive.Root;
 
@@ -34,18 +35,30 @@ const OptionMenuContent =
         children = null,
         open = false,
         compact = false,
+        align = 'end',
         ...props
       }) => null
     : _false) ||
   React.forwardRef(
-    ({ className, sideOffset = 4, children, open, compact, ...props }, ref) => (
+    (
+      {
+        className,
+        sideOffset = 4,
+        children,
+        open,
+        compact,
+        align = 'end',
+        ...props
+      },
+      ref
+    ) => (
       <AnimatePresence>
         {open && (
           <OptionMenuPrimitive.Portal forceMount>
             <OptionMenuPrimitive.Content
               ref={ref}
               sideOffset={sideOffset}
-              align="end"
+              align={align}
               loop
               forceMount
               asChild
@@ -60,10 +73,7 @@ const OptionMenuContent =
                 exit={{ opacity: 0, scale: 0.85 }}
                 transition={{ duration: 0.3, ease: 'anticipate' }}
                 className={cn(
-                  'z-50 border border-border-default shadow-popover bg-surface-basic-default rounded min-w-[160px] overflow-hidden origin-top',
-                  {
-                    'py-lg': !compact,
-                  },
+                  'z-50 border border-border-default shadow-popover bg-surface-basic-default rounded min-w-[160px] overflow-hidden origin-top py-lg',
                   className
                 )}
               >
@@ -102,6 +112,50 @@ const OptionMenuItem =
   ));
 OptionMenuItem.displayName = OptionMenuPrimitive.Item.displayName;
 
+const OptionMenuLink =
+  (_false
+    ? ({
+        className = '',
+        onSelect = (_) => _,
+        children = null,
+        LinkComponent = null,
+        to = '',
+      }) => null
+    : _false) ||
+  React.forwardRef(
+    ({ className, LinkComponent = null, to = '', children, ...props }, ref) => {
+      let Comp = 'a';
+      let tempProps = { href: to };
+      if (LinkComponent) {
+        Comp = LinkComponent;
+        tempProps = { to };
+      }
+      return (
+        <OptionMenuPrimitive.Item
+          ref={ref}
+          className={cn(
+            'group relative flex flex-row gap-xl items-center bodyMd gap cursor-default select-none py-lg px-xl text-text-default outline-none transition-colors focus:bg-surface-basic-hovered hover:bg-surface-basic-hovered data-[disabled]:pointer-events-none data-[disabled]:text-text-disabled',
+            className
+          )}
+          {...props}
+          onMouseMove={(e) => e.preventDefault()}
+          onMouseEnter={(e) => e.preventDefault()}
+          onMouseLeave={(e) => {
+            e.preventDefault();
+            e.target.blur();
+          }}
+          onPointerLeave={(e) => e.preventDefault()}
+          onPointerEnter={(e) => e.preventDefault()}
+          onPointerMove={(e) => e.preventDefault()}
+          asChild
+        >
+          <Comp {...tempProps}>{children}</Comp>
+        </OptionMenuPrimitive.Item>
+      );
+    }
+  );
+OptionMenuLink.displayName = 'OptionMenuLink';
+
 const OptionMenuTextInputItem =
   (_false
     ? (
@@ -130,18 +184,25 @@ const OptionMenuTextInputItem =
         } = { value: '' }
       ) => null
     : _false) ||
-  React.forwardRef(({ onChange, ...props }, ref) => {
+  React.forwardRef(({ onChange, compact = false, ...props }, ref) => {
     const searchRef = React.useRef(null);
     const setSearchFocus = (e) => {
       e?.preventDefault();
       searchRef.current.focus();
     };
 
+    React.useEffect(() => {
+      if (searchRef.current) {
+        searchRef.current.focus();
+      }
+    }, []);
+
     return (
       <div
         className={cn({
-          'py-lg px-xl': !props.compact,
+          'py-lg px-xl': !compact,
         })}
+        onFocus={() => console.log('div focus')}
       >
         <OptionMenuPrimitive.Item
           ref={ref}
@@ -156,6 +217,7 @@ const OptionMenuTextInputItem =
           onPointerLeave={(e) => e.preventDefault()}
           onFocus={() => {
             searchRef.current.focus();
+            console.log('search focus');
           }}
           {...props}
           asChild
@@ -317,61 +379,133 @@ const OptionMenuSeparator = React.forwardRef(({ className, ...props }, ref) => (
 ));
 OptionMenuSeparator.displayName = OptionMenuPrimitive.Separator.displayName;
 
-const OptionMenuTabs = React.forwardRef(({ onChange, ...props }, ref) => {
-  const tabRef = React.useRef(null);
-  console.log('tab menu');
-  return (
-    <div
-      className={cn({
-        'py-lg px-xl': !props.compact,
-      })}
-    >
-      <OptionMenuPrimitive.Item
-        // ref={ref}
-        onSelect={(e) => e.preventDefault()}
-        onClick={(e) => console.log(e)}
-        onPointerUp={(e) => e.preventDefault()}
-        onPointerDown={(e) => e.preventDefault()}
-        onMouseMove={(e) => e.preventDefault()}
-        onMouseEnter={(e) => e.preventDefault()}
-        onMouseLeave={(e) => e.preventDefault()}
-        onPointerMove={(e) => e.preventDefault()}
-        onPointerLeave={(e) => e.preventDefault()}
-        {...props}
-        asChild
-        // onFocus={(e) => {
-        //   tabRef.current.focus();
-        //   console.log(tabRef.current.children[0].querySelector('a').focus());
-        // }}
-      >
-        <Tabs.Root ref={ref} variant="filled" value="env" LinkComponent={Link}>
-          {[
-            { label: 'Environments', value: 'env' },
-            {
-              label: 'Workspace',
-              value: 'work',
-            },
-          ].map((item, index) => {
-            console.log(item);
-            return (
-              <Tabs.Tab
-                {...item}
-                key={index}
-                onKeyDown={(e) => {
-                  if (e.key === 'Tab') {
-                    e.preventDefault();
-                    e.stopPropagation();
-                  }
-                  console.log(e);
-                }}
-              />
-            );
+// OptionMenuTabs
+const focusElement = (element) => {
+  element?.querySelector('[data-radix-collection-item]')?.focus();
+};
+
+const handleKeyNavigation = (e, tabRef) => {
+  if (['ArrowDown', 'ArrowUp'].includes(e.key)) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (e.key === 'ArrowUp') {
+      const childs = Array.from(tabRef.current.parentNode.children).filter(
+        (c) =>
+          c.hasAttribute('data-radix-collection-item') ||
+          c.querySelector('[data-radix-collection-item]')
+      );
+
+      console.log(childs);
+      const currentIndex = childs.indexOf(tabRef.current);
+      if (currentIndex > 0) {
+        if (
+          childs[currentIndex - 1].hasAttribute('data-radix-collection-item')
+        ) {
+          childs[currentIndex - 1].focus();
+        } else {
+          focusElement(childs[currentIndex - 1]);
+        }
+      } else if (
+        childs[childs.length - 1].hasAttribute('data-radix-collection-item')
+      ) {
+        childs[childs.length - 1].focus();
+      } else {
+        focusElement(childs[childs.length - 1]);
+      }
+    }
+    if (e.key === 'ArrowDown') {
+      const childs = Array.from(tabRef.current.parentNode.children).filter(
+        (c) =>
+          c.hasAttribute('data-radix-collection-item') ||
+          c.querySelector('[data-radix-collection-item]')
+      );
+
+      console.log(childs);
+      const currentIndex = childs.indexOf(tabRef.current);
+      if (currentIndex < childs.length - 1) {
+        if (
+          childs[currentIndex + 1].hasAttribute('data-radix-collection-item')
+        ) {
+          childs[currentIndex + 1].focus();
+        } else {
+          focusElement(childs[currentIndex + 1]);
+        }
+      } else if (childs[0].hasAttribute('data-radix-collection-item')) {
+        childs[0].focus();
+      } else {
+        focusElement(childs[0]);
+      }
+    }
+  }
+};
+const OptionMenuTabs =
+  (_false
+    ? (
+        {
+          value,
+          onChange = (_) => _,
+          className = '',
+          size = '',
+          children = null,
+          LinkComponent = null,
+        } = {
+          value: '',
+        }
+      ) => null
+    : _false) ||
+  React.forwardRef(
+    (
+      { onChange, value, size, children, LinkComponent, className, ...props },
+      ref
+    ) => {
+      const tabRef = React.useRef(null);
+      let tempProps = { LinkComponent };
+      if (!LinkComponent) tempProps = {};
+
+      return (
+        <div
+          className={cn({
+            'py-lg px-xl': !props.compact,
           })}
-        </Tabs.Root>
-      </OptionMenuPrimitive.Item>
-    </div>
+          ref={tabRef}
+          onFocus={(e) => {
+            e.target.querySelector(`.tab-item`)?.focus();
+            console.log(e.target.querySelector(`.tab-item`));
+          }}
+        >
+          <OptionMenuPrimitive.Item
+            onSelect={(e) => e.preventDefault()}
+            onPointerUp={(e) => e.preventDefault()}
+            onPointerDown={(e) => e.preventDefault()}
+            onMouseMove={(e) => e.preventDefault()}
+            onMouseEnter={(e) => e.preventDefault()}
+            onMouseLeave={(e) => e.preventDefault()}
+            onPointerMove={(e) => e.preventDefault()}
+            onPointerLeave={(e) => e.preventDefault()}
+          >
+            <Tabs.Root
+              ref={ref}
+              variant="filled"
+              value={value}
+              size={size}
+              className={className}
+              onChange={onChange}
+              {...tempProps}
+              {...props}
+            >
+              {React.Children.map(children, (child) =>
+                React.cloneElement(child, {
+                  onKeyDown: (e) => handleKeyNavigation(e, tabRef),
+                })
+              )}
+            </Tabs.Root>
+          </OptionMenuPrimitive.Item>
+        </div>
+      );
+    }
   );
-});
+
 OptionMenuTextInputItem.displayName = OptionMenuPrimitive.Item.displayName;
 
 const Root = ({ ...props }) => {
@@ -401,7 +535,11 @@ const OptionList = {
   Trigger: OptionMenuTrigger,
   TextInput: OptionMenuTextInputItem,
   Item: OptionMenuItem,
-  Tabs: OptionMenuTabs,
+  Tabs: {
+    Root: OptionMenuTabs,
+    Tab: Tabs.Tab,
+  },
+  Link: OptionMenuLink,
 };
 
 export default OptionList;

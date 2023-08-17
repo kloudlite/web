@@ -4,15 +4,17 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Button as NativeButton, IconButton } from '../atoms/button';
 import { cn } from '../utils';
 
-export const Header = ({ children }) => {
+export const Header = ({ children, showclose = true }) => {
   return (
     <div className="border-b border-border-default p-3xl flex flex-row items-center justify-between">
       <Dialog.Title className="headingLg text-text-strong">
         {children}
       </Dialog.Title>
-      <Dialog.Close asChild>
-        <IconButton variant="plain" icon={X} />
-      </Dialog.Close>
+      {showclose && (
+        <Dialog.Close asChild>
+          <IconButton variant="plain" icon={X} />
+        </Dialog.Close>
+      )}
     </div>
   );
 };

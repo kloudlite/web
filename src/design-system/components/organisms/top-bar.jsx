@@ -1,6 +1,9 @@
+import { ChevronLeft } from '@jengaicons/react';
+import { Button } from '../atoms/button';
 import Container from '../atoms/container';
 import Tabs from '../atoms/tabs';
 import { cn } from '../utils';
+import ScrollArea from '../atoms/scroll-area';
 
 export const TopBar = ({
   tab,
@@ -9,6 +12,7 @@ export const TopBar = ({
   fixed,
   linkComponent,
   breadcrum = null,
+  backurl = 'abc',
 }) => {
   return (
     <div
@@ -32,18 +36,36 @@ export const TopBar = ({
           </div>
         </div>
         {tab && (
-          <div className="-mx-3xl md:mx-0">
-            <Tabs.Root
-              basePath={tab.basePath}
-              value={tab.value}
-              fitted={tab.fitted}
-              onChange={tab.onChange}
-              LinkComponent={linkComponent}
+          <div className="flex flex-row items-center">
+            {backurl && (
+              <div className="flex flex-row items-center">
+                <button className="outline-none flex flex-row items-center gap-lg bodyMd-medium text-text-soft hover:text-text-default active:text-text-default cursor-default py-lg">
+                  <ChevronLeft size={16} />
+                  Routers
+                </button>
+                <span className="ml-4xl mr-2xl w-xs h-2xl bg-border-default" />
+              </div>
+            )}
+            {/* <div className="-mx-3xl md:mx-0">
+             
+            </div> */}
+            <ScrollArea
+              blurfrom="from-white"
+              rightblur={false}
+              className="flex-1 -mr-2xl"
             >
-              {tab.items?.map((tabitem, index) => {
-                return <Tabs.Tab {...tabitem} key={index} />;
-              })}
-            </Tabs.Root>
+              <Tabs.Root
+                basePath={tab.basePath}
+                value={tab.value}
+                fitted={tab.fitted}
+                onChange={tab.onChange}
+                LinkComponent={linkComponent}
+              >
+                {tab.items?.map((tabitem, index) => {
+                  return <Tabs.Tab {...tabitem} key={index} />;
+                })}
+              </Tabs.Root>
+            </ScrollArea>
           </div>
         )}
       </Container>

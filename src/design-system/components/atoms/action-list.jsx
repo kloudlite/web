@@ -7,10 +7,9 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 import { LayoutGroup, motion } from 'framer-motion';
-import { DefaultLinkComp } from './_link';
 import { cn } from '../utils';
 
-export const ActionButton = ({
+export const Button = ({
   children = null,
   disabled = false,
   critical = false,
@@ -19,13 +18,13 @@ export const ActionButton = ({
   href = '',
   prefix = null,
   suffix = null,
-  LinkComponent,
+  LinkComponent = null,
   // eslint-disable-next-line no-unused-vars
   value = '',
 }) => {
   if (!LinkComponent) {
     // eslint-disable-next-line no-param-reassign
-    LinkComponent = DefaultLinkComp;
+    LinkComponent = 'div';
   }
   return (
     <div className={cn('w-full flex flex-row gap-x-md')}>
@@ -72,7 +71,7 @@ export const ActionButton = ({
   );
 };
 
-export const ActionRoot = (
+export const Root = (
   { children, value, onChange = (_) => _, LinkComponent = null } = {
     children: null,
     value: '',
@@ -104,21 +103,28 @@ export const ActionRoot = (
   );
 };
 
-ActionButton.propTypes = {
+const ActionList = {
+  Root,
+  Button,
+};
+
+export default ActionList;
+
+Button.propTypes = {
   href: PropTypes.string.isRequired,
   active: PropTypes.bool,
   onClick: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-ActionButton.defaultProps = {
+Button.defaultProps = {
   active: false,
   onClick: null,
   disabled: false,
 };
 
-ActionRoot.propTypes = {
+Root.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
 };
 
-ActionRoot.defaultProps = {};
+Root.defaultProps = {};

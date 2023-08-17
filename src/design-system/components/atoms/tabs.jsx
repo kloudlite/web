@@ -10,7 +10,6 @@ import { LayoutGroup, motion } from 'framer-motion';
 import PropTypes from 'prop-types';
 import * as RovingFocusGroup from '@radix-ui/react-roving-focus';
 import { cn } from '../utils';
-import { DefaultLinkComp } from './_link';
 
 const Tab = ({
   href,
@@ -25,40 +24,39 @@ const Tab = ({
   onKeyDown,
 }) => {
   const Prefix = prefix;
+  let tempProps = { to: href };
   if (!LinkComponent) {
     // eslint-disable-next-line no-param-reassign
-    LinkComponent = DefaultLinkComp;
+    LinkComponent = 'button';
+    tempProps = {};
   }
   return (
     <div
       className={cn(
-        'outline-none flex flex-col relative group bodyMd-medium hover:text-text-default active:text-text-default',
+        'outline-none flex flex-col relative group bodyMd-medium hover:text-text-default active:text-text-default transition-all',
         {
           'text-text-default': active,
           'text-text-soft': !active,
           'hover:bg-surface-basic-hovered active:bg-surface-basic-pressed rounded-lg':
             variant === 'filled',
-          'bg-surface-basic-default border border-border-default shadow-button':
-            variant === 'filled' && active,
+          // 'border border-transparent': variant === 'filled' && !active,
         }
       )}
     >
       <RovingFocusGroup.Item
         asChild
         focusable
-        // onKeyDown={(e) => {
-        //   if (['ArrowDown', 'ArrowUp'].includes(e.key)) {
-        //     e.preventDefault();
-        //     // e.stopPropagation();
-        //   }
-        // }}
-        onKeyDown={onKeyDown}
+        onKeyDown={(e) => {
+          if (onKeyDown) onKeyDown(e);
+          if (['Enter', ' '].includes(e.key)) {
+            onClick(e);
+          }
+        }}
       >
         <LinkComponent
           onClick={onClick}
-          to={href}
           className={cn(
-            'gap-lg outline-none flex flex-row items-center ring-offset-1 focus-visible:ring-2 focus-visible:ring-border-focus w-max',
+            'z-10 tab-item gap-lg outline-none flex flex-row items-center ring-offset-1 focus-visible:ring-2 focus-visible:ring-border-focus w-max cursor-default',
             {
               ...((!fitted || variant === 'filled') && {
                 'px-2xl py-lg': size === 'md',
@@ -70,8 +68,9 @@ const Tab = ({
               }),
             }
           )}
+          {...tempProps}
         >
-          {prefix && <Prefix size={16} />}
+          {prefix && <Prefix size={16} color="currentColor" />}
           {label}
         </LinkComponent>
       </RovingFocusGroup.Item>
@@ -81,6 +80,13 @@ const Tab = ({
           className={cn(
             'h-md bg-surface-primary-pressed z-10 absolute bottom-0 w-full'
           )}
+        />
+      )}
+      {variant === 'filled' && active && (
+        <motion.span
+          layoutId="bubble"
+          className="absolute inset-0 rounded-lg bg-surface-basic-default border border-border-default shadow-button "
+          transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
         />
       )}
       {variant === 'plain' && (
@@ -113,14 +119,18 @@ const Root = forwardRef(
         onChange(active);
       }
     }, [active]);
-
+    console.log(value);
     return (
       <RovingFocusGroup.Root
         orientation="horizontal"
         loop
         className={cn(
-          'no-scrollbar flex flex-row md:gap-4xl overflow-x-scroll py-[3px] pl-[3px] -my-[3px] -ml-[3px]',
+          'flex flex-row items-center py-[3px] pl-[3px] -my-[3px] -ml-[3px] transition-all',
           'snap-x',
+          {
+            'md:gap-4xl': size === 'md' && variant !== 'filled',
+            'gap-lg': size === 'sm' || variant === 'filled',
+          },
           className
         )}
         ref={ref}
@@ -128,9 +138,10 @@ const Root = forwardRef(
         <LayoutGroup id={id}>
           {React.Children.map(children, (child) => {
             return (
-              <div className="px-xl first:pl-3xl last:pr-3xl md:first:pl-0 md:first:pr-0 md:px-0 snap-start">
+              <div className="px-xl md:px-0 snap-start">
                 {cloneElement(child, {
                   onClick: () => {
+                    console.log(child.props.value);
                     setActive(child.props.value);
                   },
                   fitted,
@@ -150,6 +161,8 @@ const Root = forwardRef(
     );
   }
 );
+
+Root.displayName = 'TabRoot';
 
 const Tabs = {
   Tab,
