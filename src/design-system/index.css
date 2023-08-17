@@ -84,6 +84,10 @@ input:-webkit-autofill:active {
     @apply bodySm font-medium;
 }
 
+.bodySm-semibold{
+    @apply bodySm font-semibold;
+}
+
 .slider {
     @apply w-[100%] h-[100%] bg-[#F5F5F5] rounded-[10px] overflow-hidden;
 }

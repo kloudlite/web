@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/display-name */
 import PropTypes from 'prop-types';
 import {
   useRef,
@@ -14,22 +16,21 @@ import {
   EyeSlash,
   Eye,
 } from '@jengaicons/react';
-import { cn } from '../utils';
+import { _false, cn } from '../utils';
 
-export const NumberInput = (props) => {
-  const {
-    value,
-    min,
-    onChange,
-    label,
-    extra,
-    error,
-    disabled,
-    max,
-    message,
-    size = 'md',
-    step = 1,
-  } = props;
+export const NumberInput = ({
+  value,
+  min,
+  onChange,
+  label,
+  extra,
+  error,
+  disabled,
+  max,
+  message,
+  size = 'md',
+  step = 1,
+}) => {
   const [v, setV] = useState(value || min || 0);
   const ref = useRef();
   const id = useId();
@@ -165,13 +166,13 @@ export const TextInputBase = forwardRef((props, ref) => {
     showclear,
     placeholder,
     size = 'md',
+    resize = true,
     prefix,
     suffix,
     prefixIcon: PrefixIcon,
     suffixIcon: SuffixIcon,
     ...extraProps
   } = props;
-  const [val, setVal] = useState(value || '');
   const [t, setT] = useState(type || 'text');
 
   const id = useId();
@@ -194,7 +195,10 @@ export const TextInputBase = forwardRef((props, ref) => {
       })}
     >
       <div className="flex items-center">
-        <label className="flex-1 select-none bodyMd-medium" htmlFor={id}>
+        <label
+          className="flex-1 select-none bodyMd-medium text-text-default"
+          htmlFor={id}
+        >
           {label}
         </label>
         <div
@@ -240,17 +244,19 @@ export const TextInputBase = forwardRef((props, ref) => {
             'outline-none flex-1 w-full',
             'rounded bodyMd bg-transparent',
             {
-              'text-text-critical placeholder:text-critical-400': error,
+              'text-text-critical placeholder:text-text-critical/70': error,
               'text-text-default': !error,
             },
             {
               'py-xl': size === 'lg',
               'py-lg': size === 'md',
+            },
+            {
+              'resize-none': !resize,
             }
           )}
-          value={val}
+          value={value}
           onChange={(e) => {
-            setVal(e.target.value);
             if (onChange) {
               onChange(e);
             }
@@ -277,7 +283,7 @@ export const TextInputBase = forwardRef((props, ref) => {
             type="button"
             tabIndex={-1}
             onClick={() => {
-              setVal('');
+              if (onChange) onChange({ target: { value: '' } });
             }}
             className={cn(
               'outline-none flex items-center rounded justify-center',
@@ -328,16 +334,94 @@ export const TextInputBase = forwardRef((props, ref) => {
 
 TextInputBase.displayName = 'TextInputBase';
 
-export const TextInput = forwardRef((props, ref) => {
-  return <TextInputBase {...props} component="input" type="text" ref={ref} />;
-});
+export const TextInputType = _false
+  ? (
+      {
+        value,
+        name = '',
+        type = 'password' || 'number',
+        extra = null,
+        className = '',
+        error = false,
+        disabled = false,
+        label = null,
+        onKeyDown = (_) => {},
+        autoComplete = 'off',
+        onChange = (_) => {},
+        message = '',
+        showclear = false,
+        placeholder = '',
+        size = 'md',
+        prefix = null,
+        suffix = null,
+        prefixIcon = null,
+        suffixIcon = null,
+        ...extraProps
+      } = { value: '' }
+    ) => null
+  : _false;
+
+export const TextInput =
+  TextInputType ||
+  forwardRef((props, ref) => {
+    return <TextInputBase {...props} component="input" type="text" ref={ref} />;
+  });
 
 TextInput.displayName = 'TextInput';
 
-export const TextArea = (props) => {
+export const TextArea = (
+  {
+    value,
+    name = '',
+    extra = null,
+    className = '',
+    error = false,
+    disabled = false,
+    label = '',
+    onKeyDown = (_) => {},
+    autoComplete = 'off',
+    onChange = (_) => {},
+    message = '',
+    placeholder = '',
+    prefix = null,
+    prefixIcon = null,
+    resize = false,
+    rows = '3',
+    onClick = (_) => _,
+    onMouseDown = (_) => _,
+    onPointerDown = (_) => _,
+    ...etc
+  } = { value: '' }
+) => {
   const ref = useRef(null);
   return (
-    <TextInputBase {...props} component="textarea" ref={ref} type="text" />
+    <TextInputBase
+      {...{
+        value,
+        name,
+        extra,
+        className,
+        error,
+        disabled,
+        label,
+        onKeyDown,
+        autoComplete,
+        onChange,
+        message,
+        placeholder,
+        prefix,
+        prefixIcon,
+        resize,
+        rows,
+        onClick,
+        onMouseDown,
+        onPointerDown,
+        ...etc,
+      }}
+      component="textarea"
+      ref={ref}
+      type="text"
+    />
   );
 };
 

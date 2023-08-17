@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 import { cn } from '../utils';
 
-export const Badge = ({ type, label, icon }) => {
+export const Badge = ({ type, children, icon = null }) => {
   const Icon = icon;
   return (
     <div
       className={cn(
-        'flex gap-md items-center  h-3xl py-sm px-lg w-fit rounded-full bodySm border select-none',
+        'flex gap-md items-center h-3xl py-sm px-lg w-fit rounded-full bodySm border select-none',
         {
           'border-border-default bg-surface-basic-default text-text-default':
             type === 'neutral',
@@ -17,19 +17,18 @@ export const Badge = ({ type, label, icon }) => {
           'border-border-warning bg-surface-warning-subdued text-text-warning':
             type === 'warning',
           'border-border-critical bg-surface-critical-subdued text-text-critical':
-            type === 'danger',
+            type === 'critical',
         }
       )}
     >
       {icon && <Icon size={12} color="currentColor" />}
-      {label}
+      {children}
     </div>
   );
 };
 
 Badge.propTypes = {
-  type: PropTypes.oneOf(['neutral', 'info', 'success', 'warning', 'danger']),
-  label: PropTypes.string.isRequired,
+  type: PropTypes.oneOf(['neutral', 'info', 'success', 'warning', 'critical']),
 };
 
 Badge.defaultProps = {

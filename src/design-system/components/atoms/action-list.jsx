@@ -1,21 +1,31 @@
-import { useEffect, useState } from 'react';
+import React, {
+  cloneElement,
+  useEffect,
+  useId,
+  useMemo,
+  useState,
+} from 'react';
 import PropTypes from 'prop-types';
 import { LayoutGroup, motion } from 'framer-motion';
-import { DefaultLinkComp } from './_link';
 import { cn } from '../utils';
 
-export const ActionButton = ({
-  label,
-  disabled,
-  critical,
-  active,
-  onClick,
-  href,
-  LeftIconComp,
-  RightIconComp,
-  rightEmptyPlaceholder,
-  LinkComponent = DefaultLinkComp,
+export const Button = ({
+  children = null,
+  disabled = false,
+  critical = false,
+  active = false,
+  onClick = (_) => _,
+  href = '',
+  prefix = null,
+  suffix = null,
+  LinkComponent = null,
+  // eslint-disable-next-line no-unused-vars
+  value = '',
 }) => {
+  if (!LinkComponent) {
+    // eslint-disable-next-line no-param-reassign
+    LinkComponent = 'div';
+  }
   return (
     <div className={cn('w-full flex flex-row gap-x-md')}>
       {active && (
@@ -27,9 +37,12 @@ export const ActionButton = ({
       <LinkComponent
         to={href}
         className={cn(
-          'w-[inherit] rounded border bodyMd flex gap-md items-center justify-between cursor-pointer outline-none border-none px-2xl py-lg ring-offset-1 focus-visible:ring-2 focus:ring-border-focus',
+          'transition-all w-[inherit] rounded border flex gap-md items-center justify-between cursor-pointer outline-none border-none px-2xl py-lg ring-offset-1 focus-visible:ring-2 focus:ring-border-focus',
           {
+            'text-text-soft hover:text-text-default':
+              !active && !disabled && !critical,
             'text-text-primary bodyMd-medium': active,
+            bodyMd: !active,
             'text-text-disabled': disabled,
             'text-text-critical hover:text-text-on-primary active:text-text-on-primary':
               critical,
@@ -43,86 +56,75 @@ export const ActionButton = ({
             'bg-none hover:bg-surface-critical-hovered active:bg-surface-critical-pressed':
               !active && !disabled && critical,
             'bg-none': disabled,
-            'bg-surface-primary-selected': !critical && active,
+            'bg-surface-basic-active': !critical && active,
           }
         )}
         onClick={!critical ? onClick : null}
       >
         <div className="flex flex-row items-center gap-md">
-          {LeftIconComp && <LeftIconComp size={16} color="currentColor" />}
-          {label}
+          {prefix && <prefix size={16} color="currentColor" />}
+          {children}
         </div>
-        {RightIconComp && <RightIconComp size={16} color="currentColor" />}
-        {!RightIconComp && rightEmptyPlaceholder && (
-          <div className="w-2xl h-2xl" />
-        )}
+        {suffix && <suffix size={16} color="currentColor" />}
       </LinkComponent>
     </div>
   );
 };
 
-export const ActionList = ({
-  items,
-  value,
-  onChange,
-  layoutId,
-  LinkComponent,
-}) => {
+export const Root = (
+  { children, value, onChange = (_) => _, LinkComponent = null } = {
+    children: null,
+    value: '',
+  }
+) => {
+  const props = { children, value, onChange, LinkComponent };
   const [active, setActive] = useState(value);
   useEffect(() => {
     if (onChange) onChange(active);
   }, [active]);
+
+  let id = useId();
+  id = useMemo(() => id, [props]);
+
   return (
     <div className={cn('flex flex-col gap-y-md')}>
-      <LayoutGroup id={layoutId}>
-        {items.map((child) => {
-          return (
-            <ActionButton
-              critical={child.critical}
-              label={child.label}
-              href={child.href}
-              LeftIconComp={child.LeftIconComp}
-              RightIconComp={child.RightIconComp}
-              rightEmptyPlaceholder={!child.RightIconComp}
-              key={child.key}
-              active={child.value === active}
-              LinkComponent={LinkComponent}
-              onClick={() => {
-                setActive(child.value);
-              }}
-            />
-          );
-        })}
+      <LayoutGroup id={id}>
+        {React.Children.map(children, (child) =>
+          cloneElement(child, {
+            LinkComponent,
+            active: child.props.value === value,
+            onClick: () => {
+              setActive(child.props?.value);
+            },
+          })
+        )}
       </LayoutGroup>
     </div>
   );
 };
 
-ActionButton.propTypes = {
-  label: PropTypes.string.isRequired,
+const ActionList = {
+  Root,
+  Button,
+};
+
+export default ActionList;
+
+Button.propTypes = {
   href: PropTypes.string.isRequired,
   active: PropTypes.bool,
   onClick: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-ActionButton.defaultProps = {
+Button.defaultProps = {
   active: false,
   onClick: null,
   disabled: false,
 };
 
-ActionList.propTypes = {
-  items: PropTypes.arrayOf(
-    PropTypes.shape({
-      label: PropTypes.string.isRequired,
-      value: PropTypes.oneOfType([PropTypes.string, PropTypes.object])
-        .isRequired,
-      key: PropTypes.string,
-    })
-  ).isRequired,
+Root.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
-  layoutId: PropTypes.string.isRequired,
 };
 
-ActionList.defaultProps = {};
+Root.defaultProps = {};

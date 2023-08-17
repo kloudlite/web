@@ -2,13 +2,13 @@ import { useState } from 'react';
 import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 import { AnimatePresence, motion } from 'framer-motion';
 
-export const TooltipProvider = ({ delayDuration = 0, children }) => (
+export const Provider = ({ delayDuration = 0, children }) => (
   <TooltipPrimitive.Provider delayDuration={delayDuration}>
     {children}
   </TooltipPrimitive.Provider>
 );
 
-export const Tooltip = ({ children, content }) => {
+export const Root = ({ children, content }) => {
   const [open, setOpen] = useState(false);
   return (
     <TooltipPrimitive.Root open={open} onOpenChange={setOpen}>
@@ -33,6 +33,11 @@ export const Tooltip = ({ children, content }) => {
       </AnimatePresence>
     </TooltipPrimitive.Root>
   );
+};
+
+const Tooltip = {
+  Root,
+  Provider,
 };
 
 export default Tooltip;

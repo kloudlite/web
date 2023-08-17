@@ -20,3 +20,5 @@ export const klogger = ([...message], type = 'log') => {
       break;
   }
 };
+
+export const _false = false;

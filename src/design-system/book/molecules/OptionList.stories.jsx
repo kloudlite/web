@@ -17,7 +17,7 @@ const OptionListHook = () => {
   const [apple, setApple] = useState(false);
   const [orange, setOrange] = useState(false);
   return (
-    <OptionList open={open} onOpenChange={setOpen}>
+    <OptionList.Root open={open} onOpenChange={setOpen}>
       <OptionList.Trigger>
         <Button content="menu" variant="basic" selected={open} />
       </OptionList.Trigger>
@@ -82,7 +82,7 @@ const OptionListHook = () => {
           </OptionList.RadioGroupItem>
         </OptionList.RadioGroup>
       </OptionList.Content>
-    </OptionList>
+    </OptionList.Root>
   );
 };
 
@@ -92,7 +92,7 @@ const ProfileOptionListHook = () => {
   const [apple, setApple] = useState(false);
   const [orange, setOrange] = useState(false);
   return (
-    <OptionList open={open} onOpenChange={setOpen}>
+    <OptionList.Root open={open} onOpenChange={setOpen}>
       <OptionList.Trigger>
         <Profile name="this is profile" />
       </OptionList.Trigger>
@@ -157,7 +157,7 @@ const ProfileOptionListHook = () => {
           </OptionList.RadioGroupItem>
         </OptionList.RadioGroup>
       </OptionList.Content>
-    </OptionList>
+    </OptionList.Root>
   );
 };
 

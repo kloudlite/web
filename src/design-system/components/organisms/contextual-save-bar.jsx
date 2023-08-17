@@ -1,15 +1,16 @@
 import classNames from 'classnames';
+import { Link } from '@remix-run/react';
 import { Button } from '../atoms/button';
 import { BrandLogo } from '../branding/brand-logo';
 import Container from '../atoms/container';
 
 export const ContextualSaveBar = ({
-  logo,
-  logoWidth,
-  message,
-  saveAction,
-  discardAction,
-  fixed,
+  logo = null,
+  logoWidth = 124,
+  message = '',
+  saveAction = (_) => _,
+  discardAction = (_) => _,
+  fixed = false,
 }) => {
   return (
     <div
@@ -23,12 +24,13 @@ export const ContextualSaveBar = ({
       <Container>
         <div className="flex flex-row items-center justify-between gap-lg md:gap-0">
           {logo && (
-            <div
+            <Link
+              to="/"
               className="hidden md:block lg:block xl:block"
-              width={logoWidth || 124}
+              width={logoWidth}
             >
               {logo}
-            </div>
+            </Link>
           )}
           {message && (
             <div className="headingMd text-text-on-primary font-sans-serif truncate">
