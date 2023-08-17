@@ -1,5 +1,4 @@
 import { ChevronLeft } from '@jengaicons/react';
-import { Button } from '../atoms/button';
 import Container from '../atoms/container';
 import Tabs from '../atoms/tabs';
 import { cn } from '../utils';
@@ -12,8 +11,14 @@ export const TopBar = ({
   fixed,
   linkComponent,
   breadcrum = null,
-  backurl = 'abc',
+  backurl = {},
 }) => {
+  let BackurlComp = linkComponent;
+  let backurlProps = { to: backurl?.href };
+  if (!BackurlComp) {
+    BackurlComp = 'a';
+    backurlProps = { href: backurl?.href };
+  }
   return (
     <div
       className={cn(
@@ -39,10 +44,13 @@ export const TopBar = ({
           <div className="flex flex-row items-center">
             {backurl && (
               <div className="flex flex-row items-center">
-                <button className="outline-none flex flex-row items-center gap-lg bodyMd-medium text-text-soft hover:text-text-default active:text-text-default cursor-default py-lg">
+                <BackurlComp
+                  {...backurlProps}
+                  className="outline-none flex flex-row items-center gap-lg bodyMd-medium text-text-soft hover:text-text-default active:text-text-default cursor-default py-lg"
+                >
                   <ChevronLeft size={16} />
-                  Routers
-                </button>
+                  {backurl.name}
+                </BackurlComp>
                 <span className="ml-4xl mr-2xl w-xs h-2xl bg-border-default" />
               </div>
             )}
