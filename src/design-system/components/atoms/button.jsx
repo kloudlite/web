@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/display-name */
 import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -17,13 +19,15 @@ export const ButtonStyles = [
   'primary-plain',
   'secondary-plain',
   'critical-plain',
+  'purple',
+  'tertiary',
+  'warning',
 ];
 export const IconButtonStyles = ['outline', 'basic', 'plain'];
 
 export const AriaButton = 'button';
 
 export const ButtonBase = forwardRef((props, ref) => {
-  let Component = motion.button;
   const {
     onClick,
     href,
@@ -47,11 +51,13 @@ export const ButtonBase = forwardRef((props, ref) => {
     loading = false,
     ...mprops
   } = props;
-  const extraProps = {};
 
+  const extraProps = {};
   extraProps.onClick = onClick;
 
-  if (props.href) {
+  let Component = motion.button;
+
+  if (href) {
     Component = motion(LinkComponent);
     extraProps.to = href;
   } else {
@@ -123,6 +129,7 @@ export const ButtonBase = forwardRef((props, ref) => {
                 'border-border-critical disabled:border-border-disabled':
                   variant === 'critical-outline' || variant === 'critical',
                 'border-border-purple': variant === 'purple',
+                'border-border-warning': variant === 'warning',
                 'border-border-tertiary': variant === 'tertiary',
                 'border-none':
                   variant === 'plain' ||
@@ -174,6 +181,8 @@ export const ButtonBase = forwardRef((props, ref) => {
             variant === 'purple',
           'bg-surface-tertiary-default hover:bg-surface-tertiary-hovered active:bg-surface-tertiary-pressed':
             variant === 'tertiary',
+          'bg-surface-warning-default hover:bg-surface-warning-hovered active:bg-surface-warning-pressed':
+            variant === 'warning',
         },
         {
           'text-text-default':
@@ -184,7 +193,8 @@ export const ButtonBase = forwardRef((props, ref) => {
             variant === 'secondary' ||
             variant === 'secondary-outline' ||
             variant === 'tertiary' ||
-            variant === 'purple',
+            variant === 'purple' ||
+            variant === 'warning',
           'text-text-critical':
             variant === 'critical-outline' || variant === 'critical-plain',
           'text-text-primary':
@@ -259,46 +269,81 @@ export const ButtonBase = forwardRef((props, ref) => {
 
 ButtonBase.displayName = 'ButtonBase';
 
-export const IconButton = forwardRef((props, ref) => {
-  const { icon, block } = props;
-  return (
-    <ButtonBase
-      {...props}
-      ref={ref}
-      iconOnly
-      label={null}
-      prefix={icon}
-      block={!!block}
-    />
-  );
-});
+const _false = false;
+export const IconButtonType = _false
+  ? (
+      {
+        icon,
+        variant = '',
+        disabled = false,
+        ref = null,
+        block = false,
+        onClick = (_) => _,
+        selected = false,
+        onMouseDown = (_) => _,
+        onPointerDown = (_) => _,
+      } = {
+        icon: null,
+      }
+    ) => null
+  : _false;
+export const IconButton =
+  IconButtonType ||
+  forwardRef((props, ref) => {
+    const { icon, block } = props;
+    return (
+      <ButtonBase
+        {...props}
+        ref={ref}
+        iconOnly
+        label={null}
+        prefix={icon}
+        block={!!block}
+      />
+    );
+  });
 
 IconButton.displayName = 'IconButton';
 
-export const Button = forwardRef((props, ref) => {
-  const { block } = props;
-  return <ButtonBase {...props} iconOnly={false} ref={ref} block={!!block} />;
-});
+export const ButtonType = _false
+  ? (
+      {
+        content,
+        size = '',
+        icon = null,
+        variant = '',
+        disabled = false,
+        ref = null,
+        prefix = null,
+        block = false,
+        onClick = (_) => _,
+        loading = false,
+        suffix = null,
+        type = 'button',
+        href = '',
+        LinkComponent = null,
+        selected = false,
+        onMouseDown = (_) => _,
+        onMousePointer = (_) => _,
+        onPointerDown = (_) => _,
+        className = '',
+      } = {
+        content: null,
+      }
+    ) => null
+  : _false;
+
+export const Button =
+  ButtonType ||
+  forwardRef((props, ref) => {
+    const { block } = props;
+    return <ButtonBase {...props} iconOnly={false} ref={ref} block={!!block} />;
+  });
 
 Button.displayName = 'Button';
 
 Button.propTypes = {
-  variant: PropTypes.oneOf([
-    'outline',
-    'basic',
-    'plain',
-    'primary',
-    'primary-outline',
-    'secondary',
-    'secondary-outline',
-    'critical',
-    'critical-outline',
-    'primary-plain',
-    'secondary-plain',
-    'critical-plain',
-    'purple',
-    'tertiary',
-  ]),
+  variant: PropTypes.oneOf(ButtonStyles),
   size: PropTypes.oneOf(['sm', 'md', 'lg', 'xl', '2xl']),
   content: PropTypes.oneOfType([PropTypes.string, PropTypes.any]),
   onClick: PropTypes.func,

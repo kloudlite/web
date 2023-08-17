@@ -7,10 +7,10 @@ export const Thumbnail = ({ src, size, rounded }) => {
       className={classNames(
         'rounded border border-border-default overflow-clip',
         {
-          'w-5xl h-5xl': size === 'extra-small',
-          'w-6xl h-6xl': size === 'small',
-          'w-8xl h-8xl': size === 'medium',
-          'w-9xl h-9xl': size === 'large',
+          'w-5xl h-5xl': size === 'xs',
+          'w-6xl h-6xl': size === 'sm',
+          'w-8xl h-8xl': size === 'md',
+          'w-9xl h-w-9xl': size === 'lg',
         },
         {
           'rounded-full': rounded,
@@ -25,11 +25,11 @@ export const Thumbnail = ({ src, size, rounded }) => {
 
 Thumbnail.propTypes = {
   src: PropTypes.string.isRequired,
-  size: PropTypes.oneOf(['extra-small', 'small', 'medium', 'large']),
+  size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg']),
   rounded: PropTypes.bool,
 };
 
 Thumbnail.defaultProps = {
-  size: 'medium',
+  size: 'md',
   rounded: false,
 };

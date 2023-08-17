@@ -1,18 +1,17 @@
 import PropTypes from 'prop-types';
-import { useEffect, useId, useState } from 'react';
+import React, { cloneElement, useId } from 'react';
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group';
 import { cn } from '../utils';
 import { BounceIt } from '../bounce-it';
 
-export const RadioItem = (props) => {
-  const {
-    disabled,
-    value,
-    label,
-    className,
-    withBounceEffect,
-    labelPlacement = 'right',
-  } = props;
+export const Item = ({
+  disabled,
+  value,
+  children,
+  className,
+  withBounceEffect,
+  labelPlacement = 'right',
+}) => {
   const id = useId();
   const rend = () => {
     return (
@@ -47,69 +46,75 @@ export const RadioItem = (props) => {
             })}
           />
         </RadioGroupPrimitive.Item>
-        {label && (
-          <label
-            className={cn(
-              {
-                'text-text-disabled': disabled,
-                'text-text-default cursor-pointer': !disabled,
-              },
-              'bodyMd-medium pl-lg select-none flex-1'
-            )}
-            htmlFor={id}
-          >
-            {label}
-          </label>
-        )}
+        <label
+          className={cn(
+            {
+              'text-text-disabled': disabled,
+              'text-text-default cursor-pointer': !disabled,
+            },
+            'bodyMd-medium pl-lg select-none flex-1'
+          )}
+          htmlFor={id}
+        >
+          {children}
+        </label>
       </div>
     );
   };
   return withBounceEffect ? <BounceIt>{rend()}</BounceIt> : rend();
 };
 
-export const RadioGroup = (props) => {
-  const { value: v, onChange, label, disabled, children, className } = props;
-  const [value, setValue] = useState(v);
-  useEffect(() => {
-    if (onChange) onChange(value);
-  }, [value]);
+export const Root = ({
+  value,
+  onChange = (_) => {},
+  label,
+  disabled,
+  children,
+  className,
+  labelPlacement = 'right',
+}) => {
   return (
     <RadioGroupPrimitive.Root
       className={cn('flex flex-col gap-y-xl', className)}
       value={value}
       aria-label={label}
       disabled={disabled}
-      onValueChange={(e) => {
-        setValue(e);
-      }}
+      onValueChange={onChange}
     >
       <span className="bodyMd-medium">{label}</span>
-      {children}
+      {React.Children.map(children, (child) =>
+        cloneElement(child, { labelPlacement })
+      )}
     </RadioGroupPrimitive.Root>
   );
 };
 
-RadioItem.propTypes = {
-  label: PropTypes.any,
-  value: PropTypes.any,
+const Radio = {
+  Root,
+  Item,
+};
+
+export default Radio;
+
+Item.propTypes = {
+  value: PropTypes.string,
   disabled: PropTypes.bool,
   withBounceEffect: PropTypes.bool,
 };
 
-RadioItem.defaultProps = {
-  label: '',
+Item.defaultProps = {
   value: '',
   disabled: false,
   withBounceEffect: true,
 };
 
-RadioGroup.propTypes = {
+Root.propTypes = {
   label: PropTypes.string,
   onChange: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-RadioGroup.defaultProps = {
+Root.defaultProps = {
   onChange: () => {},
   disabled: false,
   label: null,
