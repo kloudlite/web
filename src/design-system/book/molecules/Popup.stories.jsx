@@ -1,11 +1,11 @@
 import { Button } from '~/components/atoms/button';
 import { useState } from 'react';
-import * as Popup from '~/components/molecule/popup';
+import Popup from '~/components/molecule/popup';
 import { TextInput } from '~/components/atoms/input';
 
 export default {
   title: 'Molecules/Popup',
-  component: Popup.PopupRoot,
+  component: Popup.Root,
   tags: ['autodocs'],
   argTypes: {},
 };
@@ -20,7 +20,7 @@ const PopupHook = () => {
           setShow(true);
         }}
       />{' '}
-      <Popup.PopupRoot
+      <Popup.Root
         show={show}
         onOpenChange={(e) => {
           setShow(e);
@@ -34,7 +34,7 @@ const PopupHook = () => {
           <Popup.Button content="Cancel" variant="basic" closable />
           <Popup.Button type="submit" content="Continue" variant="primary" />
         </Popup.Footer>
-      </Popup.PopupRoot>
+      </Popup.Root>
     </div>
   );
 };
