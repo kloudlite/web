@@ -46,7 +46,7 @@ export const TopBar = ({
               <div className="flex flex-row items-center">
                 <BackurlComp
                   {...backurlProps}
-                  className="outline-none flex flex-row items-center gap-lg bodyMd-medium text-text-soft hover:text-text-default active:text-text-default cursor-default py-lg"
+                  className="outline-none flex flex-row items-center gap-lg bodyMd-medium text-text-soft hover:text-text-default active:text-text-default py-lg cursor-pointer"
                 >
                   <ChevronLeft size={16} />
                   {backurl.name}
