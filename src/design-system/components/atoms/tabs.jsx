@@ -1,18 +1,13 @@
-import React, {
-  useState,
-  useEffect,
-  forwardRef,
-  useId,
-  useMemo,
-  cloneElement,
-} from 'react';
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/display-name */
+import React, { useState, useEffect, forwardRef, useId, useMemo } from 'react';
 import { LayoutGroup, motion } from 'framer-motion';
 import PropTypes from 'prop-types';
 import * as RovingFocusGroup from '@radix-ui/react-roving-focus';
-import { cn } from '../utils';
+import { _false, cn } from '../utils';
 
-const Tab = ({
-  href,
+const TabBase = ({
+  to,
   label,
   active,
   fitted,
@@ -21,10 +16,10 @@ const Tab = ({
   variant,
   size,
   prefix,
-  onKeyDown,
+  value,
 }) => {
   const Prefix = prefix;
-  let tempProps = { to: href };
+  let tempProps = { to };
   if (!LinkComponent) {
     // eslint-disable-next-line no-param-reassign
     LinkComponent = 'button';
@@ -47,11 +42,11 @@ const Tab = ({
         asChild
         focusable
         onKeyDown={(e) => {
-          if (onKeyDown) onKeyDown(e);
           if (['Enter', ' '].includes(e.key)) {
             onClick(e);
           }
         }}
+        value={value}
       >
         <LinkComponent
           onClick={onClick}
@@ -96,73 +91,91 @@ const Tab = ({
   );
 };
 
-const Root = forwardRef(
-  (
-    {
-      variant = 'plain',
-      size = 'md',
-      fitted,
-      onChange,
-      value,
-      LinkComponent,
-      className,
-      basePath,
-      children,
-    },
-    ref
-  ) => {
-    const [active, setActive] = useState(value);
-    let id = useId();
-    id = useMemo(() => id, [children, value, basePath, size, variant]);
-    useEffect(() => {
-      if (onChange) {
-        onChange(active);
-      }
-    }, [active]);
-    console.log(value);
-    return (
-      <RovingFocusGroup.Root
-        orientation="horizontal"
-        loop
-        className={cn(
-          'flex flex-row items-center py-[3px] pl-[3px] -my-[3px] -ml-[3px] transition-all',
-          'snap-x',
-          {
-            'md:gap-4xl': size === 'md' && variant !== 'filled',
-            'gap-lg': size === 'sm' || variant === 'filled',
-          },
-          className
-        )}
-        ref={ref}
-      >
-        <LayoutGroup id={id}>
-          {React.Children.map(children, (child) => {
-            return (
-              <div className="px-xl md:px-0 snap-start">
-                {cloneElement(child, {
-                  onClick: () => {
-                    console.log(child.props.value);
-                    setActive(child.props.value);
-                  },
-                  fitted,
-                  href: basePath + child.props.href,
-                  label: child.props.label,
-                  active: value === child.props.value,
-                  LinkComponent,
-                  variant,
-                  size,
-                  prefix: child.props.prefix,
-                })}
-              </div>
-            );
-          })}
-        </LayoutGroup>
-      </RovingFocusGroup.Root>
-    );
-  }
+const Tab = ({ to, label, prefix = null, value }) => (
+  <TabBase to={to} label={label} prefix={prefix} value={value} />
 );
 
-Root.displayName = 'TabRoot';
+const Root = _false
+  ? (
+      {
+        variant = '',
+        size = 'md',
+        fitted = false,
+        onChange = (_) => {},
+        value = null,
+        LinkComponent = null,
+        className = '',
+        basePath = '',
+        children = null,
+      } = {
+        children: null,
+        value: null,
+      }
+    ) => null
+  : _false ||
+    forwardRef(
+      (
+        {
+          variant = 'plain',
+          size = 'md',
+          fitted,
+          onChange,
+          value,
+          LinkComponent,
+          className,
+          basePath = '',
+          children,
+        },
+        ref
+      ) => {
+        const [active, setActive] = useState(value);
+        let id = useId();
+        id = useMemo(() => id, [children, value, basePath, size, variant]);
+        useEffect(() => {
+          if (onChange) {
+            onChange(active);
+          }
+        }, [active]);
+        console.log(value);
+        return (
+          <RovingFocusGroup.Root
+            orientation="horizontal"
+            loop
+            className={cn(
+              'flex flex-row items-center py-[3px] pl-[3px] -my-[3px] -ml-[3px] transition-all',
+              'snap-x',
+              {
+                'md:gap-4xl': size === 'md' && variant !== 'filled',
+                'gap-lg': size === 'sm' || variant === 'filled',
+              },
+              className
+            )}
+            ref={ref}
+          >
+            <LayoutGroup id={id}>
+              {React.Children.map(children, (child) => {
+                return (
+                  <div className="px-xl md:px-0 snap-start">
+                    <TabBase
+                      {...child.props}
+                      onClick={() => {
+                        setActive(child.props.value);
+                      }}
+                      fitted={fitted}
+                      to={basePath + child.props.to}
+                      active={value === child.props.value}
+                      LinkComponent={LinkComponent}
+                      variant={variant}
+                      size={size}
+                    />
+                  </div>
+                );
+              })}
+            </LayoutGroup>
+          </RovingFocusGroup.Root>
+        );
+      }
+    );
 
 const Tabs = {
   Tab,
@@ -173,8 +186,6 @@ export default Tabs;
 
 Tab.propTypes = {
   label: PropTypes.string.isRequired,
-  active: PropTypes.bool,
-  fitted: PropTypes.bool,
 };
 
 Root.propTypes = {
@@ -187,9 +198,4 @@ Root.defaultProps = {
   fitted: false,
   variant: 'plain',
   size: 'md',
-};
-
-Tab.defaultProps = {
-  active: false,
-  fitted: false,
 };
