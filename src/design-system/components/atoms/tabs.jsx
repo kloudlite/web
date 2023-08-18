@@ -25,10 +25,19 @@ const TabBase = ({
     LinkComponent = 'button';
     tempProps = {};
   }
+
+  const [hoverd, setHoverd] = useState(false);
+
   return (
     <div
+      onMouseEnter={() => {
+        setHoverd(true);
+      }}
+      onMouseLeave={() => {
+        setHoverd(false);
+      }}
       className={cn(
-        'outline-none flex flex-col relative group bodyMd-medium hover:text-text-default active:text-text-default transition-all',
+        'outline-none flex flex-col relative group bodyMd-medium hover:text-text-default active:text-text-default transition-all cursor-pointer',
         {
           'text-text-default': active,
           'text-text-soft': !active,
@@ -51,7 +60,7 @@ const TabBase = ({
         <LinkComponent
           onClick={onClick}
           className={cn(
-            'z-10 tab-item gap-lg outline-none flex flex-row items-center ring-offset-1 focus-visible:ring-2 focus-visible:ring-border-focus w-max cursor-default',
+            'z-10 tab-item gap-lg outline-none flex flex-row items-center ring-offset-1 focus-visible:ring-2 focus-visible:ring-border-focus w-max',
             {
               ...((!fitted || variant === 'filled') && {
                 'px-2xl py-lg': size === 'md',
@@ -84,8 +93,15 @@ const TabBase = ({
           transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
         />
       )}
+      {variant === 'plain' && hoverd && (
+        <motion.div
+          layoutId="hoverd-underline"
+          className="h-md bg-border-default group-active:bg-border-tertiary bg-none absolute bottom-0 w-full z-0"
+        />
+      )}
+
       {variant === 'plain' && (
-        <div className="h-md group-hover:bg-border-default group-active:bg-border-tertiary bg-none transition-all absolute bottom-0 w-full z-0" />
+        <div className="h-md bg-none absolute bottom-0 w-full z-0" />
       )}
     </div>
   );
@@ -136,7 +152,6 @@ const Root = _false
             onChange(active);
           }
         }, [active]);
-        console.log(value);
         return (
           <RovingFocusGroup.Root
             orientation="horizontal"
