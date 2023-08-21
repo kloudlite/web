@@ -63,6 +63,7 @@ const OptionMenuContent =
               forceMount
               asChild
               {...props}
+              onClick={(e) => e.stopPropagation()}
             >
               <motion.div
                 // initial={{ x: 0, y: -3, opacity: 0 }}
@@ -108,6 +109,7 @@ const OptionMenuItem =
       onPointerLeave={(e) => e.preventDefault()}
       onPointerEnter={(e) => e.preventDefault()}
       onPointerMove={(e) => e.preventDefault()}
+      onClick={(e) => e.stopPropagation()}
     />
   ));
 OptionMenuItem.displayName = OptionMenuPrimitive.Item.displayName;

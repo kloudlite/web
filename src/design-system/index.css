@@ -92,14 +92,13 @@ input:-webkit-autofill:active {
     @apply w-[100%] h-[100%] bg-[#F5F5F5] rounded-[10px] overflow-hidden;
 }
 
-@media screen and (min-width: 960px) {
-  html {
+/* html {
     min-width: 100vw;
     margin-left: 0;
     margin-right: 0;
     overflow-x: hidden;
-  }
-}
+    
+  } */
 
 *::-webkit-scrollbar {
   width: 6px;
