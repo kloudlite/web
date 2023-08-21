@@ -40,7 +40,7 @@ export const TopBar = ({
             </div>
           </div>
         </div>
-        {tab && (
+        {(!!tab?.items || !!tab?.backurl) && (
           <div className="flex flex-row items-center">
             {backurl && (
               <div className="flex flex-row items-center">
