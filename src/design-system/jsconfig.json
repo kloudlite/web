@@ -1,20 +1,21 @@
 {
-    "compilerOptions": {
-        "target": "es6",
-        "module": "CommonJS",
-        "allowSyntheticDefaultImports": true,
-        "allowJs": true,
-        
-        "jsx": "react-jsx",
-        "baseUrl": ".",
-        "paths": {
-            "~/components/*": [
-                "./components/*"
-            ]
-        }
-    },
-    "exclude": [
-        "node_modules",
-        "public"
-    ]
+  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx","**/*.js", "**/*.jsx"],
+  "compilerOptions": {
+    "target": "es6",
+    "module": "CommonJS",
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
+
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "~/components/*": [
+        "./components/*"
+      ]
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "public"
+  ]
 }
