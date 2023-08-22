@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { cn } from '../utils';
 
 export const Badge = ({ type, children, icon = null }) => {
@@ -25,12 +24,4 @@ export const Badge = ({ type, children, icon = null }) => {
       {children}
     </div>
   );
-};
-
-Badge.propTypes = {
-  type: PropTypes.oneOf(['neutral', 'info', 'success', 'warning', 'critical']),
-};
-
-Badge.defaultProps = {
-  type: 'neutral',
 };
