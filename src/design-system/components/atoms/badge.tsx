@@ -1,7 +1,15 @@
+import React, { cloneElement } from 'react';
 import { cn } from '../utils';
 
-export const Badge = ({ type, children, icon = null }) => {
-  const Icon = icon;
+interface BadgeProps {
+  type: string;
+  children: JSX.Element | JSX.Element[];
+  icon?: JSX.Element;
+}
+
+export const Badge = ({ type, children, icon }: BadgeProps) => {
+  const iconProps = { size: 12, color: 'currentColor' };
+
   return (
     <div
       className={cn(
@@ -20,7 +28,7 @@ export const Badge = ({ type, children, icon = null }) => {
         }
       )}
     >
-      {icon && <Icon size={12} color="currentColor" />}
+      {icon && cloneElement(icon, iconProps)}
       {children}
     </div>
   );

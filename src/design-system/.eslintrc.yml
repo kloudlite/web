@@ -54,6 +54,7 @@ rules:
   # ts rules
   "@typescript-eslint/no-unused-vars": 0
   react/jsx-filename-extension: 0
+  react/require-default-props : 0
 
 
   # js rules
