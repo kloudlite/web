@@ -1,7 +1,9 @@
-const Container = ({ children }) => {
+import { cn } from '../utils';
+
+const Container = ({ children, className }) => {
   return (
     <>
-      <div className="flex flex-1 justify-center px-3xl">
+      <div className={cn('flex flex-1 justify-center px-3xl', className)}>
         <div className="flex-1 w-full max-w-8xl min-w-[320px]">{children}</div>
       </div>
 
