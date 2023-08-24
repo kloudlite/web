@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -8,14 +8,26 @@ export const Provider = ({ delayDuration = 0, children }) => (
   </TooltipPrimitive.Provider>
 );
 
-export const Root = ({ children, content }) => {
-  const [open, setOpen] = useState(false);
+export const Root = ({ children, content, open = false }) => {
+  const [_open, _setOpen] = useState(false);
+  useEffect(() => {
+    _setOpen(open);
+  }, [open]);
   return (
-    <TooltipPrimitive.Root open={open} onOpenChange={setOpen}>
+    <TooltipPrimitive.Root
+      open={_open}
+      onOpenChange={(e) => {
+        if (open) {
+          _setOpen(open);
+        } else {
+          _setOpen(e);
+        }
+      }}
+    >
       <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>
 
       <AnimatePresence>
-        {open && (
+        {_open && (
           <TooltipPrimitive.Portal forceMount>
             <TooltipPrimitive.Content asChild sideOffset={5}>
               <motion.div
