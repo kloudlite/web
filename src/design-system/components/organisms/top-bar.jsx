@@ -4,23 +4,21 @@ import { cn } from '../utils';
 
 export const TopBarContext = createContext();
 
-export const TopBar = ({ tabs, actions, logo, fixed, breadcrum = null }) => {
-  const ref = createRef();
-
-  const [isSticked, setIsSticked] = useState(false);
+export const useSticky = (elementRef, topLimit = 0) => {
+  const [isStickey, setIsSticky] = useState(false);
 
   useEffect(() => {
     const getScroll = () => {
-      if (ref && ref.current) {
-        const { top } = ref.current.getBoundingClientRect();
+      if (elementRef && elementRef.current) {
+        const { top } = elementRef.current.getBoundingClientRect();
         // if (log) {
         //   logger.log(top, topLimit);
         // }
 
-        if (top < 0) {
-          setIsSticked(true);
+        if (top < topLimit) {
+          setIsSticky(true);
         } else {
-          setIsSticked(false);
+          setIsSticky(false);
         }
       }
     };
@@ -28,15 +26,30 @@ export const TopBar = ({ tabs, actions, logo, fixed, breadcrum = null }) => {
     return () => {
       document.removeEventListener('scroll', getScroll);
     };
-  }, [ref]);
+  }, [elementRef, topLimit]);
+
+  return isStickey;
+};
+
+export const TopBar = ({ tabs, actions, logo, fixed, breadcrum = null }) => {
+  const tabBarRef = createRef();
+  const isTabBarSticked = useSticky(tabBarRef, 0);
+
+  const headingRef = createRef();
+  const isHeadingSticked = useSticky(headingRef, 0);
 
   return (
     <>
       <div
-        className={cn('bg-surface-basic-default z-40', {
-          'border-b border-border-default': !tabs,
-          'sticky top-0 left-0 right-0': !tabs,
-        })}
+        ref={headingRef}
+        className={cn(
+          'bg-surface-basic-default z-40 transition-all overflow-hidden',
+          {
+            'border-b border-border-default': !tabs,
+            'sticky -top-xs left-0 right-0': !tabs && fixed,
+            'shadow-sm pt-xs': !tabs && fixed && isHeadingSticked,
+          }
+        )}
       >
         <Container>
           <div className="flex flex-row items-center gap-3xl py-xl">
@@ -54,16 +67,19 @@ export const TopBar = ({ tabs, actions, logo, fixed, breadcrum = null }) => {
       </div>
 
       <TopBarContext.Provider
-        value={useMemo(() => ({ isSticked: isSticked && fixed }), [isSticked])}
+        value={useMemo(
+          () => ({ isSticked: isTabBarSticked && fixed }),
+          [isTabBarSticked]
+        )}
       >
         {!!tabs && (
           <div
-            ref={ref}
+            ref={tabBarRef}
             className={cn(
               'bg-surface-basic-default z-40 border-b border-border-default',
               {
-                'sticky -top-xs left-0 right-0': fixed,
-                'pt-xs': fixed && isSticked,
+                'sticky -top-xs pt-xs left-0 right-0': fixed,
+                'shadow-sm': fixed && isTabBarSticked,
               }
             )}
           >
