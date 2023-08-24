@@ -72,6 +72,7 @@ export const Root = ({
   children,
   className,
   labelPlacement = 'right',
+  withBounceEffect = true,
 }) => {
   return (
     <RadioGroupPrimitive.Root
@@ -83,7 +84,7 @@ export const Root = ({
     >
       <span className="bodyMd-medium">{label}</span>
       {React.Children.map(children, (child) =>
-        cloneElement(child, { labelPlacement })
+        cloneElement(child, { labelPlacement, withBounceEffect })
       )}
     </RadioGroupPrimitive.Root>
   );
