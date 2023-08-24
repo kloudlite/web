@@ -54,14 +54,14 @@ const Slider = ({
   onChange,
 }: SliderProps) => {
   const [showToolTip, setShowToolTip] = useState<boolean>(false);
-  // const thumbWidth = 16; // w-2xl
+  const thumbWidth = 16; // w-2xl
 
-  // const dashLeftOffset = (index: number) =>
-  //   getThumbInBoundsOffset(
-  //     thumbWidth,
-  //     convertValueToPercentage((index + 1) * step, min, max),
-  //     1
-  //   );
+  const dashLeftOffset = (index: number) =>
+    getThumbInBoundsOffset(
+      thumbWidth,
+      convertValueToPercentage((index + 1) * step, min, max),
+      1
+    );
   return (
     <SliderPrimitive.Root
       defaultValue={defaultValue}
@@ -72,15 +72,17 @@ const Slider = ({
         if (onChange) onChange(e);
         setShowToolTip(true);
       }}
-      onValueCommit={(e) => setShowToolTip(false)}
       disabled={disabled}
       value={value}
+      onPointerUp={(e) => {
+        setShowToolTip(false);
+      }}
       // minStepsBetweenThumbs={1}
       className="relative flex items-center select-none touch-none w-[200px] h-5"
     >
       <SliderPrimitive.Track className="bg-border-default relative grow rounded-full h-md overflow-hidden">
         <SliderPrimitive.Range className="absolute bg-icon-primary rounded-full h-full z-10" />
-        {/* <div
+        <div
           className={cn(
             'flex flex-row items-center absolute inset-0 bg-transparent'
           )}
@@ -97,7 +99,7 @@ const Slider = ({
               }}
             />
           ))}
-        </div> */}
+        </div>
       </SliderPrimitive.Track>
       <Tooltip.Provider>
         <Tooltip.Root content="h" open={showToolTip}>

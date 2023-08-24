@@ -53,25 +53,24 @@ export const TopBar = ({ tabs, actions, logo, fixed, breadcrum = null }) => {
         </Container>
       </div>
 
-      <div
-        ref={ref}
-        className={cn(
-          'border-b border-border-default bg-surface-basic-default z-40',
-          {
-            'sticky -top-xs left-0 right-0': fixed,
-            'pt-xs': fixed && isSticked,
-          }
-        )}
+      <TopBarContext.Provider
+        value={useMemo(() => ({ isSticked: isSticked && fixed }), [isSticked])}
       >
-        <TopBarContext.Provider
-          value={useMemo(
-            () => ({ isSticked: isSticked && fixed }),
-            [isSticked]
-          )}
-        >
-          <Container>{!!tabs && tabs}</Container>
-        </TopBarContext.Provider>
-      </div>
+        {!!tabs && (
+          <div
+            ref={ref}
+            className={cn(
+              'bg-surface-basic-default z-40 border-b border-border-default',
+              {
+                'sticky -top-xs left-0 right-0': fixed,
+                'pt-xs': fixed && isSticked,
+              }
+            )}
+          >
+            <Container>{tabs}</Container>
+          </div>
+        )}
+      </TopBarContext.Provider>
     </>
   );
 };
