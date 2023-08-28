@@ -6,8 +6,8 @@ import { cn } from '../utils';
 
 const Header = ({ children, showclose = true }) => {
   return (
-    <div className="border-b border-border-default p-3xl flex flex-row items-center justify-between">
-      <Dialog.Title className="headingLg text-text-strong">
+    <div className="border-b border-border-default p-3xl flex flex-row items-center">
+      <Dialog.Title className="headingLg text-text-strong flex-1">
         {children}
       </Dialog.Title>
       {showclose && (
@@ -20,7 +20,9 @@ const Header = ({ children, showclose = true }) => {
 };
 
 const Content = ({ children }) => {
-  return <div className="p-3xl">{children}</div>;
+  return (
+    <div className="p-3xl overscroll-y-auto overflow-x-hidden">{children}</div>
+  );
 };
 
 const Footer = ({ children }) => {
@@ -45,7 +47,13 @@ const Button = (props) => {
   );
 };
 
-const PopupRoot = ({ show, onOpenChange, children, backdrop = true }) => {
+const PopupRoot = ({
+  show,
+  onOpenChange,
+  children,
+  backdrop = true,
+  className = '',
+}) => {
   return (
     <Dialog.Root
       open={show}
@@ -78,7 +86,15 @@ const PopupRoot = ({ show, onOpenChange, children, backdrop = true }) => {
                 animate={{ x: '-50%', y: '-50%', opacity: 1 }}
                 exit={{ x: '-50%', y: '-47%', opacity: 0 }}
                 transition={{ duration: 0.3, ease: 'anticipate' }}
-                className="z-50 outline-none transform overflow-hidden rounded bg-surface-basic-default shadow-modal border border-border-default fixed top-1/2 left-1/2 w-[612px] max-w-[612px]"
+                className={cn(
+                  'flex flex-col',
+                  'z-50 outline-none transform overflow-hidden rounded bg-surface-basic-default shadow-modal',
+                  'fixed top-1/2 left-1/2',
+                  'w-[612px]',
+                  'max-h-[70%]',
+                  'border border-border-default',
+                  className
+                )}
               >
                 {children}
               </motion.div>

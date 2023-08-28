@@ -1,0 +1,34 @@
+
+.range-slide-base{
+    @apply !h-[28px] flex items-center !p-0
+}
+.range-slide-base .rc-slider-rail{
+    @apply bg-border-default h-md rounded
+}
+
+.range-slide-base .rc-slider-track{
+    @apply bg-icon-primary h-md z-10
+}
+
+.range-slide-base .rc-slider-handle{
+    @apply mt-0 h-2xl w-2xl bg-icon-primary rounded-full ring-offset-1 focus:ring-[3px] focus:ring-border-focus opacity-100 border-none border-0 border-transparent
+}
+
+.range-slide-base .rc-slider-handle:hover, .range-slide-base .rc-slider-handle:active{
+    @apply !border-0 !border-none !border-transparent !shadow-none
+}
+
+.range-slide-base .rc-slider-handle-dragging{
+    @apply !border-0 !border-none !border-transparent !shadow-none
+}
+
+.range-slide-base .rc-slider-step .rc-slider-dot:last-child, .range-slide-base .rc-slider-step .rc-slider-dot:first-child{
+    @apply opacity-0
+}
+.range-slide-base .rc-slider-step .rc-slider-dot{
+    @apply border-none border-0 rounded-none w-md
+}
+
+.range-slider{
+    @apply range-slide-base
+}

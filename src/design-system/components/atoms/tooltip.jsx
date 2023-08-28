@@ -8,7 +8,7 @@ export const Provider = ({ delayDuration = 0, children }) => (
   </TooltipPrimitive.Provider>
 );
 
-export const Root = ({ children, content, open = false }) => {
+export const Root = ({ children, content, open = false, offset = 5 }) => {
   const [_open, _setOpen] = useState(false);
   useEffect(() => {
     _setOpen(open);
@@ -29,8 +29,9 @@ export const Root = ({ children, content, open = false }) => {
       <AnimatePresence>
         {_open && (
           <TooltipPrimitive.Portal forceMount>
-            <TooltipPrimitive.Content asChild sideOffset={5}>
+            <TooltipPrimitive.Content asChild sideOffset={offset}>
               <motion.div
+                onKeyDown={(e) => console.log(e)}
                 initial={{ y: -2, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: -2, opacity: 0 }}

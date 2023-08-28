@@ -1,4 +1,5 @@
 import "../index.css"
+import "../slider.css"
 /** @type { import('@storybook/react').Preview } */
 const preview = {
   parameters: {
