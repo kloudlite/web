@@ -188,6 +188,7 @@ export const TextInputBase = forwardRef((props, ref) => {
 
   const Component = component || 'input';
 
+  const containerRef = useRef(null);
   return (
     <div
       className={cn('flex flex-col ', {
@@ -210,8 +211,9 @@ export const TextInputBase = forwardRef((props, ref) => {
         </div>
       </div>
       <div
+        ref={containerRef}
         className={cn(
-          'transition-all px-lg rounded border flex flex-row items-center relative ring-offset-1 focus-within:ring-2 focus-within:ring-border-focus ',
+          'transition-all px-lg rounded border flex flex-row items-center relative ring-offset-1',
           {
             'text-text-critical bg-surface-critical-subdued border-border-critical':
               error,
@@ -260,6 +262,16 @@ export const TextInputBase = forwardRef((props, ref) => {
             if (onChange) {
               onChange(e);
             }
+          }}
+          onFocus={(e) => {
+            console.log(e);
+            containerRef.current?.classList.add('ring-2', 'ring-border-focus');
+          }}
+          onBlur={() => {
+            containerRef.current?.classList.remove(
+              'ring-2',
+              'ring-border-focus'
+            );
           }}
           disabled={disabled}
           ref={ref}

@@ -168,7 +168,23 @@ const ToolbarTextField =
     const { __scopeToolbar, ...inputProps } = props;
     const rovingFocusGroupScope = useRovingFocusGroupScope(__scopeToolbar);
     return (
-      <RovingFocusGroup.Item asChild {...rovingFocusGroupScope} focusable>
+      <RovingFocusGroup.Item
+        asChild
+        {...rovingFocusGroupScope}
+        focusable
+        onFocus={(e) => {
+          e.target?.parentElement?.classList?.add(
+            'ring-2',
+            'ring-border-focus'
+          );
+        }}
+        onBlur={(e) => {
+          e.target?.parentElement?.classList?.remove(
+            'ring-2',
+            'ring-border-focus'
+          );
+        }}
+      >
         <_TextInput {...inputProps} ref={forwardedRef} />
       </RovingFocusGroup.Item>
     );

@@ -70,7 +70,9 @@ const ChipBase = forwardRef((props, ref) => {
             compType === ChipType.CLICKABLE,
         }
       )}
-      onClick={onClick}
+      onClick={() => {
+        if (onClick) onClick(item);
+      }}
       ref={ref}
     >
       {Prefix &&
