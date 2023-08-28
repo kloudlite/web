@@ -160,3 +160,5 @@ select{
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
 }
+
+#loadOverlay{display: none;}
