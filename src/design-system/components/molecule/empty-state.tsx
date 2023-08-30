@@ -1,15 +1,24 @@
-import PropTypes from 'prop-types';
-import { Button } from '../atoms/button';
+import { ReactNode } from 'react';
+import { Button, ButtonProps } from '../atoms/button';
 import { cn } from '../utils';
+
+interface EmptyStateProps {
+  heading: string;
+  image?: string;
+  children: ReactNode;
+  footer: ReactNode;
+  action: ButtonProps;
+  secondaryAction: ButtonProps;
+}
 
 export const EmptyState = ({
   image,
-  heading,
+  heading = 'This is where you’ll manage your projects',
   children,
   footer,
   action,
   secondaryAction,
-}) => {
+}: EmptyStateProps) => {
   return (
     <div className="flex flex-col items-center shadow-card border border-border-default rounded">
       <div className={cn('flex flex-col items-center px-3xl py-8xl gap-5xl')}>
@@ -25,37 +34,17 @@ export const EmptyState = ({
               {children}
             </div>
           )}
-          {(action || secondaryAction) && (
+          {(!!action || !!secondaryAction) && (
             <div className="flex flex-row items-center justify-center gap-lg">
-              {secondaryAction && (
-                <Button
-                  content={secondaryAction?.title}
-                  variant="outline"
-                  onClick={secondaryAction?.click}
-                />
+              {!!secondaryAction && (
+                <Button {...{ ...secondaryAction, variant: 'outline' }} />
               )}
-              {action && (
-                <Button
-                  content={action?.title}
-                  variant="primary"
-                  onClick={action?.click}
-                  LinkComponent={action?.LinkComponent}
-                  href={action.href}
-                />
-              )}
+              {!!action && <Button {...{ ...action, variant: 'primary' }} />}
             </div>
           )}
-          {footer && <div className="bodySm text-text-soft">{footer}</div>}
+          {!!footer && <div className="bodySm text-text-soft">{footer}</div>}
         </div>
       </div>
     </div>
   );
-};
-
-EmptyState.propTypes = {
-  heading: PropTypes.string,
-};
-
-EmptyState.defaultProps = {
-  heading: 'This is where you’ll manage your projects',
 };
