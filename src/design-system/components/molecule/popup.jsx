@@ -6,7 +6,7 @@ import { cn } from '../utils';
 
 const Header = ({ children, showclose = true }) => {
   return (
-    <div className="border-b border-border-default p-3xl flex flex-row items-center">
+    <div className="border-b border-border-default p-3xl flex flex-row items-center min-h-[69px]">
       <Dialog.Title className="headingLg text-text-strong flex-1">
         {children}
       </Dialog.Title>

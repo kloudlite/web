@@ -240,7 +240,8 @@ export const ButtonBase = forwardRef((props, ref) => {
             }),
         },
         {
-          'p-lg': iconOnly,
+          'p-lg': iconOnly && size === 'md',
+          'p-md': iconOnly && size === 'sm',
         },
         className
       )}
@@ -275,6 +276,7 @@ export const IconButtonType = _false
       {
         icon,
         variant = '',
+        size = '',
         disabled = false,
         ref = null,
         block = false,
@@ -310,7 +312,6 @@ export const ButtonType = _false
       {
         content,
         size = '',
-        icon = null,
         variant = '',
         disabled = false,
         ref = null,
@@ -385,6 +386,7 @@ IconButton.propTypes = {
    */
   disabled: PropTypes.bool,
   type: PropTypes.oneOf(['button', 'submit']),
+  size: PropTypes.oneOf(['sm', 'md']),
 };
 
 IconButton.defaultProps = {
