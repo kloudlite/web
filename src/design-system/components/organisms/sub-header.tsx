@@ -1,19 +1,27 @@
 import { ArrowLeft } from '@jengaicons/react';
+import { ReactNode } from 'react';
 import { IconButton } from '../atoms/button';
+
+interface SubHeaderProps {
+  title: string;
+  actions: ReactNode;
+  backUrl?: string;
+  LinkComponent: any;
+}
 
 export const SubHeader = ({
   title = '',
   actions = null,
   backUrl = '',
   LinkComponent = null,
-}) => {
+}: SubHeaderProps) => {
   return (
     <div className="flex flex-row items-center justify-between pb-3xl pt-6xl gap-xl">
       <div className="flex flex-row items-center gap-xl">
         {backUrl && (
           <IconButton
-            icon={ArrowLeft}
-            href={backUrl}
+            icon={<ArrowLeft />}
+            to={backUrl}
             LinkComponent={LinkComponent}
           />
         )}

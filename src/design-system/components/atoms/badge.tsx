@@ -28,7 +28,7 @@ export const Badge = ({ type, children, icon }: BadgeProps) => {
         }
       )}
     >
-      {icon && cloneElement(icon, iconProps)}
+      {!!icon && cloneElement(icon, iconProps)}
       {children}
     </div>
   );

@@ -355,7 +355,7 @@ export const TextInputType = _false
         className = '',
         error = false,
         disabled = false,
-        label = null,
+        label = null || '',
         onKeyDown = (_) => {},
         autoComplete = 'off',
         onChange = (_) => {},
