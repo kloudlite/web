@@ -48,9 +48,9 @@ export const Checkbox = ({
               'bg-surface-critical-subdued border-border-critical':
                 !checked && !disabled && error,
               'bg-surface-primary-default border-border-primary':
-                checked && !error && !disabled,
+                !!checked && !error && !disabled,
               'bg-surface-critical-default border-border-critical':
-                checked && error && !disabled,
+                !!checked && error && !disabled,
               'hover:bg-surface-basic-hovered': !checked && !disabled,
             }
           )}

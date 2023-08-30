@@ -1,17 +1,27 @@
-import PropTypes from 'prop-types';
-import React, { cloneElement, useId } from 'react';
+import React, { ReactElement, ReactNode, cloneElement, useId } from 'react';
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group';
 import { cn } from '../utils';
 import { BounceIt } from '../bounce-it';
 
+type labelPlacements = 'left' | 'right' | (string & NonNullable<unknown>);
+
+interface ItemProps {
+  disabled?: boolean;
+  value: string;
+  children: ReactNode;
+  className?: string;
+  withBounceEffect?: boolean;
+  labelPlacement?: labelPlacements;
+}
+
 export const Item = ({
-  disabled,
-  value,
+  disabled = false,
+  value = '',
   children,
-  className,
-  withBounceEffect,
+  className = '',
+  withBounceEffect = true,
   labelPlacement = 'right',
-}) => {
+}: ItemProps) => {
   const id = useId();
   const rend = () => {
     return (
@@ -64,16 +74,27 @@ export const Item = ({
   return withBounceEffect ? <BounceIt>{rend()}</BounceIt> : rend();
 };
 
+interface RootProps {
+  value: string;
+  onChange?: () => void;
+  label: string;
+  disabled?: boolean;
+  children: ReactElement | ReactElement[];
+  className?: string;
+  labelPlacement?: labelPlacements;
+  withBounceEffect?: boolean;
+}
+
 export const Root = ({
   value,
-  onChange = (_) => {},
+  onChange = () => {},
   label,
-  disabled,
+  disabled = false,
   children,
-  className,
+  className = '',
   labelPlacement = 'right',
   withBounceEffect = true,
-}) => {
+}: RootProps) => {
   return (
     <RadioGroupPrimitive.Root
       className={cn('flex flex-col gap-y-xl', className)}
@@ -96,27 +117,3 @@ const Radio = {
 };
 
 export default Radio;
-
-Item.propTypes = {
-  value: PropTypes.string,
-  disabled: PropTypes.bool,
-  withBounceEffect: PropTypes.bool,
-};
-
-Item.defaultProps = {
-  value: '',
-  disabled: false,
-  withBounceEffect: true,
-};
-
-Root.propTypes = {
-  label: PropTypes.string,
-  onChange: PropTypes.func,
-  disabled: PropTypes.bool,
-};
-
-Root.defaultProps = {
-  onChange: () => {},
-  disabled: false,
-  label: null,
-};
