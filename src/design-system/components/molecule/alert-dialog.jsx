@@ -11,7 +11,7 @@ export const Header = ({ children }) => {
         {children}
       </PrimitiveAlertDialog.Title>
       <PrimitiveAlertDialog.Cancel asChild>
-        <IconButton variant="plain" icon={X} />
+        <IconButton variant="plain" icon={<X />} />
       </PrimitiveAlertDialog.Cancel>
     </div>
   );

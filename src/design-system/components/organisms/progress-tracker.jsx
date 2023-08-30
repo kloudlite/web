@@ -42,13 +42,21 @@ const ProgressTrackerItem = ({ label, active }) => {
   );
 };
 
-export const ProgressTracker = ({ items }) => {
+const def = (_) => _;
+
+export const ProgressTracker = ({ items, onClick = def }) => {
   return (
     <div className="flex flex-col gap-y-lg">
       {items &&
         items.map((item, index) => {
           return (
-            <div className="flex flex-col" key={item.id}>
+            <div
+              className={cn('flex flex-col', {
+                'cursor-pointer': onClick !== def,
+              })}
+              key={item.id}
+              onClick={() => onClick(item.id)}
+            >
               <ProgressTrackerItem active={item.active} label={item.label} />
               {index !== items.length - 1 && (
                 <div className="flex items-center justify-center w-[10px]">
