@@ -1,10 +1,5 @@
 import React, { MouseEventHandler } from 'react';
-import {
-  AnimatePresence,
-  ForwardRefComponent,
-  HTMLMotionProps,
-  motion,
-} from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Spinner } from '@jengaicons/react';
 import { cn } from '../utils';
 
@@ -44,7 +39,7 @@ interface ButtonBaseProps {
   size?: ButtonSizes;
 }
 
-interface IconButtonProps extends ButtonBaseProps {
+export interface IconButtonProps extends ButtonBaseProps {
   icon: JSX.Element;
   variant?: IconButtonVariants;
 }
@@ -65,23 +60,23 @@ export interface ButtonProps extends ButtonBaseProps {
 export const ButtonBase = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (props, ref) => {
     const {
-      onClick,
-      to,
-      LinkComponent = 'a',
-      disabled,
+      onClick = () => {},
+      to = '',
+      LinkComponent = motion.button,
+      disabled = false,
       suffix,
       prefix,
-      block,
-      type,
-      variant,
+      block = false,
+      type = 'button',
+      variant = 'primary',
       // noRing,
-      noRounded,
-      noBorder,
-      sharpLeft,
-      sharpRight,
-      selected,
-      iconOnly,
-      className,
+      noRounded = false,
+      noBorder = false,
+      sharpLeft = false,
+      sharpRight = false,
+      selected = false,
+      iconOnly = false,
+      className = '',
       content,
       size = 'md',
       loading = false,
@@ -90,16 +85,14 @@ export const ButtonBase = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     // const extraProps: ButtonProps = {};
 
-    type CompType = ForwardRefComponent<
-      HTMLButtonElement,
-      HTMLMotionProps<'button'>
-    >;
-
-    let Component: CompType = motion.button;
+    let Component: any = LinkComponent;
 
     if (to) {
-      const lc = LinkComponent;
-      Component = motion(lc) as CompType;
+      if (LinkComponent === motion.button) {
+        Component = 'a';
+      } else {
+        Component = LinkComponent;
+      }
     }
 
     const noRing = false;
@@ -107,7 +100,7 @@ export const ButtonBase = React.forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <Component
         {...mprops}
-        {...(to ? { to } : {})}
+        {...(Component === 'a' ? { href: to } : { to })}
         disabled={disabled}
         onClick={onClick}
         initial={{ scale: 1 }}
@@ -304,8 +297,6 @@ export const ButtonBase = React.forwardRef<HTMLButtonElement, ButtonProps>(
     );
   }
 );
-
-ButtonBase.displayName = 'ButtonBase';
 
 export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
   (props, ref) => {

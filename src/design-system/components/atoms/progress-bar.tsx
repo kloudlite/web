@@ -1,10 +1,24 @@
 import { motion } from 'framer-motion';
-import { createContext, useContext, useMemo, useState } from 'react';
+import React, {
+  ReactNode,
+  createContext,
+  useContext,
+  useMemo,
+  useState,
+} from 'react';
 import useScreenSize from '../hooks/useScreen';
 
-const context = createContext();
+interface ProgressBarContextProps {
+  count: number;
+  setCount: React.Dispatch<React.SetStateAction<number>>;
+}
 
-const PBar = ({ duration }) => {
+const context = createContext<ProgressBarContextProps>({
+  count: 0,
+  setCount: () => {},
+});
+
+const PBar = ({ duration }: { duration: number }) => {
   return (
     <motion.div className="fixed top-0 left-0 right-0 z-[999]">
       <motion.div
@@ -41,7 +55,7 @@ const PBar = ({ duration }) => {
   );
 };
 
-const ProgressContainer = ({ children }) => {
+const ProgressContainer = ({ children }: { children: ReactNode }) => {
   const { width } = useScreenSize();
   const duration = Math.ceil(width / (2240 / 3));
   const [count, setCount] = useState(0);

@@ -1,7 +1,23 @@
 import classNames from 'classnames';
-import PropTypes from 'prop-types';
 
-export const Thumbnail = ({ src, size, rounded }) => {
+type thumbnailSizes =
+  | 'xs'
+  | 'sm'
+  | 'md'
+  | 'lg'
+  | (string & NonNullable<unknown>);
+
+interface ThumbnailProps {
+  src: string;
+  size?: thumbnailSizes;
+  rounded?: boolean;
+}
+
+export const Thumbnail = ({
+  src,
+  size = 'md',
+  rounded = false,
+}: ThumbnailProps) => {
   return (
     <div
       className={classNames(
@@ -21,15 +37,4 @@ export const Thumbnail = ({ src, size, rounded }) => {
       <img src={src} alt="thumbnail" className="w-full h-full object-cover" />
     </div>
   );
-};
-
-Thumbnail.propTypes = {
-  src: PropTypes.string.isRequired,
-  size: PropTypes.oneOf(['xs', 'sm', 'md', 'lg']),
-  rounded: PropTypes.bool,
-};
-
-Thumbnail.defaultProps = {
-  size: 'md',
-  rounded: false,
 };
