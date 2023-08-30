@@ -1,8 +1,5 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/display-name */
 import React, { useState, useEffect, forwardRef, useId, useMemo } from 'react';
 import { LayoutGroup, motion } from 'framer-motion';
-import PropTypes from 'prop-types';
 import * as RovingFocusGroup from '@radix-ui/react-roving-focus';
 import { _false, cn } from '../utils';
 
@@ -198,19 +195,3 @@ const Tabs = {
 };
 
 export default Tabs;
-
-Tab.propTypes = {
-  label: PropTypes.string.isRequired,
-};
-
-Root.propTypes = {
-  fitted: PropTypes.bool,
-  variant: PropTypes.oneOf(['plain', 'filled']),
-  size: PropTypes.oneOf(['md', 'sm']),
-};
-
-Root.defaultProps = {
-  fitted: false,
-  variant: 'plain',
-  size: 'md',
-};

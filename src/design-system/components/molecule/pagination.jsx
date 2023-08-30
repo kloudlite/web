@@ -142,7 +142,7 @@ const Pagination = (props) => {
           <RovingFocusGroup.Item asChild focusable>
             <Button
               content="Previous"
-              prefix={ChevronLeft}
+              prefix={<ChevronLeft />}
               variant="plain"
               onClick={() => {
                 if (onPageChanged) {
@@ -224,7 +224,7 @@ const Pagination = (props) => {
           <RovingFocusGroup.Item asChild focusable>
             <Button
               content="Next"
-              suffix={ChevronRight}
+              suffix={<ChevronRight />}
               variant="plain"
               onClick={() => {
                 if (onPageChanged) {
