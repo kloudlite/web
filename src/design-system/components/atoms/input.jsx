@@ -246,7 +246,7 @@ export const TextInputBase = forwardRef((props, ref) => {
             'outline-none flex-1 w-full',
             'rounded bodyMd bg-transparent',
             {
-              'text-text-critical placeholder:text-text-critical/70': error,
+              'text-text-critical placeholder:text-text-critical/70 bgh': error,
               'text-text-default': !error,
             },
             {
@@ -264,7 +264,6 @@ export const TextInputBase = forwardRef((props, ref) => {
             }
           }}
           onFocus={(e) => {
-            console.log(e);
             containerRef.current?.classList.add('ring-2', 'ring-border-focus');
           }}
           onBlur={() => {

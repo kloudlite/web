@@ -29,7 +29,9 @@ const TabBase = ({
   const [hoverd, setHoverd] = useState(false);
 
   return (
-    <div
+    <motion.div
+      layout
+      layoutRoot
       onMouseEnter={() => {
         setHoverd(true);
       }}
@@ -89,8 +91,8 @@ const TabBase = ({
       {variant === 'filled' && active && (
         <motion.span
           layoutId="bubble"
-          className="absolute inset-0 rounded-lg bg-surface-basic-default border border-border-default shadow-button "
-          transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
+          className="absolute inset-0 rounded-lg bg-surface-basic-default border border-border-default shadow-button"
+          transition={{ type: 'spring', stiffness: 700, damping: 30 }}
         />
       )}
       {variant === 'plain' && hoverd && (
@@ -103,7 +105,7 @@ const TabBase = ({
       {variant === 'plain' && (
         <div className="h-md bg-none absolute bottom-0 w-full z-0" />
       )}
-    </div>
+    </motion.div>
   );
 };
 
@@ -166,27 +168,30 @@ const Root = _false
               className
             )}
             ref={ref}
+            asChild
           >
-            <LayoutGroup id={id}>
-              {React.Children.map(children, (child) => {
-                return (
-                  <div className="px-xl md:px-0 snap-start">
-                    <TabBase
-                      {...child.props}
-                      onClick={() => {
-                        setActive(child.props.value);
-                      }}
-                      fitted={fitted}
-                      to={basePath + child.props.to}
-                      active={value === child.props.value}
-                      LinkComponent={LinkComponent}
-                      variant={variant}
-                      size={size}
-                    />
-                  </div>
-                );
-              })}
-            </LayoutGroup>
+            <motion.div layout layoutRoot>
+              <LayoutGroup id={id}>
+                {React.Children.map(children, (child) => {
+                  return (
+                    <motion.div className="px-xl md:px-0 snap-start">
+                      <TabBase
+                        {...child.props}
+                        onClick={() => {
+                          setActive(child.props.value);
+                        }}
+                        fitted={fitted}
+                        to={basePath + child.props.to}
+                        active={value === child.props.value}
+                        LinkComponent={LinkComponent}
+                        variant={variant}
+                        size={size}
+                      />
+                    </motion.div>
+                  );
+                })}
+              </LayoutGroup>
+            </motion.div>
           </RovingFocusGroup.Root>
         );
       }

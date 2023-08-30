@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { useEffect, useId, useMemo, useState } from 'react';
+import { useId, useMemo } from 'react';
 import { cn } from '../utils';
 
 export const Option = ({ children, value = '', ...props }) => {
@@ -13,7 +13,7 @@ export const Option = ({ children, value = '', ...props }) => {
 export const Root = (props) => {
   const {
     disabled,
-    value: v,
+    value,
     onChange,
     className,
     children,
@@ -23,10 +23,7 @@ export const Root = (props) => {
     error,
     ...extraProps
   } = props;
-  const [value, setValue] = useState(v);
-  useEffect(() => {
-    if (onChange) onChange(value);
-  }, [value]);
+
   const tempId = useId();
   const id = useMemo(() => tempId, []);
   return (
@@ -41,7 +38,7 @@ export const Root = (props) => {
         id={id}
         disabled={disabled}
         value={value}
-        onChange={({ target }) => setValue(target.value)}
+        onChange={onChange}
         className={cn(
           'bodyMd py-lg pl-lg pr-5xl text-text-default border-border-default bg-surface-basic-input transition-all rounded border flex flex-row items-center relative outline-none disabled:bg-surface-basic-input disabled:text-text-disabled disabled:border-border-disabled ring-offset-1 focus-within:ring-2 focus-within:ring-border-focus appearance-none',
           {
