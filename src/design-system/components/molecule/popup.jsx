@@ -12,7 +12,7 @@ const Header = ({ children, showclose = true }) => {
       </Dialog.Title>
       {showclose && (
         <Dialog.Close asChild>
-          <IconButton variant="plain" icon={X} />
+          <IconButton variant="plain" icon={<X />} />
         </Dialog.Close>
       )}
     </div>

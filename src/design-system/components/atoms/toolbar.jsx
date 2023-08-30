@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/display-name */
 /* eslint-disable react/jsx-pascal-case */
@@ -11,13 +12,8 @@ import * as SeparatorPrimitive from '@radix-ui/react-separator';
 import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
 import { createToggleGroupScope } from '@radix-ui/react-toggle-group';
 import { useDirection } from '@radix-ui/react-direction';
-import { TextInputType, TextInput as _TextInput } from './input.jsx';
-import {
-  ButtonType,
-  IconButtonType,
-  Button as _Button,
-  IconButton as _IconButton,
-} from './button.jsx';
+import { TextInputType, TextInput as _TextInput } from './input';
+import { Button as _Button, IconButton as _IconButton } from './button';
 import { cn } from '../utils.jsx';
 
 const TOOLBAR_NAME = 'Toolbar';
@@ -122,41 +118,37 @@ ToolbarButtonBase.displayName = BUTTON_NAME;
  * -----------------------------------------------------------------------------------------------*/
 const TOOLBAR_BUTTON_NAME = 'ToolbarButton';
 
-const ToolbarButton =
-  ButtonType ||
-  React.forwardRef((props, forwardedRef) => {
-    const { __scopeToolbar, ...buttonProps } = props;
-    const rovingFocusGroupScope = useRovingFocusGroupScope(__scopeToolbar);
-    return (
-      <RovingFocusGroup.Item
-        asChild
-        {...rovingFocusGroupScope}
-        focusable={!props.disabled}
-      >
-        <_Button {...buttonProps} ref={forwardedRef} />
-      </RovingFocusGroup.Item>
-    );
-  });
+const ToolbarButton = React.forwardRef((props, forwardedRef) => {
+  const { __scopeToolbar, ...buttonProps } = props;
+  const rovingFocusGroupScope = useRovingFocusGroupScope(__scopeToolbar);
+  return (
+    <RovingFocusGroup.Item
+      asChild
+      {...rovingFocusGroupScope}
+      focusable={!props.disabled}
+    >
+      <_Button {...buttonProps} ref={forwardedRef} />
+    </RovingFocusGroup.Item>
+  );
+});
 
 ToolbarButton.displayName = TOOLBAR_BUTTON_NAME;
 
 const TOOLBAR_ICON_BUTTON_NAME = 'ToolbarIconButton';
 
-const ToolbarIconButton =
-  IconButtonType ||
-  React.forwardRef((props, forwardedRef) => {
-    const { __scopeToolbar, ...buttonProps } = props;
-    const rovingFocusGroupScope = useRovingFocusGroupScope(__scopeToolbar);
-    return (
-      <RovingFocusGroup.Item
-        asChild
-        {...rovingFocusGroupScope}
-        focusable={!props.disabled}
-      >
-        <_IconButton {...buttonProps} ref={forwardedRef} />
-      </RovingFocusGroup.Item>
-    );
-  });
+const ToolbarIconButton = React.forwardRef((props, forwardedRef) => {
+  const { __scopeToolbar, ...buttonProps } = props;
+  const rovingFocusGroupScope = useRovingFocusGroupScope(__scopeToolbar);
+  return (
+    <RovingFocusGroup.Item
+      asChild
+      {...rovingFocusGroupScope}
+      focusable={!props.disabled}
+    >
+      <_IconButton {...buttonProps} ref={forwardedRef} />
+    </RovingFocusGroup.Item>
+  );
+});
 
 ToolbarIconButton.displayName = TOOLBAR_ICON_BUTTON_NAME;
 
