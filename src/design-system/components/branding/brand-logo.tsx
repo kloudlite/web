@@ -1,6 +1,13 @@
-import PropTypes from 'prop-types';
+interface LogoProps {
+  size?: number;
+  darkBg?: boolean;
+}
 
-const Logo = ({ size, darkBg }) => {
+interface BrandLogoProps extends LogoProps {
+  detailed?: boolean;
+}
+
+const Logo = ({ size = 24, darkBg = false }: LogoProps) => {
   return (
     <>
       {!darkBg && (
@@ -31,7 +38,7 @@ const Logo = ({ size, darkBg }) => {
   );
 };
 
-const DetailedLogo = ({ size, darkBg }) => {
+const DetailedLogo = ({ size, darkBg }: LogoProps) => {
   return (
     <>
       {!darkBg && (
@@ -74,23 +81,15 @@ const DetailedLogo = ({ size, darkBg }) => {
   );
 };
 
-export const BrandLogo = ({ size, darkBg, detailed }) => {
+export const BrandLogo = ({
+  size = 24,
+  darkBg = false,
+  detailed = false,
+}: BrandLogoProps) => {
   return (
     <>
       {detailed && <DetailedLogo size={size} darkBg={darkBg} />}
       {!detailed && <Logo size={size} darkBg={darkBg} />}
     </>
   );
-};
-
-BrandLogo.propTypes = {
-  size: PropTypes.number,
-  darkBg: PropTypes.bool,
-  detailed: PropTypes.bool,
-};
-
-BrandLogo.defaultProps = {
-  size: 24,
-  darkBg: false,
-  detailed: false,
 };

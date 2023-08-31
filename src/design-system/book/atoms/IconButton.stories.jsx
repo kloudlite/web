@@ -11,6 +11,6 @@ export default {
 export const BaseButton = {
   args: {
     variant: 'basic',
-    icon: CalendarCheckFill,
+    icon: <CalendarCheckFill />,
   },
 };

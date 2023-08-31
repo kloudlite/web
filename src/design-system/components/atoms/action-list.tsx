@@ -1,31 +1,50 @@
 import React, {
+  ReactElement,
+  ReactNode,
   cloneElement,
   useEffect,
   useId,
   useMemo,
   useState,
 } from 'react';
-import PropTypes from 'prop-types';
 import { LayoutGroup, motion } from 'framer-motion';
 import { cn } from '../utils';
 
+interface ButtonProps {
+  children: ReactNode;
+  disabled?: boolean;
+  critical?: boolean;
+  active?: boolean;
+  onClick?: () => void;
+  to?: string;
+  prefix?: JSX.Element;
+  suffix?: JSX.Element;
+  LinkComponent?: any;
+  value: string;
+}
+
 export const Button = ({
-  children = null,
+  children,
   disabled = false,
   critical = false,
   active = false,
-  onClick = (_) => _,
-  href = '',
-  prefix = null,
-  suffix = null,
-  LinkComponent = null,
+  onClick = () => {},
+  to = '',
+  prefix,
+  suffix,
+  LinkComponent = 'div',
   // eslint-disable-next-line no-unused-vars
-  value = '',
-}) => {
-  if (!LinkComponent) {
-    // eslint-disable-next-line no-param-reassign
-    LinkComponent = 'div';
+  value: _,
+}: ButtonProps) => {
+  let Component: any = LinkComponent;
+  if (to) {
+    if (LinkComponent === 'div') {
+      Component = 'a';
+    } else {
+      Component = LinkComponent;
+    }
   }
+
   return (
     <div className={cn('w-full flex flex-row gap-x-md')}>
       {active && (
@@ -34,8 +53,8 @@ export const Button = ({
       {!active && (
         <motion.div layoutId="line_1" className="w-sm bg-transparent rounded" />
       )}
-      <LinkComponent
-        to={href}
+      <Component
+        {...(Component === 'a' ? { href: to } : { to })}
         className={cn(
           'transition-all w-[inherit] rounded border flex gap-md items-center justify-between cursor-pointer outline-none border-none px-2xl py-lg ring-offset-1 focus-visible:ring-2 focus:ring-border-focus',
           {
@@ -62,21 +81,30 @@ export const Button = ({
         onClick={!critical ? onClick : null}
       >
         <div className="flex flex-row items-center gap-md">
-          {prefix && <prefix size={16} color="currentColor" />}
+          {!!prefix &&
+            React.cloneElement(prefix, { size: 16, color: 'currentColor' })}
           {children}
         </div>
-        {suffix && <suffix size={16} color="currentColor" />}
-      </LinkComponent>
+        {suffix &&
+          React.cloneElement(suffix, { size: 16, color: 'currentColor' })}
+      </Component>
     </div>
   );
 };
 
-export const Root = (
-  { children, value, onChange = (_) => _, LinkComponent = null } = {
-    children: null,
-    value: '',
-  }
-) => {
+interface RootProps {
+  children: ReactElement | ReactElement[];
+  value: string;
+  onChange?: (value: string) => void;
+  LinkComponent?: any;
+}
+
+export const Root = ({
+  children,
+  value,
+  onChange = () => {},
+  LinkComponent,
+}: RootProps) => {
   const props = { children, value, onChange, LinkComponent };
   const [active, setActive] = useState(value);
   useEffect(() => {
@@ -109,22 +137,3 @@ const ActionList = {
 };
 
 export default ActionList;
-
-Button.propTypes = {
-  href: PropTypes.string.isRequired,
-  active: PropTypes.bool,
-  onClick: PropTypes.func,
-  disabled: PropTypes.bool,
-};
-
-Button.defaultProps = {
-  active: false,
-  onClick: null,
-  disabled: false,
-};
-
-Root.propTypes = {
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,
-};
-
-Root.defaultProps = {};

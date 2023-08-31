@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/display-name */
 import PropTypes from 'prop-types';
 import {
   useRef,

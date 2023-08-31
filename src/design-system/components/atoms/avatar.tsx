@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { cn } from '../utils';
 
 const colors = {
@@ -9,7 +8,21 @@ const colors = {
   five: ['fill-icon-secondary', 'text-icon-secondary'],
 };
 
-export const AvatarBase = ({ size, color }) => {
+type AvatarSizes = 'xs' | 'sm' | 'md' | 'lg' | (string & NonNullable<unknown>);
+type AvatarColors =
+  | 'one'
+  | 'two'
+  | 'three'
+  | 'four'
+  | 'five'
+  | (string & NonNullable<unknown>);
+
+interface AvatarBaseProps {
+  size?: AvatarSizes;
+  color?: AvatarColors;
+}
+
+export const AvatarBase = ({ size = 'md', color = 'one' }: AvatarBaseProps) => {
   return (
     <div
       className={cn(
@@ -32,6 +45,7 @@ export const AvatarBase = ({ size, color }) => {
           viewBox="0 0 42 49"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
+          //  @ts-ignore
           className={cn(`${colors[color][0]}`)}
         >
           <path
@@ -48,6 +62,7 @@ export const AvatarBase = ({ size, color }) => {
           viewBox="0 0 28 31"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
+          //  @ts-ignore
           className={cn(`${colors[color][0]}`)}
         >
           <path
@@ -64,6 +79,7 @@ export const AvatarBase = ({ size, color }) => {
           viewBox="0 0 22 25"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
+          //  @ts-ignore
           className={cn(`${colors[color][0]}`)}
         >
           <path
@@ -80,6 +96,7 @@ export const AvatarBase = ({ size, color }) => {
           viewBox="0 0 16 17"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
+          //  @ts-ignore
           className={cn(`${colors[color][0]}`)}
         >
           <path
@@ -93,16 +110,6 @@ export const AvatarBase = ({ size, color }) => {
   );
 };
 
-export const Avatar = ({ size, color }) => {
+export const Avatar = ({ size, color }: AvatarBaseProps) => {
   return <AvatarBase size={size} color={color} />;
-};
-
-Avatar.propTypes = {
-  size: PropTypes.oneOf(['lg', 'md', 'sm', 'xs']),
-  color: PropTypes.oneOf(['one', 'two', 'three', 'four', 'five']),
-};
-
-Avatar.defaultProps = {
-  size: 'md',
-  color: 'one',
 };

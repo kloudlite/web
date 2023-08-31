@@ -1,10 +1,20 @@
-import PropTypes from 'prop-types';
-import { useState, useEffect, useId } from 'react';
+import { useState, useEffect, useId, ReactNode } from 'react';
 import * as SwitchPrimitive from '@radix-ui/react-switch';
 import { cn } from '../utils';
 
-export const Switch = (props) => {
-  const { checked: c, onChange, disabled, label } = props;
+interface SwitchProps {
+  checked?: boolean;
+  onChange?: (check: boolean) => void;
+  disabled?: boolean;
+  label: ReactNode;
+}
+
+export const Switch = ({
+  checked: c = false,
+  onChange = () => {},
+  disabled = false,
+  label,
+}: SwitchProps) => {
   const [checked, setChecked] = useState(c);
   const id = useId();
 
@@ -78,14 +88,4 @@ export const Switch = (props) => {
       )}
     </div>
   );
-};
-
-Switch.propTypes = {
-  onChange: PropTypes.func,
-  disabled: PropTypes.bool,
-};
-
-Switch.defaultProps = {
-  onChange: () => {},
-  disabled: false,
 };

@@ -1,10 +1,15 @@
 import * as PrimitiveAlertDialog from '@radix-ui/react-alert-dialog';
 import { X } from '@jengaicons/react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Button as NativeButton, IconButton } from '../atoms/button';
+import { ReactNode } from 'react';
+import {
+  Button as NativeButton,
+  IconButton,
+  ButtonProps,
+} from '../atoms/button';
 import { cn } from '../utils';
 
-export const Header = ({ children }) => {
+export const Header = ({ children }: { children: ReactNode }) => {
   return (
     <div className="bg-surface-basic-subdued p-3xl flex flex-row items-center justify-between">
       <PrimitiveAlertDialog.Title className="headingLg text-text-strong">
@@ -17,17 +22,17 @@ export const Header = ({ children }) => {
   );
 };
 
-export const Content = ({ children }) => {
+export const Content = ({ children }: { children: ReactNode }) => {
   return <div className="p-3xl bodyMd">{children}</div>;
 };
 
-export const Footer = ({ children }) => {
+export const Footer = ({ children }: { children: ReactNode }) => {
   return (
     <div className="p-3xl flex flex-row justify-end gap-lg">{children}</div>
   );
 };
 
-export const Button = (props) => {
+export const Button = (props: ButtonProps) => {
   return (
     <PrimitiveAlertDialog.Cancel asChild>
       <NativeButton {...props} />
@@ -35,12 +40,19 @@ export const Button = (props) => {
   );
 };
 
+interface DialogRootProps {
+  show: boolean;
+  onOpenChange: (val: boolean) => void;
+  children: ReactNode;
+  backdrop: boolean;
+}
+
 export const DialogRoot = ({
   show,
   onOpenChange,
   children,
   backdrop = true,
-}) => {
+}: DialogRootProps) => {
   return (
     <PrimitiveAlertDialog.Root
       open={show}
