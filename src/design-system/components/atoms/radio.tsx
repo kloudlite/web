@@ -77,7 +77,7 @@ export const Item = ({
 interface RootProps {
   value: string;
   onChange?: () => void;
-  label: string;
+  label?: string;
   disabled?: boolean;
   children: ReactElement | ReactElement[];
   className?: string;
@@ -99,11 +99,11 @@ export const Root = ({
     <RadioGroupPrimitive.Root
       className={cn('flex flex-col gap-y-xl', className)}
       value={value}
-      aria-label={label}
+      aria-label={label || 'Radio choice'}
       disabled={disabled}
       onValueChange={onChange}
     >
-      <span className="bodyMd-medium">{label}</span>
+      {label && <span className="bodyMd-medium">{label}</span>}
       {React.Children.map(children, (child) =>
         cloneElement(child, { labelPlacement, withBounceEffect })
       )}

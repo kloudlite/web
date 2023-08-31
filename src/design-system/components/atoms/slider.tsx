@@ -3,15 +3,13 @@ import type { SliderProps as PrimitiveSliderProps } from 'rc-slider';
 import { useEffect, useState } from 'react';
 import Tooltip from './tooltip';
 
-type ValueChangeFunction = (_value: number | number[]) => void;
-
 interface SliderProps {
   step?: number;
   max?: number;
   min?: number;
-  value: number[];
+  value: number | number[];
   disabled?: boolean;
-  onChange?: ValueChangeFunction;
+  onChange?: (_value: number | number[]) => void;
 }
 
 const Handle: PrimitiveSliderProps['handleRender'] = (node, handleProps) => {
@@ -39,7 +37,7 @@ const Slider = ({
   return (
     <Tooltip.Provider>
       <SliderPrimitive
-        range={value.length > 1}
+        range={Array.isArray(value) ? value.length > 1 : false}
         value={value}
         className="range-slider"
         step={step}
