@@ -73,7 +73,7 @@ export const ButtonBase = React.forwardRef<HTMLButtonElement, ButtonProps>(
       prefix,
       block,
       type,
-      variant,
+      variant = 'primary',
       // noRing,
       noRounded,
       noBorder,
@@ -269,7 +269,8 @@ export const ButtonBase = React.forwardRef<HTMLButtonElement, ButtonProps>(
               }),
           },
           {
-            'p-lg': iconOnly,
+            'p-lg': iconOnly && size === 'md',
+            'p-md': iconOnly && size === 'sm',
           },
           className
         )}
