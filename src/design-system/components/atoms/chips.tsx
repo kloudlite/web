@@ -139,8 +139,6 @@ const ChipBase = React.forwardRef<HTMLButtonElement, ChipBaseProps>(
   }
 );
 
-ChipBase.displayName = 'ChipBase';
-
 interface ChipProps {
   item: ItemType;
   label: string;

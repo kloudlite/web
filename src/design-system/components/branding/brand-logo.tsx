@@ -1,13 +1,13 @@
-interface LogoProps {
+export interface BaseLogoProps {
   size?: number;
   darkBg?: boolean;
 }
 
-interface BrandLogoProps extends LogoProps {
+interface BrandLogoProps extends BaseLogoProps {
   detailed?: boolean;
 }
 
-const Logo = ({ size = 24, darkBg = false }: LogoProps) => {
+const Logo = ({ size = 24, darkBg = false }: BaseLogoProps) => {
   return (
     <>
       {!darkBg && (
@@ -38,7 +38,7 @@ const Logo = ({ size = 24, darkBg = false }: LogoProps) => {
   );
 };
 
-const DetailedLogo = ({ size, darkBg }: LogoProps) => {
+const DetailedLogo = ({ size, darkBg }: BaseLogoProps) => {
   return (
     <>
       {!darkBg && (

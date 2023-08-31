@@ -1,4 +1,4 @@
-import React, { MouseEventHandler } from 'react';
+import React, { KeyboardEventHandler, MouseEventHandler } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Spinner } from '@jengaicons/react';
 import { cn } from '../utils';
@@ -29,6 +29,7 @@ interface ButtonBaseProps {
   onClick?: MouseEventHandler<HTMLButtonElement>;
   onMouseDown?: MouseEventHandler<HTMLButtonElement>;
   onPointerDown?: MouseEventHandler<HTMLButtonElement>;
+  onKeyDown?: KeyboardEventHandler<HTMLButtonElement>;
   to?: string;
   LinkComponent?: any;
   disabled?: boolean;
@@ -37,6 +38,7 @@ interface ButtonBaseProps {
   selected?: boolean;
   className?: string;
   size?: ButtonSizes;
+  value?: any;
 }
 
 export interface IconButtonProps extends ButtonBaseProps {
