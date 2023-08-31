@@ -10,7 +10,14 @@ import React, {
 import { LayoutGroup, motion } from 'framer-motion';
 import { cn } from '../utils';
 
-interface ButtonProps {
+interface IActionList {
+  children: ReactElement | ReactElement[];
+  value: string;
+  onChange?: (value: string) => void;
+  LinkComponent?: any;
+}
+
+interface IActionItem {
   children: ReactNode;
   disabled?: boolean;
   critical?: boolean;
@@ -23,7 +30,7 @@ interface ButtonProps {
   value: string;
 }
 
-export const Button = ({
+export const Item = ({
   children,
   disabled = false,
   critical = false,
@@ -35,7 +42,7 @@ export const Button = ({
   LinkComponent = 'div',
   // eslint-disable-next-line no-unused-vars
   value: _,
-}: ButtonProps) => {
+}: IActionItem) => {
   let Component: any = LinkComponent;
   if (to) {
     if (LinkComponent === 'div') {
@@ -92,19 +99,12 @@ export const Button = ({
   );
 };
 
-interface RootProps {
-  children: ReactElement | ReactElement[];
-  value: string;
-  onChange?: (value: string) => void;
-  LinkComponent?: any;
-}
-
 export const Root = ({
   children,
   value,
   onChange = () => {},
   LinkComponent,
-}: RootProps) => {
+}: IActionList) => {
   const props = { children, value, onChange, LinkComponent };
   const [active, setActive] = useState(value);
   useEffect(() => {
@@ -133,7 +133,7 @@ export const Root = ({
 
 const ActionList = {
   Root,
-  Button,
+  Item,
 };
 
 export default ActionList;
