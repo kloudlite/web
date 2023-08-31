@@ -1,17 +1,26 @@
 import classNames from 'classnames';
 import { Link } from '@remix-run/react';
+import { ReactNode } from 'react';
 import { Button } from '../atoms/button';
-import { BrandLogo } from '../branding/brand-logo';
 import Container from '../atoms/container';
+
+interface ContextualSaveBarProps {
+  logo?: ReactNode;
+  logoWidth?: number;
+  message?: string;
+  saveAction?: () => void;
+  discardAction?: () => void;
+  fixed?: boolean;
+}
 
 export const ContextualSaveBar = ({
   logo = null,
   logoWidth = 124,
   message = '',
-  saveAction = (_) => _,
-  discardAction = (_) => _,
+  saveAction,
+  discardAction,
   fixed = false,
-}) => {
+}: ContextualSaveBarProps) => {
   return (
     <div
       className={classNames(
@@ -27,7 +36,8 @@ export const ContextualSaveBar = ({
             <Link
               to="/"
               className="hidden md:block lg:block xl:block"
-              width={logoWidth}
+              // width={logoWidth}
+              style={{ width: `${logoWidth}px` }}
             >
               {logo}
             </Link>
@@ -60,14 +70,4 @@ export const ContextualSaveBar = ({
       </Container>
     </div>
   );
-};
-
-ContextualSaveBar.defaultProps = {
-  imageWidth: 124,
-  logo: <BrandLogo detailed darkBg size={20} />,
-  message: 'Unsaved changes',
-  saveAction: (e) => {
-    console.log(e);
-  },
-  discardAction: () => {},
 };

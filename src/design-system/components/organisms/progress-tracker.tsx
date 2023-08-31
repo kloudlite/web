@@ -1,7 +1,6 @@
-import PropTypes from 'prop-types';
 import { cn } from '../utils';
 
-const ProgressTrackerItem = ({ label, active }) => {
+const ProgressTrackerItem = ({ label, active }: any) => {
   return (
     <div
       className={cn('flex flex-row gap-x-xl items-center headingMd', {
@@ -42,9 +41,16 @@ const ProgressTrackerItem = ({ label, active }) => {
   );
 };
 
-const def = (_) => _;
+interface ProgressTrackerProps {
+  items: {
+    label: string;
+    active?: boolean;
+    id: string | number;
+  }[];
+  onClick: (id: string | number) => void;
+}
 
-export const ProgressTracker = ({ items, onClick = def }) => {
+export const ProgressTracker = ({ items, onClick }: ProgressTrackerProps) => {
   return (
     <div className="flex flex-col gap-y-lg">
       {items &&
@@ -52,7 +58,7 @@ export const ProgressTracker = ({ items, onClick = def }) => {
           return (
             <div
               className={cn('flex flex-col', {
-                'cursor-pointer': onClick !== def,
+                'cursor-pointer': !!onClick,
               })}
               key={item.id}
               onClick={() => onClick(item.id)}
@@ -83,15 +89,3 @@ export const ProgressTracker = ({ items, onClick = def }) => {
     </div>
   );
 };
-
-ProgressTracker.propTypes = {
-  items: PropTypes.arrayOf(
-    PropTypes.shape({
-      label: PropTypes.string.isRequired,
-      active: PropTypes.bool,
-      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    })
-  ).isRequired,
-};
-
-ProgressTracker.defaultProps = {};
