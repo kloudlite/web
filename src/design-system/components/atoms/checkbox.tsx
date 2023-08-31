@@ -1,20 +1,30 @@
-import PropTypes from 'prop-types';
 import { useEffect, useId, useState } from 'react';
 
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
 import { cn } from '../utils';
 import { BounceIt } from '../bounce-it';
 
-export const Checkbox = (props) => {
-  const {
-    checked: c,
-    onChange,
-    disabled,
-    error,
-    indeterminate,
-    label,
-    withBounceEffect,
-  } = props;
+type checkedType = boolean | string;
+
+interface CheckboxProps {
+  checked: checkedType;
+  onChange: (check: checkedType) => void;
+  disabled: boolean;
+  error: boolean;
+  indeterminate: boolean;
+  withBounceEffect: boolean;
+  label: string;
+}
+
+export const Checkbox = ({
+  checked: c,
+  onChange = () => {},
+  disabled = false,
+  error = false,
+  indeterminate = false,
+  label,
+  withBounceEffect,
+}: CheckboxProps) => {
   const [checked, setChecked] = useState(c);
 
   useEffect(() => {
@@ -38,15 +48,15 @@ export const Checkbox = (props) => {
               'bg-surface-critical-subdued border-border-critical':
                 !checked && !disabled && error,
               'bg-surface-primary-default border-border-primary':
-                checked && !error && !disabled,
+                !!checked && !error && !disabled,
               'bg-surface-critical-default border-border-critical':
-                checked && error && !disabled,
+                !!checked && error && !disabled,
               'hover:bg-surface-basic-hovered': !checked && !disabled,
             }
           )}
           defaultChecked
           id={id}
-          checked={checked}
+          checked={!!checked}
           onCheckedChange={(e) => {
             setChecked((prev) => {
               if (indeterminate) {
@@ -110,23 +120,4 @@ export const Checkbox = (props) => {
     );
   };
   return withBounceEffect ? rend() : <BounceIt>{rend()}</BounceIt>;
-};
-
-Checkbox.propTypes = {
-  withBounceEffect: PropTypes.bool,
-  label: PropTypes.string.isRequired,
-  onChange: PropTypes.func,
-  disabled: PropTypes.bool,
-  error: PropTypes.bool,
-  checked: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
-  indeterminate: PropTypes.bool,
-};
-
-Checkbox.defaultProps = {
-  withBounceEffect: true,
-  onChange: () => {},
-  disabled: false,
-  error: false,
-  checked: false,
-  indeterminate: false,
 };
