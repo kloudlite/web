@@ -3,7 +3,7 @@ import { MouseEventHandler } from 'react';
 import { ChildrenProps } from './types';
 import { cn } from './utils';
 
-interface BounceItProps extends ChildrenProps {
+interface IBounceit extends ChildrenProps {
   disable?: boolean;
   onClick?: MouseEventHandler<HTMLDivElement>;
   className?: string;
@@ -14,7 +14,7 @@ export const BounceIt = ({
   onClick = (_) => {},
   className = '',
   ...etc
-}: BounceItProps) => {
+}: IBounceit) => {
   if (disable) {
     return <div>{etc.children}</div>;
   }

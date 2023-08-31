@@ -1,13 +1,13 @@
-import React, { cloneElement } from 'react';
+import React, { ReactNode, cloneElement } from 'react';
 import { cn } from '../utils';
 
-interface BadgeProps {
+interface IBadge {
   type: string;
-  children: JSX.Element | JSX.Element[];
+  children: ReactNode;
   icon?: JSX.Element;
 }
 
-export const Badge = ({ type, children, icon }: BadgeProps) => {
+export const Badge = ({ type, children, icon }: IBadge) => {
   const iconProps = { size: 12, color: 'currentColor' };
 
   return (

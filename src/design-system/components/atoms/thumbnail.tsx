@@ -7,7 +7,7 @@ type thumbnailSizes =
   | 'lg'
   | (string & NonNullable<unknown>);
 
-interface ThumbnailProps {
+interface IThumbnail {
   src: string;
   size?: thumbnailSizes;
   rounded?: boolean;
@@ -17,7 +17,7 @@ export const Thumbnail = ({
   src,
   size = 'md',
   rounded = false,
-}: ThumbnailProps) => {
+}: IThumbnail) => {
   return (
     <div
       className={classNames(

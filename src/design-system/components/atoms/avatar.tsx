@@ -17,12 +17,12 @@ type AvatarColors =
   | 'five'
   | (string & NonNullable<unknown>);
 
-export interface AvatarBaseProps {
+export interface IAvatar {
   size?: AvatarSizes;
   color?: AvatarColors;
 }
 
-export const AvatarBase = ({ size = 'md', color = 'one' }: AvatarBaseProps) => {
+export const AvatarBase = ({ size = 'md', color = 'one' }: IAvatar) => {
   return (
     <div
       className={cn(
@@ -110,6 +110,6 @@ export const AvatarBase = ({ size = 'md', color = 'one' }: AvatarBaseProps) => {
   );
 };
 
-export const Avatar = ({ size, color }: AvatarBaseProps) => {
+export const Avatar = ({ size, color }: IAvatar) => {
   return <AvatarBase size={size} color={color} />;
 };

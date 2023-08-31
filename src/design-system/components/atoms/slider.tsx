@@ -3,7 +3,7 @@ import type { SliderProps as PrimitiveSliderProps } from 'rc-slider';
 import { useEffect, useState } from 'react';
 import Tooltip from './tooltip';
 
-interface SliderProps {
+interface ISlider {
   step?: number;
   max?: number;
   min?: number;
@@ -33,7 +33,7 @@ const Slider = ({
   max = 100,
   disabled = false,
   onChange,
-}: SliderProps) => {
+}: ISlider) => {
   return (
     <Tooltip.Provider>
       <SliderPrimitive

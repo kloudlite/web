@@ -1,7 +1,7 @@
 import { ReactNode, useState } from 'react';
 import { cn } from '~/components/utils';
 
-interface ScrollAreaProps {
+interface IScrollArea {
   children: ReactNode;
   className?: string;
   leftblur?: boolean;
@@ -15,7 +15,7 @@ const ScrollArea = ({
   leftblur = true,
   rightblur = true,
   blurfrom = '',
-}: ScrollAreaProps) => {
+}: IScrollArea) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const handleScroll = ({ target }: any) => {
     setIsScrolled(target.scrollLeft > 0);

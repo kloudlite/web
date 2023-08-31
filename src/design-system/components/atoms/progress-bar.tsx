@@ -8,12 +8,12 @@ import React, {
 } from 'react';
 import useScreenSize from '../hooks/useScreen';
 
-interface ProgressBarContextProps {
+interface IProgressbarContext {
   count: number;
   setCount: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const context = createContext<ProgressBarContextProps>({
+const context = createContext<IProgressbarContext>({
   count: 0,
   setCount: () => {},
 });

@@ -1,11 +1,7 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { X } from '@jengaicons/react';
 import { AnimatePresence, motion } from 'framer-motion';
-import {
-  Button as NativeButton,
-  IconButton,
-  ButtonProps,
-} from '../atoms/button';
+import { Button as NativeButton, IconButton, IButton } from '../atoms/button';
 import { cn } from '../utils';
 import { ChildrenProps } from '../types';
 
@@ -38,11 +34,11 @@ const Footer = ({ children }: ChildrenProps) => {
   );
 };
 
-interface BProps extends ButtonProps {
+interface IPopupButton extends IButton {
   closable?: boolean;
 }
 
-const Button = (props: BProps) => {
+const Button = (props: IPopupButton) => {
   const { closable = true } = props;
   return (
     <>
@@ -56,7 +52,7 @@ const Button = (props: BProps) => {
   );
 };
 
-interface PopupRootProps extends ChildrenProps {
+interface IPopup extends ChildrenProps {
   show?: boolean;
   onOpenChange?: (val: any) => void;
   backdrop?: boolean;
@@ -69,7 +65,7 @@ const PopupRoot = ({
   children,
   backdrop = true,
   className = '',
-}: PopupRootProps) => {
+}: IPopup) => {
   return (
     <Dialog.Root
       open={show}

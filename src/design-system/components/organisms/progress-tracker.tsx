@@ -41,7 +41,7 @@ const ProgressTrackerItem = ({ label, active }: any) => {
   );
 };
 
-interface ProgressTrackerProps {
+interface IProgressTracker {
   items: {
     label: string;
     active?: boolean;
@@ -50,7 +50,7 @@ interface ProgressTrackerProps {
   onClick: (id: string | number) => void;
 }
 
-export const ProgressTracker = ({ items, onClick }: ProgressTrackerProps) => {
+export const ProgressTracker = ({ items, onClick }: IProgressTracker) => {
   return (
     <div className="flex flex-col gap-y-lg">
       {items &&
