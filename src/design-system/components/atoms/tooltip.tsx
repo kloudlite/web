@@ -2,18 +2,18 @@ import { ReactNode, useEffect, useState } from 'react';
 import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 import { AnimatePresence, motion } from 'framer-motion';
 
-interface ProviderProps {
+interface ITooltipProvider {
   children: ReactNode;
   delayDuration?: number;
 }
 
-export const Provider = ({ delayDuration = 0, children }: ProviderProps) => (
+export const Provider = ({ delayDuration = 0, children }: ITooltipProvider) => (
   <TooltipPrimitive.Provider delayDuration={delayDuration}>
     {children}
   </TooltipPrimitive.Provider>
 );
 
-interface RootProps {
+interface ITooltip {
   children: ReactNode;
   content: ReactNode;
   open: boolean;
@@ -25,7 +25,7 @@ export const Root = ({
   content,
   open = false,
   offset = 5,
-}: RootProps) => {
+}: ITooltip) => {
   const [_open, _setOpen] = useState(false);
   useEffect(() => {
     _setOpen(open);

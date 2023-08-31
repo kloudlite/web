@@ -25,7 +25,7 @@ type ButtonVariants =
 type IconButtonVariants = 'outline' | 'basic' | 'plain';
 type ButtonSizes = 'md' | 'sm' | 'lg' | 'xl' | '2xl';
 
-interface ButtonBaseProps {
+interface IBaseButton {
   onClick?: MouseEventHandler<HTMLButtonElement>;
   onMouseDown?: MouseEventHandler<HTMLButtonElement>;
   onPointerDown?: MouseEventHandler<HTMLButtonElement>;
@@ -41,12 +41,12 @@ interface ButtonBaseProps {
   value?: any;
 }
 
-export interface IconButtonProps extends ButtonBaseProps {
+export interface IIconButton extends IBaseButton {
   icon: JSX.Element;
   variant?: IconButtonVariants;
 }
 
-export interface ButtonProps extends ButtonBaseProps {
+export interface IButton extends IBaseButton {
   suffix?: JSX.Element;
   prefix?: JSX.Element;
   noRounded?: boolean;
@@ -59,7 +59,7 @@ export interface ButtonProps extends ButtonBaseProps {
   variant?: ButtonVariants | IconButtonVariants;
 }
 
-export const ButtonBase = React.forwardRef<HTMLButtonElement, ButtonProps>(
+export const ButtonBase = React.forwardRef<HTMLButtonElement, IButton>(
   (props, ref) => {
     const {
       onClick = () => {},
@@ -84,8 +84,6 @@ export const ButtonBase = React.forwardRef<HTMLButtonElement, ButtonProps>(
       loading = false,
       ...mprops
     } = props;
-
-    // const extraProps: ButtonProps = {};
 
     let Component: any = LinkComponent;
 
@@ -301,7 +299,7 @@ export const ButtonBase = React.forwardRef<HTMLButtonElement, ButtonProps>(
   }
 );
 
-export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
+export const IconButton = React.forwardRef<HTMLButtonElement, IIconButton>(
   (props, ref) => {
     const { icon, block } = props;
     return (
@@ -317,7 +315,7 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
   }
 );
 
-export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+export const Button = React.forwardRef<HTMLButtonElement, IButton>(
   (props: any, ref) => {
     const { block } = props;
     return <ButtonBase {...props} iconOnly={false} ref={ref} block={!!block} />;

@@ -2,11 +2,11 @@ import { Link, useLocation } from 'react-router-dom';
 import classnames from 'classnames';
 import { ChildrenProps } from './types';
 
-interface HeaderLinkProps extends ChildrenProps {
+interface IHeaderLink extends ChildrenProps {
   to?: string;
 }
 
-const HeaderLink = (props: HeaderLinkProps) => {
+const HeaderLink = (props: IHeaderLink) => {
   const { to = '', children } = props;
   const location = useLocation();
   const isActive = location.pathname === to;

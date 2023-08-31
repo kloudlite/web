@@ -19,7 +19,7 @@ type ChipTypes =
 
 type ItemType = any;
 
-interface ChipBaseProps {
+interface IChipBase {
   item: ItemType;
   label: string;
   disabled?: boolean;
@@ -31,7 +31,26 @@ interface ChipBaseProps {
   loading?: boolean;
 }
 
-const ChipBase = React.forwardRef<HTMLButtonElement, ChipBaseProps>(
+interface IChip {
+  item: ItemType;
+  label: string;
+  disabled?: boolean;
+  type?: ChipTypes;
+  onRemove?: (item: ItemType, isKeyBoard?: boolean) => void;
+  prefix?: JSX.Element | string | null;
+  onClick?: (item: ItemType) => void;
+  loading?: boolean;
+  isInGroup?: boolean;
+}
+
+interface IChipGroup {
+  onClick?: (item: ItemType) => void;
+  onRemove?: (item: ItemType) => void;
+  children: ReactElement | ReactElement[];
+  className?: string;
+}
+
+const ChipBase = React.forwardRef<HTMLButtonElement, IChipBase>(
   (props, ref) => {
     const {
       item,
@@ -139,19 +158,7 @@ const ChipBase = React.forwardRef<HTMLButtonElement, ChipBaseProps>(
   }
 );
 
-interface ChipProps {
-  item: ItemType;
-  label: string;
-  disabled?: boolean;
-  type?: ChipTypes;
-  onRemove?: (item: ItemType, isKeyBoard?: boolean) => void;
-  prefix?: JSX.Element | string | null;
-  onClick?: (item: ItemType) => void;
-  loading?: boolean;
-  isInGroup?: boolean;
-}
-
-export const Chip = forwardRef<HTMLButtonElement, ChipProps>(
+export const Chip = forwardRef<HTMLButtonElement, IChip>(
   (
     {
       item,
@@ -196,24 +203,15 @@ export const Chip = forwardRef<HTMLButtonElement, ChipProps>(
   }
 );
 
-interface ChipGroupProps {
-  onClick?: (item: ItemType) => void;
-  onRemove?: (item: ItemType) => void;
-  children: ReactElement | ReactElement[];
-  className?: string;
-}
-
 export const ChipGroup = ({
   onClick = (_) => {},
   onRemove = (_) => {},
   children,
   className = '',
-}: ChipGroupProps) => {
+}: IChipGroup) => {
   const [keyRemovable, setKeyRemovable] = useState(false);
   const [lastRemovedIndex, setLastRemovedIndex] = useState<number | null>(null);
   const ref = useRef<HTMLDivElement>(null);
-
-  // ref.current
 
   useEffect(() => {
     if (lastRemovedIndex === null) {

@@ -1,14 +1,14 @@
 import { ReactNode } from 'react';
-import { Button, ButtonProps } from '../atoms/button';
+import { Button, IButton } from '../atoms/button';
 import { cn } from '../utils';
 
-interface EmptyStateProps {
+interface IEmptyState {
   heading: string;
   image?: string;
   children: ReactNode;
   footer: ReactNode;
-  action: ButtonProps;
-  secondaryAction: ButtonProps;
+  action: IButton;
+  secondaryAction: IButton;
 }
 
 export const EmptyState = ({
@@ -18,7 +18,7 @@ export const EmptyState = ({
   footer,
   action,
   secondaryAction,
-}: EmptyStateProps) => {
+}: IEmptyState) => {
   return (
     <div className="flex flex-col items-center shadow-card border border-border-default rounded">
       <div className={cn('flex flex-col items-center px-3xl py-8xl gap-5xl')}>

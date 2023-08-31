@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 import { Button } from '../atoms/button';
 import Container from '../atoms/container';
 
-interface ContextualSaveBarProps {
+interface IContextualSaveBar {
   logo?: ReactNode;
   logoWidth?: number;
   message?: string;
@@ -20,7 +20,7 @@ export const ContextualSaveBar = ({
   saveAction,
   discardAction,
   fixed = false,
-}: ContextualSaveBarProps) => {
+}: IContextualSaveBar) => {
   return (
     <div
       className={classNames(
