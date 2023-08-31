@@ -5,13 +5,24 @@ import { BounceIt } from '../bounce-it';
 
 type labelPlacements = 'left' | 'right' | (string & NonNullable<unknown>);
 
-interface ItemProps {
+interface IRadioItem {
   disabled?: boolean;
   value: string;
   children: ReactNode;
   className?: string;
   withBounceEffect?: boolean;
   labelPlacement?: labelPlacements;
+}
+
+interface IRadioGroup {
+  value: string;
+  onChange?: () => void;
+  label?: string;
+  disabled?: boolean;
+  children: ReactElement | ReactElement[];
+  className?: string;
+  labelPlacement?: labelPlacements;
+  withBounceEffect?: boolean;
 }
 
 export const Item = ({
@@ -21,7 +32,7 @@ export const Item = ({
   className = '',
   withBounceEffect = true,
   labelPlacement = 'right',
-}: ItemProps) => {
+}: IRadioItem) => {
   const id = useId();
   const rend = () => {
     return (
@@ -74,17 +85,6 @@ export const Item = ({
   return withBounceEffect ? <BounceIt>{rend()}</BounceIt> : rend();
 };
 
-interface RootProps {
-  value: string;
-  onChange?: () => void;
-  label?: string;
-  disabled?: boolean;
-  children: ReactElement | ReactElement[];
-  className?: string;
-  labelPlacement?: labelPlacements;
-  withBounceEffect?: boolean;
-}
-
 export const Root = ({
   value,
   onChange = () => {},
@@ -94,7 +94,7 @@ export const Root = ({
   className = '',
   labelPlacement = 'right',
   withBounceEffect = true,
-}: RootProps) => {
+}: IRadioGroup) => {
   return (
     <RadioGroupPrimitive.Root
       className={cn('flex flex-col gap-y-xl', className)}

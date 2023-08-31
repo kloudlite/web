@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import * as PopoverPrimitive from '@radix-ui/react-popover';
 import { ReactNode } from 'react';
-import { ButtonProps, Button as NativeButton } from '~/components/atoms/button';
+import { IButton, Button as NativeButton } from '~/components/atoms/button';
 import { ChildrenProps } from '../types';
 
 export const Trigger = ({ children }: ChildrenProps) => {
@@ -34,7 +34,7 @@ export const Footer = ({ children }: ChildrenProps) => {
     <div className="pt-3xl flex flex-row justify-end gap-lg">{children}</div>
   );
 };
-export const Button = (props: ButtonProps) => {
+export const Button = (props: IButton) => {
   return (
     <PopoverPrimitive.Close asChild>
       <NativeButton {...props} />
@@ -42,7 +42,7 @@ export const Button = (props: ButtonProps) => {
   );
 };
 
-interface PopoverProps extends ChildrenProps {
+interface IPopover extends ChildrenProps {
   onOpenChange?: (val: boolean) => void;
   show?: boolean;
 }
@@ -51,7 +51,7 @@ export const Popover = ({
   children,
   onOpenChange = () => {},
   show = false,
-}: PopoverProps) => (
+}: IPopover) => (
   <PopoverPrimitive.Root open={show} onOpenChange={onOpenChange}>
     {children}
   </PopoverPrimitive.Root>
