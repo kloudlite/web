@@ -1,10 +1,15 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { X } from '@jengaicons/react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Button as NativeButton, IconButton } from '../atoms/button';
+import {
+  Button as NativeButton,
+  IconButton,
+  ButtonProps,
+} from '../atoms/button';
 import { cn } from '../utils';
+import { ChildrenProps } from '../types';
 
-const Header = ({ children, showclose = true }) => {
+const Header = ({ children, showclose = true }: any) => {
   return (
     <div className="border-b border-border-default p-3xl flex flex-row items-center min-h-[69px]">
       <Dialog.Title className="headingLg text-text-strong flex-1">
@@ -19,13 +24,13 @@ const Header = ({ children, showclose = true }) => {
   );
 };
 
-const Content = ({ children }) => {
+const Content = ({ children }: ChildrenProps) => {
   return (
     <div className="p-3xl overscroll-y-auto overflow-x-hidden">{children}</div>
   );
 };
 
-const Footer = ({ children }) => {
+const Footer = ({ children }: ChildrenProps) => {
   return (
     <div className="p-3xl flex flex-row justify-end gap-lg bg-surface-basic-subdued">
       {children}
@@ -33,8 +38,12 @@ const Footer = ({ children }) => {
   );
 };
 
-const Button = (props) => {
-  const { closable } = props;
+interface BProps extends ButtonProps {
+  closable?: boolean;
+}
+
+const Button = (props: BProps) => {
+  const { closable = true } = props;
   return (
     <>
       {closable && (
@@ -47,18 +56,24 @@ const Button = (props) => {
   );
 };
 
+interface PopupRootProps extends ChildrenProps {
+  show?: boolean;
+  onOpenChange?: (val: any) => void;
+  backdrop?: boolean;
+  className?: string;
+}
+
 const PopupRoot = ({
-  show,
-  onOpenChange,
+  show = false,
+  onOpenChange = () => {},
   children,
   backdrop = true,
   className = '',
-}) => {
+}: PopupRootProps) => {
   return (
     <Dialog.Root
       open={show}
       onOpenChange={(e) => {
-        console.log(e);
         if (e) {
           onOpenChange(show);
         } else {
