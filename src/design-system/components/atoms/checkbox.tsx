@@ -4,15 +4,15 @@ import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
 import { cn } from '../utils';
 import { BounceIt } from '../bounce-it';
 
-type checkedType = boolean | string;
+type checkedType = boolean | string | undefined;
 
 interface CheckboxProps {
-  checked: checkedType;
-  onChange: (check: checkedType) => void;
-  disabled: boolean;
-  error: boolean;
-  indeterminate: boolean;
-  withBounceEffect: boolean;
+  checked?: checkedType;
+  onChange?: (check: checkedType) => void;
+  disabled?: boolean;
+  error?: boolean;
+  indeterminate?: boolean;
+  withBounceEffect?: boolean;
   label: string;
 }
 

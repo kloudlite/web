@@ -6,6 +6,7 @@ import React, {
   useMemo,
   KeyboardEvent,
   ReactElement,
+  ReactNode,
 } from 'react';
 import { LayoutGroup, motion } from 'framer-motion';
 import * as RovingFocusGroup from '@radix-ui/react-roving-focus';
@@ -16,7 +17,6 @@ type TabVariant = 'filled' | 'plain' | (string & NonNullable<unknown>);
 
 interface BaseProps {
   to?: string;
-  label: string;
   fitted?: boolean;
   LinkComponent?: any;
   variant?: TabVariant;
@@ -24,6 +24,7 @@ interface BaseProps {
 }
 
 interface TabBaseProps extends BaseProps {
+  label: string;
   active?: boolean;
   onClick?: (e: KeyboardEvent<HTMLSpanElement>) => void;
   prefix?: JSX.Element;
@@ -34,10 +35,10 @@ interface RootProps extends BaseProps {
   value: string;
   className?: string;
   basePath?: string;
-  children: ReactElement;
+  children: ReactNode;
 }
 
-interface TabProps {
+export interface TabProps {
   to?: string;
   label: string;
   prefix?: JSX.Element;
@@ -55,7 +56,7 @@ const TabBase = ({
   size = 'md',
   prefix,
 }: TabBaseProps) => {
-  let Component: any = LinkComponent;
+  let Component: any = LinkComponent || 'div';
 
   if (to) {
     if (LinkComponent === 'div') {
@@ -194,16 +195,22 @@ const Root = forwardRef<HTMLDivElement, RootProps>(
         <motion.div layout layoutRoot>
           <LayoutGroup id={id}>
             {React.Children.map(children, (child) => {
+              if (!child) {
+                throw Error('Tab child is required');
+              }
+              const tabChild = child as ReactElement;
+              const tabChildProps: TabProps = tabChild.props;
+
               return (
                 <motion.div className="px-xl md:px-0 snap-start">
                   <TabBase
-                    {...child.props}
+                    {...tabChildProps}
                     onClick={() => {
-                      setActive(child.props.value);
+                      setActive(tabChildProps.value);
                     }}
                     fitted={fitted}
-                    to={basePath + child.props.to}
-                    active={value === child.props.value}
+                    to={basePath + (tabChildProps.to || '')}
+                    active={value === tabChildProps.value}
                     LinkComponent={LinkComponent}
                     variant={variant}
                     size={size}
