@@ -1,13 +1,21 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import * as PopoverPrimitive from '@radix-ui/react-popover';
-import { Button as NativeButton } from '~/components/atoms/button';
+import { ReactNode } from 'react';
+import { ButtonProps, Button as NativeButton } from '~/components/atoms/button';
+import { ChildrenProps } from '../types';
 
-export const Trigger = ({ children }) => {
+export const Trigger = ({ children }: ChildrenProps) => {
   return (
     <PopoverPrimitive.Trigger asChild>{children}</PopoverPrimitive.Trigger>
   );
 };
-export const Content = ({ children, align = 'center' }) => {
+export const Content = ({
+  children,
+  align = 'center',
+}: {
+  children: ReactNode;
+  align?: 'center' | 'start' | 'end';
+}) => {
   return (
     <PopoverPrimitive.Portal>
       <PopoverPrimitive.Content
@@ -21,12 +29,12 @@ export const Content = ({ children, align = 'center' }) => {
   );
 };
 
-export const Footer = ({ children }) => {
+export const Footer = ({ children }: ChildrenProps) => {
   return (
     <div className="pt-3xl flex flex-row justify-end gap-lg">{children}</div>
   );
 };
-export const Button = (props) => {
+export const Button = (props: ButtonProps) => {
   return (
     <PopoverPrimitive.Close asChild>
       <NativeButton {...props} />
@@ -34,7 +42,16 @@ export const Button = (props) => {
   );
 };
 
-export const Popover = ({ children, onOpenChange, show = false }) => (
+interface PopoverProps extends ChildrenProps {
+  onOpenChange?: (val: boolean) => void;
+  show?: boolean;
+}
+
+export const Popover = ({
+  children,
+  onOpenChange = () => {},
+  show = false,
+}: PopoverProps) => (
   <PopoverPrimitive.Root open={show} onOpenChange={onOpenChange}>
     {children}
   </PopoverPrimitive.Root>

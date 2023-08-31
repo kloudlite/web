@@ -17,7 +17,7 @@ type AvatarColors =
   | 'five'
   | (string & NonNullable<unknown>);
 
-interface AvatarBaseProps {
+export interface AvatarBaseProps {
   size?: AvatarSizes;
   color?: AvatarColors;
 }

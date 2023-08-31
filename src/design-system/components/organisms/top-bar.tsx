@@ -1,20 +1,24 @@
-import { createContext, createRef, useEffect, useMemo, useState } from 'react';
+import {
+  ReactNode,
+  RefObject,
+  createContext,
+  createRef,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import Container from '../atoms/container';
 import { cn } from '../utils';
 
-export const TopBarContext = createContext();
+export const TopBarContext = createContext<{ isSticked?: boolean }>({});
 
-export const useSticky = (elementRef, topLimit = 0) => {
+const useSticky = (elementRef: RefObject<HTMLElement>, topLimit = 0) => {
   const [isStickey, setIsSticky] = useState(false);
 
   useEffect(() => {
     const getScroll = () => {
       if (elementRef && elementRef.current) {
         const { top } = elementRef.current.getBoundingClientRect();
-        // if (log) {
-        //   logger.log(top, topLimit);
-        // }
-
         if (top < topLimit) {
           setIsSticky(true);
         } else {
@@ -31,11 +35,25 @@ export const useSticky = (elementRef, topLimit = 0) => {
   return isStickey;
 };
 
-export const TopBar = ({ tabs, actions, logo, fixed, breadcrum = null }) => {
-  const tabBarRef = createRef();
+interface TopBarProps {
+  tabs: ReactNode;
+  actions: ReactNode;
+  logo: ReactNode;
+  fixed: boolean;
+  breadcrum: ReactNode;
+}
+
+export const TopBar = ({
+  tabs,
+  actions,
+  logo,
+  fixed,
+  breadcrum = null,
+}: TopBarProps) => {
+  const tabBarRef = createRef<HTMLDivElement>();
   const isTabBarSticked = useSticky(tabBarRef, 0);
 
-  const headingRef = createRef();
+  const headingRef = createRef<HTMLDivElement>();
   const isHeadingSticked = useSticky(headingRef, 0);
 
   return (
@@ -59,7 +77,7 @@ export const TopBar = ({ tabs, actions, logo, fixed, breadcrum = null }) => {
             </div>
             <div className="flex flex-row items-center justify-end flex-1">
               <div className="flex flex-row items-center justify-center">
-                {actions && actions}
+                {!!actions && actions}
               </div>
             </div>
           </div>

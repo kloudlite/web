@@ -10,36 +10,50 @@ const ITEMS_PER_PAGE = [
 ];
 // currentPage must be greater than 0
 
-const Pagination = (props) => {
-  const {
-    currentPage = 3,
-    totalItems = 90,
-    itemsPerPage = 15,
-    onPageChanged = (_) => {},
-    onItemsPerPageChanged,
-    disabled = false,
-    itemPerPageDisabled = false,
-    onClickNext = (_) => {},
-    onClickPrev = (_) => {},
-    isNextDisabled = false,
-    isPrevDisabled = false,
-    showNumbers = true,
-  } = props;
+interface PaginationProps {
+  currentPage: number;
+  totalItems: number;
 
-  const [focusItem, setFocusItem] = useState(null);
+  itemsPerPage?: number;
+  onPageChanged?: (count: number) => void;
+  onItemsPerPageChanged?: (count: number) => void;
+  disabled?: boolean;
+  itemPerPageDisabled?: boolean;
+  onClickNext?: () => void;
+  onClickPrev?: () => void;
+  isNextDisabled?: boolean;
+  isPrevDisabled?: boolean;
+  showNumbers?: boolean;
+}
+
+const Pagination = ({
+  currentPage = 3,
+  totalItems = 90,
+  itemsPerPage = 15,
+  onPageChanged = () => {},
+  onItemsPerPageChanged = () => {},
+  disabled = false,
+  itemPerPageDisabled = false,
+  onClickNext = () => {},
+  onClickPrev = () => {},
+  isNextDisabled = false,
+  isPrevDisabled = false,
+  showNumbers = true,
+}: PaginationProps) => {
+  const [focusItem, setFocusItem] = useState<null | number>(null);
   const [focusCallback, setFocusCallback] = useState(false);
 
   const [itemsPerPageValue, setItemsPerPageValue] = useState(itemsPerPage);
 
-  const [startPages, setStartPages] = useState([1, 2, 3, 4]);
-  const [middlePages, setMiddlePages] = useState([]);
-  const [endPages, setEndPages] = useState([10]);
+  const [startPages, setStartPages] = useState<number[]>([]);
+  const [middlePages, setMiddlePages] = useState<number[]>([]);
+  const [endPages, setEndPages] = useState<number[]>([]);
 
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   const itemsPerPageId = useId();
 
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (onItemsPerPageChanged) onItemsPerPageChanged(itemsPerPageValue);
@@ -76,8 +90,11 @@ const Pagination = (props) => {
 
   useEffect(() => {
     if (focusCallback) {
-      if (focusItem) {
-        const itemsArray = Array.from(ref.current?.children);
+      if (focusItem && ref?.current?.children) {
+        const itemsArray = Array.from(
+          ref.current?.children
+        ) as HTMLButtonElement[];
+
         if (itemsArray.find((e) => e.value === `${focusItem}`)) {
           itemsArray?.find((e) => e.value === `${focusItem}`)?.focus();
         } else {
@@ -85,7 +102,9 @@ const Pagination = (props) => {
             (e) => e.tagName.toLowerCase() === 'div'
           );
           if (divElement) {
-            const divElementArray = Array.from(divElement.children);
+            const divElementArray = Array.from(
+              divElement.children
+            ) as HTMLButtonElement[];
             if (divElementArray) {
               divElementArray.find((e) => e.value === `${focusItem}`)?.focus();
             }
@@ -96,7 +115,7 @@ const Pagination = (props) => {
     setFocusItem(null);
     setFocusCallback(false);
   }, [focusCallback]);
-  const restoreFocus = (index) => {
+  const restoreFocus = (index: number) => {
     setFocusItem(index);
   };
 
@@ -111,7 +130,7 @@ const Pagination = (props) => {
           disabled={itemPerPageDisabled}
           value={itemsPerPageValue}
           onChange={(e) => {
-            setItemsPerPageValue(e.target.value);
+            setItemsPerPageValue(Number(e.target.value));
           }}
           className={cn(
             'py-md pl-lg pr-5xl text-text-default border-border-default bg-surface-basic-input transition-all rounded border flex flex-row items-center relative outline-none disabled:bg-surface-basic-input disabled:text-text-disabled ring-offset-1 focus-within:ring-2 focus-within:ring-border-focus appearance-none',
