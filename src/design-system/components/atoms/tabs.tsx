@@ -15,7 +15,7 @@ import { cn } from '../utils';
 type TabSizes = 'md' | 'sm' | (string & NonNullable<unknown>);
 type TabVariant = 'filled' | 'plain' | (string & NonNullable<unknown>);
 
-interface BaseProps {
+interface IBase {
   to?: string;
   fitted?: boolean;
   LinkComponent?: any;
@@ -23,14 +23,14 @@ interface BaseProps {
   size?: TabSizes;
 }
 
-interface TabBaseProps extends BaseProps {
+interface ITabBase extends IBase {
   label: string;
   active?: boolean;
   onClick?: (e: KeyboardEvent<HTMLSpanElement>) => void;
   prefix?: JSX.Element;
 }
 
-interface RootProps extends BaseProps {
+interface ITabs extends IBase {
   onChange?: (item: string) => void;
   value: string;
   className?: string;
@@ -38,7 +38,7 @@ interface RootProps extends BaseProps {
   children: ReactNode;
 }
 
-export interface TabProps {
+export interface ITab {
   to?: string;
   label: string;
   prefix?: JSX.Element;
@@ -55,7 +55,7 @@ const TabBase = ({
   variant = 'plain',
   size = 'md',
   prefix,
-}: TabBaseProps) => {
+}: ITabBase) => {
   let Component: any = LinkComponent || 'div';
 
   if (to) {
@@ -149,11 +149,11 @@ const TabBase = ({
   );
 };
 
-const Tab = ({ to, label, prefix, value: _ }: TabProps) => (
+const Tab = ({ to, label, prefix, value: _ }: ITab) => (
   <TabBase to={to} label={label} prefix={prefix} />
 );
 
-const Root = forwardRef<HTMLDivElement, RootProps>(
+const Root = forwardRef<HTMLDivElement, ITabs>(
   (
     {
       variant = 'plain',
@@ -199,7 +199,7 @@ const Root = forwardRef<HTMLDivElement, RootProps>(
                 throw Error('Tab child is required');
               }
               const tabChild = child as ReactElement;
-              const tabChildProps: TabProps = tabChild.props;
+              const tabChildProps: ITab = tabChild.props;
 
               return (
                 <motion.div className="px-xl md:px-0 snap-start">

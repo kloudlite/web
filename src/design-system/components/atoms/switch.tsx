@@ -2,7 +2,7 @@ import { useState, useEffect, useId, ReactNode } from 'react';
 import * as SwitchPrimitive from '@radix-ui/react-switch';
 import { cn } from '../utils';
 
-interface SwitchProps {
+interface ISwitch {
   checked?: boolean;
   onChange?: (check: boolean) => void;
   disabled?: boolean;
@@ -14,7 +14,7 @@ export const Switch = ({
   onChange = () => {},
   disabled = false,
   label,
-}: SwitchProps) => {
+}: ISwitch) => {
   const [checked, setChecked] = useState(c);
   const id = useId();
 

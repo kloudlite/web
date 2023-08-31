@@ -10,7 +10,7 @@ const ITEMS_PER_PAGE = [
 ];
 // currentPage must be greater than 0
 
-interface PaginationProps {
+interface IPagination {
   currentPage: number;
   totalItems: number;
 
@@ -39,7 +39,7 @@ const Pagination = ({
   isNextDisabled = false,
   isPrevDisabled = false,
   showNumbers = true,
-}: PaginationProps) => {
+}: IPagination) => {
   const [focusItem, setFocusItem] = useState<null | number>(null);
   const [focusCallback, setFocusCallback] = useState(false);
 

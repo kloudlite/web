@@ -2,11 +2,7 @@ import * as PrimitiveAlertDialog from '@radix-ui/react-alert-dialog';
 import { X } from '@jengaicons/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ReactNode } from 'react';
-import {
-  Button as NativeButton,
-  IconButton,
-  ButtonProps,
-} from '../atoms/button';
+import { Button as NativeButton, IconButton, IButton } from '../atoms/button';
 import { cn } from '../utils';
 
 export const Header = ({ children }: { children: ReactNode }) => {
@@ -32,7 +28,7 @@ export const Footer = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export const Button = (props: ButtonProps) => {
+export const Button = (props: IButton) => {
   return (
     <PrimitiveAlertDialog.Cancel asChild>
       <NativeButton {...props} />
@@ -40,7 +36,7 @@ export const Button = (props: ButtonProps) => {
   );
 };
 
-interface DialogRootProps {
+interface IDialog {
   show: boolean;
   onOpenChange: (val: boolean) => void;
   children: ReactNode;
@@ -52,7 +48,7 @@ export const DialogRoot = ({
   onOpenChange,
   children,
   backdrop = true,
-}: DialogRootProps) => {
+}: IDialog) => {
   return (
     <PrimitiveAlertDialog.Root
       open={show}

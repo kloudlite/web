@@ -1,30 +1,32 @@
 import React, { ReactElement, cloneElement, forwardRef, useState } from 'react';
 import * as ButtonGroupPrimitive from '@radix-ui/react-toggle-group';
-import { ButtonBase, ButtonProps, IconButtonProps } from './button';
+import { ButtonBase, IButton, IIconButton } from './button';
 import { cn } from '../utils';
 
-interface BGButtonProps extends ButtonProps {
+interface IButtonGroupButton extends IButton {
   value: string;
 }
 
-const Button = forwardRef<HTMLButtonElement, BGButtonProps>((props, ref) => {
-  return (
-    <ButtonGroupPrimitive.Item value={props.value} asChild ref={ref}>
-      <ButtonBase
-        {...props}
-        variant="basic"
-        noRounded
-        className={cn('-ml-xs first:rounded-l last:rounded-r first:ml-0')}
-      />
-    </ButtonGroupPrimitive.Item>
-  );
-});
+const Button = forwardRef<HTMLButtonElement, IButtonGroupButton>(
+  (props, ref) => {
+    return (
+      <ButtonGroupPrimitive.Item value={props.value} asChild ref={ref}>
+        <ButtonBase
+          {...props}
+          variant="basic"
+          noRounded
+          className={cn('-ml-xs first:rounded-l last:rounded-r first:ml-0')}
+        />
+      </ButtonGroupPrimitive.Item>
+    );
+  }
+);
 
-interface BGIconButtonProps extends IconButtonProps {
+interface IButtonGroupIconButton extends IIconButton {
   value: string;
 }
 
-const IconButton = forwardRef<HTMLButtonElement, BGIconButtonProps>(
+const IconButton = forwardRef<HTMLButtonElement, IButtonGroupIconButton>(
   (props, ref) => {
     return (
       <ButtonGroupPrimitive.Item value={props.value} asChild ref={ref}>
@@ -42,7 +44,7 @@ const IconButton = forwardRef<HTMLButtonElement, BGIconButtonProps>(
   }
 );
 
-interface RootProps {
+interface IButtonGroup {
   children: ReactElement | ReactElement[];
   value: string;
   selectable: boolean;
@@ -56,7 +58,7 @@ const Root = ({
   selectable = false,
   onValueChange,
   onClick,
-}: RootProps) => {
+}: IButtonGroup) => {
   const [v, setV] = useState(value);
   return (
     <ButtonGroupPrimitive.Root

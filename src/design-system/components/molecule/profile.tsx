@@ -1,14 +1,14 @@
 import { forwardRef } from 'react';
-import { AvatarBase, AvatarBaseProps } from '../atoms/avatar.jsx';
+import { AvatarBase, IAvatar } from '../atoms/avatar.jsx';
 import { BounceIt } from '../bounce-it.jsx';
 import { cn } from '../utils.jsx';
 
-interface ProfileProps extends AvatarBaseProps {
+interface IProfile extends IAvatar {
   name: string;
   subtitle: string;
 }
 
-export const Profile = forwardRef<HTMLButtonElement, ProfileProps>(
+export const Profile = forwardRef<HTMLButtonElement, IProfile>(
   ({ name, subtitle, color, size, ...props }, ref) => {
     return (
       <BounceIt className="w-fit">

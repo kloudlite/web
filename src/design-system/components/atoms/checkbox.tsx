@@ -6,7 +6,7 @@ import { BounceIt } from '../bounce-it';
 
 type checkedType = boolean | string | undefined;
 
-interface CheckboxProps {
+interface ICheckbox {
   checked?: checkedType;
   onChange?: (check: checkedType) => void;
   disabled?: boolean;
@@ -24,7 +24,7 @@ export const Checkbox = ({
   indeterminate = false,
   label,
   withBounceEffect,
-}: CheckboxProps) => {
+}: ICheckbox) => {
   const [checked, setChecked] = useState(c);
 
   useEffect(() => {
