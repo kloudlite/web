@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/display-name */
-/* eslint-disable react/jsx-pascal-case */
 import * as React from 'react';
 import { composeEventHandlers } from '@radix-ui/primitive';
 import { createContextScope } from '@radix-ui/react-context';
@@ -12,7 +8,7 @@ import * as SeparatorPrimitive from '@radix-ui/react-separator';
 import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
 import { createToggleGroupScope } from '@radix-ui/react-toggle-group';
 import { useDirection } from '@radix-ui/react-direction';
-import { TextInputType, TextInput as _TextInput } from './input';
+import { TextInput as _TextInput } from './input';
 import { Button as _Button, IconButton as _IconButton } from './button';
 import { cn } from '../utils.jsx';
 
@@ -154,33 +150,28 @@ ToolbarIconButton.displayName = TOOLBAR_ICON_BUTTON_NAME;
 
 const TEXTFIELD_NAME = 'TextField';
 
-const ToolbarTextField =
-  TextInputType ||
-  React.forwardRef((props, forwardedRef) => {
-    const { __scopeToolbar, ...inputProps } = props;
-    const rovingFocusGroupScope = useRovingFocusGroupScope(__scopeToolbar);
-    return (
-      <RovingFocusGroup.Item
-        asChild
-        {...rovingFocusGroupScope}
-        focusable
-        onFocus={(e) => {
-          e.target?.parentElement?.classList?.add(
-            'ring-2',
-            'ring-border-focus'
-          );
-        }}
-        onBlur={(e) => {
-          e.target?.parentElement?.classList?.remove(
-            'ring-2',
-            'ring-border-focus'
-          );
-        }}
-      >
-        <_TextInput {...inputProps} ref={forwardedRef} />
-      </RovingFocusGroup.Item>
-    );
-  });
+const ToolbarTextField = React.forwardRef((props, forwardedRef) => {
+  const { __scopeToolbar, ...inputProps } = props;
+  const rovingFocusGroupScope = useRovingFocusGroupScope(__scopeToolbar);
+  return (
+    <RovingFocusGroup.Item
+      asChild
+      {...rovingFocusGroupScope}
+      focusable
+      onFocus={(e) => {
+        e.target?.parentElement?.classList?.add('ring-2', 'ring-border-focus');
+      }}
+      onBlur={(e) => {
+        e.target?.parentElement?.classList?.remove(
+          'ring-2',
+          'ring-border-focus'
+        );
+      }}
+    >
+      <_TextInput {...inputProps} ref={forwardedRef} />
+    </RovingFocusGroup.Item>
+  );
+});
 
 ToolbarTextField.displayName = TEXTFIELD_NAME;
 
