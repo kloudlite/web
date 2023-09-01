@@ -40,7 +40,7 @@ interface IDialog {
   show: boolean;
   onOpenChange: (val: boolean) => void;
   children: ReactNode;
-  backdrop: boolean;
+  backdrop?: boolean;
 }
 
 export const DialogRoot = ({
