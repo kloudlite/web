@@ -36,19 +36,19 @@ const useSticky = (elementRef: RefObject<HTMLElement>, topLimit = 0) => {
 };
 
 interface ITopbar {
-  tabs: ReactNode;
-  actions: ReactNode;
+  tabs?: ReactNode;
+  actions?: ReactNode;
   logo: ReactNode;
-  fixed: boolean;
-  breadcrum: ReactNode;
+  fixed?: boolean;
+  breadcrum?: ReactNode;
 }
 
 export const TopBar = ({
   tabs,
   actions,
   logo,
-  fixed,
-  breadcrum = null,
+  fixed = true,
+  breadcrum,
 }: ITopbar) => {
   const tabBarRef = createRef<HTMLDivElement>();
   const isTabBarSticked = useSticky(tabBarRef, 0);
