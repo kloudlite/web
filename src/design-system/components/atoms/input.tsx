@@ -8,6 +8,8 @@ import {
   KeyboardEventHandler,
   ChangeEventHandler,
   MouseEventHandler,
+  FocusEventHandler,
+  PointerEventHandler,
 } from 'react';
 import {
   XCircleFill,
@@ -34,10 +36,12 @@ export interface IInputRow {
   size?: InputSizes;
   name?: string;
 
+  onFocus?: FocusEventHandler;
+  onBlur?: FocusEventHandler;
   onKeyDown?: KeyboardEventHandler<HTMLInputElement>;
   onClick?: MouseEventHandler<HTMLTextAreaElement>;
   onMouseDown?: MouseEventHandler<HTMLTextAreaElement>;
-  onPointerDown?: MouseEventHandler<HTMLTextAreaElement>;
+  onPointerDown?: PointerEventHandler<HTMLTextAreaElement>;
 }
 
 interface INumberInput extends IInputRow {
@@ -46,7 +50,7 @@ interface INumberInput extends IInputRow {
   step?: number;
 }
 
-interface ITextInput extends IInputRow {
+export interface ITextInput extends IInputRow {
   prefix?: ReactNode;
   suffix?: ReactNode;
   prefixIcon?: JSX.Element;
@@ -55,7 +59,7 @@ interface ITextInput extends IInputRow {
 }
 
 interface ITextArea extends IInputRow {
-  rows?: number;
+  rows?: string;
   prefix?: ReactNode;
   prefixIcon?: JSX.Element;
   resize?: boolean;
@@ -357,7 +361,7 @@ export const TextArea = ({
   autoComplete = 'off',
   onChange = (_) => {},
   resize = false,
-  rows = 3,
+  rows = '3',
   ...etc
 }: ITextArea) => {
   const ref = useRef(null);
