@@ -2,12 +2,12 @@ import React, { ReactNode, cloneElement } from 'react';
 import { cn } from '../utils';
 
 interface IBadge {
-  type: string;
+  type?: string;
   children: ReactNode;
   icon?: JSX.Element;
 }
 
-export const Badge = ({ type, children, icon }: IBadge) => {
+export const Badge = ({ type = 'neutral', children, icon }: IBadge) => {
   const iconProps = { size: 12, color: 'currentColor' };
 
   return (

@@ -39,7 +39,7 @@ interface IPopupButton extends IButton {
 }
 
 const Button = (props: IPopupButton) => {
-  const { closable = true } = props;
+  const { closable = false } = props;
   return (
     <>
       {closable && (
