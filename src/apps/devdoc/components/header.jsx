@@ -1,8 +1,8 @@
-import { BrandLogo } from '~/components/branding/brand-logo.jsx';
+import { BrandLogo } from '~/components/branding/brand-logo';
 import { Link } from '@remix-run/react';
-import { TextInput } from '~/components/atoms/input.jsx';
+import { TextInput } from '~/components/atoms/input';
 import { Search } from '@jengaicons/react';
-import * as Chips from '~/components/atoms/chips.jsx';
+import * as Chips from '~/components/atoms/chips';
 
 export const Header = () => {
   return (
@@ -23,7 +23,7 @@ export const Header = () => {
         <div className="flex flex-row gap-4 p-4 items-center">
           <TextInput
             placeholder="Search"
-            prefixIcon={Search}
+            prefixIcon={<Search/>}
             suffix={
               <Chips.ChipGroup>
                 <Chips.Chip label="C+K" item="sample" />
