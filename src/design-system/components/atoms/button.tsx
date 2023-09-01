@@ -5,7 +5,7 @@ import { cn } from '../utils';
 
 type ButtonTypes = 'submit' | 'button';
 
-type ButtonVariants =
+export type ButtonVariants =
   | 'outline'
   | 'basic'
   | 'plain'
@@ -20,10 +20,22 @@ type ButtonVariants =
   | 'critical-plain'
   | 'purple'
   | 'tertiary'
-  | 'warning';
+  | 'warning'
+  | (undefined & NonNullable<unknown>);
 
-type IconButtonVariants = 'outline' | 'basic' | 'plain';
-type ButtonSizes = 'md' | 'sm' | 'lg' | 'xl' | '2xl';
+type IconButtonVariants =
+  | 'outline'
+  | 'basic'
+  | 'plain'
+  | (undefined & NonNullable<unknown>);
+
+type ButtonSizes =
+  | 'md'
+  | 'sm'
+  | 'lg'
+  | 'xl'
+  | '2xl'
+  | (undefined & NonNullable<unknown>);
 
 interface IBaseButton {
   onClick?: MouseEventHandler<HTMLButtonElement>;
@@ -54,7 +66,7 @@ export interface IButton extends IBaseButton {
   sharpLeft?: boolean;
   sharpRight?: boolean;
   iconOnly?: boolean;
-  content: React.ReactNode | string;
+  content: React.ReactNode;
   loading?: boolean;
   variant?: ButtonVariants | IconButtonVariants;
 }

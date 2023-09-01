@@ -11,7 +11,7 @@ const ITEMS_PER_PAGE = [
 // currentPage must be greater than 0
 
 interface IPagination {
-  currentPage: number;
+  currentPage?: number;
   totalItems: number;
 
   itemsPerPage?: number;

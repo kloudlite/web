@@ -25,7 +25,7 @@ const OptionListHook = () => {
         />
       </OptionList.Trigger>
       <OptionList.Content>
-        <OptionList.TextInput placeholder="Filter" prefixIcon={Search} />
+        <OptionList.TextInput placeholder="Filter" prefixIcon={<Search/>} />
         {/* <OptionList.Separator /> */}
         <OptionList.Item>This is test Item 1</OptionList.Item>
         <OptionList.Item>This is test Item 2</OptionList.Item>
