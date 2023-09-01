@@ -3,7 +3,7 @@ import * as ButtonGroupPrimitive from '@radix-ui/react-toggle-group';
 import { ButtonBase, IButton, IIconButton } from './button';
 import { cn } from '../utils';
 
-interface IButtonGroupButton extends IButton {
+export interface IButtonGroupButton extends IButton {
   value: string;
 }
 
@@ -22,7 +22,7 @@ const Button = forwardRef<HTMLButtonElement, IButtonGroupButton>(
   }
 );
 
-interface IButtonGroupIconButton extends IIconButton {
+export interface IButtonGroupIconButton extends IIconButton {
   value: string;
 }
 

@@ -11,13 +11,68 @@ import React, {
 import { AnimatePresence, motion } from 'framer-motion';
 import * as MenuPrimitive from '@radix-ui/react-menu';
 import * as OptionMenuPrimitive from './_dropdown-primitive';
-import { TextInputBase } from './input';
+import { ITextInput, TextInput } from './input';
 import { cn } from '../utils';
 import Tabs from './tabs';
 
 type DropdownMenuContentElement = React.ElementRef<
   typeof MenuPrimitive.Content
 >;
+
+interface IBase {
+  className?: string;
+  onSelect?: (e: Event) => void;
+}
+
+interface ITrigger {
+  children: ReactNode;
+  props?: any;
+}
+
+interface IOptionMenuContent extends Omit<IBase, 'onSelect'> {
+  sideOffset?: number;
+  children: ReactNode;
+  open?: boolean;
+  align?: 'start' | 'center' | 'end';
+}
+
+interface IOptionMenuItem extends IBase {}
+
+interface IOptionMenuLink extends IBase {
+  LinkComponent?: any;
+  to: string;
+  children: ReactNode;
+}
+
+interface IOptionMenuTextInput
+  extends Omit<ITextInput, 'onPointerDown' | 'onClick'> {
+  compact?: boolean;
+}
+
+interface IOptionMenuCheckbox extends IBase {
+  showIndicator?: boolean;
+  children: ReactNode;
+  checked?: boolean;
+  onValueChange?: (checked: boolean) => void;
+}
+
+interface IOptionMenuRadio extends IBase {
+  showIndicator?: boolean;
+  children: ReactNode;
+  value: string;
+}
+
+interface IOptionMenuSeparator extends Omit<IBase, 'onSelect'> {}
+
+interface IOptionMenuTabs extends IBase {
+  onChange?: () => void;
+  value: string;
+  size?: string;
+  children: ReactNode;
+  LinkComponent?: any;
+  compact?: boolean;
+}
+
 const OptionMenu = OptionMenuPrimitive.Root;
 
 const OptionMenuTriggerBase = OptionMenuPrimitive.Trigger;
@@ -37,16 +92,9 @@ const preventDefaultEvents = {
   onPointerLeave: (e: any) => e.preventDefault(),
   onPointerEnter: (e: any) => e.preventDefault(),
   onPointerMove: (e: any) => e.preventDefault(),
-  onClick: (e: any) => e.preventDefault(),
+  // onClick: (e: any) => e.preventDefault(),
 };
 
-interface IBase {
-  className?: string;
-}
-interface ITrigger {
-  children: ReactNode;
-  props?: any;
-}
 const OptionMenuTrigger = forwardRef<HTMLElement, ITrigger>(
   ({ props, children }, ref) => (
     <OptionMenuTriggerBase ref={ref} {...props} asChild is-menu-button="true">
@@ -56,13 +104,6 @@ const OptionMenuTrigger = forwardRef<HTMLElement, ITrigger>(
 );
 
 OptionMenuTrigger.displayName = 'OptionMenuTrigger';
-
-interface IOptionMenuContent extends IBase {
-  sideOffset?: number;
-  children: ReactNode;
-  open?: boolean;
-  align?: 'start' | 'center' | 'end';
-}
 
 const OptionMenuContent = forwardRef<
   DropdownMenuContentElement,
@@ -105,7 +146,6 @@ const OptionMenuContent = forwardRef<
 );
 OptionMenuContent.displayName = OptionMenuPrimitive.Content.displayName;
 
-interface IOptionMenuItem extends IBase {}
 const OptionMenuItem = forwardRef<HTMLDivElement, IOptionMenuItem>(
   ({ className, ...props }, ref) => (
     <OptionMenuPrimitive.Item
@@ -120,11 +160,6 @@ const OptionMenuItem = forwardRef<HTMLDivElement, IOptionMenuItem>(
 );
 OptionMenuItem.displayName = OptionMenuPrimitive.Item.displayName;
 
-interface IOptionMenuLink extends IBase {
-  LinkComponent?: any;
-  to: string;
-  children: ReactNode;
-}
 const OptionMenuLink = forwardRef<HTMLDivElement, IOptionMenuLink>(
   ({ className, LinkComponent = 'a', to = '', children }, ref) => {
     let Component: any = LinkComponent;
@@ -156,13 +191,8 @@ const OptionMenuLink = forwardRef<HTMLDivElement, IOptionMenuLink>(
 );
 OptionMenuLink.displayName = 'OptionMenuLink';
 
-interface IOptionMenuTextInput {
-  onChange?: () => void;
-  compact?: boolean;
-}
-
 const OptionMenuTextInputItem = forwardRef<
-  HTMLDivElement,
+  HTMLInputElement,
   IOptionMenuTextInput
 >(({ onChange, compact = false, ...props }, ref) => {
   const searchRef = useRef<HTMLInputElement>(null);
@@ -198,14 +228,25 @@ const OptionMenuTextInputItem = forwardRef<
         onFocus={() => {
           searchRef.current?.focus();
         }}
-        {...props}
         asChild
       >
-        <TextInputBase
-          component="input"
+        <TextInput
+          {...props}
           ref={searchRef}
           autoComplete="off"
           onChange={onChange}
+          onFocus={(event) => {
+            event.target?.parentElement?.classList?.add(
+              'ring-2',
+              'ring-border-focus'
+            );
+          }}
+          onBlur={(e) => {
+            e.target?.parentElement?.classList?.remove(
+              'ring-2',
+              'ring-border-focus'
+            );
+          }}
           onKeyDown={(e) => {
             if (e.key !== 'Escape') e.stopPropagation();
           }}
@@ -216,12 +257,6 @@ const OptionMenuTextInputItem = forwardRef<
 });
 OptionMenuTextInputItem.displayName = OptionMenuPrimitive.Item.displayName;
 
-interface IOptionMenuCheckbox extends IBase {
-  showIndicator?: boolean;
-  children: ReactNode;
-  checked?: boolean;
-  onValueChange?: (checked: boolean) => void;
-}
 const OptionMenuCheckboxItem = forwardRef<HTMLDivElement, IOptionMenuCheckbox>(
   (
     {
@@ -278,13 +313,11 @@ const OptionMenuCheckboxItem = forwardRef<HTMLDivElement, IOptionMenuCheckbox>(
 OptionMenuCheckboxItem.displayName =
   OptionMenuPrimitive.CheckboxItem.displayName;
 
-interface IOptionMenuRadio extends IBase {
-  showIndicator?: boolean;
-  children: ReactNode;
-  value: string;
-}
 const OptionMenuRadioItem = forwardRef<HTMLDivElement, IOptionMenuRadio>(
-  ({ className, showIndicator = true, children, value, ...props }, ref) => (
+  (
+    { className, showIndicator = true, children, value, onSelect, ...props },
+    ref
+  ) => (
     <OptionMenuPrimitive.RadioItem
       ref={ref}
       className={cn(
@@ -320,7 +353,6 @@ const OptionMenuRadioItem = forwardRef<HTMLDivElement, IOptionMenuRadio>(
 );
 OptionMenuRadioItem.displayName = OptionMenuPrimitive.RadioItem.displayName;
 
-interface IOptionMenuSeparator extends IBase {}
 const OptionMenuSeparator = forwardRef<HTMLDivElement, IOptionMenuSeparator>(
   ({ className, ...props }, ref) => (
     <OptionMenuPrimitive.Separator
@@ -402,14 +434,6 @@ const handleKeyNavigation = (
   }
 };
 
-interface IOptionMenuTabs extends IBase {
-  onChange?: () => void;
-  value: string;
-  size?: string;
-  children: ReactNode;
-  LinkComponent?: any;
-  compact?: boolean;
-}
 const OptionMenuTabs = forwardRef<HTMLDivElement, IOptionMenuTabs>(
   (
     {
