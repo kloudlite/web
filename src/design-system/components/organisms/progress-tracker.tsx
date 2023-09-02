@@ -47,10 +47,13 @@ interface IProgressTracker {
     active?: boolean;
     id: string | number;
   }[];
-  onClick: (id: string | number) => void;
+  onClick?: (id: string | number) => void;
 }
 
-export const ProgressTracker = ({ items, onClick }: IProgressTracker) => {
+export const ProgressTracker = ({
+  items,
+  onClick = () => {},
+}: IProgressTracker) => {
   return (
     <div className="flex flex-col gap-y-lg">
       {items &&
