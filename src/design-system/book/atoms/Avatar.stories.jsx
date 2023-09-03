@@ -9,13 +9,13 @@ export default {
 
 export const InitialAvatar = {
   args: {
-    size: 'medium',
+    size: 'md',
   },
 };
 
 export const BasicAvatar = {
   args: {
     label: 'Karthik Th',
-    size: 'medium',
+    size: 'md',
   },
 };

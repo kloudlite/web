@@ -1,9 +1,9 @@
 import { ArrowsDownUp, Check } from '@jengaicons/react';
-import { ActionList } from '../../components/atoms/action-list';
+import { Root } from '../../components/atoms/action-list';
 
 export default {
   title: 'Atoms/ActionList',
-  component: ActionList,
+  component: Root,
   tags: ['autodocs'],
   argTypes: {},
 };
