@@ -1,5 +1,5 @@
 import { CalendarCheckFill, CaretDownFill } from '@jengaicons/react';
-import { Button } from '../../components/atoms/button.jsx';
+import { Button } from '../../components/atoms/button';
 
 export default {
   title: 'Atoms/Button',
@@ -11,22 +11,22 @@ export default {
 export const BaseButton = {
   args: {
     variant: 'basic',
-    label: 'Button',
-    prefix: CalendarCheckFill,
-    suffix: CaretDownFill,
+    content: 'Button',
+    prefix: <CalendarCheckFill />,
+    suffix: <CaretDownFill />,
   },
 };
 
 export const OutlineButton = {
   args: {
     variant: 'outline',
-    label: 'Button',
+    content: 'Button',
   },
 };
 
 export const PlainButton = {
   args: {
     variant: 'plain',
-    label: 'Button',
+    content: 'Button',
   },
 };

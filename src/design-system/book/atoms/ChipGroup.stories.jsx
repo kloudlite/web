@@ -10,14 +10,17 @@ export default {
 
 const ChipGroupRemovableHook = () => {
   const [chips, setChips] = useState([
-    { id: 2, label: 'Mango', type: Chips.ChipType.REMOVABLE },
-    { id: 3, label: 'Dog', type: Chips.ChipType.REMOVABLE },
-    { id: 4, label: 'Cat', type: Chips.ChipType.REMOVABLE },
+    { key: 2, label: 'Mango', type: 'REMOVABLE' },
+    { key: 3, label: 'Dog', type: 'REMOVABLE' },
+    { key: 4, label: 'Cat', type: 'REMOVABLE' },
   ]);
   return (
     <Chips.ChipGroup onRemove={(e) => setChips(chips.filter((c) => c !== e))}>
-      {chips.map((chip) => (
-        <Chips.Chip {...chip} item={chip} key={chip.id} />
+      {chips.map(({ key, label, type }) => (
+        <Chips.Chip
+          key={key}
+          {...{ label, type, item: { key, label, type } }}
+        />
       ))}
     </Chips.ChipGroup>
   );
@@ -25,8 +28,8 @@ const ChipGroupRemovableHook = () => {
 
 const ChipGroupBasicHook = () => {
   const [chips, _setChips] = useState([
-    { id: 0, label: 'Apple', type: Chips.ChipType.BASIC },
-    { id: 1, label: 'Orange', type: Chips.ChipType.BASIC },
+    { id: 0, label: 'Apple', type: 'BASIC' },
+    { id: 1, label: 'Orange', type: 'BASIC' },
   ]);
   return (
     <Chips.ChipGroup>
@@ -39,8 +42,8 @@ const ChipGroupBasicHook = () => {
 
 const ChipGroupClickableHook = () => {
   const [chips, _setChips] = useState([
-    { id: 5, label: 'Volleyball', type: Chips.ChipType.CLICKABLE },
-    { id: 6, label: 'Football', type: Chips.ChipType.CLICKABLE },
+    { id: 5, label: 'Volleyball', type: 'CLICKABLE' },
+    { id: 6, label: 'Football', type: 'CLICKABLE' },
   ]);
   return (
     <Chips.ChipGroup>

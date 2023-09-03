@@ -11,31 +11,31 @@ export default {
 export const Neutral = {
   args: {
     type: 'neutral',
-    label: 'Neutral',
+    children: 'Neutral',
   },
 };
 export const Danger = {
   args: {
     type: 'danger',
-    label: 'Danger',
+    children: 'Danger',
   },
 };
 export const Info = {
   args: {
     type: 'info',
-    label: 'Info',
+    children: 'Info',
   },
 };
 export const Success = {
   args: {
     type: 'success',
-    label: 'Success',
-    icon: InfoIcon,
+    children: 'Success',
+    icon: <InfoIcon />,
   },
 };
 export const Warning = {
   args: {
     type: 'warning',
-    label: 'Warning',
+    children: 'Warning',
   },
 };
