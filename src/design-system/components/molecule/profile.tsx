@@ -5,7 +5,7 @@ import { cn } from '../utils.jsx';
 
 interface IProfile extends IAvatar {
   name: string;
-  subtitle: string;
+  subtitle?: string;
 }
 
 export const Profile = forwardRef<HTMLButtonElement, IProfile>(
