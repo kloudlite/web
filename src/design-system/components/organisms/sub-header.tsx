@@ -20,6 +20,7 @@ export const SubHeader = ({
       <div className="flex flex-row items-center gap-xl">
         {backUrl && (
           <IconButton
+            variant="basic"
             icon={<ArrowLeft />}
             to={backUrl}
             LinkComponent={LinkComponent}
