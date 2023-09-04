@@ -152,6 +152,7 @@ const OptionMenuItem = forwardRef<HTMLDivElement, IOptionMenuItem>(
   ({ className, ...props }, ref) => (
     <OptionMenuPrimitive.Item
       ref={ref}
+      {...preventDefaultEvents}
       className={cn(
         'group relative flex flex-row gap-xl items-center bodyMd gap cursor-default select-none py-lg px-xl text-text-default outline-none transition-colors focus:bg-surface-basic-hovered hover:bg-surface-basic-hovered data-[disabled]:pointer-events-none data-[disabled]:text-text-disabled',
         className
@@ -214,7 +215,6 @@ const OptionMenuTextInputItem = forwardRef<
       className={cn({
         'py-lg px-xl': !compact,
       })}
-      onFocus={() => console.log('div focus')}
     >
       <OptionMenuPrimitive.Item
         ref={ref}

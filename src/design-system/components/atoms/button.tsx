@@ -99,12 +99,20 @@ export const ButtonBase = React.forwardRef<HTMLButtonElement, IButton>(
 
     let Component: any = LinkComponent;
 
+    let extraProps = {} as any;
     if (to) {
       if (LinkComponent === motion.button) {
-        Component = 'a';
+        Component = motion.a;
       } else {
         Component = LinkComponent;
       }
+    }
+
+    if (Component === motion.button || Component === motion.a) {
+      extraProps = {
+        initial: { scale: 1 },
+        whileTap: { scale: 0.99 },
+      };
     }
 
     const noRing = false;
@@ -115,8 +123,7 @@ export const ButtonBase = React.forwardRef<HTMLButtonElement, IButton>(
         {...(Component === 'a' ? { href: to } : { to })}
         disabled={disabled}
         onClick={onClick}
-        initial={{ scale: 1 }}
-        whileTap={{ scale: 0.99 }}
+        {...extraProps}
         ref={ref}
         type={type}
         className={cn(
