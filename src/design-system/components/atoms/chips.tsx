@@ -170,15 +170,34 @@ export const Chip = forwardRef<HTMLButtonElement, IChip>(
       onRemove = (_) => _,
       isInGroup = false,
       loading = false,
+      ...props
     },
     ref
   ) => {
     let Component: any = 'div';
-    if (type === 'BASIC') {
+    if (type === 'CLICKABLE') {
       Component = motion.button;
     }
 
-    const ChipBaseElement = (
+    if (type === 'CLICKABLE' && isInGroup)
+      return (
+        <RovingFocusGroup.Item asChild focusable ref={ref}>
+          <ChipBase
+            item={item}
+            label={label}
+            disabled={disabled}
+            compType={type}
+            prefix={prefix}
+            Component={Component}
+            onClick={onClick}
+            onRemove={onRemove}
+            loading={loading}
+            {...props}
+          />
+        </RovingFocusGroup.Item>
+      );
+
+    return (
       <ChipBase
         item={item}
         label={label}
@@ -189,17 +208,10 @@ export const Chip = forwardRef<HTMLButtonElement, IChip>(
         onClick={onClick}
         onRemove={onRemove}
         loading={loading}
+        ref={ref}
+        {...props}
       />
     );
-
-    if (type === 'CLICKABLE' && isInGroup)
-      return (
-        <RovingFocusGroup.Item asChild focusable ref={ref}>
-          {ChipBaseElement}
-        </RovingFocusGroup.Item>
-      );
-
-    return ChipBaseElement;
   }
 );
 
