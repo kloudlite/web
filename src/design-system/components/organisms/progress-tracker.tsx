@@ -1,94 +1,83 @@
+import { Circle, RecordFill } from '@jengaicons/react';
+import React, { ReactElement, ReactNode } from 'react';
 import { cn } from '../utils';
 
-const ProgressTrackerItem = ({ label, active }: any) => {
+export interface IProgressTrackerItem {
+  children: ReactNode;
+  active: boolean;
+  completed: boolean;
+  item?: any;
+}
+const ProgressTrackerItem = (props: IProgressTrackerItem) => {
+  const { children, active, completed, item: _ } = props;
   return (
     <div
-      className={cn('flex flex-row gap-x-xl items-center headingMd', {
-        'text-text-default': active,
-        'text-text-disabled': !active,
-      })}
+      className={cn(
+        'flex flex-row gap-x-xl items-center headingMd select-none',
+        {
+          'text-text-default': active,
+          'text-text-disabled': !active || (!active && completed),
+        }
+      )}
     >
-      <div
-        className={cn(
-          'w-[10px] h-[10px] rounded-full flex items-center justify-center'
-        )}
-      >
-        {active && (
-          <svg
-            width="10"
-            height="10"
-            viewBox="0 0 10 10"
-            xmlns="http://www.w3.org/2000/svg"
-            className="fill-icon-primary"
-          >
-            <circle cx="5" cy="5" r="5" />
-          </svg>
-        )}
-        {!active && (
-          <svg
-            width="10"
-            height="10"
-            viewBox="0 0 10 10"
-            xmlns="http://www.w3.org/2000/svg"
-            className="fill-border-default"
-          >
-            <circle cx="5" cy="5" r="2.5" />
-          </svg>
-        )}
+      <div className={cn('rounded-full flex items-center justify-center')}>
+        {(active || completed) && <RecordFill size={12} color="currentColor" />}
+        {!active && !completed && <Circle size={12} color="currentColor" />}
       </div>
-      <div className="py-lg">{label}</div>
+      <div className="py-lg select-none">{children}</div>
     </div>
   );
 };
 
 interface IProgressTracker {
-  items: {
-    label: string;
-    active?: boolean;
-    id: string | number;
-  }[];
-  onClick?: (id: string | number) => void;
+  children: ReactNode;
+  onClick?: (item: any) => void;
 }
 
-export const ProgressTracker = ({
-  items,
-  onClick = () => {},
-}: IProgressTracker) => {
+const Root = ({ children, onClick }: IProgressTracker) => {
   return (
     <div className="flex flex-col gap-y-lg">
-      {items &&
-        items.map((item, index) => {
-          return (
-            <div
-              className={cn('flex flex-col', {
-                'cursor-pointer': !!onClick,
-              })}
-              key={item.id}
-              onClick={() => onClick(item.id)}
-            >
-              <ProgressTrackerItem active={item.active} label={item.label} />
-              {index !== items.length - 1 && (
-                <div className="flex items-center justify-center w-[10px]">
-                  <svg
-                    width="10"
-                    height="35"
-                    className="-mt-[13px] -mb-[22px] stroke-border-default"
-                  >
-                    <line
-                      x1="5"
-                      y1="1"
-                      x2="5"
-                      y2="34"
-                      strokeWidth="1"
-                      strokeLinecap="round"
-                      strokeDasharray="3, 4"
-                    />
-                  </svg>
-                </div>
-              )}
-            </div>
-          );
-        })}
+      {React.Children.map(children, (child, index) => {
+        const childElement = child as ReactElement;
+        const childProps = childElement.props as IProgressTrackerItem;
+        return (
+          <div
+            className={cn('flex flex-col select-none', {
+              'cursor-pointer': !!onClick,
+            })}
+            onClick={() => {
+              if (onClick) onClick(childProps.item);
+            }}
+          >
+            <ProgressTrackerItem {...childProps} />
+            {index < React.Children.count(children) - 1 && (
+              <div className="flex items-center justify-center w-[12px] -mt-[13px] -mb-[21px]">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="2"
+                  height="36"
+                  viewBox="0 0 2 36"
+                  fill="none"
+                >
+                  <path
+                    d="M1 1.18723V34.9972"
+                    stroke="#9CA3AF"
+                    strokeLinecap="round"
+                    strokeDasharray="2 2"
+                  />
+                </svg>
+              </div>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 };
+
+const ProgressTracker = {
+  Root,
+  Item: ProgressTrackerItem,
+};
+
+export default ProgressTracker;

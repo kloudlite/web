@@ -157,6 +157,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
               {cloneElement(prefixIcon, { size: 16, color: 'currentColor' })}
             </div>
           )}
+          {!!prefix && <div className="cursor-default">{prefix}</div>}
           <Component
             name={name}
             type={t}
@@ -202,6 +203,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
             autoComplete={autoComplete}
             {...extraProps}
           />
+          {!!suffix && <div className="cursor-default">{suffix}</div>}
           {!!suffixIcon && (
             <div
               className={cn('pl-lg bodyMd', {
@@ -349,6 +351,7 @@ export const NumberInput = ({
 export const TextInput = forwardRef<HTMLInputElement, ITextInput>(
   (props, ref) => {
     const id = useId();
+
     return (
       <TextInputBase
         {...{ ...props, id, component: 'input', type: 'text', ref }}
