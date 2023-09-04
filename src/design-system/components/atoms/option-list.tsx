@@ -36,7 +36,9 @@ interface IOptionMenuContent extends Omit<IBase, 'onSelect'> {
   align?: 'start' | 'center' | 'end';
 }
 
-interface IOptionMenuItem extends IBase {}
+interface IOptionMenuItem extends IBase {
+  children: ReactNode;
+}
 
 interface IOptionMenuLink extends IBase {
   LinkComponent?: any;
@@ -65,7 +67,7 @@ interface IOptionMenuRadio extends IBase {
 interface IOptionMenuSeparator extends Omit<IBase, 'onSelect'> {}
 
 interface IOptionMenuTabs extends IBase {
-  onChange?: () => void;
+  onChange?: (v: string) => void;
   value: string;
   size?: string;
   children: ReactNode;
