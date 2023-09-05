@@ -1,15 +1,17 @@
 import { Circle, RecordFill } from '@jengaicons/react';
-import React, { ReactElement, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { cn } from '../utils';
+import { ChildrenProps } from '../types';
 
-export interface IProgressTrackerItem {
-  children: ReactNode;
-  active: boolean;
-  completed: boolean;
-  item?: any;
-}
-const ProgressTrackerItem = (props: IProgressTrackerItem) => {
-  const { children, active, completed, item: _ } = props;
+type IProgressTrackerItem<I = any> = {
+  active?: boolean;
+  completed?: boolean;
+} & I;
+
+function ProgressTrackerItem<I = any>(
+  props: IProgressTrackerItem<I> & ChildrenProps
+) {
+  const { children, active = false, completed = false } = props;
   return (
     <div
       className={cn(
@@ -27,30 +29,45 @@ const ProgressTrackerItem = (props: IProgressTrackerItem) => {
       <div className="py-lg select-none">{children}</div>
     </div>
   );
-};
-
-interface IProgressTracker {
-  children: ReactNode;
-  onClick?: (item: any) => void;
 }
 
-const Root = ({ children, onClick }: IProgressTracker) => {
+export type ProgressItemProps<I = any, V = any> = {
+  item: IProgressTrackerItem<I>;
+  value: V;
+};
+
+interface IProgressTracker<I = any, V = any> {
+  children: (item: IProgressTrackerItem<I>) => ReactNode;
+  onClick: (item: V) => void;
+  items: {
+    item: IProgressTrackerItem<I>;
+    value: V;
+  }[];
+}
+
+function Root<I = any, V = any>({
+  children,
+  items = [],
+  onClick,
+}: IProgressTracker<I, V>) {
   return (
     <div className="flex flex-col gap-y-lg">
-      {React.Children.map(children, (child, index) => {
-        const childElement = child as ReactElement;
-        const childProps = childElement.props as IProgressTrackerItem;
+      {items.map(({ item, value }, index) => {
+        // const childProps = childElement.props;
+        // as IProgressTrackerItem
         return (
           <div
+            key={JSON.stringify(value)}
             className={cn('flex flex-col select-none', {
               'cursor-pointer': !!onClick,
             })}
             onClick={() => {
-              if (onClick) onClick(childProps.item);
+              if (onClick) onClick(value);
             }}
           >
-            <ProgressTrackerItem {...childProps} />
-            {index < React.Children.count(children) - 1 && (
+            {children(item)}
+            {/* <ProgressTrackerItem {...item} /> */}
+            {index < items.length - 1 && (
               <div className="flex items-center justify-center w-[12px] -mt-[13px] -mb-[21px]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -73,7 +90,7 @@ const Root = ({ children, onClick }: IProgressTracker) => {
       })}
     </div>
   );
-};
+}
 
 const ProgressTracker = {
   Root,
