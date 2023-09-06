@@ -24,7 +24,7 @@ interface IBase {
 }
 
 interface ITabBase extends IBase {
-  label: string;
+  label: ReactNode;
   active?: boolean;
   onClick?: (e: KeyboardEvent<HTMLSpanElement>) => void;
   prefix?: JSX.Element;
@@ -40,7 +40,7 @@ interface ITabs extends IBase {
 
 export interface ITab {
   to?: string;
-  label: string;
+  label: ReactNode;
   prefix?: JSX.Element;
   value: string;
 }

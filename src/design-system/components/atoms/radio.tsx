@@ -16,7 +16,7 @@ interface IRadioItem {
 
 interface IRadioGroup {
   value: string;
-  onChange?: () => void;
+  onChange?: (value: string) => void;
   label?: string;
   disabled?: boolean;
   children: ReactElement | ReactElement[];
