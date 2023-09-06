@@ -30,19 +30,19 @@ interface ITabBase extends IBase {
   prefix?: JSX.Element;
 }
 
-interface ITabs extends IBase {
-  onChange?: (item: string) => void;
-  value: string;
+interface ITabs<T = string> extends IBase {
+  onChange?: (item: T) => void;
+  value: T;
   className?: string;
   basePath?: string;
   children: ReactNode;
 }
 
-export interface ITab {
+export interface ITab<T = string> {
   to?: string;
   label: ReactNode;
   prefix?: JSX.Element;
-  value: string;
+  value: T;
 }
 
 const TabBase = ({
@@ -149,11 +149,11 @@ const TabBase = ({
   );
 };
 
-const Tab = ({ to, label, prefix, value: _ }: ITab) => (
+const Tab = <T,>({ to, label, prefix, value: _ }: ITab<T>) => (
   <TabBase to={to} label={label} prefix={prefix} />
 );
 
-const Root = forwardRef<HTMLDivElement, ITabs>(
+const Root = forwardRef<HTMLDivElement, ITabs<any>>(
   (
     {
       variant = 'plain',

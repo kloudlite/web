@@ -305,6 +305,7 @@ export const NumberInput = ({
             tabIndex={-1}
           >
             <button
+              type="button"
               aria-controls={id}
               aria-label={`Increase ${label}`}
               tabIndex={-1}
@@ -325,6 +326,7 @@ export const NumberInput = ({
               <CaretUpFill size={16} color="currentColor" />
             </button>
             <button
+              type="button"
               aria-controls={id}
               aria-label={`Decrease ${label}`}
               tabIndex={-1}
