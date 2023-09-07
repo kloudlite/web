@@ -55,9 +55,9 @@ export const Root = (props) => {
   );
 };
 
-const Select = {
+const SelectPrimitive = {
   Root,
   Option,
 };
 
-export default Select;
+export default SelectPrimitive;
