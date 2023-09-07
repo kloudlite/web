@@ -6,7 +6,7 @@ interface ISubHeader {
   title: string;
   actions: ReactNode;
   backUrl?: string;
-  LinkComponent: any;
+  LinkComponent?: any;
 }
 
 export const SubHeader = ({
