@@ -11,7 +11,6 @@ import RSelect, {
   MultiValueRemoveProps,
   OptionProps,
   PlaceholderProps,
-  PropsValue,
   SingleValueProps,
   ValueContainerProps,
   components,
@@ -25,7 +24,9 @@ import { cn } from '../utils';
 declare module 'react-select/dist/declarations/src/Select' {
   export interface Props<
     Option,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
     IsMulti extends boolean,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
     Group extends GroupBase<Option>
   > {
     label?: string;
@@ -39,7 +40,8 @@ interface IOptionBase {
   render?: () => ReactNode;
 }
 
-type IOption<T> = { [property in keyof T]: T[property] } & IOptionBase;
+type IOptionValue<T> = Omit<T, 'render'> & { render?: () => ReactNode };
+type IOption<T> = T & IOptionBase;
 
 interface IGroupOption<T> {
   label: string;
@@ -49,12 +51,12 @@ interface ISelect<T> {
   label?: string;
   size?: 'md' | 'lg';
   options: (IOption<T> | IGroupOption<T>)[];
-  value: PropsValue<IOption<T>> | undefined;
+  value: IOptionValue<T> | undefined;
   creatable?: boolean;
   async?: boolean;
   multiselect?: boolean;
   placeholder?: string;
-  onChange?: (value: T) => void;
+  onChange?: (value: IOptionValue<T>) => void;
 }
 const Control = <T,>(props: ControlProps<T, boolean>) => {
   const { selectProps } = props;
@@ -187,7 +189,7 @@ const Option = <T,>({ children, ...props }: OptionProps<IOption<T>>) => {
 const Placeholder = <T,>({
   children,
   ...props
-}: PlaceholderProps<IOption<T>>) => {
+}: PlaceholderProps<IOptionValue<T>>) => {
   return (
     <components.Placeholder {...props} className="text-text-default/80 bodyMd">
       {children}
@@ -206,7 +208,9 @@ const MultiValueContainer = <T,>({
   );
 };
 
-const MultiValueRemove = <T,>(props: MultiValueRemoveProps<IOption<T>>) => {
+const MultiValueRemove = <T,>(
+  props: MultiValueRemoveProps<IOptionValue<T>>
+) => {
   return (
     <components.MultiValueRemove {...props}>
       <X size={14} />
@@ -215,7 +219,7 @@ const MultiValueRemove = <T,>(props: MultiValueRemoveProps<IOption<T>>) => {
 };
 
 const ClearIndicator = <T,>(
-  props: ClearIndicatorProps<IOption<T>, boolean>
+  props: ClearIndicatorProps<IOptionValue<T>, boolean>
 ) => {
   const {
     innerProps: { ref, ...restInnerProps },
@@ -268,6 +272,7 @@ const Select = <T,>({
         IndicatorSeparator: null,
         Menu,
         MenuList,
+        // @ts-ignore
         Option,
         Placeholder,
         MultiValueContainer,
