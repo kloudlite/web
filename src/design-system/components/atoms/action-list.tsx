@@ -17,7 +17,7 @@ interface IActionList {
   LinkComponent?: any;
 }
 
-interface IActionItem {
+export interface IActionItem {
   children: ReactNode;
   disabled?: boolean;
   critical?: boolean;
