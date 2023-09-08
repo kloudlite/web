@@ -1,6 +1,7 @@
 import * as Dialog from '@radix-ui/react-dialog';
 import { X } from '@jengaicons/react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { FormEvent, ReactNode } from 'react';
 import { Button as NativeButton, IconButton, IButton } from '../atoms/button';
 import { cn } from '../utils';
 import { ChildrenProps } from '../types';
@@ -22,7 +23,9 @@ const Header = ({ children, showclose = true }: any) => {
 
 const Content = ({ children }: ChildrenProps) => {
   return (
-    <div className="p-3xl overscroll-y-auto overflow-x-hidden">{children}</div>
+    <div className="p-3xl overscroll-y-auto overflow-x-hidden max-h-[65vh]">
+      {children}
+    </div>
   );
 };
 
@@ -102,7 +105,6 @@ const PopupRoot = ({
                   'z-50 outline-none transform overflow-hidden rounded bg-surface-basic-default shadow-modal',
                   'fixed top-1/2 left-1/2',
                   'w-[612px]',
-                  'max-h-[70%]',
                   'border border-border-default',
                   className
                 )}
