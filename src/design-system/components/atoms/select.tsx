@@ -3,6 +3,7 @@ import RSelect, {
   ControlProps,
   DropdownIndicatorProps,
   GroupBase,
+  GroupHeadingProps,
   IndicatorsContainerProps,
   InputProps,
   MenuListProps,
@@ -34,29 +35,35 @@ declare module 'react-select/dist/declarations/src/Select' {
   }
 }
 
-interface IOptionBase {
+interface IOption {
   label: string;
   value: string;
   render?: () => ReactNode;
 }
 
-type IOptionValue<T> = Omit<T, 'render'> & { render?: () => ReactNode };
-type IOption<T> = T & IOptionBase;
-
-interface IGroupOption<T> {
+interface IGroup<T> {
   label: string;
-  options: IOption<T>[];
+  options: T;
 }
-interface ISelect<T> {
+
+type ExtractOptionType<T, A> = T extends IGroup<IOption[] | T[]>
+  ? A extends true
+    ? T['options'][number][]
+    : T['options'][number]
+  : A extends true
+  ? T[]
+  : T;
+
+interface ISelect<T, A> {
   label?: string;
   size?: 'md' | 'lg';
-  options: (IOption<T> | IGroupOption<T>)[];
-  value: IOptionValue<T> | undefined;
+  options: T[] & (IOption[] | IGroup<IOption[] | T[]>[]);
+  value: ExtractOptionType<T, A> | undefined; // Ensure value matches the type of options
   creatable?: boolean;
   async?: boolean;
-  multiselect?: boolean;
+  multiselect?: A;
   placeholder?: string;
-  onChange?: (value: IOptionValue<T>) => void;
+  onChange?: (value: ExtractOptionType<T, A>) => void;
 }
 const Control = <T,>(props: ControlProps<T, boolean>) => {
   const { selectProps } = props;
@@ -164,7 +171,7 @@ const MenuList = <T,>({
   return <components.MenuList {...props}>{children}</components.MenuList>;
 };
 
-const Option = <T,>({ children, ...props }: OptionProps<IOption<T>>) => {
+const Option = ({ children, ...props }: OptionProps<IOption, boolean>) => {
   const { isFocused, isSelected, isDisabled, innerRef, innerProps, data } =
     props;
   return (
@@ -186,10 +193,7 @@ const Option = <T,>({ children, ...props }: OptionProps<IOption<T>>) => {
   );
 };
 
-const Placeholder = <T,>({
-  children,
-  ...props
-}: PlaceholderProps<IOptionValue<T>>) => {
+const Placeholder = ({ children, ...props }: PlaceholderProps<IOption>) => {
   return (
     <components.Placeholder {...props} className="text-text-default/80 bodyMd">
       {children}
@@ -197,10 +201,10 @@ const Placeholder = <T,>({
   );
 };
 
-const MultiValueContainer = <T,>({
+const MultiValueContainer = ({
   children,
   ..._props
-}: MultiValueGenericProps<IOption<T>>) => {
+}: MultiValueGenericProps<IOption>) => {
   return (
     <div className="flex flex-row items-center px-lg py-md gap-md rounded border border-border-default bg-surface-basic-active mr-lg bodyMd-medium text-text-default">
       {children}
@@ -208,9 +212,7 @@ const MultiValueContainer = <T,>({
   );
 };
 
-const MultiValueRemove = <T,>(
-  props: MultiValueRemoveProps<IOptionValue<T>>
-) => {
+const MultiValueRemove = (props: MultiValueRemoveProps<IOption>) => {
   return (
     <components.MultiValueRemove {...props}>
       <X size={14} />
@@ -218,9 +220,7 @@ const MultiValueRemove = <T,>(
   );
 };
 
-const ClearIndicator = <T,>(
-  props: ClearIndicatorProps<IOptionValue<T>, boolean>
-) => {
+const ClearIndicator = (props: ClearIndicatorProps<IOption, boolean>) => {
   const {
     innerProps: { ref, ...restInnerProps },
   } = props;
@@ -231,7 +231,14 @@ const ClearIndicator = <T,>(
   );
 };
 
-const Select = <T,>({
+const GroupHeading = (props: GroupHeadingProps<IOption>) => (
+  <components.GroupHeading
+    {...props}
+    className="py-md px-xl flex flex-row items-center bodySm-medium text-text-disabled"
+  />
+);
+
+const Select = <T, A extends boolean | undefined = undefined>({
   label,
   size = 'md',
   options,
@@ -241,11 +248,11 @@ const Select = <T,>({
   multiselect = false,
   placeholder = '',
   onChange,
-}: ISelect<T>) => {
+}: ISelect<T, A>) => {
   let Component = creatable ? RCreatable : RSelect;
   Component = async ? AsyncSelect : Component;
   return (
-    <Component
+    <Component<IOption, boolean>
       classNames={{
         control: (state) => {
           return state.isFocused
@@ -256,8 +263,8 @@ const Select = <T,>({
       label={label}
       size={size}
       isMulti={multiselect}
-      options={options}
-      value={value}
+      options={options as any}
+      value={value as any}
       onChange={onChange as any}
       styles={{ menu: () => ({}), option: () => ({}) }}
       unstyled
@@ -272,12 +279,12 @@ const Select = <T,>({
         IndicatorSeparator: null,
         Menu,
         MenuList,
-        // @ts-ignore
         Option,
         Placeholder,
         MultiValueContainer,
         MultiValueRemove,
         ClearIndicator,
+        GroupHeading,
       }}
     />
   );
