@@ -95,7 +95,7 @@ export const WorkspacesLogo = ({
   size = 24,
   darkBg = false,
   detailed = false,
-  color = 'currentColor',
+  color,
 }: WorkspacesLogoProps) => {
   return (
     <>
