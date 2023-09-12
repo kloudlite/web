@@ -26,6 +26,7 @@ interface IBase {
 
 interface ITrigger {
   children: ReactNode;
+  open?: boolean;
   props?: any;
 }
 
@@ -97,12 +98,17 @@ const preventDefaultEvents = {
   // onClick: (e: any) => e.preventDefault(),
 };
 
-const OptionMenuTrigger = forwardRef<HTMLElement, ITrigger>(
-  ({ props, children }, ref) => (
-    <OptionMenuTriggerBase ref={ref} {...props} asChild is-menu-button="true">
-      {children}
-    </OptionMenuTriggerBase>
-  )
+const OptionMenuTrigger = forwardRef<HTMLButtonElement, ITrigger>(
+  ({ children, ...props }, ref) => {
+    const { open } = props;
+    return (
+      <OptionMenuTriggerBase ref={ref} {...props} asChild is-menu-button="true">
+        {cloneElement(children as ReactElement, {
+          selected: open,
+        })}
+      </OptionMenuTriggerBase>
+    );
+  }
 );
 
 OptionMenuTrigger.displayName = 'OptionMenuTrigger';
@@ -392,7 +398,6 @@ const handleKeyNavigation = (
           c.querySelector('[data-radix-collection-item]')
       );
 
-      console.log(childs);
       const currentIndex = childs.indexOf(tabElement);
       if (currentIndex > 0) {
         if (
@@ -417,7 +422,6 @@ const handleKeyNavigation = (
           c.querySelector('[data-radix-collection-item]')
       );
 
-      console.log(childs);
       const currentIndex = childs.indexOf(tabElement);
       if (currentIndex < childs.length - 1) {
         if (
@@ -504,6 +508,7 @@ const Root = ({ ...props }) => {
   useEffect(() => {
     if (props.onOpenChange) props.onOpenChange(open);
   }, [open]);
+
   return (
     <OptionMenu open={open} onOpenChange={setOpen}>
       {Children.map(props.children, (child) =>

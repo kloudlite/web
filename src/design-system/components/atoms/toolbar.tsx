@@ -148,6 +148,7 @@ const ToolbarButton = React.forwardRef<ToolbarButtonElement, IButton>(
   (props: ScopedProps<IButton>, forwardedRef) => {
     const { __scopeToolbar, ...buttonProps } = props;
     const rovingFocusGroupScope = useRovingFocusGroupScope(__scopeToolbar);
+
     return (
       <RovingFocusGroup.Item
         asChild
