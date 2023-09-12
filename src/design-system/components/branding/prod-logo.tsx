@@ -134,7 +134,7 @@ export const ProdLogo = ({
   size = 24,
   darkBg = false,
   detailed = false,
-  color = 'currentColor',
+  color,
 }: ProdLogoProps) => {
   return (
     <>

@@ -19,3 +19,9 @@ export function mapper<A, B>(array: A[], transform: (value: A) => B): B[] {
 export function useMapper<A, B>(array: A[], transform: (value: A) => B): B[] {
   return useMemo(() => array.map(transform), [array]);
 }
+
+export function titleCase(string: string) {
+  if (typeof string !== 'string')
+    throw Error(`Cannot titleCase ${string}: Cause it is not string.`);
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
