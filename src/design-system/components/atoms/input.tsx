@@ -91,6 +91,8 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
       label,
       onKeyDown,
       autoComplete,
+      onBlur = () => {},
+      onFocus = () => {},
       onChange = () => {},
       message = '',
       showclear,
@@ -185,22 +187,25 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
                 onChange(e);
               }
             }}
-            onFocus={() => {
+            onFocus={(e: any) => {
               containerRef.current?.classList.add(
                 'ring-2',
                 'ring-border-focus'
               );
-            }}
-            onBlur={() => {
-              containerRef.current?.classList.remove(
-                'ring-2',
-                'ring-border-focus'
-              );
+              onFocus(e);
             }}
             disabled={disabled}
             ref={ref}
             onKeyDown={onKeyDown}
             autoComplete={autoComplete}
+            onBlur={(e: any) => {
+              containerRef.current?.classList.remove(
+                'ring-2',
+                'ring-border-focus'
+              );
+
+              onBlur(e);
+            }}
             {...extraProps}
           />
           {!!suffix && <div className="cursor-default">{suffix}</div>}
