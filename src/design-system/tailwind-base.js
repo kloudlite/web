@@ -1,4 +1,7 @@
-import plugin from 'tailwindcss/plugin';
+import noSpinner from './css-plugins/no-spinner.js';
+import noScrollbar from './css-plugins/no-scrollbar.js';
+import scrollbar from './css-plugins/scrollbar.js';
+import typography from './css-plugins/typography.js';
 
 const primitives = {
   colors: {
@@ -206,8 +209,8 @@ const config = {
       '2xl': '1440px',
       '3xl': '1920px',
     },
-    // fontSize: { ...primitives.fontSize },
-    // lineHeight: { ...primitives.lineHeight },
+    fontSize: { ...primitives.fontSize },
+    lineHeight: { ...primitives.lineHeight },
     spacing: {
       0: '0px',
       xs: primitives.spacing['025'],
@@ -322,36 +325,7 @@ const config = {
       black: 'black',
     },
   },
-  plugins: [
-    // plugin(({ addComponents, theme }) => {
-    //   console.log(theme('fontWeight'));
-    //   addComponents({
-    //     '.bodySm': {
-    //       fontSize: theme('fontSize.xs'),
-    //       lineHeight: theme('lineHeight.xs'),
-    //       fontWeight: theme('fontWeight.normal'),
-    //     },
-    //     '.bodySm-medium': {
-    //       fontSize: theme('fontSize.xs'),
-    //       lineHeight: theme('lineHeight.xs'),
-    //       fontWeight: theme('fontWeight.medium'),
-    //     },
-    //     '.bodyMd': {
-    //       fontSize: theme('fontSize.sm'),
-    //       lineHeight: theme('lineHeight.sm'),
-    //       fontWeight: theme('fontWeight.normal'),
-    //     },
-    //     '.abcd': {
-    //       '@apply .bodyMd underline': {},
-    //     },
-    //     '.bodyLg': {
-    //       fontSize: theme('fontSize.md'),
-    //       lineHeight: theme('lineHeight.sm'),
-    //       fontWeight: theme('fontWeight.normal'),
-    //     },
-    //   });
-    // }),
-  ],
+  plugins: [typography(), scrollbar(), noScrollbar(), noSpinner()],
 };
 
 export const LightTitlebarColor = config.theme.colors.surface.basic.subdued;

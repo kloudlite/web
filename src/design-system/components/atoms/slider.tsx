@@ -9,6 +9,8 @@ interface ISlider {
   min?: number;
   value: number | number[];
   disabled?: boolean;
+  tooltip?: boolean;
+  dots?: boolean;
   onChange?: (_value: number | number[]) => void;
 }
 
@@ -32,6 +34,8 @@ const Slider = ({
   min = 0,
   max = 100,
   disabled = false,
+  tooltip = false,
+  dots,
   onChange,
 }: ISlider) => {
   return (
@@ -41,7 +45,7 @@ const Slider = ({
         value={value}
         className="range-slider"
         step={step}
-        dots
+        dots={dots}
         handleRender={Handle}
         max={max}
         min={min}

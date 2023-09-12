@@ -36,7 +36,8 @@ export const Item = ({
   const id = useId();
   const rend = () => {
     return (
-      <div
+      <label
+        htmlFor={id}
         className={cn(
           'flex items-center w-fit',
           {
@@ -67,7 +68,7 @@ export const Item = ({
             })}
           />
         </RadioGroupPrimitive.Item>
-        <label
+        <div
           className={cn(
             {
               'text-text-disabled': disabled,
@@ -75,11 +76,10 @@ export const Item = ({
             },
             'bodyMd-medium pl-lg select-none flex-1'
           )}
-          htmlFor={id}
         >
           {children}
-        </label>
-      </div>
+        </div>
+      </label>
     );
   };
   return withBounceEffect ? <BounceIt>{rend()}</BounceIt> : rend();
