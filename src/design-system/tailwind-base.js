@@ -1,5 +1,5 @@
-import noSpinner from './css-plugins/no-spinner.js';
 import noScrollbar from './css-plugins/no-scrollbar.js';
+import noSpinner from './css-plugins/no-spinner.js';
 import scrollbar from './css-plugins/scrollbar.js';
 import typography from './css-plugins/typography.js';
 
@@ -194,6 +194,7 @@ const config = {
           '0px 1px 3px rgba(63, 63, 68, 0.15)',
           '0px 0px 0px 1px rgba(63, 63, 68, 0.05)',
         ],
+        focus: '0px 0px 0px 2px #60A5FA;',
       },
       maxWidth: { ...width },
       minWidth: { ...width },
