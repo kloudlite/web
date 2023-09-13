@@ -11,12 +11,18 @@ export const cn = (...props: cnProps) => {
 
 export const _false = false;
 
-export function mapper<A, B>(array: A[], transform: (value: A) => B): B[] {
+export function mapper<A, B>(
+  array: A[],
+  transform: (value: A, index: number) => B
+): B[] {
   let _;
   return array.map(transform);
 }
 
-export function useMapper<A, B>(array: A[], transform: (value: A) => B): B[] {
+export function useMapper<A, B>(
+  array: A[],
+  transform: (value: A, index: number) => B
+): B[] {
   return useMemo(() => array.map(transform), [array]);
 }
 
