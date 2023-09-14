@@ -1,8 +1,8 @@
-import React, { ReactNode, cloneElement } from 'react';
+import { ReactNode, cloneElement } from 'react';
 import { cn } from '../utils';
 
 interface IBadge {
-  type?: string;
+  type?: 'neutral' | 'info' | 'success' | 'warning' | 'critical';
   children: ReactNode;
   icon?: JSX.Element;
 }
