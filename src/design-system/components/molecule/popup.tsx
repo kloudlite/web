@@ -1,10 +1,9 @@
-import * as Dialog from '@radix-ui/react-dialog';
 import { X } from '@jengaicons/react';
+import * as Dialog from '@radix-ui/react-dialog';
 import { AnimatePresence, motion } from 'framer-motion';
-import { FormEvent, ReactNode } from 'react';
-import { Button as NativeButton, IconButton, IButton } from '../atoms/button';
-import { cn } from '../utils';
+import { IButton, IconButton, Button as NativeButton } from '../atoms/button';
 import { ChildrenProps } from '../types';
+import { cn } from '../utils';
 
 const Header = ({ children, showclose = true }: any) => {
   return (
@@ -31,7 +30,7 @@ const Content = ({ children }: ChildrenProps) => {
 
 const Footer = ({ children }: ChildrenProps) => {
   return (
-    <div className="p-3xl flex flex-row justify-end gap-lg bg-surface-basic-subdued">
+    <div className="p-3xl flex flex-row justify-end gap-lg bg-surface-basic-active">
       {children}
     </div>
   );

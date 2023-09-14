@@ -1,26 +1,26 @@
 /* eslint-disable react/jsx-pascal-case */
-import * as React from 'react';
 import { composeEventHandlers } from '@radix-ui/primitive';
 import { createContextScope } from '@radix-ui/react-context';
+import * as React from 'react';
 
+import type { Scope } from '@radix-ui/react-context';
+import { Direction, useDirection } from '@radix-ui/react-direction';
+import type * as Radix from '@radix-ui/react-primitive';
+import { Primitive } from '@radix-ui/react-primitive';
 import * as RovingFocusGroup from '@radix-ui/react-roving-focus';
 import { createRovingFocusGroupScope } from '@radix-ui/react-roving-focus';
-import { Primitive } from '@radix-ui/react-primitive';
 import * as SeparatorPrimitive from '@radix-ui/react-separator';
 import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
 import { createToggleGroupScope } from '@radix-ui/react-toggle-group';
-import { Direction, useDirection } from '@radix-ui/react-direction';
-import type * as Radix from '@radix-ui/react-primitive';
-import type { Scope } from '@radix-ui/react-context';
-import { ITextInput, TextInput as _TextInput } from './input';
+import { cn } from '../utils.jsx';
 import {
   IButton,
   IIconButton,
   Button as _Button,
   IconButton as _IconButton,
 } from './button';
-import { cn } from '../utils.jsx';
 import { IButtonGroupButton, IButtonGroupIconButton } from './button-group';
+import { ITextInput, TextInput as _TextInput } from './input';
 
 const TOOLBAR_NAME = 'Toolbar';
 type ScopedProps<P> = P & { __scopeToolbar?: Scope };
@@ -257,8 +257,9 @@ interface ToolbarToggleGroupSingleProps
   selectable?: boolean;
 }
 interface ToolbarToggleGroupSinglePropsOmitted
-  extends Omit<ToolbarToggleGroupSingleProps, 'onClick'> {
-  onClick: (value?: string) => void;
+  extends Omit<ToolbarToggleGroupSingleProps, 'onClick' | 'type'> {
+  onClick?: (value?: string) => void;
+  type?: 'single';
 }
 
 const ToolbarButtonGroup = React.forwardRef<
@@ -268,7 +269,9 @@ const ToolbarButtonGroup = React.forwardRef<
   const { __scopeToolbar, ...toggleGroupProps } = props;
   const context = useToolbarContext(BUTTON_GROUP_NAME, __scopeToolbar) as any;
   const toggleGroupScope = useToggleGroupScope(__scopeToolbar);
-  const [value, setValue] = React.useState(props.value);
+
+  delete toggleGroupProps.selectable;
+
   return (
     <ToggleGroupPrimitive.Root
       data-orientation={context?.orientation}
@@ -279,7 +282,6 @@ const ToolbarButtonGroup = React.forwardRef<
       rovingFocus={false}
       className={cn('flex flex-row')}
       onValueChange={(e) => {
-        if (e) setValue(e);
         if (props.onValueChange && e) props.onValueChange(e);
       }}
       type="single"
@@ -291,7 +293,7 @@ const ToolbarButtonGroup = React.forwardRef<
         const childElement = child as React.ReactElement;
         const childProps = childElement.props as IButtonGroupButton;
         return React.cloneElement(childElement, {
-          selected: childProps.value === value && !!props.selectable,
+          selected: childProps.value === props.value && !!props.selectable,
         });
       })}
     </ToggleGroupPrimitive.Root>
