@@ -1,13 +1,13 @@
-import * as PrimitiveAlertDialog from '@radix-ui/react-alert-dialog';
 import { X } from '@jengaicons/react';
+import * as PrimitiveAlertDialog from '@radix-ui/react-alert-dialog';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ReactNode } from 'react';
-import { Button as NativeButton, IconButton, IButton } from '../atoms/button';
+import { IButton, IconButton, Button as NativeButton } from '../atoms/button';
 import { cn } from '../utils';
 
 export const Header = ({ children }: { children: ReactNode }) => {
   return (
-    <div className="bg-surface-basic-subdued p-3xl flex flex-row items-center justify-between">
+    <div className="bg-surface-basic-active p-3xl flex flex-row items-center justify-between">
       <PrimitiveAlertDialog.Title className="headingLg text-text-strong">
         {children}
       </PrimitiveAlertDialog.Title>
