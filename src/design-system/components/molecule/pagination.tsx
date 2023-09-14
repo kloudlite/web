@@ -1,6 +1,6 @@
 import { ChevronLeft, ChevronRight } from '@jengaicons/react';
-import { useEffect, useId, useRef, useState } from 'react';
 import * as RovingFocusGroup from '@radix-ui/react-roving-focus';
+import { useEffect, useId, useRef, useState } from 'react';
 import { Button } from '../atoms/button';
 import { cn } from '../utils';
 
@@ -24,6 +24,7 @@ interface IPagination {
   isNextDisabled?: boolean;
   isPrevDisabled?: boolean;
   showNumbers?: boolean;
+  showItemsPerPage?: boolean;
 }
 
 const Pagination = ({
@@ -39,6 +40,7 @@ const Pagination = ({
   isNextDisabled = false,
   isPrevDisabled = false,
   showNumbers = true,
+  showItemsPerPage = true,
 }: IPagination) => {
   const [focusItem, setFocusItem] = useState<null | number>(null);
   const [focusCallback, setFocusCallback] = useState(false);
@@ -120,42 +122,48 @@ const Pagination = ({
   };
 
   return (
-    <div className="flex flex-row items-center gap-3xl w-full">
-      <div className="flex flex-row items-center flex-1 gap-lg text-icon-default bodyMd">
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label htmlFor={itemsPerPageId}>Item per page</label>
-        <select
-          name="itemperpage"
-          id={itemsPerPageId}
-          disabled={itemPerPageDisabled}
-          value={itemsPerPageValue}
-          onChange={(e) => {
-            setItemsPerPageValue(Number(e.target.value));
-          }}
-          className={cn(
-            'py-md pl-lg pr-5xl text-text-default border-border-default bg-surface-basic-input transition-all rounded border flex flex-row items-center relative outline-none disabled:bg-surface-basic-input disabled:text-text-disabled ring-offset-1 focus-within:ring-2 focus-within:ring-border-focus appearance-none',
-            {
-              'text-text-disabled border-border-disabled bg-surface-basic-input':
-                disabled,
-            }
-          )}
-        >
-          {ITEMS_PER_PAGE.map((ipp) => (
-            <option value={ipp} key={ipp}>
-              {ipp}
-            </option>
-          ))}
-        </select>
+    <div
+      className={cn('flex flex-row items-center gap-3xl w-full', {
+        'justify-end': !showItemsPerPage,
+      })}
+    >
+      {showItemsPerPage && (
+        <div className="flex flex-row items-center flex-1 gap-lg text-icon-default bodyMd">
+          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+          <label htmlFor={itemsPerPageId}>Item per page</label>
+          <select
+            name="itemperpage"
+            id={itemsPerPageId}
+            disabled={itemPerPageDisabled}
+            value={itemsPerPageValue}
+            onChange={(e) => {
+              setItemsPerPageValue(Number(e.target.value));
+            }}
+            className={cn(
+              'py-md pl-lg pr-5xl text-text-default border-border-default bg-surface-basic-input transition-all rounded border flex flex-row items-center relative outline-none disabled:bg-surface-basic-input disabled:text-text-disabled ring-offset-1 focus-within:ring-2 focus-within:ring-border-focus appearance-none',
+              {
+                'text-text-disabled border-border-disabled bg-surface-basic-input':
+                  disabled,
+              }
+            )}
+          >
+            {ITEMS_PER_PAGE.map((ipp) => (
+              <option value={ipp} key={ipp}>
+                {ipp}
+              </option>
+            ))}
+          </select>
 
-        {showNumbers ? (
-          <span>
-            {currentPage * itemsPerPage - itemsPerPage + 1} -{' '}
-            {currentPage * itemsPerPage} of {totalItems} items
-          </span>
-        ) : (
-          <span> total {totalItems} items</span>
-        )}
-      </div>
+          {showNumbers ? (
+            <span>
+              {currentPage * itemsPerPage - itemsPerPage + 1} -{' '}
+              {currentPage * itemsPerPage} of {totalItems} items
+            </span>
+          ) : (
+            <span> total {totalItems} items</span>
+          )}
+        </div>
+      )}
       <RovingFocusGroup.Root loop>
         <div className="flex flex-row items-center gap-xl">
           <RovingFocusGroup.Item asChild focusable>
