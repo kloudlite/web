@@ -19,8 +19,16 @@ import RSelect, {
 import RCreatable from 'react-select/creatable';
 import AsyncSelect from 'react-select/async';
 import { X } from '@jengaicons/react';
-import { ReactNode } from 'react';
+import React, {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+} from 'react';
 import { cn } from '../utils';
+import { ChildrenProps } from '../types';
 
 declare module 'react-select/dist/declarations/src/Select' {
   export interface Props<
@@ -238,6 +246,19 @@ const GroupHeading = (props: GroupHeadingProps<IOption>) => (
   />
 );
 
+const SelectContext = createContext<React.MutableRefObject<null> | null>(null);
+
+export const SelectPortalContainer = ({ children }: ChildrenProps) => {
+  const ref = useRef(null);
+
+  return (
+    <SelectContext.Provider value={useMemo(() => ref, [ref])}>
+      {children}
+      <div className="select-portal" ref={ref} />
+    </SelectContext.Provider>
+  );
+};
+
 const Select = <T, A extends boolean | undefined = undefined>({
   label,
   size = 'md',
@@ -249,8 +270,10 @@ const Select = <T, A extends boolean | undefined = undefined>({
   placeholder = '',
   onChange,
 }: ISelect<T, A>) => {
+  const portalRef = useContext(SelectContext);
   let Component = creatable ? RCreatable : RSelect;
   Component = async ? AsyncSelect : Component;
+
   return (
     <Component<IOption, boolean>
       classNames={{
@@ -260,13 +283,24 @@ const Select = <T, A extends boolean | undefined = undefined>({
             : '';
         },
       }}
+      menuPortalTarget={portalRef?.current}
       label={label}
       size={size}
       isMulti={multiselect}
       options={options as any}
       value={value as any}
       onChange={onChange as any}
-      styles={{ menu: () => ({}), option: () => ({}) }}
+      styles={{
+        menu: () => ({}),
+        option: () => ({}),
+        menuPortal: (css) => {
+          return {
+            ...css,
+            zIndex: 9999,
+            pointerEvents: 'all',
+          };
+        },
+      }}
       unstyled
       placeholder={placeholder}
       components={{
