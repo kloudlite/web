@@ -48,6 +48,7 @@ interface INumberInput extends IInputRow {
   min?: number;
   max?: number;
   step?: number;
+  suffix?: ReactNode;
 }
 
 export interface ITextInput extends IInputRow {
@@ -161,6 +162,11 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
           )}
           {!!prefix && <div className="cursor-default">{prefix}</div>}
           <Component
+            {...(type === 'number'
+              ? {
+                  pattern: '[0-9]',
+                }
+              : {})}
             name={name}
             type={t}
             placeholder={placeholder}
@@ -179,6 +185,9 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
               },
               {
                 'resize-none': !resize,
+              },
+              {
+                'no-spinner': type === 'number',
               }
             )}
             value={value}
@@ -276,6 +285,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
 );
 
 export const NumberInput = ({
+  suffix,
   value,
   error = false,
   onChange = () => {},
@@ -289,6 +299,7 @@ export const NumberInput = ({
     <TextInputBase
       {...{
         ...etc,
+        type: 'number',
         id,
         error,
         onChange,
@@ -297,57 +308,57 @@ export const NumberInput = ({
         value,
         step,
         suffix: (
-          <div
-            className={cn(
-              'flex flex-col absolute right-0 top-0 bottom-0 justify-center items-center',
-              {
+          <div className="flex flex-row items-center gap-xl -mr-lg">
+            {suffix}
+            <div
+              className={cn('flex flex-col justify-center items-center', {
                 'bg-surface-critical-subdued divide-border-critical divide-y rounded-r border-l border-border-critical text-text-critical placeholder:text-critical-400':
                   error,
                 'text-text-default border-l border-border-default divide-border-default divide-y':
                   !error,
-              }
-            )}
-            tabIndex={-1}
-          >
-            <button
-              type="button"
-              aria-controls={id}
-              aria-label={`Increase ${label}`}
+              })}
               tabIndex={-1}
-              onClick={(e: any) => {
-                // setV((_v) => _v + step);
-
-                onChange({
-                  ...e,
-                  target: { value: `${Number(value) + step}` },
-                });
-
-                ref?.current?.focus();
-              }}
-              className={cn(
-                'flex-1 p-sm disabled:text-icon-disabled hover:bg-surface-basic-hovered active:bg-surface-basic-pressed'
-              )}
             >
-              <CaretUpFill size={16} color="currentColor" />
-            </button>
-            <button
-              type="button"
-              aria-controls={id}
-              aria-label={`Decrease ${label}`}
-              tabIndex={-1}
-              onClick={(e: any) => {
-                onChange({
-                  ...e,
-                  target: { value: `${Number(value) - step}` },
-                });
-                ref?.current?.focus();
-              }}
-              className={cn(
-                'flex-1 p-sm disabled:text-icon-disabled hover:bg-surface-basic-hovered active:bg-surface-basic-pressed'
-              )}
-            >
-              <CaretDownFill size={16} color="currentColor" />
-            </button>
+              <button
+                type="button"
+                aria-controls={id}
+                aria-label={`Increase ${label}`}
+                tabIndex={-1}
+                onClick={(e: any) => {
+                  // setV((_v) => _v + step);
+
+                  onChange({
+                    ...e,
+                    target: { value: `${Number(value) + step}` },
+                  });
+
+                  ref?.current?.focus();
+                }}
+                className={cn(
+                  'flex-1 p-sm disabled:text-icon-disabled hover:bg-surface-basic-hovered active:bg-surface-basic-pressed'
+                )}
+              >
+                <CaretUpFill size={16} color="currentColor" />
+              </button>
+              <button
+                type="button"
+                aria-controls={id}
+                aria-label={`Decrease ${label}`}
+                tabIndex={-1}
+                onClick={(e: any) => {
+                  onChange({
+                    ...e,
+                    target: { value: `${Number(value) - step}` },
+                  });
+                  ref?.current?.focus();
+                }}
+                className={cn(
+                  'flex-1 p-sm disabled:text-icon-disabled hover:bg-surface-basic-hovered active:bg-surface-basic-pressed'
+                )}
+              >
+                <CaretDownFill size={16} color="currentColor" />
+              </button>
+            </div>
           </div>
         ),
       }}
