@@ -23,7 +23,6 @@ import React, {
   ReactNode,
   createContext,
   useContext,
-  useEffect,
   useMemo,
   useRef,
 } from 'react';
