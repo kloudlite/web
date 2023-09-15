@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { cn } from '../utils';
 
 const colors = {
@@ -20,9 +21,10 @@ type AvatarColors =
 export interface IAvatar {
   size?: AvatarSizes;
   color?: AvatarColors;
+  image?: ReactNode;
 }
 
-export const AvatarBase = ({ size = 'md', color = 'one' }: IAvatar) => {
+export const AvatarBase = ({ size = 'md', color = 'one', image }: IAvatar) => {
   return (
     <div
       className={cn(
@@ -38,7 +40,15 @@ export const AvatarBase = ({ size = 'md', color = 'one' }: IAvatar) => {
         }
       )}
     >
-      {size === 'lg' && (
+      {image && (
+        <span
+          // @ts-ignore
+          className={cn(`${colors[color][1]}`)}
+        >
+          {image}
+        </span>
+      )}
+      {size === 'lg' && !image && (
         <svg
           width="42"
           height="49"
@@ -55,7 +65,7 @@ export const AvatarBase = ({ size = 'md', color = 'one' }: IAvatar) => {
           />
         </svg>
       )}
-      {size === 'md' && (
+      {size === 'md' && !image && (
         <svg
           width="28"
           height="31"
@@ -72,7 +82,7 @@ export const AvatarBase = ({ size = 'md', color = 'one' }: IAvatar) => {
           />
         </svg>
       )}
-      {size === 'sm' && (
+      {size === 'sm' && !image && (
         <svg
           width="22"
           height="25"
@@ -89,7 +99,7 @@ export const AvatarBase = ({ size = 'md', color = 'one' }: IAvatar) => {
           />
         </svg>
       )}
-      {size === 'xs' && (
+      {size === 'xs' && !image && (
         <svg
           width="16"
           height="17"
@@ -110,6 +120,6 @@ export const AvatarBase = ({ size = 'md', color = 'one' }: IAvatar) => {
   );
 };
 
-export const Avatar = ({ size, color }: IAvatar) => {
-  return <AvatarBase size={size} color={color} />;
+export const Avatar = ({ size, color, image }: IAvatar) => {
+  return <AvatarBase size={size} color={color} image={image} />;
 };

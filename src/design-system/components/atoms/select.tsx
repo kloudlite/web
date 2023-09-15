@@ -42,9 +42,13 @@ declare module 'react-select/dist/declarations/src/Select' {
   }
 }
 
-type IOption = {
-  value: string;
-} & ({ label: string } | { render: () => ReactNode });
+type IOption =
+  | {
+      label: string;
+      value: string;
+      render?: () => ReactNode;
+    }
+  | { value: string; render: () => ReactNode; label?: string };
 
 interface IGroup<T> {
   label: string;
@@ -186,6 +190,7 @@ const MenuList = <T,>({
 const Option = ({ children, ...props }: OptionProps<IOption, boolean>) => {
   const { isFocused, isSelected, isDisabled, innerRef, innerProps, data } =
     props;
+
   return (
     <div
       ref={innerRef}
@@ -200,7 +205,7 @@ const Option = ({ children, ...props }: OptionProps<IOption, boolean>) => {
         }
       )}
     >
-      {data.render ? data.render() : children}
+      {data.render ? data?.render() : children}
     </div>
   );
 };

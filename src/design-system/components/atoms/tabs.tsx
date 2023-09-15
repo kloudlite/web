@@ -1,15 +1,15 @@
+import * as RovingFocusGroup from '@radix-ui/react-roving-focus';
+import { LayoutGroup, motion } from 'framer-motion';
 import React, {
-  useState,
-  useEffect,
-  forwardRef,
-  useId,
-  useMemo,
   KeyboardEvent,
   ReactElement,
   ReactNode,
+  forwardRef,
+  useEffect,
+  useId,
+  useMemo,
+  useState,
 } from 'react';
-import { LayoutGroup, motion } from 'framer-motion';
-import * as RovingFocusGroup from '@radix-ui/react-roving-focus';
 import { cn } from '../utils';
 
 type TabSizes = 'md' | 'sm' | (string & NonNullable<unknown>);
@@ -132,7 +132,7 @@ const TabBase = ({
         <motion.span
           layoutId="bubble"
           className="absolute inset-0 rounded-lg bg-surface-basic-default border border-border-default shadow-button"
-          transition={{ type: 'spring', stiffness: 700, damping: 30 }}
+          transition={{ type: 'spring', bounce: 0.3, duration: 0.4 }}
         />
       )}
       {variant === 'plain' && hoverd && (

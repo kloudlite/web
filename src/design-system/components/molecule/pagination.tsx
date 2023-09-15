@@ -4,6 +4,92 @@ import { useEffect, useId, useRef, useState } from 'react';
 import { Button } from '../atoms/button';
 import { cn } from '../utils';
 
+export const usePagination = ({
+  items,
+  itemsPerPage = 5,
+}: {
+  items: Array<any>;
+  itemsPerPage: number;
+}) => {
+  const [listItems, setListItems] = useState(items);
+  const [page, setPage] = useState<Array<any>>([]);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [hasNext, setHasNext] = useState(false);
+  const [hasPrevious, setHasPrevious] = useState(false);
+
+  useEffect(() => {
+    if (listItems.length > 0) {
+      let tempItems = listItems.slice(
+        (pageNumber - 1) * itemsPerPage,
+        pageNumber * itemsPerPage
+      );
+
+      if (tempItems.length === 0) {
+        tempItems = listItems.slice(
+          (Math.ceil(listItems.length / itemsPerPage) - 1) * itemsPerPage,
+          listItems.length
+        );
+        setPageNumber((prev) => prev - 1);
+      }
+      setPage(tempItems);
+    } else {
+      setPageNumber(1);
+      setPage([]);
+    }
+  }, [listItems]);
+
+  useEffect(() => {
+    if (pageNumber * itemsPerPage >= listItems.length) {
+      setHasNext(false);
+    } else {
+      setHasNext(true);
+    }
+
+    if (pageNumber * itemsPerPage > itemsPerPage) {
+      setHasPrevious(true);
+    } else {
+      setHasPrevious(false);
+    }
+  }, [page]);
+
+  const onNext = () => {
+    if (pageNumber < Math.ceil(listItems.length / itemsPerPage)) {
+      setPage(
+        listItems.slice(
+          pageNumber * itemsPerPage,
+          (pageNumber + 1) * itemsPerPage
+        )
+      );
+      setPageNumber((prev) => prev + 1);
+    }
+  };
+
+  const onPrev = () => {
+    if (pageNumber > 1) {
+      setPage(
+        listItems.slice(
+          (pageNumber - 1 - 1) * itemsPerPage,
+          (pageNumber - 1) * itemsPerPage
+        )
+      );
+      setPageNumber((prev) => prev - 1);
+    }
+  };
+
+  const onPageChange = () => {};
+
+  return {
+    page,
+    pageNumber,
+    hasNext,
+    hasPrevious,
+    onNext,
+    onPrev,
+    onPageChange,
+    setItems: setListItems,
+  };
+};
+
 const ITEMS_PER_PAGE = [
   1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95,
   100,
