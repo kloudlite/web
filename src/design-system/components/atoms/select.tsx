@@ -1,3 +1,11 @@
+import { X } from '@jengaicons/react';
+import React, {
+  ReactNode,
+  createContext,
+  useContext,
+  useMemo,
+  useRef,
+} from 'react';
 import RSelect, {
   ClearIndicatorProps,
   ControlProps,
@@ -16,19 +24,10 @@ import RSelect, {
   ValueContainerProps,
   components,
 } from 'react-select';
-import RCreatable from 'react-select/creatable';
 import AsyncSelect from 'react-select/async';
-import { X } from '@jengaicons/react';
-import React, {
-  ReactNode,
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-} from 'react';
-import { cn } from '../utils';
+import RCreatable from 'react-select/creatable';
 import { ChildrenProps } from '../types';
+import { cn } from '../utils';
 
 declare module 'react-select/dist/declarations/src/Select' {
   export interface Props<
@@ -43,11 +42,9 @@ declare module 'react-select/dist/declarations/src/Select' {
   }
 }
 
-interface IOption {
-  label: string;
+type IOption = {
   value: string;
-  render?: () => ReactNode;
-}
+} & ({ label: string } | { render: () => ReactNode });
 
 interface IGroup<T> {
   label: string;
@@ -125,11 +122,18 @@ const Input = <T,>(props: InputProps<T, boolean, GroupBase<T>>) => {
   );
 };
 
-const SingleValue = <T,>({ children, ...props }: SingleValueProps<T>) => (
-  <components.SingleValue {...props} className="bodyMd text-text-default">
-    {children}
-  </components.SingleValue>
-);
+const SingleValue = <T extends IOption>({
+  children,
+  ...props
+}: SingleValueProps<T>) => {
+  console.log(props, children);
+  const { data } = props;
+  return (
+    <components.SingleValue {...props} className="bodyMd text-text-default">
+      {data?.render ? data.render() : children}
+    </components.SingleValue>
+  );
+};
 
 const IndicatorsContainer = <T,>(
   props: IndicatorsContainerProps<T, boolean>
