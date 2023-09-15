@@ -11,7 +11,7 @@ import { LayoutGroup, motion } from 'framer-motion';
 import { cn } from '../utils';
 
 interface IActionList {
-  children: ReactElement | ReactElement[];
+  children: ReactNode;
   value: string;
   onChange?: (value: string) => void;
   LinkComponent?: any;
@@ -106,10 +106,6 @@ export const Root = ({
   LinkComponent,
 }: IActionList) => {
   const props = { children, value, onChange, LinkComponent };
-  const [active, setActive] = useState(value);
-  useEffect(() => {
-    if (onChange) onChange(active);
-  }, [active]);
 
   let id = useId();
   id = useMemo(() => id, [props]);
@@ -117,12 +113,12 @@ export const Root = ({
   return (
     <div className={cn('flex flex-col gap-y-md')}>
       <LayoutGroup id={id}>
-        {React.Children.map(children, (child) =>
+        {React.Children.map(children as ReactElement[], (child) =>
           cloneElement(child, {
             LinkComponent,
             active: child.props.value === value,
             onClick: () => {
-              setActive(child.props?.value);
+              if (onChange) onChange(child.props?.value);
             },
           })
         )}
