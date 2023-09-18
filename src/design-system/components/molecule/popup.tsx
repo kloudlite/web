@@ -93,13 +93,7 @@ const PopupRoot = ({
                 })}
               />
             </Dialog.Overlay>
-            <Dialog.Content
-              onInteractOutside={(e) => {
-                console.log(e);
-              }}
-              asChild
-              forceMount
-            >
+            <Dialog.Content asChild forceMount>
               <motion.div
                 initial={{ x: '-50%', y: '-47%', opacity: 0 }}
                 animate={{ x: '-50%', y: '-50%', opacity: 1 }}

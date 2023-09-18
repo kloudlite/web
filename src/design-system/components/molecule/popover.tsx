@@ -20,6 +20,9 @@ export const Content = ({
     <PopoverPrimitive.Portal>
       <PopoverPrimitive.Content
         align={align}
+        style={{ pointerEvents: 'all' }}
+        autoFocus
+        forceMount
         className="outline-none transform overflow-hidden rounded bg-surface-basic-default shadow-modal border border-border-default w-[300px] z-[99]"
         sideOffset={5}
       >
@@ -47,12 +50,18 @@ interface IPopover extends ChildrenProps {
   show?: boolean;
 }
 
-export const Popover = ({
-  children,
-  onOpenChange = () => {},
-  show = false,
-}: IPopover) => (
+export const Root = ({ children, onOpenChange = () => {}, show }: IPopover) => (
   <PopoverPrimitive.Root open={show} onOpenChange={onOpenChange}>
     {children}
   </PopoverPrimitive.Root>
 );
+
+const Popover = {
+  Root,
+  Trigger,
+  Content,
+  Footer,
+  Button,
+};
+
+export default Popover;

@@ -1,24 +1,25 @@
 import {
-  useRef,
+  CaretDownFill,
+  CaretUpFill,
+  Eye,
+  EyeSlash,
+  XCircleFill,
+} from '@jengaicons/react';
+import {
+  ChangeEventHandler,
+  FocusEventHandler,
+  KeyboardEventHandler,
+  MouseEventHandler,
+  PointerEventHandler,
+  ReactNode,
   cloneElement,
   forwardRef,
   useId,
+  useRef,
   useState,
-  ReactNode,
-  KeyboardEventHandler,
-  ChangeEventHandler,
-  MouseEventHandler,
-  FocusEventHandler,
-  PointerEventHandler,
 } from 'react';
-import {
-  XCircleFill,
-  EyeSlash,
-  Eye,
-  CaretUpFill,
-  CaretDownFill,
-} from '@jengaicons/react';
 import { cn } from '../utils';
+import AnimateHide from './animate-hide';
 
 type InputSizes = 'md' | 'lg' | (undefined & NonNullable<unknown>);
 
@@ -113,12 +114,12 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
 
     const containerRef = useRef<HTMLDivElement>(null);
     return (
-      <div
-        className={cn('flex flex-col ', {
-          'gap-md': !!label || !!extra,
-        })}
-      >
-        <div className="flex items-center">
+      <div className={cn('flex flex-col')}>
+        <div
+          className={cn('flex items-center', {
+            'pb-md': !!label || !!extra,
+          })}
+        >
           <label
             className="flex-1 select-none bodyMd-medium text-text-default"
             htmlFor={id}
@@ -269,16 +270,20 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
           )}
         </div>
 
-        {message && (
+        <AnimateHide show={!!message}>
           <div
-            className={cn('bodySm', {
-              'text-text-critical': error,
-              'text-text-default': !error,
-            })}
+            className={cn(
+              'bodySm',
+              {
+                'text-text-critical': error,
+                'text-text-default': !error,
+              },
+              'pt-md'
+            )}
           >
             {message}
           </div>
-        )}
+        </AnimateHide>
       </div>
     );
   }
