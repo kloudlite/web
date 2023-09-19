@@ -31,3 +31,6 @@ export function titleCase(string: string) {
     throw Error(`Cannot titleCase ${string}: Cause it is not string.`);
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
+
+export const generateKey = (...items: Array<string | number>) =>
+  items.join('-');
