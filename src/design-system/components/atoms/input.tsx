@@ -261,7 +261,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
                 }
               )}
             >
-              {type === 'password' ? (
+              {t === 'password' ? (
                 <EyeSlash size={16} color="currentColor" />
               ) : (
                 <Eye size={16} color="currentColor" />
