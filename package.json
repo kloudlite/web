@@ -65,7 +65,7 @@
 		"dayjs": "^1.11.9",
 		"dayjs-parser": "^0.9.3",
 		"framer-motion": "^10.12.16",
-		"graphql": "^16.8.0",
+		"graphql": "^16.8.1",
 		"graphql-tag": "^2.12.6",
 		"isbot": "^3.6.10",
 		"js-cookie": "^3.0.5",
