@@ -502,16 +502,21 @@ const OptionMenuTabs = forwardRef<HTMLDivElement, IOptionMenuTabs>(
 
 OptionMenuTextInputItem.displayName = OptionMenuPrimitive.Item.displayName;
 
-const Root = ({ ...props }) => {
+interface IRoot {
+  children: ReactNode;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+}
+const Root = ({ ...props }: IRoot) => {
   const [open, setOpen] = useState(props.open);
 
   useEffect(() => {
-    if (props.onOpenChange) props.onOpenChange(open);
+    if (props.onOpenChange) props.onOpenChange(open || false);
   }, [open]);
 
   return (
     <OptionMenu open={open} onOpenChange={setOpen}>
-      {Children.map(props.children, (child) =>
+      {Children.map(props.children as ReactElement[], (child) =>
         cloneElement(child, {
           open,
         })
