@@ -134,6 +134,7 @@ export const ButtonBase = React.forwardRef<
         {
           'w-full': !!block,
           'w-fit': !block,
+          selected,
         },
         {
           'bodyMd-medium': !variant?.includes('plain'),

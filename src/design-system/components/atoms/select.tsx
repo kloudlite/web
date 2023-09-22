@@ -28,6 +28,7 @@ import AsyncSelect from 'react-select/async';
 import RCreatable from 'react-select/creatable';
 import { ChildrenProps } from '../types';
 import { cn } from '../utils';
+import AnimateHide from './animate-hide';
 
 declare module 'react-select/dist/declarations/src/Select' {
   export interface Props<
@@ -39,6 +40,7 @@ declare module 'react-select/dist/declarations/src/Select' {
   > {
     label?: string;
     size?: 'md' | 'lg';
+    error?: boolean;
   }
 }
 
@@ -73,6 +75,8 @@ interface ISelect<T, A> {
   multiselect?: A;
   placeholder?: string;
   onChange?: (value: ExtractOptionType<T, A>) => void;
+  error?: boolean;
+  message?: ReactNode;
 }
 const Control = <T,>(props: ControlProps<T, boolean>) => {
   const { selectProps } = props;
@@ -88,10 +92,16 @@ const Control = <T,>(props: ControlProps<T, boolean>) => {
       <components.Control
         {...props}
         className={cn(
-          'rounded border border-border-default bg-surface-basic-default flex flex-row items-center',
+          'rounded flex flex-row items-center',
           {
             'py-sm px-lg': selectProps.size === 'md',
             'py-md px-lg': selectProps.size === 'lg',
+          },
+          {
+            'border border-border-default bg-surface-basic-default':
+              !selectProps.error,
+            'border bg-surface-critical-subdued border-border-critical text-text-critical':
+              !!selectProps.error,
           }
         )}
       />
@@ -146,6 +156,7 @@ const IndicatorsContainer = <T,>(
 };
 
 const DropdownIndicator = <T,>(props: DropdownIndicatorProps<T, boolean>) => {
+  const { selectProps } = props;
   return (
     <components.DropdownIndicator {...props}>
       <svg
@@ -154,12 +165,15 @@ const DropdownIndicator = <T,>(props: DropdownIndicatorProps<T, boolean>) => {
         viewBox="0 0 16 16"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        className={cn({
+          'fill-icon-default': !selectProps.error,
+          'fill-icon-critical': !!selectProps.error,
+        })}
       >
         <path
           fillRule="evenodd"
           clipRule="evenodd"
           d="M3.74053 5.96715C3.54527 6.16241 3.22869 6.16241 3.03342 5.96715C2.83816 5.77189 2.83816 5.45531 3.03342 5.26004L7.64642 0.647046C7.84169 0.451783 8.15827 0.451783 8.35353 0.647046L12.9665 5.26004C13.1618 5.45531 13.1618 5.77189 12.9665 5.96715C12.7713 6.16241 12.4547 6.16241 12.2594 5.96715L7.99998 1.70771L3.74053 5.96715ZM3.74053 10.0329C3.54527 9.83763 3.22869 9.83763 3.03342 10.0329C2.83816 10.2282 2.83816 10.5447 3.03342 10.74L7.64642 15.353C7.84169 15.5483 8.15827 15.5483 8.35353 15.353L12.9665 10.74C13.1618 10.5447 13.1618 10.2282 12.9665 10.0329C12.7713 9.83763 12.4547 9.83763 12.2594 10.0329L7.99998 14.2923L3.74053 10.0329Z"
-          fill="#111827"
         />
       </svg>
     </components.DropdownIndicator>
@@ -211,8 +225,15 @@ const Option = ({ children, ...props }: OptionProps<IOption, boolean>) => {
 };
 
 const Placeholder = ({ children, ...props }: PlaceholderProps<IOption>) => {
+  const { selectProps } = props;
   return (
-    <components.Placeholder {...props} className="text-text-default/80 bodyMd">
+    <components.Placeholder
+      {...props}
+      className={cn('bodyMd', {
+        'text-text-default/80': !selectProps.error,
+        'text-text-critical/80': !!selectProps.error,
+      })}
+    >
       {children}
     </components.Placeholder>
   );
@@ -278,58 +299,77 @@ const Select = <T, A extends boolean | undefined = undefined>({
   multiselect = false,
   placeholder = '',
   onChange,
+  error,
+  message,
 }: ISelect<T, A>) => {
   const portalRef = useContext(SelectContext);
   let Component = creatable ? RCreatable : RSelect;
   Component = async ? AsyncSelect : Component;
 
   return (
-    <Component<IOption, boolean>
-      classNames={{
-        control: (state) => {
-          return state.isFocused
-            ? 'ring-offset-1 ring-2 ring-border-focus'
-            : '';
-        },
-      }}
-      menuPortalTarget={portalRef?.current}
-      label={label}
-      size={size}
-      isMulti={multiselect}
-      options={options as any}
-      value={value as any}
-      onChange={onChange as any}
-      styles={{
-        menu: () => ({}),
-        option: () => ({}),
-        menuPortal: (css) => {
-          return {
-            ...css,
-            zIndex: 9999,
-            pointerEvents: 'all',
-          };
-        },
-      }}
-      unstyled
-      placeholder={placeholder}
-      components={{
-        Control,
-        Input,
-        IndicatorsContainer,
-        DropdownIndicator,
-        ValueContainer,
-        SingleValue,
-        IndicatorSeparator: null,
-        Menu,
-        MenuList,
-        Option,
-        Placeholder,
-        MultiValueContainer,
-        MultiValueRemove,
-        ClearIndicator,
-        GroupHeading,
-      }}
-    />
+    <div>
+      <Component<IOption, boolean>
+        classNames={{
+          control: (state) => {
+            return state.isFocused
+              ? 'ring-offset-1 ring-2 ring-border-focus'
+              : '';
+          },
+        }}
+        menuPortalTarget={portalRef?.current}
+        label={label}
+        size={size}
+        isMulti={multiselect}
+        options={options as any}
+        value={value as any}
+        onChange={onChange as any}
+        error={error}
+        styles={{
+          menu: () => ({}),
+          option: () => ({}),
+          menuPortal: (css) => {
+            return {
+              ...css,
+              zIndex: 9999,
+              pointerEvents: 'all',
+            };
+          },
+        }}
+        unstyled
+        placeholder={placeholder}
+        components={{
+          Control,
+          Input,
+          IndicatorsContainer,
+          DropdownIndicator,
+          ValueContainer,
+          SingleValue,
+          IndicatorSeparator: null,
+          Menu,
+          MenuList,
+          Option,
+          Placeholder,
+          MultiValueContainer,
+          MultiValueRemove,
+          ClearIndicator,
+          GroupHeading,
+        }}
+      />
+      <AnimateHide show={!!message}>
+        <div
+          className={cn(
+            'bodySm',
+            {
+              'text-text-critical': !!error,
+              'text-text-default': !error,
+            },
+            'pt-md'
+          )}
+        >
+          {message}
+        </div>
+      </AnimateHide>
+    </div>
   );
 };
 

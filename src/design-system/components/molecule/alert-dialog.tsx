@@ -5,7 +5,7 @@ import { ReactNode } from 'react';
 import { IButton, IconButton, Button as NativeButton } from '../atoms/button';
 import { cn } from '../utils';
 
-export const Header = ({ children }: { children: ReactNode }) => {
+const Header = ({ children }: { children: ReactNode }) => {
   return (
     <div className="bg-surface-basic-active p-3xl flex flex-row items-center justify-between">
       <PrimitiveAlertDialog.Title className="headingLg text-text-strong">
@@ -18,21 +18,31 @@ export const Header = ({ children }: { children: ReactNode }) => {
   );
 };
 
-export const Content = ({ children }: { children: ReactNode }) => {
+const Content = ({ children }: { children: ReactNode }) => {
   return <div className="p-3xl bodyMd">{children}</div>;
 };
 
-export const Footer = ({ children }: { children: ReactNode }) => {
+const Footer = ({ children }: { children: ReactNode }) => {
   return (
     <div className="p-3xl flex flex-row justify-end gap-lg">{children}</div>
   );
 };
 
-export const Button = (props: IButton) => {
+interface IPopupButton extends IButton {
+  closable?: boolean;
+}
+
+const Button = (props: IPopupButton) => {
+  const { closable = false } = props;
   return (
-    <PrimitiveAlertDialog.Cancel asChild>
-      <NativeButton {...props} />
-    </PrimitiveAlertDialog.Cancel>
+    <>
+      {closable && (
+        <PrimitiveAlertDialog.Cancel asChild>
+          <NativeButton {...props} />
+        </PrimitiveAlertDialog.Cancel>
+      )}
+      {!closable && <NativeButton {...props} />}
+    </>
   );
 };
 
@@ -43,12 +53,7 @@ interface IDialog {
   backdrop?: boolean;
 }
 
-export const DialogRoot = ({
-  show,
-  onOpenChange,
-  children,
-  backdrop = true,
-}: IDialog) => {
+const Root = ({ show, onOpenChange, children, backdrop = true }: IDialog) => {
   return (
     <PrimitiveAlertDialog.Root
       open={show}
@@ -91,3 +96,13 @@ export const DialogRoot = ({
     </PrimitiveAlertDialog.Root>
   );
 };
+
+const AlertDialog = {
+  Root,
+  Content,
+  Header,
+  Footer,
+  Button,
+};
+
+export default AlertDialog;

@@ -343,7 +343,7 @@ export const NumberInput = ({
                   'flex-1 p-sm disabled:text-icon-disabled hover:bg-surface-basic-hovered active:bg-surface-basic-pressed'
                 )}
               >
-                <CaretUpFill size={16} color="currentColor" />
+                <CaretUpFill size={12} color="currentColor" />
               </button>
               <button
                 type="button"
@@ -361,7 +361,7 @@ export const NumberInput = ({
                   'flex-1 p-sm disabled:text-icon-disabled hover:bg-surface-basic-hovered active:bg-surface-basic-pressed'
                 )}
               >
-                <CaretDownFill size={16} color="currentColor" />
+                <CaretDownFill size={12} color="currentColor" />
               </button>
             </div>
           </div>

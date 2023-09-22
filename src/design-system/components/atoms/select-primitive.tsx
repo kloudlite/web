@@ -1,16 +1,34 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import { useId, useMemo } from 'react';
+import { ChangeEventHandler, ReactNode, useId, useMemo } from 'react';
 import { cn } from '../utils';
 
-export const Option = ({ children, value = '', ...props }) => {
+interface IOption {
+  children?: ReactNode;
+  value: string;
+  disabled?: boolean;
+}
+const Option = ({ children, value = '', disabled, ...props }: IOption) => {
   return (
-    <option value={value} {...props}>
+    <option value={value} disabled={disabled} {...props}>
       {children}
     </option>
   );
 };
 
-export const Root = (props) => {
+interface IRoot {
+  disabled?: boolean;
+  value: string;
+  onChange?: ChangeEventHandler<HTMLSelectElement>;
+  className?: string;
+  children: ReactNode;
+  label?: ReactNode;
+  size?: 'md' | 'lg';
+  block?: boolean;
+  error?: boolean;
+  message?: ReactNode;
+}
+
+export const Root = (props: IRoot) => {
   const {
     disabled,
     value,
@@ -27,12 +45,24 @@ export const Root = (props) => {
   const tempId = useId();
   const id = useMemo(() => tempId, []);
   return (
-    <div className="flex flex-col gap-md">
-      {label && (
-        <label className="bodyMd-medium select-none" htmlFor={id}>
+    <div className="flex flex-col">
+      <div
+        className={cn('flex items-center', {
+          'pb-md': !!label,
+        })}
+      >
+        <label
+          className="flex-1 select-none bodyMd-medium text-text-default"
+          htmlFor={id}
+        >
           {label}
         </label>
-      )}
+        <div
+          className={cn({
+            'h-4xl': !!label,
+          })}
+        />
+      </div>
       <select
         {...extraProps}
         id={id}
