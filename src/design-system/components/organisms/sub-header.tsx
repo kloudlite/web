@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 import { IconButton } from '../atoms/button';
 
 interface ISubHeader {
-  title: string;
+  title: ReactNode;
   actions: ReactNode;
   backUrl?: string;
   LinkComponent?: any;
