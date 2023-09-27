@@ -180,8 +180,9 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
               'rounded bodyMd bg-transparent',
               {
                 'text-text-critical placeholder:text-text-critical/70 bgh':
-                  error,
-                'text-text-default': !error,
+                  error && !disabled,
+                'text-text-default': !error && !disabled,
+                'text-text-disabled': disabled,
               },
               {
                 'py-xl': size === 'lg',
