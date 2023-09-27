@@ -5,8 +5,14 @@ interface IAnimateHide {
   children: ReactNode;
   show: boolean;
   initial?: boolean;
+  className?: string;
 }
-const AnimateHide = ({ children, show, initial = false }: IAnimateHide) => {
+const AnimateHide = ({
+  children,
+  show,
+  initial = false,
+  className,
+}: IAnimateHide) => {
   return (
     <AnimatePresence initial={initial}>
       {show && (
@@ -26,6 +32,7 @@ const AnimateHide = ({ children, show, initial = false }: IAnimateHide) => {
             height: 0,
             y: -5,
           }}
+          className={className}
         >
           {children}
         </motion.div>
