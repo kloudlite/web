@@ -36,6 +36,7 @@ export interface IInputRow {
   placeholder?: string;
   size?: InputSizes;
   name?: string;
+  tabIndex?: number;
 
   onFocus?: FocusEventHandler;
   onBlur?: FocusEventHandler;
@@ -106,6 +107,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
       prefixIcon,
       suffixIcon,
       id,
+      tabIndex,
       ...extraProps
     } = props;
     const [t, setT] = useState(type || 'text');
@@ -172,6 +174,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
             type={t}
             placeholder={placeholder}
             id={id}
+            tabIndex={tabIndex}
             className={cn(
               'outline-none flex-1 w-full',
               'rounded bodyMd bg-transparent',
