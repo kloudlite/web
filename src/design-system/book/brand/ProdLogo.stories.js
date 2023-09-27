@@ -1,4 +1,4 @@
-import {ProdLogo} from "../../components/branding/prod-logo.jsx";
+import { ProdLogo } from '~/components/branding/prod-logo';
 
 export default {
   title: 'Branding/ProdLogo',
@@ -8,14 +8,11 @@ export default {
 };
 
 export const BasicLogo = {
-  args:{
-
-  }
-}
+  args: {},
+};
 
 export const DetailedLogo = {
   args: {
-    detailed: true
+    detailed: true,
   },
 };
-

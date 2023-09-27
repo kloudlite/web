@@ -1,4 +1,4 @@
-import { NumberInput } from '../../components/atoms/input.jsx';
+import { NumberInput } from '~/components/atoms/input';
 
 export default {
   title: 'Atoms/NumberInput',
@@ -12,6 +12,5 @@ export const DefaultTextInput = {
     label: 'Default',
     defaultValue: 4,
     disabled: false,
-    onChange: (e) => console.log(e),
   },
 };
