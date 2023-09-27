@@ -72,6 +72,7 @@ export interface IButton extends IBaseButton {
   loading?: boolean;
   variant?: ButtonVariants | IconButtonVariants;
   size?: ButtonSizes;
+  tabIndex?: number;
 }
 export const ButtonBase = React.forwardRef<
   HTMLButtonElement,
@@ -98,6 +99,7 @@ export const ButtonBase = React.forwardRef<
     content,
     size = 'md',
     loading = false,
+    tabIndex,
     ...mprops
   } = props;
 
@@ -130,6 +132,7 @@ export const ButtonBase = React.forwardRef<
       {...extraProps}
       ref={ref}
       type={type}
+      tabIndex={tabIndex}
       className={cn(
         {
           'w-full': !!block,
