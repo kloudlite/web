@@ -1,8 +1,8 @@
-import { ProgressTracker } from '../../components/organisms/progress-tracker';
+import ProgressTracker from '~/components/organisms/progress-tracker';
 
 export default {
   title: 'Organisms/Progress Tracker',
-  component: ProgressTracker,
+  component: ProgressTracker.Root,
   tags: ['autodocs'],
   argTypes: {},
 };
