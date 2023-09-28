@@ -326,7 +326,7 @@ interface ToolbarButtonGroupButtonProps
   extends ToolbarToggleItemPropsBase,
     Omit<
       IButtonGroupButton,
-      'value' | 'content' | 'onPointerDown' | 'type' | 'prefix' | 'children'
+      'value' | 'onPointerDown' | 'type' | 'prefix' | 'children'
     > {
   'is-menu-button'?: string;
   'data-state'?: string;
@@ -348,6 +348,7 @@ const ToolbarButtonGroupButton = React.forwardRef<
       <ToggleGroupPrimitive.Item
         {...toggleGroupScope}
         {...toggleItemProps}
+        content={toggleItemProps.content as string}
         ref={forwardedRef}
         asChild
         value={value as string}
@@ -358,6 +359,7 @@ const ToolbarButtonGroupButton = React.forwardRef<
           className={cn('-ml-xs first:rounded-l last:rounded-r first:ml-0')}
           variant="basic"
           {...extraProps}
+          content={toggleItemProps.content}
         />
       </ToggleGroupPrimitive.Item>
     </ToolbarButtonBase>
