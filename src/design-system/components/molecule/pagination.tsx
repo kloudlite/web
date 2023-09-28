@@ -9,13 +9,12 @@ interface IUsePagination<T> {
   itemsPerPage: number;
 }
 
-export const usePagination = <T extends Record<string, any>[]>({
+export const usePagination = <T extends Array<any>>({
   items,
   itemsPerPage,
 }: IUsePagination<T>) => {
-  const k: T = [];
   const [listItems, setListItems] = useState(items);
-  const [page, setPage] = useState<T>(k);
+  const [page, setPage] = useState<typeof items>();
   const [pageNumber, setPageNumber] = useState(1);
   const [hasNext, setHasNext] = useState(false);
   const [hasPrevious, setHasPrevious] = useState(false);
@@ -34,10 +33,9 @@ export const usePagination = <T extends Record<string, any>[]>({
         );
         setPageNumber((prev) => prev - 1);
       }
-      setPage(tempItems);
+      setPage(tempItems as T);
     } else {
       setPageNumber(1);
-      setPage([]);
     }
   }, [listItems]);
 
@@ -61,7 +59,7 @@ export const usePagination = <T extends Record<string, any>[]>({
         listItems.slice(
           pageNumber * itemsPerPage,
           (pageNumber + 1) * itemsPerPage
-        )
+        ) as T
       );
       setPageNumber((prev) => prev + 1);
     }
@@ -73,7 +71,7 @@ export const usePagination = <T extends Record<string, any>[]>({
         listItems.slice(
           (pageNumber - 1 - 1) * itemsPerPage,
           (pageNumber - 1) * itemsPerPage
-        )
+        ) as T
       );
       setPageNumber((prev) => prev - 1);
     }
@@ -82,7 +80,7 @@ export const usePagination = <T extends Record<string, any>[]>({
   const onPageChange = () => {};
 
   return {
-    page,
+    page: page || [],
     pageNumber,
     hasNext,
     hasPrevious,
