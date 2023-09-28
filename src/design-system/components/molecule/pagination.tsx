@@ -4,15 +4,18 @@ import { useEffect, useId, useRef, useState } from 'react';
 import { Button } from '../atoms/button';
 import { cn } from '../utils';
 
-export const usePagination = ({
-  items,
-  itemsPerPage = 5,
-}: {
-  items: Array<any>;
+interface IUsePagination<T> {
+  items: T;
   itemsPerPage: number;
-}) => {
+}
+
+export const usePagination = <T extends Record<string, any>[]>({
+  items,
+  itemsPerPage,
+}: IUsePagination<T>) => {
+  const k: T = [];
   const [listItems, setListItems] = useState(items);
-  const [page, setPage] = useState<Array<any>>([]);
+  const [page, setPage] = useState<T>(k);
   const [pageNumber, setPageNumber] = useState(1);
   const [hasNext, setHasNext] = useState(false);
   const [hasPrevious, setHasPrevious] = useState(false);
