@@ -21,7 +21,7 @@ const ScrollArea = ({
     setIsScrolled(target.scrollLeft > 0);
   };
   return (
-    <div className={cn('w-0 relative pl-[3px] -ml-[3px]', className)}>
+    <div className={cn('w-0 relative', className)}>
       {isScrolled && leftblur && (
         <div
           className={cn(
@@ -29,16 +29,18 @@ const ScrollArea = ({
             {
               'from-surface-basic-subdued': !blurfrom,
             },
+
             blurfrom
           )}
         />
       )}
       <div
-        className="no-scrollbar overflow-y-hidden flex flex-row"
+        tabIndex={-1}
+        className="no-scrollbar overflow-x-scroll flex flex-row py-[3px] pl-[3px] -ml-[3px] pr-2xl whitespace-nowrap"
         onScroll={handleScroll}
       >
         {children}
-        {rightblur && <div className="min-w-[16px]" />}
+        {rightblur && <div className="w-[3px] min-w-[3px]" />}
       </div>
       {rightblur && (
         <div
