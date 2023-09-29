@@ -87,6 +87,7 @@ const TabBase = ({
         }
       )}
     >
+      <div className="h-md bg-none w-full z-0" />
       <RovingFocusGroup.Item
         asChild
         focusable
@@ -103,8 +104,8 @@ const TabBase = ({
           onClick={onClick}
           className={cn(
             'z-10 tab-item gap-lg outline-none flex flex-row items-center w-max',
-            // 'ring-offset-1 focus-visible:ring-2 focus-visible:ring-border-focus',
-            'focus-visible:shadow-focus',
+            'ring-offset-0 focus-visible:ring-2 focus-visible:ring-border-focus',
+            // 'focus-visible:shadow-focus',
             {
               ...((!fitted || variant === 'filled') && {
                 'px-2xl py-lg': size === 'md',
@@ -112,7 +113,7 @@ const TabBase = ({
                 'rounded-lg': true,
               }),
               ...(fitted && {
-                'py-lg': variant !== 'filled',
+                'py-md': variant !== 'filled',
               }),
             }
           )}
@@ -144,9 +145,7 @@ const TabBase = ({
         />
       )}
 
-      {variant === 'plain' && (
-        <div className="h-md bg-none absolute bottom-0 w-full z-0" />
-      )}
+      {variant === 'plain' && <div className="h-md bg-none w-full z-0" />}
     </div>
   );
 };
@@ -183,7 +182,7 @@ const Root = forwardRef<HTMLDivElement, ITabs<any>>(
         orientation="horizontal"
         loop
         className={cn(
-          'flex flex-row items-center py-[3px] pl-[3px] -my-[3px] -ml-[3px] transition-all',
+          'flex flex-row items-center transition-all',
           'snap-x',
           {
             'md:gap-4xl': size === 'md' && variant !== 'filled',

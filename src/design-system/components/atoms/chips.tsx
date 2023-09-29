@@ -1,5 +1,6 @@
 import { Spinner, XFill } from '@jengaicons/react';
 import * as RovingFocusGroup from '@radix-ui/react-roving-focus';
+import { motion } from 'framer-motion';
 import React, {
   ReactElement,
   ReactNode,
@@ -9,7 +10,6 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { motion } from 'framer-motion';
 import { cn } from '../utils';
 
 type ChipTypes =
@@ -81,7 +81,7 @@ const ChipBase = React.forwardRef<HTMLButtonElement, IChipBase>(
         className={cn(
           'rounded border bodySm-medium py-px flex items-center transition-all outline-none flex-row gap-md ring-offset-1 h-fit',
           'focus-within:ring-2 focus-within:ring-border-focus',
-          'w-fit',
+          'w-fit flex-shrink-0',
           {
             'text-text-default': !disabled,
             'text-text-disabled': disabled,
