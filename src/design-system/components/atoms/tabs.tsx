@@ -102,7 +102,9 @@ const TabBase = ({
           {...(to ? (Component === 'a' ? { href: to } : { to }) : {})}
           onClick={onClick}
           className={cn(
-            'z-10 tab-item gap-lg outline-none flex flex-row items-center ring-offset-1 focus-visible:ring-2 focus-visible:ring-border-focus w-max',
+            'z-10 tab-item gap-lg outline-none flex flex-row items-center w-max',
+            // 'ring-offset-1 focus-visible:ring-2 focus-visible:ring-border-focus',
+            'focus-visible:shadow-focus',
             {
               ...((!fitted || variant === 'filled') && {
                 'px-2xl py-lg': size === 'md',
