@@ -2,6 +2,7 @@ import { Spinner, XFill } from '@jengaicons/react';
 import * as RovingFocusGroup from '@radix-ui/react-roving-focus';
 import React, {
   ReactElement,
+  ReactNode,
   cloneElement,
   forwardRef,
   useEffect,
@@ -21,7 +22,7 @@ type ItemType = any;
 
 interface IChipBase {
   item: ItemType;
-  label: string;
+  label: ReactNode;
   disabled?: boolean;
   compType?: ChipTypes;
   onRemove?: (item: ItemType, isKeyBoard?: boolean) => void;
@@ -33,7 +34,7 @@ interface IChipBase {
 
 interface IChip {
   item: ItemType;
-  label: string;
+  label: ReactNode;
   disabled?: boolean;
   type?: ChipTypes;
   onRemove?: (item: ItemType, isKeyBoard?: boolean) => void;
