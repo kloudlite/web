@@ -25,25 +25,38 @@ export interface IAvatar {
 }
 
 export const AvatarBase = ({ size = 'md', color = 'one', image }: IAvatar) => {
+  const isExternal = !Object.keys(colors).includes(color);
+  console.log(color);
+
   return (
     <div
+      style={
+        isExternal
+          ? {
+              background: color,
+            }
+          : {}
+      }
       className={cn(
         'relative flex flex-row items-center justify-center',
         'outline-none transition-all',
-        'rounded-full bg-surface-basic-default',
+        'rounded-full',
         'border border-border-default',
         {
           'w-8xl h-8xl p-lg': size === 'lg',
           'w-6xl h-6xl p-md': size === 'md',
           'w-5xl h-5xl p-md': size === 'sm',
           'w-4xl h-4xl p-md': size === 'xs',
+        },
+        {
+          'bg-surface-basic-default': !isExternal,
         }
       )}
     >
       {image && (
         <span
-          // @ts-ignore
-          className={cn(`${colors[color][1]}`)}
+        // @ts-ignore
+        // className={cn(`${isExternal ? colors[color][1] : 'text-white'}`)}
         >
           {image}
         </span>
