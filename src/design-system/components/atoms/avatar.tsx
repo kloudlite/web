@@ -26,7 +26,6 @@ export interface IAvatar {
 
 export const AvatarBase = ({ size = 'md', color = 'one', image }: IAvatar) => {
   const isExternal = !Object.keys(colors).includes(color);
-  console.log(color);
 
   return (
     <div
