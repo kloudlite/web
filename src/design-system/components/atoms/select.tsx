@@ -44,13 +44,11 @@ declare module 'react-select/dist/declarations/src/Select' {
   }
 }
 
-type IOption =
-  | {
-      label: string;
-      value: string;
-      render?: () => ReactNode;
-    }
-  | { value: string; render: () => ReactNode; label?: string };
+type IOption = {
+  label: string;
+  value: string;
+  render?: () => ReactNode;
+};
 
 interface IGroup<T> {
   label: string;
@@ -77,6 +75,7 @@ interface ISelect<T, A> {
   onChange?: (value: ExtractOptionType<T, A>) => void;
   error?: boolean;
   message?: ReactNode;
+  disabled?: boolean;
 }
 const Control = <T,>(props: ControlProps<T, boolean>) => {
   const { selectProps } = props;
@@ -102,6 +101,8 @@ const Control = <T,>(props: ControlProps<T, boolean>) => {
               !selectProps.error,
             'border bg-surface-critical-subdued border-border-critical text-text-critical':
               !!selectProps.error,
+            'text-text-disabled border-border-disabled bg-surface-basic-input':
+              selectProps.isDisabled,
           }
         )}
       />
@@ -140,11 +141,16 @@ const SingleValue = <T extends IOption>({
   children,
   ...props
 }: SingleValueProps<T>) => {
-  console.log(props, children);
-  const { data } = props;
+  const { selectProps } = props;
   return (
-    <components.SingleValue {...props} className="bodyMd text-text-default">
-      {data?.render ? data.render() : children}
+    <components.SingleValue
+      {...props}
+      className={cn('bodyMd', {
+        'text-text-default': !selectProps.isDisabled,
+        'text-text-disabled': selectProps.isDisabled,
+      })}
+    >
+      {children}
     </components.SingleValue>
   );
 };
@@ -168,6 +174,7 @@ const DropdownIndicator = <T,>(props: DropdownIndicatorProps<T, boolean>) => {
         className={cn({
           'fill-icon-default': !selectProps.error,
           'fill-icon-critical': !!selectProps.error,
+          'fill-icon-disabled': selectProps.isDisabled,
         })}
       >
         <path
@@ -230,8 +237,9 @@ const Placeholder = ({ children, ...props }: PlaceholderProps<IOption>) => {
     <components.Placeholder
       {...props}
       className={cn('bodyMd', {
-        'text-text-default/80': !selectProps.error,
-        'text-text-critical/80': !!selectProps.error,
+        'text-text-default/60': !selectProps.error && !selectProps.isDisabled,
+        'text-text-critical/60': !!selectProps.error && !selectProps.isDisabled,
+        'text-text-disabled': selectProps.isDisabled,
       })}
     >
       {children}
@@ -301,6 +309,7 @@ const Select = <T, A extends boolean | undefined = undefined>({
   onChange,
   error,
   message,
+  disabled = false,
 }: ISelect<T, A>) => {
   const portalRef = useContext(SelectContext);
   let Component = creatable ? RCreatable : RSelect;
@@ -318,6 +327,7 @@ const Select = <T, A extends boolean | undefined = undefined>({
         }}
         menuPortalTarget={portalRef?.current}
         label={label}
+        isDisabled={disabled}
         size={size}
         isMulti={multiselect}
         options={options as any}

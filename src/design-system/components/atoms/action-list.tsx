@@ -6,6 +6,7 @@ interface IActionList {
   children: ReactNode;
   value: string;
   onChange?: (value: string) => void;
+  onClick?: (e: Event, route: string) => void;
   LinkComponent?: any;
   showIndicator?: boolean;
 }
@@ -23,7 +24,7 @@ export interface IActionItem {
 export interface IActionItemBase extends IActionItem {
   LinkComponent?: any;
   active?: boolean;
-  onClick?: () => void;
+  onClick?: (e: Event) => void;
   showIndicator?: boolean;
 }
 
@@ -127,6 +128,7 @@ export const Root = ({
   onChange = () => {},
   LinkComponent,
   showIndicator = true,
+  onClick,
 }: IActionList) => {
   const props = { children, value, onChange, LinkComponent };
 
@@ -140,8 +142,9 @@ export const Root = ({
           <Item
             {...child.props}
             LinkComponent={LinkComponent}
-            onClick={() => {
+            onClick={(e) => {
               if (onChange) onChange(child.props?.value);
+              onClick?.(e, child.props.to);
             }}
             active={child.props.value === value}
             showIndicator={showIndicator}
