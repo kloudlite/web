@@ -2,6 +2,9 @@
 module.exports = function typography() {
   return ({ addComponents }) => {
     addComponents({
+      '.bodyMono': {
+        '@apply text-sm leading-sm font-mono': {},
+      },
       '.bodySm': {
         '@apply text-xs leading-xs': {},
       },
