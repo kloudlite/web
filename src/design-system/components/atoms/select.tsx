@@ -46,6 +46,7 @@ declare module 'react-select/dist/declarations/src/Select' {
 
 type IOption = {
   label: string;
+  labelValueIcon?: ReactNode;
   value: string;
   render?: () => ReactNode;
 };
@@ -83,7 +84,7 @@ const Control = <T,>(props: ControlProps<T, boolean>) => {
   return (
     <div className="flex flex-col gap-md">
       {selectProps.label && (
-        <div className="bodyMd-medium text-text-default h-4xl">
+        <div className="bodyMd-medium text-text-default h-4xl pulsable">
           {selectProps.label}
         </div>
       )}
@@ -91,7 +92,7 @@ const Control = <T,>(props: ControlProps<T, boolean>) => {
       <components.Control
         {...props}
         className={cn(
-          'rounded flex flex-row items-center',
+          'rounded flex flex-row items-center pulsable',
           {
             'py-sm px-lg': selectProps.size === 'md',
             'py-md px-lg': selectProps.size === 'lg',
@@ -141,15 +142,18 @@ const SingleValue = <T extends IOption>({
   children,
   ...props
 }: SingleValueProps<T>) => {
-  const { selectProps } = props;
+  const { selectProps, data } = props;
+  const { labelValueIcon } = data;
+
   return (
     <components.SingleValue
       {...props}
-      className={cn('bodyMd', {
+      className={cn('flex flex-row items-center gap-lg bodyMd', {
         'text-text-default': !selectProps.isDisabled,
         'text-text-disabled': selectProps.isDisabled,
       })}
     >
+      {labelValueIcon && <span>{labelValueIcon}</span>}
       {children}
     </components.SingleValue>
   );
@@ -368,7 +372,7 @@ const Select = <T, A extends boolean | undefined = undefined>({
       <AnimateHide show={!!message}>
         <div
           className={cn(
-            'bodySm',
+            'bodySm pulsable',
             {
               'text-text-critical': !!error,
               'text-text-default': !error,
