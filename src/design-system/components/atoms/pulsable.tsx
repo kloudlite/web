@@ -73,7 +73,9 @@ const Pulsable = ({
           // @ts-ignore
           ch.classList?.remove('pulse-child-element');
 
+          // @ts-ignore
           if (!ch?.classList.contains('pulse-has-disabled-attr')) {
+            // @ts-ignore
             ch?.removeAttribute('disabled');
           }
         });
