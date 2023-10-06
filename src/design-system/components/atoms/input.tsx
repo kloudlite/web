@@ -16,7 +16,7 @@ import {
   forwardRef,
   useId,
   useRef,
-  useState,
+  useState
 } from 'react';
 import { cn } from '../utils';
 import AnimateHide from './animate-hide';
@@ -37,6 +37,7 @@ export interface IInputRow {
   size?: InputSizes;
   name?: string;
   tabIndex?: number;
+  shimmerLoading?: boolean;
 
   onFocus?: FocusEventHandler;
   onBlur?: FocusEventHandler;
@@ -108,6 +109,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
       suffixIcon,
       id,
       tabIndex,
+      shimmerLoading,
       ...extraProps
     } = props;
     const [t, setT] = useState(type || 'text');
@@ -117,29 +119,31 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
     const containerRef = useRef<HTMLDivElement>(null);
     return (
       <div className={cn('flex flex-col')}>
-        <div
-          className={cn('flex items-center', {
-            'pb-md': !!label || !!extra,
-          })}
-        >
-          <label
-            className="flex-1 select-none bodyMd-medium text-text-default"
-            htmlFor={id}
-          >
-            {label}
-          </label>
+        {(label || extra) && (
           <div
-            className={cn({
-              'h-4xl': !!label || !!extra,
+            className={cn('flex items-center justify-between gap-md', {
+              'pb-md': !!label || !!extra,
             })}
           >
-            {extra && cloneElement(extra)}
+            <label
+              className="select-none bodyMd-medium text-text-default pulsable min-w-[33%]"
+              htmlFor={id}
+            >
+              {label}
+            </label>
+            <div
+              className={cn({
+                'h-4xl pulsable': !!label || !!extra,
+              })}
+            >
+              {extra && cloneElement(extra)}
+            </div>
           </div>
-        </div>
+        )}
         <div
           ref={containerRef}
           className={cn(
-            'transition-all px-lg rounded border flex flex-row items-center relative ring-offset-1',
+            'transition-all px-lg rounded border flex flex-row items-center relative ring-offset-1 pulsable',
             {
               'text-text-critical bg-surface-critical-subdued border-border-critical':
                 error,
@@ -160,7 +164,10 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
                 'text-text-disabled': disabled,
               })}
             >
-              {cloneElement(prefixIcon, { size: 16, color: 'currentColor' })}
+              {cloneElement(prefixIcon, {
+                size: 16,
+                color: 'currentColor',
+              })}
             </div>
           )}
           {!!prefix && <div className="cursor-default">{prefix}</div>}
@@ -231,7 +238,10 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
                 'text-text-disabled': disabled,
               })}
             >
-              {cloneElement(suffixIcon, { color: 'currentColor', size: 16 })}
+              {cloneElement(suffixIcon, {
+                color: 'currentColor',
+                size: 16,
+              })}
             </div>
           )}
           {showclear && !disabled && (
@@ -277,7 +287,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
         <AnimateHide show={!!message}>
           <div
             className={cn(
-              'bodySm',
+              'bodySm pulsable',
               {
                 'text-text-critical': error,
                 'text-text-default': !error,

@@ -28,3 +28,10 @@ select{
 }
 
 #loadOverlay{display: none;}
+
+.pulse-element{
+    @apply !text-transparent !relative !border-0
+}
+.pulse-child-element{
+    @apply opacity-0
+}
