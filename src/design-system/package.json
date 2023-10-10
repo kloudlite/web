@@ -1,5 +1,5 @@
 {
-  "name": "stories",
+  "name": "kl-design-system",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,6 +7,8 @@
     "dev": "storybook dev -p 6006",
     "build-storybook": "storybook build -o ./dist/storybook"
   },
+  "types": "./dist/@types",
+
   "keywords": [],
   "author": "",
   "license": "ISC",
