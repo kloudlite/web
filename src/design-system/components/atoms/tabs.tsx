@@ -87,7 +87,7 @@ const TabBase = ({
         }
       )}
     >
-      <div className="h-md bg-none w-full z-0" />
+      {variant === 'plain' && <div className="h-md bg-none w-full z-0" />}
       <RovingFocusGroup.Item
         asChild
         focusable
@@ -203,7 +203,11 @@ const Root = forwardRef<HTMLDivElement, ITabs<any>>(
               const tabChildProps: ITab = tabChild.props;
 
               return (
-                <motion.div className="px-xl md:px-0 snap-start">
+                <motion.div
+                  className={cn('snap-start', {
+                    'px-xl md:px-0': variant === 'plain',
+                  })}
+                >
                   <TabBase
                     {...tabChildProps}
                     onClick={() => {

@@ -9,6 +9,7 @@ interface IActionList {
   onClick?: (e: Event, route: string) => void;
   LinkComponent?: any;
   showIndicator?: boolean;
+  className?: string;
 }
 
 export interface IActionItem {
@@ -129,6 +130,7 @@ export const Root = ({
   LinkComponent,
   showIndicator = true,
   onClick,
+  className,
 }: IActionList) => {
   const props = { children, value, onChange, LinkComponent };
 
@@ -136,7 +138,7 @@ export const Root = ({
   id = useMemo(() => id, [props]);
 
   return (
-    <div className={cn('flex flex-col gap-y-md')}>
+    <div className={cn('flex flex-col gap-y-md', className)}>
       <LayoutGroup id={id}>
         {React.Children.map(children as ReactElement[], (child) => (
           <Item

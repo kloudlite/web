@@ -44,6 +44,8 @@ interface IOptionMenuItem extends IBase {
 interface IOptionMenuLink extends IBase {
   LinkComponent?: any;
   to: string;
+  target?: string;
+  rel?: string;
 }
 
 interface IOptionMenuTextInput
@@ -173,7 +175,7 @@ const OptionMenuItem = forwardRef<HTMLDivElement, IOptionMenuItem>(
 OptionMenuItem.displayName = OptionMenuPrimitive.Item.displayName;
 
 const OptionMenuLink = forwardRef<HTMLDivElement, IOptionMenuLink>(
-  ({ className, LinkComponent = 'a', to = '', children }, ref) => {
+  ({ className, LinkComponent = 'a', to = '', target, rel, children }, ref) => {
     let Component: any = LinkComponent;
 
     if (to) {
@@ -194,7 +196,11 @@ const OptionMenuLink = forwardRef<HTMLDivElement, IOptionMenuLink>(
         {...preventDefaultEvents}
         asChild
       >
-        <Component {...(Component === 'a' ? { href: to } : { to })}>
+        <Component
+          {...(Component === 'a' ? { href: to } : { to })}
+          target={target}
+          rel={rel}
+        >
           {children}
         </Component>
       </OptionMenuPrimitive.Item>
