@@ -1,5 +1,4 @@
-// @ts-nocheck
-module.exports = function noScrollbar() {
+function noScrollbar() {
   return ({ addComponents }) => {
     addComponents({
       '.no-spinner::-webkit-inner-spin-button, .no-spinner::-webkit-outer-spin-button':
@@ -12,4 +11,6 @@ module.exports = function noScrollbar() {
       },
     });
   };
-};
+}
+
+export default noScrollbar;

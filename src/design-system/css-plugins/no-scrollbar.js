@@ -1,5 +1,4 @@
-// @ts-nocheck
-module.exports = function noScrollbar() {
+function noScrollbar() {
   return ({ addComponents }) => {
     addComponents({
       '.no-scrollbar-base::-webkit-scrollbar': {
@@ -14,4 +13,6 @@ module.exports = function noScrollbar() {
       },
     });
   };
-};
+}
+
+export default noScrollbar;
