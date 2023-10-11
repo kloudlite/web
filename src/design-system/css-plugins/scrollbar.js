@@ -1,5 +1,4 @@
-// @ts-nocheck
-module.exports = function scrollbar() {
+function scrollbar() {
   return ({ addBase }) => {
     addBase({
       '*': {
@@ -22,4 +21,6 @@ module.exports = function scrollbar() {
       },
     });
   };
-};
+}
+
+export default scrollbar;

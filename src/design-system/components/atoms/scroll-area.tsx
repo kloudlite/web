@@ -1,5 +1,5 @@
 import { ReactNode, useState } from 'react';
-import { cn } from '~/components/utils';
+import { cn } from '../utils';
 
 interface IScrollArea {
   children: ReactNode;

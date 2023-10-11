@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import * as PopoverPrimitive from '@radix-ui/react-popover';
 import { ReactNode } from 'react';
-import { IButton, Button as NativeButton } from '~/components/atoms/button';
+import { IButton, Button as NativeButton } from './../atoms/button';
 import { ChildrenProps } from '../types';
 
 export const Trigger = ({ children }: ChildrenProps) => {
