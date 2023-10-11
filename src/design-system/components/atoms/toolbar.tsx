@@ -12,7 +12,7 @@ import { createRovingFocusGroupScope } from '@radix-ui/react-roving-focus';
 import * as SeparatorPrimitive from '@radix-ui/react-separator';
 import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
 import { createToggleGroupScope } from '@radix-ui/react-toggle-group';
-import { cn } from '../utils.jsx';
+import { cn } from '../utils';
 import {
   IButton,
   IIconButton,

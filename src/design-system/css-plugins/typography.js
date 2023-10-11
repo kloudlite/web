@@ -1,5 +1,4 @@
-// @ts-nocheck
-module.exports = function typography() {
+function typography() {
   return ({ addComponents }) => {
     addComponents({
       '.bodyMono': {
@@ -61,4 +60,6 @@ module.exports = function typography() {
       },
     });
   };
-};
+}
+
+export default typography;
