@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
-import { AvatarBase, IAvatar } from '../atoms/avatar.jsx';
-import { BounceIt } from '../bounce-it.jsx';
-import { cn } from '../utils.jsx';
+import { AvatarBase, IAvatar } from '../atoms/avatar';
+import { BounceIt } from '../bounce-it';
+import { cn } from '../utils';
 
 interface IProfile extends IAvatar {
   name: string;
