@@ -135,7 +135,7 @@ const TabBase = ({
         <motion.span
           layoutId="bubble"
           className="absolute inset-0 rounded-lg bg-surface-basic-default border border-border-default shadow-button"
-          transition={{ type: 'spring', bounce: 0.3, duration: 0.4 }}
+          transition={{ type: 'spring', bounce: 0.1, duration: 0.3 }}
         />
       )}
       {variant === 'plain' && hoverd && (
