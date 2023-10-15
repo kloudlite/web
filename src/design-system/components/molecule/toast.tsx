@@ -5,7 +5,11 @@ import {
   WarningCircle,
   X,
 } from '@jengaicons/react';
-import { ToastContainer as Container, toast as t } from 'react-toastify';
+import {
+  ToastContainer as Container,
+  ToastPosition,
+  toast as t,
+} from 'react-toastify';
 
 export const toast = {
   info: t.info,
@@ -35,7 +39,12 @@ const CloseButton = () => (
     <X color="currentColor" size={12} />
   </span>
 );
-export const ToastContainer = () => {
+
+interface IToastContainer {
+  autoClose?: number | false | undefined;
+  position?: ToastPosition;
+}
+export const ToastContainer = ({ autoClose, position }: IToastContainer) => {
   return (
     <Container
       toastClassName={({ type }: any) =>
@@ -49,8 +58,8 @@ export const ToastContainer = () => {
       hideProgressBar
       icon={({ type }) => icons[type]}
       closeButton={<CloseButton />}
-      position="top-right"
-      autoClose={false}
+      position={position || 'top-right'}
+      autoClose={autoClose}
     />
   );
 };
