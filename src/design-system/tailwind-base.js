@@ -143,6 +143,8 @@ const primitives = {
     '2xl': '28px',
     '3xl': '32px',
     '4xl': '40px',
+    '5xl': '48px',
+    '6xl': '64px',
   },
   lineHeight: {
     xs: '16px',
@@ -152,6 +154,8 @@ const primitives = {
     xl: '32px',
     '2xl': '40px',
     '3xl': '48px',
+    '5xl': '64px',
+    '6xl': '76px',
   },
 };
 
@@ -202,6 +206,7 @@ const config = {
     fontFamily: {
       sans: ['Inter', 'sans-serif'],
       mono: ['Roboto Mono', 'monospace'],
+      familjen: ['Familjen Grotesk', 'sans-serif'],
     },
     screens: {
       sm: '490px',
