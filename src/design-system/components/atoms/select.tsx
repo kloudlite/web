@@ -74,6 +74,7 @@ interface ISelect<T, A> {
   multiselect?: A;
   placeholder?: string;
   onChange?: (value: ExtractOptionType<T, A>) => void;
+  onCreateOption?(value: string): void;
   error?: boolean;
   message?: ReactNode;
   disabled?: boolean;
@@ -311,6 +312,7 @@ const Select = <T, A extends boolean | undefined = undefined>({
   multiselect = false,
   placeholder = '',
   onChange,
+  onCreateOption,
   error,
   message,
   disabled = false,
@@ -338,6 +340,7 @@ const Select = <T, A extends boolean | undefined = undefined>({
         value={value as any}
         onChange={onChange as any}
         error={error}
+        onCreateOption={onCreateOption}
         styles={{
           menu: () => ({}),
           option: () => ({}),
