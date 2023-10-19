@@ -37,6 +37,7 @@ export const AvatarBase = ({ size = 'md', color = 'one', image }: IAvatar) => {
           : {}
       }
       className={cn(
+        'pulsable pulsable-circle',
         'relative flex flex-row items-center justify-center',
         'outline-none transition-all',
         'rounded-full',
