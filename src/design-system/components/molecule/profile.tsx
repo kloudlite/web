@@ -21,9 +21,9 @@ export const Profile = forwardRef<HTMLButtonElement, IProfile>(
         >
           <AvatarBase color={color} size={size} />
           <div className=" flex-col items-start hidden md:flex">
-            <div className="bodyMd-medium gap-y-md">{name}</div>
+            <div className="bodyMd-medium gap-y-md pulsable">{name}</div>
             {subtitle && (
-              <div className="bodySm text-text-soft">{subtitle}</div>
+              <div className="bodySm text-text-soft pulsable">{subtitle}</div>
             )}
           </div>
         </button>
