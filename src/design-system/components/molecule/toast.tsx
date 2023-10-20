@@ -35,7 +35,7 @@ const icons = {
 };
 
 const CloseButton = () => (
-  <span className="text-text-on-primary hover:text-text-on-primary/50 mt-[7px]">
+  <span className="text-text-on-primary hover:text-text-on-primary/50 h-[24px] flex items-center">
     <X color="currentColor" size={12} />
   </span>
 );
@@ -48,12 +48,12 @@ export const ToastContainer = ({ autoClose, position }: IToastContainer) => {
   return (
     <Container
       toastClassName={({ type }: any) =>
-        `shadow-popover relative flex items-start gap-xl p-xl mb-xl min-h-[48px] rounded-md justify-between overflow-hidden cursor-pointer border ${
+        `shadow-popover relative flex items-start gap-xl p-xl mb-xl rounded-md justify-between overflow-hidden cursor-pointer border ${
           classes[(type || 'default') as keyof typeof classes]
         }`
       }
       bodyClassName={() =>
-        'text-text-on-primary bodyMd-medium flex flex-row items-center [&>*]:!w-auto [&>*]:break-all [&>*]:whitespace-break-spaces mt-[2px]'
+        'text-text-on-primary py-sm bodyMd-medium flex flex-row items-center [&>*]:!w-auto [&>*]:break-all [&>*]:whitespace-break-spaces'
       }
       hideProgressBar
       icon={({ type }) => icons[type]}
