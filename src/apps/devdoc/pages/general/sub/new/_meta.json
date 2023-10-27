@@ -1,0 +1,11 @@
+{
+    "index":{
+        "title":"New",
+        "type":"page",
+        "display":false
+    },
+    "test":{
+        "title":"Test",
+        "type":"page"
+    }
+}

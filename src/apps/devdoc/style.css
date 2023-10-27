@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html{
+    scroll-behavior: auto;
+    -webkit-tap-highlight-color: transparent;
+    scrollbar-gutter: stable;
+}
+.scrollbar-gutter{
+    scrollbar-gutter: stable;
+}

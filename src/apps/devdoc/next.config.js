@@ -1,8 +1,7 @@
 // @ts-ignore
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const withNextra = require('nextra')({
-  theme: 'nextra-theme-docs',
-  themeConfig: './theme.config.tsx',
+  theme: './layout/theme.tsx',
 });
 
 module.exports = withNextra();
