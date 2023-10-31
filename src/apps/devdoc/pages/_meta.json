@@ -1,0 +1,14 @@
+{
+    "index":{
+        "title":"Getting started",
+        "type":"page"
+    },
+    "home":{
+        "title":"Home",
+        "type":"page"
+    },
+    "general":{
+        "title":"General",
+        "type":"folder"
+    }
+}

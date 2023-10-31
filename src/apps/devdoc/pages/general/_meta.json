@@ -1,0 +1,11 @@
+{
+    "index":{
+        "title":"General",
+        "type":"page",
+        "display":false
+    },
+    "sub":{
+        "title":"Sub",
+        "type":"folder"
+    }
+}

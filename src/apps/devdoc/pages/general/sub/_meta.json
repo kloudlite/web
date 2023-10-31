@@ -1,0 +1,15 @@
+{
+    "index":{
+        "title":"Sub",
+        "type":"page",
+        "display":false
+    },
+    "tetra":{
+        "title":"Tetra",
+        "type":"page"
+    },
+    "new":{
+        "title":"New",
+        "type":"folder"
+    }
+}

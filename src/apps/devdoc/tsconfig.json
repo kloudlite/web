@@ -26,9 +26,12 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
+      "~/design-system/*": [
+        "../../design-system/*"
+      ],
       "~/components/*": [
-        "../../design-system/components/*"
-      ]
+        "./components/*"
+      ],
     },
     "noEmit": true,
     "incremental": true,
