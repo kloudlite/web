@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import { Spinner } from '@jengaicons/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { KeyboardEventHandler, MouseEventHandler } from 'react';
@@ -52,6 +53,7 @@ interface IBaseButton {
   selected?: boolean;
   className?: string;
   value?: any;
+  toLabel?: string;
 }
 
 export interface IIconButton extends IBaseButton {
@@ -100,6 +102,7 @@ export const ButtonBase = React.forwardRef<
     size = 'md',
     loading = false,
     tabIndex,
+    toLabel,
     ...mprops
   } = props;
 
@@ -126,7 +129,11 @@ export const ButtonBase = React.forwardRef<
   return (
     <Component
       {...mprops}
-      {...(Component === 'a' ? { href: to } : { to })}
+      {...(Component === 'a'
+        ? { href: to }
+        : toLabel
+        ? { [toLabel]: to }
+        : { to })}
       disabled={disabled}
       onClick={onClick}
       {...extraProps}
