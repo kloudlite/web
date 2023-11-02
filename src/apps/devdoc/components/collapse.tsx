@@ -1,6 +1,6 @@
-import cn from 'classnames';
 import type { ReactElement, ReactNode } from 'react';
 import { useEffect, useRef } from 'react';
+import { cn } from '~/utiltities/commons';
 
 export function Collapse({
   children,

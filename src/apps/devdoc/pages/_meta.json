@@ -1,14 +1,22 @@
 {
     "index":{
-        "title":"Getting started",
-        "type":"page"
-    },
-    "home":{
         "title":"Home",
+        "type":"page",
+        "display":"hidden",
+        "theme":{
+            "layout":"raw"
+        }
+    },
+    "devops":{
+        "title":"DevOps",
         "type":"page"
     },
-    "general":{
-        "title":"General",
-        "type":"folder"
+    "infraops":{
+        "title":"InfraOps",
+        "type":"page"
+    },
+    "distribution":{
+        "title":"Distribution",
+        "type":"page"
     }
 }

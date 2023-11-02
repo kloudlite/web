@@ -4,11 +4,12 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { PageMapItem } from 'nextra';
 import { MouseEventHandler, ReactNode, useState } from 'react';
+import useMenu from '~/utiltities/use-menu';
 import { cn } from '../utils/commons';
 import { Collapse } from './collapse';
 
 interface CustomMeta {
-  type: 'folder' | 'page';
+  type: 'folder' | 'doc';
   title: string;
   display?: boolean;
 }
@@ -54,10 +55,13 @@ const Sidebar = ({ data, parent }: ISidebar) => {
   const router = useRouter();
   const [open, setOpen] = useState(true);
 
+  console.log('data', data);
+
   const isActive = (path: string) => router.pathname === path;
 
   const generateKey = (...items: Array<string | number>) => items.join('-');
 
+  const { setState } = useMenu();
   return (
     <li
       className={cn('flex flex-col capitalize', {
@@ -79,6 +83,8 @@ const Sidebar = ({ data, parent }: ISidebar) => {
               if (isActive(`/${parent.route}`)) {
                 e.preventDefault();
                 setOpen((prev) => !prev);
+              } else {
+                setState(false);
               }
             }}
             to={`/${parent.route}`}
@@ -139,6 +145,9 @@ const Sidebar = ({ data, parent }: ISidebar) => {
                       }
                       return null;
                     }
+                    if (v.type !== 'doc') {
+                      return null;
+                    }
                     return v.display === false ? null : (
                       <li
                         className={cn('list-none flex flex-row items-center', {
@@ -164,6 +173,9 @@ const Sidebar = ({ data, parent }: ISidebar) => {
                               key === 'index' ? '/' : `/${key}`
                             }`
                           )}
+                          onClick={() => {
+                            setState(false);
+                          }}
                           to={`${parent ? `/${parent?.route}` : ''}${
                             key === 'index' ? '/' : `/${key}`
                           }`}

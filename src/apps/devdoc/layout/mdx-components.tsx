@@ -12,11 +12,11 @@ const H1 = ({ children, ...props }: ComponentProps<'h1'>) => {
 const H2 = ({ children, id, ...props }: ComponentProps<'h2'>) => {
   return (
     <h2
-      className="heading2xl-marketing text-text-default mt-3xl"
+      className="heading2xl-marketing text-text-default -mt-[76px] pt-[96px]"
       {...props}
       id={id}
     >
-      {children}{' '}
+      {children}
       {id && (
         <a
           href={`#${id}`}
