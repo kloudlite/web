@@ -1,4 +1,5 @@
 function noScrollbar() {
+  // @ts-ignore
   return ({ addComponents }) => {
     addComponents({
       '.no-scrollbar-base::-webkit-scrollbar': {

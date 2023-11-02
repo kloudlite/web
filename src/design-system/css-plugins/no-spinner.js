@@ -1,4 +1,5 @@
 function noScrollbar() {
+  // @ts-ignore
   return ({ addComponents }) => {
     addComponents({
       '.no-spinner::-webkit-inner-spin-button, .no-spinner::-webkit-outer-spin-button':
