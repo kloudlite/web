@@ -30,7 +30,7 @@ function typography() {
         '@apply bodyMd underline': {},
       },
       '.bodyLg': {
-        '@apply text-md leading-sm': {},
+        '@apply text-md leading-md': {},
       },
       '.bodyLg-medium': {
         '@apply bodyLg font-medium': {},
@@ -42,7 +42,7 @@ function typography() {
         '@apply font-semibold text-xs leading-xs': {},
       },
       '.headingSm': {
-        '@apply font-semibold text-sm leading-xs': {},
+        '@apply font-semibold text-sm leading-sm': {},
       },
       '.headingMd': {
         '@apply font-semibold text-md leading-md': {},
