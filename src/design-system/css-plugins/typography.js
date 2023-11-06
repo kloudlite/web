@@ -81,6 +81,9 @@ function typography() {
         '@apply heading4xl font-familjen': {},
       },
       '.heading5xl-marketing': {
+        '@apply font-bold text-5xl leading-5xl font-familjen': {},
+      },
+      '.heading6xl-marketing': {
         '@apply font-bold text-6xl leading-6xl font-familjen': {},
       },
     });
