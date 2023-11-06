@@ -10,7 +10,7 @@
     "lib": [
       "DOM",
       "DOM.Iterable",
-      "ES2019"
+      "ESNext"
     ],
     "isolatedModules": true,
     "esModuleInterop": true,
@@ -26,11 +26,12 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "~/design-system/*": [
-        "../../design-system/*"
-      ],
+      "flexsearch": ["./node_modules/@types/flexsearch"],
       "~/components/*": [
         "./components/*"
+      ],
+      "~/utiltities/*": [
+        "./utils/*"
       ],
     },
     "noEmit": true,

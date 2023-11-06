@@ -1,0 +1,11 @@
+{
+    "backup":{
+        "title":"Storage"
+    },
+    "restore":{
+        "title":"Storage"
+    },
+    "snapshots":{
+        "title":"Snapshots"
+    }
+}

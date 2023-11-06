@@ -1,6 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+    --kl-navbar-height:76px;
+  }
 
 html{
     scroll-behavior: auto;
@@ -10,3 +17,17 @@ html{
 .scrollbar-gutter{
     scrollbar-gutter: stable;
 }
+
+.scrollbar-gutter-auto{
+    scrollbar-gutter: 'auto';
+}
+
+@media (max-width: 767px) {
+    .nextra-sidebar-container {
+      @apply fixed pt-[calc(var(--kl-navbar-height)+20px)] inset-0 w-full bottom-0 z-[15] overscroll-contain px-md pb-3xl;
+      transition: transform 0.8s cubic-bezier(0.52, 0.16, 0.04, 1);
+      will-change: transform, opacity;
+      contain: layout style;
+      backface-visibility: hidden;
+    }
+  }

@@ -1,6 +1,7 @@
 import { X } from '@jengaicons/react';
 import * as Dialog from '@radix-ui/react-dialog';
 import { AnimatePresence, motion } from 'framer-motion';
+import { ComponentProps, ReactNode } from 'react';
 import { IButton, IconButton, Button as NativeButton } from '../atoms/button';
 import { ChildrenProps } from '../types';
 import { cn } from '../utils';
@@ -20,12 +21,27 @@ const Header = ({ children, showclose = true }: any) => {
   );
 };
 
-const Content = ({ children }: ChildrenProps) => {
+const Content = ({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) => {
   return (
-    <div className="p-3xl overscroll-y-auto overflow-x-hidden max-h-[65vh]">
+    <div
+      className={cn(
+        'p-3xl overscroll-y-auto overflow-x-hidden flex-1 md:max-h-[65vh]',
+        className
+      )}
+    >
       {children}
     </div>
   );
+};
+
+const Form = (props: ComponentProps<'form'>) => {
+  return <form {...props} className="flex-1 flex flex-col " />;
 };
 
 const Footer = ({ children }: ChildrenProps) => {
@@ -88,7 +104,7 @@ const PopupRoot = ({
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2, ease: 'anticipate' }}
-                className={cn('fixed inset-0 z-40', {
+                className={cn('fixed inset-0 z-[999999999]', {
                   'bg-text-default/60': backdrop,
                 })}
               />
@@ -101,9 +117,9 @@ const PopupRoot = ({
                 transition={{ duration: 0.3, ease: 'anticipate' }}
                 className={cn(
                   'flex flex-col',
-                  'z-50 outline-none transform overflow-hidden rounded bg-surface-basic-default shadow-modal',
+                  'z-[9999999999] outline-none transform overflow-hidden md:rounded bg-surface-basic-default shadow-modal',
                   'fixed top-1/2 left-1/2',
-                  'w-[612px]',
+                  'w-full h-full md:!h-auto md:!w-[612px]',
                   'border border-border-default',
                   className
                 )}
@@ -124,6 +140,7 @@ const Popup = {
   Content,
   Footer,
   Button,
+  Form,
 };
 
 export default Popup;

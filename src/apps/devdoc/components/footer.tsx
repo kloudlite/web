@@ -1,14 +1,14 @@
 import {
-    DiscordLogoFill,
-    GithubLogoFill,
-    LinkedinLogoFill,
-    TwitterLogoFill,
+  DiscordLogoFill,
+  GithubLogoFill,
+  LinkedinLogoFill,
+  TwitterLogoFill,
 } from '@jengaicons/react';
 import { Button } from 'kl-design-system/atoms/button';
 import { BrandLogo } from 'kl-design-system/branding/brand-logo';
 import Link from 'next/link';
 import { ReactNode } from 'react';
-import { cn } from '../utils/commons';
+import { cn } from '~/utiltities/commons';
 
 const FooterLink = ({ to, children }: { to: string; children: ReactNode }) => {
   return (
@@ -49,7 +49,7 @@ const FooterMenu = ({ title, className, menu }: IFooterMenu) => {
 const menu: IFooterMenu[] = [
   {
     title: 'Products',
-    className: 'flex-1',
+    className: 'w-[47%] md:w-auto md:flex-1  md:min-w-[200px]',
     menu: [
       {
         title: 'DevOps',
@@ -67,7 +67,7 @@ const menu: IFooterMenu[] = [
   },
   {
     title: 'Developers',
-    className: 'w-[200px]',
+    className: 'w-[47%] md:w-[200px]',
     menu: [
       {
         title: 'Documents',
@@ -93,7 +93,7 @@ const menu: IFooterMenu[] = [
   },
   {
     title: 'Resources',
-    className: 'w-[200px]',
+    className: 'w-[47%] md:w-[200px]',
     menu: [
       {
         title: 'Pricing',
@@ -119,7 +119,7 @@ const menu: IFooterMenu[] = [
   },
   {
     title: 'Company',
-    className: 'w-[200px]',
+    className: 'w-[47%] md:w-[200px]',
     menu: [
       {
         title: 'About us',
@@ -141,12 +141,12 @@ const menu: IFooterMenu[] = [
   },
 ];
 
-const BrandMenu = () => {
+const BrandMenu = ({ className }: { className?: string }) => {
   const socialIconSize = 24;
   const brandIconSize = 28;
 
   return (
-    <div className="flex flex-col gap-3xl pr-4xl w-[296px]">
+    <div className={cn('flex flex-col gap-3xl pr-4xl w-[296px]', className)}>
       <div className="flex flex-col gap-3xl flex-1">
         <div className="flex flex-col items-start gap-lg">
           <BrandLogo size={brandIconSize} detailed />
@@ -171,12 +171,12 @@ const BrandMenu = () => {
 
 const Footer = () => {
   return (
-    <div className="flex flex-row justify-between py-10xl px-14xl bg-surface-basic-default">
-      <BrandMenu />
+    <footer className="flex flex-row flex-wrap justify-between gap-y-6xl md:flex-nowrap md:gap-0 py-6xl md:py-10xl px-2xl md:px-14xl bg-surface-basic-default">
+      <BrandMenu className="order-last md:order-first" />
       {menu.map((item) => (
         <FooterMenu key={item.title} {...item} />
       ))}
-    </div>
+    </footer>
   );
 };
 
