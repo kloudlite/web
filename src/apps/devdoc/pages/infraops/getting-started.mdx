@@ -1,0 +1,48 @@
+# Get Started
+Docs for this theme is under construction.
+An example of the blog theme can be found here, with source code here.
+
+ Similar to the Docs Theme, you can install the blog theme with the following commands:
+
+## Quick Start from Template
+Start as New Project
+Install
+To create a Nextra Docs site manually, you have to install Next.js, React, Nextra, and Nextra Blog Theme. In your project directory, run the following command to install the dependencies:
+
+bun add next react react-dom nextra nextra-theme-blog
+
+If you already have Next.js installed in your project, you only need to install nextra and nextra-theme-blog as the add-ons.
+
+Add Next.js Config
+Create the following next.config.js file in your project’s root directory:
+
+
+
+// If you have other Next.js configurations, you can pass them as the parameter:
+
+With the above configuration, Nextra can handle Markdown files in your Next.js project, with the specified theme. Other Nextra configurations can be found in Guide.
+
+## Create Blog Theme Config
+Lastly, create the corresponding theme.config.jsx file in your project’s root directory. This will be used to configure the Nextra Blog theme:
+
+
+Ready to Go!
+Now, you can run the next or next dev command specified in package.json to start developing the project! 🎉
+
+Render Metadata for the Active Page
+Other than children, some other useful props are passed to the theme layout too. With the pageOpts props, the theme can access the page’s meta information.
+
+For example, let’s implement these features:
+
+Render the page title in
+Show a simple table of contents
+Add a meta tag for og:image via the front matter
+
+## Use Page Map of the Entire Site
+Now, if you want to render something like a sidebar or a navigation bar, which relies on information of not only the current page but also other pages, you can use the pageMap value.
+
+For example, we can render a simple navigation list with all the pages in the top level:
+
+
+## Next.js Link
+All relative Markdown links are automatically converted to Next.js links. This means that the target page will be prefetched. And when you click on a link, the page will be loaded on the client-side like a SPA, without making a full page load. For example:

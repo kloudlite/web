@@ -1,5 +1,11 @@
+/* eslint-disable consistent-return */
 import { Components } from 'nextra/mdx';
-import { ComponentProps } from 'react';
+import { ComponentProps, useEffect, useRef } from 'react';
+import {
+  useIntersectionObserver,
+  useSetActiveAnchor,
+  useSlugs,
+} from '~/utiltities/active-anchor';
 
 const H1 = ({ children, ...props }: ComponentProps<'h1'>) => {
   return (
@@ -9,10 +15,40 @@ const H1 = ({ children, ...props }: ComponentProps<'h1'>) => {
   );
 };
 
-const H2 = ({ children, id, ...props }: ComponentProps<'h2'>) => {
+const H2 = ({
+  children,
+  id,
+  context,
+  ...props
+}: ComponentProps<'h2'> & { context: { index: number } }) => {
+  const setActiveAnchor = useSetActiveAnchor();
+  const slugs = useSlugs();
+  const observer = useIntersectionObserver();
+  const obRef = useRef<HTMLAnchorElement>(null);
+
+  useEffect(() => {
+    if (!id) return;
+    const heading = obRef.current;
+    console.log(heading);
+
+    if (!heading) return;
+    slugs.set(heading, [id, (context.index += 1)]);
+    observer?.observe(heading);
+
+    return () => {
+      observer?.disconnect();
+      slugs.delete(heading);
+      setActiveAnchor((f) => {
+        const ret = { ...f };
+        delete ret[id];
+        return ret;
+      });
+    };
+  }, [id, context, slugs, observer, setActiveAnchor]);
+
   return (
     <h2
-      className="heading2xl-marketing text-text-default -mt-[76px] pt-[96px]"
+      className="heading2xl-marketing text-text-default -mt-[76px] pt-[96px] group"
       {...props}
       id={id}
     >
@@ -21,8 +57,9 @@ const H2 = ({ children, id, ...props }: ComponentProps<'h2'>) => {
         <a
           href={`#${id}`}
           id={id}
-          className="subheading-anchor"
+          className="subheading-anchor invisible group-hover:visible transition-all"
           aria-label="Permalink for this section"
+          ref={obRef}
         >
           #
         </a>
@@ -40,9 +77,10 @@ const P = ({ children, ...props }: ComponentProps<'p'>) => {
 };
 
 const createComponents = ({ components }: any): Components => {
+  const context = { index: 0 };
   return {
     h1: H1,
-    h2: H2,
+    h2: (props) => <H2 context={context} {...props} />,
     p: P,
     ...components,
   };

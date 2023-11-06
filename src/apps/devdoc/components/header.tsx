@@ -70,7 +70,7 @@ const Header = ({
           <MenuButton onClick={() => setState(!state)} toggle={state} />
         </div>
       </nav>
-      <Flexsearch show={showSearch} />
+      <Flexsearch />
     </div>
   );
 };

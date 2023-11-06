@@ -14,6 +14,7 @@ import { cn } from '~/utiltities/commons';
 import { DEFAULT_LOCALE } from '~/utiltities/constants';
 import ListNavigate from './list-navigate';
 import { HighlightMatches } from './highlight-matches';
+import useSearch from '~/utiltities/use-search';
 
 type SearchResult = {
   children: ReactNode;
@@ -156,7 +157,7 @@ const loadIndexes = (basePath: string, locale: string): Promise<void> => {
   return promise;
 };
 
-export function Flexsearch({ show = false }: { show?: boolean }): ReactElement {
+export function Flexsearch(): ReactElement {
   const { locale = DEFAULT_LOCALE, basePath } = useRouter();
   const [loading, setLoading] = useState(false);
   const [_error, setError] = useState(false);
@@ -286,6 +287,7 @@ export function Flexsearch({ show = false }: { show?: boolean }): ReactElement {
   };
 
   const [keyEvent, setKeyEvent] = useState<KeyboardEvent<HTMLInputElement>>();
+  const { show, setShow } = useSearch();
 
   useEffect(() => {
     if (show) {
@@ -296,7 +298,12 @@ export function Flexsearch({ show = false }: { show?: boolean }): ReactElement {
     }
   }, [show]);
   return (
-    <Popup.Root show={show}>
+    <Popup.Root
+      show={show}
+      onOpenChange={(e) => {
+        setShow(e);
+      }}
+    >
       <Popup.Content className="!p-0">
         <div className="flex flex-col">
           <div className="flex flex-row items-center sticky top-0 bg-surface-basic-default border-b border-border-default">
