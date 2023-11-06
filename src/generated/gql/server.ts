@@ -170,17 +170,15 @@ export type SearchSecrets = {
   text?: InputMaybe<MatchFilterIn>;
 };
 
-export type SearchVpnDevices = {
-  isReady?: InputMaybe<MatchFilterIn>;
-  markedForDeletion?: InputMaybe<MatchFilterIn>;
-  text?: InputMaybe<MatchFilterIn>;
-};
-
 export type Kloudlite_Io__Apps__Container___Registry__Internal__Domain__Entities_GitProvider =
   'github' | 'gitlab';
 
 export type Kloudlite_Io__Apps__Container___Registry__Internal__Domain__Entities_BuildStatus =
   'error' | 'failed' | 'idle' | 'pending' | 'queued' | 'running' | 'success';
+
+export type SearchBuildCacheKeys = {
+  text?: InputMaybe<MatchFilterIn>;
+};
 
 export type SearchBuilds = {
   text?: InputMaybe<MatchFilterIn>;
@@ -207,23 +205,20 @@ export type PaginationIn = {
 
 export type ResType = 'cluster' | 'nodepool' | 'providersecret' | 'vpn_device';
 
-export type Github_Com__Kloudlite__Operator__Apis__Clusters__V1_ClusterSpecAvailabilityMode =
+export type Kloudlite__Io___Pkg___Types__SyncStatusAction = 'APPLY' | 'DELETE';
+
+export type Kloudlite__Io___Pkg___Types__SyncStatusState =
+  | 'APPLIED_AT_AGENT'
+  | 'ERRORED_AT_AGENT'
+  | 'IDLE'
+  | 'IN_QUEUE'
+  | 'RECEIVED_UPDATE_FROM_AGENT';
+
+export type Github__Com___Kloudlite___Operator___Apis___Clusters___V1__ClusterSpecAvailabilityMode =
   'dev' | 'HA';
 
-export type Github_Com__Kloudlite__Operator__Apis__Clusters__V1_ClusterSpecCloudProvider =
+export type Github__Com___Kloudlite___Operator___Apis___Common____Types__CloudProvider =
   'aws' | 'azure' | 'do' | 'gcp';
-
-export type Github_Com__Kloudlite__Operator__Apis__Clusters__V1_NodePoolSpecAwsNodeConfigProvisionMode =
-  'on_demand' | 'reserved' | 'spot';
-
-export type CloudProviderSecretCloudProviderName =
-  | 'aws'
-  | 'azure'
-  | 'do'
-  | 'gcp'
-  | 'oci'
-  | 'openstack'
-  | 'vmware';
 
 export type SearchCluster = {
   cloudProviderName?: InputMaybe<MatchFilterIn>;
@@ -243,6 +238,12 @@ export type SearchNodepool = {
 
 export type SearchProviderSecret = {
   cloudProviderName?: InputMaybe<MatchFilterIn>;
+  text?: InputMaybe<MatchFilterIn>;
+};
+
+export type SearchVpnDevices = {
+  isReady?: InputMaybe<MatchFilterIn>;
+  markedForDeletion?: InputMaybe<MatchFilterIn>;
   text?: InputMaybe<MatchFilterIn>;
 };
 
@@ -638,30 +639,8 @@ export type SecretIn = {
   type?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type VpnDeviceIn = {
-  apiVersion?: InputMaybe<Scalars['String']['input']>;
-  displayName: Scalars['String']['input'];
-  kind?: InputMaybe<Scalars['String']['input']>;
-  metadata: MetadataIn;
-  spec?: InputMaybe<Github_Com__Kloudlite__Operator__Apis__Wireguard__V1_DeviceSpecIn>;
-};
-
-export type Github_Com__Kloudlite__Operator__Apis__Wireguard__V1_DeviceSpecIn =
-  {
-    offset?: InputMaybe<Scalars['Int']['input']>;
-    ports?: InputMaybe<
-      Array<Github_Com__Kloudlite__Operator__Apis__Wireguard__V1_DeviceSpecPortsIn>
-    >;
-    serverName: Scalars['String']['input'];
-  };
-
-export type Github_Com__Kloudlite__Operator__Apis__Wireguard__V1_DeviceSpecPortsIn =
-  {
-    port?: InputMaybe<Scalars['Int']['input']>;
-    targetPort?: InputMaybe<Scalars['Int']['input']>;
-  };
-
 export type BuildIn = {
+  buildCacheId?: InputMaybe<Scalars['String']['input']>;
   buildData?: InputMaybe<Kloudlite_Io__Apps__Container___Registry__Internal__Domain__Entities_BuildOptionsIn>;
   name: Scalars['String']['input'];
   repository: Scalars['String']['input'];
@@ -686,6 +665,12 @@ export type Kloudlite_Io__Apps__Container___Registry__Internal__Domain__Entities
     repository: Scalars['String']['input'];
   };
 
+export type BuildCacheKeyIn = {
+  displayName: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+  volumeSizeInGB: Scalars['Float']['input'];
+};
+
 export type CredentialIn = {
   access: Kloudlite_Io__Apps__Container___Registry__Internal__Domain__Entities_RepoAccess;
   expiration: Kloudlite_Io__Apps__Container___Registry__Internal__Domain__Entities_ExpirationIn;
@@ -705,82 +690,51 @@ export type RepositoryIn = {
 
 export type ByocClusterIn = {
   accountName: Scalars['String']['input'];
-  apiVersion?: InputMaybe<Scalars['String']['input']>;
   displayName: Scalars['String']['input'];
-  kind?: InputMaybe<Scalars['String']['input']>;
-  metadata: MetadataIn;
-  spec: Github_Com__Kloudlite__Operator__Apis__Clusters__V1_ByocSpecIn;
+  metadata?: InputMaybe<MetadataIn>;
+  spec: Github__Com___Kloudlite___Operator___Apis___Clusters___V1__ByocSpecIn;
 };
 
-export type Github_Com__Kloudlite__Operator__Apis__Clusters__V1_ByocSpecIn = {
-  accountName: Scalars['String']['input'];
-  displayName?: InputMaybe<Scalars['String']['input']>;
-  incomingKafkaTopic: Scalars['String']['input'];
-  ingressClasses?: InputMaybe<Array<Scalars['String']['input']>>;
-  provider: Scalars['String']['input'];
-  publicIps?: InputMaybe<Array<Scalars['String']['input']>>;
-  region: Scalars['String']['input'];
-  storageClasses?: InputMaybe<Array<Scalars['String']['input']>>;
-};
+export type Github__Com___Kloudlite___Operator___Apis___Clusters___V1__ByocSpecIn =
+  {
+    accountName: Scalars['String']['input'];
+    displayName?: InputMaybe<Scalars['String']['input']>;
+    incomingKafkaTopic: Scalars['String']['input'];
+    ingressClasses?: InputMaybe<Array<Scalars['String']['input']>>;
+    provider: Scalars['String']['input'];
+    publicIps?: InputMaybe<Array<Scalars['String']['input']>>;
+    region: Scalars['String']['input'];
+    storageClasses?: InputMaybe<Array<Scalars['String']['input']>>;
+  };
 
 export type ClusterIn = {
-  apiVersion?: InputMaybe<Scalars['String']['input']>;
   displayName: Scalars['String']['input'];
-  kind?: InputMaybe<Scalars['String']['input']>;
   metadata: MetadataIn;
-  spec?: InputMaybe<Github_Com__Kloudlite__Operator__Apis__Clusters__V1_ClusterSpecIn>;
+  spec: Github__Com___Kloudlite___Operator___Apis___Clusters___V1__ClusterSpecIn;
 };
 
-export type Github_Com__Kloudlite__Operator__Apis__Clusters__V1_ClusterSpecIn =
+export type Github__Com___Kloudlite___Operator___Apis___Clusters___V1__ClusterSpecIn =
   {
-    accountId?: InputMaybe<Scalars['String']['input']>;
-    accountName: Scalars['String']['input'];
-    availabilityMode: Github_Com__Kloudlite__Operator__Apis__Clusters__V1_ClusterSpecAvailabilityMode;
-    aws?: InputMaybe<Github_Com__Kloudlite__Operator__Apis__Clusters__V1_ClusterSpecAwsIn>;
-    azure?: InputMaybe<Scalars['Map']['input']>;
-    cloudProvider: Github_Com__Kloudlite__Operator__Apis__Clusters__V1_ClusterSpecCloudProvider;
-    clusterTokenRef?: InputMaybe<Github_Com__Kloudlite__Operator__Apis__Clusters__V1_ClusterSpecClusterTokenRefIn>;
-    credentialsRef: Github_Com__Kloudlite__Operator__Apis__Clusters__V1_ClusterSpecCredentialsRefIn;
-    dnsHostName?: InputMaybe<Scalars['String']['input']>;
-    do?: InputMaybe<Scalars['Map']['input']>;
-    gcp?: InputMaybe<Scalars['Map']['input']>;
-    kloudliteRelease: Scalars['String']['input'];
-    messageQueueTopicName?: InputMaybe<Scalars['String']['input']>;
-  };
-
-export type Github_Com__Kloudlite__Operator__Apis__Clusters__V1_ClusterSpecAwsIn =
-  {
-    k3sMasters?: InputMaybe<Github_Com__Kloudlite__Operator__Apis__Clusters__V1_ClusterSpecAwsK3sMastersIn>;
-    nodePools?: InputMaybe<Scalars['Map']['input']>;
-    region: Scalars['String']['input'];
-    spotNodePools?: InputMaybe<Scalars['Map']['input']>;
-  };
-
-export type Github_Com__Kloudlite__Operator__Apis__Clusters__V1_ClusterSpecAwsK3sMastersIn =
-  {
-    ami: Scalars['String']['input'];
-    amiSSHUsername: Scalars['String']['input'];
-    backupToS3Enabled: Scalars['Boolean']['input'];
+    availabilityMode: Github__Com___Kloudlite___Operator___Apis___Clusters___V1__ClusterSpecAvailabilityMode;
+    aws?: InputMaybe<Github__Com___Kloudlite___Operator___Apis___Clusters___V1__AwsClusterConfigIn>;
     cloudflareEnabled?: InputMaybe<Scalars['Boolean']['input']>;
-    clusterInternalDnsHost?: InputMaybe<Scalars['String']['input']>;
+    cloudProvider: Github__Com___Kloudlite___Operator___Apis___Common____Types__CloudProvider;
+    credentialsRef: Github__Com___Kloudlite___Operator___Apis___Common____Types__SecretRefIn;
+  };
+
+export type Github__Com___Kloudlite___Operator___Apis___Clusters___V1__AwsClusterConfigIn =
+  {
+    k3sMasters?: InputMaybe<Github__Com___Kloudlite___Operator___Apis___Clusters___V1__Awsk3sMastersConfigIn>;
+    region: Scalars['String']['input'];
+  };
+
+export type Github__Com___Kloudlite___Operator___Apis___Clusters___V1__Awsk3sMastersConfigIn =
+  {
     iamInstanceProfileRole?: InputMaybe<Scalars['String']['input']>;
     instanceType: Scalars['String']['input'];
-    nodes?: InputMaybe<Scalars['Map']['input']>;
-    nvidiaGpuEnabled: Scalars['Boolean']['input'];
-    publicDnsHost?: InputMaybe<Scalars['String']['input']>;
-    rootVolumeSize: Scalars['Int']['input'];
-    rootVolumeType: Scalars['String']['input'];
-    taintMasterNodes: Scalars['Boolean']['input'];
   };
 
-export type Github_Com__Kloudlite__Operator__Apis__Clusters__V1_ClusterSpecClusterTokenRefIn =
-  {
-    key: Scalars['String']['input'];
-    name: Scalars['String']['input'];
-    namespace?: InputMaybe<Scalars['String']['input']>;
-  };
-
-export type Github_Com__Kloudlite__Operator__Apis__Clusters__V1_ClusterSpecCredentialsRefIn =
+export type Github__Com___Kloudlite___Operator___Apis___Common____Types__SecretRefIn =
   {
     name: Scalars['String']['input'];
     namespace?: InputMaybe<Scalars['String']['input']>;
@@ -793,58 +747,106 @@ export type DomainEntryIn = {
 };
 
 export type NodePoolIn = {
-  apiVersion?: InputMaybe<Scalars['String']['input']>;
   displayName: Scalars['String']['input'];
-  kind?: InputMaybe<Scalars['String']['input']>;
-  metadata: MetadataIn;
-  spec: Github_Com__Kloudlite__Operator__Apis__Clusters__V1_NodePoolSpecIn;
+  metadata?: InputMaybe<MetadataIn>;
+  spec: Github__Com___Kloudlite___Operator___Apis___Clusters___V1__NodePoolSpecIn;
 };
 
-export type Github_Com__Kloudlite__Operator__Apis__Clusters__V1_NodePoolSpecIn =
+export type Github__Com___Kloudlite___Operator___Apis___Clusters___V1__NodePoolSpecIn =
   {
-    awsNodeConfig?: InputMaybe<Github_Com__Kloudlite__Operator__Apis__Clusters__V1_NodePoolSpecAwsNodeConfigIn>;
-    labels?: InputMaybe<Scalars['Map']['input']>;
+    aws?: InputMaybe<Github__Com___Kloudlite___Operator___Apis___Clusters___V1__AwsNodePoolConfigIn>;
+    cloudProvider: Scalars['String']['input'];
     maxCount: Scalars['Int']['input'];
     minCount: Scalars['Int']['input'];
-    taints?: InputMaybe<Array<Scalars['String']['input']>>;
     targetCount: Scalars['Int']['input'];
   };
 
-export type Github_Com__Kloudlite__Operator__Apis__Clusters__V1_NodePoolSpecAwsNodeConfigIn =
+export type Github__Com___Kloudlite___Operator___Apis___Clusters___V1__AwsNodePoolConfigIn =
   {
-    imageId?: InputMaybe<Scalars['String']['input']>;
-    isGpu?: InputMaybe<Scalars['Boolean']['input']>;
-    onDemandSpecs?: InputMaybe<Github_Com__Kloudlite__Operator__Apis__Clusters__V1_NodePoolSpecAwsNodeConfigOnDemandSpecsIn>;
-    provisionMode: Github_Com__Kloudlite__Operator__Apis__Clusters__V1_NodePoolSpecAwsNodeConfigProvisionMode;
-    region?: InputMaybe<Scalars['String']['input']>;
-    spotSpecs?: InputMaybe<Github_Com__Kloudlite__Operator__Apis__Clusters__V1_NodePoolSpecAwsNodeConfigSpotSpecsIn>;
-    vpc?: InputMaybe<Scalars['String']['input']>;
+    normalPool?: InputMaybe<Github__Com___Kloudlite___Operator___Apis___Clusters___V1__AwsNodePoolIn>;
+    poolType: Scalars['String']['input'];
+    spotPool?: InputMaybe<Github__Com___Kloudlite___Operator___Apis___Clusters___V1__AwsSpotNodePoolIn>;
   };
 
-export type Github_Com__Kloudlite__Operator__Apis__Clusters__V1_NodePoolSpecAwsNodeConfigOnDemandSpecsIn =
+export type Github__Com___Kloudlite___Operator___Apis___Clusters___V1__AwsNodePoolIn =
   {
+    ami: Scalars['String']['input'];
+    amiSSHUsername: Scalars['String']['input'];
+    availabilityZone?: InputMaybe<Scalars['String']['input']>;
+    iamInstanceProfileRole?: InputMaybe<Scalars['String']['input']>;
     instanceType: Scalars['String']['input'];
+    nodes?: InputMaybe<Scalars['Map']['input']>;
+    nvidiaGpuEnabled: Scalars['Boolean']['input'];
+    rootVolumeSize: Scalars['Int']['input'];
+    rootVolumeType: Scalars['String']['input'];
   };
 
-export type Github_Com__Kloudlite__Operator__Apis__Clusters__V1_NodePoolSpecAwsNodeConfigSpotSpecsIn =
+export type Github__Com___Kloudlite___Operator___Apis___Clusters___V1__AwsSpotNodePoolIn =
   {
-    cpuMax: Scalars['Int']['input'];
-    cpuMin: Scalars['Int']['input'];
-    memMax: Scalars['Int']['input'];
-    memMin: Scalars['Int']['input'];
+    ami: Scalars['String']['input'];
+    amiSSHUsername: Scalars['String']['input'];
+    availabilityZone?: InputMaybe<Scalars['String']['input']>;
+    cpuNode?: InputMaybe<Github__Com___Kloudlite___Operator___Apis___Clusters___V1__AwsSpotCpuNodeIn>;
+    gpuNode?: InputMaybe<Github__Com___Kloudlite___Operator___Apis___Clusters___V1__AwsSpotGpuNodeIn>;
+    iamInstanceProfileRole?: InputMaybe<Scalars['String']['input']>;
+    nodes?: InputMaybe<Scalars['Map']['input']>;
+    nvidiaGpuEnabled: Scalars['Boolean']['input'];
+    rootVolumeSize: Scalars['Int']['input'];
+    rootVolumeType: Scalars['String']['input'];
+    spotFleetTaggingRoleName: Scalars['String']['input'];
+  };
+
+export type Github__Com___Kloudlite___Operator___Apis___Clusters___V1__AwsSpotCpuNodeIn =
+  {
+    memoryPerVcpu?: InputMaybe<Github__Com___Kloudlite___Operator___Apis___Common____Types__MinMaxFloatIn>;
+    vcpu: Github__Com___Kloudlite___Operator___Apis___Common____Types__MinMaxFloatIn;
+  };
+
+export type Github__Com___Kloudlite___Operator___Apis___Common____Types__MinMaxFloatIn =
+  {
+    max: Scalars['String']['input'];
+    min: Scalars['String']['input'];
+  };
+
+export type Github__Com___Kloudlite___Operator___Apis___Clusters___V1__AwsSpotGpuNodeIn =
+  {
+    instanceTypes: Array<Scalars['String']['input']>;
   };
 
 export type CloudProviderSecretIn = {
-  apiVersion?: InputMaybe<Scalars['String']['input']>;
-  cloudProviderName: CloudProviderSecretCloudProviderName;
-  data?: InputMaybe<Scalars['Map']['input']>;
+  aws?: InputMaybe<Kloudlite__Io___Apps___Infra___Internal___Entities__AwsSecretCredentialsIn>;
+  cloudProviderName: Github__Com___Kloudlite___Operator___Apis___Common____Types__CloudProvider;
   displayName: Scalars['String']['input'];
-  enabled?: InputMaybe<Scalars['Boolean']['input']>;
-  kind?: InputMaybe<Scalars['String']['input']>;
   metadata: MetadataIn;
-  stringData?: InputMaybe<Scalars['Map']['input']>;
-  type?: InputMaybe<Scalars['String']['input']>;
 };
+
+export type Kloudlite__Io___Apps___Infra___Internal___Entities__AwsSecretCredentialsIn =
+  {
+    accessKey?: InputMaybe<Scalars['String']['input']>;
+    awsAccountId?: InputMaybe<Scalars['String']['input']>;
+    secretKey?: InputMaybe<Scalars['String']['input']>;
+  };
+
+export type VpnDeviceIn = {
+  displayName: Scalars['String']['input'];
+  metadata?: InputMaybe<MetadataIn>;
+  spec?: InputMaybe<Github__Com___Kloudlite___Operator___Apis___Wireguard___V1__DeviceSpecIn>;
+};
+
+export type Github__Com___Kloudlite___Operator___Apis___Wireguard___V1__DeviceSpecIn =
+  {
+    offset?: InputMaybe<Scalars['Int']['input']>;
+    ports?: InputMaybe<
+      Array<Github__Com___Kloudlite___Operator___Apis___Wireguard___V1__PortIn>
+    >;
+    serverName: Scalars['String']['input'];
+  };
+
+export type Github__Com___Kloudlite___Operator___Apis___Wireguard___V1__PortIn =
+  {
+    port?: InputMaybe<Scalars['Int']['input']>;
+    targetPort?: InputMaybe<Scalars['Int']['input']>;
+  };
 
 export type AccountMembershipIn = {
   accountName: Scalars['String']['input'];
@@ -865,16 +867,15 @@ export type EnvOrWorkspaceOrProjectIdType =
   | 'workspaceName'
   | 'workspaceTargetNamespace';
 
-export type Github_Com__Kloudlite__Operator__Apis__Clusters__V1_NodeSpecNodeType =
-  'cluster' | 'master' | 'worker';
+export type Github__Com___Kloudlite___Operator___Apis___Clusters___V1__NodePropsIn =
+  {
+    lastRecreatedAt?: InputMaybe<Scalars['Date']['input']>;
+  };
 
-export type Github_Com__Kloudlite__Operator__Apis__Clusters__V1_NodeSpecIn = {
-  clusterName?: InputMaybe<Scalars['String']['input']>;
-  labels?: InputMaybe<Scalars['Map']['input']>;
-  nodePoolName?: InputMaybe<Scalars['String']['input']>;
-  nodeType: Github_Com__Kloudlite__Operator__Apis__Clusters__V1_NodeSpecNodeType;
-  taints?: InputMaybe<Array<Scalars['String']['input']>>;
-};
+export type Github__Com___Kloudlite___Operator___Apis___Clusters___V1__NodeSpecIn =
+  {
+    nodepoolName: Scalars['String']['input'];
+  };
 
 export type Kloudlite_Io__Apps__Container___Registry__Internal__Domain__Entities_GithubUserAccountIn =
   {
@@ -892,10 +893,8 @@ export type MembershipIn = {
 };
 
 export type NodeIn = {
-  apiVersion?: InputMaybe<Scalars['String']['input']>;
-  kind?: InputMaybe<Scalars['String']['input']>;
-  metadata: MetadataIn;
-  spec: Github_Com__Kloudlite__Operator__Apis__Clusters__V1_NodeSpecIn;
+  metadata?: InputMaybe<MetadataIn>;
+  spec: Github__Com___Kloudlite___Operator___Apis___Clusters___V1__NodeSpecIn;
 };
 
 export type SearchEnvironments = {
@@ -1096,6 +1095,8 @@ export type ConsoleListProjectsQuery = {
         recordVersion: number;
         updateTime: any;
         accountName: string;
+        createdBy: { userName: string; userEmail: string; userId: string };
+        lastUpdatedBy: { userName: string; userId: string; userEmail: string };
         metadata: {
           namespace?: string;
           name: string;
@@ -1183,16 +1184,19 @@ export type ConsoleListClustersQuery = {
       cursor: string;
       node: {
         displayName: string;
+        creationTime: any;
         updateTime: any;
         recordVersion: number;
         metadata: { name: string; annotations?: any };
+        lastUpdatedBy: { userId: string; userName: string; userEmail: string };
+        createdBy: { userEmail: string; userId: string; userName: string };
         syncStatus: {
           syncScheduledAt?: any;
           lastSyncedAt?: any;
           recordVersion: number;
-          state: Kloudlite_Io__Pkg__Types_SyncStatusState;
+          state: Kloudlite__Io___Pkg___Types__SyncStatusState;
           error?: string;
-          action: Kloudlite_Io__Pkg__Types_SyncStatusAction;
+          action: Kloudlite__Io___Pkg___Types__SyncStatusAction;
         };
         status?: {
           lastReconcileTime?: any;
@@ -1201,22 +1205,23 @@ export type ConsoleListClustersQuery = {
           resources?: Array<{
             namespace: string;
             name: string;
-            kind?: string;
-            apiVersion?: string;
+            kind: string;
+            apiVersion: string;
           }>;
           message?: { RawMessage?: any };
         };
         spec?: {
-          messageQueueTopicName?: string;
+          messageQueueTopicName: string;
           kloudliteRelease: string;
-          gcp?: any;
-          do?: any;
-          dnsHostName?: string;
-          accountId?: string;
+          accountId: string;
           accountName: string;
-          availabilityMode: Github_Com__Kloudlite__Operator__Apis__Clusters__V1_ClusterSpecAvailabilityMode;
-          azure?: any;
-          cloudProvider: Github_Com__Kloudlite__Operator__Apis__Clusters__V1_ClusterSpecCloudProvider;
+          availabilityMode: Github__Com___Kloudlite___Operator___Apis___Clusters___V1__ClusterSpecAvailabilityMode;
+          cloudProvider: Github__Com___Kloudlite___Operator___Apis___Common____Types__CloudProvider;
+          backupToS3Enabled: boolean;
+          cloudflareEnabled?: boolean;
+          clusterInternalDnsHost?: string;
+          publicDNSHost: string;
+          taintMasterNodes: boolean;
           credentialsRef: { namespace?: string; name: string };
           clusterTokenRef?: { key: string; name: string; namespace?: string };
           aws?: {
@@ -1224,20 +1229,19 @@ export type ConsoleListClustersQuery = {
             region: string;
             spotNodePools?: any;
             k3sMasters?: {
-              ami: string;
-              amiSSHUsername: string;
-              backupToS3Enabled: boolean;
-              cloudflareEnabled?: boolean;
-              clusterInternalDnsHost?: string;
               iamInstanceProfileRole?: string;
               instanceType: string;
               nodes?: any;
               nvidiaGpuEnabled: boolean;
-              publicDnsHost?: string;
               rootVolumeSize: number;
               rootVolumeType: string;
-              taintMasterNodes: boolean;
             };
+          };
+          output?: {
+            keyK3sAgentJoinToken: string;
+            keyK3sServerJoinToken: string;
+            keyKubeconfig: string;
+            secretName: string;
           };
         };
       };
@@ -1251,63 +1255,90 @@ export type ConsoleGetClusterQueryVariables = Exact<{
 
 export type ConsoleGetClusterQuery = {
   infra_getCluster?: {
+    accountName: string;
+    apiVersion: string;
+    creationTime: any;
     displayName: string;
-    updateTime: any;
+    id: string;
+    kind: string;
+    markedForDeletion?: boolean;
     recordVersion: number;
-    metadata: { name: string; annotations?: any };
-    syncStatus: {
-      syncScheduledAt?: any;
-      lastSyncedAt?: any;
-      recordVersion: number;
-      state: Kloudlite_Io__Pkg__Types_SyncStatusState;
-      error?: string;
-      action: Kloudlite_Io__Pkg__Types_SyncStatusAction;
-    };
-    status?: {
-      lastReconcileTime?: any;
-      isReady: boolean;
-      checks?: any;
-      resources?: Array<{
-        namespace: string;
-        name: string;
-        kind?: string;
-        apiVersion?: string;
-      }>;
-      message?: { RawMessage?: any };
+    updateTime: any;
+    clusterToken: string;
+    createdBy: { userEmail: string; userId: string; userName: string };
+    lastUpdatedBy: { userEmail: string; userId: string; userName: string };
+    metadata: {
+      annotations?: any;
+      creationTimestamp: any;
+      deletionTimestamp?: any;
+      generation: number;
+      labels?: any;
+      name: string;
+      namespace?: string;
     };
     spec?: {
-      messageQueueTopicName?: string;
-      kloudliteRelease: string;
-      gcp?: any;
-      do?: any;
-      dnsHostName?: string;
-      accountId?: string;
+      accountId: string;
       accountName: string;
-      availabilityMode: Github_Com__Kloudlite__Operator__Apis__Clusters__V1_ClusterSpecAvailabilityMode;
-      azure?: any;
-      cloudProvider: Github_Com__Kloudlite__Operator__Apis__Clusters__V1_ClusterSpecCloudProvider;
-      credentialsRef: { namespace?: string; name: string };
-      clusterTokenRef?: { key: string; name: string; namespace?: string };
+      availabilityMode: Github__Com___Kloudlite___Operator___Apis___Clusters___V1__ClusterSpecAvailabilityMode;
+      backupToS3Enabled: boolean;
+      cloudflareEnabled?: boolean;
+      cloudProvider: Github__Com___Kloudlite___Operator___Apis___Common____Types__CloudProvider;
+      clusterInternalDnsHost?: string;
+      kloudliteRelease: string;
+      messageQueueTopicName: string;
+      publicDNSHost: string;
+      taintMasterNodes: boolean;
       aws?: {
         nodePools?: any;
         region: string;
         spotNodePools?: any;
         k3sMasters?: {
-          ami: string;
-          amiSSHUsername: string;
-          backupToS3Enabled: boolean;
-          cloudflareEnabled?: boolean;
-          clusterInternalDnsHost?: string;
           iamInstanceProfileRole?: string;
+          imageId: string;
+          imageSSHUsername: string;
           instanceType: string;
           nodes?: any;
           nvidiaGpuEnabled: boolean;
-          publicDnsHost?: string;
           rootVolumeSize: number;
           rootVolumeType: string;
-          taintMasterNodes: boolean;
         };
       };
+      clusterTokenRef?: { key: string; name: string; namespace?: string };
+      credentialsRef: { name: string; namespace?: string };
+      output?: {
+        keyK3sAgentJoinToken: string;
+        keyK3sServerJoinToken: string;
+        keyKubeconfig: string;
+        secretName: string;
+      };
+      credentialKeys?: {
+        keyAccessKey: string;
+        keyAWSAccountId: string;
+        keyAWSAssumeRoleExternalID: string;
+        keyAWSAssumeRoleRoleARN: string;
+        keySecretKey: string;
+      };
+    };
+    status?: {
+      checks?: any;
+      isReady: boolean;
+      lastReadyGeneration?: number;
+      lastReconcileTime?: any;
+      message?: { RawMessage?: any };
+      resources?: Array<{
+        apiVersion: string;
+        kind: string;
+        name: string;
+        namespace: string;
+      }>;
+    };
+    syncStatus: {
+      action: Kloudlite__Io___Pkg___Types__SyncStatusAction;
+      error?: string;
+      lastSyncedAt?: any;
+      recordVersion: number;
+      state: Kloudlite__Io___Pkg___Types__SyncStatusState;
+      syncScheduledAt?: any;
     };
   };
 };
@@ -1318,6 +1349,14 @@ export type ConsoleUpdateClusterMutationVariables = Exact<{
 
 export type ConsoleUpdateClusterMutation = {
   infra_updateCluster?: { id: string };
+};
+
+export type ConsoleCheckAwsAccessQueryVariables = Exact<{
+  cloudproviderName: Scalars['String']['input'];
+}>;
+
+export type ConsoleCheckAwsAccessQuery = {
+  infra_checkAwsAccess: { result: boolean; installationUrl?: any };
 };
 
 export type ConsoleListProviderSecretsQueryVariables = Exact<{
@@ -1332,27 +1371,21 @@ export type ConsoleListProviderSecretsQuery = {
       cursor: string;
       node: {
         accountName: string;
-        apiVersion: string;
-        cloudProviderName: CloudProviderSecretCloudProviderName;
+        cloudProviderName: Github__Com___Kloudlite___Operator___Apis___Common____Types__CloudProvider;
         creationTime: any;
-        data?: any;
         displayName: string;
         id: string;
-        kind: string;
         markedForDeletion?: boolean;
-        recordVersion: number;
-        type?: string;
         updateTime: any;
         createdBy: { userEmail: string; userId: string; userName: string };
         lastUpdatedBy: { userEmail: string; userId: string; userName: string };
-        metadata: {
-          annotations?: any;
-          creationTimestamp: any;
-          deletionTimestamp?: any;
-          generation: number;
-          labels?: any;
-          name: string;
-          namespace?: string;
+        metadata: { name: string; namespace?: string };
+        aws?: {
+          accessKey?: string;
+          awsAccountId?: string;
+          awsAssumeRoleExternalId?: string;
+          awsAssumeRoleRoleARN?: string;
+          secretKey?: string;
         };
       };
     }>;
@@ -1395,8 +1428,7 @@ export type ConsoleGetProviderSecretQueryVariables = Exact<{
 
 export type ConsoleGetProviderSecretQuery = {
   infra_getProviderSecret?: {
-    stringData?: any;
-    cloudProviderName: CloudProviderSecretCloudProviderName;
+    cloudProviderName: Github__Com___Kloudlite___Operator___Apis___Common____Types__CloudProvider;
     creationTime: any;
     updateTime: any;
     metadata: { annotations?: any; name: string };
@@ -1416,22 +1448,39 @@ export type ConsoleGetNodePoolQuery = {
       targetCount: number;
       minCount: number;
       maxCount: number;
-      awsNodeConfig?: {
-        vpc?: string;
-        region?: string;
-        provisionMode: Github_Com__Kloudlite__Operator__Apis__Clusters__V1_NodePoolSpecAwsNodeConfigProvisionMode;
-        isGpu?: boolean;
-        imageId?: string;
-        spotSpecs?: {
-          memMin: number;
-          memMax: number;
-          cpuMin: number;
-          cpuMax: number;
+      cloudProvider: string;
+      aws?: {
+        poolType: string;
+        normalPool?: {
+          ami: string;
+          amiSSHUsername: string;
+          availabilityZone?: string;
+          iamInstanceProfileRole?: string;
+          instanceType: string;
+          nodes?: any;
+          nvidiaGpuEnabled: boolean;
+          rootVolumeSize: number;
+          rootVolumeType: string;
         };
-        onDemandSpecs?: { instanceType: string };
+        spotPool?: {
+          ami: string;
+          amiSSHUsername: string;
+          availabilityZone?: string;
+          iamInstanceProfileRole?: string;
+          nodes?: any;
+          nvidiaGpuEnabled: boolean;
+          rootVolumeSize: number;
+          rootVolumeType: string;
+          spotFleetTaggingRoleName: string;
+          cpuNode?: {
+            vcpu: { max: string; min: string };
+            memoryPerVcpu?: { max: string; min: string };
+          };
+          gpuNode?: { instanceTypes: Array<string> };
+        };
       };
     };
-    metadata: { name: string; annotations?: any };
+    metadata?: { name: string; annotations?: any };
     status?: { isReady: boolean; checks?: any; message?: { RawMessage?: any } };
   };
 };
@@ -1447,50 +1496,95 @@ export type ConsoleCreateNodePoolMutation = {
 
 export type ConsoleListNodePoolsQueryVariables = Exact<{
   clusterName: Scalars['String']['input'];
-  pagination?: InputMaybe<CursorPaginationIn>;
-  search?: InputMaybe<SearchNodepool>;
 }>;
 
 export type ConsoleListNodePoolsQuery = {
   infra_listNodePools?: {
     totalCount: number;
+    pageInfo: {
+      hasNextPage?: boolean;
+      hasPreviousPage?: boolean;
+      startCursor?: string;
+      endCursor?: string;
+    };
     edges: Array<{
       node: {
-        updateTime: any;
+        accountName: string;
+        apiVersion: string;
         clusterName: string;
+        creationTime: any;
+        displayName: string;
+        id: string;
+        kind: string;
+        markedForDeletion?: boolean;
+        recordVersion: number;
+        updateTime: any;
         spec: {
-          targetCount: number;
-          minCount: number;
-          maxCount: number;
-          awsNodeConfig?: {
-            vpc?: string;
-            region?: string;
-            provisionMode: Github_Com__Kloudlite__Operator__Apis__Clusters__V1_NodePoolSpecAwsNodeConfigProvisionMode;
-            isGpu?: boolean;
-            imageId?: string;
-            spotSpecs?: {
-              memMin: number;
-              memMax: number;
-              cpuMin: number;
-              cpuMax: number;
+          aws?: {
+            poolType: string;
+            normalPool?: {
+              ami: string;
+              amiSSHUsername: string;
+              availabilityZone?: string;
+              iamInstanceProfileRole?: string;
+              instanceType: string;
+              nodes?: any;
+              nvidiaGpuEnabled: boolean;
+              rootVolumeSize: number;
+              rootVolumeType: string;
             };
-            onDemandSpecs?: { instanceType: string };
+            spotPool?: {
+              ami: string;
+              amiSSHUsername: string;
+              availabilityZone?: string;
+              iamInstanceProfileRole?: string;
+              nodes?: any;
+              nvidiaGpuEnabled: boolean;
+              rootVolumeSize: number;
+              rootVolumeType: string;
+              spotFleetTaggingRoleName: string;
+              cpuNode?: {
+                memoryPerVcpu?: { max: string; min: string };
+                vcpu: { max: string; min: string };
+              };
+              gpuNode?: { instanceTypes: Array<string> };
+            };
           };
         };
-        metadata: { name: string; annotations?: any };
+        createdBy: { userEmail: string; userId: string; userName: string };
+        lastUpdatedBy: { userEmail: string; userId: string; userName: string };
+        metadata?: {
+          annotations?: any;
+          creationTimestamp: any;
+          deletionTimestamp?: any;
+          generation: number;
+          labels?: any;
+          name: string;
+          namespace?: string;
+        };
         status?: {
-          isReady: boolean;
           checks?: any;
+          isReady: boolean;
+          lastReadyGeneration?: number;
+          lastReconcileTime?: any;
           message?: { RawMessage?: any };
+          resources?: Array<{
+            apiVersion: string;
+            kind: string;
+            name: string;
+            namespace: string;
+          }>;
+        };
+        syncStatus: {
+          action: Kloudlite__Io___Pkg___Types__SyncStatusAction;
+          error?: string;
+          lastSyncedAt?: any;
+          recordVersion: number;
+          state: Kloudlite__Io___Pkg___Types__SyncStatusState;
+          syncScheduledAt?: any;
         };
       };
     }>;
-    pageInfo: {
-      startCursor?: string;
-      hasPreviousPage?: boolean;
-      hasNextPage?: boolean;
-      endCursor?: string;
-    };
   };
 };
 
@@ -2120,7 +2214,7 @@ export type ConsoleCreateVpnDeviceMutationVariables = Exact<{
 }>;
 
 export type ConsoleCreateVpnDeviceMutation = {
-  core_createVPNDevice?: { id: string };
+  infra_createVPNDevice?: { id: string };
 };
 
 export type ConsoleUpdateVpnDeviceMutationVariables = Exact<{
@@ -2129,7 +2223,7 @@ export type ConsoleUpdateVpnDeviceMutationVariables = Exact<{
 }>;
 
 export type ConsoleUpdateVpnDeviceMutation = {
-  core_updateVPNDevice?: { id: string };
+  infra_updateVPNDevice?: { id: string };
 };
 
 export type ConsoleListVpnDevicesQueryVariables = Exact<{
@@ -2139,7 +2233,7 @@ export type ConsoleListVpnDevicesQueryVariables = Exact<{
 }>;
 
 export type ConsoleListVpnDevicesQuery = {
-  core_listVPNDevices?: {
+  infra_listVPNDevices?: {
     totalCount: number;
     edges: Array<{
       cursor: string;
@@ -2156,7 +2250,7 @@ export type ConsoleListVpnDevicesQuery = {
         updateTime: any;
         createdBy: { userEmail: string; userId: string; userName: string };
         lastUpdatedBy: { userEmail: string; userId: string; userName: string };
-        metadata: {
+        metadata?: {
           annotations?: any;
           creationTimestamp: any;
           deletionTimestamp?: any;
@@ -2176,18 +2270,18 @@ export type ConsoleListVpnDevicesQuery = {
           lastReconcileTime?: any;
           message?: { RawMessage?: any };
           resources?: Array<{
-            apiVersion?: string;
-            kind?: string;
+            apiVersion: string;
+            kind: string;
             name: string;
             namespace: string;
           }>;
         };
         syncStatus: {
-          action: Kloudlite_Io__Pkg__Types_SyncStatusAction;
+          action: Kloudlite__Io___Pkg___Types__SyncStatusAction;
           error?: string;
           lastSyncedAt?: any;
           recordVersion: number;
-          state: Kloudlite_Io__Pkg__Types_SyncStatusState;
+          state: Kloudlite__Io___Pkg___Types__SyncStatusState;
           syncScheduledAt?: any;
         };
       };
@@ -2207,7 +2301,7 @@ export type ConsoleGetVpnDeviceQueryVariables = Exact<{
 }>;
 
 export type ConsoleGetVpnDeviceQuery = {
-  core_getVPNDevice?: {
+  infra_getVPNDevice?: {
     accountName: string;
     apiVersion: string;
     clusterName: string;
@@ -2220,7 +2314,7 @@ export type ConsoleGetVpnDeviceQuery = {
     updateTime: any;
     createdBy: { userEmail: string; userId: string; userName: string };
     lastUpdatedBy: { userEmail: string; userId: string; userName: string };
-    metadata: {
+    metadata?: {
       annotations?: any;
       creationTimestamp: any;
       deletionTimestamp?: any;
@@ -2240,18 +2334,18 @@ export type ConsoleGetVpnDeviceQuery = {
       lastReconcileTime?: any;
       message?: { RawMessage?: any };
       resources?: Array<{
-        apiVersion?: string;
-        kind?: string;
+        apiVersion: string;
+        kind: string;
         name: string;
         namespace: string;
       }>;
     };
     syncStatus: {
-      action: Kloudlite_Io__Pkg__Types_SyncStatusAction;
+      action: Kloudlite__Io___Pkg___Types__SyncStatusAction;
       error?: string;
       lastSyncedAt?: any;
       recordVersion: number;
-      state: Kloudlite_Io__Pkg__Types_SyncStatusState;
+      state: Kloudlite__Io___Pkg___Types__SyncStatusState;
       syncScheduledAt?: any;
     };
   };
@@ -2262,7 +2356,7 @@ export type ConsoleDeleteVpnDeviceMutationVariables = Exact<{
   deviceName: Scalars['String']['input'];
 }>;
 
-export type ConsoleDeleteVpnDeviceMutation = { core_deleteVPNDevice: boolean };
+export type ConsoleDeleteVpnDeviceMutation = { infra_deleteVPNDevice: boolean };
 
 export type ConsoleListInvitationsForAccountQueryVariables = Exact<{
   accountName: Scalars['String']['input'];

@@ -12,6 +12,8 @@ import {
   ConsoleListProviderSecretsQueryVariables,
   ConsoleUpdateProviderSecretMutation,
   ConsoleUpdateProviderSecretMutationVariables,
+  ConsoleCheckAwsAccessQueryVariables,
+  ConsoleCheckAwsAccessQuery,
 } from '~/root/src/generated/gql/server';
 
 export type IProviderSecrets = NN<
@@ -23,6 +25,22 @@ export type IProviderSecret = NN<
 >;
 
 export const providerSecretQueries = (executor: IExecutor) => ({
+  checkAwsAccess: executor(
+    gql`
+      query Infra_checkAwsAccess($cloudproviderName: String!) {
+        infra_checkAwsAccess(cloudproviderName: $cloudproviderName) {
+          result
+          installationUrl
+        }
+      }
+    `,
+    {
+      transformer(data: ConsoleCheckAwsAccessQuery) {
+        return data.infra_checkAwsAccess;
+      },
+      vars(_: ConsoleCheckAwsAccessQueryVariables) {},
+    }
+  ),
   listProviderSecrets: executor(
     gql`
       query Infra_listProviderSecrets(
@@ -34,7 +52,6 @@ export const providerSecretQueries = (executor: IExecutor) => ({
             cursor
             node {
               accountName
-              apiVersion
               cloudProviderName
               createdBy {
                 userEmail
@@ -42,10 +59,8 @@ export const providerSecretQueries = (executor: IExecutor) => ({
                 userName
               }
               creationTime
-              data
               displayName
               id
-              kind
               lastUpdatedBy {
                 userEmail
                 userId
@@ -53,17 +68,17 @@ export const providerSecretQueries = (executor: IExecutor) => ({
               }
               markedForDeletion
               metadata {
-                annotations
-                creationTimestamp
-                deletionTimestamp
-                generation
-                labels
                 name
                 namespace
               }
-              recordVersion
-              type
               updateTime
+              aws {
+                accessKey
+                awsAccountId
+                awsAssumeRoleExternalId
+                awsAssumeRoleRoleARN
+                secretKey
+              }
             }
           }
           pageInfo {
@@ -129,7 +144,6 @@ export const providerSecretQueries = (executor: IExecutor) => ({
     gql`
       query Metadata($name: String!) {
         infra_getProviderSecret(name: $name) {
-          stringData
           metadata {
             annotations
             name

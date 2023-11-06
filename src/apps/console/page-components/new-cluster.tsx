@@ -1,5 +1,5 @@
 import { ArrowLeft, ArrowRight, UserCircle } from '@jengaicons/react';
-import { useNavigate, useOutletContext, useParams } from '@remix-run/react';
+import { useNavigate, useParams } from '@remix-run/react';
 import { useMemo, useState } from 'react';
 import { Button } from '~/components/atoms/button';
 import { TextInput } from '~/components/atoms/input';
@@ -24,9 +24,8 @@ import {
   parseName,
   parseNodes,
   validateAvailabilityMode,
-  validateCloudProvider,
+  validateClusterCloudProvider,
 } from '../server/r-utils/common';
-import { keyconstants } from '../server/r-utils/key-constants';
 import { ensureAccountClientSide } from '../server/utils/auth-utils';
 
 type props =
@@ -64,10 +63,6 @@ export const NewCluster = ({ providerSecrets, cloudProvider }: props) => {
   }));
 
   const { a: accountName } = useParams();
-  const { user } = useOutletContext<{
-    user: any;
-    account: any;
-  }>();
 
   const navigate = useNavigate();
 
@@ -130,51 +125,14 @@ export const NewCluster = ({ providerSecrets, cloudProvider }: props) => {
           cluster: {
             displayName: val.displayName,
             spec: {
-              // accountName: "{{.accountName}}"
-              // credentialsRef:
-              //   name: "{{.providerSecretName}}"
-              //   namespace: "{{.providerSecretNamespace}}"
-              // availabilityMode: HA
-              // # messageQueueTopicName: "clus-{{.clusterName}}-topic"
-              // cloudProvider: aws
-              // kloudliteRelease: v1.0.5-nightly
-              // aws:
-              //   region: ap-south-1
-              //   k3sMasters:
-              //     ami: ami-06d146e85d1709abb
-              //     amiSSHUsername: ubuntu
-              //     instanceType: c6a.large
-              //     nvidiaGpuEnabled: false
-              //     rootVolumeType: gp3
-              //     rootVolumeSize: 50
-              //     iamInstanceProfileRole: "EC2StorageAccess"
-              //
-              //     publicDnsHost: ""
-              //     clusterInternalDnsHost: "example-cluster.kloudlite-platform.kloudlite.local"
-              //
-              //     cloudflareEnabled: true
-              //     taintMasterNodes: true
-              //     backupToS3Enabled: false
-              //
-              //     nodes:
-              //       master-1:
-              //         role: primary-master
-              //       master-2:
-              //         role: secondary-master
-
-              kloudliteRelease: 'v1.0.5-nightly',
-              accountName,
-              // vpc: val.vpc || undefined,
-              // ...(validateCloudProvider(val.cloudProvider) === 'aws'
-              //   ? {
-              //       aws: {
-              //         region: val.region,
-              //         ami: 'ami-06d146e85d1709abb',
-              //       },
-              //     }
-              //   : {}),
-
-              cloudProvider: validateCloudProvider(val.cloudProvider),
+              cloudProvider: validateClusterCloudProvider(val.cloudProvider),
+              aws: {
+                region: 'ap-south-1',
+                k3sMasters: {
+                  instanceType: 'c6a.xlarge',
+                  iamInstanceProfileRole: '',
+                },
+              },
               credentialsRef: {
                 name: val.credentialsRef,
               },
@@ -182,9 +140,6 @@ export const NewCluster = ({ providerSecrets, cloudProvider }: props) => {
             },
             metadata: {
               name: val.name,
-              annotations: {
-                [keyconstants.author]: user.name,
-              },
             },
           },
         });
