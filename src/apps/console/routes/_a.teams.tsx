@@ -67,7 +67,7 @@ const Accounts = () => {
     Team.`}
       subtitle="Select an account to proceed to console screens."
       rightChildren={
-        <FadeIn>
+        <FadeIn notForm>
           <DynamicPagination
             {...{
               hasNext,
@@ -91,7 +91,7 @@ const Accounts = () => {
                 const displayName = account?.displayName;
                 return (
                   <List.Row
-                    to={`/${name}`}
+                    to={`/${name}/projects`}
                     key={name}
                     plain
                     className="group/team p-3xl [&:not(:last-child)]:border-b border-border-disabled last:rounded"
@@ -112,7 +112,7 @@ const Accounts = () => {
                       {
                         key: generateKey(name, index, 'action-arrow'),
                         render: () => (
-                          <div className="invisible transition-all delay-200 duration-10 group-hover/team:visible group-hover/team:translate-x-sm">
+                          <div className="invisible transition-all delay-100 duration-10 group-hover/team:visible group-hover/team:translate-x-sm">
                             <ArrowRight size={24} />
                           </div>
                         ),
