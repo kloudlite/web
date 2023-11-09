@@ -758,46 +758,54 @@ video {
 }
 
 .bodySm{
+  font-family: Inter, sans-serif;
   font-size: 12px;
   line-height: 16px;
 }
 
 .bodySm-medium{
+  font-family: Inter, sans-serif;
   font-size: 12px;
   line-height: 16px;
   font-weight: 500;
 }
 
 .bodyMd{
+  font-family: Inter, sans-serif;
   font-size: 14px;
   line-height: 20px;
 }
 
 .bodyMd-medium{
+  font-family: Inter, sans-serif;
   font-size: 14px;
   line-height: 20px;
   font-weight: 500;
 }
 
 .headingSm{
+  font-family: Inter, sans-serif;
   font-size: 14px;
   font-weight: 600;
-  line-height: 16px;
+  line-height: 20px;
 }
 
 .headingMd{
+  font-family: Inter, sans-serif;
   font-size: 16px;
   font-weight: 600;
   line-height: 24px;
 }
 
 .headingLg{
+  font-family: Inter, sans-serif;
   font-size: 20px;
   font-weight: 600;
   line-height: 24px;
 }
 
 .heading2xl{
+  font-family: Inter, sans-serif;
   font-size: 28px;
   font-weight: 600;
   line-height: 32px;
@@ -1752,9 +1760,19 @@ video {
   padding-bottom: 64px;
 }
 
+.py-\[10px\]{
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
 .py-\[3px\]{
   padding-top: 3px;
   padding-bottom: 3px;
+}
+
+.py-\[6px\]{
+  padding-top: 6px;
+  padding-bottom: 6px;
 }
 
 .py-lg{
@@ -2201,6 +2219,10 @@ select{
 .focus\:ring-border-focus:focus{
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(96 165 250 / var(--tw-ring-opacity));
+}
+
+.focus\:ring-offset-1:focus{
+  --tw-ring-offset-width: 1px;
 }
 
 .focus-visible\:shadow-focus:focus-visible{
