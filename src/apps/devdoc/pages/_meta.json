@@ -2,7 +2,10 @@
     "index":{
         "title":"Home",
         "type":"page",
-        "display":"hidden"
+        "display":"hidden",
+        "theme":{
+            "layout":"full"
+        }
     },
     "devops":{
         "title":"DevOps",

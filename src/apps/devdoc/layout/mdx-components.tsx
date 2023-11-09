@@ -6,6 +6,7 @@ import {
   useSetActiveAnchor,
   useSlugs,
 } from '~/utiltities/active-anchor';
+import { cn } from '~/utiltities/commons';
 
 const H1 = ({ children, ...props }: ComponentProps<'h1'>) => {
   return (
@@ -15,12 +16,16 @@ const H1 = ({ children, ...props }: ComponentProps<'h1'>) => {
   );
 };
 
-const H2 = ({
+const Heading = ({
+  tag: Tag,
   children,
   id,
   context,
   ...props
-}: ComponentProps<'h2'> & { context: { index: number } }) => {
+}: ComponentProps<'h2'> & {
+  tag: `h${2 | 3 | 4 | 5 | 6}`;
+  context: { index: number };
+}) => {
   const setActiveAnchor = useSetActiveAnchor();
   const slugs = useSlugs();
   const observer = useIntersectionObserver();
@@ -29,7 +34,6 @@ const H2 = ({
   useEffect(() => {
     if (!id) return;
     const heading = obRef.current;
-    console.log(heading);
 
     if (!heading) return;
     slugs.set(heading, [id, (context.index += 1)]);
@@ -47,8 +51,11 @@ const H2 = ({
   }, [id, context, slugs, observer, setActiveAnchor]);
 
   return (
-    <h2
-      className="heading2xl-marketing text-text-default -mt-[76px] pt-[96px] group"
+    <Tag
+      className={cn('text-text-default group mt-6xl', {
+        'heading2xl-marketing': Tag === 'h2',
+        'headingXl-marketing': Tag === 'h3',
+      })}
       {...props}
       id={id}
     >
@@ -56,7 +63,6 @@ const H2 = ({
       {id && (
         <a
           href={`#${id}`}
-          id={id}
           className="subheading-anchor invisible group-hover:visible transition-all"
           aria-label="Permalink for this section"
           ref={obRef}
@@ -64,7 +70,7 @@ const H2 = ({
           #
         </a>
       )}
-    </h2>
+    </Tag>
   );
 };
 
@@ -80,7 +86,8 @@ const createComponents = ({ components }: any): Components => {
   const context = { index: 0 };
   return {
     h1: H1,
-    h2: (props) => <H2 context={context} {...props} />,
+    h2: (props) => <Heading tag="h2" context={context} {...props} />,
+    h3: (props) => <Heading tag="h3" context={context} {...props} />,
     p: P,
     ...components,
   };

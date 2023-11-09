@@ -3,19 +3,22 @@ import type { ReactElement } from 'react';
 import { useEffect, useMemo, useRef } from 'react';
 import scrollIntoView from 'scroll-into-view-if-needed';
 
+import { Button } from 'kl-design-system/atoms/button';
+import { ArrowSquareOut } from '@jengaicons/react';
+import Link from 'next/link';
 import { BackToTop } from './back-to-top';
 import { useActiveAnchor } from '~/utiltities/active-anchor';
 import { cn } from '~/utiltities/commons';
+import useConfig from '~/utiltities/use-config';
+import getGitIssueUrl from '~/utiltities/get-git-issue-url';
 
 export type TOCProps = {
   headings: Heading[];
 };
 
 export function TOC({ headings }: TOCProps): ReactElement {
+  const { config } = useConfig();
   const activeAnchor = useActiveAnchor();
-
-  console.log(activeAnchor);
-
   const tocRef = useRef<HTMLDivElement>(null);
 
   const items = useMemo(
@@ -88,16 +91,6 @@ export function TOC({ headings }: TOCProps): ReactElement {
       )}
 
       <div className={cn()}>
-        {/* {config.feedback.content ? (
-            <Anchor
-              className={linkClassName}
-              href={config.feedback.useLink()}
-              newWindow
-            >
-              {renderComponent(config.feedback.content)}
-            </Anchor>
-          ) : null} */}
-
         {/* {renderComponent(config.editLink.component, {
             filePath,
             className: linkClassName,
@@ -105,8 +98,30 @@ export function TOC({ headings }: TOCProps): ReactElement {
           })}
 
           {renderComponent(config.toc.extraContent)} */}
-
-        <BackToTop />
+        <hr className="border-border-default my-5xl" />
+        {config.feedback ? (
+          <Button
+            content={
+              config.feedback.linkTitle || 'Question? Give us feedback →'
+            }
+            to={getGitIssueUrl({
+              labels: config.feedback.feedbackLabels || '',
+              repository: config.gitRepoUrl,
+              title: `Feedback for “${config.pageOpts?.title}”`,
+            })}
+            LinkComponent={Link}
+            toLabel="href"
+            variant="plain"
+            size="lg"
+          />
+        ) : null}
+        <Button
+          content="Kloudlite.io"
+          suffix={<ArrowSquareOut />}
+          variant="plain"
+          size="lg"
+        />
+        {config.scrollToTop && <BackToTop className="opacity-0" />}
       </div>
     </div>
   );

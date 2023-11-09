@@ -3,26 +3,40 @@ import type { NextraThemeLayoutProps } from 'nextra';
 import { MDXProvider } from 'nextra/mdx';
 import { useEffect, useMemo } from 'react';
 import Header from '~/components/header';
-import { Button } from 'kl-design-system/atoms/button';
-import { ArrowSquareOut } from '@jengaicons/react';
 import { useFSRoute } from 'nextra/hooks';
 import { normalizePages } from 'nextra/normalize-pages';
 import { useRouter } from 'next/router';
+import config from 'config';
 import Footer from '~/components/footer';
 import Container from '~/components/container';
-import NavFooter from '~/components/nav-footer';
 import { NavLinks } from '~/components/nav-links';
 import { DEFAULT_LOCALE } from '~/utiltities/constants';
 import { cn } from '~/utiltities/commons';
 import useMenu from '~/utiltities/use-menu';
-import { Sidebar } from '~/components/ssidebar';
-import createComponents from './mdx-components';
-import { BackToTop } from '~/components/back-to-top';
 import { TOC } from '~/components/toc';
 import { ActiveAnchorProvider } from '~/utiltities/active-anchor';
 import { Breadcrumb } from '~/components/breadcrum';
+import { ConfigProvider } from '~/utiltities/use-config';
+import { Sidebar } from '~/components/sidebar';
+import createComponents from './mdx-components';
 
-export default function Layout({ children, pageOpts }: NextraThemeLayoutProps) {
+function GitTimestamp({ timestamp }: { timestamp: Date }) {
+  const { locale = DEFAULT_LOCALE } = useRouter();
+  return (
+    <>
+      Last updated on{' '}
+      <time dateTime={timestamp.toISOString()}>
+        {timestamp.toLocaleDateString(locale, {
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric',
+        })}
+      </time>
+    </>
+  );
+}
+
+const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
   const { title, frontMatter, pageMap, headings } = pageOpts;
   const { state } = useMenu();
 
@@ -55,8 +69,6 @@ export default function Layout({ children, pageOpts }: NextraThemeLayoutProps) {
 
   const hideSidebar = activeType === 'page';
 
-  console.log(activeThemeContext);
-
   return (
     <div className="bg-surface-basic-subdued min-h-screen antialiased">
       <Head>
@@ -84,15 +96,26 @@ export default function Layout({ children, pageOpts }: NextraThemeLayoutProps) {
           <article className="flex-1">
             <main
               className={cn(
-                'md:p-6xl w-full min-w-0 min-h-[calc(100vh-101px)] flex flex-col',
+                'md:p-6xl w-full min-w-0 min-h-[calc(100vh-101px)] flex flex-col gap-6xl',
                 !hideSidebar ? 'max-w-[72rem]' : ''
               )}
             >
               <MDXProvider components={createComponents}>
-                {activeThemeContext.layout !== 'full' && (
-                  <Breadcrumb activePath={activePath} />
-                )}
-                <div className="flex-1">{children}</div>
+                <div className="flex-1">
+                  <div className="mb-2xl">
+                    {activeThemeContext.layout !== 'full' && (
+                      <Breadcrumb activePath={activePath} />
+                    )}
+                  </div>
+                  {children}
+                </div>
+                <div className="bodyLg text-text-strong">
+                  {activeThemeContext.timestamp &&
+                  pageOpts.timestamp &&
+                  activeThemeContext.layout !== 'full'
+                    ? GitTimestamp({ timestamp: new Date(pageOpts.timestamp) })
+                    : null}
+                </div>
                 {!hideSidebar && (
                   <NavLinks
                     flatDirectories={flatDocsDirectories}
@@ -106,5 +129,14 @@ export default function Layout({ children, pageOpts }: NextraThemeLayoutProps) {
         <Footer />
       </ActiveAnchorProvider>
     </div>
+  );
+};
+
+export default function Layout(props: NextraThemeLayoutProps) {
+  const { pageOpts } = props;
+  return (
+    <ConfigProvider pageOpts={pageOpts} config={config}>
+      <Main {...props} />
+    </ConfigProvider>
   );
 }

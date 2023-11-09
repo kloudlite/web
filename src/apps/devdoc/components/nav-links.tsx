@@ -27,7 +27,7 @@ export const NavLinks = ({
   return (
     <div
       className={cn(
-        'py-6xl px-xl border-t border-border-default mt-6xl flex flex-row flex-wrap items-center gap-xl bodyMd text-text-default ',
+        'py-6xl px-xl border-t border-border-default  flex flex-row flex-wrap items-center gap-xl bodyMd text-text-default ',
         {
           'justify-between': !!prev,
           'justify-end': !prev,

@@ -13,6 +13,7 @@ html{
     scroll-behavior: auto;
     -webkit-tap-highlight-color: transparent;
     scrollbar-gutter: stable;
+    @apply scroll-pt-[--kl-navbar-height];
 }
 .scrollbar-gutter{
     scrollbar-gutter: stable;
@@ -22,6 +23,28 @@ html{
     scrollbar-gutter: 'auto';
 }
 
+.kl-steps{
+  counter-reset: steps;
+  @apply pl-[28px] ml-[14px] border-l border-icon-disabled border-dotted;
+}
+
+.kl-steps > h3::before{
+  counter-increment: steps;
+  content: counter(steps);
+  width: 28px;
+  height: 28px;
+  @apply -ml-[47px] -mt-[3px] bg-surface-basic-pressed border-surface-basic-subdued rounded-full flex items-center justify-center text-center border-4 box-content headingMd text-text-default absolute;
+}
+
+.kl-sidebar{
+  -webkit-mask-image: linear-gradient(transparent,#000 20px),linear-gradient(270deg,#000 10px,transparent 0);
+    mask-image: linear-gradient(transparent,#000 20px),linear-gradient(270deg,#000 10px,transparent 0);
+}
+
+.kl-footer{
+  order: -99999;
+}
+
 @media (max-width: 767px) {
     .nextra-sidebar-container {
       @apply fixed pt-[calc(var(--kl-navbar-height)+20px)] inset-0 w-full bottom-0 z-[15] overscroll-contain px-md pb-3xl;
@@ -29,5 +52,9 @@ html{
       will-change: transform, opacity;
       contain: layout style;
       backface-visibility: hidden;
+    }
+
+    .kl-footer{
+      order: 99999;
     }
   }
