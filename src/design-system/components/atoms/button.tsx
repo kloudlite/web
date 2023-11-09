@@ -317,7 +317,7 @@ export const ButtonBase = React.forwardRef<
       </AnimatePresence>
       {!!prefix &&
         React.cloneElement(prefix, {
-          size: iconOnly ? 20 : 16,
+          size: 16,
           color: 'currentColor',
         })}
       {!iconOnly && content}
