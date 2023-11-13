@@ -6,11 +6,11 @@ import scrollIntoView from 'scroll-into-view-if-needed';
 import { Button } from 'kl-design-system/atoms/button';
 import { ArrowSquareOut } from '@jengaicons/react';
 import Link from 'next/link';
-import { BackToTop } from './back-to-top';
 import { useActiveAnchor } from '~/utiltities/active-anchor';
 import { cn } from '~/utiltities/commons';
 import useConfig from '~/utiltities/use-config';
 import getGitIssueUrl from '~/utiltities/get-git-issue-url';
+import { BackToTop } from './back-to-top';
 
 export type TOCProps = {
   headings: Heading[];

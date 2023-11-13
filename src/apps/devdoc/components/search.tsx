@@ -1,5 +1,5 @@
-import { Search, X } from '@jengaicons/react';
-import { Button, IconButton } from 'kl-design-system/atoms/button';
+import { Search } from '@jengaicons/react';
+import { IconButton } from 'kl-design-system/atoms/button';
 import { cn } from '~/utiltities/commons';
 import useSearch from '~/utiltities/use-search';
 
