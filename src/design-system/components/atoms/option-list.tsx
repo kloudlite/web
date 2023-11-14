@@ -1,3 +1,5 @@
+import * as MenuPrimitive from '@radix-ui/react-menu';
+import { AnimatePresence, motion } from 'framer-motion';
 import React, {
   Children,
   ReactElement,
@@ -8,11 +10,9 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
-import * as MenuPrimitive from '@radix-ui/react-menu';
+import { cn } from '../utils';
 import * as OptionMenuPrimitive from './_dropdown-primitive';
 import { ITextInput, TextInput } from './input';
-import { cn } from '../utils';
 import Tabs from './tabs';
 
 type DropdownMenuContentElement = React.ElementRef<
@@ -21,27 +21,31 @@ type DropdownMenuContentElement = React.ElementRef<
 
 interface IBase {
   className?: string;
-  onSelect?: (e: Event) => void;
+  onClick?: (e: Event) => void;
+  children: ReactNode;
 }
 
 interface ITrigger {
   children: ReactNode;
+  open?: boolean;
   props?: any;
 }
 
-interface IOptionMenuContent extends Omit<IBase, 'onSelect'> {
+interface IOptionMenuContent extends Omit<IBase, 'onClick'> {
   sideOffset?: number;
-  children: ReactNode;
   open?: boolean;
   align?: 'start' | 'center' | 'end';
 }
 
-interface IOptionMenuItem extends IBase {}
+interface IOptionMenuItem extends IBase {
+  active?: boolean;
+}
 
 interface IOptionMenuLink extends IBase {
   LinkComponent?: any;
   to: string;
-  children: ReactNode;
+  target?: string;
+  rel?: string;
 }
 
 interface IOptionMenuTextInput
@@ -51,24 +55,21 @@ interface IOptionMenuTextInput
 
 interface IOptionMenuCheckbox extends IBase {
   showIndicator?: boolean;
-  children: ReactNode;
   checked?: boolean;
   onValueChange?: (checked: boolean) => void;
 }
 
 interface IOptionMenuRadio extends IBase {
   showIndicator?: boolean;
-  children: ReactNode;
   value: string;
 }
 
-interface IOptionMenuSeparator extends Omit<IBase, 'onSelect'> {}
+interface IOptionMenuSeparator extends Omit<IBase, 'onClick' | 'children'> {}
 
 interface IOptionMenuTabs extends IBase {
-  onChange?: () => void;
+  onChange?: (v: string) => void;
   value: string;
   size?: string;
-  children: ReactNode;
   LinkComponent?: any;
   compact?: boolean;
 }
@@ -95,12 +96,17 @@ const preventDefaultEvents = {
   // onClick: (e: any) => e.preventDefault(),
 };
 
-const OptionMenuTrigger = forwardRef<HTMLElement, ITrigger>(
-  ({ props, children }, ref) => (
-    <OptionMenuTriggerBase ref={ref} {...props} asChild is-menu-button="true">
-      {children}
-    </OptionMenuTriggerBase>
-  )
+const OptionMenuTrigger = forwardRef<HTMLButtonElement, ITrigger>(
+  ({ children, ...props }, ref) => {
+    const { open } = props;
+    return (
+      <OptionMenuTriggerBase ref={ref} {...props} asChild is-menu-button="true">
+        {cloneElement(children as ReactElement, {
+          selected: open,
+        })}
+      </OptionMenuTriggerBase>
+    );
+  }
 );
 
 OptionMenuTrigger.displayName = 'OptionMenuTrigger';
@@ -147,21 +153,29 @@ const OptionMenuContent = forwardRef<
 OptionMenuContent.displayName = OptionMenuPrimitive.Content.displayName;
 
 const OptionMenuItem = forwardRef<HTMLDivElement, IOptionMenuItem>(
-  ({ className, ...props }, ref) => (
-    <OptionMenuPrimitive.Item
-      ref={ref}
-      className={cn(
-        'group relative flex flex-row gap-xl items-center bodyMd gap cursor-default select-none py-lg px-xl text-text-default outline-none transition-colors focus:bg-surface-basic-hovered hover:bg-surface-basic-hovered data-[disabled]:pointer-events-none data-[disabled]:text-text-disabled',
-        className
-      )}
-      {...props}
-    />
-  )
+  ({ className, ...props }, ref) => {
+    return (
+      <OptionMenuPrimitive.Item
+        ref={ref}
+        {...preventDefaultEvents}
+        className={cn(
+          'group relative flex flex-row gap-xl items-center bodyMd gap cursor-default select-none py-lg px-xl text-text-default outline-none transition-colors focus:bg-surface-basic-hovered hover:bg-surface-basic-hovered data-[disabled]:pointer-events-none data-[disabled]:text-text-disabled',
+          {
+            'bg-surface-basic-active': !!props.active,
+          },
+          className
+        )}
+        onSelect={props.onClick}
+      >
+        {props.children}
+      </OptionMenuPrimitive.Item>
+    );
+  }
 );
 OptionMenuItem.displayName = OptionMenuPrimitive.Item.displayName;
 
 const OptionMenuLink = forwardRef<HTMLDivElement, IOptionMenuLink>(
-  ({ className, LinkComponent = 'a', to = '', children }, ref) => {
+  ({ className, LinkComponent = 'a', to = '', target, rel, children }, ref) => {
     let Component: any = LinkComponent;
 
     if (to) {
@@ -182,7 +196,11 @@ const OptionMenuLink = forwardRef<HTMLDivElement, IOptionMenuLink>(
         {...preventDefaultEvents}
         asChild
       >
-        <Component {...(Component === 'a' ? { href: to } : { to })}>
+        <Component
+          {...(Component === 'a' ? { href: to } : { to })}
+          target={target}
+          rel={rel}
+        >
           {children}
         </Component>
       </OptionMenuPrimitive.Item>
@@ -212,7 +230,6 @@ const OptionMenuTextInputItem = forwardRef<
       className={cn({
         'py-lg px-xl': !compact,
       })}
-      onFocus={() => console.log('div focus')}
     >
       <OptionMenuPrimitive.Item
         ref={ref}
@@ -280,9 +297,9 @@ const OptionMenuCheckboxItem = forwardRef<HTMLDivElement, IOptionMenuCheckbox>(
         className
       )}
       checked={checked}
-      {...props}
       {...preventDefaultEvents}
       onCheckedChange={onValueChange}
+      onSelect={props.onClick}
     >
       {showIndicator && (
         <span className="w-2xl h-2xl rounded border transition-all flex items-center justify-center border-border-default group-data-[state=checked]:border-border-primary group-data-[state=checked]:bg-surface-primary-default group-data-[disabled]:border-border-disabled group-data-[disabled]:bg-surface-basic-default ">
@@ -314,10 +331,7 @@ OptionMenuCheckboxItem.displayName =
   OptionMenuPrimitive.CheckboxItem.displayName;
 
 const OptionMenuRadioItem = forwardRef<HTMLDivElement, IOptionMenuRadio>(
-  (
-    { className, showIndicator = true, children, value, onSelect, ...props },
-    ref
-  ) => (
+  ({ className, showIndicator = true, children, value, ...props }, ref) => (
     <OptionMenuPrimitive.RadioItem
       ref={ref}
       className={cn(
@@ -328,7 +342,7 @@ const OptionMenuRadioItem = forwardRef<HTMLDivElement, IOptionMenuRadio>(
         },
         className
       )}
-      {...props}
+      onSelect={props.onClick}
       value={value}
       {...preventDefaultEvents}
     >
@@ -390,7 +404,6 @@ const handleKeyNavigation = (
           c.querySelector('[data-radix-collection-item]')
       );
 
-      console.log(childs);
       const currentIndex = childs.indexOf(tabElement);
       if (currentIndex > 0) {
         if (
@@ -415,7 +428,6 @@ const handleKeyNavigation = (
           c.querySelector('[data-radix-collection-item]')
       );
 
-      console.log(childs);
       const currentIndex = childs.indexOf(tabElement);
       if (currentIndex < childs.length - 1) {
         if (
@@ -496,15 +508,21 @@ const OptionMenuTabs = forwardRef<HTMLDivElement, IOptionMenuTabs>(
 
 OptionMenuTextInputItem.displayName = OptionMenuPrimitive.Item.displayName;
 
-const Root = ({ ...props }) => {
+interface IRoot {
+  children: ReactNode;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+}
+const Root = ({ ...props }: IRoot) => {
   const [open, setOpen] = useState(props.open);
 
   useEffect(() => {
-    if (props.onOpenChange) props.onOpenChange(open);
+    if (props.onOpenChange) props.onOpenChange(open || false);
   }, [open]);
+
   return (
     <OptionMenu open={open} onOpenChange={setOpen}>
-      {Children.map(props.children, (child) =>
+      {Children.map(props.children as ReactElement[], (child) =>
         cloneElement(child, {
           open,
         })

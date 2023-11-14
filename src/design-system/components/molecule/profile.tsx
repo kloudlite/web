@@ -1,11 +1,11 @@
 import { forwardRef } from 'react';
-import { AvatarBase, IAvatar } from '../atoms/avatar.jsx';
-import { BounceIt } from '../bounce-it.jsx';
-import { cn } from '../utils.jsx';
+import { AvatarBase, IAvatar } from '../atoms/avatar';
+import { BounceIt } from '../bounce-it';
+import { cn } from '../utils';
 
 interface IProfile extends IAvatar {
   name: string;
-  subtitle: string;
+  subtitle?: string;
 }
 
 export const Profile = forwardRef<HTMLButtonElement, IProfile>(
@@ -21,9 +21,9 @@ export const Profile = forwardRef<HTMLButtonElement, IProfile>(
         >
           <AvatarBase color={color} size={size} />
           <div className=" flex-col items-start hidden md:flex">
-            <div className="bodyMd-medium gap-y-md">{name}</div>
+            <div className="bodyMd-medium gap-y-md pulsable">{name}</div>
             {subtitle && (
-              <div className="bodySm text-text-soft">{subtitle}</div>
+              <div className="bodySm text-text-soft pulsable">{subtitle}</div>
             )}
           </div>
         </button>

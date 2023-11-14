@@ -1,0 +1,8 @@
+{
+    "vpn-access":{
+        "title":"VPN Access"
+    },
+    "domain-management":{
+        "title":"Domain & Ingress"
+    }
+}

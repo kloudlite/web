@@ -1,5 +1,5 @@
 import { Search } from '@jengaicons/react';
-import { TextInput } from '../../components/atoms/input.jsx';
+import { TextInput } from '~/components/atoms/input';
 
 export default {
   title: 'Atoms/TextInput',
@@ -20,7 +20,7 @@ export const PrefixIconTextInput = {
   args: {
     label: 'Default',
     value: 'Hello',
-    prefixIcon: <Search/>,
+    prefixIcon: <Search />,
   },
 };
 
@@ -53,7 +53,7 @@ export const ErrorTextInput = {
     label: 'Default',
     value: 'Hello',
     showclear: true,
-    prefixIcon: <Search/>,
+    prefixIcon: <Search />,
     error: true,
   },
 };
@@ -63,7 +63,7 @@ export const DisabledTextInput = {
     label: 'Default',
     value: 'Hello',
     showclear: true,
-    prefixIcon: <Search/>,
+    prefixIcon: <Search />,
     disabled: true,
   },
 };

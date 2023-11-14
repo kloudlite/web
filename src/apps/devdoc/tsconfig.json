@@ -1,0 +1,45 @@
+{
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "**/*.jsx"
+  ],
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "jsx": "preserve",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "target": "ES2019",
+    "strict": true,
+    "allowJs": true,
+    "checkJs": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "flexsearch": ["./node_modules/@types/flexsearch"],
+      "~/components/*": [
+        "./components/*"
+      ],
+      "~/utiltities/*": [
+        "./utils/*"
+      ],
+    },
+    "noEmit": true,
+    "incremental": true,
+    "module": "esnext"
+  },
+  "exclude": [
+    "node_modules/**/*",
+    "public"
+  ]
+}

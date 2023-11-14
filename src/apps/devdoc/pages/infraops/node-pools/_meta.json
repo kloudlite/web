@@ -1,0 +1,14 @@
+{
+    "autoscaling":{
+        "title":"Autoscaling"
+    },
+    "spot-pools":{
+        "title":"Spot Pools"
+    },
+    "gpu-nodes":{
+        "title":"GPU Nodes"
+    },
+    "best-practices":{
+        "title":"Best practices"
+    }
+}

@@ -1,4 +1,7 @@
-import plugin from 'tailwindcss/plugin';
+import noScrollbar from './css-plugins/no-scrollbar.js';
+import noSpinner from './css-plugins/no-spinner.js';
+import scrollbar from './css-plugins/scrollbar.js';
+import typography from './css-plugins/typography.js';
 
 const primitives = {
   colors: {
@@ -39,16 +42,16 @@ const primitives = {
       900: '#701A75',
     },
     purple: {
-      50: '#DFDCF3',
-      100: '#BFB9E7',
-      200: '#A196D9',
-      300: '#8573CB',
-      400: '#6B4FBB',
-      500: '#5C44A2',
-      600: '#4E388A',
-      700: '#3F2E73',
-      800: '#32235C',
-      900: '#251946',
+      50: '##FFFBFF',
+      100: '#F3EEFF',
+      200: '#E3DFFF',
+      300: '#C4C0FF',
+      400: '#A6A1FD',
+      500: '#8B87E0',
+      600: '#726DC4',
+      700: '#413B90',
+      800: '#292278',
+      900: '#171347',
     },
     red: {
       50: '#FEF2F2',
@@ -140,6 +143,8 @@ const primitives = {
     '2xl': '28px',
     '3xl': '32px',
     '4xl': '40px',
+    '5xl': '48px',
+    '6xl': '64px',
   },
   lineHeight: {
     xs: '16px',
@@ -149,6 +154,8 @@ const primitives = {
     xl: '32px',
     '2xl': '40px',
     '3xl': '48px',
+    '5xl': '64px',
+    '6xl': '76px',
   },
 };
 
@@ -191,12 +198,15 @@ const config = {
           '0px 1px 3px rgba(63, 63, 68, 0.15)',
           '0px 0px 0px 1px rgba(63, 63, 68, 0.05)',
         ],
+        focus: '0px 0px 0px 2px #60A5FA;',
       },
       maxWidth: { ...width },
       minWidth: { ...width },
     },
     fontFamily: {
       sans: ['Inter', 'sans-serif'],
+      mono: ['Roboto Mono', 'monospace'],
+      familjen: ['Familjen Grotesk', 'sans-serif'],
     },
     screens: {
       sm: '490px',
@@ -206,8 +216,8 @@ const config = {
       '2xl': '1440px',
       '3xl': '1920px',
     },
-    // fontSize: { ...primitives.fontSize },
-    // lineHeight: { ...primitives.lineHeight },
+    fontSize: { ...primitives.fontSize },
+    lineHeight: { ...primitives.lineHeight },
     spacing: {
       0: '0px',
       xs: primitives.spacing['025'],
@@ -322,36 +332,7 @@ const config = {
       black: 'black',
     },
   },
-  plugins: [
-    // plugin(({ addComponents, theme }) => {
-    //   console.log(theme('fontWeight'));
-    //   addComponents({
-    //     '.bodySm': {
-    //       fontSize: theme('fontSize.xs'),
-    //       lineHeight: theme('lineHeight.xs'),
-    //       fontWeight: theme('fontWeight.normal'),
-    //     },
-    //     '.bodySm-medium': {
-    //       fontSize: theme('fontSize.xs'),
-    //       lineHeight: theme('lineHeight.xs'),
-    //       fontWeight: theme('fontWeight.medium'),
-    //     },
-    //     '.bodyMd': {
-    //       fontSize: theme('fontSize.sm'),
-    //       lineHeight: theme('lineHeight.sm'),
-    //       fontWeight: theme('fontWeight.normal'),
-    //     },
-    //     '.abcd': {
-    //       '@apply .bodyMd underline': {},
-    //     },
-    //     '.bodyLg': {
-    //       fontSize: theme('fontSize.md'),
-    //       lineHeight: theme('lineHeight.sm'),
-    //       fontWeight: theme('fontWeight.normal'),
-    //     },
-    //   });
-    // }),
-  ],
+  plugins: [typography(), scrollbar(), noScrollbar(), noSpinner()],
 };
 
 export const LightTitlebarColor = config.theme.colors.surface.basic.subdued;

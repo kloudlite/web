@@ -16,8 +16,8 @@ export const Provider = ({ delayDuration = 0, children }: ITooltipProvider) => (
 interface ITooltip {
   children: ReactNode;
   content: ReactNode;
-  open: boolean;
-  offset: number;
+  open?: boolean;
+  offset?: number;
 }
 
 export const Root = ({

@@ -1,4 +1,4 @@
-import {WorkspacesLogo} from "../../components/branding/workspace-logo.jsx";
+import { WorkspacesLogo } from '~/components/branding/workspace-logo';
 
 export default {
   title: 'Branding/WorkspacesLogo',
@@ -8,14 +8,11 @@ export default {
 };
 
 export const BasicLogo = {
-  args:{
-
-  }
-}
+  args: {},
+};
 
 export const DetailedLogo = {
   args: {
-    detailed: true
+    detailed: true,
   },
 };
-

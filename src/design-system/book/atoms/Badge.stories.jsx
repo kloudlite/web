@@ -16,8 +16,8 @@ export const Neutral = {
 };
 export const Danger = {
   args: {
-    type: 'danger',
-    children: 'Danger',
+    type: 'critical',
+    children: 'critical',
   },
 };
 export const Info = {

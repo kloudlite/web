@@ -1,0 +1,23 @@
+{
+    "ref-node-pools":{
+        "title":"NodePool"
+    },
+    "ref-domains":{
+        "title":"Domains"
+    },
+    "ref-vpn-devices":{
+        "title":"VPNDevice"
+    },
+    "ref-helm-releases":{
+        "title":"HelmRelease"
+    },
+    "ref-snapshots":{
+        "title":"ScheduledSnapshot"
+    },
+    "ref-backup":{
+        "title":"ScheduledBackup"
+    },
+    "ref-restore":{
+        "title":"RestoreTask"
+    }
+}

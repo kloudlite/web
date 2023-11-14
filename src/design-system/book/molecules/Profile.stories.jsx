@@ -1,4 +1,4 @@
-import { Profile } from '../../components/molecule/profile.jsx';
+import { Profile } from '~/components/molecule/profile';
 
 export default {
   title: 'Molecules/Profile',

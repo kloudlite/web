@@ -1,0 +1,58 @@
+{
+    "index":{
+        "display":"hidden"
+    },
+    "---intro":{
+        "title":"Introduction",
+        "type":"separator"
+    },
+    "what-is-infraops":{
+        "title":"What is KLInfraOps?"
+    },
+    "how-does-devops-work":{
+        "title":"How does it work?"
+    },
+    "getting-started":{
+        "title":"Getting Started"
+    },
+    "---learn":{
+        "title":"Learn",
+        "type":"separator"
+    },
+    "node-pools":{
+        "title":"Node Pools"
+    },
+    "network":{
+        "title":"Network"
+    },
+    "observability":{
+        "title":"Observability"
+    },
+    "storage":{
+        "title":"Storage"
+    },
+    "iac":{
+        "title":"Infra as Code"
+    },
+    "---resources":{
+        "title":"Resources",
+        "type":"separator",
+        "bottom":true
+    },
+    "api-doc":{
+        "title":"API Documentation",
+        "bottom":true
+    },
+    "cli":{
+        "title":"Cli tool",
+        "bottom":true
+    },
+    "github":{
+        "title":"Github",
+        "bottom":true
+    },
+    "help":{
+        "title":"Help & Support",
+        "bottom":true
+    }
+}

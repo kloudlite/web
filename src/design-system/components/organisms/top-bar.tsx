@@ -63,9 +63,8 @@ export const TopBar = ({
         className={cn(
           'bg-surface-basic-default z-40 transition-all overflow-hidden',
           {
-            'border-b border-border-default': !tabs,
             'sticky -top-xs left-0 right-0': !tabs && fixed,
-            'shadow-sm pt-xs': !tabs && fixed && isHeadingSticked,
+            'shadow-sm pt-xs ': !tabs && fixed && isHeadingSticked,
           }
         )}
       >
@@ -93,18 +92,16 @@ export const TopBar = ({
         {!!tabs && (
           <div
             ref={tabBarRef}
-            className={cn(
-              'bg-surface-basic-default z-40 border-b border-border-default',
-              {
-                'sticky -top-xs pt-xs left-0 right-0': fixed,
-                'shadow-sm': fixed && isTabBarSticked,
-              }
-            )}
+            className={cn('bg-surface-basic-default z-40', {
+              'sticky -top-xs pt-xs left-0 right-0': fixed,
+              'shadow-sm': fixed && isTabBarSticked,
+            })}
           >
             <Container>{tabs}</Container>
           </div>
         )}
       </TopBarContext.Provider>
+      <div className="border-b border-border-default" />
     </>
   );
 };

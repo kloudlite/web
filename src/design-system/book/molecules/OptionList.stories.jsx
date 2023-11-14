@@ -1,7 +1,7 @@
 import { ArrowDown, ArrowUp, Search } from '@jengaicons/react';
 import { useState } from 'react';
-import OptionList from '../../components/atoms/option-list';
 import { Button } from '../../components/atoms/button';
+import OptionList from '../../components/atoms/option-list';
 import { Profile } from '../../components/molecule/profile';
 
 export default {
@@ -22,7 +22,7 @@ const OptionListHook = () => {
         <Button content="menu" variant="basic" selected={open} />
       </OptionList.Trigger>
       <OptionList.Content>
-        <OptionList.TextInput placeholder="Filter" prefixIcon={<Search/>} />
+        <OptionList.TextInput placeholder="Filter" prefixIcon={<Search />} />
         {/* <OptionList.Separator /> */}
         <OptionList.Item>This is test Item 1</OptionList.Item>
         <OptionList.Item>This is test Item 2</OptionList.Item>
@@ -30,14 +30,14 @@ const OptionListHook = () => {
         <OptionList.CheckboxItem
           checked={apple}
           onValueChange={setApple}
-          onSelect={(e) => e.preventDefault()}
+          onClick={(e) => e.preventDefault()}
         >
           Apple
         </OptionList.CheckboxItem>
         <OptionList.CheckboxItem
           checked={orange}
           onValueChange={setOrange}
-          onSelect={(e) => e.preventDefault()}
+          onClick={(e) => e.preventDefault()}
         >
           Orange
         </OptionList.CheckboxItem>
@@ -45,19 +45,19 @@ const OptionListHook = () => {
         <OptionList.RadioGroup value={radioValue} onValueChange={setRadioValue}>
           <OptionList.RadioGroupItem
             value="one"
-            onSelect={(e) => e.preventDefault()}
+            onClick={(e) => e.preventDefault()}
           >
             One
           </OptionList.RadioGroupItem>
           <OptionList.RadioGroupItem
             value="two"
-            onSelect={(e) => e.preventDefault()}
+            onClick={(e) => e.preventDefault()}
           >
             Two
           </OptionList.RadioGroupItem>
           <OptionList.RadioGroupItem
             value="three"
-            onSelect={(e) => e.preventDefault()}
+            onClick={(e) => e.preventDefault()}
           >
             Three
           </OptionList.RadioGroupItem>
@@ -67,7 +67,7 @@ const OptionListHook = () => {
           <OptionList.RadioGroupItem
             showIndicator={false}
             value="one"
-            onSelect={(e) => e.preventDefault()}
+            onClick={(e) => e.preventDefault()}
           >
             <ArrowUp size={16} />
             One
@@ -75,7 +75,7 @@ const OptionListHook = () => {
           <OptionList.RadioGroupItem
             value="two"
             showIndicator={false}
-            onSelect={(e) => e.preventDefault()}
+            onClick={(e) => e.preventDefault()}
           >
             <ArrowDown size={16} />
             Two
@@ -97,7 +97,7 @@ const ProfileOptionListHook = () => {
         <Profile name="this is profile" />
       </OptionList.Trigger>
       <OptionList.Content>
-        <OptionList.TextInput placeholder="Filter" prefixIcon={<Search/>} />
+        <OptionList.TextInput placeholder="Filter" prefixIcon={<Search />} />
         {/* <OptionList.Separator /> */}
         <OptionList.Item>This is test Item 1</OptionList.Item>
         <OptionList.Item>This is test Item 2</OptionList.Item>
@@ -105,14 +105,14 @@ const ProfileOptionListHook = () => {
         <OptionList.CheckboxItem
           checked={apple}
           onValueChange={setApple}
-          onSelect={(e) => e.preventDefault()}
+          onClick={(e) => e.preventDefault()}
         >
           Apple
         </OptionList.CheckboxItem>
         <OptionList.CheckboxItem
           checked={orange}
           onValueChange={setOrange}
-          onSelect={(e) => e.preventDefault()}
+          onClick={(e) => e.preventDefault()}
         >
           Orange
         </OptionList.CheckboxItem>
@@ -120,19 +120,19 @@ const ProfileOptionListHook = () => {
         <OptionList.RadioGroup value={radioValue} onValueChange={setRadioValue}>
           <OptionList.RadioGroupItem
             value="one"
-            onSelect={(e) => e.preventDefault()}
+            onClick={(e) => e.preventDefault()}
           >
             One
           </OptionList.RadioGroupItem>
           <OptionList.RadioGroupItem
             value="two"
-            onSelect={(e) => e.preventDefault()}
+            onClick={(e) => e.preventDefault()}
           >
             Two
           </OptionList.RadioGroupItem>
           <OptionList.RadioGroupItem
             value="three"
-            onSelect={(e) => e.preventDefault()}
+            onClick={(e) => e.preventDefault()}
           >
             Three
           </OptionList.RadioGroupItem>
@@ -142,7 +142,7 @@ const ProfileOptionListHook = () => {
           <OptionList.RadioGroupItem
             showIndicator={false}
             value="one"
-            onSelect={(e) => e.preventDefault()}
+            onClick={(e) => e.preventDefault()}
           >
             <ArrowUp size={16} />
             One
@@ -150,7 +150,7 @@ const ProfileOptionListHook = () => {
           <OptionList.RadioGroupItem
             value="two"
             showIndicator={false}
-            onSelect={(e) => e.preventDefault()}
+            onClick={(e) => e.preventDefault()}
           >
             <ArrowDown size={16} />
             Two

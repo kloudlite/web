@@ -1,8 +1,95 @@
 import { ChevronLeft, ChevronRight } from '@jengaicons/react';
-import { useEffect, useId, useRef, useState } from 'react';
 import * as RovingFocusGroup from '@radix-ui/react-roving-focus';
+import { useEffect, useId, useRef, useState } from 'react';
 import { Button } from '../atoms/button';
 import { cn } from '../utils';
+
+interface IUsePagination<T> {
+  items: T;
+  itemsPerPage: number;
+}
+
+export const usePagination = <T extends Array<any>>({
+  items,
+  itemsPerPage,
+}: IUsePagination<T>) => {
+  const [listItems, setListItems] = useState(items);
+  const [page, setPage] = useState<typeof items>();
+  const [pageNumber, setPageNumber] = useState(1);
+  const [hasNext, setHasNext] = useState(false);
+  const [hasPrevious, setHasPrevious] = useState(false);
+
+  useEffect(() => {
+    if (listItems.length > 0) {
+      let tempItems = listItems.slice(
+        (pageNumber - 1) * itemsPerPage,
+        pageNumber * itemsPerPage
+      );
+
+      if (tempItems.length === 0) {
+        tempItems = listItems.slice(
+          (Math.ceil(listItems.length / itemsPerPage) - 1) * itemsPerPage,
+          listItems.length
+        );
+        setPageNumber((prev) => prev - 1);
+      }
+      setPage(tempItems as T);
+    } else {
+      setPageNumber(1);
+    }
+  }, [listItems]);
+
+  useEffect(() => {
+    if (pageNumber * itemsPerPage >= listItems.length) {
+      setHasNext(false);
+    } else {
+      setHasNext(true);
+    }
+
+    if (pageNumber * itemsPerPage > itemsPerPage) {
+      setHasPrevious(true);
+    } else {
+      setHasPrevious(false);
+    }
+  }, [page]);
+
+  const onNext = () => {
+    if (pageNumber < Math.ceil(listItems.length / itemsPerPage)) {
+      setPage(
+        listItems.slice(
+          pageNumber * itemsPerPage,
+          (pageNumber + 1) * itemsPerPage
+        ) as T
+      );
+      setPageNumber((prev) => prev + 1);
+    }
+  };
+
+  const onPrev = () => {
+    if (pageNumber > 1) {
+      setPage(
+        listItems.slice(
+          (pageNumber - 1 - 1) * itemsPerPage,
+          (pageNumber - 1) * itemsPerPage
+        ) as T
+      );
+      setPageNumber((prev) => prev - 1);
+    }
+  };
+
+  const onPageChange = () => {};
+
+  return {
+    page: page || [],
+    pageNumber,
+    hasNext,
+    hasPrevious,
+    onNext,
+    onPrev,
+    onPageChange,
+    setItems: setListItems,
+  };
+};
 
 const ITEMS_PER_PAGE = [
   1, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95,
@@ -24,6 +111,7 @@ interface IPagination {
   isNextDisabled?: boolean;
   isPrevDisabled?: boolean;
   showNumbers?: boolean;
+  showItemsPerPage?: boolean;
 }
 
 const Pagination = ({
@@ -39,6 +127,7 @@ const Pagination = ({
   isNextDisabled = false,
   isPrevDisabled = false,
   showNumbers = true,
+  showItemsPerPage = true,
 }: IPagination) => {
   const [focusItem, setFocusItem] = useState<null | number>(null);
   const [focusCallback, setFocusCallback] = useState(false);
@@ -120,42 +209,48 @@ const Pagination = ({
   };
 
   return (
-    <div className="flex flex-row items-center gap-3xl w-full">
-      <div className="flex flex-row items-center flex-1 gap-lg text-icon-default bodyMd">
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label htmlFor={itemsPerPageId}>Item per page</label>
-        <select
-          name="itemperpage"
-          id={itemsPerPageId}
-          disabled={itemPerPageDisabled}
-          value={itemsPerPageValue}
-          onChange={(e) => {
-            setItemsPerPageValue(Number(e.target.value));
-          }}
-          className={cn(
-            'py-md pl-lg pr-5xl text-text-default border-border-default bg-surface-basic-input transition-all rounded border flex flex-row items-center relative outline-none disabled:bg-surface-basic-input disabled:text-text-disabled ring-offset-1 focus-within:ring-2 focus-within:ring-border-focus appearance-none',
-            {
-              'text-text-disabled border-border-disabled bg-surface-basic-input':
-                disabled,
-            }
-          )}
-        >
-          {ITEMS_PER_PAGE.map((ipp) => (
-            <option value={ipp} key={ipp}>
-              {ipp}
-            </option>
-          ))}
-        </select>
+    <div
+      className={cn('flex flex-row items-center gap-3xl w-full', {
+        'justify-end': !showItemsPerPage,
+      })}
+    >
+      {showItemsPerPage && (
+        <div className="flex flex-row items-center flex-1 gap-lg text-icon-default bodyMd">
+          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+          <label htmlFor={itemsPerPageId}>Item per page</label>
+          <select
+            name="itemperpage"
+            id={itemsPerPageId}
+            disabled={itemPerPageDisabled}
+            value={itemsPerPageValue}
+            onChange={(e) => {
+              setItemsPerPageValue(Number(e.target.value));
+            }}
+            className={cn(
+              'py-md pl-lg pr-5xl text-text-default border-border-default bg-surface-basic-input transition-all rounded border flex flex-row items-center relative outline-none disabled:bg-surface-basic-input disabled:text-text-disabled ring-offset-1 focus-within:ring-2 focus-within:ring-border-focus appearance-none',
+              {
+                'text-text-disabled border-border-disabled bg-surface-basic-input':
+                  disabled,
+              }
+            )}
+          >
+            {ITEMS_PER_PAGE.map((ipp) => (
+              <option value={ipp} key={ipp}>
+                {ipp}
+              </option>
+            ))}
+          </select>
 
-        {showNumbers ? (
-          <span>
-            {currentPage * itemsPerPage - itemsPerPage + 1} -{' '}
-            {currentPage * itemsPerPage} of {totalItems} items
-          </span>
-        ) : (
-          <span> total {totalItems} items</span>
-        )}
-      </div>
+          {showNumbers ? (
+            <span>
+              {currentPage * itemsPerPage - itemsPerPage + 1} -{' '}
+              {currentPage * itemsPerPage} of {totalItems} items
+            </span>
+          ) : (
+            <span> total {totalItems} items</span>
+          )}
+        </div>
+      )}
       <RovingFocusGroup.Root loop>
         <div className="flex flex-row items-center gap-xl">
           <RovingFocusGroup.Item asChild focusable>
