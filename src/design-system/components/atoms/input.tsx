@@ -1,24 +1,25 @@
 import {
-  useRef,
+  CaretDownFill,
+  CaretUpFill,
+  Eye,
+  EyeSlash,
+  XCircleFill,
+} from '@jengaicons/react';
+import {
+  ChangeEventHandler,
+  FocusEventHandler,
+  KeyboardEventHandler,
+  MouseEventHandler,
+  PointerEventHandler,
+  ReactNode,
   cloneElement,
   forwardRef,
   useId,
-  useState,
-  ReactNode,
-  KeyboardEventHandler,
-  ChangeEventHandler,
-  MouseEventHandler,
-  FocusEventHandler,
-  PointerEventHandler,
+  useRef,
+  useState
 } from 'react';
-import {
-  XCircleFill,
-  EyeSlash,
-  Eye,
-  CaretUpFill,
-  CaretDownFill,
-} from '@jengaicons/react';
 import { cn } from '../utils';
+import AnimateHide from './animate-hide';
 
 type InputSizes = 'md' | 'lg' | (undefined & NonNullable<unknown>);
 
@@ -35,6 +36,8 @@ export interface IInputRow {
   placeholder?: string;
   size?: InputSizes;
   name?: string;
+  tabIndex?: number;
+  shimmerLoading?: boolean;
 
   onFocus?: FocusEventHandler;
   onBlur?: FocusEventHandler;
@@ -48,6 +51,7 @@ interface INumberInput extends IInputRow {
   min?: number;
   max?: number;
   step?: number;
+  suffix?: ReactNode;
 }
 
 export interface ITextInput extends IInputRow {
@@ -91,6 +95,8 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
       label,
       onKeyDown,
       autoComplete,
+      onBlur = () => {},
+      onFocus = () => {},
       onChange = () => {},
       message = '',
       showclear,
@@ -102,6 +108,8 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
       prefixIcon,
       suffixIcon,
       id,
+      tabIndex,
+      shimmerLoading,
       ...extraProps
     } = props;
     const [t, setT] = useState(type || 'text');
@@ -110,30 +118,32 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
 
     const containerRef = useRef<HTMLDivElement>(null);
     return (
-      <div
-        className={cn('flex flex-col ', {
-          'gap-md': !!label || !!extra,
-        })}
-      >
-        <div className="flex items-center">
-          <label
-            className="flex-1 select-none bodyMd-medium text-text-default"
-            htmlFor={id}
-          >
-            {label}
-          </label>
+      <div className={cn('flex flex-col')}>
+        {(label || extra) && (
           <div
-            className={cn({
-              'h-4xl': !!label || !!extra,
+            className={cn('flex items-center justify-between gap-md', {
+              'pb-md': !!label || !!extra,
             })}
           >
-            {extra && cloneElement(extra)}
+            <label
+              className="select-none bodyMd-medium text-text-default pulsable min-w-[33%]"
+              htmlFor={id}
+            >
+              {label}
+            </label>
+            <div
+              className={cn({
+                'h-4xl pulsable': !!label || !!extra,
+              })}
+            >
+              {extra && cloneElement(extra)}
+            </div>
           </div>
-        </div>
+        )}
         <div
           ref={containerRef}
           className={cn(
-            'transition-all px-lg rounded border flex flex-row items-center relative ring-offset-1',
+            'transition-all px-lg rounded border flex flex-row items-center relative ring-offset-1 pulsable',
             {
               'text-text-critical bg-surface-critical-subdued border-border-critical':
                 error,
@@ -154,21 +164,32 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
                 'text-text-disabled': disabled,
               })}
             >
-              {cloneElement(prefixIcon, { size: 16, color: 'currentColor' })}
+              {cloneElement(prefixIcon, {
+                size: 16,
+                color: 'currentColor',
+              })}
             </div>
           )}
+          {!!prefix && <div className="cursor-default">{prefix}</div>}
           <Component
+            {...(type === 'number'
+              ? {
+                  pattern: '[0-9]',
+                }
+              : {})}
             name={name}
             type={t}
             placeholder={placeholder}
             id={id}
+            tabIndex={tabIndex}
             className={cn(
               'outline-none flex-1 w-full',
               'rounded bodyMd bg-transparent',
               {
                 'text-text-critical placeholder:text-text-critical/70 bgh':
-                  error,
-                'text-text-default': !error,
+                  error && !disabled,
+                'text-text-default': !error && !disabled,
+                'text-text-disabled': disabled,
               },
               {
                 'py-xl': size === 'lg',
@@ -176,6 +197,9 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
               },
               {
                 'resize-none': !resize,
+              },
+              {
+                'no-spinner': type === 'number',
               }
             )}
             value={value}
@@ -184,24 +208,28 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
                 onChange(e);
               }
             }}
-            onFocus={() => {
+            onFocus={(e: any) => {
               containerRef.current?.classList.add(
                 'ring-2',
                 'ring-border-focus'
               );
-            }}
-            onBlur={() => {
-              containerRef.current?.classList.remove(
-                'ring-2',
-                'ring-border-focus'
-              );
+              onFocus(e);
             }}
             disabled={disabled}
             ref={ref}
             onKeyDown={onKeyDown}
             autoComplete={autoComplete}
+            onBlur={(e: any) => {
+              containerRef.current?.classList.remove(
+                'ring-2',
+                'ring-border-focus'
+              );
+
+              onBlur(e);
+            }}
             {...extraProps}
           />
+          {!!suffix && <div className="cursor-default">{suffix}</div>}
           {!!suffixIcon && (
             <div
               className={cn('pl-lg bodyMd', {
@@ -210,7 +238,10 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
                 'text-text-disabled': disabled,
               })}
             >
-              {cloneElement(suffixIcon, { color: 'currentColor', size: 16 })}
+              {cloneElement(suffixIcon, {
+                color: 'currentColor',
+                size: 16,
+              })}
             </div>
           )}
           {showclear && !disabled && (
@@ -244,7 +275,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
                 }
               )}
             >
-              {type === 'password' ? (
+              {t === 'password' ? (
                 <EyeSlash size={16} color="currentColor" />
               ) : (
                 <Eye size={16} color="currentColor" />
@@ -253,22 +284,27 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
           )}
         </div>
 
-        {message && (
+        <AnimateHide show={!!message}>
           <div
-            className={cn('bodySm', {
-              'text-text-critical': error,
-              'text-text-default': !error,
-            })}
+            className={cn(
+              'bodySm pulsable',
+              {
+                'text-text-critical': error,
+                'text-text-default': !error,
+              },
+              'pt-md'
+            )}
           >
             {message}
           </div>
-        )}
+        </AnimateHide>
       </div>
     );
   }
 );
 
 export const NumberInput = ({
+  suffix,
   value,
   error = false,
   onChange = () => {},
@@ -282,6 +318,7 @@ export const NumberInput = ({
     <TextInputBase
       {...{
         ...etc,
+        type: 'number',
         id,
         error,
         onChange,
@@ -290,55 +327,57 @@ export const NumberInput = ({
         value,
         step,
         suffix: (
-          <div
-            className={cn(
-              'flex flex-col absolute right-0 top-0 bottom-0 justify-center items-center',
-              {
+          <div className="flex flex-row items-center gap-xl -mr-lg">
+            {suffix}
+            <div
+              className={cn('flex flex-col justify-center items-center', {
                 'bg-surface-critical-subdued divide-border-critical divide-y rounded-r border-l border-border-critical text-text-critical placeholder:text-critical-400':
                   error,
                 'text-text-default border-l border-border-default divide-border-default divide-y':
                   !error,
-              }
-            )}
-            tabIndex={-1}
-          >
-            <button
-              aria-controls={id}
-              aria-label={`Increase ${label}`}
+              })}
               tabIndex={-1}
-              onClick={(e: any) => {
-                // setV((_v) => _v + step);
-
-                onChange({
-                  ...e,
-                  target: { value: `${Number(value) + step}` },
-                });
-
-                ref?.current?.focus();
-              }}
-              className={cn(
-                'flex-1 p-sm disabled:text-icon-disabled hover:bg-surface-basic-hovered active:bg-surface-basic-pressed'
-              )}
             >
-              <CaretUpFill size={16} color="currentColor" />
-            </button>
-            <button
-              aria-controls={id}
-              aria-label={`Decrease ${label}`}
-              tabIndex={-1}
-              onClick={(e: any) => {
-                onChange({
-                  ...e,
-                  target: { value: `${Number(value) - step}` },
-                });
-                ref?.current?.focus();
-              }}
-              className={cn(
-                'flex-1 p-sm disabled:text-icon-disabled hover:bg-surface-basic-hovered active:bg-surface-basic-pressed'
-              )}
-            >
-              <CaretDownFill size={16} color="currentColor" />
-            </button>
+              <button
+                type="button"
+                aria-controls={id}
+                aria-label={`Increase ${label}`}
+                tabIndex={-1}
+                onClick={(e: any) => {
+                  // setV((_v) => _v + step);
+
+                  onChange({
+                    ...e,
+                    target: { value: `${Number(value) + step}` },
+                  });
+
+                  ref?.current?.focus();
+                }}
+                className={cn(
+                  'flex-1 p-sm disabled:text-icon-disabled hover:bg-surface-basic-hovered active:bg-surface-basic-pressed'
+                )}
+              >
+                <CaretUpFill size={12} color="currentColor" />
+              </button>
+              <button
+                type="button"
+                aria-controls={id}
+                aria-label={`Decrease ${label}`}
+                tabIndex={-1}
+                onClick={(e: any) => {
+                  onChange({
+                    ...e,
+                    target: { value: `${Number(value) - step}` },
+                  });
+                  ref?.current?.focus();
+                }}
+                className={cn(
+                  'flex-1 p-sm disabled:text-icon-disabled hover:bg-surface-basic-hovered active:bg-surface-basic-pressed'
+                )}
+              >
+                <CaretDownFill size={12} color="currentColor" />
+              </button>
+            </div>
           </div>
         ),
       }}
@@ -349,6 +388,7 @@ export const NumberInput = ({
 export const TextInput = forwardRef<HTMLInputElement, ITextInput>(
   (props, ref) => {
     const id = useId();
+
     return (
       <TextInputBase
         {...{ ...props, id, component: 'input', type: 'text', ref }}

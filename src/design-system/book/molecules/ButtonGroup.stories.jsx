@@ -39,7 +39,7 @@ const OptionListHook = ({ isIconButton }) => {
         </OptionList.Trigger>
       )}
       <OptionList.Content>
-        <OptionList.TextInput placeholder="Filter" prefixIcon={<Search/>} />
+        <OptionList.TextInput placeholder="Filter" prefixIcon={<Search />} />
         {/* <OptionList.Separator /> */}
         <OptionList.Item>This is test Item 1</OptionList.Item>
         <OptionList.Item>This is test Item 2</OptionList.Item>
@@ -47,14 +47,14 @@ const OptionListHook = ({ isIconButton }) => {
         <OptionList.CheckboxItem
           checked={apple}
           onValueChange={setApple}
-          onSelect={(e) => e.preventDefault()}
+          onClick={(e) => e.preventDefault()}
         >
           Apple
         </OptionList.CheckboxItem>
         <OptionList.CheckboxItem
           checked={orange}
           onValueChange={setOrange}
-          onSelect={(e) => e.preventDefault()}
+          onClick={(e) => e.preventDefault()}
         >
           Orange
         </OptionList.CheckboxItem>
@@ -62,19 +62,19 @@ const OptionListHook = ({ isIconButton }) => {
         <OptionList.RadioGroup value={radioValue} onValueChange={setRadioValue}>
           <OptionList.RadioGroupItem
             value="one"
-            onSelect={(e) => e.preventDefault()}
+            onClick={(e) => e.preventDefault()}
           >
             One
           </OptionList.RadioGroupItem>
           <OptionList.RadioGroupItem
             value="two"
-            onSelect={(e) => e.preventDefault()}
+            onClick={(e) => e.preventDefault()}
           >
             Two
           </OptionList.RadioGroupItem>
           <OptionList.RadioGroupItem
             value="three"
-            onSelect={(e) => e.preventDefault()}
+            onClick={(e) => e.preventDefault()}
           >
             Three
           </OptionList.RadioGroupItem>
@@ -84,7 +84,7 @@ const OptionListHook = ({ isIconButton }) => {
           <OptionList.RadioGroupItem
             showIndicator={false}
             value="one"
-            onSelect={(e) => e.preventDefault()}
+            onClick={(e) => e.preventDefault()}
           >
             <ArrowUp size={16} />
             One
@@ -92,7 +92,7 @@ const OptionListHook = ({ isIconButton }) => {
           <OptionList.RadioGroupItem
             value="two"
             showIndicator={false}
-            onSelect={(e) => e.preventDefault()}
+            onClick={(e) => e.preventDefault()}
           >
             <ArrowDown size={16} />
             Two

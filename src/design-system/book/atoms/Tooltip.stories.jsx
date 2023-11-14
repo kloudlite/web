@@ -1,12 +1,13 @@
-import { Tooltip, TooltipProvider } from '../../components/atoms/tooltip';
+import { TooltipProvider } from '@radix-ui/react-tooltip';
+import Tooltip from '~/components/atoms/tooltip';
 import { Button } from '../../components/atoms/button';
 
 export default {
   title: 'Atoms/Tooltip',
-  component: Tooltip,
+  component: Tooltip.Root,
   decorators: [
     (Story) => (
-      <TooltipProvider>
+      <TooltipProvider delayDuration={150}>
         <Story />
       </TooltipProvider>
     ),
@@ -18,6 +19,6 @@ export default {
 export const InitialAvatar = {
   args: {
     content: 'tooltip',
-    children: <Button />,
+    children: <Button content="tooltip" />,
   },
 };

@@ -1,5 +1,5 @@
 {
-  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx","**/*.js", "**/*.jsx"],
+  "include": ["components/**/*.ts", "components/**/*.tsx","components/**/*.js", "components/**/*.jsx"],
   "compilerOptions": {
     "skipLibCheck": true,
     "lib": ["DOM", "DOM.Iterable", "ES2019"],
@@ -22,11 +22,14 @@
       ]
     },
 
-    "noEmit": true
+    "declaration": true,
+    "noEmit": false
     // Remix takes care of building everything in `remix build`.
   },
   "exclude": [
     "node_modules/**/*",
-    "public"
+    "public",
+    "book",
+    "css-plugins"
   ]
 }

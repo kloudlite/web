@@ -18,6 +18,10 @@
     @apply !border-0 !border-none !border-transparent !shadow-none
 }
 
+.range-slide-base .rc-slider-handle:active{
+    @apply h-3xl w-3xl
+}
+
 .range-slide-base .rc-slider-handle-dragging{
     @apply !border-0 !border-none !border-transparent !shadow-none
 }

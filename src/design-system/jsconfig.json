@@ -16,6 +16,8 @@
   },
   "exclude": [
     "node_modules",
-    "public"
+    "public",
+    "build.js",
+    "css-plugins"
   ]
 }

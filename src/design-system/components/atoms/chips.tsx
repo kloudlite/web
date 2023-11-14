@@ -1,14 +1,15 @@
 import { Spinner, XFill } from '@jengaicons/react';
 import * as RovingFocusGroup from '@radix-ui/react-roving-focus';
+import { motion } from 'framer-motion';
 import React, {
   ReactElement,
+  ReactNode,
   cloneElement,
   forwardRef,
   useEffect,
   useRef,
   useState,
 } from 'react';
-import { motion } from 'framer-motion';
 import { cn } from '../utils';
 
 type ChipTypes =
@@ -21,7 +22,7 @@ type ItemType = any;
 
 interface IChipBase {
   item: ItemType;
-  label: string;
+  label: ReactNode;
   disabled?: boolean;
   compType?: ChipTypes;
   onRemove?: (item: ItemType, isKeyBoard?: boolean) => void;
@@ -33,7 +34,7 @@ interface IChipBase {
 
 interface IChip {
   item: ItemType;
-  label: string;
+  label: ReactNode;
   disabled?: boolean;
   type?: ChipTypes;
   onRemove?: (item: ItemType, isKeyBoard?: boolean) => void;
@@ -80,7 +81,7 @@ const ChipBase = React.forwardRef<HTMLButtonElement, IChipBase>(
         className={cn(
           'rounded border bodySm-medium py-px flex items-center transition-all outline-none flex-row gap-md ring-offset-1 h-fit',
           'focus-within:ring-2 focus-within:ring-border-focus',
-          'w-fit',
+          'w-fit flex-shrink-0',
           {
             'text-text-default': !disabled,
             'text-text-disabled': disabled,
@@ -170,15 +171,34 @@ export const Chip = forwardRef<HTMLButtonElement, IChip>(
       onRemove = (_) => _,
       isInGroup = false,
       loading = false,
+      ...props
     },
     ref
   ) => {
     let Component: any = 'div';
-    if (type === 'BASIC') {
+    if (type === 'CLICKABLE') {
       Component = motion.button;
     }
 
-    const ChipBaseElement = (
+    if (type === 'CLICKABLE' && isInGroup)
+      return (
+        <RovingFocusGroup.Item asChild focusable ref={ref}>
+          <ChipBase
+            item={item}
+            label={label}
+            disabled={disabled}
+            compType={type}
+            prefix={prefix}
+            Component={Component}
+            onClick={onClick}
+            onRemove={onRemove}
+            loading={loading}
+            {...props}
+          />
+        </RovingFocusGroup.Item>
+      );
+
+    return (
       <ChipBase
         item={item}
         label={label}
@@ -189,17 +209,10 @@ export const Chip = forwardRef<HTMLButtonElement, IChip>(
         onClick={onClick}
         onRemove={onRemove}
         loading={loading}
+        ref={ref}
+        {...props}
       />
     );
-
-    if (type === 'CLICKABLE' && isInGroup)
-      return (
-        <RovingFocusGroup.Item asChild focusable ref={ref}>
-          {ChipBaseElement}
-        </RovingFocusGroup.Item>
-      );
-
-    return ChipBaseElement;
   }
 );
 

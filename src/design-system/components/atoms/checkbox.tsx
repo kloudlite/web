@@ -1,8 +1,8 @@
 import { useEffect, useId, useState } from 'react';
 
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
-import { cn } from '../utils';
 import { BounceIt } from '../bounce-it';
+import { cn } from '../utils';
 
 type checkedType = boolean | string | undefined;
 
@@ -119,5 +119,5 @@ export const Checkbox = ({
       </div>
     );
   };
-  return withBounceEffect ? rend() : <BounceIt>{rend()}</BounceIt>;
+  return withBounceEffect ? <BounceIt>{rend()}</BounceIt> : rend();
 };

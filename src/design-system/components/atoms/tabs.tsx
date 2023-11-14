@@ -1,15 +1,15 @@
+import * as RovingFocusGroup from '@radix-ui/react-roving-focus';
+import { LayoutGroup, motion } from 'framer-motion';
 import React, {
-  useState,
-  useEffect,
-  forwardRef,
-  useId,
-  useMemo,
   KeyboardEvent,
   ReactElement,
   ReactNode,
+  forwardRef,
+  useEffect,
+  useId,
+  useMemo,
+  useState,
 } from 'react';
-import { LayoutGroup, motion } from 'framer-motion';
-import * as RovingFocusGroup from '@radix-ui/react-roving-focus';
 import { cn } from '../utils';
 
 type TabSizes = 'md' | 'sm' | (string & NonNullable<unknown>);
@@ -24,25 +24,25 @@ interface IBase {
 }
 
 interface ITabBase extends IBase {
-  label: string;
+  label: ReactNode;
   active?: boolean;
   onClick?: (e: KeyboardEvent<HTMLSpanElement>) => void;
   prefix?: JSX.Element;
 }
 
-interface ITabs extends IBase {
-  onChange?: (item: string) => void;
-  value: string;
+interface ITabs<T = string> extends IBase {
+  onChange?: (item: T) => void;
+  value: T;
   className?: string;
   basePath?: string;
   children: ReactNode;
 }
 
-export interface ITab {
+export interface ITab<T = string> {
   to?: string;
-  label: string;
+  label: ReactNode;
   prefix?: JSX.Element;
-  value: string;
+  value: T;
 }
 
 const TabBase = ({
@@ -87,6 +87,7 @@ const TabBase = ({
         }
       )}
     >
+      {variant === 'plain' && <div className="h-md bg-none w-full z-0" />}
       <RovingFocusGroup.Item
         asChild
         focusable
@@ -102,7 +103,9 @@ const TabBase = ({
           {...(to ? (Component === 'a' ? { href: to } : { to }) : {})}
           onClick={onClick}
           className={cn(
-            'z-10 tab-item gap-lg outline-none flex flex-row items-center ring-offset-1 focus-visible:ring-2 focus-visible:ring-border-focus w-max',
+            'z-10 tab-item gap-lg outline-none flex flex-row items-center w-max',
+            'ring-offset-0 focus-visible:ring-2 focus-visible:ring-border-focus',
+            // 'focus-visible:shadow-focus',
             {
               ...((!fitted || variant === 'filled') && {
                 'px-2xl py-lg': size === 'md',
@@ -110,7 +113,7 @@ const TabBase = ({
                 'rounded-lg': true,
               }),
               ...(fitted && {
-                'py-lg': variant !== 'filled',
+                'py-md': variant !== 'filled',
               }),
             }
           )}
@@ -132,7 +135,7 @@ const TabBase = ({
         <motion.span
           layoutId="bubble"
           className="absolute inset-0 rounded-lg bg-surface-basic-default border border-border-default shadow-button"
-          transition={{ type: 'spring', stiffness: 700, damping: 30 }}
+          transition={{ type: 'spring', bounce: 0.1, duration: 0.3 }}
         />
       )}
       {variant === 'plain' && hoverd && (
@@ -142,18 +145,16 @@ const TabBase = ({
         />
       )}
 
-      {variant === 'plain' && (
-        <div className="h-md bg-none absolute bottom-0 w-full z-0" />
-      )}
+      {variant === 'plain' && <div className="h-md bg-none w-full z-0" />}
     </div>
   );
 };
 
-const Tab = ({ to, label, prefix, value: _ }: ITab) => (
+const Tab = <T,>({ to, label, prefix, value: _ }: ITab<T>) => (
   <TabBase to={to} label={label} prefix={prefix} />
 );
 
-const Root = forwardRef<HTMLDivElement, ITabs>(
+const Root = forwardRef<HTMLDivElement, ITabs<any>>(
   (
     {
       variant = 'plain',
@@ -181,7 +182,7 @@ const Root = forwardRef<HTMLDivElement, ITabs>(
         orientation="horizontal"
         loop
         className={cn(
-          'flex flex-row items-center py-[3px] pl-[3px] -my-[3px] -ml-[3px] transition-all',
+          'flex flex-row items-center transition-all',
           'snap-x',
           {
             'md:gap-4xl': size === 'md' && variant !== 'filled',
@@ -202,7 +203,11 @@ const Root = forwardRef<HTMLDivElement, ITabs>(
               const tabChildProps: ITab = tabChild.props;
 
               return (
-                <motion.div className="px-xl md:px-0 snap-start">
+                <motion.div
+                  className={cn('snap-start', {
+                    'px-xl md:px-0': variant === 'plain',
+                  })}
+                >
                   <TabBase
                     {...tabChildProps}
                     onClick={() => {

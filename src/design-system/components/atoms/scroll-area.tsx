@@ -1,5 +1,5 @@
 import { ReactNode, useState } from 'react';
-import { cn } from '~/components/utils';
+import { cn } from '../utils';
 
 interface IScrollArea {
   children: ReactNode;
@@ -25,25 +25,27 @@ const ScrollArea = ({
       {isScrolled && leftblur && (
         <div
           className={cn(
-            'z-10 bg-gradient-to-r to-transparent absolute h-full w-2xl -left-[3px] top-0',
+            'z-20 bg-gradient-to-r to-transparent absolute h-full w-2xl -left-[3px] top-0',
             {
               'from-surface-basic-subdued': !blurfrom,
             },
+
             blurfrom
           )}
         />
       )}
       <div
-        className="no-scrollbar overflow-x-scroll overflow-y-hidden flex flex-row pl-[3px] -ml-[3px]"
+        tabIndex={-1}
+        className="no-scrollbar overflow-x-scroll flex flex-row py-[3px] pl-[3px] -ml-[3px] pr-2xl whitespace-nowrap"
         onScroll={handleScroll}
       >
         {children}
-        {rightblur && <div className="min-w-[16px]" />}
+        {rightblur && <div className="w-[3px] min-w-[3px]" />}
       </div>
       {rightblur && (
         <div
           className={cn(
-            'bg-gradient-to-l to-transparent absolute h-full w-2xl right-0 top-0',
+            'bg-gradient-to-l to-transparent absolute h-full w-2xl right-0 top-0 z-20',
             {
               'from-surface-basic-subdued': !blurfrom,
             },
