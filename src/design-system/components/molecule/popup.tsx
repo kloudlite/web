@@ -104,7 +104,7 @@ const PopupRoot = ({
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2, ease: 'anticipate' }}
-                className={cn('fixed inset-0 z-[999999999]', {
+                className={cn('fixed inset-0 z-[9999999]', {
                   'bg-text-default/60': backdrop,
                 })}
               />
@@ -117,7 +117,7 @@ const PopupRoot = ({
                 transition={{ duration: 0.3, ease: 'anticipate' }}
                 className={cn(
                   'flex flex-col',
-                  'z-[9999999999] outline-none transform overflow-hidden md:rounded bg-surface-basic-default shadow-modal',
+                  'z-[99999999] outline-none transform overflow-hidden md:rounded bg-surface-basic-default shadow-modal',
                   'fixed top-1/2 left-1/2',
                   'w-full h-full md:!h-auto md:!w-[612px]',
                   'border border-border-default',
