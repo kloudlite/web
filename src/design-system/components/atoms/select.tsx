@@ -35,8 +35,8 @@ const groupRender = ({ label }: IGroupRender) => {
 
 const suffixRender = ({ isOpen }: ISuffixRender) => {
   return (
-    <div className="px-lg text-text-default">
-      {isOpen && <ChevronUpDown size={16} />}
+    <div className="px-lg">
+      <ChevronUpDown size={16} color="currentColor" />
     </div>
   );
 };
@@ -73,7 +73,7 @@ const Select = <T, U extends boolean | undefined = undefined>(
         <SelectZener
           className={() => {
             const c = cn(
-              'rounded flex flex-row items-center border bodyMd outline-none cursor-default pulsable',
+              'rounded flex flex-row items-center border bodyMd outline-none cursor-default',
               {
                 'py-[10px] px-lg': size === 'lg',
                 'py-[6px] px-lg': size === 'md',
@@ -81,7 +81,7 @@ const Select = <T, U extends boolean | undefined = undefined>(
             );
             return {
               default: `${c} border-border-default bg-surface-basic-default text-text-default`,
-              disabled: c,
+              disabled: `${c} border-border-disabled text-text-disabled`,
               focus: `${c} bg-surface-basic-default border-border-default text-text-default ring-offset-1 ring-2 ring-border-focus`,
             };
           }}
