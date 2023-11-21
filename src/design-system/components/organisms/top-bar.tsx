@@ -92,7 +92,7 @@ export const TopBar = ({
         {!!tabs && (
           <div
             ref={tabBarRef}
-            className={cn('bg-surface-basic-default z-40', {
+            className={cn('bg-surface-basic-default z-40 min-h-[40px]', {
               'sticky -top-xs pt-xs left-0 right-0': fixed,
               'shadow-sm': fixed && isTabBarSticked,
             })}

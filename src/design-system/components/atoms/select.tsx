@@ -60,6 +60,8 @@ const Select = <T, U extends boolean | undefined = undefined>(
     onChange,
     disabled,
     valueRender,
+    creatable,
+    multiple,
   } = props;
 
   return (
@@ -96,6 +98,8 @@ const Select = <T, U extends boolean | undefined = undefined>(
           groupRender={groupRender}
           disabled={disabled}
           valueRender={valueRender}
+          creatable={creatable}
+          multiple={multiple}
         />
       </div>
       <AnimateHide show={!!message}>
