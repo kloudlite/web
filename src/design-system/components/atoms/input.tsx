@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unused-prop-types */
 import {
   CaretDownFill,
   CaretUpFill,
@@ -16,7 +17,7 @@ import {
   forwardRef,
   useId,
   useRef,
-  useState
+  useState,
 } from 'react';
 import { cn } from '../utils';
 import AnimateHide from './animate-hide';
@@ -246,6 +247,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
           )}
           {showclear && !disabled && (
             <button
+              aria-label="Clear"
               type="button"
               tabIndex={-1}
               onClick={(e: any) => {

@@ -141,6 +141,7 @@ export const ButtonBase = React.forwardRef<
       type={type}
       tabIndex={tabIndex}
       className={cn(
+        'pulsable',
         {
           'w-full': !!block,
           'w-fit': !block,
