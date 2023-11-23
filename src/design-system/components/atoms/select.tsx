@@ -4,7 +4,6 @@ import type {
   IGroupRender,
   IMenuItemRender,
   ISelect,
-  ISuffixRender,
 } from '@oshq/react-select';
 import { ChevronUpDown } from '@jengaicons/react';
 import { cn } from '../utils';
@@ -33,7 +32,7 @@ const groupRender = ({ label }: IGroupRender) => {
   );
 };
 
-const suffixRender = ({ isOpen }: ISuffixRender) => {
+const suffixRender = () => {
   return (
     <div className="px-lg">
       <ChevronUpDown size={16} color="currentColor" />
