@@ -48,7 +48,7 @@ export const ToastContainer = ({ autoClose, position }: IToastContainer) => {
   return (
     <Container
       toastClassName={({ type }: any) =>
-        `shadow-popover relative flex items-start gap-xl p-xl mb-xl rounded-md justify-between overflow-hidden cursor-pointer border ${
+        `z-[9999999999] shadow-popover relative flex items-start gap-xl p-xl mb-xl rounded-md justify-between overflow-hidden cursor-pointer border ${
           classes[(type || 'default') as keyof typeof classes]
         }`
       }
