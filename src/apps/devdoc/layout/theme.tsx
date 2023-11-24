@@ -18,29 +18,7 @@ import { ActiveAnchorProvider } from '~/utiltities/active-anchor';
 import { Breadcrumb } from '~/components/breadcrum';
 import { ConfigProvider } from '~/utiltities/use-config';
 import { Sidebar } from '~/components/sidebar';
-import Select from 'react-select-test';
-import createComponents from './mdx-components';
-import 'react-select-test/index.css';
-
-export function mapper<A, B>(
-  array: A[],
-  transform: (value: A, index: number) => B
-): B[] {
-  let _;
-  return array.map(transform);
-}
-
-const _f = async () => {
-  const x = await (
-    await fetch('https://jsonplaceholder.typicode.com/photos')
-  ).json();
-  const k = mapper(x, (d: any) => ({
-    label: `${d.title}`,
-    value: `${d.id}`,
-    extra: { a: 'h', url: d.thumbnailUrl },
-  }));
-  return [...k, ...k, ...k];
-};
+import { createComponents } from './mdx-components';
 
 function GitTimestamp({ timestamp }: { timestamp: Date }) {
   const { locale = DEFAULT_LOCALE } = useRouter();
@@ -115,7 +93,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
               <TOC headings={headings} />
             </nav>
           )}
-          <article className="flex-1">
+          <article className="flex-1 overflow-x-hidden">
             <main
               className={cn(
                 'md:p-6xl w-full min-w-0 min-h-[calc(100vh-101px)] flex flex-col gap-6xl',
@@ -138,13 +116,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
                     ? GitTimestamp({ timestamp: new Date(pageOpts.timestamp) })
                     : null}
                 </div>
-                <Select
-                  options={_f}
-                  value={undefined}
-                  onChange={(e) => {
-                    console.log(e);
-                  }}
-                />
+
                 {!hideSidebar && (
                   <NavLinks
                     flatDirectories={flatDocsDirectories}

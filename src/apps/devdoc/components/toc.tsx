@@ -6,6 +6,7 @@ import scrollIntoView from 'scroll-into-view-if-needed';
 import { Button } from 'kl-design-system/atoms/button';
 import { ArrowSquareOut } from '@jengaicons/react';
 import Link from 'next/link';
+import { LayoutGroup, motion } from 'framer-motion';
 import { useActiveAnchor } from '~/utiltities/active-anchor';
 import { cn } from '~/utiltities/commons';
 import useConfig from '~/utiltities/use-config';
@@ -50,43 +51,44 @@ export function TOC({ headings }: TOCProps): ReactElement {
   }, [activeSlug]);
 
   return (
-    <div
-      ref={tocRef}
-      className={cn(
-        'nextra-scrollbar nx-sticky nx-top-16 nx-overflow-y-auto nx-pr-4 nx-pt-6 nx-text-sm [hyphens:auto]',
-        'nx-max-h-[calc(100vh-var(--nextra-navbar-height)-env(safe-area-inset-bottom))] ltr:-nx-mr-4 rtl:-nx-ml-4'
-      )}
-    >
+    <div ref={tocRef} className={cn()}>
       {hasHeadings && (
         <>
-          <p className="nx-mb-4 nx-font-semibold nx-tracking-tight">
-            On This Page
-          </p>
-          <ul>
-            {items.map(({ id, value, depth }) => (
-              <li className="nx-my-2 nx-scroll-my-6 nx-scroll-py-6" key={id}>
-                <a
-                  href={`#${id}`}
-                  className={cn(
-                    {
-                      2: 'nx-font-semibold',
-                      3: 'ltr:nx-pl-4 rtl:nx-pr-4',
-                      4: 'ltr:nx-pl-8 rtl:nx-pr-8',
-                      5: 'ltr:nx-pl-12 rtl:nx-pr-12',
-                      6: 'ltr:nx-pl-16 rtl:nx-pr-16',
-                    }[depth as Exclude<typeof depth, 1>],
-                    'nx-inline-block',
-                    activeAnchor[id]?.isActive
-                      ? 'text-text-primary nx-subpixel-antialiased contrast-more:!text-text-primary '
-                      : 'nx-text-gray-500 hover:nx-text-gray-900 dark:nx-text-gray-400 dark:hover:nx-text-gray-300',
-                    'contrast-more:nx-text-gray-900 contrast-more:nx-underline contrast-more:dark:nx-text-gray-50 nx-w-full nx-break-words'
-                  )}
-                >
-                  {value}
-                </a>
-              </li>
-            ))}
-          </ul>
+          <LayoutGroup>
+            <ul className="flex flex-col">
+              {items.map(({ id, value, depth }, index) => {
+                return (
+                  <li
+                    className={cn('flex flex-row relative', {
+                      'ml-2xl pl-md border-l border-border-default': depth > 2,
+                      'mb-lg': depth === 2,
+                      'pb-lg': depth > 2 && items?.[index + 1]?.depth > 2,
+                    })}
+                    key={id}
+                  >
+                    <a
+                      href={`#${id}`}
+                      className={cn(
+                        'flex px-2xl py-lg rounded min-w-0 w-full',
+                        activeAnchor[id]?.isActive
+                          ? 'bg-surface-basic-active bodyMd-medium  text-text-primary relative'
+                          : 'bodyMd text-text-soft'
+                      )}
+                    >
+                      {depth > 2 && activeAnchor[id]?.isActive && (
+                        <motion.div
+                          layoutId="toc-line"
+                          className="border-l-2 border-border-primary rounded h-full absolute -left-[5px] top-0"
+                        />
+                      )}
+
+                      <span className="block truncate">{value}</span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </LayoutGroup>
         </>
       )}
 

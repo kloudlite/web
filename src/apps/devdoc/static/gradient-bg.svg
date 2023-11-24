@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" height="1000" preserveAspectRatio="none" xml:space="preserve">
+  <defs>
+    <filter id="f1" x="0" y="0">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="350" />
+    </filter>
+  </defs>
+<g transform="matrix(0.37 0 0 0.37 315.32 99.67)"  >
+<path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(191,219,254); fill-rule: nonzero; opacity: 1;"  transform=" translate(-720, -229.5)" d="M 653.268 446.177 C 527.105 516.364 394.867 279.09 360.33 202.173 C 360.33 87.7593 35.7678 41.5291 -126.513 32.7158 C 86.8101 25.2044 626.138 8.19853 1076.86 0.266491 C 1640.27 -9.64856 1730.56 260.762 1279.51 202.173 C 828.448 143.584 810.972 358.444 653.268 446.177 Z" stroke-linecap="round" filter="url(#f1)"/>
+</g>
+</svg>
