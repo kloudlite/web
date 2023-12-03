@@ -8,10 +8,12 @@ import type { SearchData } from 'nextra';
 import type { KeyboardEvent, ReactElement, ReactNode } from 'react';
 import { useCallback, useEffect, useState } from 'react';
 import Popup from 'kl-design-system/molecule/popup';
-import { Search } from '@jengaicons/react';
+import { Search, X } from '@jengaicons/react';
 import Link from 'next/link';
+import { IconButton } from 'kl-design-system/atoms/button';
 import { cn } from '~/utiltities/commons';
 import { DEFAULT_LOCALE } from '~/utiltities/constants';
+import useSearch from '~/utiltities/use-search';
 import ListNavigate from './list-navigate';
 import { HighlightMatches } from './highlight-matches';
 
@@ -156,7 +158,7 @@ const loadIndexes = (basePath: string, locale: string): Promise<void> => {
   return promise;
 };
 
-export function Flexsearch({ show = false }: { show?: boolean }): ReactElement {
+export function Flexsearch(): ReactElement {
   const { locale = DEFAULT_LOCALE, basePath } = useRouter();
   const [loading, setLoading] = useState(false);
   const [_error, setError] = useState(false);
@@ -286,6 +288,7 @@ export function Flexsearch({ show = false }: { show?: boolean }): ReactElement {
   };
 
   const [keyEvent, setKeyEvent] = useState<KeyboardEvent<HTMLInputElement>>();
+  const { show, setShow } = useSearch();
 
   useEffect(() => {
     if (show) {
@@ -296,10 +299,15 @@ export function Flexsearch({ show = false }: { show?: boolean }): ReactElement {
     }
   }, [show]);
   return (
-    <Popup.Root show={show}>
+    <Popup.Root
+      show={show}
+      onOpenChange={(e) => {
+        setShow(e);
+      }}
+    >
       <Popup.Content className="!p-0">
         <div className="flex flex-col">
-          <div className="flex flex-row items-center sticky top-0 bg-surface-basic-default border-b border-border-default">
+          <div className="flex flex-row items-center sticky top-0 bg-surface-basic-default border-b border-border-default pr-xs">
             <span className="pl-xl pr-md py-xl">
               <Search size={20} />
             </span>
@@ -315,7 +323,16 @@ export function Flexsearch({ show = false }: { show?: boolean }): ReactElement {
                 handleChange(target.value);
               }}
             />
-            <span className="pl-lg px-lg bodyMd text-text-soft">⌘K</span>
+            <span className="pl-lg pr-xl bodyMd text-text-soft">⌘K</span>
+            <div className="border-l border-border-default h-[26px]" />
+            <IconButton
+              variant="plain"
+              size="md"
+              icon={<X />}
+              onClick={() => {
+                setShow(false);
+              }}
+            />
           </div>
           <div>
             {results.length === 0 && (

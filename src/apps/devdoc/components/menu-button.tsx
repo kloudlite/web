@@ -18,7 +18,7 @@ const MenuToggle = ({
   toggle: boolean;
   onClick: () => void;
 }) => (
-  <button onClick={onClick}>
+  <button onClick={onClick} aria-label="menu-button">
     <motion.svg
       animate={toggle ? 'open' : 'closed'}
       width="23"

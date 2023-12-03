@@ -101,6 +101,7 @@ const TabBase = ({
         <Component
           // eslint-disable-next-line no-nested-ternary
           {...(to ? (Component === 'a' ? { href: to } : { to }) : {})}
+          prefetch="intent"
           onClick={onClick}
           className={cn(
             'z-10 tab-item gap-lg outline-none flex flex-row items-center w-max',

@@ -13,7 +13,7 @@ export const Badge = ({ type = 'neutral', children, icon }: IBadge) => {
   return (
     <div
       className={cn(
-        'flex gap-md items-center h-3xl py-sm px-lg w-fit rounded-full bodySm border select-none',
+        'flex gap-md items-center h-3xl py-sm px-lg w-fit rounded-full bodySm border select-none pulsable',
         {
           'border-border-default bg-surface-basic-default text-text-default':
             type === 'neutral',

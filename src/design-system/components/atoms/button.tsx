@@ -141,6 +141,7 @@ export const ButtonBase = React.forwardRef<
       type={type}
       tabIndex={tabIndex}
       className={cn(
+        'pulsable',
         {
           'w-full': !!block,
           'w-fit': !block,
@@ -317,7 +318,7 @@ export const ButtonBase = React.forwardRef<
       </AnimatePresence>
       {!!prefix &&
         React.cloneElement(prefix, {
-          size: iconOnly ? 20 : 16,
+          size: 16,
           color: 'currentColor',
         })}
       {!iconOnly && content}

@@ -1,6 +1,7 @@
 import 'kl-design-system/index.css';
 import type { AppProps } from 'next/app';
 import '../style.css';
+import '../static/arduino-light.min.css';
 import { SearchProvider } from '~/utiltities/use-search';
 import { MenuProvider } from '~/utiltities/use-menu';
 

@@ -1,14 +1,13 @@
-import { BrandLogo } from 'kl-design-system/branding/brand-logo';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { PageItem } from 'nextra/normalize-pages';
-import Link from 'next/link';
 import useMenu from '~/utiltities/use-menu';
 import useSearch from '~/utiltities/use-search';
+import useConfig from '~/utiltities/use-config';
 import { HeaderLink } from './frequents';
 import { Flexsearch } from './flexsearch';
 import MenuButton from './menu-button';
-import Search from './search';
+import SearchBox from './search';
 
 const Header = ({
   navitems,
@@ -17,8 +16,9 @@ const Header = ({
   navitems: PageItem[];
   activePath: PageItem[];
 }) => {
+  const { config } = useConfig();
   const { state, setState } = useMenu();
-  const { show: showSearch, setShow: setShowSearch } = useSearch();
+  const { setShow: setShowSearch } = useSearch();
   const route = useRouter();
 
   useEffect(() => {
@@ -45,14 +45,7 @@ const Header = ({
   return (
     <div className="flex flex-row sticky top-0 left-0 right-0 p-2 bg-surface-basic-default border-b border-border-default min-h-[76px] z-50">
       <nav className="w-full md:max-w-[1440px] flex-1 m-auto px-4xl flex flex-row items-center gap-6xl">
-        <Link href="/">
-          <div className="hidden md:block md:w-[284px]">
-            <BrandLogo detailed size={28} />
-          </div>
-          <div className="md:hidden">
-            <BrandLogo detailed={false} size={28} />
-          </div>
-        </Link>
+        {config.logo}
         <ul className="hidden md:flex flex-1 flex-row items-center justify-end gap-4xl list-none">
           {navitems?.map((ni) => (
             <li key={ni.name} className="list-none">
@@ -65,12 +58,12 @@ const Header = ({
             </li>
           ))}
         </ul>
-        <Search className="hidden md:flex" />
+        <SearchBox className="hidden md:flex" />
         <div className="flex-1 flex md:!hidden items-center justify-end">
           <MenuButton onClick={() => setState(!state)} toggle={state} />
         </div>
       </nav>
-      <Flexsearch show={showSearch} />
+      <Flexsearch />
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import { ArrowLeft } from '@jengaicons/react';
 import { ReactNode } from 'react';
+import { motion } from 'framer-motion';
 import { IconButton } from '../atoms/button';
 
 interface ISubHeader {
@@ -26,7 +27,7 @@ export const SubHeader = ({
             LinkComponent={LinkComponent}
           />
         )}
-        <div className="text-text-strong heading2xl">{title}</div>
+        <motion.div className="text-text-strong heading2xl">{title}</motion.div>
       </div>
       <div className="flex flex-row items-center justify-center min-h-[38px]">
         {actions && actions}
