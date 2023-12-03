@@ -159,7 +159,7 @@ const OptionMenuItem = forwardRef<HTMLDivElement, IOptionMenuItem>(
         ref={ref}
         {...preventDefaultEvents}
         className={cn(
-          'group relative flex flex-row gap-xl items-center bodyMd gap cursor-default select-none py-lg px-xl text-text-default outline-none transition-colors focus:bg-surface-basic-hovered hover:bg-surface-basic-hovered data-[disabled]:pointer-events-none data-[disabled]:text-text-disabled',
+          'group relative flex flex-row gap-xl items-center bodyMd gap cursor-pointer select-none py-lg px-xl text-text-default outline-none transition-colors focus:bg-surface-basic-hovered hover:bg-surface-basic-hovered data-[disabled]:pointer-events-none data-[disabled]:text-text-disabled',
           {
             'bg-surface-basic-active': !!props.active,
           },
@@ -190,7 +190,7 @@ const OptionMenuLink = forwardRef<HTMLDivElement, IOptionMenuLink>(
       <OptionMenuPrimitive.Item
         ref={ref}
         className={cn(
-          'group relative flex flex-row gap-xl items-center bodyMd gap cursor-default select-none py-lg px-xl text-text-default outline-none transition-colors focus:bg-surface-basic-hovered hover:bg-surface-basic-hovered data-[disabled]:pointer-events-none data-[disabled]:text-text-disabled',
+          'group relative flex flex-row gap-xl items-center bodyMd gap cursor-pointer select-none py-lg px-xl text-text-default outline-none transition-colors focus:bg-surface-basic-hovered hover:bg-surface-basic-hovered data-[disabled]:pointer-events-none data-[disabled]:text-text-disabled',
           className
         )}
         {...preventDefaultEvents}
@@ -289,7 +289,7 @@ const OptionMenuCheckboxItem = forwardRef<HTMLDivElement, IOptionMenuCheckbox>(
     <OptionMenuPrimitive.CheckboxItem
       ref={ref}
       className={cn(
-        'group relative flex flex-row gap-xl items-center bodyMd gap cursor-default select-none py-lg px-xl text-text-default outline-none transition-colors focus:bg-surface-basic-hovered hover:bg-surface-basic-hovered data-[disabled]:pointer-events-none data-[disabled]:text-text-disabled',
+        'group relative flex flex-row gap-xl items-center bodyMd gap cursor-pointer select-none py-lg px-xl text-text-default outline-none transition-colors focus:bg-surface-basic-hovered hover:bg-surface-basic-hovered data-[disabled]:pointer-events-none data-[disabled]:text-text-disabled',
         {
           'data-[state=checked]:bg-surface-primary-subdued data-[state=checked]:text-text-primary':
             !showIndicator,
@@ -335,7 +335,7 @@ const OptionMenuRadioItem = forwardRef<HTMLDivElement, IOptionMenuRadio>(
     <OptionMenuPrimitive.RadioItem
       ref={ref}
       className={cn(
-        'group relative flex flex-row gap-xl items-center bodyMd gap cursor-default select-none py-lg px-xl text-text-default outline-none transition-colors focus:bg-surface-basic-hovered hover:bg-surface-basic-hovered data-[disabled]:pointer-events-none data-[disabled]:text-text-disabled',
+        'group relative flex flex-row gap-xl items-center bodyMd gap cursor-pointer select-none py-lg px-xl text-text-default outline-none transition-colors focus:bg-surface-basic-hovered hover:bg-surface-basic-hovered data-[disabled]:pointer-events-none data-[disabled]:text-text-disabled',
         {
           'data-[state=checked]:bg-surface-primary-subdued data-[state=checked]:text-text-primary':
             !showIndicator,

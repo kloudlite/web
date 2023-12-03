@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import * as PopoverPrimitive from '@radix-ui/react-popover';
 import { ReactNode } from 'react';
-import { IButton, Button as NativeButton } from './../atoms/button';
+import { IButton, Button as NativeButton } from '../atoms/button';
 import { ChildrenProps } from '../types';
 
 export const Trigger = ({ children }: ChildrenProps) => {
@@ -23,7 +23,7 @@ export const Content = ({
         style={{ pointerEvents: 'all' }}
         autoFocus
         forceMount
-        className="outline-none transform overflow-hidden rounded bg-surface-basic-default shadow-modal border border-border-default w-[300px] z-[99]"
+        className="outline-none transform overflow-hidden rounded bg-surface-basic-default shadow-modal border border-border-default w-[300px] z-[999999999]"
         sideOffset={5}
       >
         <div className="p-3xl">{children}</div>
