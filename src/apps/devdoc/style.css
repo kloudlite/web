@@ -45,11 +45,12 @@ html{
   order: -99999;
 }
 
-.pre{
+pre{
   overflow-x: auto;
+  @apply bg-surface-basic-input shadow-card rounded border border-border-default p-xl;
 }
 
-.code{
+code{
   overflow-wrap: break-word;
 }
 
@@ -58,6 +59,15 @@ html{
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+.kl-scrollbar-transparent::-webkit-scrollbar-thumb{
+  scrollbar-color:  transparent;
+}
+
+.kl-scrollbar-colored::-webkit-scrollbar-thumb{
+  scrollbar-color: auto;
+}
+
 @media (max-width: 767px) {
     .nextra-sidebar-container {
       @apply fixed pt-[calc(var(--kl-navbar-height)+20px)] inset-0 w-full bottom-0 z-[15] overscroll-contain px-md pb-3xl;
