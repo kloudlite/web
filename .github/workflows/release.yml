@@ -15,139 +15,24 @@ permissions:
 jobs:
   build-auth:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v4
+    - name: Check Out Code
+      uses: actions/checkout@v2
 
-      -
-        name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '20' # or another version you prefer
+    - name: Set up Docker
+      uses: docker/setup-buildx-action@v1
 
-      # Step 2: NPM install & build
-      -
-        name: Checkout
-        uses: actions/checkout@v4
+    - name: Set up Task
+      run: |
+        sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b ~/.local/bin
+        echo "Task version: $(task --version)"
 
-      -
-        name: Install TaskGo
-        run: |
-          curl -sL https://taskfile.dev/install.sh | sh
-          sudo mv ./bin/task /usr/local/bin/task
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      -
-        name: NPM Install
-        run: |
-          npm i -g pnpm
-          pnpm i
-
-      -
-        name: NPM Build
-        run: |
-          npm run build-export
-
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: typing-guru-go
-          path: ./desktop-app
-
-
-  # build:
-  #   needs: build-web
-  #   strategy:
-  #     matrix:
-  #       image:
-  #         - macos-latest
-  #         - ubuntu-latest
-  #         - windows-latest
-  #   runs-on: ${{ matrix.image }}
-  #   steps:
-  #     - name: os
-  #       run: echo ${{ runner.os }}
-  #
-  #     - name: Download build artifacts
-  #       uses: actions/download-artifact@v2
-  #       with:
-  #         name: typing-guru-go
-  #         path: .
-  #
-  #     - uses: actions/setup-go@v4
-  #       with:
-  #         go-version: '^1.21.1'
-  #     - run: go version
-  #
-  #     - name: Install dependencies
-  #       if: runner.os == 'Linux'
-  #       run: sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.0-dev && sudo apt-get install -y libgl1-mesa-dev && sudo apt-get install -y xorg-dev
-  #
-  #     - name: Build for Windows
-  #       if: runner.os == 'Windows'
-  #       run: go build -o build/typing-guru-${{runner.os}} .
-  #
-  #     - name: Build for Others
-  #       if: runner.os != 'Windows'
-  #       run: go build -o build/typing-guru-${{runner.os}} .
-  #
-  #     - name: Upload build artifact
-  #       uses: actions/upload-artifact@v2
-  #       with:
-  #         name: typing-guru-${{runner.os}}
-  #         path: ./build
-
-
-  release:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Download build artifacts (macOS)
-        uses: actions/download-artifact@v2
-        with:
-          name: typing-guru-macOS
-          path: ./macos
-
-      - name: Download build artifacts (Windows)
-        uses: actions/download-artifact@v2
-        with:
-          name: typing-guru-Windows
-          path: ./windows
-
-      - name: Download build artifacts (Linux)
-        uses: actions/download-artifact@v2
-        with:
-          name: typing-guru-Linux
-          path: ./linux
-
-      -
-        name: Extract branch or tag name
-        id: extract_branch
-        run: |+
-          name=${GITHUB_REF##*/}
-          echo "branch_or_tag=v${name:1}" >> $GITHUB_OUTPUT
-
-
-      -
-        name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ steps.extract_branch.outputs.branch_or_tag }}
-          release_name: Release ${{ steps.extract_branch.outputs.branch_or_tag }}
-          draft: false
-          prerelease: true
-
-      # # For Linux
-      # - name: Upload Linux Binary
-      #   # uses: actions/upload-release-asset@v1
-      #   uses: shogo82148/actions-upload-release-asset@v1
-      #   with:
-      #     upload_url: ${{ steps.create_release.outputs.upload_url }}
-      #     asset_path: ./linux/typing-guru-Linux
-      #     asset_name: typing-guru-linux.appImage
-      #     asset_content_type: application/octet-stream
+    - name: Build All
+      run: |
+        task docker-build-all  tag=${{ github.ref }}
