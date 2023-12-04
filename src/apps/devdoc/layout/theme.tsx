@@ -80,7 +80,10 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
         {activeThemeContext.layout !== 'raw' && (
           <Header navitems={topLevelNavbarItems} activePath={activePath} />
         )}
-        <Container className="min-h-[calc(100vh-76px)]">
+        <Container
+          className="min-h-[calc(100vh-76px)]"
+          layout={activeThemeContext.layout}
+        >
           <Sidebar
             docsDirectories={docsDirectories}
             fullDirectories={directories}
@@ -89,15 +92,16 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
             includePlaceholder
           />
           {!hideSidebar && (
-            <nav className="order-last w-[226px] max-w-[226px] min-w-[226px] py-6xl sticky top-[76px] self-start hidden  lg:block">
+            <nav className="order-last w-[226px] max-w-[226px] min-w-[226px] sticky top-[calc(var(--kl-navbar-height))] self-start hidden lg:block">
               <TOC headings={headings} />
             </nav>
           )}
           <article className="flex-1 overflow-x-hidden">
             <main
               className={cn(
-                'md:p-6xl w-full min-w-0 min-h-[calc(100vh-101px)] flex flex-col gap-6xl',
-                !hideSidebar ? 'max-w-[72rem]' : ''
+                ' w-full min-w-0 min-h-[calc(100vh-101px)] flex flex-col gap-6xl',
+                !hideSidebar ? 'max-w-[72rem]' : '',
+                { 'md:p-6xl': activeThemeContext.layout === 'default' }
               )}
             >
               <MDXProvider components={createComponents}>

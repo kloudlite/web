@@ -119,7 +119,7 @@ export const createComponents = (components?: any): Components => {
     td: Td,
     // details: Details,
     // summary: Summary,
-    // pre: Pre,
+    pre: (props) => <pre {...props} className="mt-3xl" />,
     // code: Code,
     ...components,
   };

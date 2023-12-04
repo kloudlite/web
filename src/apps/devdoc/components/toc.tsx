@@ -40,18 +40,27 @@ export function TOC({ headings }: TOCProps): ReactElement {
     );
 
     if (anchor) {
-      scrollIntoView(anchor, {
-        behavior: 'smooth',
-        block: 'center',
-        inline: 'center',
-        scrollMode: 'always',
-        boundary: tocRef.current,
-      });
+      console.log(activeSlug, anchor);
+      setTimeout(() => {
+        scrollIntoView(anchor, {
+          behavior: 'smooth',
+          block: 'center',
+          inline: 'center',
+          scrollMode: 'always',
+          boundary: tocRef.current,
+        });
+      }, 100);
+      // anchor.scrollIntoView({ block: '' });
     }
   }, [activeSlug]);
 
   return (
-    <div ref={tocRef} className={cn()}>
+    <div
+      ref={tocRef}
+      className={cn(
+        'md:h-[calc(100vh-var(--kl-navbar-height))] overflow-x-hidden overflow-y-auto kl-scrollbar-transparent hover:kl-scrollbar-colored scrollbar-gutter grow pr-md pt-[28px] -mr-5xl'
+      )}
+    >
       {hasHeadings && (
         <>
           <LayoutGroup>
@@ -92,7 +101,11 @@ export function TOC({ headings }: TOCProps): ReactElement {
         </>
       )}
 
-      <div className={cn()}>
+      <div
+        className={cn(
+          'sticky bottom-0 bg-surface-basic-subdued shadow-[0_-12px_16px_#FAFAFA]'
+        )}
+      >
         {/* {renderComponent(config.editLink.component, {
             filePath,
             className: linkClassName,
@@ -100,7 +113,7 @@ export function TOC({ headings }: TOCProps): ReactElement {
           })}
 
           {renderComponent(config.toc.extraContent)} */}
-        <hr className="border-border-default my-5xl" />
+        <hr className="border-border-default mb-5xl" />
         {config.feedback ? (
           <Button
             content={
