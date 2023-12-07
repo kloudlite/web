@@ -6,6 +6,7 @@ import tailwindBase from '../../design-system/tailwind-base';
 export default {
   ...tailwindBase,
   content: [
-    './**/*.{js,ts,jsx,tsx,mdx}',
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './pages/**/*.{js,ts,jsx,tsx,mdx}',
   ],
 };

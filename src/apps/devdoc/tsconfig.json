@@ -27,15 +27,18 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
+      "~/app/*": [
+        "./app/*"
+      ],
       "flexsearch": [
         "./node_modules/@types/flexsearch"
       ],
       "~/components/*": [
-        "./components/*"
+        "./app/components/*"
       ],
       "~/utiltities/*": [
-        "./utils/*"
-      ]
+        "./app/utils/*"
+      ],
     },
     "noEmit": true,
     "incremental": true,
