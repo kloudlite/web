@@ -38,6 +38,9 @@ function typography() {
       '.bodyLg-underline': {
         '@apply bodyLg underline': {},
       },
+      '.bodyXl-medium': {
+        '@apply font-medium font-sans text-lg leading-lg': {},
+      },
       '.headingXs': {
         '@apply font-semibold text-xs leading-xs font-sans': {},
       },
