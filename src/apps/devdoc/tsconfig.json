@@ -3,7 +3,8 @@
     "**/*.ts",
     "**/*.tsx",
     "**/*.js",
-    "**/*.jsx"
+    "**/*.jsx",
+    ".next/types/**/*.ts"
   ],
   "compilerOptions": {
     "skipLibCheck": true,
@@ -26,17 +27,24 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "flexsearch": ["./node_modules/@types/flexsearch"],
+      "flexsearch": [
+        "./node_modules/@types/flexsearch"
+      ],
       "~/components/*": [
         "./components/*"
       ],
       "~/utiltities/*": [
         "./utils/*"
-      ],
+      ]
     },
     "noEmit": true,
     "incremental": true,
-    "module": "esnext"
+    "module": "esnext",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "exclude": [
     "node_modules/**/*",
