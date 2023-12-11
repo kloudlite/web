@@ -9,7 +9,7 @@ function typography() {
         '@apply bodyMono font-medium': {},
       },
       '.bodySm': {
-        '@apply text-xs leading-xs font-sans': {},
+        '@apply text-xs leading-xs font-sans font-normal': {},
       },
       '.bodySm-medium': {
         '@apply bodySm font-medium': {},

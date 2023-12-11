@@ -70,7 +70,7 @@ export const TopBar = ({
       >
         <Container>
           <div className="flex flex-row items-center gap-3xl py-xl">
-            <div className="flex flex-row gap-lg items-center">
+            <div className="flex flex-row gap-md items-center">
               {!!logo && logo}
               {!!breadcrum && breadcrum}
             </div>
