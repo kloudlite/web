@@ -218,7 +218,7 @@ export const SuiteCard = ({ title, img, imgPad, desc }) => {
 }
 
 export const Graphify = ({ className, children, blurSize = 'md', responsive = false }) => {
-  return <div className={cn("md:graph", {
+  return <div className={cn("graph", {
     "before:bg-[100%_5%,100%_5%,5%_100%,5%_100%]": blurSize === "xs",
     "before:bg-[100%_7%,100%_7%,7%_100%,7%_100%]": blurSize === "sm",
     "before:bg-[100%_10%,100%_10%,5%_100%,5%_100%] 2xl:before:bg-[100%_10%,100%_10%,10%_100%,10%_100%]": blurSize === "md" && responsive,

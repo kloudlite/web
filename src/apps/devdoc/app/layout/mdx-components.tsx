@@ -91,7 +91,13 @@ const A = ({ href = '', ...props }) => (
   <Anchor href={href} newWindow={EXTERNAL_HREF_REGEX.test(href)} {...props} />
 );
 
-export const createComponents = ({components, isRawLayout}:{components?:any, isRawLayout?:boolean}): Components => {
+export const createComponents = ({
+  components,
+  isRawLayout,
+}: {
+  components?: any;
+  isRawLayout?: boolean;
+}): Components => {
   if (isRawLayout) {
     return { a: A };
   }

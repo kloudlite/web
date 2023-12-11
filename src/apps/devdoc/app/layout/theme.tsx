@@ -17,9 +17,9 @@ import { ActiveAnchorProvider } from '~/utiltities/active-anchor';
 import { Breadcrumb } from '~/components/breadcrum';
 import { ConfigProvider } from '~/utiltities/use-config';
 import { Sidebar } from '~/components/sidebar';
-import { createComponents } from './mdx-components';
 import config from '~/utiltities/config';
 import HeaderSecondary from '~/components/header-secondary';
+import { createComponents } from './mdx-components';
 
 function GitTimestamp({ timestamp }: { timestamp: Date }) {
   const { locale = DEFAULT_LOCALE } = useRouter();
@@ -108,7 +108,11 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
                 { 'md:p-6xl': activeThemeContext.layout === 'default' }
               )}
             >
-              <MDXProvider components={createComponents({isRawLayout:activeThemeContext.layout === 'raw',})} >
+              <MDXProvider
+                components={createComponents({
+                  isRawLayout: activeThemeContext.layout === 'raw',
+                })}
+              >
                 <div className="flex-1">
                   {activeThemeContext.layout !== 'raw' && (
                     <div className="mb-2xl">
