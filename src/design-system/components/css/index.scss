@@ -760,6 +760,7 @@ video {
 .bodySm{
   font-family: Inter, sans-serif;
   font-size: 12px;
+  font-weight: 400;
   line-height: 16px;
 }
 
@@ -1139,6 +1140,10 @@ video {
 
 .max-w-8xl{
   max-width: 90rem;
+}
+
+.max-w-\[200px\]{
+  max-width: 200px;
 }
 
 .max-w-\[612px\]{
@@ -2072,6 +2077,15 @@ select{
   position: relative;
   z-index: 999999999;
   pointer-events: all;
+}
+
+@media screen and (min-width: 960px) {
+  html {
+    min-width: 100vw;
+    margin-left: 0;
+    margin-right: 0;
+    overflow-x: hidden;
+  }
 }
 
 .placeholder\:text-text-critical\/70::-moz-placeholder{

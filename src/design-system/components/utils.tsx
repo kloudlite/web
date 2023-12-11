@@ -27,6 +27,7 @@ export function useMapper<A, B>(
 }
 
 export function titleCase(string: string) {
+  if (!string) return string;
   if (typeof string !== 'string')
     throw Error(`Cannot titleCase ${string}: Cause it is not string.`);
   return string.charAt(0).toUpperCase() + string.slice(1);
