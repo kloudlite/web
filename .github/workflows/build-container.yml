@@ -1,0 +1,52 @@
+name: build-container
+
+on:
+  push:
+    branches:
+      - release*
+    paths:
+      - "fake-data-generator/**"
+      - "gql-queries-generator/**"
+      - "lib/**"
+      - "public/**"
+      - "scripts/**"
+      - "static/**"
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  docker-builds:
+    strategy:
+      matrix:
+        app:
+          - auth
+          - console
+    runs-on: ubuntu-latest
+    name: Deploy to Docker Image
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v1
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build & Push Image
+        if: startsWith(github.ref, 'refs/heads/release')
+        run: |
+          branch_name=${GITHUB_REF#refs/heads/}
+          version_string="v${branch_name#release-}-nightly"
+          
+          docker build --build-arg APP=${{matrix.app}} . -t ghcr.io/kloudlite/platform/web/${{matrix.app}}:$version_string --push
+          docker build --build-arg APP=${{matrix.app}} . -t ghcr.io/kloudlite/platform/web/${{matrix.app}}:commit-${GITHUB_SHA} --push
