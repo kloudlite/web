@@ -8,7 +8,7 @@ interface IProfile extends IAvatar {
   subtitle?: string;
 }
 
-export const Profile = forwardRef<HTMLButtonElement, IProfile>(
+const Profile = forwardRef<HTMLButtonElement, IProfile>(
   ({ name, subtitle, color, size, ...props }, ref) => {
     return (
       <BounceIt className="w-fit">
@@ -31,3 +31,5 @@ export const Profile = forwardRef<HTMLButtonElement, IProfile>(
     );
   }
 );
+
+export default Profile;
