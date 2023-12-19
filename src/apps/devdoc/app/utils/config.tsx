@@ -6,8 +6,9 @@ import {
   LinkedinLogoFill,
   TwitterLogoFill,
 } from '@jengaicons/react';
-import { IConfig } from './utils/use-config';
-import { cn } from './utils/commons';
+import { Button } from 'kl-design-system/atoms/button';
+import { cn } from './commons';
+import { IConfig } from './use-config';
 
 const BrandMenu = ({ className }: { className?: string }) => {
   const socialIconSize = 24;
@@ -155,5 +156,47 @@ export default {
   feedback: {
     feedbackLabels: 'bug',
     linkTitle: 'Question? Give us feedback →',
+  },
+  headerSecondary: {
+    items: [
+      {
+        title: 'Product',
+        to: '/',
+      },
+      {
+        title: 'Docs',
+        to: 'devops',
+      },
+      {
+        title: 'Pricing',
+        to: 'pricing',
+      },
+      {
+        title: 'Help',
+        to: 'help',
+      },
+      {
+        title: 'Contact us',
+        to: 'contact-us',
+      },
+    ],
+    extra: (
+      <div className="flex flex-row gap-xl items-center">
+        <Button
+          content="Login"
+          variant="basic"
+          to="https://auth.dev.kloudlite.io/login"
+          LinkComponent={Link}
+          toLabel="href"
+        />
+        <Button
+          content="Signup"
+          variant="primary"
+          to="https://auth.dev.kloudlite.io/signup"
+          LinkComponent={Link}
+          toLabel="href"
+        />
+      </div>
+    ),
   },
 } as IConfig;

@@ -31,6 +31,13 @@ export interface IConfig {
     linkTitle: string;
   };
   readonly pageOpts?: PageOpts;
+  headerSecondary?: {
+    items: {
+      title: string;
+      to: string;
+    }[];
+    extra?: ReactNode;
+  };
 }
 
 const ConfigContext = createContext<{

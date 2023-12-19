@@ -346,12 +346,12 @@ export function Sidebar({
       />
       <aside
         className={cn(
-          'kl-sidebar bg-surface-basic-subdued z-40 flex nextra-sidebar-container flex-col py-6xl md:pt-0',
+          'kl-sidebar bg-surface-basic-subdued z-40 nextra-sidebar-container flex-col pb-6xl md:pt-0',
           'md:top-[calc(var(--kl-navbar-height))] md:shrink-0 motion-reduce:transform-none',
           'transform-gpu transition-all ease-in-out',
           'print:hidden',
           showSidebar ? 'md:w-[284px]' : '',
-          asPopover ? 'md:hidden' : 'md:sticky md:self-start',
+          asPopover ? 'md:hidden' : 'flex md:sticky md:self-start',
           menu
             ? 'max-md:[transform:translate3d(0,0,0)]'
             : 'max-md:[transform:translate3d(0,-100%,0)]'
@@ -369,7 +369,7 @@ export function Sidebar({
           >
             <div
               className={cn(
-                'overflow-y-hidden overflow-x-hidden pt-[28px] hover:overflow-y-auto scrollbar-gutter',
+                'overflow-y-hidden pt-6xl overflow-x-hidden hover:overflow-y-auto scrollbar-gutter',
                 'grow md:h-[calc(100vh-var(--kl-navbar-height))]',
                 {
                   'no-scrollbar': !showSidebar,

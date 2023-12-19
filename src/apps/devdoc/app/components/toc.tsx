@@ -58,7 +58,7 @@ export function TOC({ headings }: TOCProps): ReactElement {
     <div
       ref={tocRef}
       className={cn(
-        'md:h-[calc(100vh-var(--kl-navbar-height))] overflow-x-hidden overflow-y-auto kl-scrollbar-transparent hover:kl-scrollbar-colored scrollbar-gutter grow pr-md pt-[28px] -mr-5xl'
+        'md:h-[calc(100vh-var(--kl-navbar-height))] overflow-x-hidden overflow-y-auto kl-scrollbar-transparent hover:kl-scrollbar-colored scrollbar-gutter grow pr-md pt-6xl -mr-5xl'
       )}
     >
       {hasHeadings && (
@@ -103,7 +103,7 @@ export function TOC({ headings }: TOCProps): ReactElement {
 
       <div
         className={cn(
-          'sticky bottom-0 bg-surface-basic-subdued shadow-[0_-12px_16px_#FAFAFA]'
+          'sticky pb-6xl bottom-0 bg-surface-basic-subdued shadow-[0_-12px_16px_#FAFAFA]'
         )}
       >
         {/* {renderComponent(config.editLink.component, {

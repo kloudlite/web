@@ -4,7 +4,23 @@
         "type":"page",
         "display":"hidden",
         "theme":{
-            "layout":"full"
+            "layout":"raw"
+        }
+    },
+    "privacy-policy":{
+        "title":"Privacy Policy",
+        "type":"page",
+        "display":"hidden",
+        "theme":{
+            "layout":"raw"
+        }
+    },
+    "terms-of-services":{
+        "title":"Terms of Services",
+        "type":"page",
+        "display":"hidden",
+        "theme":{
+            "layout":"raw"
         }
     },
     "devops":{

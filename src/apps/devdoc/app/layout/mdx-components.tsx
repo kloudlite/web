@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 /* eslint-disable jsx-a11y/heading-has-content */
 
-import { Code, Pre, Table, Td, Th, Tr } from 'nextra/components';
+import { Table, Td, Th, Tr } from 'nextra/components';
 import type { Components } from 'nextra/mdx';
 import type { ComponentProps, ReactElement } from 'react';
 import { useEffect, useRef } from 'react';
@@ -91,10 +91,16 @@ const A = ({ href = '', ...props }) => (
   <Anchor href={href} newWindow={EXTERNAL_HREF_REGEX.test(href)} {...props} />
 );
 
-export const createComponents = (components?: any): Components => {
-  // if (isRawLayout) {
-  //   return { a: A };
-  // }
+export const createComponents = ({
+  components,
+  isRawLayout,
+}: {
+  components?: any;
+  isRawLayout?: boolean;
+}): Components => {
+  if (isRawLayout) {
+    return { a: A };
+  }
 
   const context = { index: 0 };
   return {

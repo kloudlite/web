@@ -6,7 +6,6 @@ import Header from '~/components/header';
 import { useFSRoute } from 'nextra/hooks';
 import { normalizePages } from 'nextra/normalize-pages';
 import { useRouter } from 'next/router';
-import config from 'config';
 import Footer from '~/components/footer';
 import Container from '~/components/container';
 import { NavLinks } from '~/components/nav-links';
@@ -18,6 +17,8 @@ import { ActiveAnchorProvider } from '~/utiltities/active-anchor';
 import { Breadcrumb } from '~/components/breadcrum';
 import { ConfigProvider } from '~/utiltities/use-config';
 import { Sidebar } from '~/components/sidebar';
+import config from '~/utiltities/config';
+import HeaderSecondary from '~/components/header-secondary';
 import { createComponents } from './mdx-components';
 
 function GitTimestamp({ timestamp }: { timestamp: Date }) {
@@ -77,9 +78,12 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
         <link rel="shortcut icon" href="/static/favicon.ico" />
       </Head>
       <ActiveAnchorProvider>
-        {activeThemeContext.layout !== 'raw' && (
+        {activeThemeContext.layout !== 'raw' ? (
           <Header navitems={topLevelNavbarItems} activePath={activePath} />
+        ) : (
+          <HeaderSecondary {...config?.headerSecondary} />
         )}
+
         <Container
           className="min-h-[calc(100vh-76px)]"
           layout={activeThemeContext.layout}
@@ -96,7 +100,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
               <TOC headings={headings} />
             </nav>
           )}
-          <article className="flex-1 overflow-x-hidden">
+          <article className="flex-1 overflow-x-hidden pt-xl">
             <main
               className={cn(
                 ' w-full min-w-0 min-h-[calc(100vh-101px)] flex flex-col gap-6xl',
@@ -104,19 +108,24 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
                 { 'md:p-6xl': activeThemeContext.layout === 'default' }
               )}
             >
-              <MDXProvider components={createComponents}>
+              <MDXProvider
+                components={createComponents({
+                  isRawLayout: activeThemeContext.layout === 'raw',
+                })}
+              >
                 <div className="flex-1">
-                  <div className="mb-2xl">
-                    {activeThemeContext.layout !== 'full' && (
+                  {activeThemeContext.layout !== 'raw' && (
+                    <div className="mb-2xl">
                       <Breadcrumb activePath={activePath} />
-                    )}
-                  </div>
+                    </div>
+                  )}
+
                   {children}
                 </div>
                 <div className="bodyLg text-text-strong">
                   {activeThemeContext.timestamp &&
                   pageOpts.timestamp &&
-                  activeThemeContext.layout !== 'full'
+                  activeThemeContext.layout !== 'raw'
                     ? GitTimestamp({ timestamp: new Date(pageOpts.timestamp) })
                     : null}
                 </div>
@@ -131,7 +140,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
             </main>
           </article>
         </Container>
-        <Footer />
+        <Footer config={config} />
       </ActiveAnchorProvider>
     </div>
   );

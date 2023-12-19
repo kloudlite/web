@@ -46,14 +46,20 @@ export const Root = ({
       <AnimatePresence>
         {_open && (
           <TooltipPrimitive.Portal forceMount>
-            <TooltipPrimitive.Content asChild sideOffset={offset}>
+            <TooltipPrimitive.Content
+              asChild
+              sideOffset={offset}
+              side="right"
+              align="start"
+              alignOffset={0}
+            >
               <motion.div
                 onKeyDown={(e) => console.log(e)}
                 initial={{ y: -2, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: -2, opacity: 0 }}
                 transition={{ duration: 0.3, ease: 'anticipate' }}
-                className="z-[99999999999] bodySm-default text-text-default px-lg py-md shadow-popover bg-surface-basic-default rounded"
+                className="z-[99999999999] bodySm-default text-text-default px-lg py-md shadow-popover bg-surface-basic-default rounded max-w-[200px]"
               >
                 {content}
               </motion.div>

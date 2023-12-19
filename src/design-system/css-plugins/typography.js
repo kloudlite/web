@@ -9,7 +9,7 @@ function typography() {
         '@apply bodyMono font-medium': {},
       },
       '.bodySm': {
-        '@apply text-xs leading-xs font-sans': {},
+        '@apply text-xs leading-xs font-sans font-normal': {},
       },
       '.bodySm-medium': {
         '@apply bodySm font-medium': {},
@@ -37,6 +37,9 @@ function typography() {
       },
       '.bodyLg-underline': {
         '@apply bodyLg underline': {},
+      },
+      '.bodyXl-medium': {
+        '@apply font-medium font-sans text-lg leading-lg': {},
       },
       '.headingXs': {
         '@apply font-semibold text-xs leading-xs font-sans': {},
