@@ -129,6 +129,7 @@ const ChipBase = React.forwardRef<HTMLButtonElement, IChipBase>(
         {compType === 'REMOVABLE' && (
           <RovingFocusGroup.Item asChild focusable>
             <button
+              aria-label="close"
               type="button"
               disabled={disabled}
               onClick={(_e) => {

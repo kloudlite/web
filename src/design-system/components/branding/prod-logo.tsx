@@ -127,7 +127,6 @@ const DetailedLogo = ({ size, darkBg, color: _ }: LogoProps) => {
 
 interface ProdLogoProps extends BaseLogoProps {
   detailed?: boolean;
-  color?: string;
 }
 
 export const ProdLogo = ({
