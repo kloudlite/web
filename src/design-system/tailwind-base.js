@@ -133,6 +133,7 @@ const primitives = {
     40: '160px',
     48: '192px',
     60: '240px',
+    'form-text-field-height': '36px',
   },
   fontSize: {
     xs: '12px',
@@ -238,6 +239,7 @@ const config = {
       '12xl': primitives.spacing['40'],
       '13xl': primitives.spacing['48'],
       '14xl': primitives.spacing['60'],
+      'form-text-field-height': primitives.spacing['form-text-field-height'],
     },
     colors: {
       surface: {

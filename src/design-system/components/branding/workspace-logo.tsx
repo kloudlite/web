@@ -88,7 +88,6 @@ const DetailedLogo = ({ size, darkBg }: any) => {
 
 interface WorkspacesLogoProps extends BaseLogoProps {
   detailed?: boolean;
-  color?: string;
 }
 
 export const WorkspacesLogo = ({
