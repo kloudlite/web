@@ -11,11 +11,11 @@ import Popup from 'kl-design-system/molecule/popup';
 import { Search, X } from '@jengaicons/react';
 import Link from 'next/link';
 import { IconButton } from 'kl-design-system/atoms/button';
-import { cn } from '~/utiltities/commons';
-import { DEFAULT_LOCALE } from '~/utiltities/constants';
-import useSearch from '~/utiltities/use-search';
 import ListNavigate from './list-navigate';
 import { HighlightMatches } from './highlight-matches';
+import { DEFAULT_LOCALE } from '../utils/constants';
+import { cn } from '../utils/commons';
+import useSearch from '../utils/use-search';
 
 type SearchResult = {
   children: ReactNode;

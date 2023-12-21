@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
-import useConfig from '~/utiltities/use-config';
 import { HeaderLink } from './frequents';
+import useConfig from '../utils/use-config';
 
 const HeaderSecondary = ({
   items,

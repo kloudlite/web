@@ -2,15 +2,17 @@ import { Button } from "kl-design-system/atoms/button"
 import { Avatar } from "kl-design-system/atoms/avatar"
 import Profile from "kl-design-system/molecule/profile"
 import { AWSlogoFill, TwitterLogo, UsersThree } from "@jengaicons/react"
-import DevopsIcon from "../app/icons/devops"
-import InfraopsIcon from "../app/icons/infraops"
-import DistributionIcon from "../app/icons/distribution"
+import DevopsIcon from "~/app/icons/devops"
+import InfraopsIcon from "~/app/icons/infraops"
+import DistributionIcon from "~/app/icons/distribution"
 import Link from 'next/link';
-import ProgressTracker from "../app/components/progress-tracker"
+import ProgressTracker from "~/app/components/progress-tracker"
+import {Graph, GraphItem} from "~/app/components/graph"
+import ReadyTo from "~/app/components/website/ready-to"
 
-import Illustration from "../static/illustraion1.svg"
+import Illustration from "../public/illustraion1.svg"
 
-import { cn } from '~/utiltities/commons';
+import { cn } from '~/app/utils/commons';
 
 
 export const suites = [
@@ -18,7 +20,7 @@ export const suites = [
     title: "DevOps",
     desc: "Self-Serve environments crafted for development, staging and production workloads",
     img: <DevopsIcon />,
-    imgPad: "px-[74px] py-[22px]"
+    imgPad: "px-[74px] py-[22px] md:px-[10px] xl:px-[74px] xl:py-[22px]"
   },
   {
     title: "InfraOps",
@@ -210,49 +212,13 @@ export const SuiteCard = ({ title, img, imgPad, desc }) => {
     <span className={cn("min-h-[224px] self-center", imgPad)}>
       {img}
     </span>
-    <div className="flex flex-col gap-3xl px-4xl pb-4xl">
+    <div className="flex flex-col gap-3xl px-4xl pb-4xl md:!p-xl md:!pt-0 xl:!px-4xl xl:!pb-4xl">
       <span className="heading3xl-marketing md:!heading4xl-marketing text-text-default">{title}</span>
       <span className="bodyLg md:!bodyXl-medium text-text-strong">{desc}</span>
     </div>
   </div>
 }
 
-export const Graphify = ({ className, children, blurSize = 'md', responsive = false }) => {
-  return <div className={cn("graph", {
-    "before:bg-[100%_5%,100%_5%,5%_100%,5%_100%]": blurSize === "xs",
-    "before:bg-[100%_7%,100%_7%,7%_100%,7%_100%]": blurSize === "sm",
-    "before:bg-[100%_10%,100%_10%,5%_100%,5%_100%] 2xl:before:bg-[100%_10%,100%_10%,10%_100%,10%_100%]": blurSize === "md" && responsive,
-    "before:bg-[100%_10%,100%_10%,10%_100%,10%_100%]": blurSize === "md" && !responsive,
-    "before:bg-[100%_13%,100%_13%,13%_100%,13%_100%]": blurSize === "lg",
-    "before:bg-[100%_15%,100%_15%,15%_100%,15%_100%]": blurSize === "xl",
-    "before:bg-[100%_17%,100%_17%,17%_100%,17%_100%]": blurSize === "2xl",
-    "before:bg-[100%_20%,100%_20%,20%_100%,20%_100%]": blurSize === "3xl",
-    "before:bg-[100%_23%,100%_23%,23%_100%,23%_100%]": blurSize === "4xl",
-    "before:bg-[100%_25%,100%_25%,25%_100%,25%_100%]": blurSize === "5xl",
-  }, className)}>
-    {children}
-  </div>
-}
-
-export const GraphifyItem = ({ className, children }) => {
-  const lineVertical = () => <svg xmlns="http://www.w3.org/2000/svg" width="2" height="100%" viewBox="0 0 2 480" fill="none" preserveAspectRatio="none">
-    <path d="M1 0.000488281L1.00002 480.001" stroke="#D4D4D8" />
-  </svg>
-
-  const lineHorizontal = () => <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="2" viewBox="0 0 1184 2" fill="none" preserveAspectRatio="none">
-    <path d="M0 1.00122L1184 1.00132" stroke="#D4D4D8" />
-  </svg>
-
-  return <div className={cn("relative", className)}>
-    <div className="absolute inset-0">
-      <div className="h-[calc(100%+40px)] md:h-[calc(100%+64px)] absolute -left-xs -top-[20px] md:-top-[32px]">{lineVertical()}</div>
-      <div className="h-[calc(100%+40px)] md:h-[calc(100%+64px)] absolute -right-xs -top-[20px] md:-top-[32px]">{lineVertical()}</div>
-      <div className="w-[calc(100%+40px)] md:w-[calc(100%+64px)] absolute -top-xs -left-[20px] md:-left-[32px]">{lineHorizontal()}</div>
-      <div className="w-[calc(100%+40px)] md:w-[calc(100%+64px)] absolute -bottom-xs -left-[20px] md:-left-[32px]">{lineHorizontal()}</div>
-    </div>
-    {children}
-  </div>
-}
 export const Main = () => {
   return <div className='max-w-[1440px] m-auto'>
     <div className='px-3xl py-6xl md:!px-11xl md:!pt-10xl'>
@@ -273,23 +239,23 @@ export const Main = () => {
       <p className='headingMd-marketing md:!headingLg-marketing text-text-strong text-center'>Join the cult of our early adopters, and discover the power of Kloudlite</p>
       <Partners/>
     </div>
-    <div className='px-3xl py-6xl md:!pb-0 md:!px-0 md:!pt-10xl max-w-[1360px] m-auto'>
+    <div className='px-3xl py-6xl md:!pb-0 lg:!px-3xl md:!pt-10xl lg:max-w-[1024px] xl:max-w-[1360px] m-auto'>
       <div className='flex flex-col'>
         <h2 className='heading3xl-marketing md:!heading5xl-marketing text-text-default text-center'>Dive in: Kloudlite suite</h2>
-        <Graphify className={"pt-7xl md:!py-10xl"} blurSize={'md'} responsive>
-          <div className="grid grid-cols-1 md:!grid-cols-3 gap-3xl md:!gap-5xl max-w-[1120px] m-auto">{suites.map((suite) => <GraphifyItem key={suite.title}><SuiteCard {...suite} /></GraphifyItem>)}</div>
-        </Graphify>
+        <Graph className={"pt-7xl md:!py-10xl"} blurSize={'md'} responsive>
+          <div className="grid grid-cols-1 md:!grid-cols-3 gap-3xl md:!gap-5xl max-w-[1120px] m-auto">{suites.map((suite) => <GraphItem key={suite.title}><SuiteCard {...suite} /></GraphItem>)}</div>
+        </Graph>
       </div>
     </div>
     <div className="py-6xl px-3xl md:!px-0 md:!py-10xl max-w-[1184px] m-auto flex flex-row flex-wrap items-center gap-6xl md:!gap-0">
-      <div className="flex flex-col gap-3xl md:!gap-8xl flex-1 md:!flex-auto md:!w-[384px]">
+      <div className="flex flex-col gap-3xl md:!gap-8xl flex-1 md:!flex-auto md:!max-w-[384px]">
         <h2 className="heading3xl-marketing md:!heading5xl-marketing text-text-default">Why <br className="hidden md:!block" />Kloudlite?</h2>
         <p className="bodyLg-medium md:!bodyXl-medium text-text-soft">A transformative solution for modern DevOps needs, built with precision and a deep understanding of developer and platform engineer challenges</p>
       </div>
       <div className="flex flex-col flex-1 relative">
         <h4 className="headingMd-marketing md:!headingXl-marketing text-text-default text-center relative md:!absolute md:!left-1/2 md:!transform md:!-translate-x-1/2 z-[1]">Your team’s task</h4>
-        <Graphify className={"pt-5xl md:!px-10xl md:!py-8xl"}>
-          <GraphifyItem>
+        <Graph className={"pt-5xl md:!px-10xl md:!py-8xl"}>
+          <GraphItem>
             <div className="flex p-xl md:!p-5xl flex-row bg-gradient-to-b from-[#E4E4E7] to-[#F3F4F6]">
               <div className="flex flex-col gap-xl md:!gap-5xl flex-1">
                 {teamTasks.map((tt) => <TeamTaskCard key={tt.title} color={tt.color} title={tt.title} />)}
@@ -299,43 +265,29 @@ export const Main = () => {
               </div>
               <div></div>
             </div>
-          </GraphifyItem>
-        </Graphify>
+          </GraphItem>
+        </Graph>
       </div>
     </div>
     <div className="flex flex-col max-w-[1360px] m-auto py-6xl px-3xl md:!p-0">
       <h2 className="heading3xl-marketing md:!heading5xl-marketing text-text-default text-center">Don't believe? Read for yourself..</h2>
-      <Graphify className={"pt-7xl pb-6xl md:!py-10xl"} blurSize="md" responsive>
-        <div className="grid grid-cols-cols-1 md:!grid-cols-3 gap-3xl md:!gap-5xl max-w-[1120px] m-auto">{messages.map((message) => <GraphifyItem key={message.title}><MessageCard {...message} /></GraphifyItem>)}</div>
-      </Graphify>
+      <Graph className={"pt-7xl pb-6xl md:!py-10xl"} blurSize="md" responsive>
+        <div className="grid grid-cols-cols-1 md:!grid-cols-3 gap-3xl md:!gap-5xl max-w-[1120px] m-auto">{messages.map((message) => <GraphItem key={message.title}><MessageCard {...message} /></GraphItem>)}</div>
+      </Graph>
     </div>
 
     <div className="flex flex-col px-3xl py-6xl md:!pt-10xl md:!pb-0 md:!px-0">
       <h2 className="heading3xl-marketing md:!heading5xl-marketing text-text-default text-center">Unveil the untold - Keep exploring</h2>
-      <Graphify className={"pt-7xl pb-6xl md:!py-10xl"} responsive>
+      <Graph className={"pt-7xl pb-6xl md:!py-10xl"} responsive>
         <div className="grid grid-cols-cols-1 md:!grid-cols-2 gap-3xl md:!gap-5xl max-w-[1120px] m-auto">
-          <GraphifyItem><TutorialCard /></GraphifyItem>
-          <GraphifyItem><FeaturedCard /></GraphifyItem>
-          <GraphifyItem><CommunityCard /></GraphifyItem>
-          <GraphifyItem><ChangeLogCard /></GraphifyItem>
+          <GraphItem><TutorialCard /></GraphItem>
+          <GraphItem><FeaturedCard /></GraphItem>
+          <GraphItem><CommunityCard /></GraphItem>
+          <GraphItem><ChangeLogCard /></GraphItem>
         </div>
-      </Graphify>
+      </Graph>
     </div>
-    <div>
-      <Graphify className={"py-6xl px-3xl md:!px-0 md:!py-10xl"} responsive>
-        <div className="max-w-[1120px] m-auto">
-          <GraphifyItem>
-            <div className="px-3xl pt-3xl pb-5xl md:!px-10xl md:!py-7xl flex flex-col gap-6xl items-center bg-surface-basic-subdued min-h-[288px]">
-              <div className="flex flex-col gap-xl text-center">
-                <h2 className="heading3xl-marketing md:!heading5xl-marketing text-text-default">Ready to try Kloudlite?</h2>
-                <p className="bodyXl-medium text-text-soft">Join the cult of our early adopters, and discover the power of Kloudlite.</p>
-              </div>
-              <Button content="Get started for free" variant="primary" size="lg" />
-            </div>
-          </GraphifyItem>
-        </div>
-      </Graphify>
-    </div>
+    <ReadyTo/>
   </div>
 }
 

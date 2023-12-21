@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { PageItem } from 'nextra/normalize-pages';
-import useMenu from '~/utiltities/use-menu';
-import useSearch from '~/utiltities/use-search';
-import useConfig from '~/utiltities/use-config';
 import { HeaderLink } from './frequents';
 import { Flexsearch } from './flexsearch';
 import MenuButton from './menu-button';
 import SearchBox from './search';
+import useMenu from '../utils/use-menu';
+import useSearch from '../utils/use-search';
+import useConfig from '../utils/use-config';
 
 const Header = ({
   navitems,

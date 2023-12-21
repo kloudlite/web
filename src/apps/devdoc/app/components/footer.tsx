@@ -1,8 +1,8 @@
 import { Button } from 'kl-design-system/atoms/button';
 import Link from 'next/link';
 import { ReactNode, isValidElement } from 'react';
-import { cn } from '~/utiltities/commons';
-import { IConfig } from '~/utiltities/use-config';
+import { cn } from '../utils/commons';
+import { IConfig } from '../utils/use-config';
 
 const FooterLink = ({ to, children }: { to: string; children: ReactNode }) => {
   return (

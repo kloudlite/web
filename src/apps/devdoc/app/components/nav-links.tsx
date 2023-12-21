@@ -3,7 +3,7 @@ import { Button } from 'kl-design-system/atoms/button';
 import Link from 'next/link';
 import type { Item } from 'nextra/normalize-pages';
 import type { ReactElement } from 'react';
-import { cn } from '~/utiltities/commons';
+import { cn } from '../utils/commons';
 
 interface NavLinkProps {
   currentIndex: number;

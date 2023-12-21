@@ -1,0 +1,151 @@
+import Container from '~/app/components/container';
+import {TextInput} from "kl-design-system/atoms/input"
+import {Search, ChevronRight, GearSix, Domain, Link as LinkIcon, Webhook} from "@jengaicons/react"
+import {Graph, GraphItem} from "~/app/components/graph"
+import Link from 'next/link';
+import { BrandLogo } from 'kl-design-system/branding/brand-logo';
+
+export const popular_articles = [
+    {
+        title:"What is NoOps?",
+        link:"/"
+    },
+    {
+        title:"What is a 'Project' on Kloudlite?",
+        link:"/"
+    },
+    {
+        title:"What is Platform Engineering?",
+        link:"/"
+    },
+    {
+        title:"How to use tags on Kloudlite?",
+        link:"/"
+    },{
+        title:"How to add custom domain to Kloudlite?",
+        link:"/"
+    },
+    {
+        title:"How Kloudlite's pro plan work?",
+        link:"/"
+    }
+]
+
+export const support_topics = [
+    {
+        icon:<BrandLogo size={32} color='currentColor'/>,
+        title:"Kloudlite Overview",
+        desc:"Learn about Kloudlite and how it can help you",
+        link:"/"
+    },
+    {
+        icon:<GearSix size={32}/>,
+        title:"Getting started",
+        desc:"Learn how to get started with Kloudlite",
+        link:"/"
+    },
+    {
+        icon:<LinkIcon size={32}/>,
+        title:"Link management",
+        desc:"Learn how to manage your links on Kloudlite",
+        link:"/"
+    },
+    {
+        icon:<Domain size={32}/>,
+        title:"Custom domains",
+        desc:"Learn how to use custom domain with Kloudlite",
+        link:"/"
+    },
+    {
+        icon:<Webhook size={32}/>,
+        title:"API",
+        desc:"Learn how to use the Kloudlite API",
+        link:"/"
+    }
+]
+
+export const unknown_topics = [
+    {
+        icon:<LinkIcon size={32}/>,
+        title:"Best practice guides",
+        desc:"Make the most out of Kloudlite",
+        link:"/"
+    },
+    {
+        icon:<Domain size={32}/>,
+        title:"Community",
+        desc:"Get help from like-minded developers",
+        link:"/"
+    },
+    {
+        icon:<Webhook size={32}/>,
+        title:"Contact support",
+        desc:"Our support team is ready to assist",
+        link:"/"
+    }
+]
+
+export const PopularArticleItem = ({title, link})=>{
+    return <Link href={link} className='bodyLg-medium text-text-strong py-lg px-xl flex flex-row gap-xl items-center'>
+        <span className='flex-1'>{title}</span>
+        <span>
+            <ChevronRight size={16}/>
+        </span>
+    </Link>
+}
+
+export const TopicItem = ({link, title, icon, desc})=>{
+    return <Link href={link} className="px-5xl pt-8xl pb-5xl flex flex-col gap-5xl bg-surface-basic-default min-h-[288px] help-card-graph">
+        <div className='bg-surface-basic-default flex w-8xl h-8xl rounded-full items-center justify-center p-2xl border border-border-default text-icon-default'>{icon}</div>
+        <div className='flex flex-col gap-3xl'>
+            <h4 className='headingXl-marketing text-text-default'>{title}</h4>
+            <p className='text-text-soft bodyLg line-clamp-2'>{desc}</p>
+        </div>
+    </Link>
+}
+
+export default () => {
+  return (
+    <Container className='relative flex flex-col items-center'>
+       <div className='px-12xl py-10xl flex flex-col gap-11xl w-full'>
+            <div className='flex flex-col gap-6xl text-center w-full'>
+                <div className='flex flex-col gap-3xl'>
+                    <h1 className='heading5xl-marketing text-text-default'>👋 How can we help you today?</h1>
+                    <p className='bodyXl-medium text-text-soft'>Discover solutions through our documentation, guides, and community</p>
+                </div>
+                <div className='max-w-[700px] w-[700px] m-auto'>
+                    <TextInput placeholder='Search for articles...' suffix={<span className='bodyMd text-text-soft'>⌘K</span>} prefixIcon={<Search/>} size='lg'/>
+                </div>
+            </div>
+            <div>
+                <Graph className='-m-10xl -mt-11xl p-10xl pt-11xl'>
+                    <GraphItem>
+                        <div className='px-2xl pt-5xl pb-4xl gap-6xl flex flex-col bg-surface-basic-default min-h-[289px]'>
+                            <h2 className='heading2xl-marketing text-text-default'>Popular articles</h2>
+                            <div className='flex flex-row flex-wrap gap-x-6xl gap-y-xl'>
+                                {popular_articles.map((pa)=><div key={pa.title} className='w-[calc(50%-40px)]'><PopularArticleItem {...pa} /></div>)}
+                            </div>
+                        </div>
+                    </GraphItem>
+                    <div className='grid grid-cols-3 gap-5xl mt-5xl'>
+                        {support_topics.map((st)=><GraphItem  key={st.title}><TopicItem {...st}/></GraphItem>)}
+                    </div>
+                </Graph>
+            </div>
+        </div>
+        <div className='px-12xl py-10xl flex flex-col gap-11xl w-full'>
+            <div className='flex flex-col gap-3xl text-center'>
+                <h2 className='heading5xl-marketing text-text-default'>Couldn’t fine what you needed?</h2>
+                <p className='bodyXl-medium text-text-soft'>Don’t worry, we’ve got more options for you</p>
+            </div>
+            <div>
+                <Graph className='-m-10xl -mt-11xl p-10xl pt-11xl'>
+                    <div className='grid grid-cols-3 gap-5xl'>
+                        {unknown_topics.map((ut)=><GraphItem  key={ut.title}><TopicItem {...ut}/></GraphItem>)}
+                    </div>
+                </Graph>
+            </div>
+        </div>
+    </Container>
+  );
+};

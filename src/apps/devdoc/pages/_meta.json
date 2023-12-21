@@ -7,6 +7,38 @@
             "layout":"raw"
         }
     },
+    "infraops-design":{
+        "title":"InfraOps",
+        "type":"page",
+        "display":"hidden",
+        "theme":{
+            "layout":"raw"
+        }
+    },
+    "devops-design":{
+        "title":"DevOps",
+        "type":"page",
+        "display":"hidden",
+        "theme":{
+            "layout":"raw"
+        }
+    },
+    "distribution-design":{
+        "title":"Distribution",
+        "type":"page",
+        "display":"hidden",
+        "theme":{
+            "layout":"raw"
+        }
+    },
+    "help-and-support":{
+        "title":"Help and Support",
+        "type":"page",
+        "display":"hidden",
+        "theme":{
+            "layout":"raw"
+        }
+    },
     "privacy-policy":{
         "title":"Privacy Policy",
         "type":"page",

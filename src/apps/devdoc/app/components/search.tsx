@@ -1,7 +1,7 @@
 import { Search } from '@jengaicons/react';
 import { IconButton } from 'kl-design-system/atoms/button';
-import { cn } from '~/utiltities/commons';
-import useSearch from '~/utiltities/use-search';
+import { cn } from '../utils/commons';
+import useSearch from '../utils/use-search';
 
 const SearchBox = ({ className }: { className?: string }) => {
   const { setShow } = useSearch();

@@ -7,11 +7,11 @@ import { Button } from 'kl-design-system/atoms/button';
 import { ArrowSquareOut } from '@jengaicons/react';
 import Link from 'next/link';
 import { LayoutGroup, motion } from 'framer-motion';
-import { useActiveAnchor } from '~/utiltities/active-anchor';
-import { cn } from '~/utiltities/commons';
-import useConfig from '~/utiltities/use-config';
-import getGitIssueUrl from '~/utiltities/get-git-issue-url';
 import { BackToTop } from './back-to-top';
+import useConfig from '../utils/use-config';
+import { useActiveAnchor } from '../utils/active-anchor';
+import { cn } from '../utils/commons';
+import getGitIssueUrl from '../utils/get-git-issue-url';
 
 export type TOCProps = {
   headings: Heading[];

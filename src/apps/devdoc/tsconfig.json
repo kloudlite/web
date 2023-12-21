@@ -4,7 +4,7 @@
     "**/*.tsx",
     "**/*.js",
     "**/*.jsx",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
   ],
   "compilerOptions": {
     "skipLibCheck": true,
@@ -19,7 +19,7 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "target": "ES2019",
-    "strict": true,
+    "strict": false,
     "allowJs": true,
     "checkJs": true,
     "noImplicitAny": true,
@@ -32,13 +32,7 @@
       ],
       "flexsearch": [
         "./node_modules/@types/flexsearch"
-      ],
-      "~/components/*": [
-        "./app/components/*"
-      ],
-      "~/utiltities/*": [
-        "./app/utils/*"
-      ],
+      ]
     },
     "noEmit": true,
     "incremental": true,

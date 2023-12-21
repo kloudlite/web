@@ -1,9 +1,9 @@
 import '../style.css';
 import 'kl-design-system/index.css';
 import type { AppProps } from 'next/app';
-import '../static/arduino-light.min.css';
-import { SearchProvider } from '~/utiltities/use-search';
-import { MenuProvider } from '~/utiltities/use-menu';
+import '../public/arduino-light.min.css';
+import { MenuProvider } from '~/app/utils/use-menu';
+import { SearchProvider } from '~/app/utils/use-search';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
