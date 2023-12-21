@@ -55,7 +55,7 @@ code{
 }
 
 .gradient-bg{
-  background-image: url("./static/gradient-bg.svg");
+  background-image: url("/gradient-bg.svg");
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -204,7 +204,7 @@ code{
     content: '';
     position: absolute;
     top: 50%;
-    background-image: url("./static/strike.svg");
+    background-image: url("/strike.svg");
     height: 100%;
     background-repeat: no-repeat;
     width: 110%;
@@ -234,4 +234,24 @@ code{
     background-repeat: no-repeat;
     /* background-size: 100% 10%, 100% 10%, 10% 100%, 10% 100%; */
     background-position: top, bottom, left, right;
+  }
+
+  .infraops-cover-graph{
+    background-image: url("/infraops/graph.svg");
+    background-position: center;
+  }
+
+  .distribution-cover-graph{
+    background-image: url("/distribution/distribution-graph.svg");
+    background-position: center;
+  }
+
+  .help-card-graph{
+    background-image: url("/help-and-support/card-graph.svg");
+    background-position: right top;
+    background-repeat: no-repeat;
+  }
+
+  .shadow-filter{
+    filter: drop-shadow(0px 2px 16px rgba(33, 43, 54, 0.08)) drop-shadow(0px 0px 0px rgba(6, 44, 82, 0.10));
   }

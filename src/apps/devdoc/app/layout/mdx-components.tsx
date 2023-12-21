@@ -5,13 +5,13 @@ import { Table, Td, Th, Tr } from 'nextra/components';
 import type { Components } from 'nextra/mdx';
 import type { ComponentProps, ReactElement } from 'react';
 import { useEffect, useRef } from 'react';
-import { Anchor, AnchorProps } from '~/components/anchor';
 import {
   useIntersectionObserver,
   useSetActiveAnchor,
   useSlugs,
-} from '~/utiltities/active-anchor';
-import { cn } from '~/utiltities/commons';
+} from '../utils/active-anchor';
+import { Anchor, AnchorProps } from '../components/anchor';
+import { cn } from '../utils/commons';
 
 // Anchor links
 function HeadingLink({

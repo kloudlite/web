@@ -2,23 +2,23 @@ import Head from 'next/head';
 import type { NextraThemeLayoutProps } from 'nextra';
 import { MDXProvider } from 'nextra/mdx';
 import { useEffect, useMemo } from 'react';
-import Header from '~/components/header';
 import { useFSRoute } from 'nextra/hooks';
 import { normalizePages } from 'nextra/normalize-pages';
 import { useRouter } from 'next/router';
-import Footer from '~/components/footer';
-import Container from '~/components/container';
-import { NavLinks } from '~/components/nav-links';
-import { DEFAULT_LOCALE } from '~/utiltities/constants';
-import { cn } from '~/utiltities/commons';
-import useMenu from '~/utiltities/use-menu';
-import { TOC } from '~/components/toc';
-import { ActiveAnchorProvider } from '~/utiltities/active-anchor';
-import { Breadcrumb } from '~/components/breadcrum';
-import { ConfigProvider } from '~/utiltities/use-config';
-import { Sidebar } from '~/components/sidebar';
-import config from '~/utiltities/config';
-import HeaderSecondary from '~/components/header-secondary';
+import Footer from '~/app/components/footer';
+import Container from '~/app/components/container';
+import { NavLinks } from '~/app/components/nav-links';
+import { TOC } from '~/app/components/toc';
+import { Breadcrumb } from '~/app/components/breadcrum';
+import { Sidebar } from '~/app/components/sidebar';
+import HeaderSecondary from '~/app/components/header-secondary';
+import Header from '~/app/components/header';
+import { DEFAULT_LOCALE } from '~/app/utils/constants';
+import { cn } from '~/app/utils/commons';
+import useMenu from '~/app/utils/use-menu';
+import { ActiveAnchorProvider } from '~/app/utils/active-anchor';
+import { ConfigProvider } from '~/app/utils/use-config';
+import config from '~/app/utils/config';
 import { createComponents } from './mdx-components';
 
 function GitTimestamp({ timestamp }: { timestamp: Date }) {
@@ -75,7 +75,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
       <Head>
         <title>{title}</title>
         <meta name="og:image" content={frontMatter.image} />
-        <link rel="shortcut icon" href="/static/favicon.ico" />
+        <link rel="shortcut icon" href="/favicon.ico" />
       </Head>
       <ActiveAnchorProvider>
         {activeThemeContext.layout !== 'raw' ? (
@@ -85,8 +85,12 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
         )}
 
         <Container
-          className="min-h-[calc(100vh-76px)]"
-          layout={activeThemeContext.layout}
+          className={cn(
+            'min-h-[calc(100vh-76px)] flex-row',
+            activeThemeContext.layout === 'default'
+              ? 'max-w-[1440px]'
+              : 'max-w-none'
+          )}
         >
           <Sidebar
             docsDirectories={docsDirectories}

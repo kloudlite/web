@@ -7,6 +7,7 @@ extends:
   - plugin:prettier/recommended
   - plugin:@typescript-eslint/recommended
   - plugin:import/typescript
+  - next/core-web-vitals
 
 plugins:
   - import
@@ -36,6 +37,7 @@ settings:
       extensions: [.js, .jsx, .ts, .tsx, .json]
       moduleDirectory:
         - node_modules
+        - app
     typescript:
       project: ./tsconfig.json
 

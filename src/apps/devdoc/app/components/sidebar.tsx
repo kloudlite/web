@@ -20,11 +20,11 @@ import {
 } from 'react';
 import scrollIntoView from 'scroll-into-view-if-needed';
 import { ChevronRight } from '@jengaicons/react';
-import { cn } from '~/utiltities/commons';
-import useMenu from '~/utiltities/use-menu';
 import { Collapse } from './collapse';
 import { Anchor } from './anchor';
 import Search from './search';
+import useMenu from '../utils/use-menu';
+import { cn } from '../utils/commons';
 
 const TreeState: Record<string, boolean> = Object.create(null);
 

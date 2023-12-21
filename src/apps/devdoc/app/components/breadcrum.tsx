@@ -2,8 +2,8 @@ import type { Item } from 'nextra/normalize-pages';
 import type { ReactElement } from 'react';
 import { Fragment } from 'react';
 import { ChevronRight } from '@jengaicons/react';
-import { cn } from '~/utiltities/commons';
 import { Anchor } from './anchor';
+import { cn } from '../utils/commons';
 
 export function Breadcrumb({
   activePath,

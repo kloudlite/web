@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { ReactNode } from 'react';
-import { cn } from '~/utiltities/commons';
+import { cn } from '../utils/commons';
 
 export const HeaderLink = ({
   to,

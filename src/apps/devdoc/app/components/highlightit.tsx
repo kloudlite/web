@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import hljs from 'highlight.js';
-import { cn } from '~/utiltities/commons';
+import { cn } from '../utils/commons';
 
 const HighlightIt = ({
   language,

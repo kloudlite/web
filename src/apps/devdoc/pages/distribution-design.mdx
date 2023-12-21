@@ -1,0 +1,116 @@
+import { useState } from 'react';
+import Container from '~/app/components/container';
+import Discover from '~/app/components/website/discover-component';
+import ReadyToOps from '~/app/components/website/ready-to-ops';
+import DistributeDis from '../public/distribution/distribute-distribution.svg';
+import CreateDis from '../public/distribution/create-distribution.svg';
+import BuildDis from '../public/distribution/build-distribution.svg';
+import Cover from '../public/distribution/distribution-cover.svg';
+import GetStarted from '~/app/components/website/get-started';
+import SuccessStories from '~/app/components/website/success-stories';
+import { Button } from 'kl-design-system/atoms/button';
+import Chips from 'kl-design-system/atoms/chips';
+
+import consts from "~/app/utils/const"
+
+import { successStories } from '~/app/utils/dummy-data';
+
+export const DiscoverSection = () => {
+  return (
+    <div className="flex flex-col 2xl:pt-10xl">
+      <Discover 
+        title={<>Discover <span className="text-text-primary">Distribution</span></>} 
+        desc="Dive-in to know how Distribution can transform the container image management" 
+        features={consts.distribution.features} />
+    </div>
+  );
+};
+
+export const GetStartedSection = () => {
+  const [selectedTab, setSelectedTab] = useState(consts.distribution.getstarted[0].id);
+  const getTab = () => {
+    switch (selectedTab) {
+      case 'push':
+        return (
+          <div className="relative h-full overflow-hidden">
+            <img alt="push" src={BuildDis} />
+          </div>
+        );
+      case 'distribute':
+        return (
+          <div className="relative h-full overflow-hidden flex items-center justify-center">
+            <img alt="distribute" src={DistributeDis} />
+          </div>
+        );
+      case 'create':
+      default:
+        return (
+          <div className="h-full flex items-center justify-center relative">
+                <img alt="create" src={CreateDis} className='absolute bottom-0'/>
+          </div>
+        );
+    }
+  };
+
+  return (
+    <GetStarted
+      title="In 3 simple steps"
+      tabs={consts.distribution.getstarted}
+      onTabChange={(item) => setSelectedTab(item.id)}
+      tab={getTab()}
+      activeTab={selectedTab}
+    />
+  );
+};
+
+export const SuccessStorySection = () => {
+  return (
+    <div className="flex flex-col 2xl:pt-10xl">
+      <SuccessStories tabs={successStories} />
+    </div>
+  );
+};
+
+export default () => {
+  return (
+    <div>
+        <Container className='relative'>
+            <div className="flex flex-col 2xl:px-12xl z-10">
+            <div className='absolute inset-0 distribution-cover-graph z-0'/>
+                <div className="flex flex-row items-center gap-10xl 2xl:py-10xl z-10">
+                    <div className="flex flex-col gap-6xl md:max-w-[630px]">
+                        <div className="flex flex-col gap-3xl">
+                        <Chips.Chip item="infraops" label="Distribution" />
+                        <h1 className="heading6xl-marketing text-text-default">
+                            Package & Distribute your Environments
+                        </h1>
+                        <p className="bodyXl-medium text-text-soft">
+                            Cloud-accelerated Build System, Container Registry, & Helm Repos built to distribute and deploy with ease
+                        </p>
+                        </div>
+                        <div className="flex flex-row items-center gap-4xl">
+                        <Button
+                            content="Start your free trial"
+                            variant="primary"
+                            size="lg"
+                        />
+                        <Button content="Schedule a demo" variant="basic" size="lg" />
+                        </div>
+                    </div>
+                    <div className='z-10'>
+                        <img src={Cover} className='scale-[1.3]'/>
+                    </div>
+                </div>
+            </div>
+        </Container>
+        <Container className="flex-col">
+            <div className="flex flex-col 2xl:px-12xl">
+                <DiscoverSection />
+                <GetStartedSection />
+                <SuccessStorySection />
+                <ReadyToOps />
+            </div>
+        </Container>
+    </div>
+  );
+};
