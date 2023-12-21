@@ -8,7 +8,7 @@
   "author": "",
   "license": "ISC",
   "scripts": {
-    "local:release": "npm run build:css && npm run build && node prod-package.js && cd dist && npm pack --pack-destination ../out",
+    "local:release": "mkdir -p out && npm run build:css && npm run build && node prod-package.js && cd dist && npm pack --pack-destination ../out",
     "build": "npm run clean && node build.js && npm run tsc",
     "clean": "rimraf dist",
     "tsc": "tsc --emitDeclarationOnly --outDir ./dist/",
