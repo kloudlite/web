@@ -78,7 +78,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
         <link rel="shortcut icon" href="/favicon.ico" />
         <link
           rel="preload"
-          href="/fonts/inter-cyrillic-ext.woff2"
+          href="/fonts/inter.woff2"
           as="font"
           type="font/woff2"
           crossOrigin="anonymous"
