@@ -1,5 +1,8 @@
-@import url('./fonts/Familjen-Grotesk.css');
+
 @import url('./fonts/Inter.css');
+
+@import url('./fonts/Familjen-Grotesk.css');
+
 
 @tailwind base;
 @tailwind components;
