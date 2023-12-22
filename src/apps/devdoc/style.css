@@ -204,7 +204,7 @@ code{
     content: '';
     position: absolute;
     top: 50%;
-    background-image: url("/strike.svg");
+    background-image: url("strike.svg");
     height: 100%;
     background-repeat: no-repeat;
     width: 110%;
@@ -237,17 +237,17 @@ code{
   }
 
   .infraops-cover-graph{
-    background-image: url("/infraops/graph.svg");
+    background-image: url("infraops/graph.svg");
     background-position: center;
   }
 
   .distribution-cover-graph{
-    background-image: url("/distribution/distribution-graph.svg");
+    background-image: url("distribution/distribution-graph.svg");
     background-position: center;
   }
 
   .help-card-graph{
-    background-image: url("/help-and-support/card-graph.svg");
+    background-image: url("help-and-support/card-graph.svg");
     background-position: right top;
     background-repeat: no-repeat;
   }
