@@ -76,6 +76,20 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
         <title>{title}</title>
         <meta name="og:image" content={frontMatter.image} />
         <link rel="shortcut icon" href="/favicon.ico" />
+        <link
+          rel="preload"
+          href="/fonts/inter-cyrillic-ext.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/familjen.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
       </Head>
       <ActiveAnchorProvider>
         {activeThemeContext.layout !== 'raw' ? (
