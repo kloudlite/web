@@ -10,7 +10,7 @@ import ProgressTracker from "~/app/components/progress-tracker"
 import {Graph, GraphItem} from "~/app/components/graph"
 import ReadyTo from "~/app/components/website/ready-to"
 
-import Illustration from "../public/illustraion1.svg"
+import Illustration from "../images/illustraion1.svg"
 
 import { cn } from '~/app/utils/commons';
 
@@ -20,19 +20,22 @@ export const suites = [
     title: "DevOps",
     desc: "Self-Serve environments crafted for development, staging and production workloads",
     img: <DevopsIcon />,
-    imgPad: "px-[74px] py-[22px] md:px-[10px] xl:px-[74px] xl:py-[22px]"
+    imgPad: "px-[74px] py-[22px] md:px-[10px] xl:px-[74px] xl:py-[22px]",
+    to:"devops-design"
   },
   {
     title: "InfraOps",
     desc: "Flexible & Cost Effective Kubernetes Cluster Management at your fingertips",
     imgPad: "px-[45px] py-[42px]",
-    img: <InfraopsIcon />
+    img: <InfraopsIcon />,
+    to:"infraops-design"
   },
   {
     title: "Distribution",
     desc: "Cloud accelerated build system and container registry to build and ship containers anywhere",
     imgPad: "px-[76px] py-[22px]",
-    img: <DistributionIcon />
+    img: <DistributionIcon />,
+    to:"distribution-design"
   },
 ]
 
@@ -207,8 +210,8 @@ export const ChangeLogCard = () => {
   </UntoldCard>
 }
 
-export const SuiteCard = ({ title, img, imgPad, desc }) => {
-  return <div key={title} className='bg-surface-basic-default flex flex-col h-full min-h-[416px]'>
+export const SuiteCard = ({ title, img, imgPad, desc, to }) => {
+  return <Link href={to} key={title} className='bg-surface-basic-default flex flex-col h-full min-h-[416px]'>
     <span className={cn("min-h-[224px] self-center", imgPad)}>
       {img}
     </span>
@@ -216,7 +219,7 @@ export const SuiteCard = ({ title, img, imgPad, desc }) => {
       <span className="heading3xl-marketing md:!heading4xl-marketing text-text-default">{title}</span>
       <span className="bodyLg md:!bodyXl-medium text-text-strong">{desc}</span>
     </div>
-  </div>
+  </Link>
 }
 
 export const Main = () => {

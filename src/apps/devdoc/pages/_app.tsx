@@ -8,6 +8,10 @@ import { SearchProvider } from '~/app/utils/use-search';
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <MenuProvider>
+      <div
+        className="loading-overlay"
+        style={{ position: 'absolute', inset: 0, background: 'white' }}
+      />
       <SearchProvider>
         <Component {...pageProps} />
       </SearchProvider>
