@@ -126,6 +126,15 @@ export const ButtonBase = React.forwardRef<
 
   const noRing = false;
 
+  console.log(
+    disabled &&
+      !['plain', 'primary-plain', 'critical-plain', 'secondary-plain'].includes(
+        variant
+      ),
+    variant,
+    disabled
+  );
+
   return (
     <Component
       {...mprops}
@@ -152,7 +161,16 @@ export const ButtonBase = React.forwardRef<
           bodyMd: variant?.includes('plain'),
         },
         {
-          'pointer-events-none !text-text-disabled': disabled,
+          'pointer-events-none !text-text-disabled !bg-surface-basic-default':
+            disabled,
+          '!border-border-disabled':
+            disabled &&
+            ![
+              'plain',
+              'primary-plain',
+              'critical-plain',
+              'secondary-plain',
+            ].includes(variant),
         },
         'relative ring-offset-1',
         'outline-none shadow-button',
