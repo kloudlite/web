@@ -151,6 +151,9 @@ export const ButtonBase = React.forwardRef<
           'bodyMd-medium': !variant?.includes('plain'),
           bodyMd: variant?.includes('plain'),
         },
+        {
+          'pointer-events-none !text-text-disabled': disabled,
+        },
         'relative ring-offset-1',
         'outline-none shadow-button',
         'flex flex-row gap-lg items-center justify-center',
