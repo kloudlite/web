@@ -161,7 +161,7 @@ const primitives = {
 };
 
 const width = {
-  '8xl': '90rem',
+  ...primitives.spacing,
 };
 
 const config = {
