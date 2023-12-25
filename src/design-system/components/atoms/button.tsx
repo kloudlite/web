@@ -126,15 +126,6 @@ export const ButtonBase = React.forwardRef<
 
   const noRing = false;
 
-  console.log(
-    disabled &&
-      !['plain', 'primary-plain', 'critical-plain', 'secondary-plain'].includes(
-        variant
-      ),
-    variant,
-    disabled
-  );
-
   return (
     <Component
       {...mprops}
