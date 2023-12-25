@@ -24,7 +24,7 @@ interface IBase {
 }
 
 interface ITabBase extends IBase {
-  label: ReactNode;
+  label: ReactNode | ((active: boolean) => ReactNode);
   active?: boolean;
   onClick?: (e: KeyboardEvent<HTMLSpanElement>) => void;
   prefix?: JSX.Element;
@@ -40,7 +40,7 @@ interface ITabs<T = string> extends IBase {
 
 export interface ITab<T = string> {
   to?: string;
-  label: ReactNode;
+  label: ReactNode | ((active: boolean) => ReactNode);
   prefix?: JSX.Element;
   value: T;
 }
@@ -121,7 +121,7 @@ const TabBase = ({
         >
           {!!prefix &&
             React.cloneElement(prefix, { size: 16, color: 'currentColor' })}
-          {label}
+          {typeof label === 'function' ? label(active) : label}
         </Component>
       </RovingFocusGroup.Item>
       {active && variant === 'plain' && (
