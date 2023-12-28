@@ -27,10 +27,8 @@ const menuItemRender = (props: IMenuItemRender) => {
 };
 
 const groupRender = ({ label }: IGroupRender) => {
-  // return null;
-  return (
-    <div className="px-xl py-md bodySm-medium text-text-disabled">{label}</div>
-  );
+  return null;
+  return <div className="bodySm-medium text-text-disabled">{label}</div>;
 };
 
 const suffixRender = () => {
@@ -73,7 +71,6 @@ const Select = <T, U extends boolean | undefined = undefined>(
           </div>
         )}
         <SelectZener
-          open
           className={() => {
             const c = cn(
               'rounded flex flex-row items-center border bodyMd outline-none cursor-default',
