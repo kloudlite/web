@@ -27,10 +27,8 @@ const menuItemRender = (props: IMenuItemRender) => {
 };
 
 const groupRender = ({ label }: IGroupRender) => {
-  // return null;
-  return (
-    <div className="my-md px-xl bodySm-medium text-text-disabled">{label}</div>
-  );
+  return null;
+  return <div className="bodySm-medium text-text-disabled">{label}</div>;
 };
 
 const suffixRender = () => {
