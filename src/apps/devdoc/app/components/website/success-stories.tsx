@@ -1,8 +1,8 @@
 import { ReactNode } from 'react';
 import { Button } from 'kl-design-system/atoms/button';
 import { ArrowRight } from '@jengaicons/react';
-import { cn } from '~/app/utils/commons';
 import Image from 'next/image';
+import { cn } from '~/app/utils/commons';
 import { Graph, GraphItem } from '../graph';
 
 type ISuccessStoryButton = { logo: any; onClick: () => void; active: boolean };

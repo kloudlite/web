@@ -18,7 +18,7 @@ const SearchBox = ({ className }: { className?: string }) => {
         </span>
         <span className="text-text-disabled bodyMd">Search</span>
       </button>
-      <div className="hidden md:flex lg:hidden">
+      <div className="hidden md:!flex lg:!hidden">
         <IconButton
           icon={<Search />}
           variant="plain"

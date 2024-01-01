@@ -218,8 +218,8 @@ code{
     background: linear-gradient(90deg, #e4e4e783 1px, transparent 1px),
     linear-gradient(0deg, #e4e4e783 1px, transparent 1px);
     background-size: 32px 32px;
-    background-position: 1px 1px;
-    background-position-x: center;
+    /* background-position: 1px 1px;
+    background-position-x: center; */
     position: relative;
   }
 
@@ -246,6 +246,11 @@ code{
 
   .distribution-cover-graph{
     background-image: url("/distribution/distribution-graph.svg");
+    background-position: center;
+  }
+
+  .product-graph{
+    background-image: url("/product/graph-product.svg");
     background-position: center;
   }
 

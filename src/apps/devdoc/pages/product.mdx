@@ -1,0 +1,389 @@
+import {CheckCircleFill, ArrowRight, Stack, Domain, } from "@jengaicons/react"
+import { Button } from 'kl-design-system/atoms/button';
+import Container from '~/app/components/container';
+import ReadyToOps from '~/app/components/website/ready-to-ops';
+import Cover from '../images/product-landing/cover-product.svg';
+import InfraOps from "../images/product-landing/infra.svg"
+import DevOps from "../images/product-landing/dev.svg"
+import Dist from "../images/product-landing/dist.svg"
+import {Graph, GraphItem} from "~/app/components/graph"
+import { cn } from '~/app/utils/commons';
+import Image from 'next/image';
+
+export const products = [
+    {
+        type:"InfraOps",
+        title:"Cloud-native at the core",
+        desc:"Flexible & Cost Effective Kubernetes Cluster Management with simple and user-friendly interface",
+        features:[
+            {
+                title:"Cloud agnostic",
+            },
+            {
+                title:"Spot fleet",
+            },
+            {
+                title:"GPU enabled nodes",
+            },
+            {
+                title:"Auto scalable nodepools",
+            }
+        ],
+        link:"/",
+        logo:InfraOps
+    },
+    {
+        type:"DevOps",
+        title:"NoOps development",
+        desc:"Self-Serve environments crafted for development, staging & production workloads",
+        features:[
+            {
+                title:"Ephemeral workspaces",
+            },
+            {
+                title:"Scalable environments",
+            },
+            {
+                title:"Secure VPN for remote local",
+            },
+            {
+                title:"Automated backing services",
+            }
+        ],
+        link:"/",
+        logo:DevOps
+    },
+    {
+        type:"Distribution",
+        title:"Simply build and deploy",
+        desc:"Cloud accelerated build system and container registry to build and ship containers anywhere",
+        features:[
+            {
+                title:"Integrated container registry",
+            },
+            {
+                title:"Auto build & deploy",
+            },
+            {
+                title:"Major repo integrations",
+            },
+            {
+                title:"Optimized building processes",
+            }
+        ],
+        link:"/",
+        logo:Dist
+    }
+]
+
+
+export const benefitsItems = [
+    {
+        title:"Developers",
+        items:[
+            {
+                title:"Auto - Provision",
+                icon: Stack
+            },
+            {
+                title:"Run Anywhere",
+                icon: Stack
+            },
+            {
+                title:"Enhanced Application Security",
+                icon: Stack
+            },
+            {
+                title:"Collaborative Environments",
+                icon: Stack
+            },
+            {
+                title:"Comprehensive Monitoring and Insights",
+                icon: Stack
+            },
+            {
+                title:"Plug your own CICDs and Observability",
+                icon: Stack
+            },
+            {
+                title:"Streamlined Application Development",
+                icon: Stack
+            },
+            {
+                title:"Cost - Efficient Resource Management",
+                icon: Stack
+            }
+        ]
+    },
+    {
+        title:"Platform Engineers",
+        items:[
+            {
+                title:"Faster Deployment",
+                icon: Stack
+            },
+            {
+                title:"Flexible Autoscaling",
+                icon: Stack
+            },
+            {
+                title:"Developer Centric",
+                icon: Stack
+            },
+            {
+                title:"Reduce Development Inner loop",
+                icon: Stack
+            },
+            {
+                title:"Simplified Infrastructure Management",
+                icon: Stack
+            },
+            {
+                title:"Build system for faster deployments",
+                icon: Stack
+            },
+            {
+                title:"Declarative Infrastructure, Projects, and Maintenance",
+                icon: Stack
+            },
+            {
+                title:"Effective and Efficient Development Process",
+                icon: Stack
+            }
+        ]
+    }
+]
+
+export const recommendedTabs = [
+    {
+        title:"InfraOps",
+        desc:"Dive in to set up your InfraOps effortlessly",
+        content:"Explore our knowledge bank",
+        subContent:"Tap into our extensive collection of resources and guides tailored to help you navigate around platform",
+        link:"/",
+        id:"infraops"
+    },
+    {
+        title:"DevOps",
+        desc:"Dive in to set up your InfraOps effortlessly",
+        content:"Explore our knowledge bank",
+        subContent:"Tap into our extensive collection of resources and guides tailored to help you navigate around platform",
+        link:"/",
+        id:"devops"
+    },
+    {
+        title:"Distribution",
+        desc:"Dive in to set up your InfraOps effortlessly",
+        content:"Explore our knowledge bank",
+        subContent:"Tap into our extensive collection of resources and guides tailored to help you navigate around platform",
+        link:"/",
+        id:"distribution"
+    }
+]
+
+export const ProductCards = ({type, title, desc, features, link, logo})=>{
+    return <Container>
+        <div className='px-12xl py-10xl w-full flex flex-row gap-10xl min-h-[512px]'>
+            <div className='flex flex-col gap-5xl flex-1'>
+                <div className='flex flex-col gap-4xl'>
+                    <div className='flex flex-col gap-md'>
+                        <h5 className='bodyXl-medium text-text-disabled'>{type}</h5>
+                        <h3 className='heading5xl-marketing text-text-default'>{title}</h3>
+                    </div>
+                    <p className='bodyXl-medium text-text-soft'>{desc}</p>
+                </div>
+                <ul className='flex flex-col gap-2xl'>
+                    {features?.map((f)=><li key={f.title} className='flex flex-row items-center gap-lg'>
+                        <span className='text-icon-primary'>
+                            <CheckCircleFill size={16}/>
+                        </span>
+                        <span>{f.title}</span>
+                    </li>)}
+                </ul>
+                <Button content={`Learn more about ${type}`} suffix={<ArrowRight/>} variant='primary-outline'/>
+            </div>
+            <Graph className="-mx-10xl px-10xl -my-8xl py-8xl flex-1">
+                <div className='grid grid-cols-1'>
+                    <GraphItem>
+                        <div className=" bg-surface-basic-subdued w-[512px] h-[512px] flex items-center justify-center">
+                            <img src={logo}/>
+                        </div>
+                    </GraphItem>
+                </div>
+            </Graph>
+        </div>
+    </Container>
+}
+
+export const Benefits = ()=>{
+    return <Container>
+    <div className="py-10xl px-12xl flex flex-col gap-10xl">
+        <div className="flex flex-col gap-3xl w-full text-center">
+            <h1 className="heading6xl-marketing text-text-default">
+                We understand because we've been there too
+            </h1>
+            <p className="bodyXl-medium text-text-soft">So, we meticulously engineered our platform to provide you the below benefits</p>
+        </div>
+        <Graph className="-m-10xl p-10xl">
+            <div className="grid grid-cols-2 gap-5xl">{benefitsItems.map((bi)=>(
+                <div key={bi.title} className="grid grid-rows-[96px_auto] gap-5xl">
+                    <GraphItem>
+                        <div className="bg-surface-basic-subdued p-2xl flex items-center justify-center heading3xl-marketing text-text-default h-full">{bi.title}</div>
+                    </GraphItem>
+                    <div className="grid grid-cols-2 gap-5xl">
+                       {bi.items.map((bii)=> <GraphItem key={bii.title}>
+                            <div className="h-[192px] bg-surface-basic-subdued flex flex-col gap-4xl p-4xl">
+                               <span className="rounded-full border-2 border-border-default w-fit p-2xl"><bii.icon size={32}/></span>
+                               <span className="bodyLg-medium text-text-default flex-1">{bii.title}</span>
+                            </div>
+                        </GraphItem>)}
+                    </div>
+                </div>))}
+            </div>
+        </Graph>
+    </div>
+    </Container>
+}
+
+
+export const RecommendedItemButton = ({
+  title,
+  desc,
+  onClick,
+  active: _,
+}) => {
+  return (
+    <div
+      onClick={onClick}
+      className="p-4xl bg-surface-basic-default flex flex-col  h-full gap-4xl"
+    >
+      <span className="heading2xl-marketing text-text-default">{title}</span>
+      <span className="bodyLg text-text-soft">{desc}</span>
+    </div>
+  );
+};
+
+
+export const RecommendedCard = ({
+  content,
+  subContent,
+  image,
+  link: _,
+}) => {
+  return (
+    <div className="bg-surface-basic-default flex flex-row gap-8xl h-[416px]">
+      <div className="flex flex-col p-5xl gap-5xl w-1/2">
+        <div className="flex flex-col gap-4xl">
+            <div className="flex flex-col gap-md">
+                <span className="bodyXl-medium text-text-disabled">Recommended resources</span>
+                <h3 className="heading5xl-marketing text-text-default line-clamp-2">{content}</h3>
+            </div>
+            <p className="bodyXl-medium text-text-soft line-clamp-3">
+                {subContent}
+            </p>
+        </div>
+        <Button
+          content="Explore Docs"
+          suffix={<ArrowRight />}
+          size="sm"
+          variant="basic"
+        />
+      </div>
+      <div className="w-1/2">
+        {image ? (
+          <Image src={image} alt="success-story" />
+        ) : (
+          <div className="w-full h-full" style={{background:"linear-gradient(180deg, #E4E4E7 0%, #F3F4F6 100%)"}}/>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export const RecommendedResources = ({
+  tabs,
+  activeTab,
+  onTabChange,
+  title,
+  tabContainerClassName,
+}) => {
+  return (
+   <Graph className="-m-10xl p-10xl">
+        <div className="grid grid-rows-[auto_160px] gap-5xl">
+            <GraphItem>
+            <RecommendedCard
+                {...(tabs.find((tb) => tb.id === activeTab) || tabs[0])}
+            />
+            </GraphItem>
+            <div
+            className={cn('grid grid-cols-3 gap-5xl', tabContainerClassName)}
+            >
+            {tabs.map((ss) => (
+                <GraphItem key={ss.subContent?.toString()}>
+                <RecommendedItemButton
+                    {...ss}
+                    onClick={() => onTabChange?.(ss)}
+                    active={activeTab === ss.id}
+                />
+                </GraphItem>
+            ))}
+            </div>
+        </div>
+    </Graph>
+  );
+};
+
+
+export const RecommendedSection = () => {
+  return (
+    <Container>
+        <div className="flex flex-col px-12xl py-11xl w-full">
+            <RecommendedResources tabs={recommendedTabs} />
+        </div>
+    </Container>
+  );
+};
+
+export default () => {
+  return (
+    <div>
+        <Container className='relative items-center'>
+            <div className="flex flex-col 2xl:px-12xl 2xl:py-10xl z-10 w-full items-center">
+                <div className="flex flex-col gap-6xl items-center text-center max-w-[870px]">
+                        <div className="flex flex-col gap-3xl">
+                            <h1 className="heading6xl-marketing text-text-default">
+                                Kloudlite - a One click console for your code to cloud journey
+                            </h1>
+                            <p className="bodyXl-medium text-text-soft">
+                                Upgrade your development and deployment by merging efficient DevOps, scalable cloud infrastructure, and continuous optimization into a seamless, productive workflow
+                            </p>
+                        </div>
+                        <div className="flex flex-row items-center gap-4xl">
+                            <Button
+                                content="Get started for free"
+                                variant="primary"
+                                size="lg"
+                            />
+                            <Button content="Schedule a demo" variant="basic" size="lg" />
+                        </div>
+                    </div>
+            </div>
+        </Container>
+        <Container className="justify-center pb-10xl">
+            <div className='product-graph'>
+                <img src={Cover}/>
+            </div>
+        </Container>
+
+        {products.map((p)=><ProductCards key={p.type} {...p}/>)}
+        <Benefits/>
+        <RecommendedSection/>
+        <Container className="flex-col">
+            <div className="flex flex-col 2xl:px-12xl">
+                <ReadyToOps />
+            </div>
+        </Container>
+    </div>
+
+);
+};

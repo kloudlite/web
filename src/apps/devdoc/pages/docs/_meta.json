@@ -1,0 +1,14 @@
+{
+    "devops":{
+        "title":"DevOps",
+        "type":"page"
+    },
+    "infraops":{
+        "title":"InfraOps",
+        "type":"page"
+    },
+    "distribution":{
+        "title":"Distribution",
+        "type":"page"
+    }
+}
