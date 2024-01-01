@@ -7,13 +7,13 @@ import MenuButton from './menu-button';
 import SearchBox from './search';
 import useMenu from '../utils/use-menu';
 import useSearch from '../utils/use-search';
-import useConfig from '../utils/use-config';
+import useConfig, { IConfig } from '../utils/use-config';
 
 const Header = ({
   navitems,
   activePath,
 }: {
-  navitems: PageItem[];
+  navitems: IConfig['headerPrimary'];
   activePath: PageItem[];
 }) => {
   const { config } = useConfig();
@@ -44,14 +44,14 @@ const Header = ({
 
   return (
     <div className="flex flex-row sticky top-0 left-0 right-0 p-2 bg-surface-basic-default border-b border-border-default min-h-[76px] z-50">
-      <nav className="w-full md:max-w-[1440px] flex-1 m-auto px-4xl flex flex-row items-center gap-6xl">
+      <nav className="w-full md:max-w-[1404px] flex-1 m-auto flex flex-row items-center gap-6xl">
         {config.logo}
         <ul className="hidden md:flex flex-1 flex-row items-center justify-end gap-4xl list-none">
-          {navitems?.map((ni) => (
-            <li key={ni.name} className="list-none">
+          {navitems?.items.map((ni) => (
+            <li key={ni.title} className="list-none">
               <HeaderLink
-                to={ni.route}
-                active={!!activePath.find((ap) => ap.route === ni.route)}
+                to={ni.to}
+                active={!!activePath.find((ap) => ap.route === ni.to)}
               >
                 {ni.title}
               </HeaderLink>

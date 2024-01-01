@@ -49,58 +49,48 @@ export const ProviderCard = ({ icon: Icon, label }) => {
 export const AdvantageSection = () => {
   const [selectedTab, setSelectedTab] = useState(consts.infraops.advantages[0].id);
 
-  const getTab = () => {
-    switch (selectedTab) {
-      case 'flexible':
-        return (
-          <img
-            alt="flexible"
-            src={FlexibleImage}
-            className="h-full w-full object-cover"
-          />
-        );
-      case 'cost-effective':
-        return (
-          <img
-            alt="cost-effective"
-            src={CostIllustration}
-            className="h-full w-full object-cover"
-          />
-        );
-      case 'simple-to-use':
-      default:
-        return (
-          <div className="p-8xl">
-            <div className="max-w-[878px] m-auto flex flex-row items-center justify-between">
-              <img
-                alt="simple-to-use"
-                src={NodePoolImg}
-                className="shadow-filter"
-              />
-              <span className="text-icon-disabled">
-                <ArrowRight size={32} />
-              </span>
-              <div className="rounded border border-border-default bg-surface-basic-default p-3xl shadow-filter">
-                <span className="">
-                  <GithubLogoFill size={60} />
-                </span>
-              </div>
-            </div>
-          </div>
-        );
-    }
-  };
+const getTab = () => {
+switch (selectedTab) {
+case 'flexible':
+return (
 
-  return (
-    <HorizontalTopTab
-      tabContainerClassName="grid grid-cols-3 gap-5xl pt-10xl px-10xl"
-      tabs={consts.infraops.advantages}
-      onTabChange={(item) => setSelectedTab(item.id)}
-      activeTab={selectedTab}
-      tab={getTab()}
-    />
-  );
-};
+<img
+  alt="flexible"
+  src={FlexibleImage}
+  className="h-full w-full object-cover"
+/>
+); case 'cost-effective': return (
+
+<img
+  alt="cost-effective"
+  src={CostIllustration}
+  className="h-full w-full object-cover"
+/>
+); case 'simple-to-use': default: return (<div className="p-8xl">
+  <div className="max-w-[878px] m-auto flex flex-row items-center justify-between">
+    <img alt="simple-to-use" src={NodePoolImg} className="shadow-filter" />
+    <span className="text-icon-disabled">
+      <ArrowRight size={32} />
+    </span>
+    <div className="rounded border border-border-default bg-surface-basic-default p-3xl shadow-filter">
+      <span className="">
+        <GithubLogoFill size={60} />
+      </span>
+    </div>
+  </div>
+</div>
+); } };
+
+return (
+
+<HorizontalTopTab
+  tabContainerClassName="grid grid-cols-3 gap-5xl pt-10xl px-10xl"
+  tabs={consts.infraops.advantages}
+  onTabChange={(item) => setSelectedTab(item.id)}
+  activeTab={selectedTab}
+  tab={getTab()}
+/>
+) }
 
 export const GetStartedSection = () => {
   const [selectedTab, setSelectedTab] = useState(consts.infraops.getstarted[0].id);
@@ -185,16 +175,16 @@ export const GetStartedSection = () => {
     }
   };
 
-  return (
-    <GetStarted
-      title="In 3 simple steps"
-      tabs={consts.infraops.getstarted}
-      onTabChange={(item) => setSelectedTab(item.id)}
-      tab={getTab()}
-      activeTab={selectedTab}
-    />
-  );
-};
+return (
+
+<GetStarted
+  title="In 3 simple steps"
+  tabs={consts.infraops.getstarted}
+  onTabChange={(item) => setSelectedTab(item.id)}
+  tab={getTab()}
+  activeTab={selectedTab}
+/>
+); };
 
 export const DiscoverSection = () => {
   return (
@@ -249,5 +239,6 @@ export default () => {
         <ReadyToOps />
       </div>
     </Container>
-  );
+
+);
 };

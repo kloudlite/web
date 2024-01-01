@@ -4,7 +4,7 @@ import {
   DiscordLogoFill,
   GithubLogoFill,
   LinkedinLogoFill,
-  TwitterLogoFill,
+  TwitterNewLogoFill,
 } from '@jengaicons/react';
 import { Button } from 'kl-design-system/atoms/button';
 import { cn } from './commons';
@@ -25,14 +25,14 @@ const BrandMenu = ({ className }: { className?: string }) => {
         <div className="flex flex-col items-start gap-lg">
           <BrandLogo size={brandIconSize} detailed />
           <span className="bodySm text-text-soft">
-            Lorem ipsum dolor sit amet. Et sunt itaque et repudiandae blanditiis
-            ut
+            Kloudlite is a NoOps platform engineering system built to increase
+            the productivity of developers & platform engineers.
           </span>
         </div>
         <div className="flex flex-row items-center gap-3xl text-text-soft">
           <GithubLogoFill size={socialIconSize} />
           <DiscordLogoFill size={socialIconSize} />
-          <TwitterLogoFill size={socialIconSize} />
+          <TwitterNewLogoFill size={socialIconSize} />
           <LinkedinLogoFill size={socialIconSize} />
         </div>
       </div>
@@ -62,15 +62,15 @@ export default {
         className: 'w-[47%] md:w-auto',
         items: [
           {
-            title: 'DevOps',
+            title: 'Kl-DevOps',
             to: 'devops',
           },
           {
-            title: 'InfraOps',
+            title: 'Kl-InfraOps',
             to: 'infraops',
           },
           {
-            title: 'Distribution',
+            title: 'Kl-Distribution',
             to: 'distribution',
           },
         ],
@@ -157,15 +157,31 @@ export default {
     feedbackLabels: 'bug',
     linkTitle: 'Question? Give us feedback →',
   },
+  headerPrimary: {
+    items: [
+      {
+        title: 'Devops',
+        to: '/docs/devops',
+      },
+      {
+        title: 'Infraops',
+        to: '/docs/infraops',
+      },
+      {
+        title: 'Distribution',
+        to: '/docs/distribution',
+      },
+    ],
+  },
   headerSecondary: {
     items: [
       {
         title: 'Product',
-        to: '/',
+        to: 'product',
       },
       {
         title: 'Docs',
-        to: 'devops',
+        to: 'docs',
       },
       {
         title: 'Pricing',
@@ -173,7 +189,7 @@ export default {
       },
       {
         title: 'Help',
-        to: 'help',
+        to: 'help-and-support',
       },
       {
         title: 'Contact us',

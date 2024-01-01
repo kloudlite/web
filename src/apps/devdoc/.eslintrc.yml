@@ -8,6 +8,7 @@ extends:
   - plugin:@typescript-eslint/recommended
   - plugin:import/typescript
   - next/core-web-vitals
+  - plugin:mdx/recommended
 
 plugins:
   - import
@@ -32,6 +33,7 @@ env:
   es2021: true
  
 settings:
+  mdx/code-blocks: true
   import/resolver:
     node:  
       extensions: [.js, .jsx, .ts, .tsx, .json]

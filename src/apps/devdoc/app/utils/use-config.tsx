@@ -31,6 +31,13 @@ export interface IConfig {
     linkTitle: string;
   };
   readonly pageOpts?: PageOpts;
+  headerPrimary?: {
+    items: {
+      title: string;
+      to: string;
+    }[];
+    extra?: ReactNode;
+  };
   headerSecondary?: {
     items: {
       title: string;

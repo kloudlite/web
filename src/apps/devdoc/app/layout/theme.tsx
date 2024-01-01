@@ -48,16 +48,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
   const { locale = DEFAULT_LOCALE, defaultLocale } = useRouter();
   const fsPath = useFSRoute();
 
-  const {
-    flatDocsDirectories,
-    activeIndex,
-    topLevelNavbarItems,
-    activePath,
-    activeType,
-    activeThemeContext,
-    docsDirectories,
-    directories,
-  } = useMemo(
+  const pageData = useMemo(
     () =>
       normalizePages({
         list: pageMap,
@@ -68,7 +59,19 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
     [pageMap, locale, defaultLocale, fsPath]
   );
 
+  const {
+    flatDocsDirectories,
+    activeIndex,
+    activePath,
+    activeType,
+    activeThemeContext,
+    docsDirectories,
+    directories,
+  } = pageData;
+
   const hideSidebar = activeType === 'page';
+
+  console.log(activePath);
 
   return (
     <div className="bg-surface-basic-subdued min-h-screen antialiased">
@@ -93,7 +96,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
       </Head>
       <ActiveAnchorProvider>
         {activeThemeContext.layout !== 'raw' ? (
-          <Header navitems={topLevelNavbarItems} activePath={activePath} />
+          <Header navitems={config?.headerPrimary} activePath={activePath} />
         ) : (
           <HeaderSecondary {...config?.headerSecondary} />
         )}
