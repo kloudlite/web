@@ -10,6 +10,7 @@ import {
 } from 'react';
 
 export interface IConfig {
+  siteTitle?:string;
   logo?: ReactNode;
   footer?:
     | {
