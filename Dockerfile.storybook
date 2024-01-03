@@ -1,0 +1,18 @@
+FROM node:20.8.1-alpine as base
+# RUN apk add g++ make py3-pip
+RUN npm i -g pnpm
+WORKDIR  /app
+
+
+# design system
+COPY ./src/design-system/ ./src/design-system/
+WORKDIR /app/src/design-system
+RUN pnpm i -p
+RUN pnpm build-storybook
+
+
+FROM node:20.8.1-alpine
+WORKDIR /app
+COPY --from=base ./src/design-system/storybook-dist/storybook ./public
+
+ENTRYPOINT npm run start
