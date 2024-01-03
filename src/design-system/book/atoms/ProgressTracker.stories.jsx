@@ -7,34 +7,60 @@ export default {
   argTypes: {},
 };
 
+const ProgressTrackerHook = () => {
+  const items = [
+    {
+      item: {
+        active: true,
+        completed: false,
+        label: 'Item-1',
+      },
+      value: 'item-1',
+    },
+    {
+      item: {
+        active: false,
+        completed: false,
+        label: 'Item-2',
+      },
+      value: 'item-2',
+    },
+    {
+      item: {
+        active: false,
+        completed: false,
+        label: 'Item-3',
+      },
+      value: 'item-3',
+    },
+    {
+      item: {
+        active: false,
+        completed: false,
+        label: 'Item-4',
+      },
+      value: 'item-4',
+    },
+    {
+      item: {
+        active: false,
+        completed: false,
+        label: 'Item-5',
+      },
+      value: 'item-5',
+    },
+  ];
+  return (
+    <ProgressTracker.Root items={items}>
+      {(item) => (
+        <ProgressTracker.Item active={item.active} completed={item.completed}>
+          {item.label}
+        </ProgressTracker.Item>
+      )}
+    </ProgressTracker.Root>
+  );
+};
+
 export const DeafultProgressTracker = {
-  args: {
-    items: [
-      {
-        label: 'Item 1',
-        active: true,
-        key: 1,
-      },
-      {
-        label: 'Item 2',
-        active: true,
-        key: 2,
-      },
-      {
-        label: 'Item 3',
-        active: false,
-        key: 3,
-      },
-      {
-        label: 'Item 4',
-        active: false,
-        key: 4,
-      },
-      {
-        label: 'Item 5',
-        active: false,
-        key: 5,
-      },
-    ],
-  },
+  render: () => <ProgressTrackerHook />,
 };
