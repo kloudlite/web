@@ -5,7 +5,7 @@ import type {
   IMenuItemRender,
   ISelect,
 } from '@oshq/react-select';
-import { ChevronUpDown } from '@jengaicons/react';
+import { ChevronUpDown, CircleNotch } from '@jengaicons/react';
 import { cn } from '../utils';
 import AnimateHide from './animate-hide';
 
@@ -27,13 +27,17 @@ const menuItemRender = (props: IMenuItemRender) => {
 };
 
 const groupRender = ({ label }: IGroupRender) => {
-  return null;
   return <div className="bodySm-medium text-text-disabled">{label}</div>;
 };
 
-const suffixRender = () => {
+const suffixRender = ({ loading }: { loading: boolean }) => {
   return (
-    <div className="px-lg">
+    <div className="px-lg flex flex-row items-center gap-lg">
+      {loading && (
+        <span className="animate-spin">
+          <CircleNotch size={16} />
+        </span>
+      )}
       <ChevronUpDown size={16} color="currentColor" />
     </div>
   );
@@ -44,6 +48,7 @@ const Select = <T, U extends boolean | undefined = undefined>(
     label?: ReactNode;
     size?: 'md' | 'lg';
     message?: ReactNode;
+    loading?: boolean;
     error?: boolean;
   }
 ) => {
@@ -60,6 +65,7 @@ const Select = <T, U extends boolean | undefined = undefined>(
     valueRender,
     creatable,
     multiple,
+    loading,
   } = props;
 
   return (
@@ -91,7 +97,7 @@ const Select = <T, U extends boolean | undefined = undefined>(
           options={options}
           placeholder={placeholder}
           showclear={false}
-          suffixRender={suffixRender}
+          suffixRender={() => suffixRender({ loading: loading || false })}
           onChange={onChange}
           groupRender={groupRender}
           disabled={disabled}

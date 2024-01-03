@@ -39,6 +39,8 @@ function GitTimestamp({ timestamp }: { timestamp: Date }) {
 
 const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
   const { title, frontMatter, pageMap, headings } = pageOpts;
+  console.log(pageOpts);
+
   const { state } = useMenu();
 
   useEffect(() => {
@@ -76,7 +78,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
   return (
     <div className="bg-surface-basic-subdued min-h-screen antialiased">
       <Head>
-        <title>{title}</title>
+        <title>{title === 'Index' ? config.siteTitle : title}</title>
         <meta name="og:image" content={frontMatter.image} />
         <link rel="shortcut icon" href="/favicon.ico" />
         <link

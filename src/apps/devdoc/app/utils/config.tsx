@@ -44,6 +44,7 @@ const BrandMenu = ({ className }: { className?: string }) => {
 };
 
 export default {
+  siteTitle: 'Kloudlite',
   logo: (
     <Link href="/">
       <div className="hidden md:block md:w-[284px]">

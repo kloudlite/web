@@ -47,9 +47,9 @@ const IconButton = forwardRef<HTMLButtonElement, IButtonGroupIconButton>(
 interface IButtonGroup {
   children: ReactElement | ReactElement[];
   value: string;
-  selectable: boolean;
-  onValueChange: (value: string) => void;
-  onClick: (value: string) => void;
+  selectable?: boolean;
+  onValueChange?: (value: string) => void;
+  onClick?: (value: string) => void;
 }
 
 const Root = ({
@@ -74,6 +74,8 @@ const Root = ({
       type="single"
     >
       {React.Children.map(children, (child) => {
+        console.log(child);
+
         return cloneElement(child, {
           selected: child.props.value === v && !!selectable,
         });
