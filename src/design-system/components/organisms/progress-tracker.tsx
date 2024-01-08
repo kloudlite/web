@@ -38,7 +38,7 @@ export type ProgressItemProps<I = any, V = any> = {
 
 interface IProgressTracker<I = any, V = any> {
   children: (item: IProgressTrackerItem<I>) => ReactNode;
-  onClick: (item: V) => void;
+  onClick?: (item: V) => void;
   items: {
     item: IProgressTrackerItem<I>;
     value: V;
