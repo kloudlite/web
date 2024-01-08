@@ -46,6 +46,7 @@ export interface IInputRow {
   onClick?: MouseEventHandler<HTMLTextAreaElement>;
   onMouseDown?: MouseEventHandler<HTMLTextAreaElement>;
   onPointerDown?: PointerEventHandler<HTMLTextAreaElement>;
+  autoFocus?: boolean;
 }
 
 interface INumberInput extends IInputRow {
@@ -111,6 +112,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
       id,
       tabIndex,
       shimmerLoading,
+      autoFocus,
       ...extraProps
     } = props;
     const [t, setT] = useState(type || 'text');
@@ -119,7 +121,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
 
     const containerRef = useRef<HTMLDivElement>(null);
     return (
-      <div className={cn('flex flex-col')}>
+      <div className={cn('flex flex-col h-full')}>
         {(label || extra) && (
           <div
             className={cn('flex items-center justify-between gap-md', {
@@ -179,12 +181,13 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
                 }
               : {})}
             name={name}
+            autoFocus={autoFocus}
             type={t}
             placeholder={placeholder}
             id={id}
             tabIndex={tabIndex}
             className={cn(
-              'outline-none flex-1 w-full',
+              'outline-none flex-1 w-full h-full',
               'rounded bodyMd bg-transparent',
               {
                 'text-text-critical placeholder:text-text-critical/70 bgh':

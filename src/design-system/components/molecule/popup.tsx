@@ -119,7 +119,7 @@ const PopupRoot = ({
                   'flex flex-col',
                   'z-[99999999] outline-none transform overflow-hidden md:rounded bg-surface-basic-default shadow-modal',
                   'fixed top-1/2 left-1/2',
-                  'w-full h-full md:!h-auto md:!w-[612px]',
+                  'w-full h-full md:!h-auto md:w-[612px]',
                   'border border-border-default',
                   className
                 )}
