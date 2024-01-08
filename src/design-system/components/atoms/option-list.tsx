@@ -35,6 +35,8 @@ interface IOptionMenuContent extends Omit<IBase, 'onClick'> {
   sideOffset?: number;
   open?: boolean;
   align?: 'start' | 'center' | 'end';
+  side?: 'top' | 'right' | 'bottom' | 'left';
+  alignOffset?: number;
 }
 
 interface IOptionMenuItem extends IBase {
@@ -116,7 +118,16 @@ const OptionMenuContent = forwardRef<
   IOptionMenuContent
 >(
   (
-    { className, sideOffset = 4, children, open, align = 'end', ...props },
+    {
+      className,
+      sideOffset = 4,
+      children,
+      open,
+      align = 'end',
+      alignOffset,
+      side,
+      ...props
+    },
     ref
   ) => (
     <AnimatePresence>
@@ -126,6 +137,8 @@ const OptionMenuContent = forwardRef<
             ref={ref}
             sideOffset={sideOffset}
             align={align}
+            side={side}
+            alignOffset={alignOffset}
             loop
             forceMount
             asChild
