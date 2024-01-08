@@ -12,13 +12,13 @@ const PaginationHook = ({}) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
 
-  const onPageChanged = (e) => {
+  const onPageChanged = (e: number) => {
     setTimeout(() => {
       setCurrentPage(e);
     }, 500);
   };
 
-  const onItemsPerPageChanged = (e) => {
+  const onItemsPerPageChanged = (e: number) => {
     setItemsPerPage(e);
   };
 

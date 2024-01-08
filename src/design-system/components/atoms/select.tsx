@@ -5,7 +5,7 @@ import type {
   IMenuItemRender,
   ISelect,
 } from '@oshq/react-select';
-import { ChevronUpDown, CircleNotch } from '@jengaicons/react';
+import { ChevronUpDown, CircleNotch, X } from '@jengaicons/react';
 import { cn } from '../utils';
 import AnimateHide from './animate-hide';
 
@@ -27,18 +27,34 @@ const menuItemRender = (props: IMenuItemRender) => {
 };
 
 const groupRender = ({ label }: IGroupRender) => {
-  return <div className="bodySm-medium text-text-disabled">{label}</div>;
+  return (
+    <div className="bodySm-medium text-text-disabled px-md py-sm">{label}</div>
+  );
 };
 
-const suffixRender = ({ loading }: { loading: boolean }) => {
+const suffixRender = ({
+  loading,
+  showclear,
+  clear,
+}: {
+  loading: boolean;
+  clear: (() => void) | undefined;
+  showclear: boolean | undefined;
+}) => {
+  const iconSize = 16;
   return (
     <div className="px-lg flex flex-row items-center gap-lg">
       {loading && (
         <span className="animate-spin">
-          <CircleNotch size={16} />
+          <CircleNotch size={iconSize} />
         </span>
       )}
-      <ChevronUpDown size={16} color="currentColor" />
+      <ChevronUpDown size={iconSize} color="currentColor" />
+      {showclear && (
+        <span onClick={clear} className="cursor-pointer">
+          <X size={iconSize} color="currentColor" />
+        </span>
+      )}
     </div>
   );
 };
@@ -66,6 +82,11 @@ const Select = <T, U extends boolean | undefined = undefined>(
     creatable,
     multiple,
     loading,
+    onSearch,
+    searchable,
+    showclear,
+    noOptionMessage,
+    open,
   } = props;
 
   return (
@@ -91,19 +112,25 @@ const Select = <T, U extends boolean | undefined = undefined>(
               focus: `${c} bg-surface-basic-default border-border-default text-text-default ring-offset-1 ring-2 ring-border-focus`,
             };
           }}
+          open={open}
           menuClass="shadow-popover bg-surface-basic-default rounded py-lg"
           menuItemRender={menuItemRender}
           value={value}
           options={options}
           placeholder={placeholder}
-          showclear={false}
-          suffixRender={() => suffixRender({ loading: loading || false })}
+          showclear={showclear}
+          suffixRender={({ clear, showclear }) =>
+            suffixRender({ loading: loading || false, clear, showclear })
+          }
           onChange={onChange}
           groupRender={groupRender}
           disabled={disabled}
           valueRender={valueRender}
           creatable={creatable}
           multiple={multiple}
+          onSearch={onSearch}
+          searchable={searchable}
+          noOptionMessage={noOptionMessage}
         />
       </div>
       <AnimateHide show={!!message}>
