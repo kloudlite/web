@@ -47,11 +47,10 @@ select{
     pointer-events: all;
 }
 
-/* @media screen and (min-width: 960px) {
-    html {
-      min-width: 100vw;
-      margin-left: 0;
-      margin-right: 0;
+@media screen and (min-width: 960px) {
+    body {
+      width: 100vw;
+      margin-inline: 0px !important;
       overflow-x: hidden;
     }
-  } */
+  }

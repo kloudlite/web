@@ -47,6 +47,7 @@ export interface IInputRow {
   onMouseDown?: MouseEventHandler<HTMLTextAreaElement>;
   onPointerDown?: PointerEventHandler<HTMLTextAreaElement>;
   autoFocus?: boolean;
+  focusRing?: boolean;
 }
 
 interface INumberInput extends IInputRow {
@@ -113,6 +114,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
       tabIndex,
       shimmerLoading,
       autoFocus,
+      focusRing,
       ...extraProps
     } = props;
     const [t, setT] = useState(type || 'text');
@@ -213,10 +215,14 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
               }
             }}
             onFocus={(e: any) => {
-              containerRef.current?.classList.add(
-                'ring-2',
-                'ring-border-focus'
-              );
+              if (focusRing) {
+                console.log('here', placeholder);
+
+                containerRef.current?.classList.add(
+                  'ring-2',
+                  'ring-border-focus'
+                );
+              }
               onFocus(e);
             }}
             disabled={disabled}
