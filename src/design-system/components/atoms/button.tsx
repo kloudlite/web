@@ -302,6 +302,7 @@ export const ButtonBase = React.forwardRef<
               variant === 'primary-plain' ||
               variant === 'critical-plain' ||
               variant === 'secondary-plain') && {
+              'px-md py-sm': size === 'sm',
               'py-sm px-md': size === 'md',
               'py-md px-lg': size === 'lg',
             }),
