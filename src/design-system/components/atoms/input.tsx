@@ -28,6 +28,7 @@ export interface IInputRow {
   value?: string | number;
   extra?: JSX.Element;
   className?: string;
+  containerClassName?: string;
   error?: boolean;
   disabled?: boolean;
   label?: ReactNode;
@@ -93,6 +94,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
       component = 'input',
       extra,
       className = '',
+      containerClassName = '',
       error = false,
       disabled = false,
       label,
@@ -123,7 +125,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
 
     const containerRef = useRef<HTMLDivElement>(null);
     return (
-      <div className={cn('flex flex-col h-full')}>
+      <div className={cn('flex flex-col', containerClassName)}>
         {(label || extra) && (
           <div
             className={cn('flex items-center justify-between gap-md', {
