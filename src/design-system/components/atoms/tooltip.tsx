@@ -18,6 +18,8 @@ interface ITooltip {
   content: ReactNode;
   open?: boolean;
   offset?: number;
+  side?: 'right' | 'top' | 'bottom' | 'left';
+  align?: 'center' | 'start' | 'end';
 }
 
 export const Root = ({
@@ -25,6 +27,8 @@ export const Root = ({
   content,
   open = false,
   offset = 5,
+  side,
+  align,
 }: ITooltip) => {
   const [_open, _setOpen] = useState(false);
   useEffect(() => {
@@ -49,8 +53,8 @@ export const Root = ({
             <TooltipPrimitive.Content
               asChild
               sideOffset={offset}
-              side="right"
-              align="start"
+              side={side || 'right'}
+              align={align || 'start'}
               alignOffset={0}
             >
               <motion.div
