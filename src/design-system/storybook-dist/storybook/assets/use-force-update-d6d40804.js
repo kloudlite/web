@@ -1,1 +1,0 @@
-import{r}from"./index-76fb7be0.js";import{u as s,f as u}from"./motion-e61dcc0d.js";function c(){const e=r.useRef(!1);return s(()=>(e.current=!0,()=>{e.current=!1}),[]),e}function i(){const e=c(),[t,n]=r.useState(0),o=r.useCallback(()=>{e.current&&n(t+1)},[t]);return[r.useCallback(()=>u.postRender(o),[o]),t]}export{c as a,i as u};
