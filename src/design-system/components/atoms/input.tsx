@@ -28,6 +28,7 @@ export interface IInputRow {
   value?: string | number;
   extra?: JSX.Element;
   className?: string;
+  containerClassName?: string;
   error?: boolean;
   disabled?: boolean;
   label?: ReactNode;
@@ -47,6 +48,7 @@ export interface IInputRow {
   onMouseDown?: MouseEventHandler<HTMLTextAreaElement>;
   onPointerDown?: PointerEventHandler<HTMLTextAreaElement>;
   autoFocus?: boolean;
+  focusRing?: boolean;
 }
 
 interface INumberInput extends IInputRow {
@@ -92,6 +94,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
       component = 'input',
       extra,
       className = '',
+      containerClassName = '',
       error = false,
       disabled = false,
       label,
@@ -113,6 +116,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
       tabIndex,
       shimmerLoading,
       autoFocus,
+      focusRing,
       ...extraProps
     } = props;
     const [t, setT] = useState(type || 'text');
@@ -121,7 +125,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
 
     const containerRef = useRef<HTMLDivElement>(null);
     return (
-      <div className={cn('flex flex-col h-full')}>
+      <div className={cn('flex flex-col', containerClassName)}>
         {(label || extra) && (
           <div
             className={cn('flex items-center justify-between gap-md', {
@@ -213,10 +217,14 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
               }
             }}
             onFocus={(e: any) => {
-              containerRef.current?.classList.add(
-                'ring-2',
-                'ring-border-focus'
-              );
+              if (focusRing) {
+                console.log('here', placeholder);
+
+                containerRef.current?.classList.add(
+                  'ring-2',
+                  'ring-border-focus'
+                );
+              }
               onFocus(e);
             }}
             disabled={disabled}

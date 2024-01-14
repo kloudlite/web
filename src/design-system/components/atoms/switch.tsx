@@ -1,4 +1,4 @@
-import { useState, useEffect, useId, ReactNode } from 'react';
+import { useId, ReactNode } from 'react';
 import * as SwitchPrimitive from '@radix-ui/react-switch';
 import { cn } from '../utils';
 
@@ -15,12 +15,7 @@ export const Switch = ({
   disabled = false,
   label,
 }: ISwitch) => {
-  const [checked, setChecked] = useState(c);
   const id = useId();
-
-  useEffect(() => {
-    if (onChange) onChange(checked);
-  }, [checked]);
 
   return (
     <div className="flex gap-lg items-center w-fit">
@@ -43,9 +38,8 @@ export const Switch = ({
         )}
         id={id}
         disabled={disabled}
-        onCheckedChange={(e) => {
-          setChecked(e);
-        }}
+        checked={c}
+        onCheckedChange={onChange}
       >
         <SwitchPrimitive.Thumb
           className={cn(

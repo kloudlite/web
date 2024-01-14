@@ -266,10 +266,12 @@ const OptionMenuTextInputItem = forwardRef<
           autoComplete="off"
           onChange={onChange}
           onFocus={(event) => {
-            event.target?.parentElement?.classList?.add(
-              'ring-2',
-              'ring-border-focus'
-            );
+            if (props.focusRing) {
+              event.target?.parentElement?.classList?.add(
+                'ring-2',
+                'ring-border-focus'
+              );
+            }
           }}
           onBlur={(e) => {
             e.target?.parentElement?.classList?.remove(

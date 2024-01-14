@@ -87,7 +87,6 @@ const TabBase = ({
         }
       )}
     >
-      {variant === 'plain' && <div className="h-md bg-none w-full z-0" />}
       <RovingFocusGroup.Item
         asChild
         focusable
@@ -104,7 +103,7 @@ const TabBase = ({
           prefetch="intent"
           onClick={onClick}
           className={cn(
-            'z-10 tab-item gap-lg outline-none flex flex-row items-center w-max',
+            'relative z-10 tab-item outline-none',
             'ring-offset-0 focus-visible:ring-2 focus-visible:ring-border-focus',
             // 'focus-visible:shadow-focus',
             {
@@ -119,19 +118,29 @@ const TabBase = ({
             }
           )}
         >
-          {!!prefix &&
-            React.cloneElement(prefix, { size: 16, color: 'currentColor' })}
-          {typeof label === 'function' ? label(active) : label}
+          {variant === 'plain' && <div className="h-md bg-none w-full z-0" />}
+          <div className="flex flex-row items-center gap-lg">
+            {!!prefix &&
+              React.cloneElement(prefix, { size: 16, color: 'currentColor' })}
+            {typeof label === 'function' ? label(active) : label}
+          </div>
+          {active && variant === 'plain' && (
+            <motion.div
+              layoutId="underline"
+              className={cn(
+                'h-md bg-surface-primary-pressed z-10 absolute bottom-0 w-full'
+              )}
+            />
+          )}
+          {variant === 'plain' && hoverd && (
+            <motion.div
+              layoutId="hoverd-underline"
+              className="h-md bg-border-default group-active:bg-border-tertiary bg-none absolute bottom-0 w-full z-0"
+            />
+          )}
+          {variant === 'plain' && <div className="h-md bg-none w-full z-0" />}
         </Component>
       </RovingFocusGroup.Item>
-      {active && variant === 'plain' && (
-        <motion.div
-          layoutId="underline"
-          className={cn(
-            'h-md bg-surface-primary-pressed z-10 absolute bottom-0 w-full'
-          )}
-        />
-      )}
       {variant === 'filled' && active && (
         <motion.span
           layoutId="bubble"
@@ -139,14 +148,6 @@ const TabBase = ({
           transition={{ type: 'spring', bounce: 0.1, duration: 0.3 }}
         />
       )}
-      {variant === 'plain' && hoverd && (
-        <motion.div
-          layoutId="hoverd-underline"
-          className="h-md bg-border-default group-active:bg-border-tertiary bg-none absolute bottom-0 w-full z-0"
-        />
-      )}
-
-      {variant === 'plain' && <div className="h-md bg-none w-full z-0" />}
     </div>
   );
 };

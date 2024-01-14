@@ -19,7 +19,7 @@ const Profile = forwardRef<HTMLButtonElement, IProfile>(
             'flex py-sm px-md gap-lg items-center ring-offset-1 outline-none transition-all rounded focus-visible:ring-2 focus-visible:ring-border-focus'
           )}
         >
-          <AvatarBase color={color} size={size} />
+          <AvatarBase color={color} size={size} image={props.image} />
           <div className=" flex-col items-start hidden md:flex">
             <div className="bodyMd-medium gap-y-md pulsable">{name}</div>
             {subtitle && (
