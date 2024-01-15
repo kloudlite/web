@@ -1,6 +1,7 @@
 import { ReactNode, useEffect, useState } from 'react';
 import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 import { AnimatePresence, motion } from 'framer-motion';
+import { cn } from '../utils';
 
 interface ITooltipProvider {
   children: ReactNode;
@@ -20,6 +21,7 @@ interface ITooltip {
   offset?: number;
   side?: 'right' | 'top' | 'bottom' | 'left';
   align?: 'center' | 'start' | 'end';
+  className?: string;
 }
 
 export const Root = ({
@@ -29,6 +31,7 @@ export const Root = ({
   offset = 5,
   side,
   align,
+  className,
 }: ITooltip) => {
   const [_open, _setOpen] = useState(false);
   useEffect(() => {
@@ -63,7 +66,10 @@ export const Root = ({
                 animate={{ y: 0, opacity: 1 }}
                 exit={{ y: -2, opacity: 0 }}
                 transition={{ duration: 0.3, ease: 'anticipate' }}
-                className="z-[99999999999] bodySm-default text-text-default px-lg py-md shadow-popover bg-surface-basic-default rounded max-w-[200px]"
+                className={cn(
+                  'z-[99999999999] bodySm-default text-text-default px-lg py-md shadow-popover bg-surface-basic-default rounded max-w-[200px] overflow-hidden',
+                  className
+                )}
               >
                 {content}
               </motion.div>
