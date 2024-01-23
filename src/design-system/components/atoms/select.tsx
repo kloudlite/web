@@ -96,6 +96,7 @@ const Select = <T, U extends boolean | undefined = undefined>(
     showclear,
     noOptionMessage,
     open,
+    disableWhileLoading,
   } = props;
 
   return (
@@ -159,6 +160,7 @@ const Select = <T, U extends boolean | undefined = undefined>(
           onSearch={onSearch}
           searchable={searchable}
           noOptionMessage={noOptionMessage}
+          disableWhileLoading={disableWhileLoading}
         />
       </div>
       <AnimateHide show={!!message}>
