@@ -208,10 +208,15 @@ export const useAppState = () => {
     setState,
     getContainer,
     setContainer,
-    activeContIndex,
+    activeContIndex: activeContIndex || 0,
     services: app.spec.services || [],
     setServices,
   };
+};
+
+export const clearAppState = () => {
+  if (typeof window === 'undefined') return;
+  sessionStorage.removeItem('state');
 };
 
 export const AppContextProvider = ({

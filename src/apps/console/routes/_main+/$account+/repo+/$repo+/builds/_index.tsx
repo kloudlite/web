@@ -1,7 +1,6 @@
 import { defer } from '@remix-run/node';
-import { useLoaderData } from '@remix-run/react';
+import { Link, useLoaderData } from '@remix-run/react';
 import { useState } from 'react';
-import { Button } from '~/components/atoms/button';
 import { LoadingComp, pWrapper } from '~/console/components/loading-component';
 import Wrapper from '~/console/components/wrapper';
 import { GQLServerHandler } from '~/console/server/gql/saved-queries';
@@ -9,7 +8,8 @@ import { ensureAccountSet } from '~/console/server/utils/auth-utils';
 import { getPagination, getSearch } from '~/console/server/utils/common';
 import logger from '~/root/lib/client/helpers/log';
 import { IRemixCtx } from '~/root/lib/types/common';
-import SecondarySubHeader from '~/console/components/secondary-sub-header';
+import { Plus } from '@jengaicons/react';
+import { Button } from '~/components/atoms/button';
 import BuildResources from './build-resources';
 import HandleBuild from './handle-builds';
 import Tools from './tools';
@@ -39,6 +39,7 @@ export const loader = async (ctx: IRemixCtx) => {
 const Builds = () => {
   const [visible, setVisible] = useState(false);
   const { promise } = useLoaderData<typeof loader>();
+
   return (
     <>
       <LoadingComp data={promise}>
@@ -49,14 +50,30 @@ const Builds = () => {
             <Wrapper
               header={{
                 title: 'Build Integrations',
+                action: builds.length > 0 && (
+                  <Button
+                    content="Create build"
+                    variant="primary"
+                    to="../new-build"
+                    LinkComponent={Link}
+                    prefix={<Plus />}
+                  />
+                ),
               }}
               empty={{
                 is: builds.length === 0,
-                title: 'This is where you’ll manage your Build Configs.',
+                title: 'This is where you’ll manage your Build Integrations.',
+                action: {
+                  content: 'create build',
+
+                  to: '../new-build',
+                  LinkComponent: Link,
+                  prefix: <Plus />,
+                },
                 content: (
                   <p>
-                    You can create a new Build Config and manage the listed
-                    Build Configs.
+                    You can create a new Build Integration and manage the listed
+                    Build Integrations.
                   </p>
                 ),
               }}

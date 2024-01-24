@@ -13,9 +13,11 @@ import { usePagination } from '~/components/molecule/pagination';
 import { cn } from '~/components/utils';
 import List from '~/console/components/list';
 import NoResultsFound from '~/console/components/no-results-found';
-import { TitleBox } from '~/console/components/raw-wrapper';
 import { useAppState } from '~/console/page-components/app-states';
 import { InfoLabel } from '~/console/components/commons';
+import { useUnsavedChanges } from '~/root/lib/client/hooks/use-unsaved-changes';
+import useForm from '~/root/lib/client/hooks/use-form';
+import Yup from '~/root/lib/server/helpers/yup';
 import { FadeIn, parseValue } from '../../../../../../page-components/util';
 
 interface IExposedPorts {
@@ -46,7 +48,7 @@ const ExposedPortList = ({
         <List.Root
           className="min-h-[347px] !shadow-none"
           header={
-            <div className="flex flex-row items-center">
+            <div className="flex flex-row items-center justify-between w-full">
               <div className="text-text-strong bodyMd flex-1">
                 Exposed ports
               </div>
@@ -129,11 +131,23 @@ const ExposedPortList = ({
 };
 
 export const ExposedPorts = () => {
-  const [port, setPort] = useState<number>(3000);
-  const [targetPort, setTargetPort] = useState<number>(3000);
+  const [port, setPort] = useState<number | string>('');
+  const [targetPort, setTargetPort] = useState<number | string>('');
   const [portError, setPortError] = useState<string>('');
 
   const { services, setServices } = useAppState();
+
+  // for updating
+  const { hasChanges } = useUnsavedChanges();
+
+  // for updating
+  useEffect(() => {
+    if (!hasChanges) {
+      setPort('');
+      setTargetPort('');
+      setPortError('');
+    }
+  }, [hasChanges]);
 
   return (
     <>
@@ -141,6 +155,8 @@ export const ExposedPorts = () => {
         <div className="flex flex-row gap-3xl items-start">
           <div className="flex-1">
             <NumberInput
+              min={0}
+              max={65534}
               label={
                 <InfoLabel label="Expose Port" info="info about expose port" />
               }
@@ -156,7 +172,7 @@ export const ExposedPorts = () => {
           <div className="flex-1">
             <NumberInput
               min={0}
-              max={65536}
+              max={65534}
               label={
                 <InfoLabel
                   info="info about container port"
@@ -182,23 +198,23 @@ export const ExposedPorts = () => {
             variant="basic"
             disabled={!port || !targetPort}
             onClick={() => {
-              if (
-                services?.find(
-                  (ep) => ep.targetPort && ep.targetPort === targetPort
-                )
-              ) {
+              console.log('here');
+
+              if (services?.find((ep) => ep.port && ep.port === port)) {
                 setPortError('Port is already exposed.');
               } else {
-                setServices((prev) => [
-                  ...prev,
-                  {
-                    name: `port-${port}`,
-                    port,
-                    targetPort,
-                  },
-                ]);
-                setPort(3000);
-                setTargetPort(3000);
+                if (typeof port === 'number' && typeof targetPort === 'number')
+                  setServices((prev) => [
+                    ...prev,
+                    {
+                      name: `port-${port}`,
+                      port,
+                      targetPort,
+                    },
+                  ]);
+                setPort('');
+                setTargetPort('');
+                setPortError('');
               }
             }}
           />
@@ -218,6 +234,7 @@ export const ExposedPorts = () => {
 
 const AppNetwork = () => {
   const { setPage, markPageAsCompleted } = useAppState();
+  console.log('networkd');
   return (
     <FadeIn className="py-3xl">
       <div className="bodyMd text-text-soft">

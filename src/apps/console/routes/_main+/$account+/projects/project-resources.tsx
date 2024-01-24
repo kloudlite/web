@@ -3,14 +3,16 @@ import { Link, useParams } from '@remix-run/react';
 import { generateKey, titleCase } from '~/components/utils';
 import ConsoleAvatar from '~/console/components/console-avatar';
 import {
-  ListBody,
   ListItem,
   ListTitle,
+  listClass,
+  listFlex,
 } from '~/console/components/console-list-components';
 import Grid from '~/console/components/grid';
 import List from '~/console/components/list';
 import ListGridView from '~/console/components/list-grid-view';
 import ResourceExtraAction from '~/console/components/resource-extra-action';
+import { listStatus } from '~/console/components/sync-status';
 import { IProjects } from '~/console/server/gql/queries/project-queries';
 import {
   ExtractNodeType,
@@ -26,7 +28,6 @@ const parseItem = (item: ExtractNodeType<IProjects>) => {
   return {
     name: item.displayName,
     id: parseName(item),
-    cluster: item.clusterName,
     path: `/projects/${parseName(item)}`,
     updateInfo: {
       author: `Updated by ${titleCase(parseUpdateOrCreatedBy(item))}`,
@@ -45,9 +46,7 @@ const ExtraButton = ({ project }: { project: BaseType }) => {
           icon: <GearSix size={16} />,
           type: 'item',
 
-          to: `/${account}/${project.clusterName}/${parseName(
-            project
-          )}/settings`,
+          to: `/${account}/${parseName(project)}/settings`,
           key: 'settings',
         },
       ]}
@@ -60,7 +59,7 @@ const GridView = ({ items = [] }: { items: BaseType[] }) => {
   return (
     <Grid.Root className="!grid-cols-1 md:!grid-cols-3" linkComponent={Link}>
       {items.map((item, index) => {
-        const { name, id, path, cluster, updateInfo } = parseItem(item);
+        const { name, id, updateInfo } = parseItem(item);
         const keyPrefix = `${RESOURCE_NAME}-${id}-${index}`;
         return (
           <Grid.Column
@@ -76,15 +75,6 @@ const GridView = ({ items = [] }: { items: BaseType[] }) => {
                     action={<ExtraButton project={item} />}
                     avatar={<ConsoleAvatar name={id} />}
                   />
-                ),
-              },
-              {
-                key: generateKey(keyPrefix, path + cluster),
-                render: () => (
-                  <div className="flex flex-col gap-md">
-                    {/* <ListItem data={path} /> */}
-                    <ListBody data={cluster} />
-                  </div>
                 ),
               },
               {
@@ -111,6 +101,7 @@ const ListView = ({ items }: { items: BaseType[] }) => {
       {items.map((item, index) => {
         const { name, id, updateInfo } = parseItem(item);
         const keyPrefix = `${RESOURCE_NAME}-${id}-${index}`;
+        const status = listStatus({ item, key: `${keyPrefix}status` });
         return (
           <List.Row
             key={id}
@@ -119,7 +110,7 @@ const ListView = ({ items }: { items: BaseType[] }) => {
             columns={[
               {
                 key: generateKey(keyPrefix, 0),
-                className: 'flex-1',
+                className: listClass.title,
                 render: () => (
                   <ListTitle
                     title={name}
@@ -128,9 +119,23 @@ const ListView = ({ items }: { items: BaseType[] }) => {
                   />
                 ),
               },
+              status,
+              listFlex({ key: `${keyPrefix}flex` }),
+              {
+                key: generateKey(keyPrefix, item.clusterName || ''),
+                className: '',
+                render: () => (
+                  <div className="flex whitespace-pre items-center gap-md">
+                    <span className="bodyMd-semibold">cluster:</span>{' '}
+                    <span className="bodyMd-medium text-text-soft">
+                      {item.clusterName}
+                    </span>
+                  </div>
+                ),
+              },
               {
                 key: generateKey(keyPrefix, updateInfo.author),
-                className: 'w-[180px]',
+                className: listClass.author,
                 render: () => (
                   <ListItem
                     data={`${updateInfo.author}`}

@@ -28,7 +28,7 @@ const menuItemRender = (props: IMenuItemRender) => {
 
 const groupRender = ({ label }: IGroupRender) => {
   return (
-    <div className="bodySm-medium text-text-disabled px-md py-sm">{label}</div>
+    <div className="bodySm-medium text-text-disabled px-lg py-md">{label}</div>
   );
 };
 
@@ -36,14 +36,23 @@ const suffixRender = ({
   loading,
   showclear,
   clear,
+  error,
+  disabled,
 }: {
   loading: boolean;
   clear: (() => void) | undefined;
   showclear: boolean | undefined;
+  error: boolean;
+  disabled: boolean;
 }) => {
   const iconSize = 16;
   return (
-    <div className="px-lg flex flex-row items-center gap-lg">
+    <div
+      className={cn(
+        'px-lg flex flex-row items-center gap-lg',
+        error && !disabled ? 'text-text-critical' : ''
+      )}
+    >
       {loading && (
         <span className="animate-spin">
           <CircleNotch size={iconSize} />
@@ -87,6 +96,7 @@ const Select = <T, U extends boolean | undefined = undefined>(
     showclear,
     noOptionMessage,
     open,
+    disableWhileLoading,
   } = props;
 
   return (
@@ -104,7 +114,10 @@ const Select = <T, U extends boolean | undefined = undefined>(
               {
                 'py-[10px] px-lg': size === 'lg',
                 'py-[6px] px-lg': size === 'md',
-              }
+              },
+              error && !disabled
+                ? 'bg-surface-critical-subdued border-text-critical text-text-critical'
+                : ''
             );
             return {
               default: `${c} border-border-default bg-surface-basic-default text-text-default`,
@@ -117,10 +130,26 @@ const Select = <T, U extends boolean | undefined = undefined>(
           menuItemRender={menuItemRender}
           value={value}
           options={options}
-          placeholder={placeholder}
+          placeholder={
+            <div
+              className={cn(
+                error && !disabled
+                  ? 'text-text-critical/70'
+                  : 'text-text-disabled'
+              )}
+            >
+              {placeholder}
+            </div>
+          }
           showclear={showclear}
           suffixRender={({ clear, showclear }) =>
-            suffixRender({ loading: loading || false, clear, showclear })
+            suffixRender({
+              loading: loading || false,
+              clear,
+              showclear,
+              error,
+              disabled: !!disabled,
+            })
           }
           onChange={onChange}
           groupRender={groupRender}
@@ -131,6 +160,7 @@ const Select = <T, U extends boolean | undefined = undefined>(
           onSearch={onSearch}
           searchable={searchable}
           noOptionMessage={noOptionMessage}
+          disableWhileLoading={disableWhileLoading}
         />
       </div>
       <AnimateHide show={!!message}>
