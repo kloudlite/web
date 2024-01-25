@@ -354,8 +354,8 @@ export function Sidebar({
           'kl-sidebar bg-surface-basic-subdued z-40 nextra-sidebar-container flex-col pb-6xl md:pt-0',
           'md:top-[calc(var(--kl-navbar-height))] md:shrink-0 motion-reduce:transform-none',
           'transform-gpu transition-all ease-in-out',
-          'print:hidden',
-          showSidebar ? 'md:w-[284px]' : '',
+          'print:hidden pr-3xl',
+          showSidebar ? 'md:w-[244px]' : '',
           asPopover ? 'md:hidden' : 'flex md:sticky md:self-start',
           menu
             ? 'max-md:[transform:translate3d(0,0,0)]'
@@ -403,7 +403,7 @@ export function Sidebar({
               {mounted &&
                 window.innerWidth < 768 &&
                 (rawLayout ? (
-                  <MobileMenu items={config.headerSecondary?.items} />
+                  <MobileMenu {...config.headerSecondary} />
                 ) : (
                   <Menu
                     className="nextra-menu-mobile md:hidden"

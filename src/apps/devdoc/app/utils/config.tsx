@@ -63,15 +63,15 @@ export default {
         className: 'w-[47%] md:w-auto',
         items: [
           {
-            title: 'Kl-DevOps',
+            title: 'DevOps',
             to: 'devops',
           },
           {
-            title: 'Kl-InfraOps',
+            title: 'InfraOps',
             to: 'infraops',
           },
           {
-            title: 'Kl-Distribution',
+            title: 'Distribution',
             to: 'distribution',
           },
         ],
@@ -185,10 +185,6 @@ export default {
         to: '/docs',
       },
       {
-        title: 'Pricing',
-        to: '/pricing',
-      },
-      {
         title: 'Help',
         to: '/help-and-support',
       },
@@ -198,21 +194,27 @@ export default {
       },
     ],
     extra: (
-      <div className="flex flex-row gap-xl items-center">
-        <Button
-          content="Login"
-          variant="basic"
-          to="https://auth.kloudlite.io/login"
-          LinkComponent={Link}
-          toLabel="href"
-        />
-        <Button
-          content="Signup"
-          variant="primary"
-          to="https://auth.kloudlite.io/signup"
-          LinkComponent={Link}
-          toLabel="href"
-        />
+      <div className="flex flex-col md:!flex-row gap-xl md:items-center mt-6xl md:!mt-0">
+        <div>
+          <Button
+            content="Login"
+            variant="basic"
+            to="https://auth.kloudlite.io/login"
+            LinkComponent={Link}
+            toLabel="href"
+            block
+          />
+        </div>
+        <div>
+          <Button
+            content="Signup"
+            variant="primary"
+            to="https://auth.kloudlite.io/signup"
+            LinkComponent={Link}
+            toLabel="href"
+            block
+          />
+        </div>
       </div>
     ),
   },

@@ -19,21 +19,21 @@ import SectionWrapper from '../website/section-wrapper';
 const suites = [
   {
     title: 'DevOps',
-    desc: 'Self-Serve environments crafted for development, staging and production workloads',
+    desc: 'Environments crafted for development and production workloads',
     img: <img src={devopsIcon.src} />,
     imgPad: 'w-[160px]',
     to: 'devops',
   },
   {
     title: 'InfraOps',
-    desc: 'Flexible & Cost Effective Kubernetes Cluster Management at your fingertips',
+    desc: 'Cloud agnostic & cost effective infrastructure management at your fingertips',
     imgPad: 'w-[180px]',
     img: <img src={infraopsIcon.src} />,
     to: 'infraops',
   },
   {
     title: 'Distribution',
-    desc: 'Cloud accelerated build system and container registry to build and ship containers anywhere',
+    desc: 'Build system and package registries to build and ship your environments',
     imgPad: 'w-[160px]',
     img: <img src={distributionIcon.src} />,
     to: 'distribution',
@@ -476,7 +476,8 @@ const IndexRoot = () => {
       <Container className="flex flex-col">
         <div className="px-3xl md:!px-5xl lg:!px-8xl xl:!px-11xl 2xl:!px-12xl py-6xl md:!pt-10xl">
           <div className="flex flex-col gap-3xl text-center items-center">
-            <h1 className="heading3xl-marketing md:!heading5xl-marketing xl:!heading6xl-marketing text-text-default text-center md:!w-[615px]">
+            <h1 className="heading3xl-marketing md:!heading5xl-marketing xl:!heading6xl-marketing text-text-default text-center md:!w-[830px]">
+              <span>Opensource </span>
               <span className="relative text-center">
                 <span className="text-text-warning absolute -top-2/3 left-1/2 transform -translate-x-1/2">
                   NoOps
@@ -484,12 +485,11 @@ const IndexRoot = () => {
                 {/** @ts-ignore * */}
                 <strike className="no-underline strike">Advanced</strike>
               </span>{' '}
-              platform engineering system
+              <br /> platform engineering system
             </h1>
             <p className="bodyLg-medium md:!bodyXl-medium text-text-soft text-center md:!w-[528px] xl:!w-[806px]">
-              Kloudlite is an open-source platform that provides developers &
-              platform engineers with a one-click solution to move from code to
-              cloud
+              Cloud agnostic platform designed for developers & platform
+              engineers to ease code to cloud journey.
             </p>
           </div>
           <div className="pt-6xl flex md:!flex-row flex-col gap-4xl md:items-center justify-center">
