@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { ReactNode } from 'react';
 import { Button } from 'kl-design-system/atoms/button';
+import Radio from 'kl-design-system/atoms/radio';
 import { ArrowRight } from '@jengaicons/react';
 import { cn } from '~/app/utils/commons';
 import { Graph, GraphItem } from '../graph';
@@ -10,6 +11,7 @@ interface IHorizontalTopTabItem {
   id: string;
   desc: string;
   active: boolean;
+  className?: string;
   onClick: () => void;
 }
 
@@ -19,10 +21,14 @@ const HorizontalTopTabDevopsItem = ({
   desc,
   active,
   onClick,
+  className,
 }: IHorizontalTopTabItem) => {
   return (
     <div
-      className="flex flex-col gap-4xl p-4xl bg-surface-basic-default relative cursor-pointer min-h-[192px] max-h-[192px]"
+      className={cn(
+        'flex flex-col gap-4xl p-xl lg:!p-4xl bg-surface-basic-default relative cursor-pointer lg:min-h-[192px] lg:max-h-[192px] ',
+        className
+      )}
       onClick={onClick}
     >
       <h5
@@ -33,7 +39,9 @@ const HorizontalTopTabDevopsItem = ({
       >
         {label}
       </h5>
-      <p className="bodyLg text-text-soft line-clamp-3">{desc}</p>
+      <p className="bodyLg text-text-soft line-clamp-2 md:line-clamp-3">
+        {desc}
+      </p>
       {active && (
         <motion.div
           transition={{ type: 'spring', bounce: 0.1, duration: 0.3 }}
@@ -62,25 +70,28 @@ const HorizontalTopTabDevops = ({
 }: IHorizontalTopTab) => {
   return (
     <div className="flex flex-col 2xl:pt-10xl">
-      <div className="flex flex-row gap-10xl">
+      <div className="flex flex-col md:!flex-row gap-3xl md:!gap-8xl lg:!gap-10xl">
         <div className="flex flex-col gap-md flex-1">
-          <p className="bodyXl-medium text-text-disabled">
+          <p className="bodyLg-medium lg:!bodyXl-medium text-text-disabled">
             What does it offer?
           </p>
-          <h2 className="heading5xl-marketing text-text-default">
+          <h2 className="heading3xl-marketing md:!heading4xl-marketing lg:!heading5xl-marketing text-text-default">
             Unlocking the advantages
           </h2>
         </div>
-        <div className="flex flex-col gap-4xl flex-1">
-          <p className="bodyXl-medium text-text-soft">
+        <div className="flex flex-col gap-3xl md:!gap-4xl flex-1">
+          <p className="bodyLg-medium lg:!bodyXl-medium text-text-soft">
             Simplify software development and testing with automated
             environments, tools, and configurations
           </p>
           <Button content="Read the docs" suffix={<ArrowRight />} size="lg" />
         </div>
       </div>
-      <Graph className="-mx-10xl flex flex-col gap-5xl">
-        <div className={cn(tabContainerClassName)}>
+      <Graph className="-mx-10xl pt-7xl flex flex-col gap-3xl lg:!gap-5xl md:!pt-0">
+        {/**
+            Desktop mode 
+       * */}
+        <div className={cn(tabContainerClassName, 'hidden md:!grid')}>
           {tabs.map((tab) => (
             <GraphItem key={tab.id}>
               <HorizontalTopTabDevopsItem
@@ -91,9 +102,40 @@ const HorizontalTopTabDevops = ({
             </GraphItem>
           ))}
         </div>
-        <div className="px-10xl pb-10xl">
+        {/**
+           Mobile mode 
+       * */}
+        <div className="px-10xl grid grid-rows-[auto_50px] md:!hidden">
           <GraphItem>
-            <div className="bg-surface-basic-subdued min-h-[480px] max-h-[480px]">
+            {/** @ts-ignore* */}
+            <HorizontalTopTabDevopsItem
+              /** @ts-ignore* */
+              {...(tabs.find((t) => t.id === activeTab) || {})}
+              active
+              onClick={() => {}}
+              className="min-h-[auto]"
+            />
+          </GraphItem>
+          <GraphItem className="flex items-center justify-center">
+            <div className="flex items-center justify-center">
+              <Radio.Root
+                value={activeTab}
+                className="!flex-row"
+                /** @ts-ignore* */
+                onChange={(t) => onTabChange(tabs.find((tab) => tab.id === t))}
+              >
+                {tabs.map((item) => (
+                  <Radio.Item key={item.id} value={item.id}>
+                    {true}
+                  </Radio.Item>
+                ))}
+              </Radio.Root>
+            </div>
+          </GraphItem>
+        </div>
+        <div className="px-10xl pb-6xl md:!pb-8xl lg:!pb-10xl">
+          <GraphItem>
+            <div className="bg-surface-basic-subdued xl:min-h-[480px] xl:max-h-[480px]">
               {tab}
             </div>
           </GraphItem>

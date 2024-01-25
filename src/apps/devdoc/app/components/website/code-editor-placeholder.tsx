@@ -1,12 +1,10 @@
 import React from 'react';
 
-function CodeEditorPlaceholder() {
+function CodeEditorPlaceholder({ className: _ }: { className?: string }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
-      width="400"
-      height="287"
       fill="none"
       viewBox="0 0 400 287"
     >

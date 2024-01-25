@@ -99,9 +99,20 @@ export const createComponents = ({
   isRawLayout?: boolean;
 }): Components => {
   if (isRawLayout) {
-    return { a: A };
-  }
+    return {
+      a: A,
+      ul: (props) => {
+        console.log(props.className);
+        let cs = props.className;
+        if (!cs) {
+          cs = 'list-disc pl-5xl';
+        }
 
+        return <ul {...props} className={cs} />;
+      },
+    };
+  }
+  console.log('raw', isRawLayout);
   const context = { index: 0 };
   return {
     h1: (props) => (
