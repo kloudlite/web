@@ -39,7 +39,6 @@ function GitTimestamp({ timestamp }: { timestamp: Date }) {
 
 const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
   const { title, frontMatter, pageMap, headings } = pageOpts;
-  console.log(pageOpts);
 
   const { state } = useMenu();
 
@@ -73,8 +72,6 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
 
   const hideSidebar = activeType === 'page';
 
-  console.log(activePath);
-
   return (
     <div className="bg-surface-basic-subdued min-h-screen antialiased">
       <Head>
@@ -100,7 +97,10 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
         {activeThemeContext.layout !== 'raw' ? (
           <Header navitems={config?.headerPrimary} activePath={activePath} />
         ) : (
-          <HeaderSecondary {...config?.headerSecondary} />
+          <HeaderSecondary
+            {...config?.headerSecondary}
+            activePath={activePath}
+          />
         )}
 
         <Container
@@ -116,6 +116,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
             fullDirectories={directories}
             headings={headings}
             asPopover={hideSidebar}
+            rawLayout={activeThemeContext.layout === 'raw'}
             includePlaceholder
           />
           {!hideSidebar && (

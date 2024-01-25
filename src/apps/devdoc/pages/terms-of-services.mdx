@@ -1,65 +1,144 @@
+export const Headings = ({ children }) => {
+  return <p className="bodyMd-semibold">{children}</p>;
+};
+
+export const SubList = ({ children }) => {
+  return <ul className="list-[circle] pl-5xl">{children.props.children}</ul>;
+};
+
+export const ListRoman = ({ children }) => {
+  return <ol type="a" className="list-[lower-alpha] pl-5xl flex flex-col gap-md marker:!font-normal">{children.props.children}</ol>;
+};
+
+export const ListDecimalBold = ({ children }) => {
+  return <ol type="1" className="list-[decimal] pl-5xl flex flex-col gap-md marker:font-bold">{children.props.children}</ol>;
+};
+
 <div className="bg-surface-basic-subdued">
-  <div className="max-w-[1440px] m-auto px-14xl pb-10xl">
-    <h1 className="heading6xl-marketing text-text-strong py-10xl">
-      Terms of Serivces
+  <div className="max-w-[1440px] m-auto px-3xl md:!px-8xl lg:!px-11xl xl:!px-13xl 2xl:!px-14xl pb-6xl md:!pb-8xl xl:!pb-10xl">
+    <h1 className="heading4xl-marketing md:!heading5xl-marketing lg:!heading6xl-marketing text-text-strong py-6xl md:!py-8xl xl:!py-10xl">
+      POLICIES & GUIDELINES
     </h1>
     <div>
-      <div className="text-text-soft bodyLg">
-        Last updated: <span className="headingMd">September 15th, 2021</span>
+      <div className="flex flex-col gap-lg">
+        <Headings>TERMS OF USE</Headings>
+        <span className="text-text-soft bodySm">
+          Updated: 12th Dec 2023 (Giving this date, considering the website
+          go-live date)
+        </span>
       </div>
-      <div className="bodyLg text-text-strong flex flex-col gap-5xl pt-4xl">
-        <p className="text-text-soft">
-          Kloudlite.io (“Kloudlite”, “we”, “us”, “our”) takes your privacy
-          seriously. This Privacy Policy describes how we collect, use and share
-          personal information in connection with your use of the website (the
-          “Service” or “Services”).
-        </p>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec finibus
-          vitae ex ut bibendum. Nullam a tincidunt elit, ac finibus dolor. Donec
-          pellentesque consectetur ante, a tempus nisl faucibus ac. Morbi ac
-          metus posuere, mattis dolor vitae, pharetra eros. Vestibulum quis ex a
-          eros laoreet efficitur at ut tortor. Sed id libero interdum, dignissim
-          augue quis, molestie enim. Morbi sollicitudin mollis tincidunt. Cras
-          feugiat lorem at consequat ultricies. In hac habitasse platea
-          dictumst. Proin ut tortor quis tortor vestibulum cursus.
-        </p>
-        <p>
-          In vitae magna posuere, blandit felis a, consectetur leo. Etiam augue
-          magna, ullamcorper eget posuere at, bibendum ac leo. Nunc eu cursus
-          justo. Nullam vel lectus in nibh condimentum suscipit. Pellentesque
-          habitant morbi tristique senectus et netus et malesuada fames ac
-          turpis egestas. Suspendisse potenti. Mauris placerat dolor vel est
-          blandit, tincidunt cursus quam consectetur. Suspendisse potenti.
-          Suspendisse ac malesuada ex. Aenean at sem ut libero dignissim iaculis
-          at aliquet arcu. Vivamus justo lorem, maximus in feugiat eget,
-          fermentum et dui. Nulla eu facilisis eros, vitae vestibulum augue.
-          Vivamus facilisis, turpis et dapibus efficitur, metus sapien volutpat
-          est, sed mollis nulla mi tempor diam. Mauris nisl metus, suscipit eu
-          elit et, placerat auctor ex.
-        </p>
-        <p>
-          Nunc eget venenatis arcu. Suspendisse egestas sodales commodo. Orci
-          varius natoque penatibus et magnis dis parturient montes, nascetur
-          ridiculus mus. Aenean blandit enim sed libero placerat, quis tincidunt
-          purus malesuada. Nulla tristique molestie lacus, eget dictum ante
-          egestas vel. Aliquam consectetur efficitur ullamcorper. Maecenas
-          ullamcorper ex ut nulla lacinia, eu cursus urna varius. Vestibulum
-          efficitur viverra purus at laoreet. Suspendisse iaculis orci sit amet
-          nisl lacinia pellentesque. Sed elementum vitae nisl vel convallis.
-          Nunc risus nisl, ornare sed venenatis id, facilisis vitae nibh. Sed
-          eget metus ligula. Cras tincidunt eu sem vitae vulputate.
-        </p>
-        <p>
-          Nullam sagittis mauris et felis convallis, quis rhoncus diam accumsan.
-          Nullam aliquet bibendum lacus, id fringilla nisl dapibus at. Mauris
-          commodo viverra placerat. Nam venenatis sed lectus eu scelerisque.
-          Quisque vehicula nulla sollicitudin est lobortis, eget dictum lectus
-          tempor. Maecenas dapibus commodo ullamcorper. Nunc sapien sapien,
-          elementum vel placerat vel, tincidunt nec nibh. Aliquam erat volutpat.
-          Vestibulum purus eros, luctus sit amet posuere sit amet, rhoncus et
-          quam. Cras egestas nunc at mauris facilisis vestibulum.
-        </p>
+      <div className="bodyLg text-text-strong flex flex-col gap-4xl pt-4xl">
+        Kloudlite Labs Pvt Ltd. operate this website ("Site"). This Site may
+        provide you with access to a variety of web pages, documents, software,
+        services, images, graphics, audio, video, forums, discussion groups,
+        blogs, and other content ("Content"). 
+        
+        By accessing or logging into the Site, you agree to these terms. Kloudlite may revise these terms at any
+        time. Your continued use of the Site after any such revisions have been
+        published constitutes your agreement to the revised terms. If you do not
+        agree to these terms, do not use the Site. 
+        
+        Personal data collected when you access and use the Site will be processed by Kloudlite in accordance
+        with the Kloudlite Privacy Statement. For more information on the types
+        of personal data collected on the Site, how Kloudlite handles your
+        personal data and other related topics, please see the Kloudlite Privacy
+        Statement.
+
+        <ListDecimalBold>
+        1. **Kloudlite and Third Party Content**
+            <br></br>When using the Site, you may be able to access or download certain Content provided by Kloudlite ("Content"), or Content provided by third parties ("Third Party Content").  Content is governed by the license that accompanies it.  By using or downloading any Content, you agree to the applicable license.  It is your responsibility to ensure you have proper permission for your use of any Content. If you are unclear as to what license applies to any Content, it is recommended that you ask the author.
+    
+            The Site, including the design, layout, look and feel, and Kloudlite Content, is copyrighted by Kloudlite and its licensors.  To the extent the Site, portions of the Site, or Kloudlite Content does not designate a license, Kloudlite hereby grants you a copyright license to copy such material for your own personal or internal business purposes.  
+        
+        2. **Your Content**
+            <br></br>Where applicable, you may be able upload or otherwise provide certain Content, such as software (source code, binary code, configuration files, etc.), documents, images, videos, or other material to the Site via your Account ("Your Content").  Except if specifically stated otherwise, Your Content is not confidential and may be made publicly available. You are responsible for keeping your own backups of Your Content. You represent that you have the right to provide Your Content to Kloudlite and its users.
+            
+            It's your responsibility to make clear the license under which you are providing Your Content. You retain ownership of Your Content. By posting Your Content to the Site, you hereby grant to Kloudlite a non-exclusive, irrevocable, worldwide, royalty-free license to use, reproduce, distribute, sublicense, adapt, modify, and publish Your Content, provided this license to Kloudlite does not supersede the terms of any open source license you may explicitly apply to Your Content.
+            
+            If you close your Account, Your Content may remain accessible on the Site. 
+        
+        3. **Account**
+            <br></br>Where applicable, you may register for an account on the Site (an "Account").  You must provide current, complete, and accurate information as required by the applicable account registration form.  You must be over 16 years old to create an Account on the Site.  Each Account is personal in nature and may only be used by you.  Any activity completed through your Account will be deemed to have been completed by you. Where applicable, you may choose to create an Account by authenticating via an existing account you have with a third party, in which case the third party terms may apply to such action. 
+        
+            You are responsible for the security of your Account, and you agree not to share your password or access to the Site with another person. Kloudlite is not liable for any loss or damage arising from your failure to keep your Account secure. You will notify Kloudlite immediately if your Account information is lost, stolen, or otherwise compromised. Kloudlite may suspend or deactivate your Account if Kloudlite determines that this step is needed (such as if your Account has been compromised or you have violated these terms).
+
+        4. **Your Use of the Site**
+            <br></br>You will not use the Site in a way that violates any laws or these terms, infringes anyone's rights (including but not limited to intellectual property rights), is offensive, or interferes with the Site or its features. For example, you will not use the Site in a way or provide Content to the Site that: 
+            <ListRoman>
+                1. infringes, misappropriates, or violates any third party or Kloudlite intellectual property rights;
+                2. is defamatory, libelous, threatening, harassing, harmful to minors, or pornographic;
+                3. contains hateful, abusive, obscene, or violent content;
+                4. attempts to gain unauthorized access to the Site, the server on which the Site is stored or any server, computer, or database connected to the Site;
+                5. generates or facilitates sending unsolicited email or deploys any robot, spider, or site/search retrieval application.
+                6. contains or distributes any viruses or programming routines intended to damage, surreptitiously intercept or expropriate any system, data, or information.
+                7 attempts to or does mine or forge cryptocurrencies, enable illegal file sharing; or 
+                8. restricts or inhibits any other user from using the Site by "hacking", "cracking", "spoofing", or defacing any portions of the Site.
+            </ListRoman>
+
+            You may not post promotional materials relating to website or online services which compete with Kloudlite or the Site, or post advertising or commercial solicitations unless explicitly agreed with Kloudlite.
+
+            If Kloudlite determines that you have acted illegally, in violation of these terms, or inappropriately, Kloudlite may terminate your Account, remove Your Content, prohibit you from using the Site, take appropriate legal actions, or take other action as Kloudlite deems appropriate.
+
+            The Site or portions of the Site may also be subject to other guidelines, such as a Code of Conduct. Non-compliance with such guidelines may result in the Site or the relevant functionality of the Site no longer being available to you or other consequences as described in such guidelines.
+
+            Kloudlite has the right, but not the obligation, to monitor the use of the Site, any Content, and any activity on the Site.
+
+        5. **Feedback**
+            <br></br>You may provide ideas, suggestions, proposals, or other feedback to Kloudlite via the Site ("Feedback").<br></br>
+            Kloudlite may use such Feedback for any purpose, including incorporating the Feedback into or using the Feedback to develop and improve Kloudlite products and other Kloudlite offerings without attribution or compensation to you. You grant Kloudlite a perpetual and irrevocable license to use all Feedback for any purpose. You agree to provide Feedback to Kloudlite only in compliance with applicable laws. You represent that you have the authority to provide the Feedback and that Feedback will not include confidential information. 
+        6. **Links and References to services**
+            <br></br>The Site may provide links to third party websites, products or services, which you may access or use at your own risk subject to any applicable third-party terms. Kloudlite is not responsible for and has not endorsed such third-party websites, products, or services.  <br></br>
+            
+            The Site may refer to Kloudlite products or services that might not be available in your location. Please contact your local Kloudlite representative for more information.
+        7. **Disclaimer of Warranties**
+            <br></br>EXCEPT AS EXPRESSLY AGREED OTHERWISE IN A SIGNED AGREEMENT BETWEEN YOU AND KLOUDLITE: 
+        
+            THE SITE, ANY CONTENT ON THE SITE, AND ANY SOFTWARE OR SERVICES PROVIDED ON THE SITE ARE PROVIDED "AS IS" AND KLOUDLITE PROVIDES NO WARRANTIES EXPRESS, IMPLIED OR STATUTORY, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF MERCHANTABILITY, SATISFACTORY QUALITY, NON-INFRINGEMENT OR FITNESS FOR A PARTICULAR PURPOSE. KLOUDLITE MAKES NO WARRANTIES THAT THE SITE WILL BE SECURE OR THAT ACCESS AND USE OF THE SITE WILL BE  ERROR-FREE WITHOUT INTERRUPTIONS, CRASHES, OR DOWNTIME.
+            
+            Kloudlite may change or discontinue part or all of the Site or any Content at any time. 
+        8. **Limitation of Liability & Indemnity**
+            <br></br>EXCEPT AS EXPRESSLY PROVIDED OTHERWISE IN A SIGNED AGREEMENT BETWEEN YOU AND KLOUDLITE:
+            
+            IN NO EVENT WILL KLOUDLITE BE LIABLE FOR ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES WHETHER SUCH DAMAGES ARE ALLEGED AS A RESULT OF TORTIOUS CONDUCT OR BREACH OF CONTRACT OR OTHERWISE, EVEN IF KLOUDLITE HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES UNDER OR IN CONNECTION WITH THESE TERMS, INCLUDING BUT NOT LIMITED TO THE SITE, YOUR ACCESS TO OR USE OF (OR YOUR FAILURE TO GAIN ACCESS TO OR USE OF) THE SITE, ANY CONTENT PROVIDED ON THE SITE, OR ANY SERVICES PROVIDED ON THE SITE.
+            
+            THIS STATEMENT DOES NOT AFFECT ANY LIABILITY WHICH CANNOT BE EXCLUDED OR LIMITED UNDER APPLICABLE LAW.
+            
+            You will defend and indemnify Kloudlite from and against any and all damages, costs, losses and expenses (including reasonable attorney fees) incurred as a result of any claim, suit or proceeding brought against Kloudlite in relation to Your Content or as a result of any use or misuse of the Site by you.
+        9. **Trademarks**
+            <br></br>The trademarks, logos, trade dress and service marks displayed on the Site are the property of Kloudlite or other third parties.  Your use of any Kloudlite trademark must be in accordance with the applicable Kloudlite Trademark Guidelines and Policies or other applicable trademark guidelines. 
+        10. **Waiver, Severability, and Precedence**
+            <br></br>The failure of Kloudlite to exercise or enforce any right or provision of these terms does not constitute a waiver of such right or provision.  If any provision of these terms is held to be unenforceable, that provision will be modified so as to be enforceable, or if such modification is not possible, will be removed and the remaining provisions will remain in full force.<br></br>
+            
+            Some services or Kloudlite Content offered via the Site may be subject to additional or separate terms. If there is a conflict between these terms and such additional or separate terms, the latter will have precedence with respect to your access and use of that service or Kloudlite Content. Nothing in these terms is intended to limit your rights under an open source license.
+        11. **Jurisdiction**
+            <br></br>These terms, and any claim, controversy, or dispute arising out of or related to these terms, are governed by and construed in accordance with the laws of the State of Karnataka without giving effect to any conflicts of laws provision.<br></br>
+            
+            If one or more of the provisions contained in these terms are held invalid, illegal, or unenforceable in any respect by any court of competent jurisdiction, such holding will not impair the validity, legality, or enforceability of the remaining provisions.
+
+        12. **Copyright Notice and Takedown Process**
+            <br></br>Kloudlite and its affiliates respect the intellectual property of others. If you believe that content on the Site infringes your copyright, please provide the following information to the Kloudlite-designated copyright agent listed below:
+            1. A description of the copyrighted content that you claim has been infringed and description of the infringing activity, including where the content is located, such as an URL.
+            2. Your name, address, telephone number, and email address.
+            3. The following statement: "I have a good faith belief that use of the copyrighted materials described above as allegedly infringing is not authorized by the copyright owner, its agent, or the law."
+            4. The following statement: "I swear, under penalty of perjury, that the information in the notification is accurate and that I am the copyright owner or am authorized to act on behalf of the owner of an exclusive right that is allegedly infringed."
+            5. Your electronic or physical signature.
+            
+            If you believe that content on the Site was removed in error, please provide a counter notification to the Kloudlite-designated copyright agent listed below:
+            1. A description of the material that Kloudlite has removed or to which Kloudlite has disabled access.
+            2. Your name, address, telephone number, email address, and a statement that you consent to the jurisdiction of the Federal District Court for the judicial district in which your address is located (or Wake County, North Carolina if your address is outside of the United States), and that you will accept service of process from the person who provided notification of infringement or an agent of such person.
+            3. The following statement: "I swear, under penalty of perjury, that I have a good faith belief that the material identified above was removed or disabled as a result of a mistake or misidentification of the material to be removed or disabled."
+            4. Your electronic or physical signature. 
+        </ListDecimalBold>
+        Please send notifications of infringement and counter notifications to the Kloudlite-designated copyright agent at: support@kloudlite.io
+        
+        Kloudlite Labs Pvt Ltd<br></br>
+        415, 4th floor, Shaft-1, Tower- B<br></br>
+        VRR Fortuna<br></br>
+        Carmelaram, Janatha Colony, Bangalore<br></br>
+        Karnataka,<br></br>
+        India, 560035<br></br>
+
+        For a PDF version of the Privacy Statement, please click here.
       </div>
     </div>
   </div>

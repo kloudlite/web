@@ -58,8 +58,8 @@ const Footer = ({ config }: { config: IConfig }) => {
     'menu' in config.footer
   )
     return (
-      <footer className="px-2xl py-6xl md:px-7xl md:py-8xl xl:px-9xl xl:py-8xl 2xl:px-11xl 2xl:py-10xl 3xl:px-14xl 3xl:py-10xl bg-surface-basic-default">
-        <div className="px-4xl flex flex-row flex-wrap justify-between gap-y-6xl lg:gap-x-2xl  max-w-[1440px] m-auto">
+      <footer className="py-6xl md:py-8xl xl:py-8xl  2xl:py-10xl 3xl:py-10xl bg-surface-basic-default">
+        <div className="px-3xl md:!px-5xl lg:!px-8xl xl:!px-11xl 2xl:!px-12xl xl:max-w-[1024px] 2xl:max-w-[1120px] box-content flex flex-row flex-wrap justify-between gap-y-6xl lg:gap-x-2xl  max-w-[1440px] m-auto">
           {config.footer.brand && config.footer.brand}
           {config.footer.menu.map((item) => (
             <FooterMenu key={item.title} {...item} />

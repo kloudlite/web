@@ -16,6 +16,7 @@ export const Graph = ({
     <div
       className={cn(
         'graph',
+        'before:hidden xl:before:!flex',
         {
           'before:bg-[100%_5%,100%_5%,5%_100%,5%_100%]': blurSize === 'xs',
           'before:bg-[100%_7%,100%_7%,7%_100%,7%_100%]': blurSize === 'sm',
@@ -74,16 +75,16 @@ export const GraphItem = ({
   return (
     <div className={cn('relative', className)}>
       <div className="absolute pointer-events-none inset-0 z-10">
-        <div className="h-[calc(100%+40px)] md:h-[calc(100%+64px)] absolute -left-xs -top-[20px] md:-top-[32px]">
+        <div className="h-[calc(100%+40px)] lg:h-[calc(100%+64px)] absolute -left-xs -top-[20px] lg:-top-[32px]">
           {lineVertical()}
         </div>
-        <div className="h-[calc(100%+40px)] md:h-[calc(100%+64px)] absolute -right-xs -top-[20px] md:-top-[32px]">
+        <div className="h-[calc(100%+40px)] lg:h-[calc(100%+64px)] absolute -right-xs -top-[20px] lg:-top-[32px]">
           {lineVertical()}
         </div>
-        <div className="w-[calc(100%+40px)] md:w-[calc(100%+64px)] absolute -top-xs -left-[20px] md:-left-[32px]">
+        <div className="w-[calc(100%+40px)] lg:w-[calc(100%+64px)] absolute -top-xs -left-[20px] lg:-left-[32px]">
           {lineHorizontal()}
         </div>
-        <div className="w-[calc(100%+40px)] md:w-[calc(100%+64px)] absolute -bottom-xs -left-[20px] md:-left-[32px]">
+        <div className="w-[calc(100%+40px)] lg:w-[calc(100%+64px)] absolute -bottom-xs -left-[20px] lg:-left-[32px]">
           {lineHorizontal()}
         </div>
       </div>

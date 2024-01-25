@@ -47,7 +47,7 @@ export default {
   siteTitle: 'Kloudlite',
   logo: (
     <Link href="/">
-      <div className="hidden md:block md:w-[284px]">
+      <div className="hidden md:block">
         <BrandLogo detailed size={28} />
       </div>
       <div className="md:hidden">
@@ -178,23 +178,23 @@ export default {
     items: [
       {
         title: 'Product',
-        to: 'product',
+        to: '/product',
       },
       {
         title: 'Docs',
-        to: 'docs',
+        to: '/docs',
       },
       {
         title: 'Pricing',
-        to: 'pricing',
+        to: '/pricing',
       },
       {
         title: 'Help',
-        to: 'help-and-support',
+        to: '/help-and-support',
       },
       {
         title: 'Contact us',
-        to: 'contact-us',
+        to: '/contact-us',
       },
     ],
     extra: (
@@ -202,18 +202,22 @@ export default {
         <Button
           content="Login"
           variant="basic"
-          to="https://auth.dev.kloudlite.io/login"
+          to="https://auth.kloudlite.io/login"
           LinkComponent={Link}
           toLabel="href"
         />
         <Button
           content="Signup"
           variant="primary"
-          to="https://auth.dev.kloudlite.io/signup"
+          to="https://auth.kloudlite.io/signup"
           LinkComponent={Link}
           toLabel="href"
         />
       </div>
     ),
+  },
+  urls: {
+    auth: 'auth.kloudlite.io',
+    console: 'console.kloudlite.io',
   },
 } as IConfig;

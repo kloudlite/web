@@ -46,6 +46,10 @@ export interface IConfig {
     }[];
     extra?: ReactNode;
   };
+  urls?: {
+    auth?: string;
+    console?: string;
+  };
 }
 
 const ConfigContext = createContext<{

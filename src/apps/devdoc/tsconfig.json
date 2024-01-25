@@ -5,6 +5,7 @@
     "**/*.js",
     "**/*.jsx",
     ".next/types/**/*.ts",
+    "**/**.svg"
   ],
   "compilerOptions": {
     "skipLibCheck": true,
@@ -27,6 +28,9 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
+      "~/images/*":[
+        "./images"
+      ],
       "~/app/*": [
         "./app/*"
       ],
