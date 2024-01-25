@@ -58,7 +58,7 @@ export function TOC({ headings }: TOCProps): ReactElement {
     <div
       ref={tocRef}
       className={cn(
-        'md:h-[calc(100vh-var(--kl-navbar-height))] overflow-x-hidden overflow-y-auto kl-scrollbar-transparent hover:kl-scrollbar-colored scrollbar-gutter grow pr-md pt-6xl -mr-5xl'
+        'md:h-[calc(100vh-var(--kl-navbar-height))] overflow-x-hidden overflow-y-auto kl-scrollbar-transparent hover:kl-scrollbar-colored scrollbar-gutter grow pr-md pt-6xl'
       )}
     >
       {hasHeadings && (
