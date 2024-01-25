@@ -102,13 +102,28 @@ export const createComponents = ({
     return {
       a: A,
       ul: (props) => {
-        console.log(props.className);
         let cs = props.className;
         if (!cs) {
           cs = 'list-disc pl-5xl';
         }
 
         return <ul {...props} className={cs} />;
+      },
+      ol: (props) => {
+        let cs = props.className;
+        if (!cs) {
+          cs = 'list-decimal pl-5xl';
+        }
+
+        return <ol {...props} className={cs} />;
+      },
+      li: (props) => {
+        let cs = props.className;
+        if (!cs) {
+          cs = 'pb-lg custom-li';
+        }
+
+        return <li {...props} className={cs} />;
       },
     };
   }

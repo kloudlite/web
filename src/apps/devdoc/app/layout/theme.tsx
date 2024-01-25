@@ -116,6 +116,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
             fullDirectories={directories}
             headings={headings}
             asPopover={hideSidebar}
+            rawLayout={activeThemeContext.layout === 'raw'}
             includePlaceholder
           />
           {!hideSidebar && (
