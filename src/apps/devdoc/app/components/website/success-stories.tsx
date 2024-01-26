@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import { Button } from 'kl-design-system/atoms/button';
 import { ArrowRight } from '@jengaicons/react';
 import Image from 'next/image';
+import Radio from 'kl-design-system/atoms/radio';
 import { cn } from '~/app/utils/commons';
 import { Graph, GraphItem } from '../graph';
 
@@ -30,16 +31,19 @@ interface ISuccessStoryBase {
   id: string;
 }
 
-interface ISuccessStoryCard extends Omit<ISuccessStoryBase, 'logo'> {}
+interface ISuccessStoryCard extends Omit<ISuccessStoryBase, 'logo'> {
+  extra?: ReactNode;
+}
 export const SuccessStoryDetailCard = ({
   content,
   subContent,
   image,
   link: _,
+  extra,
 }: ISuccessStoryCard) => {
   return (
-    <div className="bg-surface-basic-default p-5xl flex flex-row gap-7xl max-h-[288px]">
-      <div className="flex flex-col gap-5xl flex-1">
+    <div className="bg-surface-basic-default p-3xl md:!p-5xl flex flex-col md:!flex-row md:!gap-7xl md:max-h-[288px]">
+      <div className="flex flex-col gap-3xl pb-3xl md:!pb-0 md:!gap-5xl flex-1">
         <div className="flex flex-col gap-3xl">
           <p className="bodyLg text-text-soft line-clamp-5">{content}</p>
           <span className="bodyLg text-text-soft line-clamp-1">
@@ -53,11 +57,12 @@ export const SuccessStoryDetailCard = ({
           variant="basic"
         />
       </div>
-      <div className="flex-1">
+      {extra}
+      <div className="flex-1 -mx-3xl -mb-3xl md:!mx-0 md:!mb-0">
         {image ? (
           <Image src={image} alt="success-story" />
         ) : (
-          <div className="bg-surface-basic-active w-full h-full" />
+          <div className="bg-surface-basic-active w-full h-[240px] md:!h-full md:!w-auto" />
         )}
       </div>
     </div>
@@ -82,20 +87,49 @@ const SuccessStories = ({
   return (
     <>
       <div className="flex flex-col gap-md text-center">
-        <p className="bodyXl-medium text-text-disabled">Case study</p>
-        <h3 className="heading5xl-marketing text-text-default">
+        <p className="bodyLg-medium lg:!bodyXl-medium text-text-disabled">
+          Case study
+        </p>
+        <h3 className="heading3xl-marketing lg:!heading5xl-marketing text-text-default">
           {title || 'Success stories'}
         </h3>
       </div>
       <Graph className="-mx-10xl">
-        <div className="grid grid-rows-[auto_64px] px-10xl py-10xl gap-5xl">
+        <div className="grid grid-rows-[auto_64px] px-10xl pt-7xl md:!pt-8xl lg:!py-10xl gap-3xl lg:!gap-5xl">
           <GraphItem>
             <SuccessStoryDetailCard
               {...(tabs.find((tb) => tb.id === activeTab) || tabs[0])}
+              extra={
+                <div className="py-3xl flex items-center justify-center md:!hidden">
+                  <Radio.Root
+                    value={activeTab}
+                    className="!flex-row"
+                    onChange={(t) =>
+                      /** @ts-ignore* */
+                      onTabChange?.(tabs.find((tab) => tab.id === t))
+                    }
+                  >
+                    {tabs.map((item) => (
+                      /** @ts-ignore* */
+                      <Radio.Item key={item.id} value={item.id} />
+                    ))}
+                  </Radio.Root>
+                </div>
+              }
+            />
+          </GraphItem>
+          <GraphItem className="md:hidden">
+            <SuccessStoryDetailButton
+              {...(tabs.find((tb) => tb.id === activeTab) || tabs[0])}
+              onClick={() => {}}
+              active
             />
           </GraphItem>
           <div
-            className={cn('grid grid-cols-4 gap-5xl', tabContainerClassName)}
+            className={cn(
+              'hidden md:!grid grid-cols-4 xl:!grid-cols-[256px_224px_224px_224px] 2xl:!grid-cols-4 gap-3xl lg:!gap-5xl',
+              tabContainerClassName
+            )}
           >
             {tabs.map((ss) => (
               <GraphItem key={ss.subContent?.toString()}>

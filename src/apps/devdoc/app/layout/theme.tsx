@@ -39,7 +39,6 @@ function GitTimestamp({ timestamp }: { timestamp: Date }) {
 
 const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
   const { title, frontMatter, pageMap, headings } = pageOpts;
-  console.log(pageOpts);
 
   const { state } = useMenu();
 
@@ -73,8 +72,6 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
 
   const hideSidebar = activeType === 'page';
 
-  console.log(activePath);
-
   return (
     <div className="bg-surface-basic-subdued min-h-screen antialiased">
       <Head>
@@ -100,14 +97,17 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
         {activeThemeContext.layout !== 'raw' ? (
           <Header navitems={config?.headerPrimary} activePath={activePath} />
         ) : (
-          <HeaderSecondary {...config?.headerSecondary} />
+          <HeaderSecondary
+            {...config?.headerSecondary}
+            activePath={activePath}
+          />
         )}
 
         <Container
           className={cn(
             'min-h-[calc(100vh-76px)] flex-row',
             activeThemeContext.layout === 'default'
-              ? 'max-w-[1440px]'
+              ? 'px-3xl md:!px-5xl lg:!px-8xl xl:!px-11xl 2xl:!px-12xl xl:max-w-[1280px] 2xl:max-w-[1440px]'
               : 'max-w-none'
           )}
         >
@@ -116,10 +116,11 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
             fullDirectories={directories}
             headings={headings}
             asPopover={hideSidebar}
+            rawLayout={activeThemeContext.layout === 'raw'}
             includePlaceholder
           />
           {!hideSidebar && (
-            <nav className="order-last w-[226px] max-w-[226px] min-w-[226px] sticky top-[calc(var(--kl-navbar-height))] self-start hidden lg:block">
+            <nav className="order-last w-[230px] max-w-[230px] min-w-[226px] sticky top-[calc(var(--kl-navbar-height))] self-start hidden lg:block">
               <TOC headings={headings} />
             </nav>
           )}
@@ -128,7 +129,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
               className={cn(
                 ' w-full min-w-0 min-h-[calc(100vh-101px)] flex flex-col gap-6xl',
                 !hideSidebar ? 'max-w-[72rem]' : '',
-                { 'md:p-6xl': activeThemeContext.layout === 'default' }
+                { 'md:p-3xl': activeThemeContext.layout === 'default' }
               )}
             >
               <MDXProvider

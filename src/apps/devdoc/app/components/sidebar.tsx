@@ -25,6 +25,8 @@ import { Anchor } from './anchor';
 import Search from './search';
 import useMenu from '../utils/use-menu';
 import { cn } from '../utils/commons';
+import useConfig from '../utils/use-config';
+import { MobileMenu } from './header-secondary';
 
 const TreeState: Record<string, boolean> = Object.create(null);
 
@@ -277,6 +279,7 @@ interface SideBarProps {
   asPopover?: boolean;
   headings: Heading[];
   includePlaceholder: boolean;
+  rawLayout?: boolean;
 }
 
 export function Sidebar({
@@ -284,6 +287,7 @@ export function Sidebar({
   fullDirectories,
   asPopover = false,
   headings,
+  rawLayout,
   includePlaceholder,
 }: SideBarProps): ReactElement {
   const { state: menu, setState: setMenu } = useMenu();
@@ -332,6 +336,7 @@ export function Sidebar({
     setMenu(false);
   }, [router.asPath, setMenu]);
 
+  const { config } = useConfig();
   return (
     <>
       {includePlaceholder && asPopover ? (
@@ -349,8 +354,8 @@ export function Sidebar({
           'kl-sidebar bg-surface-basic-subdued z-40 nextra-sidebar-container flex-col pb-6xl md:pt-0',
           'md:top-[calc(var(--kl-navbar-height))] md:shrink-0 motion-reduce:transform-none',
           'transform-gpu transition-all ease-in-out',
-          'print:hidden',
-          showSidebar ? 'md:w-[284px]' : '',
+          'print:hidden pr-3xl',
+          showSidebar ? 'md:w-[244px]' : '',
           asPopover ? 'md:hidden' : 'flex md:sticky md:self-start',
           menu
             ? 'max-md:[transform:translate3d(0,0,0)]'
@@ -369,10 +374,14 @@ export function Sidebar({
           >
             <div
               className={cn(
-                'overflow-y-hidden pt-6xl overflow-x-hidden hover:overflow-y-auto scrollbar-gutter',
+                'overflow-y-hidden overflow-x-hidden hover:overflow-y-auto scrollbar-gutter',
                 'grow md:h-[calc(100vh-var(--kl-navbar-height))]',
                 {
                   'no-scrollbar': !showSidebar,
+                },
+                {
+                  'pt-2xl': !!rawLayout,
+                  'pt-6xl': !rawLayout,
                 }
               )}
               ref={sidebarRef}
@@ -391,15 +400,19 @@ export function Sidebar({
                   />
                 </Collapse>
               )}
-              {mounted && window.innerWidth < 768 && (
-                <Menu
-                  className="nextra-menu-mobile md:hidden"
-                  // The mobile dropdown menu, shows all the directories.
-                  directories={fullDirectories}
-                  // Always show the anchor links on mobile (`md`).
-                  anchors={anchors}
-                />
-              )}
+              {mounted &&
+                window.innerWidth < 768 &&
+                (rawLayout ? (
+                  <MobileMenu {...config.headerSecondary} />
+                ) : (
+                  <Menu
+                    className="nextra-menu-mobile md:hidden"
+                    // The mobile dropdown menu, shows all the directories.
+                    directories={fullDirectories}
+                    // Always show the anchor links on mobile (`md`).
+                    anchors={anchors}
+                  />
+                ))}
             </div>
           </OnFocusItemContext.Provider>
         </FocusedItemContext.Provider>

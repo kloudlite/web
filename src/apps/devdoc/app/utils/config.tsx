@@ -47,7 +47,7 @@ export default {
   siteTitle: 'Kloudlite',
   logo: (
     <Link href="/">
-      <div className="hidden md:block md:w-[284px]">
+      <div className="hidden md:block">
         <BrandLogo detailed size={28} />
       </div>
       <div className="md:hidden">
@@ -63,15 +63,15 @@ export default {
         className: 'w-[47%] md:w-auto',
         items: [
           {
-            title: 'Kl-DevOps',
+            title: 'DevOps',
             to: 'devops',
           },
           {
-            title: 'Kl-InfraOps',
+            title: 'InfraOps',
             to: 'infraops',
           },
           {
-            title: 'Kl-Distribution',
+            title: 'Distribution',
             to: 'distribution',
           },
         ],
@@ -178,42 +178,48 @@ export default {
     items: [
       {
         title: 'Product',
-        to: 'product',
+        to: '/product',
       },
       {
         title: 'Docs',
-        to: 'docs',
-      },
-      {
-        title: 'Pricing',
-        to: 'pricing',
+        to: '/docs',
       },
       {
         title: 'Help',
-        to: 'help-and-support',
+        to: '/help-and-support',
       },
       {
         title: 'Contact us',
-        to: 'contact-us',
+        to: '/contact-us',
       },
     ],
     extra: (
-      <div className="flex flex-row gap-xl items-center">
-        <Button
-          content="Login"
-          variant="basic"
-          to="https://auth.dev.kloudlite.io/login"
-          LinkComponent={Link}
-          toLabel="href"
-        />
-        <Button
-          content="Signup"
-          variant="primary"
-          to="https://auth.dev.kloudlite.io/signup"
-          LinkComponent={Link}
-          toLabel="href"
-        />
+      <div className="flex flex-col md:!flex-row gap-xl md:items-center mt-6xl md:!mt-0">
+        <div>
+          <Button
+            content="Login"
+            variant="basic"
+            to="https://auth.kloudlite.io/login"
+            LinkComponent={Link}
+            toLabel="href"
+            block
+          />
+        </div>
+        <div>
+          <Button
+            content="Signup"
+            variant="primary"
+            to="https://auth.kloudlite.io/signup"
+            LinkComponent={Link}
+            toLabel="href"
+            block
+          />
+        </div>
       </div>
     ),
+  },
+  urls: {
+    auth: 'auth.kloudlite.io',
+    console: 'console.kloudlite.io',
   },
 } as IConfig;

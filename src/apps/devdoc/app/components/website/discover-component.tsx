@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { cn } from '~/app/utils/commons';
 import { Graph, GraphItem } from '../graph';
 
 interface IFeatureItem {
@@ -28,19 +29,24 @@ interface IDiscover {
     label: string;
     icon: any;
   }[];
+  className?: string;
 }
-const Discover = ({ features, title, desc }: IDiscover) => {
+const Discover = ({ features, title, desc, className }: IDiscover) => {
   return (
     <>
       <div className="flex flex-col gap-3xl text-center">
         <div className="flex flex-col gap-md">
-          <p className="bodyXl-medium text-text-disabled">Salient features</p>
-          <h3 className="heading5xl-marketing text-text-default">{title}</h3>
+          <p className="bodyLg-medium lg:!bodyXl-medium text-text-disabled">
+            Salient features
+          </p>
+          <h3 className="heading3xl-marketing md:!heading4xl-marketing lg:!heading5xl-marketing text-text-default">
+            {title}
+          </h3>
         </div>
-        <p className="bodyXl-medium text-text-soft">{desc}</p>
+        <p className="bodyLg-medium lg:!bodyXl-medium text-text-soft">{desc}</p>
       </div>
       <Graph className="-mx-10xl">
-        <div className="grid grid-cols-4 gap-5xl px-10xl py-10xl">
+        <div className={cn('px-10xl pt-7xl md:!py-8xl lg:!py-10xl', className)}>
           {features.map((feature) => (
             <GraphItem key={feature.label}>
               <FeatureItem {...feature} />
