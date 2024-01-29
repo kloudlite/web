@@ -2,6 +2,8 @@ import { TextInput } from 'kl-design-system/atoms/input';
 import { ArrowRight, GithubLogoFill } from '@jengaicons/react';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import { Button } from 'kl-design-system/atoms/button';
+import Chips from 'kl-design-system/atoms/chips';
 import Container from '~/app/components/container';
 import CodeEditorPlaceholder from '~/app/components/website/code-editor-placeholder';
 import HorizontalTopTab from '~/app/components/website/horizontal-top-tab';
@@ -11,14 +13,13 @@ import ReadyToOps from '~/app/components/website/ready-to-ops';
 import SuccessStories from '~/app/components/website/success-stories';
 import { successStories } from '~/app/utils/dummy-data';
 import consts from '~/app/utils/const';
-import { Button } from 'kl-design-system/atoms/button';
-import Chips from 'kl-design-system/atoms/chips';
 import NodePoolImg from '../../../images/nodepool-simple-to-use.svg';
 import FlexibleImage from '../../../images/flexible-illustration.svg';
 import CostIllustration from '../../../images/cost-illustration.svg';
 import providersImage from '../../../images/infraops/providers.svg';
 import SectionWrapper from '../website/section-wrapper';
 import cover from '../../../images/infraops/cover.svg';
+import Wrapper from '../wrapper';
 
 const AdvantageSection = () => {
   const [selectedTab, setSelectedTab] = useState(
@@ -70,7 +71,7 @@ const AdvantageSection = () => {
   return (
     <HorizontalTopTab
       tabs={consts.infraops.advantages}
-      tabContainerClassName="grid grid-cols-3 gap-3xl lg:!gap-5xl md:!pt-8xl lg:!pt-10xl px-10xl"
+      tabContainerClassName="grid grid-cols-3 gap-3xl lg:!gap-5xl"
       onTabChange={(item) => setSelectedTab(item.id)}
       activeTab={selectedTab}
       tab={getTab()}
@@ -164,28 +165,22 @@ const GetStartedSection = () => {
 
 const DiscoverSection = () => {
   return (
-    <div className="flex flex-col py-6xl 2xl:pt-10xl">
-      <Discover
-        className="grid grid-cols-1 md:!grid-cols-2 lg:!grid-cols-3 2xl:!grid-cols-4 gap-3xl lg:!gap-5xl "
-        title={
-          <>
-            Discover <span className="text-text-primary">InfraOps</span>
-          </>
-        }
-        desc="Dive-in to know how InfraOps can transform your infrastructure management"
-        features={consts.infraops.features}
-      />
-    </div>
+    <Discover
+      className="grid grid-cols-1 md:!grid-cols-2 lg:!grid-cols-3 2xl:!grid-cols-4 3xl:!grid-cols-[352px_320px_320px_320px] gap-3xl lg:!gap-5xl"
+      title={
+        <>
+          Discover <span className="text-text-primary">InfraOps</span>
+        </>
+      }
+      desc="Dive-in to know how InfraOps can transform your infrastructure management"
+      features={consts.infraops.features}
+    />
   );
 };
 
 export const SuccessStorySection = () => {
-  return (
-    <div className="flex flex-col py-6xl md:!py-8xl 2xl:!pt-10xl">
-      {/** @ts-ignore * */}
-      <SuccessStories tabs={successStories} />
-    </div>
-  );
+  // @ts-ignore
+  return <SuccessStories tabs={successStories} />;
 };
 
 const ReadyTo = () => {
@@ -195,15 +190,16 @@ const ReadyTo = () => {
 const InfraRoot = () => {
   return (
     <div>
-      <Container className="relative flex justify-center lg:justify-start">
-        <div className="flex flex-col px-3xl md:!px-5xl lg:!px-8xl xl:!px-11xl 2xl:!px-12xl z-10">
-          <div className="md:absolute inset-0 distribution-cover-graph z-0" />
-          <div className="flex flex-col lg:!flex-row items-center lg:!items-start lg:!gap-10xl lg:!py-10xl 2xl:!py-10xl z-10 text-center lg:!text-left xl:max-w-[1024px] 2xl:max-w-[1120px] box-content">
-            <div className="flex flex-col gap-6xl md:!max-w-[630px] py-6xl md:!py-8xl lg:!py-0">
+      <Wrapper className="relative flex justify-center lg:justify-start py-6xl md:!py-8xl lg:!py-10xl">
+        <div className="flex flex-col z-10 w-full">
+          <div className="md:absolute inset-0 distribution-cover-graph z-0 w-full" />
+          <div className="w-full flex flex-col lg:!flex-row items-center lg:!items-start 2xl:!gap-10xl z-10 text-center lg:!text-left justify-between 3xl:pr-10xl">
+            <div className="flex flex-col gap-6xl md:!max-w-[630px] 2xl:min-w-[630px]">
               <div className="flex flex-col items-center lg:!items-start gap-3xl">
                 <Chips.Chip item="infraops" label="InfraOps" />
                 <h1 className="heading4xl-marketing md:!heading5xl-marketing lg:!heading6xl-marketing text-text-default">
-                  Simple, cost-effective, cloud agnostic
+                  Simple, cost-effective,
+                  <br className="hidden 2xl:!block" /> cloud agnostic
                 </h1>
                 <p className="bodyLg-medium md:!bodyXl-medium text-text-soft">
                   The freedom of cloud agnosticism with effortless
@@ -230,24 +226,19 @@ const InfraRoot = () => {
                 </div>
               </div>
             </div>
-            <div className="z-10 pb-6xl">
-              <img
-                src={cover.src}
-                className="lg:scale-[1.3] md:min-w-[394px] lg:pt-5xl"
-              />
+            <div className="z-10 relative lg:min-w-[448px] lg:top-[10%] 2xl:!top-0 pt-6xl md:!pt-6xl lg:!py-0">
+              <img src={cover.src} />
             </div>
           </div>
         </div>
-      </Container>
-      <Container className="flex flex-col">
-        <SectionWrapper>
-          <AdvantageSection />
-          <DiscoverSection />
-          <GetStartedSection />
-          <SuccessStorySection />
-        </SectionWrapper>
+      </Wrapper>
+      <Wrapper>
+        <AdvantageSection />
+        <DiscoverSection />
+        <GetStartedSection />
+        <SuccessStorySection />
         <ReadyTo />
-      </Container>
+      </Wrapper>
     </div>
   );
 };

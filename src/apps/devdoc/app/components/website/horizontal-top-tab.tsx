@@ -5,7 +5,8 @@ import { Button } from 'kl-design-system/atoms/button';
 import { ArrowRight } from '@jengaicons/react';
 import Radio from 'kl-design-system/atoms/radio';
 import { cn } from '~/app/utils/commons';
-import { Graph, GraphItem } from '../graph';
+import { Graph, GraphExtended, GraphItem } from '../graph';
+import SectionWrapper from './section-wrapper';
 
 interface IHorizontalTopTabItem {
   label: string;
@@ -23,7 +24,7 @@ export const AdvantageItem = ({
 }: IHorizontalTopTabItem) => {
   return (
     <div
-      className="flex flex-col gap-2xl p-3xl lg:gap-4xl lg:!py-5xl lg:!px-4xl bg-surface-basic-default relative cursor-pointer xl:min-h-[192px] xl:max-h-[192px]"
+      className="flex flex-col gap-2xl p-3xl lg:gap-4xl lg:!py-5xl lg:!px-4xl bg-surface-basic-default relative cursor-pointer xl:min-h-[192px] xl:max-h-[192px] 3xl:min-h-[160px] 3xl:!max-h-[160px]"
       onClick={onClick}
     >
       <h5
@@ -69,7 +70,7 @@ const HorizontalTopTab = ({
   tabContainerClassName,
 }: IHorizontalTopTab) => {
   return (
-    <div className="flex flex-col py-6xl 2xl:pt-10xl">
+    <SectionWrapper className="flex-col">
       <div className="flex flex-col md:!flex-row gap-3xl md:!gap-8xl lg:!gap-10xl">
         <div className="flex flex-col gap-md flex-1">
           <p className="bodyLg-medium lg:!bodyXl-medium text-text-disabled">
@@ -87,58 +88,61 @@ const HorizontalTopTab = ({
           <Button content="Read the docs" suffix={<ArrowRight />} size="lg" />
         </div>
       </div>
-      <Graph className="-mx-10xl pt-7xl flex flex-col gap-3xl lg:!gap-5xl md:!pt-0">
-        {/**
+      <GraphExtended>
+        <div className="flex flex-col gap-3xl lg:!gap-5xl">
+          {' '}
+          {/**
             Desktop mode 
        * */}
-        <div className={cn(tabContainerClassName, 'hidden md:!grid')}>
-          {tabs.map((tab) => (
-            <GraphItem key={tab.id}>
-              <AdvantageItem
-                {...tab}
-                onClick={() => onTabChange(tab)}
-                active={activeTab === tab.id}
-              />
-            </GraphItem>
-          ))}
-        </div>
-        {/**
+          <div className={cn(tabContainerClassName, 'hidden md:!grid')}>
+            {tabs.map((tab) => (
+              <GraphItem key={tab.id}>
+                <AdvantageItem
+                  {...tab}
+                  onClick={() => onTabChange(tab)}
+                  active={activeTab === tab.id}
+                />
+              </GraphItem>
+            ))}
+          </div>
+          {/**
            Mobile mode 
        * */}
-        <div className="px-10xl grid grid-rows-[auto_50px] md:!hidden">
-          <GraphItem>
-            {/** @ts-ignore* */}
-            <AdvantageItem
-              {...(tabs.find((t) => t.id === activeTab) || {})}
-              active
-              onClick={() => {}}
-            />
-          </GraphItem>
-          <GraphItem className="flex items-center justify-center">
-            <div className="flex items-center justify-center">
-              <Radio.Root
-                value={activeTab}
-                className="!flex-row"
-                /** @ts-ignore* */
-                onChange={(t) => onTabChange(tabs.find((tab) => tab.id === t))}
-              >
-                {tabs.map((item) => (
+          <div className="grid grid-rows-[auto_50px] md:!hidden">
+            <GraphItem>
+              {/** @ts-ignore* */}
+              <AdvantageItem
+                {...(tabs.find((t) => t.id === activeTab) || {})}
+                active
+                onClick={() => { }}
+              />
+            </GraphItem>
+            <GraphItem className="flex items-center justify-center">
+              <div className="flex items-center justify-center">
+                <Radio.Root
+                  value={activeTab}
+                  className="!flex-row"
                   /** @ts-ignore* */
-                  <Radio.Item key={item.id} value={item.id} />
-                ))}
-              </Radio.Root>
-            </div>
-          </GraphItem>
-        </div>
-        <div className="px-10xl pb-6xl md:!pb-8xl lg:!pb-10xl">
+                  onChange={(t) =>
+                    onTabChange(tabs.find((tab) => tab.id === t))
+                  }
+                >
+                  {tabs.map((item) => (
+                    /** @ts-ignore* */
+                    <Radio.Item key={item.id} value={item.id} />
+                  ))}
+                </Radio.Root>
+              </div>
+            </GraphItem>
+          </div>
           <GraphItem>
             <div className="bg-surface-basic-subdued xl:min-h-[480px] xl:max-h-[480px]">
               {tab}
             </div>
           </GraphItem>
-        </div>
-      </Graph>
-    </div>
+        </div>{' '}
+      </GraphExtended>
+    </SectionWrapper>
   );
 };
 

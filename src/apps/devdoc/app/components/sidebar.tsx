@@ -403,6 +403,7 @@ export function Sidebar({
               {mounted &&
                 window.innerWidth < 768 &&
                 (rawLayout ? (
+                  // @ts-ignore
                   <MobileMenu {...config.headerSecondary} />
                 ) : (
                   <Menu

@@ -92,11 +92,20 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
           type="font/woff2"
           crossOrigin="anonymous"
         />
+        {/** Hubspot* */}
+        <script
+          type="text/javascript"
+          id="hs-script-loader"
+          async
+          defer
+          src="//js.hs-scripts.com/22566314.js"
+        />
       </Head>
       <ActiveAnchorProvider>
         {activeThemeContext.layout !== 'raw' ? (
           <Header navitems={config?.headerPrimary} activePath={activePath} />
         ) : (
+          // @ts-ignore
           <HeaderSecondary
             {...config?.headerSecondary}
             activePath={activePath}
@@ -124,7 +133,12 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
               <TOC headings={headings} />
             </nav>
           )}
-          <article className="flex-1 overflow-x-hidden pt-xl">
+          <article
+            className={cn(
+              'flex-1 overflow-x-hidden',
+              activeThemeContext.layout === 'raw' ? '' : 'pt-xl'
+            )}
+          >
             <main
               className={cn(
                 ' w-full min-w-0 min-h-[calc(100vh-101px)] flex flex-col gap-6xl',

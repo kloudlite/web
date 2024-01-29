@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import Container from '~/app/components/container';
 import Discover from '~/app/components/website/discover-component';
 import ReadyToOps from '~/app/components/website/ready-to-ops';
 import GetStarted from '~/app/components/website/get-started';
@@ -14,22 +13,20 @@ import Cover from '../../../images/distribution/distribution-cover.svg';
 import BuildDis from '../../../images/distribution/build-distribution.svg';
 import CreateDis from '../../../images/distribution/create-distribution.svg';
 import DistributeDis from '../../../images/distribution/distribute-distribution.svg';
-import SectionWrapper from '../website/section-wrapper';
+import Wrapper from '../wrapper';
 
 const DiscoverSection = () => {
   return (
-    <div className="flex flex-col 2xl:pt-10xl">
-      <Discover
-        className="grid grid-cols-1 md:!grid-cols-2 lg:!grid-cols-3 2xl:!grid-cols-4 gap-3xl lg:!gap-5xl "
-        title={
-          <>
-            Discover <span className="text-text-primary">Distribution</span>
-          </>
-        }
-        desc="Dive-in to know how Distribution can transform the container image management"
-        features={consts.distribution.features}
-      />
-    </div>
+    <Discover
+      className="grid grid-cols-1 md:!grid-cols-2 lg:!grid-cols-3 2xl:!grid-cols-4 3xl:!grid-cols-[352px_320px_320px_320px] gap-3xl lg:!gap-5xl"
+      title={
+        <>
+          Discover <span className="text-text-primary">Distribution</span>
+        </>
+      }
+      desc="Dive-in to know how Distribution can transform the container image management"
+      features={consts.distribution.features}
+    />
   );
 };
 
@@ -41,20 +38,20 @@ const GetStartedSection = () => {
     switch (selectedTab) {
       case 'push':
         return (
-          <div className="relative h-full overflow-hidden flex items-end justify-center lg:!items-start lg:!justify-start">
+          <div className="relative h-full overflow-hidden flex items-end justify-center lg:!items-start lg:!justify-start 3xl:!justify-center">
             <img alt="push" src={BuildDis.src} />
           </div>
         );
       case 'distribute':
         return (
-          <div className="relative h-full overflow-hidden flex items-center justify-center lg:!items-start lg:!justify-start">
+          <div className="relative h-full overflow-hidden flex items-center justify-center lg:!items-start lg:!justify-start 3xl:!justify-center">
             <img alt="distribute" src={DistributeDis.src} />
           </div>
         );
       case 'create':
       default:
         return (
-          <div className="relative h-full overflow-hidden flex items-end justify-center lg:!items-start lg:!justify-start">
+          <div className="relative h-full overflow-hidden flex items-end justify-center lg:!items-start lg:!justify-start 3xl:!justify-center">
             <img
               alt="create"
               src={CreateDis.src}
@@ -78,10 +75,8 @@ const GetStartedSection = () => {
 
 const SuccessStorySection = () => {
   return (
-    <div className="flex flex-col 2xl:pt-10xl">
-      {/** @ts-ignore * */}
-      <SuccessStories tabs={successStories} />
-    </div>
+    // @ts-ignore
+    <SuccessStories tabs={successStories} />
   );
 };
 
@@ -92,11 +87,11 @@ const ReadyTo = () => {
 const DistributionRoot = () => {
   return (
     <div>
-      <Container className="relative flex justify-center lg:justify-start">
-        <div className="flex flex-col px-3xl lg:!px-8xl 2xl:!px-12xl z-10">
-          <div className="md:absolute inset-0 distribution-cover-graph z-0" />
-          <div className="flex flex-col lg:!flex-row items-center lg:!items-start lg:!gap-10xl lg:!py-10xl 2xl:!py-10xl z-10 text-center lg:!text-left">
-            <div className="flex flex-col gap-6xl md:!max-w-[630px] py-6xl md:!py-8xl lg:!py-0">
+      <Wrapper className="relative flex justify-center lg:justify-start py-6xl md:!py-8xl lg:!py-10xl">
+        <div className="flex flex-col z-10 w-full">
+          <div className="md:absolute inset-0 distribution-cover-graph z-0 w-full" />
+          <div className="w-full flex flex-col lg:!flex-row items-center lg:!items-start lg:!gap-10xl z-10 text-center lg:!text-left justify-between 3xl:pr-10xl">
+            <div className="flex flex-col gap-6xl md:!max-w-[630px]">
               <div className="flex flex-col items-center lg:!items-start gap-3xl">
                 <Chips.Chip item="distribution" label="Distributions" />
                 <h1 className="heading4xl-marketing md:!heading5xl-marketing lg:!heading6xl-marketing text-text-default">
@@ -126,20 +121,18 @@ const DistributionRoot = () => {
                 </div>
               </div>
             </div>
-            <div className="z-10 pb-6xl">
-              <img src={Cover.src} className="lg:scale-[1.3]" />
+            <div className="z-10">
+              <img src={Cover.src} />
             </div>
           </div>
         </div>
-      </Container>
-      <Container className="flex flex-col">
-        <SectionWrapper>
-          <DiscoverSection />
-          <GetStartedSection />
-          <SuccessStorySection />
-        </SectionWrapper>
+      </Wrapper>
+      <Wrapper>
+        <DiscoverSection />
+        <GetStartedSection />
+        <SuccessStorySection />
         <ReadyTo />
-      </Container>
+      </Wrapper>
     </div>
   );
 };

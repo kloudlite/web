@@ -39,6 +39,14 @@ export const Graph = ({
   );
 };
 
+export const GraphExtended = ({ children }: { children?: ReactNode }) => {
+  return (
+    <Graph className="-mx-11xl 3xl:!-mx-12xl py-7xl md:!py-8xl lg:!py-10xl">
+      <div className="px-11xl 3xl:!px-12xl">{children}</div>
+    </Graph>
+  );
+};
+
 export const GraphItem = ({
   className,
   children,
