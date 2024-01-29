@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Button } from 'kl-design-system/atoms/button';
 import Chips from 'kl-design-system/atoms/chips';
-import Container from '~/app/components/container';
 import CodeEditorPlaceholder from '~/app/components/website/code-editor-placeholder';
 import HorizontalTopTab from '~/app/components/website/horizontal-top-tab';
 import Discover from '~/app/components/website/discover-component';
@@ -17,7 +16,6 @@ import NodePoolImg from '../../../images/nodepool-simple-to-use.svg';
 import FlexibleImage from '../../../images/flexible-illustration.svg';
 import CostIllustration from '../../../images/cost-illustration.svg';
 import providersImage from '../../../images/infraops/providers.svg';
-import SectionWrapper from '../website/section-wrapper';
 import cover from '../../../images/infraops/cover.svg';
 import Wrapper from '../wrapper';
 

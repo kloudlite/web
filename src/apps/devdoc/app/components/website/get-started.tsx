@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import Radio from 'kl-design-system/atoms/radio';
 import { cn } from '~/app/utils/commons';
-import { Graph, GraphExtended, GraphItem } from '../graph';
+import { GraphExtended, GraphItem } from '../graph';
 import SectionWrapper from './section-wrapper';
 
 interface IGetStartedItem {
@@ -78,7 +78,7 @@ const GetStarted = ({
           <GraphItem className="md:hidden">
             <GetStartedItem
               {...(tabs.find((t) => t.id === activeTab) || {})}
-              onClick={() => { }}
+              onClick={() => {}}
               active
             />
           </GraphItem>

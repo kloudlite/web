@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { cn } from '~/app/utils/commons';
-import { Graph, GraphExtended, GraphItem } from '../graph';
+import { GraphExtended, GraphItem } from '../graph';
 import SectionWrapper from './section-wrapper';
 
 interface IFeatureItem {

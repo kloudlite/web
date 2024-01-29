@@ -212,10 +212,22 @@ export default {
       },
     ],
     extra: (
-      <div className="flex flex-col md:!flex-row gap-2xl md:items-center mt-6xl md:!mt-0">
-        <a href={gitUrl} aria-label="kloudlite-github">
+      <div className="flex flex-col md:!flex-row gap-2xl md:items-center mt-6xl md:!mt-0 px-2xl md:!px-0">
+        <a
+          href={gitUrl}
+          aria-label="kloudlite-github"
+          className="hidden md:!block"
+        >
           <GithubLogoFill size={24} />
         </a>
+        <div className="md:!hidden">
+          <Button
+            prefix={<GithubLogoFill />}
+            content="Github"
+            variant="basic"
+            block
+          />
+        </div>
         <div>
           <Button
             content="Contact us"
