@@ -7,7 +7,6 @@ import { ReactNode } from 'react';
 import ProgressTracker from '~/app/components/progress-tracker';
 import { Graph, GraphItem } from '~/app/components/graph';
 import ReadyToOps from '~/app/components/website/ready-to-ops';
-import Container from '~/app/components/container';
 
 import { cn } from '~/app/utils/commons';
 import illustration from '../../../images/illustraion1.svg';
@@ -15,27 +14,31 @@ import devopsIcon from '../../../images/home/devops.svg';
 import infraopsIcon from '../../../images/home/infraops.svg';
 import distributionIcon from '../../../images/home/distribution.svg';
 import SectionWrapper from '../website/section-wrapper';
+import Wrapper from '../wrapper';
 
 const suites = [
   {
     title: 'DevOps',
     desc: 'Environments crafted for development and production workloads',
-    img: <img src={devopsIcon.src} />,
-    imgPad: 'w-[160px]',
+    img: <img src={devopsIcon.src} className="" />,
+    imgPad:
+      'p-3xl md:!max-h-[200px] md:!min-h-[200px] lg:!max-h-[244px] 3xl:!min-h-[280px] lg:!py-5xl 3xl:!py-4xl box-border w-auto',
     to: 'devops',
   },
   {
     title: 'InfraOps',
     desc: 'Cloud agnostic & cost effective infrastructure management at your fingertips',
-    imgPad: 'w-[180px]',
-    img: <img src={infraopsIcon.src} />,
+    imgPad:
+      'p-3xl md:!max-h-[200px] md:!min-h-[200px] lg:!max-h-[244px] 3xl:!min-h-[280px] lg:!py-5xl 3xl:!py-4xl box-border w-auto',
+    img: <img src={infraopsIcon.src} className="" />,
     to: 'infraops',
   },
   {
     title: 'Distribution',
     desc: 'Build system and package registries to build and ship your environments',
-    imgPad: 'w-[160px]',
-    img: <img src={distributionIcon.src} />,
+    imgPad:
+      'p-3xl md:!max-h-[200px] md:!min-h-[200px] lg:!max-h-[244px] 3xl:!min-h-[280px] lg:!py-5xl 3xl:!py-4xl box-border w-auto',
+    img: <img src={distributionIcon.src} className="" />,
     to: 'distribution',
   },
 ];
@@ -92,13 +95,13 @@ const messages = [
 
 const tutorials = [
   {
-    title: 'Get started with Kl-InfraOps',
+    title: 'Get started with InfraOps',
   },
   {
-    title: 'Keep building with Kl-DevOps',
+    title: 'Keep building with DevOps',
   },
   {
-    title: 'Explore further into Kl-Distribution',
+    title: 'Explore further into Distribution',
   },
 ];
 
@@ -130,7 +133,7 @@ const TeamTaskCard = ({
   title: ReactNode;
 }) => {
   return (
-    <div className="bg-surface-basic-subdued p-lg md:!px-2xl md:!py-xl flex flex-col-reverse xl:!flex-row xl:!items-center gap-lg md:!gap-2xl">
+    <div className="bg-surface-basic-subdued p-lg md:!px-2xl md:!py-xl flex flex-col md:!flex-col-reverse xl:!flex-row xl:!items-center gap-lg md:!gap-2xl">
       <div className="flex flex-col gap-lg flex-1">
         <div
           className="h-lg w-[44px] rounded-full"
@@ -140,10 +143,12 @@ const TeamTaskCard = ({
           {title}
         </div>
       </div>
-      <div className="headingMd text-text-default block md:!hidden">
+      <div className="headingSm text-text-default block md:!hidden">
         {title}
       </div>
-      <Avatar color="one" size="md" />
+      <div className="hidden md:!block">
+        <Avatar color="one" size="md" />
+      </div>
     </div>
   );
 };
@@ -319,18 +324,13 @@ const SuiteCard = ({
     <Link
       href={to}
       key={title}
-      className="bg-surface-basic-default flex flex-col h-full md:min-h-[384px] xl:max-h-[416px] xl:min-h-[416px]"
+      className="bg-surface-basic-default flex flex-col h-full md:min-h-[360px] xl:max-h-[416px] xl:min-h-[416px] 2xl:!min-h-[448px]"
     >
-      <span
-        className={cn(
-          'min-h-[224px] self-center flex items-center justify-center',
-          imgPad
-        )}
-      >
+      <span className={cn('self-center flex justify-center', imgPad)}>
         {img}
       </span>
       <div className="flex flex-col gap-3xl px-4xl pb-4xl md:!p-xl md:!pt-0 xl:!px-4xl xl:!pb-4xl">
-        <span className="heading3xl-marketing xl:!heading4xl-marketing text-text-default">
+        <span className="heading2xl-marketing lg:!heading3xl-marketing text-text-default">
           {title}
         </span>
         <span className="bodyLg-medium xl:!bodyXl-medium text-text-strong line-clamp-3">
@@ -343,12 +343,12 @@ const SuiteCard = ({
 
 const SuiteSection = () => {
   return (
-    <SectionWrapper className="gap-7xl">
+    <div className="flex flex-col pt-7xl md:!pt-8xl xl:!pt-10xl">
       <h2 className="heading3xl-marketing md:!heading4xl-marketing xl:!heading5xl-marketing text-text-default text-center">
         Dive in: Kloudlite suite
       </h2>
       <Graph className="-mx-10xl">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5xl px-10xl md:!py-8xl xl:!py-10xl">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5xl px-10xl py-7xl md:!py-8xl xl:!py-10xl">
           {suites.map((suite) => (
             <GraphItem key={suite.title}>
               <SuiteCard {...suite} />
@@ -356,16 +356,16 @@ const SuiteSection = () => {
           ))}
         </div>
       </Graph>
-    </SectionWrapper>
+    </div>
   );
 };
 
 const TeamTaskSection = () => {
   return (
-    <SectionWrapper className="md:!flex-row lg:m-0 xl:m-auto lg:!px-8xl">
-      <div className="flex flex-col gap-3xl md:gap-8xl justify-center md:max-w-[384px] mr-10xl">
+    <div className="flex flex-col md:!flex-row pt-7xl md:!pt-8xl xl:!pt-10xl">
+      <div className="flex flex-col gap-3xl md:gap-8xl justify-center md:max-w-[384px] 3xl:max-w-[512px] mr-10xl 3xl:mr-12xl">
         <h2 className="heading3xl-marketing md:!heading4xl-marketing xl:!heading5xl-marketing text-text-default">
-          Why <br className="hidden md:!block" />
+          Why <br className="hidden md:!block 3xl:!hidden" />
           Kloudlite?
         </h2>
         <p className="bodyLg-medium xl:!bodyXl-medium text-text-soft">
@@ -406,18 +406,18 @@ const TeamTaskSection = () => {
           </div>
         </Graph>
       </div>
-    </SectionWrapper>
+    </div>
   );
 };
 
 const _DontBelieve = () => {
   return (
-    <SectionWrapper className="gap-7xl">
+    <SectionWrapper className="gap-7xl md:!gap-8xl">
       <h2 className="heading3xl-marketing md:!heading4xl-marketing xl:!heading5xl-marketing text-text-default text-center">
         Don&apos;t believe? Read for yourself..
       </h2>
       <Graph className="-mx-10xl" blurSize="md" responsive>
-        <div className="grid grid-cols-1 md:!grid-cols-3 gap-5xl px-10xl xl:py-10xl">
+        <div className="grid grid-cols-1 md:!grid-cols-3 gap-5xl px-10xl">
           {messages.map((message) => (
             <GraphItem key={message.title}>
               <MessageCard {...message} />
@@ -431,12 +431,12 @@ const _DontBelieve = () => {
 
 const Exploring = () => {
   return (
-    <SectionWrapper className="gap-7xl">
+    <div className="flex flex-col pt-7xl md:!pt-8xl xl:!pt-10xl">
       <h2 className="heading3xl-marketing md:!heading4xl-marketing xl:!heading5xl-marketing text-text-default text-center">
         Unveil the untold - Keep exploring
       </h2>
       <Graph className="-mx-10xl" responsive>
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-[480px_512px] 2xl:grid-cols-[544px_544px] gap-3xl xl:!gap-5xl px-10xl xl:py-10xl">
+        <div className="grid grid-cols-1 md:!grid-cols-2 xl:!grid-cols-[480px_512px] 2xl:!grid-cols-[544px_544px] 3xl:!grid-cols-[672px_704px] gap-3xl xl:!gap-5xl px-10xl py-7xl md:!py-8xl xl:!py-10xl">
           <GraphItem>
             <TutorialCard />
           </GraphItem>
@@ -451,7 +451,7 @@ const Exploring = () => {
           </GraphItem>
         </div>
       </Graph>
-    </SectionWrapper>
+    </div>
   );
 };
 
@@ -461,20 +461,20 @@ const ReadyTo = () => {
 
 const _PartnerSection = () => {
   return (
-    <SectionWrapper className="py-8xl px-5xl flex-col gap-6xl">
+    <div className="py-8xl px-5xl flex-col gap-6xl">
       <p className="headingMd-marketing md:!headingLg-marketing text-text-strong text-center">
         Join the cult of our early adopters, and discover the power of Kloudlite
       </p>
       <Partners />
-    </SectionWrapper>
+    </div>
   );
 };
 
 const IndexRoot = () => {
   return (
     <div>
-      <Container className="flex flex-col">
-        <div className="px-3xl md:!px-5xl lg:!px-8xl xl:!px-11xl 2xl:!px-12xl py-6xl md:!pt-10xl">
+      <Wrapper className="flex flex-col py-6xl md:!pb-8xl md:!pt-11xl lg:!pt-[158px]">
+        <div className="w-full">
           <div className="flex flex-col gap-3xl text-center items-center">
             <h1 className="heading3xl-marketing md:!heading5xl-marketing xl:!heading6xl-marketing text-text-default text-center md:!w-[830px]">
               <span>Opensource </span>
@@ -487,7 +487,7 @@ const IndexRoot = () => {
               </span>{' '}
               <br /> platform engineering system
             </h1>
-            <p className="bodyLg-medium md:!bodyXl-medium text-text-soft text-center md:!w-[528px] xl:!w-[806px]">
+            <p className="bodyLg-medium md:!bodyXl-medium text-text-soft text-center max-w-[528px] lg:!w-[688px] lg:!max-w-[688px]">
               Cloud agnostic platform designed for developers & platform
               engineers to ease code to cloud journey.
             </p>
@@ -514,7 +514,7 @@ const IndexRoot = () => {
             </div>
           </div>
         </div>
-        <div className="w-full">
+        <div className="w-full pb-6xl md:!pb-8xl 2xl:!pb-10xl 3xl:!pb-11xl">
           <img
             alt="illustration"
             src={illustration.src}
@@ -527,7 +527,7 @@ const IndexRoot = () => {
         {/** <DontBelieve />* */}
         <Exploring />
         <ReadyTo />
-      </Container>
+      </Wrapper>
     </div>
   );
 };

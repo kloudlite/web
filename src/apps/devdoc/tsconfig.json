@@ -34,6 +34,9 @@
       "~/app/*": [
         "./app/*"
       ],
+      "~/services/*": [
+        "./services/*"
+      ],
       "flexsearch": [
         "./node_modules/@types/flexsearch"
       ]

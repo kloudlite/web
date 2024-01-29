@@ -14,7 +14,10 @@ const ContactRoot = () => {
         </p>
       </div>
       <div className="px-3xl md:!px-5xl lg:!px-8xl xl:!px-11xl 2xl:px-12xl py-6xl md:!py-8xl xl:!py-10xl gap-5xl md:!gap-8xl xl:!gap-10xl flex flex-col lg:!flex-row w-full">
-        <div className="flex flex-col gap-5xl flex-1 md:px-8xl lg:!px-0">
+        <form
+          action="/api/request-demo"
+          className="flex flex-col gap-5xl flex-1 md:px-8xl lg:!px-0"
+        >
           <div className="flex flex-col gap-3xl">
             <TextInput label="Full name" size="lg" />
             <div className="flex flex-col md:!flex-row gap-3xl">
@@ -36,9 +39,9 @@ const ContactRoot = () => {
             <TextArea label="Message" />
           </div>
           <div className="w-full md:!w-fit">
-            <Button content="Request demo" size="lg" block />
+            <Button type="submit" content="Request demo" size="lg" block />
           </div>
-        </div>
+        </form>
         <div className="h-xs lg:!h-auto lg:!w-xs bg-border-default" />
         <div className="flex-1 flex flex-col md:!flex-row lg:!flex-col gap-7xl md:!gap-10xl justify-center md:!justify-between lg:!justify-center lg:!max-w-[300px]">
           <div className="flex flex-col gap-2xl">

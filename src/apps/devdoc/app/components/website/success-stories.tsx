@@ -4,7 +4,8 @@ import { ArrowRight } from '@jengaicons/react';
 import Image from 'next/image';
 import Radio from 'kl-design-system/atoms/radio';
 import { cn } from '~/app/utils/commons';
-import { Graph, GraphItem } from '../graph';
+import { Graph, GraphExtended, GraphItem } from '../graph';
+import SectionWrapper from './section-wrapper';
 
 type ISuccessStoryButton = { logo: any; onClick: () => void; active: boolean };
 export const SuccessStoryDetailButton = ({
@@ -42,7 +43,7 @@ export const SuccessStoryDetailCard = ({
   extra,
 }: ISuccessStoryCard) => {
   return (
-    <div className="bg-surface-basic-default p-3xl md:!p-5xl flex flex-col md:!flex-row md:!gap-7xl md:max-h-[288px]">
+    <div className="bg-surface-basic-default p-3xl md:!p-5xl flex flex-col md:!flex-row md:!gap-7xl md:max-h-[288px] h-full">
       <div className="flex flex-col gap-3xl pb-3xl md:!pb-0 md:!gap-5xl flex-1">
         <div className="flex flex-col gap-3xl">
           <p className="bodyLg text-text-soft line-clamp-5">{content}</p>
@@ -85,7 +86,7 @@ const SuccessStories = ({
   tabContainerClassName,
 }: ISuccessStory) => {
   return (
-    <>
+    <SectionWrapper className="flex-col">
       <div className="flex flex-col gap-md text-center">
         <p className="bodyLg-medium lg:!bodyXl-medium text-text-disabled">
           Case study
@@ -94,8 +95,8 @@ const SuccessStories = ({
           {title || 'Success stories'}
         </h3>
       </div>
-      <Graph className="-mx-10xl">
-        <div className="grid grid-rows-[auto_64px] px-10xl pt-7xl md:!pt-8xl lg:!py-10xl gap-3xl lg:!gap-5xl">
+      <GraphExtended>
+        <div className="grid grid-rows-[auto_64px] 3xl:grid-rows-[288px_64px] gap-3xl lg:!gap-5xl">
           <GraphItem>
             <SuccessStoryDetailCard
               {...(tabs.find((tb) => tb.id === activeTab) || tabs[0])}
@@ -121,13 +122,13 @@ const SuccessStories = ({
           <GraphItem className="md:hidden">
             <SuccessStoryDetailButton
               {...(tabs.find((tb) => tb.id === activeTab) || tabs[0])}
-              onClick={() => {}}
+              onClick={() => { }}
               active
             />
           </GraphItem>
           <div
             className={cn(
-              'hidden md:!grid grid-cols-4 xl:!grid-cols-[256px_224px_224px_224px] 2xl:!grid-cols-4 gap-3xl lg:!gap-5xl',
+              'hidden md:!grid grid-cols-4 xl:!grid-cols-[256px_224px_224px_224px] 2xl:!grid-cols-4 3xl:!grid-cols-[352px_320px_320px_320px] gap-3xl lg:!gap-5xl',
               tabContainerClassName
             )}
           >
@@ -142,8 +143,8 @@ const SuccessStories = ({
             ))}
           </div>
         </div>
-      </Graph>
-    </>
+      </GraphExtended>
+    </SectionWrapper>
   );
 };
 
