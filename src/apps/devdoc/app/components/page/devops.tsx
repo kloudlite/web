@@ -133,7 +133,7 @@ export const GetStartedSection = () => {
   );
 };
 
-export const SuccessStorySection = () => {
+const _SuccessStorySection = () => {
   return (
     // @ts-ignore
     <SuccessStories tabs={successStories} />
@@ -192,7 +192,6 @@ const DevopsPage = () => {
         <AdvantageSection />
         <DiscoverSection />
         <GetStartedSection />
-        <SuccessStorySection />
         <ReadyTo />
       </Wrapper>
     </div>

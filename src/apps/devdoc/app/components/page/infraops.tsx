@@ -176,7 +176,7 @@ const DiscoverSection = () => {
   );
 };
 
-export const SuccessStorySection = () => {
+const _SuccessStorySection = () => {
   // @ts-ignore
   return <SuccessStories tabs={successStories} />;
 };
@@ -234,7 +234,6 @@ const InfraRoot = () => {
         <AdvantageSection />
         <DiscoverSection />
         <GetStartedSection />
-        <SuccessStorySection />
         <ReadyTo />
       </Wrapper>
     </div>
