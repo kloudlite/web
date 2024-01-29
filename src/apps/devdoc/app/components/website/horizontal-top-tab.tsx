@@ -5,7 +5,7 @@ import { Button } from 'kl-design-system/atoms/button';
 import { ArrowRight } from '@jengaicons/react';
 import Radio from 'kl-design-system/atoms/radio';
 import { cn } from '~/app/utils/commons';
-import { Graph, GraphExtended, GraphItem } from '../graph';
+import { GraphExtended, GraphItem } from '../graph';
 import SectionWrapper from './section-wrapper';
 
 interface IHorizontalTopTabItem {
@@ -114,7 +114,7 @@ const HorizontalTopTab = ({
               <AdvantageItem
                 {...(tabs.find((t) => t.id === activeTab) || {})}
                 active
-                onClick={() => { }}
+                onClick={() => {}}
               />
             </GraphItem>
             <GraphItem className="flex items-center justify-center">
@@ -124,6 +124,7 @@ const HorizontalTopTab = ({
                   className="!flex-row"
                   /** @ts-ignore* */
                   onChange={(t) =>
+                    // @ts-ignore
                     onTabChange(tabs.find((tab) => tab.id === t))
                   }
                 >

@@ -1,11 +1,11 @@
-import Container from '~/app/components/container';
 import { Button } from 'kl-design-system/atoms/button';
 import { TextInput, TextArea } from 'kl-design-system/atoms/input';
+import Wrapper from '../wrapper';
 
 const ContactRoot = () => {
   return (
-    <Container className="relative flex flex-col items-center">
-      <div className="px-3xl md:!px-5xl lg:!px-8xl xl:!px-11xl 2xl:px-12xl pt-6xl md:!pt-8xl xl:!pt-10xl flex flex-col gap-3xl text-center">
+    <Wrapper className="relative flex flex-col items-center py-6xl md:!py-8xl lg:!py-10xl gap-6xl md:!gap-8xl xl:!gap-10xl">
+      <div className="flex flex-col gap-3xl text-center">
         <h1 className="heading4xl-marketing md:!heading5xl-marketing lg:!heading6xl-marketing text-text-default">
           Contact us
         </h1>
@@ -13,7 +13,7 @@ const ContactRoot = () => {
           Get in touch and let us know how we can help.
         </p>
       </div>
-      <div className="px-3xl md:!px-5xl lg:!px-8xl xl:!px-11xl 2xl:px-12xl py-6xl md:!py-8xl xl:!py-10xl gap-5xl md:!gap-8xl xl:!gap-10xl flex flex-col lg:!flex-row w-full">
+      <div className="gap-5xl md:!gap-8xl xl:!gap-10xl flex flex-col lg:!flex-row w-full">
         <form
           action="/api/request-demo"
           className="flex flex-col gap-5xl flex-1 md:px-8xl lg:!px-0"
@@ -64,7 +64,7 @@ const ContactRoot = () => {
           </div>
         </div>
       </div>
-    </Container>
+    </Wrapper>
   );
 };
 

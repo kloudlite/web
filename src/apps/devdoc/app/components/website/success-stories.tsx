@@ -4,7 +4,7 @@ import { ArrowRight } from '@jengaicons/react';
 import Image from 'next/image';
 import Radio from 'kl-design-system/atoms/radio';
 import { cn } from '~/app/utils/commons';
-import { Graph, GraphExtended, GraphItem } from '../graph';
+import { GraphExtended, GraphItem } from '../graph';
 import SectionWrapper from './section-wrapper';
 
 type ISuccessStoryButton = { logo: any; onClick: () => void; active: boolean };
@@ -122,7 +122,7 @@ const SuccessStories = ({
           <GraphItem className="md:hidden">
             <SuccessStoryDetailButton
               {...(tabs.find((tb) => tb.id === activeTab) || tabs[0])}
-              onClick={() => { }}
+              onClick={() => {}}
               active
             />
           </GraphItem>

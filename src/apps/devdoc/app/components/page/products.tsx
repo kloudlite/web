@@ -2,16 +2,15 @@ import { CheckCircleFill, ArrowRight, Stack } from '@jengaicons/react';
 import { Button } from 'kl-design-system/atoms/button';
 import Image from 'next/image';
 import { ReactNode } from 'react';
+import Link from 'next/link';
 import Container from '~/app/components/container';
 import ReadyToOps from '~/app/components/website/ready-to-ops';
 import { Graph, GraphItem } from '~/app/components/graph';
 import { cn } from '~/app/utils/commons';
-import Link from 'next/link';
 import Cover from '../../../images/product-landing/cover-product.svg';
 import InfraOps from '../../../images/product-landing/infra.svg';
 import DevOps from '../../../images/product-landing/dev.svg';
 import Dist from '../../../images/product-landing/dist.svg';
-import SectionWrapper from '../website/section-wrapper';
 import Wrapper from '../wrapper';
 
 const products = [
@@ -250,7 +249,10 @@ const ProductCards = ({
           </div>
           <ul className="flex flex-col gap-2xl bodyLg-medium text-text-soft">
             {features?.map((f) => (
-              <li key={f.title} className="flex flex-row items-center gap-lg">
+              <li
+                key={`${f.title}`}
+                className="flex flex-row items-center gap-lg"
+              >
                 <span className="text-icon-primary">
                   <CheckCircleFill size={16} />
                 </span>
