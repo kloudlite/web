@@ -197,7 +197,7 @@ const recommendedTabs = [
   },
   {
     title: 'DevOps',
-    desc: 'Dive in to set up your InfraOps effortlessly',
+    desc: 'Explore the DevOps APIs to build your app',
     content: 'Explore our knowledge bank',
     subContent:
       'Tap into our extensive collection of resources and guides tailored to help you navigate around platform',
@@ -206,7 +206,7 @@ const recommendedTabs = [
   },
   {
     title: 'Distribution',
-    desc: 'Dive in to set up your InfraOps effortlessly',
+    desc: 'Access the resources to ensure a smooth build',
     content: 'Explore our knowledge bank',
     subContent:
       'Tap into our extensive collection of resources and guides tailored to help you navigate around platform',

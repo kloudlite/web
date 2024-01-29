@@ -73,7 +73,7 @@ const GetStartedSection = () => {
   );
 };
 
-const SuccessStorySection = () => {
+const _SuccessStorySection = () => {
   return (
     // @ts-ignore
     <SuccessStories tabs={successStories} />
@@ -130,7 +130,6 @@ const DistributionRoot = () => {
       <Wrapper>
         <DiscoverSection />
         <GetStartedSection />
-        <SuccessStorySection />
         <ReadyTo />
       </Wrapper>
     </div>
