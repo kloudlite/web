@@ -1,4 +1,23 @@
-import { CheckCircleFill, ArrowRight, Stack } from '@jengaicons/react';
+import {
+  CheckCircleFill,
+  ArrowRight,
+  Stack,
+  Globe,
+  ClockCounterClockwise,
+  SecureConfig,
+  UsersThree,
+  ChartBar,
+  Search,
+  Monitor,
+  CostMonitoring,
+  Autoscaling,
+  Developer,
+  Infinity as InfinityIcon,
+  TreeStructure,
+  GearSix,
+  Config,
+  Code,
+} from '@jengaicons/react';
 import { Button } from 'kl-design-system/atoms/button';
 import Image from 'next/image';
 import { ReactNode } from 'react';
@@ -17,16 +36,16 @@ const products = [
   {
     type: 'InfraOps',
     title: (
-      <div>
+      <span>
         Cloud-native <br className="hidden lg:!block" /> at the core
-      </div>
+      </span>
     ),
     desc: (
-      <div>
+      <span>
         Flexible & Cost Effective Kubernetes Cluster{' '}
         <br className="hidden lg:!block" /> Management with simple and
         user-friendly interface
-      </div>
+      </span>
     ),
     features: [
       {
@@ -43,20 +62,20 @@ const products = [
       },
     ],
     link: '/infraops',
-    logo: InfraOps,
+    logo: DevOps,
   },
   {
     type: 'DevOps',
     title: (
-      <div>
+      <span>
         NoOps <br className="hidden lg:!block" /> development
-      </div>
+      </span>
     ),
     desc: (
-      <div>
+      <span>
         Self-Serve environments crafted for <br className="hidden lg:!block" />
         development, staging & production workloads
-      </div>
+      </span>
     ),
     features: [
       {
@@ -73,21 +92,21 @@ const products = [
       },
     ],
     link: '/devops',
-    logo: DevOps,
+    logo: InfraOps,
   },
   {
     type: 'Distribution',
     title: (
-      <div>
+      <span>
         Simply build <br className="hidden lg:!block" /> and deploy
-      </div>
+      </span>
     ),
     desc: (
-      <div>
+      <span>
         Cloud accelerated build system and container
         <br className="hidden lg:!block" /> registry to build and ship
         containers anywhere
-      </div>
+      </span>
     ),
     features: [
       {
@@ -118,31 +137,31 @@ const benefitsItems = [
       },
       {
         title: 'Run Anywhere',
-        icon: Stack,
+        icon: Globe,
       },
       {
         title: 'Enhanced Application Security',
-        icon: Stack,
+        icon: SecureConfig,
       },
       {
         title: 'Collaborative Environments',
-        icon: Stack,
+        icon: UsersThree,
       },
       {
         title: 'Comprehensive Monitoring and Insights',
-        icon: Stack,
+        icon: ChartBar,
       },
       {
         title: 'Plug your own CICDs and Observability',
-        icon: Stack,
+        icon: Search,
       },
       {
         title: 'Streamlined Application Development',
-        icon: Stack,
+        icon: Monitor,
       },
       {
         title: 'Cost - Efficient Resource Management',
-        icon: Stack,
+        icon: CostMonitoring,
       },
     ],
   },
@@ -151,35 +170,35 @@ const benefitsItems = [
     items: [
       {
         title: 'Faster Deployment',
-        icon: Stack,
+        icon: ClockCounterClockwise,
       },
       {
         title: 'Flexible Autoscaling',
-        icon: Stack,
+        icon: Autoscaling,
       },
       {
         title: 'Developer Centric',
-        icon: Stack,
+        icon: Developer,
       },
       {
         title: 'Reduce Development Inner loop',
-        icon: Stack,
+        icon: InfinityIcon,
       },
       {
         title: 'Simplified Infrastructure Management',
-        icon: Stack,
+        icon: TreeStructure,
       },
       {
         title: 'Build system for faster deployments',
-        icon: Stack,
+        icon: GearSix,
       },
       {
         title: 'Declarative Infrastructure, Projects, and Maintenance',
-        icon: Stack,
+        icon: Config,
       },
       {
         title: 'Effective and Efficient Development Process',
-        icon: Stack,
+        icon: Code,
       },
     ],
   },

@@ -1,8 +1,35 @@
 import {
   AWSlogo,
+  Autoscaling,
   AzurelogoFill,
+  BackingServices,
+  Binoculars,
+  ChartBar,
+  CloudAgnostics,
+  Config,
+  Container,
+  CostMonitoring,
   Cpu,
+  CustomEnv,
   DigitalOceanlogoFill,
+  FlexibleNodepool,
+  HelmLogo,
+  HourglassSimpleHigh,
+  InfraAsCode,
+  LiquidCompute,
+  LockKey,
+  MultiTenant,
+  NoOps,
+  Nodeless,
+  PlayPause,
+  RocketLaunch,
+  Search,
+  SecureConfig,
+  ShieldCheck,
+  ShuffleAngular,
+  SpotManagement,
+  TreeStructure,
+  Vpn,
 } from '@jengaicons/react';
 
 const consts = {
@@ -54,51 +81,51 @@ const consts = {
     ],
     features: [
       {
-        icon: Cpu,
+        icon: InfraAsCode,
         label: 'Infra as Code (IaC)',
       },
       {
         icon: Cpu,
-        label: 'GPU ready',
+        label: 'GPU Ready',
       },
       {
-        icon: Cpu,
-        label: 'Liquid compute',
+        icon: LiquidCompute,
+        label: 'Liquid Compute',
       },
       {
-        icon: Cpu,
-        label: 'Nodeless wonders',
+        icon: Nodeless,
+        label: 'Nodeless Wonders',
       },
       {
-        icon: Cpu,
-        label: 'Cost monitoring',
+        icon: CostMonitoring,
+        label: 'Cost Monitoring',
       },
       {
-        icon: Cpu,
-        label: 'Spot management',
+        icon: SpotManagement,
+        label: 'Spot Management',
       },
       {
-        icon: Cpu,
-        label: 'Custom observability',
+        icon: ChartBar,
+        label: 'Custom Observability',
       },
       {
-        icon: Cpu,
-        label: 'Flexible nodepools',
+        icon: FlexibleNodepool,
+        label: 'Flexible Nodepools',
       },
       {
-        icon: Cpu,
-        label: 'Cloud agnostic',
+        icon: CloudAgnostics,
+        label: 'Cloud Agnostic',
       },
       {
-        icon: Cpu,
-        label: 'VPN access',
+        icon: Vpn,
+        label: 'VPN Access',
       },
       {
-        icon: Cpu,
-        label: 'SSL-Enabled ingress',
+        icon: ShieldCheck,
+        label: 'SSL-Enabled Ingress',
       },
       {
-        icon: Cpu,
+        icon: NoOps,
         label: 'NoOps Kubernetes',
       },
     ],
@@ -128,47 +155,47 @@ const consts = {
     ],
     features: [
       {
-        icon: Cpu,
+        icon: Binoculars,
         label: 'Smart Observability',
       },
       {
-        icon: Cpu,
+        icon: Autoscaling,
         label: 'Flexible Autoscaling',
       },
       {
-        icon: Cpu,
+        icon: Vpn,
         label: 'VPN Connectivity',
       },
       {
-        icon: Cpu,
+        icon: ShuffleAngular,
         label: 'Ingress Routing',
       },
       {
-        icon: Cpu,
+        icon: HourglassSimpleHigh,
         label: 'Ephemeral Workspaces',
       },
       {
-        icon: Cpu,
+        icon: MultiTenant,
         label: 'Multi-tenant Environments',
       },
       {
-        icon: Cpu,
+        icon: Search,
         label: 'Pre-deployment Testing',
       },
       {
-        icon: Cpu,
+        icon: PlayPause,
         label: 'Start & Stop on-demand',
       },
       {
-        icon: Cpu,
+        icon: CustomEnv,
         label: 'Custom Env & Workspaces',
       },
       {
-        icon: Cpu,
+        icon: SecureConfig,
         label: 'Secure Config Management',
       },
       {
-        icon: Cpu,
+        icon: BackingServices,
         label: 'Comprehensive Backing Services',
       },
     ],
@@ -194,35 +221,35 @@ const consts = {
   distribution: {
     features: [
       {
-        icon: Cpu,
+        icon: LockKey,
         label: 'Enhanced Security',
       },
       {
-        icon: Cpu,
+        icon: Config,
         label: 'Build Native System',
       },
       {
-        icon: Cpu,
+        icon: MultiTenant,
         label: 'Lazy Image Distribution',
       },
       {
-        icon: Cpu,
+        icon: Container,
         label: 'Container Registry Management',
       },
       {
-        icon: Cpu,
+        icon: TreeStructure,
         label: 'Source Integration',
       },
       {
-        icon: Cpu,
+        icon: NoOps,
         label: 'Automated Build Process',
       },
       {
-        icon: Cpu,
+        icon: RocketLaunch,
         label: 'Image Deployment Automation',
       },
       {
-        icon: Cpu,
+        icon: HelmLogo,
         label: 'Helm Charts Distribution',
       },
     ],
