@@ -31,7 +31,7 @@ const AdvantageSection = () => {
           <img
             alt="flexible"
             src={FlexibleImage.src}
-            className="h-full w-full object-cover"
+            className="h-full w-full object-fill"
           />
         );
       case 'cost-effective':
@@ -39,7 +39,7 @@ const AdvantageSection = () => {
           <img
             alt="cost-effective"
             src={CostIllustration.src}
-            className="h-full w-full object-cover"
+            className="h-full w-full object-fill"
           />
         );
       case 'simple-to-use':

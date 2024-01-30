@@ -31,7 +31,7 @@ export const AdvantageSection = () => {
           <img
             alt="trouble-fre"
             src={TroubleFree.src}
-            className="h-full w-full object-cover"
+            className="h-full w-full object-fill"
           />
         );
       case 'embedded-data':
@@ -39,7 +39,7 @@ export const AdvantageSection = () => {
           <img
             alt="embedded-data"
             src={EmbeddedData.src}
-            className="h-full w-full object-cover"
+            className="h-full w-full object-fill"
           />
         );
       case 'seamless-env':
@@ -47,7 +47,7 @@ export const AdvantageSection = () => {
           <img
             alt="seamless-env"
             src={SeamlessDev.src}
-            className="h-full w-full object-cover"
+            className="h-full w-full object-fill"
           />
         );
       case 'faster-dev':
@@ -56,7 +56,7 @@ export const AdvantageSection = () => {
           <img
             alt="faster-dev"
             src={FasterDev.src}
-            className="h-full w-full object-cover"
+            className="h-full w-full object-fill"
           />
         );
     }

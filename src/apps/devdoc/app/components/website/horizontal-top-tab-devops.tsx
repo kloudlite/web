@@ -114,7 +114,9 @@ const HorizontalTopTabDevops = ({
               <HorizontalTopTabDevopsItem
                 {...(tabs.find((t) => t.id === activeTab) || {})}
                 active
-                onClick={() => {}}
+                onClick={() => {
+                  //
+                }}
               />
             </GraphItem>
             <GraphItem className="flex items-center justify-center">
@@ -136,8 +138,8 @@ const HorizontalTopTabDevops = ({
               </div>
             </GraphItem>
           </div>
-          <GraphItem>
-            <div className="bg-surface-basic-subdued xl:min-h-[480px] xl:max-h-[480px]">
+          <GraphItem className="bg-surface-basic-subdued">
+            <div className="bg-surface-basic-subdued md:h-[338px] xl:!h-[480px] xl:max-h-[480px]">
               {tab}
             </div>
           </GraphItem>
