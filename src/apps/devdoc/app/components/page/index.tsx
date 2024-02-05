@@ -1,109 +1,22 @@
 import { Button } from 'kl-design-system/atoms/button';
 import { Avatar } from 'kl-design-system/atoms/avatar';
 import Profile from 'kl-design-system/molecule/profile';
-import { AWSlogoFill, TwitterNewLogo, UsersThree } from '@jengaicons/react';
+import { AWSlogoFill, UsersThree } from '@jengaicons/react';
 import Link from 'next/link';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
+import { BrandLogo } from 'kl-design-system/branding/brand-logo';
 import ProgressTracker from '~/app/components/progress-tracker';
 import { Graph, GraphItem } from '~/app/components/graph';
 import ReadyToOps from '~/app/components/website/ready-to-ops';
 
 import { cn } from '~/app/utils/commons';
+import consts from '~/app/utils/const';
 import illustration from '../../../images/illustraion1.svg';
-import devopsIcon from '../../../images/home/devops.svg';
-import infraopsIcon from '../../../images/home/infraops.svg';
-import distributionIcon from '../../../images/home/distribution.svg';
+
 import SectionWrapper from '../website/section-wrapper';
 import Wrapper from '../wrapper';
-
-const suites = [
-  {
-    title: 'DevOps',
-    desc: 'Environments crafted for development and production workloads',
-    img: <img src={devopsIcon.src} className="" />,
-    imgPad:
-      'p-3xl md:!max-h-[200px] md:!min-h-[200px] lg:!max-h-[244px] 3xl:!min-h-[280px] lg:!py-5xl 3xl:!py-4xl box-border w-auto',
-    to: 'devops',
-  },
-  {
-    title: 'InfraOps',
-    desc: 'Cloud agnostic & cost effective infrastructure management at your fingertips',
-    imgPad:
-      'p-3xl md:!max-h-[200px] md:!min-h-[200px] lg:!max-h-[244px] 3xl:!min-h-[280px] lg:!py-5xl 3xl:!py-4xl box-border w-auto',
-    img: <img src={infraopsIcon.src} className="" />,
-    to: 'infraops',
-  },
-  {
-    title: 'Distribution',
-    desc: 'Build system and package registries to build and ship your environments',
-    imgPad:
-      'p-3xl md:!max-h-[200px] md:!min-h-[200px] lg:!max-h-[244px] 3xl:!min-h-[280px] lg:!py-5xl 3xl:!py-4xl box-border w-auto',
-    img: <img src={distributionIcon.src} className="" />,
-    to: 'distribution',
-  },
-];
-
-const teamTasks = [
-  {
-    title: 'Develop, Git Push',
-    color: '#2563EB',
-  },
-  {
-    title: 'CI/CD',
-    color: '#D97706',
-  },
-  {
-    title: 'DevOps',
-    color: '#2563EB',
-  },
-  {
-    title: 'Environments',
-    color: '#16A34A',
-  },
-  {
-    title: 'Run Local Env',
-    color: '#2563EB',
-  },
-];
-
-const messages = [
-  {
-    title: 'Astroman',
-    subtitle: 'subtitle',
-    company: <TwitterNewLogo size={24} />,
-    message:
-      'We use @Kloudlite on a daily basis for several internal processes, and I cannot rave enough about them. Incredible flexibility and features combined with super intuitive UI',
-    time: '10:01 PM · Apr 7, 2022',
-  },
-  {
-    title: 'Astroman 1',
-    subtitle: 'subtitle',
-    company: <TwitterNewLogo size={24} />,
-    message:
-      'We use @Kloudlite on a daily basis for several internal processes, and I cannot rave enough about them. Incredible flexibility and features combined with super intuitive UI',
-    time: '10:01 PM · Apr 7, 2022',
-  },
-  {
-    title: 'Astroman 2',
-    subtitle: 'subtitle',
-    company: <TwitterNewLogo size={24} />,
-    message:
-      'We use @Kloudlite on a daily basis for several internal processes, and I cannot rave enough about them. Incredible flexibility and features combined with super intuitive UI',
-    time: '10:01 PM · Apr 7, 2022',
-  },
-];
-
-const tutorials = [
-  {
-    title: 'Get started with InfraOps',
-  },
-  {
-    title: 'Keep building with DevOps',
-  },
-  {
-    title: 'Explore further into Distribution',
-  },
-];
+import { teamTaskAnimationV3 } from './team-task-animation';
+import HoverItem from '../hover-item';
 
 const Partners = () => {
   return (
@@ -133,7 +46,7 @@ const TeamTaskCard = ({
   title: ReactNode;
 }) => {
   return (
-    <div className="bg-surface-basic-subdued p-lg md:!px-2xl md:!py-xl flex flex-col md:!flex-col-reverse xl:!flex-row xl:!items-center gap-lg md:!gap-2xl">
+    <div className="team-card bg-surface-basic-subdued p-lg md:!px-2xl md:!py-xl flex flex-col md:!flex-col-reverse xl:!flex-row xl:!items-center gap-lg md:!gap-2xl w-full z-20">
       <div className="flex flex-col gap-lg flex-1">
         <div
           className="h-lg w-[44px] rounded-full"
@@ -146,7 +59,7 @@ const TeamTaskCard = ({
       <div className="headingSm text-text-default block md:!hidden">
         {title}
       </div>
-      <div className="hidden md:!block">
+      <div className="hidden md:!block team-task-avatar">
         <Avatar color="one" size="md" />
       </div>
     </div>
@@ -225,7 +138,7 @@ const TutorialCard = () => {
     <UntoldCard className="flex flex-col gap-4xl h-full">
       <span className="bodyLg-medium text-text-disabled">Latest tutorials</span>
       <div className="flex flex-col gap-2xl">
-        {tutorials.map((tut) => (
+        {consts.home.tutorials.map((tut) => (
           <TutorialItemCard key={tut.title} to="/">
             {tut.title}
           </TutorialItemCard>
@@ -312,20 +225,14 @@ const SuiteCard = ({
   img,
   imgPad,
   desc,
-  to,
 }: {
   title: string;
   img: any;
   imgPad: string;
   desc: string;
-  to: string;
 }) => {
   return (
-    <Link
-      href={to}
-      key={title}
-      className="bg-surface-basic-default flex flex-col h-full md:min-h-[360px] xl:max-h-[416px] xl:min-h-[416px] 2xl:!min-h-[448px]"
-    >
+    <div className="bg-surface-basic-default flex flex-col h-full md:min-h-[360px] xl:max-h-[416px] xl:min-h-[416px] 2xl:!min-h-[448px]">
       <span className={cn('self-center flex justify-center', imgPad)}>
         {img}
       </span>
@@ -337,7 +244,7 @@ const SuiteCard = ({
           {desc}
         </span>
       </div>
-    </Link>
+    </div>
   );
 };
 
@@ -349,9 +256,11 @@ const SuiteSection = () => {
       </h2>
       <Graph className="-mx-10xl">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5xl px-10xl py-7xl md:!py-8xl xl:!py-10xl">
-          {suites.map((suite) => (
+          {consts.home.suites.map((suite) => (
             <GraphItem key={suite.title}>
-              <SuiteCard {...suite} />
+              <HoverItem to={suite.to}>
+                <SuiteCard {...suite} />
+              </HoverItem>
             </GraphItem>
           ))}
         </div>
@@ -361,9 +270,69 @@ const SuiteSection = () => {
 };
 
 const TeamTaskSection = () => {
+  const listOneRef = useRef<HTMLDivElement>(null);
+  const listTwoRef = useRef<HTMLDivElement>(null);
+  const logoRef = useRef<HTMLDivElement>(null);
+  const [firsList, setFirstList] = useState(consts.home.teamTasks);
+  const [secondList, setSecondList] = useState<typeof consts.home.teamTasks>(
+    []
+  );
+  const firstItemTitle = 'Focus on your business needs';
+  const firstItemColor = '#2563EB';
+
+  useEffect(() => {
+    const ani = teamTaskAnimationV3({
+      listOneRef,
+      listTwoRef,
+      logoRef: logoRef.current?.innerHTML || '',
+      orgLogo:
+        document.querySelector('.team-card')?.querySelector('svg')?.outerHTML ||
+        '',
+    });
+    return () => {
+      if (ani) {
+        clearInterval(ani);
+      }
+    };
+    const iv = setInterval(() => {
+      setFirstList((s) => {
+        const mainList = s.filter((v, index) => {
+          if (index === 0) {
+            return false;
+          }
+
+          return true;
+        });
+
+        setSecondList((s2) => {
+          let secondMList = s2;
+          if (s2.length > 5) {
+            secondMList = s2.filter((v, i) => {
+              if (i === s2.length - 1) {
+                mainList.push(v);
+                return false;
+              }
+              return true;
+            });
+          }
+          // @ts-ignore
+          secondMList = [s[0], ...secondMList];
+
+          return secondMList;
+        });
+
+        return mainList;
+      });
+    }, 1000);
+
+    return () => {
+      clearInterval(iv);
+    };
+  }, []);
+
   return (
-    <div className="flex flex-col md:!flex-row pt-7xl md:!pt-8xl xl:!pt-10xl">
-      <div className="flex flex-col gap-3xl md:gap-8xl justify-center md:max-w-[384px] 3xl:max-w-[512px] mr-10xl 3xl:mr-12xl">
+    <div className="flex flex-col md:!flex-row pt-7xl md:!pt-8xl xl:!pt-10xl relative">
+      <div className="flex flex-col gap-3xl md:gap-8xl justify-center md:max-w-[222px] lg:max-w-[384px] 3xl:max-w-[512px] md:!mr-6xl lg:!mr-8xl xl:!mr-10xl 3xl:!mr-12xl">
         <h2 className="heading3xl-marketing md:!heading4xl-marketing xl:!heading5xl-marketing text-text-default">
           Why <br className="hidden md:!block 3xl:!hidden" />
           Kloudlite?
@@ -375,36 +344,63 @@ const TeamTaskSection = () => {
         </p>
       </div>
       <div className="flex flex-col flex-1 relative pt-6xl md:!pt-0">
-        <h4 className="headingMd-marketing md:!headingXl-marketing text-text-default text-center relative md:!absolute md:!left-1/2 md:!transform md:!-translate-x-1/2 z-[1]">
-          Your team’s task
-        </h4>
         <Graph className="-mx-10xl">
-          <div className="px-10xl py-3xl md:py-8xl">
-            <GraphItem>
-              <div className="flex p-xl md:!p-5xl flex-row bg-gradient-to-b from-[#E4E4E7] to-[#F3F4F6] max-h-[512px] 2xl:min-w-[640px] overflow-hidden">
-                <div className="flex flex-col gap-xl md:!gap-5xl flex-1">
-                  {teamTasks.map((tt) => (
+          <div className="grid grid-cols-2 gap-5xl 2xl:!gap-8xl 3xl:!gap-5xl px-10xl py-3xl md:py-8xl overflow-hidden">
+            <div className="w-full flex flex-col">
+              <h4 className="headingMd-marketing md:!headingXl-marketing text-text-default relative -top-[32px] -mt-[28px] right-1/2 transform translate-x-1/2 text-center">
+                Your team’s task
+              </h4>
+              <GraphItem className="basis-1/2">
+                <div className="flex p-xl md:!p-5xl flex-col bg-gradient-to-b from-[#E4E4E7] to-[#F3F4F6] h-[512px] max-h-[512px] overflow-hidden">
+                  <div className="pb-xl md:!pb-5xl">
                     <TeamTaskCard
-                      key={tt.title}
-                      color={tt.color}
-                      title={tt.title}
+                      title={firstItemTitle}
+                      color={firstItemColor}
                     />
-                  ))}
+                  </div>
+                  <div
+                    ref={listOneRef}
+                    className="first-container w-full flex flex-col gap-xl md:!gap-5xl flex-1"
+                  >
+                    {firsList.map((tt) => (
+                      <TeamTaskCard
+                        key={tt.title}
+                        color={tt.color}
+                        title={tt.title}
+                      />
+                    ))}
+                  </div>
                 </div>
-                <div className="ml-xl md:!ml-8xl flex flex-col gap-xl md:!gap-5xl flex-1">
-                  {teamTasks.map((tt) => (
-                    <TeamTaskCard
-                      key={tt.title}
-                      color={tt.color}
-                      title={tt.title}
-                    />
-                  ))}
+              </GraphItem>
+            </div>
+
+            <div className="w-full">
+              <h4 className="headingMd-marketing md:!headingXl-marketing text-text-default relative -top-[32px] -mt-[28px] right-1/2 transform translate-x-1/2 text-center">
+                Kloudlite solves
+              </h4>
+
+              <GraphItem className="basis-1/2">
+                <div className="flex p-xl md:!p-5xl flex-row bg-[linear-gradient(180deg,#93C5FD_0%,#DBEAFE_100%)] h-[512px] max-h-[512px] overflow-hidden">
+                  <div
+                    ref={listTwoRef}
+                    className="first-container w-full flex flex-col flex-1 space-y-xl md:!space-y-5xl"
+                  >
+                    {secondList.map((tt) => (
+                      <TeamTaskCard
+                        key={tt.title}
+                        color={tt.color}
+                        title={tt.title}
+                      />
+                    ))}
+                  </div>
                 </div>
-                <div />
-              </div>
-            </GraphItem>
+              </GraphItem>
+            </div>
           </div>
         </Graph>
+      </div>
+      <div ref={logoRef} className="hidden">
+        <BrandLogo detailed={false} />
       </div>
     </div>
   );
@@ -418,7 +414,7 @@ const _DontBelieve = () => {
       </h2>
       <Graph className="-mx-10xl" blurSize="md" responsive>
         <div className="grid grid-cols-1 md:!grid-cols-3 gap-5xl px-10xl">
-          {messages.map((message) => (
+          {consts.home.messages.map((message) => (
             <GraphItem key={message.title}>
               <MessageCard {...message} />
             </GraphItem>

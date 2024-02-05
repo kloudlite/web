@@ -29,10 +29,121 @@ import {
   ShuffleAngular,
   SpotManagement,
   TreeStructure,
+  TwitterNewLogo,
   Vpn,
 } from '@jengaicons/react';
+import devopsIcon from '../../images/home/devops.svg';
+import infraopsIcon from '../../images/home/infraops.svg';
+import distributionIcon from '../../images/home/distribution.svg';
 
 const consts = {
+  home: {
+    teamTasks: [
+      {
+        title: 'Develop, Git Push',
+        color: '#2563EB',
+      },
+      {
+        title: 'CI/CD',
+        color: '#D97706',
+      },
+      {
+        title: 'DevOps',
+        color: '#2563EB',
+      },
+      {
+        title: 'Environments',
+        color: '#16A34A',
+      },
+      {
+        title: 'Run Local Env',
+        color: '#16A34A',
+      },
+      {
+        title: 'Backups & Rollbacks',
+        color: '#2563EB',
+      },
+      {
+        title: 'Configs & Secrets',
+        color: '#2563EB',
+      },
+      {
+        title: 'Global CDN',
+        color: '#16A34A',
+      },
+      {
+        title: 'Managed Services',
+        color: '#2563EB',
+      },
+      {
+        title: 'Domain management',
+        color: '#16A34A',
+      },
+    ],
+    messages: [
+      {
+        title: 'Astroman',
+        subtitle: 'subtitle',
+        company: <TwitterNewLogo size={24} />,
+        message:
+          'We use @Kloudlite on a daily basis for several internal processes, and I cannot rave enough about them. Incredible flexibility and features combined with super intuitive UI',
+        time: '10:01 PM · Apr 7, 2022',
+      },
+      {
+        title: 'Astroman 1',
+        subtitle: 'subtitle',
+        company: <TwitterNewLogo size={24} />,
+        message:
+          'We use @Kloudlite on a daily basis for several internal processes, and I cannot rave enough about them. Incredible flexibility and features combined with super intuitive UI',
+        time: '10:01 PM · Apr 7, 2022',
+      },
+      {
+        title: 'Astroman 2',
+        subtitle: 'subtitle',
+        company: <TwitterNewLogo size={24} />,
+        message:
+          'We use @Kloudlite on a daily basis for several internal processes, and I cannot rave enough about them. Incredible flexibility and features combined with super intuitive UI',
+        time: '10:01 PM · Apr 7, 2022',
+      },
+    ],
+    tutorials: [
+      {
+        title: 'Get started with InfraOps',
+      },
+      {
+        title: 'Keep building with DevOps',
+      },
+      {
+        title: 'Explore further into Distribution',
+      },
+    ],
+    suites: [
+      {
+        title: 'DevOps',
+        desc: 'Environments crafted for development and production workloads',
+        img: <img src={devopsIcon.src} className="" />,
+        imgPad:
+          'p-3xl md:!max-h-[200px] md:!min-h-[200px] lg:!max-h-[244px] 3xl:!min-h-[280px] lg:!py-5xl 3xl:!py-4xl box-border w-auto',
+        to: 'devops',
+      },
+      {
+        title: 'InfraOps',
+        desc: 'Cloud agnostic & cost effective infrastructure management at your fingertips',
+        imgPad:
+          'p-3xl md:!max-h-[200px] md:!min-h-[200px] lg:!max-h-[244px] 3xl:!min-h-[280px] lg:!py-5xl 3xl:!py-4xl box-border w-auto',
+        img: <img src={infraopsIcon.src} className="" />,
+        to: 'infraops',
+      },
+      {
+        title: 'Distribution',
+        desc: 'Build system and package registries to build and ship your environments',
+        imgPad:
+          'p-3xl md:!max-h-[200px] md:!min-h-[200px] lg:!max-h-[244px] 3xl:!min-h-[280px] lg:!py-5xl 3xl:!py-4xl box-border w-auto',
+        img: <img src={distributionIcon.src} className="" />,
+        to: 'distribution',
+      },
+    ],
+  },
   infraops: {
     advantages: [
       {

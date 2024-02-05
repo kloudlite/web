@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, memo, useEffect, useRef, useState } from 'react';
 import { cn } from '../utils/commons';
 
 export const Graph = ({
@@ -58,6 +58,110 @@ export const GraphExtended = ({
   );
 };
 
+const LineVertical = memo(() => {
+  const ref = useRef<HTMLCanvasElement>(null);
+  const [res, setRes] = useState<{
+    width: number;
+    height: number;
+  } | null>(null);
+  const draw = (drawEvent?: 'normal' | 'resize') => {
+    if (!ref.current) {
+      return;
+    }
+
+    const canvas = ref.current;
+
+    const ctx = canvas.getContext('2d');
+
+    const pixelRatio = window.devicePixelRatio || 1;
+    let r = res;
+
+    if (!res || drawEvent === 'resize') {
+      const temp = {
+        width: canvas.clientWidth * pixelRatio,
+        height: canvas.clientHeight * pixelRatio,
+      };
+
+      r = temp;
+      if (!r) {
+        return;
+      }
+
+      canvas.width = r.width;
+      canvas.height = r.height;
+
+      setRes(temp);
+    }
+
+    if (!ctx || !r) {
+      return;
+    }
+
+    // Set the line properties
+    ctx.strokeStyle = '#D4D4D8';
+    ctx.clearRect(0, 0, r.width, r.height);
+    const width = 1 * pixelRatio;
+    ctx.lineWidth = width;
+
+    const offset = 32 * pixelRatio;
+    const offsetGraphHorizontal = 3;
+    const offsetGraphHorizontalBottom = 1;
+    const offsetGraphVerticalRight = 3;
+    const offsetGraphVerticalLeft = 1;
+
+    // Draw the line
+    ctx.beginPath();
+
+    // left
+    ctx.moveTo(width + offset - offsetGraphVerticalLeft, 0);
+    ctx.lineTo(width + offset - offsetGraphVerticalLeft, r.height + offset * 2);
+
+    // right
+    ctx.moveTo(r.width - width - offset + offsetGraphVerticalRight, 0);
+    ctx.lineTo(
+      r.width - width - offset + offsetGraphVerticalRight,
+      r.height + offset * 2
+    );
+
+    // top
+    ctx.moveTo(
+      0 - offsetGraphHorizontal,
+      width + offset - offsetGraphHorizontal
+    );
+    ctx.lineTo(
+      r.width + offset * 2 - offsetGraphHorizontal,
+      width + offset - offsetGraphHorizontal
+    );
+
+    // botom
+    ctx.moveTo(0, r.height - offset - offsetGraphHorizontalBottom);
+    ctx.lineTo(r.width, r.height - offset - offsetGraphHorizontalBottom);
+
+    ctx.stroke();
+  };
+
+  useEffect(() => {
+    draw();
+    const drawEvent = () => {
+      draw('resize');
+    };
+    window.addEventListener('resize', drawEvent);
+    return () => {
+      window.removeEventListener('resize', drawEvent);
+    };
+  }, [ref.current]);
+
+  return <canvas ref={ref} className="h-full w-full pointer-events-none" />;
+});
+
+const Lines = memo(() => {
+  return (
+    <div className="pointer-events-none absolute -left-[32px] -right-[32px] -top-[32px] -bottom-[32px] z-[21]">
+      <LineVertical />
+    </div>
+  );
+});
+
 export const GraphItem = ({
   className,
   children,
@@ -65,48 +169,10 @@ export const GraphItem = ({
   className?: string;
   children?: ReactNode;
 }) => {
-  const lineVertical = () => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="2"
-      height="100%"
-      viewBox="0 0 2 480"
-      fill="none"
-      preserveAspectRatio="none"
-    >
-      <path d="M1 0.000488281L1.00002 480.001" stroke="#D4D4D8" />
-    </svg>
-  );
-
-  const lineHorizontal = () => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="100%"
-      height="2"
-      viewBox="0 0 1184 2"
-      fill="none"
-      preserveAspectRatio="none"
-    >
-      <path d="M0 1.00122L1184 1.00132" stroke="#D4D4D8" />
-    </svg>
-  );
-
   return (
-    <div className={cn('relative', className)}>
-      <div className="absolute pointer-events-none inset-0 z-10">
-        <div className="h-[calc(100%+40px)] lg:h-[calc(100%+64px)] absolute -left-xs -top-[20px] lg:-top-[32px]">
-          {lineVertical()}
-        </div>
-        <div className="h-[calc(100%+40px)] lg:h-[calc(100%+64px)] absolute -right-xs -top-[20px] lg:-top-[32px]">
-          {lineVertical()}
-        </div>
-        <div className="w-[calc(100%+40px)] lg:w-[calc(100%+64px)] absolute -top-xs -left-[20px] lg:-left-[32px]">
-          {lineHorizontal()}
-        </div>
-        <div className="w-[calc(100%+40px)] lg:w-[calc(100%+64px)] absolute -bottom-xs -left-[20px] lg:-left-[32px]">
-          {lineHorizontal()}
-        </div>
-      </div>
+    <div className={`relative ${className || ''}`}>
+      <Lines />
+
       {children}
     </div>
   );
