@@ -57,11 +57,11 @@ const HandleScope = ({ show, setShow }: IDialog<IEnvironment | null> & {}) => {
             env: {
               metadata: {
                 name: val.name,
+                namespace: parseTargetNs(project),
               },
               displayName: val.displayName,
               spec: {
                 projectName: projectName || '',
-                targetNamespace: `${projectName}-${val.name}`,
                 routing: {
                   mode: val.environmentRoutingMode ? 'public' : 'private',
                 },
