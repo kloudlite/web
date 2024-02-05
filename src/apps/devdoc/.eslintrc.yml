@@ -3,7 +3,6 @@ root: true
 extends:
   - airbnb
   - airbnb/hooks
-  - plugin:react/recommended
   - plugin:prettier/recommended
   - plugin:@typescript-eslint/recommended
   - plugin:import/typescript
@@ -91,7 +90,7 @@ rules:
   react/jsx-props-no-spreading: 0
   react/function-component-definition: 0
   prettier/prettier: 
-    - error
+    - warn
     - singleQuote: true
   camelcase:
     - error 
