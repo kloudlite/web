@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import { cn } from '~/app/utils/commons';
-import { Graph, GraphItem } from '../graph';
+import { GraphExtended, GraphItem } from '../graph';
+import SectionWrapper from './section-wrapper';
 
 interface IFeatureItem {
   icon: any;
@@ -33,7 +34,7 @@ interface IDiscover {
 }
 const Discover = ({ features, title, desc, className }: IDiscover) => {
   return (
-    <>
+    <SectionWrapper className="flex-col">
       <div className="flex flex-col gap-3xl text-center">
         <div className="flex flex-col gap-md">
           <p className="bodyLg-medium lg:!bodyXl-medium text-text-disabled">
@@ -45,16 +46,16 @@ const Discover = ({ features, title, desc, className }: IDiscover) => {
         </div>
         <p className="bodyLg-medium lg:!bodyXl-medium text-text-soft">{desc}</p>
       </div>
-      <Graph className="-mx-10xl">
-        <div className={cn('px-10xl pt-7xl md:!py-8xl lg:!py-10xl', className)}>
+      <GraphExtended>
+        <div className={cn(className)}>
           {features.map((feature) => (
             <GraphItem key={feature.label}>
               <FeatureItem {...feature} />
             </GraphItem>
           ))}
         </div>
-      </Graph>
-    </>
+      </GraphExtended>
+    </SectionWrapper>
   );
 };
 

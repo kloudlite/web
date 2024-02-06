@@ -4,8 +4,8 @@
     "**/*.tsx",
     "**/*.js",
     "**/*.jsx",
-    ".next/types/**/*.ts",
-    "**/**.svg"
+    "**/**.svg",
+    ".next/types/**/*.ts"
   ],
   "compilerOptions": {
     "skipLibCheck": true,
@@ -28,11 +28,14 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "~/images/*":[
+      "~/images/*": [
         "./images"
       ],
       "~/app/*": [
         "./app/*"
+      ],
+      "~/services/*": [
+        "./services/*"
       ],
       "flexsearch": [
         "./node_modules/@types/flexsearch"
@@ -51,12 +54,17 @@
     "plugins": [
       [
         "remark-frontmatter",
-        ["toml", "yaml"]
+        [
+          "toml",
+          "yaml"
+        ]
       ],
       "remark-gfm"
     ]
   },
   "exclude": [
     "node_modules/**/*",
+    ".next",
+    "out"
   ]
 }
