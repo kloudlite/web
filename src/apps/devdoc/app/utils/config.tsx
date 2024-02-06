@@ -161,6 +161,10 @@ export default {
   headerPrimary: {
     items: [
       {
+        title: 'First Principles',
+        to: '/docs/first-principles',
+      },
+      {
         title: 'Devops',
         to: '/docs/devops',
       },

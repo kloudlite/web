@@ -1,0 +1,51 @@
+# How Kloudlite InfraOps works ?
+
+The InfraOps module is a core component of the Kloudlite platform,
+designed to facilitate efficient infrastructure management.
+This module primarily consists of **Kubernetes Cluster Controllers** which
+play a crucial role in interfacing with various cloud providers.
+
+## Cluster Controllers
+- **Communication with Cloud Providers:** The cluster controllers are engineered
+to communicate effectively with different cloud providers. This communication is key
+to orchestrating and managing cloud resources.
+- **Creating Linux Instances:** These controllers have the capability to create Linux
+instances across desired regions. This feature allows for a high degree of flexibility
+and scalability, adapting to the geographical and computational needs of different projects.
+- **Forming Kubernetes Clusters:** Once instances are created, the controllers proceed to
+join these instances, culminating in the formation of a fully operational Kubernetes cluster.
+
+## NodePool Controller
+- **Located in Tenant Clusters:** The NodePool controller operates within the tenant clusters
+created by the InfraOps module.
+- **Managing NodePools:** This controller is responsible for a range of critical tasks, including
+the creation, scaling up, and scaling down of NodePools. These operations are essential for maintaining
+the efficiency and responsiveness of the Kubernetes clusters.
+- **Integration with Autoscalers and Deschedulers:** To optimize costs and improve the distribution of
+workloads, the NodePool controllers are backed by advanced tools such as cluster autoscalers and deschedulers.
+These tools ensure that resources are utilized optimally, reducing waste and enhancing performance.
+
+### Capabilities
+Kloudlite is equipped with features that significantly enhance Kubernetes usability:
+- **Inbuilt WireGuard VPN:** Provides secure and streamlined access to services within
+Kubernetes clusters, facilitating easier and faster application development by reducing
+development loop times.
+- **Cluster Autoscaling:** Adapts to workload fluctuations dynamically. Kloudlite's cluster
+autoscaling automatically adjusts the number of nodes in a nodepool, ensuring resource
+utilization is efficient and responsive to current needs.
+- **Spot Instance Management:** Offers sophisticated management of spot instances, enabling users
+to utilize lower-cost computing resources without compromising on reliability. This feature is key in
+optimizing both cost and performance.
+- **Cloud Provider-Specific Storage Drivers:** Kloudlite seamlessly integrates with storage solutions from
+various cloud providers. This ensures that Kubernetes clusters can leverage the most suitable storage options
+available, customized to the specific requirements of the cloud environment in use.
+- **Cloud Provider-Specific Load Balancers:** Enhances performance and reliability through support for cloud
+provider-specific load balancers. This allows for more effective distribution of network traffic and improved
+responsiveness of applications.
+
+With these features, Kloudlite facilitates the deployment and management of Kubernetes clusters with increased
+ease, efficiency, and security, catering to a wide range of public cloud environments.
+
+> We are currently working on new features as part of next release.
+More features like Remote IDEs, VMs & Notebooks are coming soon.
+Any feedback or feature requests are welcome.

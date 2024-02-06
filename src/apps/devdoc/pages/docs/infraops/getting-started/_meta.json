@@ -1,0 +1,20 @@
+{
+    "index":{
+        "display":"hidden"
+    },
+    "add-cloud-provider":{
+        "title":"Add Cloud provider"
+    },
+    "create-your-cluster":{
+        "title":"Create Cluster"
+    },
+    "setup-nodepools":{
+        "title":"Setup Nodepools"
+    },
+    "access":{
+        "title":"Access Cluster"
+    },
+    "connect-your-vpn":{
+        "title":"Wireguard Connect"
+    }
+}

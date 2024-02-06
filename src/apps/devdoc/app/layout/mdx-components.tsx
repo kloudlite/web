@@ -1,18 +1,17 @@
 /* eslint-disable consistent-return */
 /* eslint-disable jsx-a11y/heading-has-content */
 
-import { Table, Td, Th, Tr } from 'nextra/components';
-import type { Components } from 'nextra/mdx';
-import type { ComponentProps, ReactElement } from 'react';
-import { useEffect, useRef } from 'react';
+import { Table, Td, Th, Tr } from "nextra/components";
+import type { Components } from "nextra/mdx";
+import type { ComponentProps, ReactElement } from "react";
+import { useEffect, useRef } from "react";
 import {
   useIntersectionObserver,
   useSetActiveAnchor,
   useSlugs,
-} from '../utils/active-anchor';
-import { Anchor, AnchorProps } from '../components/anchor';
-import { cn } from '../utils/commons';
-
+} from "../utils/active-anchor";
+import { Anchor, AnchorProps } from "../components/anchor";
+import { cn } from "../utils/commons";
 // Anchor links
 function HeadingLink({
   tag: Tag,
@@ -21,7 +20,7 @@ function HeadingLink({
   id,
   className,
   ...props
-}: ComponentProps<'h2'> & {
+}: ComponentProps<"h2"> & {
   tag: `h${2 | 3 | 4 | 5 | 6}`;
   context: { index: number };
 }): ReactElement {
@@ -51,13 +50,13 @@ function HeadingLink({
   return (
     <Tag
       className={cn(
-        'text-text-default group mt-6xl',
+        "text-text-default group",
         {
-          h2: 'heading2xl-marketing',
-          h3: 'headingXl-marketing',
-          h4: '',
-          h5: '',
-          h6: '',
+          h2: "heading2xl-marketing py-xl",
+          h3: "headingXl-marketing py-xl",
+          h4: "",
+          h5: "",
+          h6: "",
         }[Tag]
       )}
       {...props}
@@ -78,16 +77,16 @@ function HeadingLink({
 
 const EXTERNAL_HREF_REGEX = /https?:\/\//;
 
-export const Link = ({ href = '', className, ...props }: AnchorProps) => (
+export const Link = ({ href = "", className, ...props }: AnchorProps) => (
   <Anchor
     href={href}
     newWindow={EXTERNAL_HREF_REGEX.test(href)}
-    className={cn('', className)}
+    className={cn("", className)}
     {...props}
   />
 );
 
-const A = ({ href = '', ...props }) => (
+const A = ({ href = "", ...props }) => (
   <Anchor href={href} newWindow={EXTERNAL_HREF_REGEX.test(href)} {...props} />
 );
 
@@ -104,7 +103,7 @@ export const createComponents = ({
       ul: (props) => {
         let cs = props.className;
         if (!cs) {
-          cs = 'list-disc pl-5xl';
+          cs = "list-disc pl-5xl";
         }
 
         return <ul {...props} className={cs} />;
@@ -112,7 +111,7 @@ export const createComponents = ({
       ol: (props) => {
         let cs = props.className;
         if (!cs) {
-          cs = 'list-decimal pl-5xl';
+          cs = "list-decimal pl-5xl";
         }
 
         return <ol {...props} className={cs} />;
@@ -120,14 +119,14 @@ export const createComponents = ({
       li: (props) => {
         let cs = props.className;
         if (!cs) {
-          cs = 'pb-lg custom-li';
+          cs = "pb-lg custom-li";
         }
 
         return <li {...props} className={cs} />;
       },
     };
   }
-  console.log('raw', isRawLayout);
+  console.log("raw", isRawLayout);
   const context = { index: 0 };
   return {
     h1: (props) => (
@@ -138,14 +137,19 @@ export const createComponents = ({
     h4: (props) => <HeadingLink tag="h4" context={context} {...props} />,
     h5: (props) => <HeadingLink tag="h5" context={context} {...props} />,
     h6: (props) => <HeadingLink tag="h6" context={context} {...props} />,
-    ul: (props) => <ul className="" {...props} />,
+    ul: (props) => <ul className="list-disc" {...props} />,
     ol: (props) => <ol className="" {...props} />,
-    li: (props) => <li className="" {...props} />,
-    blockquote: (props) => <blockquote className={cn()} {...props} />,
+    li: (props) => <li className="py-lg" {...props} />,
+    blockquote: (props) => (
+      <blockquote
+        className={cn("border-l-2 border-l-border-dark pl-4xl italic my-lg")}
+        {...props}
+      />
+    ),
     hr: (props) => <hr className="" {...props} />,
     a: Link,
     table: (props) => <Table className="" {...props} />,
-    p: (props) => <p className="bodyLg text-text-strong mt-3xl" {...props} />,
+    p: (props) => <p className="bodyLg text-text-strong py-lg" {...props} />,
     tr: Tr,
     th: Th,
     td: Td,

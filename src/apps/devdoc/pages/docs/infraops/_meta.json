@@ -7,32 +7,45 @@
         "type":"separator"
     },
     "what-is-infraops":{
-        "title":"What is KLInfraOps?"
+        "title":"What is InfraOps?"
     },
-    "how-does-devops-work":{
-        "title":"How does it work?"
+    "how-it-works":{
+        "title":"How it works?"
     },
     "getting-started":{
         "title":"Getting Started"
+    },
+    "iac":{
+        "title":"Infrastructure as code"
     },
     "---learn":{
         "title":"Learn",
         "type":"separator"
     },
-    "node-pools":{
-        "title":"Node Pools"
-    },
-    "network":{
-        "title":"Network"
-    },
-    "observability":{
-        "title":"Observability"
-    },
     "storage":{
         "title":"Storage"
     },
-    "iac":{
-        "title":"Infra as Code"
+    "vpn":{
+        "title":"VPN Access"
+    },
+    "domain-management":{
+        "title":"Domain Management"
+    },
+    "loadbalancer":{
+        "title":"Loadbalancer"
+    },
+    "---advanced":{
+        "title":"Advanced",
+        "type":"separator"
+    },
+    "autoscaling":{
+        "title":"Cluster Autoscaling"
+    },
+    "spot-instances":{
+        "title":"Spot Instances"
+    },
+    "best-practices":{
+        "title":"Best Practices"
     },
     "---resources":{
         "title":"Resources",
@@ -40,11 +53,15 @@
         "bottom":true
     },
     "api-doc":{
-        "title":"API Documentation",
+        "title":"API Reference",
         "bottom":true
     },
     "cli":{
         "title":"Cli tool",
+        "bottom":true
+    },
+    "faq":{
+        "title":"FAQ",
         "bottom":true
     },
     "github":{

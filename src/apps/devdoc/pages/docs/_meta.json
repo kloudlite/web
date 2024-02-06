@@ -1,4 +1,8 @@
 {
+    "first-principles":{
+        "title":"First Principles",
+        "type":"page"
+    },
     "devops":{
         "title":"DevOps",
         "type":"page"

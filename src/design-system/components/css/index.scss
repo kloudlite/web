@@ -157,7 +157,7 @@
 }
 
 /*
-! tailwindcss v3.3.3 | MIT License | https://tailwindcss.com
+! tailwindcss v3.4.0 | MIT License | https://tailwindcss.com
 */
 
 /*
@@ -190,9 +190,11 @@
 4. Use the user's configured `sans` font-family by default.
 5. Use the user's configured `sans` font-feature-settings by default.
 6. Use the user's configured `sans` font-variation-settings by default.
+7. Disable tap highlights on iOS
 */
 
-html {
+html,
+:host {
   line-height: 1.5;
   /* 1 */
   -webkit-text-size-adjust: 100%;
@@ -208,6 +210,8 @@ html {
   /* 5 */
   font-variation-settings: normal;
   /* 6 */
+  -webkit-tap-highlight-color: transparent;
+  /* 7 */
 }
 
 /*
@@ -279,8 +283,10 @@ strong {
 }
 
 /*
-1. Use the user's configured `mono` font family by default.
-2. Correct the odd `em` font sizing in all browsers.
+1. Use the user's configured `mono` font-family by default.
+2. Use the user's configured `mono` font-feature-settings by default.
+3. Use the user's configured `mono` font-variation-settings by default.
+4. Correct the odd `em` font sizing in all browsers.
 */
 
 code,
@@ -289,8 +295,12 @@ samp,
 pre {
   font-family: Roboto Mono, monospace;
   /* 1 */
-  font-size: 1em;
+  font-feature-settings: normal;
   /* 2 */
+  font-variation-settings: normal;
+  /* 3 */
+  font-size: 1em;
+  /* 4 */
 }
 
 /*
@@ -1113,11 +1123,6 @@ video {
   width: 8px;
 }
 
-.w-max{
-  width: -moz-max-content;
-  width: max-content;
-}
-
 .w-sm{
   width: 2px;
 }
@@ -1422,6 +1427,11 @@ video {
   border-style: none;
 }
 
+.\!border-border-disabled{
+  --tw-border-opacity: 1 !important;
+  border-color: rgb(244 244 245 / var(--tw-border-opacity)) !important;
+}
+
 .border-border-critical{
   --tw-border-opacity: 1;
   border-color: rgb(220 38 38 / var(--tw-border-opacity));
@@ -1467,12 +1477,22 @@ video {
   border-color: rgb(217 119 6 / var(--tw-border-opacity));
 }
 
+.border-text-critical{
+  --tw-border-opacity: 1;
+  border-color: rgb(220 38 38 / var(--tw-border-opacity));
+}
+
 .border-transparent{
   border-color: transparent;
 }
 
 .\!bg-\[\#bebebe82\]{
   background-color: #bebebe82 !important;
+}
+
+.\!bg-surface-basic-default{
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity)) !important;
 }
 
 .bg-border-default{
@@ -1852,6 +1872,11 @@ video {
   font-weight: 500;
 }
 
+.\!text-text-disabled{
+  --tw-text-opacity: 1 !important;
+  color: rgb(156 163 175 / var(--tw-text-opacity)) !important;
+}
+
 .text-icon-critical{
   --tw-text-opacity: 1;
   color: rgb(220 38 38 / var(--tw-text-opacity));
@@ -1880,6 +1905,10 @@ video {
 .text-text-critical{
   --tw-text-opacity: 1;
   color: rgb(220 38 38 / var(--tw-text-opacity));
+}
+
+.text-text-critical\/70{
+  color: rgb(220 38 38 / 0.7);
 }
 
 .text-text-default{
@@ -2073,6 +2102,10 @@ select{
   opacity: 0;
 }
 
+.progressItem::before{
+  content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='18' viewBox='0 0 26 18' fill='none'%3E%3Cpath d='M25 1.00037L9 16.9997L1 9.00037' stroke='%23111827' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
 .Toastify{
   position: relative;
   z-index: 999999999;
@@ -2080,10 +2113,9 @@ select{
 }
 
 @media screen and (min-width: 960px) {
-  html {
-    min-width: 100vw;
-    margin-left: 0;
-    margin-right: 0;
+  body {
+    width: 100vw;
+    margin-inline: 0px !important;
     overflow-x: hidden;
   }
 }
@@ -2457,8 +2489,8 @@ select{
     max-height: 65vh;
   }
 
-  .md\:\!w-\[612px\]{
-    width: 612px !important;
+  .md\:w-\[612px\]{
+    width: 612px;
   }
 
   .md\:gap-0{
