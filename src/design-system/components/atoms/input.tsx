@@ -116,7 +116,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
       tabIndex,
       shimmerLoading,
       autoFocus,
-      focusRing,
+      focusRing = true,
       ...extraProps
     } = props;
     const [t, setT] = useState(type || 'text');
@@ -218,8 +218,6 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
             }}
             onFocus={(e: any) => {
               if (focusRing) {
-                console.log('here', placeholder);
-
                 containerRef.current?.classList.add(
                   'ring-2',
                   'ring-border-focus'
