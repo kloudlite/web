@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { BrandLogo } from 'kl-design-system/branding/brand-logo';
 import ProgressTracker from '~/app/components/progress-tracker';
-import { Graph, GraphItem } from '~/app/components/graph';
+import { Graph, GraphExtended, GraphItem } from '~/app/components/graph';
 import ReadyToOps from '~/app/components/website/ready-to-ops';
 
 import { cn } from '~/app/utils/commons';
@@ -157,7 +157,7 @@ const FeaturedCard = () => {
           Develop, Deploy, Distribute
         </span>
       </div>
-      <div className="bg-surface-basic-subdued h-[160px]" />
+      <div className="bg-surface-basic-subdued h-[160px] 3xl:!h-[148px]" />
       <p className="bodyMd text-text-soft">
         From developing the code to deploying to, distributing, we got you
         covered at each touch point.
@@ -427,12 +427,12 @@ const _DontBelieve = () => {
 
 const Exploring = () => {
   return (
-    <div className="flex flex-col pt-7xl md:!pt-8xl xl:!pt-10xl">
+    <SectionWrapper className="flex-col">
       <h2 className="heading3xl-marketing md:!heading4xl-marketing xl:!heading5xl-marketing text-text-default text-center">
         Unveil the untold - Keep exploring
       </h2>
-      <Graph className="-mx-10xl" responsive>
-        <div className="grid grid-cols-1 md:!grid-cols-2 xl:!grid-cols-[480px_512px] 2xl:!grid-cols-[544px_544px] 3xl:!grid-cols-[672px_704px] gap-3xl xl:!gap-5xl px-10xl py-7xl md:!py-8xl xl:!py-10xl">
+      <GraphExtended>
+        <div className="grid grid-cols-1 md:!grid-cols-2 xl:!grid-cols-[480px_512px] 2xl:!grid-cols-[544px_544px] 3xl:!grid-cols-[672px_704px] gap-3xl xl:!gap-5xl">
           <GraphItem>
             <TutorialCard />
           </GraphItem>
@@ -446,8 +446,8 @@ const Exploring = () => {
             <ChangeLogCard />
           </GraphItem>
         </div>
-      </Graph>
-    </div>
+      </GraphExtended>
+    </SectionWrapper>
   );
 };
 

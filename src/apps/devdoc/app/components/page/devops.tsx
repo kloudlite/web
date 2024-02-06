@@ -1,4 +1,6 @@
 import Chips from 'kl-design-system/atoms/chips';
+import { useState } from 'react';
+import { Button } from 'kl-design-system/atoms/button';
 import HorizontalTopTabDevops from '~/app/components/website/horizontal-top-tab-devops';
 import Discover from '~/app/components/website/discover-component';
 import ReadyToOps from '~/app/components/website/ready-to-ops';
@@ -6,8 +8,6 @@ import GetStarted from '~/app/components/website/get-started';
 import SuccessStories from '~/app/components/website/success-stories';
 import { successStories } from '~/app/utils/dummy-data';
 import consts from '~/app/utils/const';
-import { useState } from 'react';
-import { Button } from 'kl-design-system/atoms/button';
 import EmbeddedData from '../../../images/embedded-data.svg';
 import TroubleFree from '../../../images/trouble-free.svg';
 import SeamlessDev from '../../../images/seamless-dev.svg';
@@ -96,26 +96,26 @@ export const GetStartedSection = () => {
     switch (selectedTab) {
       case 'config':
         return (
-          <div className="relative h-full overflow-hidden flex items-center justify-center lg:!items-start lg:!justify-start">
+          <div className="relative h-full overflow-hidden flex items-center justify-center lg:!items-end">
             <img alt="config" src={ConfigDevops.src} />
           </div>
         );
       case 'deploy':
         return (
-          <div className="relative h-full overflow-hidden flex items-center justify-center lg:!items-start lg:!justify-start">
+          <div className="relative h-full overflow-hidden flex items-center justify-center lg:!items-end">
             <img alt="deploy" src={DeployDevops.src} />
           </div>
         );
       case 'setup':
         return (
-          <div className="relative h-full p-xl lg:!p-0 overflow-hidden flex items-center justify-center lg:!items-start lg:!justify-start">
+          <div className="relative h-full p-xl overflow-hidden flex items-center justify-center lg:!p-4xl">
             <img alt="setup" src={SetupDevops.src} />
           </div>
         );
       case 'create':
       default:
         return (
-          <div className="h-full flex items-center justify-center flex items-center lg:!items-start">
+          <div className="h-full flex items-center justify-center flex items-center lg:!p-4xl">
             <img alt="create" src={CreateDevops.src} />
           </div>
         );
