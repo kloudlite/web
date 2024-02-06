@@ -5,24 +5,9 @@ const withNextra = require('nextra')({
 });
 
 module.exports = withNextra({
-  redirects: () => {
-    return [
-      {
-        source: '/docs',
-        destination: '/docs/devops',
-        statusCode: 301,
-      },
-      {
-        source: '/docs/devops',
-        destination: '/docs/devops/what-is-devops',
-        statusCode: 301,
-      },
-      {
-        source: '/docs/infraops',
-        destination: '/docs/infraops/what-is-infraops',
-        statusCode: 301,
-      },
-    ];
+  output: 'export',
+  images: {
+    unoptimized: true,
   },
 });
 

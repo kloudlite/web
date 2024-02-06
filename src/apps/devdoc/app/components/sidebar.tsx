@@ -22,7 +22,6 @@ import scrollIntoView from 'scroll-into-view-if-needed';
 import { ChevronRight } from '@jengaicons/react';
 import { Collapse } from './collapse';
 import { Anchor } from './anchor';
-import Search from './search';
 import useMenu from '../utils/use-menu';
 import { cn } from '../utils/commons';
 import useConfig from '../utils/use-config';
@@ -363,9 +362,12 @@ export function Sidebar({
         )}
         ref={containerRef}
       >
-        <div className="md:hidden pb-3xl px-2xl">
+        {/** uncomment this later * */}
+        {/**
+<div className="md:hidden pb-3xl px-2xl">
           <Search />
         </div>
+       * */}
         <FocusedItemContext.Provider value={focused}>
           <OnFocusItemContext.Provider
             value={(item) => {
@@ -403,6 +405,7 @@ export function Sidebar({
               {mounted &&
                 window.innerWidth < 768 &&
                 (rawLayout ? (
+                  // @ts-ignore
                   <MobileMenu {...config.headerSecondary} />
                 ) : (
                   <Menu

@@ -9,6 +9,15 @@ import {
   useState,
 } from 'react';
 
+export interface IHeaderSecondary {
+  items: {
+    title: string;
+    to: string;
+    type: 'dropdown' | 'link';
+    render?: () => ReactNode;
+  }[];
+  extra?: ReactNode;
+}
 export interface IConfig {
   siteTitle?: string;
   logo?: ReactNode;
@@ -39,13 +48,7 @@ export interface IConfig {
     }[];
     extra?: ReactNode;
   };
-  headerSecondary?: {
-    items: {
-      title: string;
-      to: string;
-    }[];
-    extra?: ReactNode;
-  };
+  headerSecondary?: IHeaderSecondary;
   urls?: {
     auth?: string;
     console?: string;

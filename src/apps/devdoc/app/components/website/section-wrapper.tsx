@@ -9,12 +9,7 @@ const SectionWrapper = ({
   className?: string;
 }) => {
   return (
-    <div
-      className={cn(
-        'px-3xl md:!px-5xl lg:!px-8xl flex flex-col py-6xl m-auto xl:max-w-[1024px] 2xl:max-w-[1120px] box-content',
-        className
-      )}
-    >
+    <div className={cn('flex pt-7xl md:!pt-8xl xl:!pt-10xl', className)}>
       {children}
     </div>
   );

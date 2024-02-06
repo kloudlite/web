@@ -14,7 +14,7 @@ export const HeaderLink = ({
   return (
     <Link
       href={to}
-      className={cn('bodyLg-medium', {
+      className={cn('bodyLg-medium hover:underline', {
         'text-text-soft': !active,
         'text-text-default': !!active,
       })}

@@ -1,7 +1,8 @@
 import { ReactNode } from 'react';
 import Radio from 'kl-design-system/atoms/radio';
 import { cn } from '~/app/utils/commons';
-import { Graph, GraphItem } from '../graph';
+import { GraphExtended, GraphItem } from '../graph';
+import SectionWrapper from './section-wrapper';
 
 interface IGetStartedItem {
   label?: string;
@@ -47,7 +48,7 @@ const GetStarted = ({
   tabContainerClassName,
 }: IGetStarted) => {
   return (
-    <div className="flex flex-col py-6xl md:!py-8xl 2xl:!pt-10xl">
+    <SectionWrapper className="flex-col">
       <div className="flex flex-col gap-md text-center">
         <p className="bodyLg-medium lg:!bodyXl-medium text-text-disabled">
           Get started
@@ -56,8 +57,8 @@ const GetStarted = ({
           {title}
         </h3>
       </div>
-      <Graph className="-mx-10xl">
-        <div className="grid grid-rows-[112px_50px] md:!grid-rows-none md:!grid-cols-[250px_auto] lg:!grid-cols-[448px_auto] md:!gap-3xl lg:!gap-5xl px-10xl pt-7xl md:!pt-8xl lg:!py-10xl">
+      <GraphExtended>
+        <div className="grid grid-rows-[112px_50px] md:!grid-rows-none md:!grid-cols-[250px_auto] lg:!grid-cols-[448px_auto] md:!gap-3xl lg:!gap-5xl">
           <div
             className={cn(
               'hidden md:!grid gap-3xl lg:!gap-5xl',
@@ -104,8 +105,8 @@ const GetStarted = ({
             <div className="bg-surface-basic-active h-full">{tab}</div>
           </GraphItem>
         </div>
-      </Graph>
-    </div>
+      </GraphExtended>
+    </SectionWrapper>
   );
 };
 
