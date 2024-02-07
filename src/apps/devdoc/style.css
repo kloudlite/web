@@ -184,19 +184,10 @@ code{
 
   .illustration{
     scale: 130%;
+    transform: translateY(12%);
+    clip-path: inset(0px 10px 13px 10px);
   }
 
-  @media screen and (min-width:600px) {
-    .illustration{
-      scale: 120%;
-    }
-  }
-
-  @media screen and (min-width:768px) {
-    .illustration{
-      scale: 1;
-    }
-  }
 
   .strike{
     text-decoration: none;
@@ -250,6 +241,7 @@ code{
  .distribution-cover-graph{
     background-image: url("/distribution/distribution-graph.svg");
     background-position: center;
+    background-repeat: no-repeat;
   }
 }
    .product-graph{
@@ -275,4 +267,54 @@ code{
   
 .custom-li>p{
   padding-bottom: 8px;
+} 
+.g{
+  --deg:0deg;
+  background:linear-gradient(var(--deg), #FAFAFA 12.07%, #FCD34D 26.16%, #3B82F6 43.46%, #FAFAFA 77.26%);
+  opacity:  0;
+  filter: blur(10px);
+}
+
+
+.task-teams-logo-animate{
+  animation: scalelogo 1s ease-in-out;
+  will-change:transform;
+}
+@keyframes scalelogo {
+    0% {
+        transform: scale(1.0);
+    }
+    50% {
+      transform: scale(0.5)
+    }
+    100% {
+        transform: scale(1.0);
+    }
+}
+
+.task-teams-card-rotate-animate{
+  animation: team-card-animate 0.8s linear;
+  will-change: transform;
+}
+
+@keyframes team-card-animate{
+    0% {
+        transform: rotate(0deg) translate(0, var(--deltaYInitial));
+    }
+    50% {
+      transform: rotate(-4deg) translate(var(--deltaX), var(--deltaY))
+    }
+    100% {
+        transform: rotate(0deg) translate(var(--deltaX), var(--deltaY));
+    }
+}
+
+
+
+canvas {
+  /* all four are needed to support the most browsers */
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
 }

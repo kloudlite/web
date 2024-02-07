@@ -1,23 +1,52 @@
-import { CheckCircleFill, ArrowRight, Stack } from '@jengaicons/react';
+import {
+  CheckCircleFill,
+  ArrowRight,
+  Stack,
+  Globe,
+  ClockCounterClockwise,
+  SecureConfig,
+  UsersThree,
+  ChartBar,
+  Search,
+  Monitor,
+  CostMonitoring,
+  Autoscaling,
+  Developer,
+  Infinity as InfinityIcon,
+  TreeStructure,
+  GearSix,
+  Config,
+  Code,
+} from '@jengaicons/react';
 import { Button } from 'kl-design-system/atoms/button';
 import Image from 'next/image';
 import { ReactNode } from 'react';
+import Link from 'next/link';
 import Container from '~/app/components/container';
 import ReadyToOps from '~/app/components/website/ready-to-ops';
 import { Graph, GraphItem } from '~/app/components/graph';
 import { cn } from '~/app/utils/commons';
-import Link from 'next/link';
 import Cover from '../../../images/product-landing/cover-product.svg';
 import InfraOps from '../../../images/product-landing/infra.svg';
 import DevOps from '../../../images/product-landing/dev.svg';
 import Dist from '../../../images/product-landing/dist.svg';
-import SectionWrapper from '../website/section-wrapper';
+import Wrapper from '../wrapper';
 
 const products = [
   {
     type: 'InfraOps',
-    title: 'Cloud-native at the core',
-    desc: 'Flexible & Cost Effective Kubernetes Cluster Management with simple and user-friendly interface',
+    title: (
+      <span>
+        Cloud-native <br className="hidden lg:!block" /> at the core
+      </span>
+    ),
+    desc: (
+      <span>
+        Flexible & Cost Effective Kubernetes Cluster{' '}
+        <br className="hidden lg:!block" /> Management with simple and
+        user-friendly interface
+      </span>
+    ),
     features: [
       {
         title: 'Cloud agnostic',
@@ -33,12 +62,21 @@ const products = [
       },
     ],
     link: '/infraops',
-    logo: InfraOps,
+    logo: DevOps,
   },
   {
     type: 'DevOps',
-    title: 'NoOps development',
-    desc: 'Self-Serve environments crafted for development, staging & production workloads',
+    title: (
+      <span>
+        NoOps <br className="hidden lg:!block" /> development
+      </span>
+    ),
+    desc: (
+      <span>
+        Self-Serve environments crafted for <br className="hidden lg:!block" />
+        development, staging & production workloads
+      </span>
+    ),
     features: [
       {
         title: 'Ephemeral workspaces',
@@ -54,12 +92,22 @@ const products = [
       },
     ],
     link: '/devops',
-    logo: DevOps,
+    logo: InfraOps,
   },
   {
     type: 'Distribution',
-    title: 'Simply build and deploy',
-    desc: 'Cloud accelerated build system and container registry to build and ship containers anywhere',
+    title: (
+      <span>
+        Simply build <br className="hidden lg:!block" /> and deploy
+      </span>
+    ),
+    desc: (
+      <span>
+        Cloud accelerated build system and container
+        <br className="hidden lg:!block" /> registry to build and ship
+        containers anywhere
+      </span>
+    ),
     features: [
       {
         title: 'Integrated container registry',
@@ -89,31 +137,31 @@ const benefitsItems = [
       },
       {
         title: 'Run Anywhere',
-        icon: Stack,
+        icon: Globe,
       },
       {
         title: 'Enhanced Application Security',
-        icon: Stack,
+        icon: SecureConfig,
       },
       {
         title: 'Collaborative Environments',
-        icon: Stack,
+        icon: UsersThree,
       },
       {
         title: 'Comprehensive Monitoring and Insights',
-        icon: Stack,
+        icon: ChartBar,
       },
       {
         title: 'Plug your own CICDs and Observability',
-        icon: Stack,
+        icon: Search,
       },
       {
         title: 'Streamlined Application Development',
-        icon: Stack,
+        icon: Monitor,
       },
       {
         title: 'Cost - Efficient Resource Management',
-        icon: Stack,
+        icon: CostMonitoring,
       },
     ],
   },
@@ -122,35 +170,35 @@ const benefitsItems = [
     items: [
       {
         title: 'Faster Deployment',
-        icon: Stack,
+        icon: ClockCounterClockwise,
       },
       {
         title: 'Flexible Autoscaling',
-        icon: Stack,
+        icon: Autoscaling,
       },
       {
         title: 'Developer Centric',
-        icon: Stack,
+        icon: Developer,
       },
       {
         title: 'Reduce Development Inner loop',
-        icon: Stack,
+        icon: InfinityIcon,
       },
       {
         title: 'Simplified Infrastructure Management',
-        icon: Stack,
+        icon: TreeStructure,
       },
       {
         title: 'Build system for faster deployments',
-        icon: Stack,
+        icon: GearSix,
       },
       {
         title: 'Declarative Infrastructure, Projects, and Maintenance',
-        icon: Stack,
+        icon: Config,
       },
       {
         title: 'Effective and Efficient Development Process',
-        icon: Stack,
+        icon: Code,
       },
     ],
   },
@@ -168,7 +216,7 @@ const recommendedTabs = [
   },
   {
     title: 'DevOps',
-    desc: 'Dive in to set up your InfraOps effortlessly',
+    desc: 'Explore the DevOps APIs to build your app',
     content: 'Explore our knowledge bank',
     subContent:
       'Tap into our extensive collection of resources and guides tailored to help you navigate around platform',
@@ -177,7 +225,7 @@ const recommendedTabs = [
   },
   {
     title: 'Distribution',
-    desc: 'Dive in to set up your InfraOps effortlessly',
+    desc: 'Access the resources to ensure a smooth build',
     content: 'Explore our knowledge bank',
     subContent:
       'Tap into our extensive collection of resources and guides tailored to help you navigate around platform',
@@ -204,7 +252,7 @@ const ProductCards = ({
   return (
     <Container>
       <div className="py-6xl md:!py-8xl lg:!py-10xl w-full flex flex-col lg:!flex-row gap-6xl lg:gap-10xl lg:min-h-[512px]">
-        <div className="flex flex-col gap-5xl flex-1 xl:w-[480px] 2xl:!w-[512px]">
+        <div className="flex flex-col gap-5xl flex-1 xl:w-[480px] 2xl:!w-[512px] ">
           <div className="flex flex-col gap-4xl">
             <div className="flex flex-col gap-md">
               <h5 className="bodyLg-medium lg:!bodyXl-medium text-text-disabled">
@@ -220,7 +268,10 @@ const ProductCards = ({
           </div>
           <ul className="flex flex-col gap-2xl bodyLg-medium text-text-soft">
             {features?.map((f) => (
-              <li key={f.title} className="flex flex-row items-center gap-lg">
+              <li
+                key={`${f.title}`}
+                className="flex flex-row items-center gap-lg"
+              >
                 <span className="text-icon-primary">
                   <CheckCircleFill size={16} />
                 </span>
@@ -239,7 +290,7 @@ const ProductCards = ({
         </div>
         <Graph className="-mx-10xl -my-8xl py-8xl ">
           <div className="grid grid-cols-1 lg:h-full px-10xl ">
-            <GraphItem className="flex items-center justify-center md:min-w-[491px] xl:!min-w-[512px] xl:h-[512px] ">
+            <GraphItem className="flex items-center justify-center md:min-w-[491px] xl:!min-w-[512px] xl:h-[512px] 3xl:!w-[608px]">
               <div className=" bg-surface-basic-subdued p-3xl w-full h-full md:!p-5xl xl:!p-0 flex items-center justify-center">
                 {/** @ts-ignore * */}
                 <img src={logo.src} />
@@ -430,8 +481,8 @@ const ReadyTo = () => {
 const ProductRoot = () => {
   return (
     <div>
-      <Container className="relative flex justify-center lg:justify-start">
-        <div className="flex flex-col px-3xl md:!px-5xl lg:!px-8xl lg:!py-10xl py-6xl md:!py-8xl 2xl:px-11xl 2xl:py-10xl z-10 w-full items-center">
+      <Wrapper className="relative flex justify-center lg:justify-start py-6xl md:!py-8xl lg:!py-10xl">
+        <div className="flex flex-col z-10 w-full items-center">
           <div className="flex flex-col gap-6xl lg:!items-center text-center max-w-[870px]">
             <div className="flex flex-col gap-3xl">
               <h1 className="heading4xl-marketing md:!heading5xl-marketing lg:!heading6xl-marketing text-text-default">
@@ -463,22 +514,20 @@ const ProductRoot = () => {
             </div>
           </div>
         </div>
-      </Container>
-      <Container className="flex flex-col">
-        <SectionWrapper>
-          <div className="product-graph">
-            <img src={Cover.src} />
-          </div>
+      </Wrapper>
+      <Wrapper>
+        <div className="product-graph flex items-center justify-center lg:!pb-10xl pb-6xl md:!pb-8xl 2xl:!pb-10xl ">
+          <img src={Cover.src} />
+        </div>
 
-          {products.map((p) => (
-            /** @ts-ignore * */
-            <ProductCards key={p.type} {...p} />
-          ))}
-          <Benefits />
-          <RecommendedSection />
-        </SectionWrapper>
+        {products.map((p) => (
+          /** @ts-ignore * */
+          <ProductCards key={p.type} {...p} />
+        ))}
+        <Benefits />
+        <RecommendedSection />
         <ReadyTo />
-      </Container>
+      </Wrapper>
     </div>
   );
 };

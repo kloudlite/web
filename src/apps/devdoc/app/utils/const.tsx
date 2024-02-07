@@ -1,11 +1,149 @@
 import {
   AWSlogo,
+  Autoscaling,
   AzurelogoFill,
+  BackingServices,
+  Binoculars,
+  ChartBar,
+  CloudAgnostics,
+  Config,
+  Container,
+  CostMonitoring,
   Cpu,
+  CustomEnv,
   DigitalOceanlogoFill,
+  FlexibleNodepool,
+  HelmLogo,
+  HourglassSimpleHigh,
+  InfraAsCode,
+  LiquidCompute,
+  LockKey,
+  MultiTenant,
+  NoOps,
+  Nodeless,
+  PlayPause,
+  RocketLaunch,
+  Search,
+  SecureConfig,
+  ShieldCheck,
+  ShuffleAngular,
+  SpotManagement,
+  TreeStructure,
+  TwitterNewLogo,
+  Vpn,
 } from '@jengaicons/react';
+import devopsIcon from '../../images/home/devops.svg';
+import infraopsIcon from '../../images/home/infraops.svg';
+import distributionIcon from '../../images/home/distribution.svg';
 
 const consts = {
+  home: {
+    teamTasks: [
+      {
+        title: 'Develop, Git Push',
+        color: '#2563EB',
+      },
+      {
+        title: 'CI/CD',
+        color: '#D97706',
+      },
+      {
+        title: 'DevOps',
+        color: '#2563EB',
+      },
+      {
+        title: 'Environments',
+        color: '#16A34A',
+      },
+      {
+        title: 'Run Local Env',
+        color: '#16A34A',
+      },
+      {
+        title: 'Backups & Rollbacks',
+        color: '#2563EB',
+      },
+      {
+        title: 'Configs & Secrets',
+        color: '#2563EB',
+      },
+      {
+        title: 'Global CDN',
+        color: '#16A34A',
+      },
+      {
+        title: 'Managed Services',
+        color: '#2563EB',
+      },
+      {
+        title: 'Domain management',
+        color: '#16A34A',
+      },
+    ],
+    messages: [
+      {
+        title: 'Astroman',
+        subtitle: 'subtitle',
+        company: <TwitterNewLogo size={24} />,
+        message:
+          'We use @Kloudlite on a daily basis for several internal processes, and I cannot rave enough about them. Incredible flexibility and features combined with super intuitive UI',
+        time: '10:01 PM · Apr 7, 2022',
+      },
+      {
+        title: 'Astroman 1',
+        subtitle: 'subtitle',
+        company: <TwitterNewLogo size={24} />,
+        message:
+          'We use @Kloudlite on a daily basis for several internal processes, and I cannot rave enough about them. Incredible flexibility and features combined with super intuitive UI',
+        time: '10:01 PM · Apr 7, 2022',
+      },
+      {
+        title: 'Astroman 2',
+        subtitle: 'subtitle',
+        company: <TwitterNewLogo size={24} />,
+        message:
+          'We use @Kloudlite on a daily basis for several internal processes, and I cannot rave enough about them. Incredible flexibility and features combined with super intuitive UI',
+        time: '10:01 PM · Apr 7, 2022',
+      },
+    ],
+    tutorials: [
+      {
+        title: 'Get started with InfraOps',
+      },
+      {
+        title: 'Keep building with DevOps',
+      },
+      {
+        title: 'Explore further into Distribution',
+      },
+    ],
+    suites: [
+      {
+        title: 'DevOps',
+        desc: 'Environments crafted for development and production workloads',
+        img: <img src={devopsIcon.src} className="" />,
+        imgPad:
+          'p-3xl md:!max-h-[200px] md:!min-h-[200px] lg:!max-h-[244px] 3xl:!min-h-[280px] lg:!py-5xl 3xl:!py-4xl box-border w-auto',
+        to: 'devops',
+      },
+      {
+        title: 'InfraOps',
+        desc: 'Cloud agnostic & cost effective infrastructure management at your fingertips',
+        imgPad:
+          'p-3xl md:!max-h-[200px] md:!min-h-[200px] lg:!max-h-[244px] 3xl:!min-h-[280px] lg:!py-5xl 3xl:!py-4xl box-border w-auto',
+        img: <img src={infraopsIcon.src} className="" />,
+        to: 'infraops',
+      },
+      {
+        title: 'Distribution',
+        desc: 'Build system and package registries to build and ship your environments',
+        imgPad:
+          'p-3xl md:!max-h-[200px] md:!min-h-[200px] lg:!max-h-[244px] 3xl:!min-h-[280px] lg:!py-5xl 3xl:!py-4xl box-border w-auto',
+        img: <img src={distributionIcon.src} className="" />,
+        to: 'distribution',
+      },
+    ],
+  },
   infraops: {
     advantages: [
       {
@@ -54,51 +192,51 @@ const consts = {
     ],
     features: [
       {
-        icon: Cpu,
+        icon: InfraAsCode,
         label: 'Infra as Code (IaC)',
       },
       {
         icon: Cpu,
-        label: 'GPU ready',
+        label: 'GPU Ready',
       },
       {
-        icon: Cpu,
-        label: 'Liquid compute',
+        icon: LiquidCompute,
+        label: 'Liquid Compute',
       },
       {
-        icon: Cpu,
-        label: 'Nodeless wonders',
+        icon: Nodeless,
+        label: 'Nodeless Wonders',
       },
       {
-        icon: Cpu,
-        label: 'Cost monitoring',
+        icon: CostMonitoring,
+        label: 'Cost Monitoring',
       },
       {
-        icon: Cpu,
-        label: 'Spot management',
+        icon: SpotManagement,
+        label: 'Spot Management',
       },
       {
-        icon: Cpu,
-        label: 'Custom observability',
+        icon: ChartBar,
+        label: 'Custom Observability',
       },
       {
-        icon: Cpu,
-        label: 'Flexible nodepools',
+        icon: FlexibleNodepool,
+        label: 'Flexible Nodepools',
       },
       {
-        icon: Cpu,
-        label: 'Cloud agnostic',
+        icon: CloudAgnostics,
+        label: 'Cloud Agnostic',
       },
       {
-        icon: Cpu,
-        label: 'VPN access',
+        icon: Vpn,
+        label: 'VPN Access',
       },
       {
-        icon: Cpu,
-        label: 'SSL-Enabled ingress',
+        icon: ShieldCheck,
+        label: 'SSL-Enabled Ingress',
       },
       {
-        icon: Cpu,
+        icon: NoOps,
         label: 'NoOps Kubernetes',
       },
     ],
@@ -128,47 +266,47 @@ const consts = {
     ],
     features: [
       {
-        icon: Cpu,
+        icon: Binoculars,
         label: 'Smart Observability',
       },
       {
-        icon: Cpu,
+        icon: Autoscaling,
         label: 'Flexible Autoscaling',
       },
       {
-        icon: Cpu,
+        icon: Vpn,
         label: 'VPN Connectivity',
       },
       {
-        icon: Cpu,
+        icon: ShuffleAngular,
         label: 'Ingress Routing',
       },
       {
-        icon: Cpu,
+        icon: HourglassSimpleHigh,
         label: 'Ephemeral Workspaces',
       },
       {
-        icon: Cpu,
+        icon: MultiTenant,
         label: 'Multi-tenant Environments',
       },
       {
-        icon: Cpu,
+        icon: Search,
         label: 'Pre-deployment Testing',
       },
       {
-        icon: Cpu,
+        icon: PlayPause,
         label: 'Start & Stop on-demand',
       },
       {
-        icon: Cpu,
+        icon: CustomEnv,
         label: 'Custom Env & Workspaces',
       },
       {
-        icon: Cpu,
+        icon: SecureConfig,
         label: 'Secure Config Management',
       },
       {
-        icon: Cpu,
+        icon: BackingServices,
         label: 'Comprehensive Backing Services',
       },
     ],
@@ -194,35 +332,35 @@ const consts = {
   distribution: {
     features: [
       {
-        icon: Cpu,
+        icon: LockKey,
         label: 'Enhanced Security',
       },
       {
-        icon: Cpu,
+        icon: Config,
         label: 'Build Native System',
       },
       {
-        icon: Cpu,
+        icon: MultiTenant,
         label: 'Lazy Image Distribution',
       },
       {
-        icon: Cpu,
+        icon: Container,
         label: 'Container Registry Management',
       },
       {
-        icon: Cpu,
+        icon: TreeStructure,
         label: 'Source Integration',
       },
       {
-        icon: Cpu,
+        icon: NoOps,
         label: 'Automated Build Process',
       },
       {
-        icon: Cpu,
+        icon: RocketLaunch,
         label: 'Image Deployment Automation',
       },
       {
-        icon: Cpu,
+        icon: HelmLogo,
         label: 'Helm Charts Distribution',
       },
     ],
