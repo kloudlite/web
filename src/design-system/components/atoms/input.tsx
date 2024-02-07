@@ -99,7 +99,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
       disabled = false,
       label,
       onKeyDown,
-      autoComplete,
+      autoComplete = 'off',
       onBlur = () => {},
       onFocus = () => {},
       onChange = () => {},
