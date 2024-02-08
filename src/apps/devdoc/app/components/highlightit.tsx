@@ -18,7 +18,7 @@ const HighlightIt = ({
       if (ref.current) {
         // @ts-ignore
         ref.current.innerHTML = hljs.highlight(
-          inlineData,
+          `<pre>${inlineData}</pre>`,
           {
             language,
           },
