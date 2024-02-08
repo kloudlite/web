@@ -26,11 +26,13 @@ const LogsContext = createContext<{
   logs: ISocketMessage[];
   resetLogs: () => void;
   subscribed: boolean;
+  setSubscribed: (s: boolean) => void;
 }>({
   sock: null,
   logs: [],
   resetLogs: () => {},
   subscribed: false,
+  setSubscribed: () => {},
 });
 
 export interface IuseLog {
@@ -186,6 +188,7 @@ export const LogsProvider = ({
           subscription,
           setSubscription,
           subscribed,
+          setSubscribed,
         };
       }, [sock, logs])}
     >
@@ -198,7 +201,7 @@ export const useSocketLogs = ({ account, cluster, trackingId }: IuseLog) => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
-  const { sock, subscribed, logs, resetLogs } = useLogsContext();
+  const { sock, subscribed, logs, resetLogs, setSubscribed } = useLogsContext();
 
   useDebounce(
     () => {
@@ -229,6 +232,7 @@ export const useSocketLogs = ({ account, cluster, trackingId }: IuseLog) => {
       }
 
       return () => {
+        setSubscribed(false);
         sock?.send(
           JSON.stringify({
             event: 'unsubscribe',
