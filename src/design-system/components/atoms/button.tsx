@@ -54,6 +54,7 @@ interface IBaseButton {
   className?: string;
   value?: any;
   toLabel?: string;
+  target?: string;
 }
 
 export interface IIconButton extends IBaseButton {
@@ -81,7 +82,7 @@ export const ButtonBase = React.forwardRef<
   Omit<IButton, 'size'> & { size?: ButtonSizes | IconButtonSizes }
 >((props, ref) => {
   const {
-    onClick = () => {},
+    onClick = () => { },
     to = '',
     LinkComponent = motion.button,
     disabled = false,
@@ -103,6 +104,7 @@ export const ButtonBase = React.forwardRef<
     loading = false,
     tabIndex,
     toLabel,
+    target,
     ...mprops
   } = props;
 
@@ -132,20 +134,24 @@ export const ButtonBase = React.forwardRef<
       {...(Component === 'a'
         ? { href: to }
         : toLabel
-        ? { [toLabel]: to }
-        : { to })}
+          ? { [toLabel]: to }
+          : { to })}
       disabled={disabled}
       onClick={onClick}
       {...extraProps}
       ref={ref}
       type={type}
       tabIndex={tabIndex}
+      target={target}
       className={cn(
         'pulsable',
         {
           'w-full': !!block,
           'w-fit': !block,
           selected,
+        },
+        {
+          'pointer-events-none': loading,
         },
         {
           'bodyMd-medium': !variant?.includes('plain'),
@@ -289,12 +295,12 @@ export const ButtonBase = React.forwardRef<
               variant === 'critical-plain' ||
               variant === 'secondary-plain'
             ) && {
-              'py-md px-lg': size === 'sm',
-              'py-lg px-2xl': size === 'md',
-              'py-xl px-4xl': size === 'lg',
-              'py-2xl px-6xl': size === 'xl',
-              'py-2xl px-9xl': size === '2xl',
-            }),
+            'py-md px-lg': size === 'sm',
+            'py-lg px-2xl': size === 'md',
+            'py-xl px-4xl': size === 'lg',
+            'py-2xl px-6xl': size === 'xl',
+            'py-2xl px-9xl': size === '2xl',
+          }),
         },
         {
           ...(!iconOnly &&
@@ -302,10 +308,10 @@ export const ButtonBase = React.forwardRef<
               variant === 'primary-plain' ||
               variant === 'critical-plain' ||
               variant === 'secondary-plain') && {
-              'px-md py-sm': size === 'sm',
-              'py-sm px-md': size === 'md',
-              'py-md px-lg': size === 'lg',
-            }),
+            'px-md py-sm': size === 'sm',
+            'py-sm px-md': size === 'md',
+            'py-md px-lg': size === 'lg',
+          }),
         },
         {
           'p-lg': iconOnly && size === 'md',
