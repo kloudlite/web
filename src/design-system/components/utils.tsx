@@ -26,6 +26,10 @@ export function useMapper<A, B>(
   return useMemo(() => array.map(transform), [array]);
 }
 
+export function useAppend<A, B>(arrayA: A[], arrayB: B[]) {
+  return useMemo(() => [...arrayA, ...arrayB], [arrayA, arrayB]);
+}
+
 export function titleCase(string: string) {
   if (!string) return string;
   if (typeof string !== 'string')
