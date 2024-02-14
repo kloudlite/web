@@ -348,7 +348,7 @@ const TeamTaskSection = () => {
           <div className="grid grid-cols-2 gap-5xl 2xl:!gap-8xl 3xl:!gap-5xl px-10xl py-3xl md:py-8xl overflow-hidden">
             <div className="w-full flex flex-col">
               <h4 className="headingMd-marketing md:!headingXl-marketing text-text-default relative -top-[32px] -mt-[28px] right-1/2 transform translate-x-1/2 text-center">
-                Your team’s task
+                Your team’s tasks
               </h4>
               <GraphItem className="basis-1/2">
                 <div className="flex p-xl md:!p-5xl flex-col bg-gradient-to-b from-[#E4E4E7] to-[#F3F4F6] h-[512px] max-h-[512px] overflow-hidden">
