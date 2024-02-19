@@ -28,7 +28,7 @@ select{
     print-color-adjust: exact;
 }
 
-#loadOverlay{display: none;}
+#loadOverlay{display: none!important;}
 
 .pulse-element{
     @apply !text-transparent !relative !border-0

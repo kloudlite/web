@@ -17,6 +17,7 @@
     "@types/git-url-parse": "^9.0.3",
     "classnames": "^2.5.1",
     "escape-string-regexp": "^5.0.0",
+    "firebase": "^10.8.0",
     "flexsearch": "^0.7.31",
     "framer-motion": "^10.16.16",
     "git-url-parse": "^13.1.1",
