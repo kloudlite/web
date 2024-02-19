@@ -71,7 +71,6 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
   } = pageData;
 
   const hideSidebar = activeType === 'page';
-
   return (
     <div className="bg-surface-basic-subdued min-h-screen antialiased">
       <Head>
@@ -92,6 +91,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
           type="font/woff2"
           crossOrigin="anonymous"
         />
+
         {/** Hubspot* */}
         <script
           type="text/javascript"
@@ -162,8 +162,8 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
                 </div>
                 <div className="bodyLg text-text-strong">
                   {activeThemeContext.timestamp &&
-                  pageOpts.timestamp &&
-                  activeThemeContext.layout !== 'raw'
+                    pageOpts.timestamp &&
+                    activeThemeContext.layout !== 'raw'
                     ? GitTimestamp({ timestamp: new Date(pageOpts.timestamp) })
                     : null}
                 </div>
