@@ -1,5 +1,5 @@
 
-@import url('./fonts/Inter.css');
+@import url('./fonts/Inter-var.css');
 
 @import url('./fonts/Familjen-Grotesk.css');
 
@@ -17,6 +17,7 @@ html{
     -webkit-tap-highlight-color: transparent;
     scrollbar-gutter: stable;
     @apply scroll-pt-[--kl-navbar-height];
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
 }
 .scrollbar-gutter{
     scrollbar-gutter: stable;

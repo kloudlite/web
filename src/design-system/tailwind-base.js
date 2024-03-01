@@ -247,7 +247,12 @@ const config = {
       minWidth: { ...width },
     },
     fontFamily: {
-      sans: ['Inter', 'sans-serif'],
+      sans: [
+        '"Inter var", sans-serif',
+        {
+          fontFeatureSettings: '"cv02", "cv03", "cv04", "cv11"',
+        },
+      ],
       mono: ['Roboto Mono', 'monospace'],
       familjen: ['Familjen Grotesk', 'sans-serif'],
     },
