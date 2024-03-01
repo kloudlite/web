@@ -17,20 +17,14 @@ interface ICheckbox {
 }
 
 export const Checkbox = ({
-  checked: c,
-  onChange = () => {},
+  checked,
+  onChange = () => { },
   disabled = false,
   error = false,
   indeterminate = false,
   label,
   withBounceEffect,
 }: ICheckbox) => {
-  const [checked, setChecked] = useState(c);
-
-  useEffect(() => {
-    if (onChange) onChange(checked);
-  }, [checked]);
-
   const id = useId();
   const rend = () => {
     return (
@@ -58,13 +52,13 @@ export const Checkbox = ({
           id={id}
           checked={!!checked}
           onCheckedChange={(e) => {
-            setChecked((prev) => {
-              if (indeterminate) {
-                if (prev === 'indeterminate') return false;
-                return 'indeterminate';
-              }
-              return e;
-            });
+            let c = checked;
+            if (indeterminate) {
+              if (checked === 'indeterminate') c = false;
+              c = 'indeterminate';
+            }
+            c = e;
+            onChange?.(c);
           }}
           disabled={disabled}
         >
