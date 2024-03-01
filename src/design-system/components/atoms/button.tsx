@@ -82,7 +82,7 @@ export const ButtonBase = React.forwardRef<
   Omit<IButton, 'size'> & { size?: ButtonSizes | IconButtonSizes }
 >((props, ref) => {
   const {
-    onClick = () => { },
+    onClick = () => {},
     to = '',
     LinkComponent = motion.button,
     disabled = false,
@@ -103,17 +103,20 @@ export const ButtonBase = React.forwardRef<
     size = 'md',
     loading = false,
     tabIndex,
-    toLabel,
+    toLabel = 'to',
     target,
     ...mprops
   } = props;
 
   let Component: any = LinkComponent;
 
+  let tempToLabel = toLabel;
+
   let extraProps = {} as any;
   if (to) {
     if (LinkComponent === motion.button) {
       Component = motion.a;
+      tempToLabel = 'href';
     } else {
       Component = LinkComponent;
     }
@@ -131,11 +134,7 @@ export const ButtonBase = React.forwardRef<
   return (
     <Component
       {...mprops}
-      {...(Component === 'a'
-        ? { href: to }
-        : toLabel
-          ? { [toLabel]: to }
-          : { to })}
+      {...{ [tempToLabel]: to }}
       disabled={disabled}
       onClick={onClick}
       {...extraProps}
@@ -295,12 +294,12 @@ export const ButtonBase = React.forwardRef<
               variant === 'critical-plain' ||
               variant === 'secondary-plain'
             ) && {
-            'py-md px-lg': size === 'sm',
-            'py-lg px-2xl': size === 'md',
-            'py-xl px-4xl': size === 'lg',
-            'py-2xl px-6xl': size === 'xl',
-            'py-2xl px-9xl': size === '2xl',
-          }),
+              'py-md px-lg': size === 'sm',
+              'py-lg px-2xl': size === 'md',
+              'py-xl px-4xl': size === 'lg',
+              'py-2xl px-6xl': size === 'xl',
+              'py-2xl px-9xl': size === '2xl',
+            }),
         },
         {
           ...(!iconOnly &&
@@ -308,10 +307,10 @@ export const ButtonBase = React.forwardRef<
               variant === 'primary-plain' ||
               variant === 'critical-plain' ||
               variant === 'secondary-plain') && {
-            'px-md py-sm': size === 'sm',
-            'py-sm px-md': size === 'md',
-            'py-md px-lg': size === 'lg',
-          }),
+              'px-md py-sm': size === 'sm',
+              'py-sm px-md': size === 'md',
+              'py-md px-lg': size === 'lg',
+            }),
         },
         {
           'p-lg': iconOnly && size === 'md',
