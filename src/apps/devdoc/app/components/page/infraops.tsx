@@ -2,7 +2,6 @@ import { TextInput } from 'kl-design-system/atoms/input';
 import { ArrowRight, GithubLogoFill } from '@jengaicons/react';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { Button } from 'kl-design-system/atoms/button';
 import Chips from 'kl-design-system/atoms/chips';
 import CodeEditorPlaceholder from '~/app/components/website/code-editor-placeholder';
 import HorizontalTopTab from '~/app/components/website/horizontal-top-tab';
@@ -18,6 +17,7 @@ import CostIllustration from '../../../images/cost-illustration.svg';
 import providersImage from '../../../images/infraops/providers.svg';
 import cover from '../../../images/infraops/cover.svg';
 import Wrapper from '../wrapper';
+import Button from '../button';
 
 const AdvantageSection = () => {
   const [selectedTab, setSelectedTab] = useState(
@@ -194,7 +194,10 @@ const InfraRoot = () => {
           <div className="w-full flex flex-col lg:!flex-row items-center lg:!items-start 2xl:!gap-10xl z-10 text-center lg:!text-left justify-between 3xl:pr-10xl">
             <div className="flex flex-col gap-6xl md:!max-w-[630px] 2xl:min-w-[630px]">
               <div className="flex flex-col items-center lg:!items-start gap-3xl">
-                <Chips.Chip item="infraops" label="InfraOps" />
+                <Chips.Chip
+                  item="infraops"
+                  label={<div className="bodyLg-medium">InfraOps</div>}
+                />
                 <h1 className="heading4xl-marketing md:!heading5xl-marketing lg:!heading6xl-marketing text-text-default">
                   Simple, cost-effective,
                   <br className="hidden 2xl:!block" /> cloud agnostic

@@ -18,7 +18,6 @@ import {
   Config,
   Code,
 } from '@jengaicons/react';
-import { Button } from 'kl-design-system/atoms/button';
 import Image from 'next/image';
 import { ReactNode } from 'react';
 import Link from 'next/link';
@@ -31,6 +30,7 @@ import InfraOps from '../../../images/product-landing/infra.svg';
 import DevOps from '../../../images/product-landing/dev.svg';
 import Dist from '../../../images/product-landing/dist.svg';
 import Wrapper from '../wrapper';
+import Button from '../button';
 
 const products = [
   {

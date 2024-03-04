@@ -1,4 +1,3 @@
-import { Button } from 'kl-design-system/atoms/button';
 import { Avatar } from 'kl-design-system/atoms/avatar';
 import Profile from 'kl-design-system/molecule/profile';
 import { AWSlogoFill, UsersThree } from '@jengaicons/react';
@@ -17,6 +16,7 @@ import SectionWrapper from '../website/section-wrapper';
 import Wrapper from '../wrapper';
 import { teamTaskAnimationV3 } from './team-task-animation';
 import HoverItem from '../hover-item';
+import Button from '../button';
 
 const Partners = () => {
   return (

@@ -1,11 +1,11 @@
 import { motion } from 'framer-motion';
 import { ReactNode } from 'react';
-import { Button } from 'kl-design-system/atoms/button';
 import { ArrowRight } from '@jengaicons/react';
 import Radio from 'kl-design-system/atoms/radio';
 import { cn } from '~/app/utils/commons';
 import { GraphExtended, GraphItem } from '../graph';
 import SectionWrapper from './section-wrapper';
+import Button from '../button';
 
 interface IHorizontalTopTabItem {
   label: string;

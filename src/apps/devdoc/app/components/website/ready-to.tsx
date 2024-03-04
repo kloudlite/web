@@ -1,4 +1,4 @@
-import { Button } from 'kl-design-system/atoms/button';
+import Button from '../button';
 import { Graph, GraphItem } from '../graph';
 
 const ReadyTo = () => {
