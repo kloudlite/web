@@ -1,6 +1,5 @@
 import Chips from 'kl-design-system/atoms/chips';
 import { useState } from 'react';
-import { Button } from 'kl-design-system/atoms/button';
 import HorizontalTopTabDevops from '~/app/components/website/horizontal-top-tab-devops';
 import Discover from '~/app/components/website/discover-component';
 import ReadyToOps from '~/app/components/website/ready-to-ops';
@@ -18,6 +17,7 @@ import DeployDevops from '../../../images/devops/deploy-devops.svg';
 import SetupDevops from '../../../images/devops/setup-devops.svg';
 import Cover from '../../../images/devops/cover-devops.svg';
 import Wrapper from '../wrapper';
+import Button from '../button';
 
 export const AdvantageSection = () => {
   const [selectedTab, setSelectedTab] = useState(
@@ -151,9 +151,12 @@ const DevopsPage = () => {
         <div className="flex flex-col z-10 w-full">
           <div className="md:absolute inset-0 distribution-cover-graph z-0 w-full" />
           <div className="w-full flex flex-col lg:!flex-row items-center lg:!items-start lg:!gap-10xl z-10 text-center lg:!text-left justify-between 3xl:pr-10xl">
-            <div className="flex flex-col gap-6xl md:!max-w-[374px] xl:!max-w-[621px]">
+            <div className="flex flex-col gap-6xl md:!max-w-[400px] xl:!max-w-[621px]">
               <div className="flex flex-col items-center lg:!items-start gap-3xl">
-                <Chips.Chip item="infraops" label="DevOps" />
+                <Chips.Chip
+                  item="infraops"
+                  label={<div className="bodyLg-medium">DevOps</div>}
+                />
                 <h1 className="heading4xl-marketing md:!heading5xl-marketing lg:!heading6xl-marketing text-text-default">
                   <span className="text-text-primary">NoOps</span> in any stage
                   of development
@@ -182,7 +185,7 @@ const DevopsPage = () => {
                 </div>
               </div>
             </div>
-            <div className="z-10 relative lg:min-w-[448px] lg:top-[10%] 2xl:!top-0 pt-6xl md:!pt-6xl lg:!py-0">
+            <div className="z-10 relative lg:min-w-[400px] xl:min-w-[448px] lg:top-[10%] 2xl:!top-0 pt-6xl md:!pt-6xl lg:!py-0">
               <img src={Cover.src} />
             </div>
           </div>

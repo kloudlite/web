@@ -3,7 +3,6 @@ import Discover from '~/app/components/website/discover-component';
 import ReadyToOps from '~/app/components/website/ready-to-ops';
 import GetStarted from '~/app/components/website/get-started';
 import SuccessStories from '~/app/components/website/success-stories';
-import { Button } from 'kl-design-system/atoms/button';
 import Chips from 'kl-design-system/atoms/chips';
 
 import consts from '~/app/utils/const';
@@ -14,6 +13,7 @@ import BuildDis from '../../../images/distribution/build-distribution.svg';
 import CreateDis from '../../../images/distribution/create-distribution.svg';
 import DistributeDis from '../../../images/distribution/distribute-distribution.svg';
 import Wrapper from '../wrapper';
+import Button from '../button';
 
 const DiscoverSection = () => {
   return (
@@ -93,7 +93,10 @@ const DistributionRoot = () => {
           <div className="w-full flex flex-col lg:!flex-row items-center lg:!items-start lg:!gap-10xl z-10 text-center lg:!text-left justify-between 3xl:pr-10xl">
             <div className="flex flex-col gap-6xl md:!max-w-[630px]">
               <div className="flex flex-col items-center lg:!items-start gap-3xl">
-                <Chips.Chip item="distribution" label="Distributions" />
+                <Chips.Chip
+                  item="distribution"
+                  label={<div className="bodyLg-medium">Distribution</div>}
+                />
                 <h1 className="heading4xl-marketing md:!heading5xl-marketing lg:!heading6xl-marketing text-text-default">
                   Package & Distribute your Environments
                 </h1>

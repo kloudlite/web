@@ -1,6 +1,8 @@
-import { Button } from 'kl-design-system/atoms/button';
 import { TextInput, TextArea } from 'kl-design-system/atoms/input';
+import Link from 'next/link';
+import { supportEmail } from '~/app/utils/config';
 import Wrapper from '../wrapper';
+import Button from '../button';
 
 const ContactRoot = () => {
   return (
@@ -46,22 +48,36 @@ const ContactRoot = () => {
         <div className="flex-1 flex flex-col md:!flex-row lg:!flex-col gap-7xl md:!gap-10xl justify-center md:!justify-between lg:!justify-center lg:!max-w-[300px]">
           <div className="flex flex-col gap-2xl">
             <div className="flex flex-col gap-lg">
-              <span className="headingLg text-text-default">Sales</span>
+              <span className="headingLg text-text-default">
+                Sales & Support
+              </span>
               <span className="bodyLg text-text-soft">
                 We’d love to talk about how we can work together.
               </span>
             </div>
-            <Button variant="plain" content="example@kloudlite.io" />
+            <Button
+              variant="plain"
+              content={supportEmail}
+              LinkComponent={Link}
+              to={`mailto:${supportEmail}`}
+              toLabel="href"
+            />
           </div>
-          <div className="flex flex-col gap-2xl">
-            <div className="flex flex-col gap-lg">
-              <span className="headingLg text-text-default">Support</span>
-              <span className="bodyLg text-text-soft">
-                We’re here to help with any questions you may have.
-              </span>
-            </div>
-            <Button variant="plain" content="example@kloudlite.io" />
-          </div>
+          {/* <div className="flex flex-col gap-2xl"> */}
+          {/*   <div className="flex flex-col gap-lg"> */}
+          {/*     <span className="headingLg text-text-default">Support</span> */}
+          {/*     <span className="bodyLg text-text-soft"> */}
+          {/*       We’re here to help with any questions you may have. */}
+          {/*     </span> */}
+          {/*   </div> */}
+          {/*   <Button */}
+          {/*     variant="plain" */}
+          {/*     content="launch@kloudlite.io" */}
+          {/*     LinkComponent={Link} */}
+          {/*     to="mailto:launch@kloudlite.io" */}
+          {/*     toLabel="href" */}
+          {/*   /> */}
+          {/* </div> */}
         </div>
       </div>
     </Wrapper>

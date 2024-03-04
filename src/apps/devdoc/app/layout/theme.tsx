@@ -79,7 +79,14 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
         <link rel="shortcut icon" href="/favicon.ico" />
         <link
           rel="preload"
-          href="/fonts/inter.woff2"
+          href="/fonts/Inter-variable.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/Inter-variable-Italic.woff2"
           as="font"
           type="font/woff2"
           crossOrigin="anonymous"
@@ -162,8 +169,8 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
                 </div>
                 <div className="bodyLg text-text-strong">
                   {activeThemeContext.timestamp &&
-                    pageOpts.timestamp &&
-                    activeThemeContext.layout !== 'raw'
+                  pageOpts.timestamp &&
+                  activeThemeContext.layout !== 'raw'
                     ? GitTimestamp({ timestamp: new Date(pageOpts.timestamp) })
                     : null}
                 </div>

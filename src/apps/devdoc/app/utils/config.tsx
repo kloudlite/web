@@ -5,17 +5,18 @@ import {
   LinkedinLogoFill,
   TwitterNewLogoFill,
 } from '@jengaicons/react';
-import { Button } from 'kl-design-system/atoms/button';
 import { ReactNode } from 'react';
 import { cn } from './commons';
 import { IConfig } from './use-config';
 import devops from '../../images/home/devops.svg';
 import infraops from '../../images/home/infraops.svg';
 import distribution from '../../images/home/distribution.svg';
+import Button from '../components/button';
 
-const gitUrl = 'https://github.com/kloudlite';
+const gitUrl = 'https://github.com/kloudlite/kloudlite';
 const linkedinUrl = 'https://linkedin.com/company/kloudlite-io';
 const xUrl = 'https://x.com/kloudlite';
+export const supportEmail = 'launch@kloudlite.io';
 
 const ProductMenuItem = ({
   title,

@@ -1,3 +1,4 @@
+import {supportEmail} from "../app/utils/config.tsx"
 export const Headings = ({ children }) => {
   return <p className="bodyMd-semibold">{children}</p>;
 };
@@ -244,7 +245,7 @@ export const SubList = ({ children }) => {
               * The right to receive your personal data in a usable format and transmit it to a third party (also known as the right of data portability); and
               * The right to lodge a complaint with your local data protection authority.
 
-              If you would like to exercise any of these rights, you may do so via our Personal Data Request Form. To submit your appeal, please do so by selecting “Other” via our Personal Data Request Form or by emailing info@kloudlite.io
+              If you would like to exercise any of these rights, you may do so via our Personal Data Request Form. To submit your appeal, please do so by selecting “Other” via our Personal Data Request Form or by emailing {supportEmail} 
 
               Where the applicable Data Protection Laws apply, you also have the right to withdraw any consent you have given to uses of your personal data. If you wish to withdraw consent that you have previously provided to us, you may do so via our Feedback Form. However, the withdrawal of consent will not affect the lawfulness of processing based on consent before its withdrawal.
 
@@ -289,9 +290,9 @@ export const SubList = ({ children }) => {
 
               <Headings>HOW TO CONTACT US</Headings>
 
-              We provided this information above in the “Your Rights and Choices” section, but remember that if you would like to exercise any of your privacy rights, you may do so via our Personal Data Request Form. For California consumers, you may also submit requests, or access the information provided in this Privacy Statement in an alternative format, by mailing on Kloudlite’s mail id at info@kloudlite.io
+              We provided this information above in the “Your Rights and Choices” section, but remember that if you would like to exercise any of your privacy rights, you may do so via our Personal Data Request Form. For California consumers, you may also submit requests, or access the information provided in this Privacy Statement in an alternative format, by mailing on Kloudlite’s mail id at {supportEmail} 
 
-              If you have any questions about Kloudlite’s privacy practices or use of your personal data, please feel free to <a href="/contact-us" className="underline  cursor-pointer">contact us</a> at info@kloudlite.io, via our Feedback Form or by mail at:
+              If you have any questions about Kloudlite’s privacy practices or use of your personal data, please feel free to <a href="/contact-us" className="underline  cursor-pointer">contact us</a> at {supportEmail}, via our Feedback Form or by mail at:
 
               Kloudlite Labs Pvt Ltd<br></br>
               415, 4th floor, Shaft-1, Tower- B<br></br>
@@ -300,7 +301,9 @@ export const SubList = ({ children }) => {
               Karnataka,<br></br>
               India, 560035<br></br>
 
-              For a PDF version of the Privacy Statement, please click here.
+              
+              For a PDF version of the Privacy Statement, please <a className="hover:underline text-text-primary" href="/documents/Kloudlite-Privacy_policy.pdf" download>click here</a>.
+
       </div>
         </div>
     </div>
