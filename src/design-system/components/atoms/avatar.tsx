@@ -29,12 +29,11 @@ export const AvatarBase = ({ size = 'md', color = 'one', image }: IAvatar) => {
 
   return (
     <div
-
       style={
         isExternal
           ? {
-              background: color,
-            }
+            background: color,
+          }
           : {}
       }
       className={cn(
