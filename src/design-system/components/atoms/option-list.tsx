@@ -66,7 +66,7 @@ interface IOptionMenuRadio extends IBase {
   value: string;
 }
 
-interface IOptionMenuSeparator extends Omit<IBase, 'onClick' | 'children'> {}
+interface IOptionMenuSeparator extends Omit<IBase, 'onClick' | 'children'> { }
 
 interface IOptionMenuTabs extends IBase {
   onChange?: (v: string) => void;
@@ -527,16 +527,13 @@ interface IRoot {
   children: ReactNode;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
+  modal?: boolean;
 }
 const Root = ({ ...props }: IRoot) => {
-  const [open, setOpen] = useState(props.open);
-
-  useEffect(() => {
-    if (props.onOpenChange) props.onOpenChange(open || false);
-  }, [open]);
+  const { open, onOpenChange, modal = true } = props;
 
   return (
-    <OptionMenu open={open} onOpenChange={setOpen}>
+    <OptionMenu open={open} onOpenChange={onOpenChange} modal={modal}>
       {Children.map(props.children as ReactElement[], (child) =>
         cloneElement(child, {
           open,
