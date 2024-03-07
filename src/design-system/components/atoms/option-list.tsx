@@ -530,11 +530,16 @@ interface IRoot {
   modal?: boolean;
 }
 const Root = ({ ...props }: IRoot) => {
-  const { open, onOpenChange, modal = true } = props;
+  const { onOpenChange, open: openExt, children, modal = true } = props;
+  const [open, setOpen] = useState(openExt);
+
+  useEffect(() => {
+    if (onOpenChange) onOpenChange(open || false);
+  }, [open]);
 
   return (
-    <OptionMenu open={open} onOpenChange={onOpenChange} modal={modal}>
-      {Children.map(props.children as ReactElement[], (child) =>
+    <OptionMenu open={open} onOpenChange={setOpen} modal={modal}>
+      {Children.map(children as ReactElement[], (child) =>
         cloneElement(child, {
           open,
         })
