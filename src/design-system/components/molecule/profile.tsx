@@ -4,7 +4,7 @@ import { BounceIt } from '../bounce-it';
 import { cn } from '../utils';
 
 interface IProfile extends IAvatar {
-  name: string;
+  name?: string;
   subtitle?: string;
 }
 
@@ -20,12 +20,17 @@ const Profile = forwardRef<HTMLButtonElement, IProfile>(
           )}
         >
           <AvatarBase color={color} size={size} image={props.image} />
-          <div className=" flex-col items-start hidden md:flex">
-            <div className="bodyMd-medium gap-y-md pulsable">{name}</div>
-            {subtitle && (
-              <div className="bodySm text-text-soft pulsable">{subtitle}</div>
-            )}
-          </div>
+          {(name || subtitle) && (
+            <div className=" flex-col items-start hidden md:flex">
+              {name && (
+                <div className="bodyMd-medium gap-y-md pulsable">{name}</div>
+              )}
+
+              {subtitle && (
+                <div className="bodySm text-text-soft pulsable">{subtitle}</div>
+              )}
+            </div>
+          )}
         </button>
       </BounceIt>
     );
