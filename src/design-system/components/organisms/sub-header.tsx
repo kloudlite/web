@@ -1,6 +1,6 @@
-import { ArrowLeft } from '@jengaicons/react';
 import { ReactNode } from 'react';
 import { motion } from 'framer-motion';
+import { ArrowLeftFill } from '@jengaicons/react';
 import { IconButton } from '../atoms/button';
 
 interface ISubHeader {
@@ -22,7 +22,7 @@ export const SubHeader = ({
         {backUrl && (
           <IconButton
             variant="basic"
-            icon={<ArrowLeft />}
+            icon={<ArrowLeftFill />}
             to={backUrl}
             LinkComponent={LinkComponent}
           />

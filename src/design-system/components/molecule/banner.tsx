@@ -83,7 +83,7 @@ const Banner = (props: IBanner) => {
         getStyle(type)
       )}
     >
-      <span className="pt-md">
+      <span className={cn(!!title && !!body ? 'pt-md' : '')}>
         <Icon type={type} />
       </span>
       <div className="flex-1 flex flex-col gap-sm">
