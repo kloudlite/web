@@ -6,17 +6,20 @@ interface IAnimateHide {
   show: boolean;
   initial?: boolean;
   className?: string;
+  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 const AnimateHide = ({
   children,
   show,
   initial = false,
   className,
+  onClick,
 }: IAnimateHide) => {
   return (
     <AnimatePresence initial={initial}>
       {show && (
         <motion.div
+          onClick={onClick}
           initial={{
             height: 0,
             opacity: 0,
