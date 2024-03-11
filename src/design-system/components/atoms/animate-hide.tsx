@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { ReactNode } from 'react';
+import { cn } from '../utils';
 
 interface IAnimateHide {
   children: ReactNode;
@@ -35,7 +36,7 @@ const AnimateHide = ({
             height: 0,
             y: -5,
           }}
-          className={className}
+          className={cn(className, 'overflow-hidden')}
         >
           {children}
         </motion.div>
