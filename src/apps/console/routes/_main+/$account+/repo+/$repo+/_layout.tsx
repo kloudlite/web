@@ -15,19 +15,13 @@ import {
 import Breadcrum from '~/console/components/breadcrum';
 import { CommonTabs } from '~/console/components/common-navbar-tabs';
 
-import { IRemixCtx } from '~/root/lib/types/common';
+import { IRemixCtx, LoaderResult } from '~/root/lib/types/common';
 import { GQLServerHandler } from '~/console/server/gql/saved-queries';
 import logger from '~/root/lib/client/helpers/log';
-import { ILoginUrls, ILogins } from '~/console/server/gql/queries/git-queries';
 import { IPackageContext } from '~/console/routes/_main+/$account+/packages+/_layout';
 
-export interface IRepoContext extends IPackageContext {
-  logins: ILogins;
-  loginUrls: ILoginUrls;
-}
-const LocalBreadcrum = () => {
-  const { repo, account } = useParams();
-  const repoName = atob(repo || '');
+const LocalBreadcrum = ({ repo }: { repo: string }) => {
+  const { account } = useParams();
   return (
     <div className="flex flex-row items-center">
       <Breadcrum.Button
@@ -44,9 +38,9 @@ const LocalBreadcrum = () => {
         }
       />
       <Breadcrum.Button
-        to={`/${account}/repo/${repoName}`}
+        to={`/${account}/repo/${repo}`}
         LinkComponent={Link}
-        content={<span>{repoName}</span>}
+        content={<span>{repo}</span>}
       />
     </div>
   );
@@ -103,14 +97,12 @@ const Tabs = () => {
     />
   );
 };
-export const handle = () => {
-  return {
-    navbar: <Tabs />,
-    breadcrum: () => <LocalBreadcrum />,
-  };
-};
 
 export const loader = async (ctx: IRemixCtx) => {
+  const { repo } = ctx.params;
+
+  const repoName = atob(repo || '');
+
   try {
     const { data, errors } = await GQLServerHandler(ctx.request).getLogins({});
 
@@ -129,6 +121,7 @@ export const loader = async (ctx: IRemixCtx) => {
     return {
       loginUrls: e,
       logins: data,
+      repoName,
     };
   } catch (err) {
     logger.error(err);
@@ -137,8 +130,18 @@ export const loader = async (ctx: IRemixCtx) => {
   return {
     logins: {},
     loginUrls: {},
+    repoName,
   };
 };
+
+export const handle = ({ repoName }: LoaderResult<typeof loader>) => {
+  return {
+    navbar: <Tabs />,
+    breadcrum: () => <LocalBreadcrum repo={repoName} />,
+  };
+};
+
+export type IRepoContext = IPackageContext & LoaderResult<typeof loader>;
 
 const Repo = () => {
   const rootContext = useOutletContext<IPackageContext>();

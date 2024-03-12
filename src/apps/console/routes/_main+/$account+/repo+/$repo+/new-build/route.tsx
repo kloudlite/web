@@ -15,7 +15,7 @@ import BuildDetails from './build-details';
 import { IRepoContext } from '../_layout';
 
 const NewBuild = () => {
-  const { loginUrls, logins } = useOutletContext<IRepoContext>();
+  const { loginUrls, logins, repoName } = useOutletContext<IRepoContext>();
 
   const navigate = useNavigate();
 
@@ -27,7 +27,6 @@ const NewBuild = () => {
   });
 
   const api = useConsoleApi();
-  const { repo } = useParams();
 
   const { values, errors, handleSubmit, handleChange, isLoading } = useForm({
     initialValues: {
@@ -40,7 +39,7 @@ const NewBuild = () => {
       tags: [],
       buildClusterName: '',
       advanceOptions: false,
-      repository: repo || '',
+      repository: repoName || '',
       buildArgs: {},
       buildContexts: {},
       contextDir: '',
@@ -69,7 +68,7 @@ const NewBuild = () => {
       }),
     }),
     onSubmit: async (val) => {
-      if (!repo) {
+      if (!repoName) {
         throw new Error('Repository is required!.');
       }
       const submit = async () => {
