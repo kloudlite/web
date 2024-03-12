@@ -100,7 +100,6 @@ const Tabs = () => {
 
 export const loader = async (ctx: IRemixCtx) => {
   const { repo } = ctx.params;
-
   const repoName = atob(repo || '');
 
   try {
@@ -127,9 +126,11 @@ export const loader = async (ctx: IRemixCtx) => {
     logger.error(err);
   }
 
+  const k: any = {};
+
   return {
-    logins: {},
-    loginUrls: {},
+    logins: k,
+    loginUrls: k,
     repoName,
   };
 };
@@ -141,7 +142,11 @@ export const handle = ({ repoName }: LoaderResult<typeof loader>) => {
   };
 };
 
-export type IRepoContext = IPackageContext & LoaderResult<typeof loader>;
+export interface IRepoContext extends IPackageContext {
+  logins: LoaderResult<typeof loader>['logins'];
+  loginUrls: LoaderResult<typeof loader>['loginUrls'];
+  repoName: LoaderResult<typeof loader>['repoName'];
+}
 
 const Repo = () => {
   const rootContext = useOutletContext<IPackageContext>();

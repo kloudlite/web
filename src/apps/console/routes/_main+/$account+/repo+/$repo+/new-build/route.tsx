@@ -114,7 +114,7 @@ const NewBuild = () => {
           if (e) {
             throw e[0];
           }
-          navigate(`/${account}/repo/${repo}/builds`);
+          navigate(`/${account}/repo/${repoName}/builds`);
         } catch (err) {
           handleError(err);
         }
