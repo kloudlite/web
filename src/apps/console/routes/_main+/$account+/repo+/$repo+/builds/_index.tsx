@@ -20,7 +20,7 @@ export const loader = async (ctx: IRemixCtx) => {
   const promise = pWrapper(async () => {
     ensureAccountSet(ctx);
     const { data, errors } = await GQLServerHandler(ctx.request).listBuilds({
-      repoName: repo,
+      repoName: atob(repo),
       pagination: getPagination(ctx),
       search: getSearch(ctx),
     });

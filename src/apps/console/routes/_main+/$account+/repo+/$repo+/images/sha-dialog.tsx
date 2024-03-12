@@ -12,6 +12,9 @@ const SHADialog = ({ show, setShow }: IDialog<ISHADialogData>) => {
   const { account } = useParams();
 
   const { repoName } = useOutletContext<IRepoContext>();
+
+  return null;
+
   const url = `${registryHost}/${account}/${repoName}:${
     show?.data?.tag ? show?.data?.tag : `@${show?.data?.sha}`
   }`;

@@ -13,6 +13,7 @@ import Tools from './tools';
 
 export const loader = async (ctx: IRemixCtx) => {
   const { repo } = ctx.params;
+
   const promise = pWrapper(async () => {
     ensureAccountSet(ctx);
     const { data, errors } = await GQLServerHandler(ctx.request).listDigest({
@@ -20,6 +21,7 @@ export const loader = async (ctx: IRemixCtx) => {
       pagination: getPagination(ctx),
       search: getSearch(ctx),
     });
+
     if (errors) {
       logger.error(errors[0]);
       throw errors[0];

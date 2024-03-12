@@ -20,8 +20,8 @@ import { GQLServerHandler } from '~/console/server/gql/saved-queries';
 import logger from '~/root/lib/client/helpers/log';
 import { IPackageContext } from '~/console/routes/_main+/$account+/packages+/_layout';
 
-const LocalBreadcrum = ({ repo }: { repo: string }) => {
-  const { account } = useParams();
+const LocalBreadcrum = () => {
+  const { account, repo } = useParams();
   return (
     <div className="flex flex-row items-center">
       <Breadcrum.Button
@@ -40,15 +40,16 @@ const LocalBreadcrum = ({ repo }: { repo: string }) => {
       <Breadcrum.Button
         to={`/${account}/repo/${repo}`}
         LinkComponent={Link}
-        content={<span>{repo}</span>}
+        content={<span>{atob(repo || '')}</span>}
       />
     </div>
   );
 };
 
-const Tabs = ({ repo }: { repo: string }) => {
+const Tabs = () => {
   const { account } = useParams();
 
+  const { repo } = useParams();
   const iconSize = 16;
   return (
     <CommonTabs
@@ -137,10 +138,10 @@ export const loader = async (ctx: IRemixCtx) => {
   };
 };
 
-export const handle = ({ repoName }: LoaderResult<typeof loader>) => {
+export const handle = () => {
   return {
-    navbar: <Tabs repo={repoName} />,
-    breadcrum: () => <LocalBreadcrum repo={repoName} />,
+    navbar: <Tabs />,
+    breadcrum: () => <LocalBreadcrum />,
   };
 };
 
