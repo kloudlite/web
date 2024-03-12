@@ -10,6 +10,7 @@ import { useConsoleApi } from '~/console/server/gql/api-provider';
 import Git from '~/console/components/git';
 import { IGIT_PROVIDERS } from '~/console/hooks/use-git';
 import { BottomNavigation } from '~/console/components/commons';
+import { toast } from '~/components/molecule/toast';
 import ReviewBuild from './review-build';
 import BuildDetails from './build-details';
 import { IRepoContext } from '../_layout';
@@ -69,7 +70,8 @@ const NewBuild = () => {
     }),
     onSubmit: async (val) => {
       if (!repoName) {
-        throw new Error('Repository is required!.');
+        toast.error('Repository is required!.');
+        return;
       }
       const submit = async () => {
         try {
@@ -119,16 +121,21 @@ const NewBuild = () => {
           handleError(err);
         }
       };
-      switch (currentStep) {
-        case 1:
-          nextStep();
-          break;
-        case 2:
-          nextStep();
-          break;
-        default:
-          await submit();
-          break;
+
+      try {
+        switch (currentStep) {
+          case 1:
+            nextStep();
+            break;
+          case 2:
+            nextStep();
+            break;
+          default:
+            await submit();
+            break;
+        }
+      } catch (err) {
+        handleError(err);
       }
     },
   });

@@ -100,6 +100,7 @@ const Tabs = () => {
 
 export const loader = async (ctx: IRemixCtx) => {
   const { repo } = ctx.params;
+
   const repoName = atob(repo || '');
 
   try {
@@ -150,8 +151,8 @@ export interface IRepoContext extends IPackageContext {
 
 const Repo = () => {
   const rootContext = useOutletContext<IPackageContext>();
-  const { logins, loginUrls } = useLoaderData<typeof loader>();
-  return <Outlet context={{ ...rootContext, logins, loginUrls }} />;
+  const ctx = useLoaderData<typeof loader>();
+  return <Outlet context={{ ...rootContext, ...ctx }} />;
 };
 
 export default Repo;
