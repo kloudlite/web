@@ -46,8 +46,9 @@ const LocalBreadcrum = ({ repo }: { repo: string }) => {
   );
 };
 
-const Tabs = () => {
-  const { repo, account } = useParams();
+const Tabs = ({ repo }: { repo: string }) => {
+  const { account } = useParams();
+
   const iconSize = 16;
   return (
     <CommonTabs
@@ -138,7 +139,7 @@ export const loader = async (ctx: IRemixCtx) => {
 
 export const handle = ({ repoName }: LoaderResult<typeof loader>) => {
   return {
-    navbar: <Tabs />,
+    navbar: <Tabs repo={repoName} />,
     breadcrum: () => <LocalBreadcrum repo={repoName} />,
   };
 };
