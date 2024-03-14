@@ -223,57 +223,89 @@ export const SockProvider = ({ children }: ChildrenProps) => {
     }
   }, []);
 
+  const getSocket = () => {
+    return new Promise<wsock.w3cwebsocket>((res, rej) => {
+      try {
+        // eslint-disable-next-line new-cap
+        const w = new wsock.w3cwebsocket(`${socketUrl}/ws`, '', '', {});
+
+        w.onmessage = onMessage;
+
+        w.onopen = () => {
+          res(w);
+        };
+
+        w.onerror = (e) => {
+          rej(e);
+        };
+
+        w.onclose = () => {
+          rej();
+        };
+      } catch (e) {
+        rej(e);
+      }
+    });
+  };
+
   useDebounce(
     () => {
       if (typeof window !== 'undefined') {
-        const connnect = (recon = () => {}) => {
-          try {
-            sockPromise.current = new Promise<wsock.w3cwebsocket>(
-              (res, rej) => {
-                try {
-                  // eslint-disable-next-line new-cap
-                  const w = new wsock.w3cwebsocket(
-                    `${socketUrl}/ws`,
-                    '',
-                    '',
-                    {}
-                  );
-
-                  w.onmessage = onMessage;
-
-                  w.onopen = () => {
-                    res(w);
-                  };
-
-                  w.onerror = (e) => {
-                    console.error(e);
-                    recon();
-                  };
-
-                  w.onclose = () => {
-                    recon();
-                  };
-                } catch (e) {
-                  rej(e);
-                }
-              }
-            );
-          } catch (e) {
-            logger.error(e);
-          }
-        };
-
-        connnect(() => {
-          setTimeout(() => {
-            console.log('reconnecting');
-            connnect();
-          }, 1000);
-        });
+        try {
+          sockPromise.current = getSocket();
+        } catch (e) {
+          logger.error(e);
+        }
       }
     },
     1000,
     []
   );
+
+  useEffect(() => {
+    if (!sockPromise.current) {
+      console.log('no socket connection');
+      return () => {};
+    }
+
+    const to = setInterval(async () => {
+      try {
+        const w = await sockPromise.current;
+        if (!w) {
+          return;
+        }
+
+        console.log(w._client);
+
+        switch (w.readyState) {
+          case w.CONNECTING:
+            console.log('socket connection is connecting');
+            break;
+          case w.OPEN:
+            console.log('socket connection is open');
+            break;
+          case w.CLOSING:
+            console.log('socket connection is closing');
+            break;
+          case w.CLOSED:
+            console.log('socket connection is closed');
+
+            sockPromise.current = getSocket();
+            await sockPromise.current;
+
+            break;
+          default:
+            console.log('unknown socket connection state');
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }, 1000); // keep alive every 1 second
+
+    return () => {
+      clearTimeout(to);
+    };
+  }, [sockPromise.current]);
 
   const sendMsg = useCallback(
     async <T extends IData>(msg: ISocketMsg<T>) => {
