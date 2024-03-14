@@ -278,6 +278,7 @@ const ToolbarButtonGroup = React.forwardRef<
       dir={context?.dir}
       {...toggleGroupScope}
       {...toggleGroupProps}
+      value={toggleGroupProps.value}
       ref={forwardedRef}
       rovingFocus={false}
       className={cn('flex flex-row pulsable')}
