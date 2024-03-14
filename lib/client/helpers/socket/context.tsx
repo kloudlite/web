@@ -7,8 +7,8 @@ import {
   useRef,
   useState,
 } from 'react';
-import * as wsock from 'websocket';
 import { ChildrenProps } from '~/components/types';
+import ReconnectingWebSocket from 'reconnecting-websocket';
 import logger from '~/root/lib/client/helpers/log';
 import useDebounce from '~/root/lib/client/hooks/use-debounce';
 import { socketUrl } from '~/root/lib/configs/base-url.cjs';
@@ -152,7 +152,7 @@ export const useSubscribe = <T extends IData>(
 };
 
 export const SockProvider = ({ children }: ChildrenProps) => {
-  const sockPromise = useRef<Promise<wsock.w3cwebsocket> | null>(null);
+  const sockPromise = useRef<Promise<ReconnectingWebSocket> | null>(null);
 
   const [responses, setResponses] = useState<IResponses>({});
   const [errors, setErrors] = useState<IResponses>({});
@@ -200,7 +200,7 @@ export const SockProvider = ({ children }: ChildrenProps) => {
     });
   }, []);
 
-  const onMessage = useCallback((msg: wsock.IMessageEvent) => {
+  const onMessage = useCallback((msg: any) => {
     try {
       const m: ISocketResp = JSON.parse(msg.data as string);
 
@@ -224,10 +224,10 @@ export const SockProvider = ({ children }: ChildrenProps) => {
   }, []);
 
   const getSocket = () => {
-    return new Promise<wsock.w3cwebsocket>((res, rej) => {
+    return new Promise<ReconnectingWebSocket>((res, rej) => {
       try {
         // eslint-disable-next-line new-cap
-        const w = new wsock.w3cwebsocket(`${socketUrl}/ws`, '', '', {});
+        const w = new ReconnectingWebSocket(`${socketUrl}/ws`, '', {});
 
         w.onmessage = onMessage;
 
@@ -261,51 +261,6 @@ export const SockProvider = ({ children }: ChildrenProps) => {
     1000,
     []
   );
-
-  useEffect(() => {
-    if (!sockPromise.current) {
-      console.log('no socket connection');
-      return () => {};
-    }
-
-    const to = setInterval(async () => {
-      try {
-        const w = await sockPromise.current;
-        if (!w) {
-          return;
-        }
-
-        console.log(w._client);
-
-        switch (w.readyState) {
-          case w.CONNECTING:
-            console.log('socket connection is connecting');
-            break;
-          case w.OPEN:
-            console.log('socket connection is open');
-            break;
-          case w.CLOSING:
-            console.log('socket connection is closing');
-            break;
-          case w.CLOSED:
-            console.log('socket connection is closed');
-
-            sockPromise.current = getSocket();
-            await sockPromise.current;
-
-            break;
-          default:
-            console.log('unknown socket connection state');
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    }, 1000); // keep alive every 1 second
-
-    return () => {
-      clearTimeout(to);
-    };
-  }, [sockPromise.current]);
 
   const sendMsg = useCallback(
     async <T extends IData>(msg: ISocketMsg<T>) => {

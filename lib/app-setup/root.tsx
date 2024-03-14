@@ -233,18 +233,6 @@ const Root = ({
             __html: getClientEnv(env),
           }}
         />
-<<<<<<< Updated upstream
-        <LiveReload port={443} />
-        <Tooltip.Provider>
-          <ProgressContainer>
-            <ReloadIndicator />
-            <NonIdleProgressBar />
-            {isBrowser() && <ToastContainer position="bottom-left" />}
-            {error ? (
-              <div>{JSON.stringify(error)}</div>
-            ) : (
-              <Wrapper>
-=======
         {/* <LiveReload port={443} /> */}
         <ToastContainer position="bottom-left" />
         <ProgressContainer>
@@ -255,7 +243,6 @@ const Root = ({
           ) : (
             <Wrapper>
               <Tooltip.Provider>
->>>>>>> Stashed changes
                 <Outlet />
               </Tooltip.Provider>
             </Wrapper>
