@@ -201,7 +201,7 @@ const Root = ({
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
 
-          gtag('config', ${tagId});
+          gtag('config', '${tagId}');
               `,
           }}
         />
@@ -233,20 +233,20 @@ const Root = ({
           }}
         />
         <LiveReload port={443} />
-        <Tooltip.Provider>
-          <ProgressContainer>
-            <ReloadIndicator />
-            <NonIdleProgressBar />
-            <ToastContainer position="bottom-left" />
-            {error ? (
-              <div>{JSON.stringify(error)}</div>
-            ) : (
-              <Wrapper>
+        <ToastContainer position="bottom-left" />
+        <ProgressContainer>
+          <ReloadIndicator />
+          <NonIdleProgressBar />
+          {error ? (
+            <div>{JSON.stringify(error)}</div>
+          ) : (
+            <Wrapper>
+              <Tooltip.Provider>
                 <Outlet />
-              </Wrapper>
-            )}
-          </ProgressContainer>
-        </Tooltip.Provider>
+              </Tooltip.Provider>
+            </Wrapper>
+          )}
+        </ProgressContainer>
         <Scripts />
       </body>
     </html>
