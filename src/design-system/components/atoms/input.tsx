@@ -28,6 +28,7 @@ export interface IInputRow {
   value?: string | number;
   extra?: JSX.Element;
   className?: string;
+  textFieldClassName?: string;
   containerClassName?: string;
   error?: boolean;
   disabled?: boolean;
@@ -117,6 +118,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
       shimmerLoading,
       autoFocus,
       focusRing = true,
+      textFieldClassName,
       ...extraProps
     } = props;
     const [t, setT] = useState(type || 'text');
@@ -191,6 +193,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
             id={id}
             tabIndex={tabIndex}
             className={cn(
+              textFieldClassName,
               'outline-none flex-1 w-full h-full',
               'rounded bodyMd bg-transparent',
               {
