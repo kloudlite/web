@@ -55,7 +55,6 @@ const MSOutlet = ({
 };
 
 export const loader = async (ctx: IRemixCtx) => {
-  console.log('Inside loader');
   const promise = pWrapper(async () => {
     ensureAccountSet(ctx);
     const { msv, project } = ctx.params;
@@ -75,7 +74,6 @@ export const loader = async (ctx: IRemixCtx) => {
     } catch (err) {
       logger.log(err);
 
-      console.log('here');
       return {
         managedService: {} as IProjectMSv,
         redirect: `../managed-services`,
@@ -87,7 +85,6 @@ export const loader = async (ctx: IRemixCtx) => {
 
 const ManagedService = () => {
   const { promise } = useLoaderData<typeof loader>();
-  console.log('Inside Managed Service layout');
   return (
     <LoadingComp data={promise}>
       {({ managedService }) => {

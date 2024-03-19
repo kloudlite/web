@@ -1,4 +1,6 @@
 export {
+  Warning,
+  WarningCircleFill,
   Domain,
   ArrowLeftFill as ArrowLeft,
   ArrowRightFill as ArrowRight,
@@ -50,4 +52,5 @@ export {
   CircleNotch,
   Circle,
   CircleFill,
+  Spinner,
 } from '@jengaicons/react';
