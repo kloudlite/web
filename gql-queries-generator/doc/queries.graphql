@@ -3531,24 +3531,6 @@ query consoleListNamespaces($clusterName: String!) {
         spec {
           finalizers
         }
-        status {
-          conditions {
-            lastTransitionTime
-            message
-            reason
-            status
-            type
-          }
-          phase
-        }
-        syncStatus {
-          action
-          error
-          lastSyncedAt
-          recordVersion
-          state
-          syncScheduledAt
-        }
         updateTime
       }
     }
