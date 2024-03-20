@@ -166,14 +166,6 @@ const LogsAndMetrics = () => {
           options={{
             ...chartOptions,
             series: [
-              // {
-              //   color: '#1D4ED8',
-              //   name: 'CPU',
-              //   data: data.cpu.map((d) => {
-              //     return [d.value[0], parseFloat(d.value[1])];
-              //   }),
-              // },
-
               ...data.cpu.map((d) => {
                 return {
                   name: d.metric.exported_pod,
@@ -228,13 +220,6 @@ const LogsAndMetrics = () => {
                   }),
                 };
               }),
-              // {
-              //   color: '#1D4ED8',
-              //   name: 'Memory',
-              //   data: data.memory.map((d) => {
-              //     return [d.value[0], parseFloat(d.value[1])];
-              //   }),
-              // },
             ],
 
             annotations: getAnnotations(
