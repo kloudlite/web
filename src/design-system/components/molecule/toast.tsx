@@ -16,6 +16,8 @@ export const toast = {
   success: t.success,
   error: t.error,
   warn: t.warn,
+  isActive: t.isActive,
+  update: t.update,
 };
 
 const classes = {
