@@ -16,14 +16,20 @@ export const toast = {
   success: t.success,
   error: t.error,
   warn: t.warn,
+  isActive: t.isActive,
+  update: t.update,
 };
 
 const classes = {
-  info: 'bg-surface-tertiary-default border-border-tertiary',
-  error: 'bg-surface-critical-default border-border-critical',
-  success: 'bg-surface-success-default border-border-success',
-  warning: 'bg-surface-warning-default border-border-warning',
-  default: 'bg-surface-tertiary-default border-border-tertiary',
+  info: 'bg-surface-basic-default text-text-default bodyMd border-border-disabled',
+  error:
+    'bg-surface-basic-default text-text-default bodyMd border-border-disabled',
+  success:
+    'bg-surface-basic-default text-text-default bodyMd border-border-disabled',
+  warning:
+    'bg-surface-basic-default text-text-default bodyMd border-border-disabled',
+  default:
+    'bg-surface-basic-default text-text-default bodyMd border-border-disabled',
 };
 
 const icons = {
@@ -35,7 +41,7 @@ const icons = {
 };
 
 const CloseButton = () => (
-  <span className="text-text-on-primary hover:text-text-on-primary/50 h-[24px] flex items-center">
+  <span className="text-text-default hover:text-text-default/50 h-[24px] flex items-center">
     <X color="currentColor" size={12} />
   </span>
 );
@@ -48,12 +54,11 @@ export const ToastContainer = ({ autoClose, position }: IToastContainer) => {
   return (
     <Container
       toastClassName={({ type }: any) =>
-        `z-[9999999999] shadow-popover relative flex items-start gap-xl p-xl mb-xl rounded-md justify-between overflow-hidden cursor-pointer border ${
-          classes[(type || 'default') as keyof typeof classes]
-        }`
+        `z-[9999999999] shadow-popover relative flex items-start gap-xl p-xl mb-xl rounded-md justify-between overflow-hidden cursor-pointer border 
+        ${classes[(type || 'default') as keyof typeof classes]}`
       }
       bodyClassName={() =>
-        'text-text-on-primary py-sm bodyMd-medium flex flex-row items-center [&>*]:!w-auto [&>*]:break-all [&>*]:whitespace-break-spaces'
+        'text-text-default py-sm bodyMd-medium flex flex-row items-center [&>*]:!w-auto [&>*]:break-all [&>*]:whitespace-break-spaces'
       }
       hideProgressBar
       icon={({ type }) => icons[type]}
