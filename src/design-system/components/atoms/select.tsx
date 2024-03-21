@@ -103,65 +103,67 @@ const Select = <T, U extends boolean | undefined = undefined>(
     <div className="flex flex-col">
       <div className="flex flex-col gap-md">
         {label && (
-          <div className="bodyMd-medium text-text-default h-4xl pulsable">
-            {label}
-          </div>
+          <div className="bodyMd-medium text-text-default h-4xl">{label}</div>
         )}
-        <SelectZener
-          className={() => {
-            const c = cn(
-              'rounded flex flex-row items-center border bodyMd outline-none cursor-default',
-              {
-                'py-[10px] px-lg': size === 'lg',
-                'py-[6px] px-lg': size === 'md',
-              },
-              error && !disabled
-                ? 'bg-surface-critical-subdued border-text-critical text-text-critical'
-                : ''
-            );
-            return {
-              default: `${c} border-border-default bg-surface-basic-default text-text-default`,
-              disabled: `${c} border-border-disabled text-text-disabled`,
-              focus: `${c} bg-surface-basic-default border-border-default text-text-default ring-offset-1 ring-2 ring-border-focus`,
-            };
-          }}
-          open={open}
-          menuClass="shadow-popover bg-surface-basic-default rounded py-lg"
-          menuItemRender={menuItemRender}
-          value={value}
-          options={options}
-          placeholder={
-            <div
-              className={cn(
-                error && !disabled
-                  ? 'text-text-critical/70'
-                  : 'text-text-disabled'
-              )}
-            >
-              {placeholder}
-            </div>
-          }
-          showclear={showclear}
-          suffixRender={({ clear, showclear }) =>
-            suffixRender({
-              loading: loading || false,
-              clear,
-              showclear,
-              error,
-              disabled: !!disabled,
-            })
-          }
-          onChange={onChange}
-          groupRender={groupRender}
-          disabled={disabled}
-          valueRender={valueRender}
-          creatable={creatable}
-          multiple={multiple}
-          onSearch={onSearch}
-          searchable={searchable}
-          noOptionMessage={noOptionMessage}
-          disableWhileLoading={disableWhileLoading}
-        />
+        <div className="pulsable">
+          <div className="pulsable pulsable-hidden">
+            <SelectZener
+              className={() => {
+                const c = cn(
+                  'rounded flex flex-row items-center border bodyMd outline-none cursor-default',
+                  {
+                    'py-[10px] px-lg': size === 'lg',
+                    'py-[6px] px-lg': size === 'md',
+                  },
+                  error && !disabled
+                    ? 'bg-surface-critical-subdued border-text-critical text-text-critical'
+                    : ''
+                );
+                return {
+                  default: `${c} border-border-default bg-surface-basic-default text-text-default`,
+                  disabled: `${c} border-border-disabled text-text-disabled`,
+                  focus: `${c} bg-surface-basic-default border-border-default text-text-default ring-offset-1 ring-2 ring-border-focus`,
+                };
+              }}
+              open={open}
+              menuClass="shadow-popover bg-surface-basic-default rounded py-lg"
+              menuItemRender={menuItemRender}
+              value={value}
+              options={options}
+              placeholder={
+                <div
+                  className={cn(
+                    error && !disabled
+                      ? 'text-text-critical/70'
+                      : 'text-text-disabled'
+                  )}
+                >
+                  {placeholder}
+                </div>
+              }
+              showclear={showclear}
+              suffixRender={({ clear, showclear }) =>
+                suffixRender({
+                  loading: loading || false,
+                  clear,
+                  showclear,
+                  error,
+                  disabled: !!disabled,
+                })
+              }
+              onChange={onChange}
+              groupRender={groupRender}
+              disabled={disabled}
+              valueRender={valueRender}
+              creatable={creatable}
+              multiple={multiple}
+              onSearch={onSearch}
+              searchable={searchable}
+              noOptionMessage={noOptionMessage}
+              disableWhileLoading={disableWhileLoading}
+            />
+          </div>
+        </div>
       </div>
       <AnimateHide show={!!message}>
         <div
