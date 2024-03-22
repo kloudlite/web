@@ -258,8 +258,8 @@ const SettingUserManagement = () => {
   const [searchText, setSearchText] = useState('');
 
   const [sortByProperty, setSortbyProperty] = useState({
-    sortByProperty: 'name',
-    sortByTime: 'newest',
+    sortByProperty: 'updated',
+    sortByTime: 'des',
   });
 
   const api = useConsoleApi();
