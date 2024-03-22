@@ -30,6 +30,7 @@ import { useReload } from '~/lib/client/helpers/reloader';
 import { SyncStatusV2 } from '~/console/components/sync-status';
 import { useWatchReload } from '~/lib/client/helpers/socket/useWatch';
 import ListV2 from '~/console/components/listV2';
+import useActiveDevice from '~/console/hooks/use-device';
 import { IEnvironmentContext } from '../_layout';
 
 const RESOURCE_NAME = 'app';
@@ -256,7 +257,8 @@ const ListView = ({ items = [], onAction }: IResource) => {
 const AppsResourcesV2 = ({ items = [] }: Omit<IResource, 'onAction'>) => {
   const api = useConsoleApi();
   const { environment, project, account } = useParams();
-  const { devicesForUser } = useOutletContext<IEnvironmentContext>();
+  const orgDevice = useActiveDevice();
+  const device = orgDevice?.device;
   const reload = useReload();
 
   useWatchReload(
@@ -278,8 +280,7 @@ const AppsResourcesV2 = ({ items = [] }: Omit<IResource, 'onAction'>) => {
     if (!environment || !project) {
       throw new Error('Environment is required!.');
     }
-    if (devicesForUser && devicesForUser.length > 0) {
-      const device = devicesForUser[0];
+    if (device) {
       try {
         const { errors } = await api.interceptApp({
           appname: pn(item),

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { NN } from '~/root/lib/types/common';
-import { useOutletContext } from '@remix-run/react';
+import { useOutletContext, useParams } from '@remix-run/react';
 import { useConsoleApi } from '../server/gql/api-provider';
 import {
   ExtractNodeType,
@@ -65,7 +65,7 @@ const getDevice = async (
 
 const useActiveDevice = () => {
   const api = useConsoleApi();
-  const { account } = useOutletContext<IAccountContext>();
+  const { account } = useParams();
   const [state, setState] = useState<{
     device?: IConsoleDevice;
     loading: boolean;
@@ -86,7 +86,7 @@ const useActiveDevice = () => {
 
         const device = await getDevice(hosts);
 
-        if (device.accountName !== parseName(account)) {
+        if (device.accountName !== account) {
           throw new Error('No active device found');
         }
 

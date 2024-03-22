@@ -43,7 +43,6 @@ import {
   BreadcrumSlash,
 } from '~/console/utils/commons';
 import OptionList from '~/components/atoms/option-list';
-import { IConsoleDevicesForUser } from '~/console/server/gql/queries/console-vpn-queries';
 import { Button, IconButton } from '~/components/atoms/button';
 import HandleConsoleDevices, {
   ShowWireguardConfig,
@@ -58,6 +57,7 @@ import { useReload } from '~/root/lib/client/helpers/reloader';
 import { cn } from '~/components/utils';
 import useCustomSwr from '~/root/lib/client/hooks/use-custom-swr';
 import { useSearch } from '~/root/lib/client/helpers/search-filter';
+import useActiveDevice from '~/console/hooks/use-device';
 import { IConsoleRootContext } from '../_layout/_layout';
 
 const _ProfileIcon = ({ size = 16 }: { size?: number }) => {
@@ -169,8 +169,7 @@ const Account = () => {
   );
 };
 
-const DevicesMenu = ({ devices }: { devices: IConsoleDevicesForUser }) => {
-  const [visible, setVisible] = useState(false);
+const DevicesMenu = () => {
   const [isUpdate, setIsUpdate] = useState(false);
   const [showQR, setShowQR] = useState(false);
 
@@ -184,29 +183,8 @@ const DevicesMenu = ({ devices }: { devices: IConsoleDevicesForUser }) => {
 
   const { environment, project } = useParams();
 
-  if (!devices || devices?.length === 0) {
-    return (
-      <div>
-        <Button
-          content="Create new device"
-          variant="basic"
-          suffix={<Plus />}
-          onClick={() => {
-            setVisible(true);
-          }}
-        />
-        <HandleConsoleDevices
-          {...{
-            isUpdate: false,
-            visible,
-            setVisible: () => setVisible(false),
-          }}
-        />
-      </div>
-    );
-  }
-
-  const device = devices[0];
+  const orgDevice = useActiveDevice();
+  const device = orgDevice?.device;
 
   const getConfig = async () => {
     try {
@@ -222,7 +200,7 @@ const DevicesMenu = ({ devices }: { devices: IConsoleDevicesForUser }) => {
     }
   };
   return (
-    devices?.length > 0 && (
+    device && (
       <>
         <OptionList.Root>
           <OptionList.Trigger>
@@ -470,10 +448,10 @@ const CurrentBreadcrum = ({ account }: { account: IAccount }) => {
   );
 };
 
-export const handle = ({ account, devicesForUser }: any) => {
+export const handle = ({ account }: any) => {
   return {
     breadcrum: () => <CurrentBreadcrum account={account} />,
-    devicesMenu: () => <DevicesMenu devices={devicesForUser} />,
+    devicesMenu: () => <DevicesMenu />,
   };
 };
 
@@ -490,17 +468,9 @@ export const loader = async (ctx: IRemixCtx) => {
       throw errors[0];
     }
 
-    const { data: devicesForUser, errors: vpnError } = await GQLServerHandler(
-      ctx.request
-    ).listConsoleVpnDevicesForUser({});
-    if (vpnError) {
-      throw vpnError[0];
-    }
-
     acccountData = data;
     return {
       account: data,
-      devicesForUser,
     };
   } catch (err) {
     const k = redirect('/teams') as any;
@@ -512,7 +482,6 @@ export const loader = async (ctx: IRemixCtx) => {
 
 export interface IAccountContext extends IConsoleRootContext {
   account: LoaderResult<typeof loader>['account'];
-  devicesForUser: IConsoleDevicesForUser;
 }
 
 export const shouldRevalidate: ShouldRevalidateFunction = ({
