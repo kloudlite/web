@@ -30,6 +30,10 @@ export function useAppend<A, B>(arrayA: A[], arrayB: B[]) {
   return useMemo(() => [...arrayA, ...arrayB], [arrayA, arrayB]);
 }
 
+export function useSort<A>(array: A[], transform: (a: A, b: A) => number): A[] {
+  return useMemo(() => array.sort(transform), [array, transform]);
+}
+
 export function titleCase(string: string) {
   if (!string) return string;
   if (typeof string !== 'string')
