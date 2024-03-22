@@ -32,8 +32,8 @@ export const AvatarBase = ({ size = 'md', color = 'one', image }: IAvatar) => {
       style={
         isExternal
           ? {
-            background: color,
-          }
+              background: color,
+            }
           : {}
       }
       className={cn(
@@ -43,11 +43,17 @@ export const AvatarBase = ({ size = 'md', color = 'one', image }: IAvatar) => {
         'rounded-full',
         'border border-border-default',
         {
-          'w-8xl h-8xl p-lg': size === 'lg',
-          'w-6xl h-6xl p-md': size === 'md',
-          'w-5xl h-5xl p-md': size === 'sm',
-          'w-4xl h-4xl p-md': size === 'xs',
+          'w-8xl h-8xl': size === 'lg',
+          'w-6xl h-6xl': size === 'md',
+          'w-5xl h-5xl': size === 'sm',
+          'w-4xl h-4xl': size === 'xs',
         },
+        !image
+          ? {
+              ' p-lg': size === 'lg',
+              ' p-md': size === 'md' || size === 'xs' || size === 'sm',
+            }
+          : '',
         {
           'bg-surface-basic-default': !isExternal,
         }
