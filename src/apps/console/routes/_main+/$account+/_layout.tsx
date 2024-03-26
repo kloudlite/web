@@ -198,122 +198,125 @@ const DevicesMenu = () => {
       handleError(error);
     }
   };
+
+  if (!device) {
+    return null;
+  }
+
   return (
-    device && (
-      <>
-        <OptionList.Root>
-          <OptionList.Trigger>
-            <IconButton variant="outline" icon={<WireGuardlogo />} />
-          </OptionList.Trigger>
-          <OptionList.Content>
-            {device.environmentName && device.projectName && (
-              <>
-                <OptionList.Item>
-                  <div className="flex flex-row items-center gap-lg">
-                    <div className="flex flex-col">
-                      <span className="bodyMd-medium text-text-default">
-                        {device.displayName}
-                      </span>
-                      <span className="bodySm text-text-soft">
-                        ({parseName(device)})
-                      </span>
-                    </div>
-                  </div>
-                </OptionList.Item>
-                <OptionList.Separator />
-                <OptionList.Item>
+    <>
+      <OptionList.Root>
+        <OptionList.Trigger>
+          <IconButton variant="outline" icon={<WireGuardlogo />} />
+        </OptionList.Trigger>
+        <OptionList.Content>
+          {device.environmentName && device.projectName && (
+            <>
+              <OptionList.Item>
+                <div className="flex flex-row items-center gap-lg">
                   <div className="flex flex-col">
                     <span className="bodyMd-medium text-text-default">
-                      Connected
+                      {device.displayName}
                     </span>
                     <span className="bodySm text-text-soft">
-                      {device.projectName}/{device.environmentName}
+                      ({parseName(device)})
                     </span>
                   </div>
-                </OptionList.Item>
-                <OptionList.Item
-                  onClick={() => {
-                    setShowQR(true);
-                  }}
-                >
-                  <div className="flex flex-row items-center gap-lg">
-                    <div>
-                      <QrCode size={16} />
-                    </div>
-                    <div>Show QR Code</div>
-                  </div>
-                </OptionList.Item>
-                <OptionList.Item
-                  onClick={() => {
-                    getConfig();
-                  }}
-                >
-                  <div className="flex flex-row items-center gap-lg">
-                    <div>
-                      <Copy size={16} />
-                    </div>
-                    <div>Copy WG Config</div>
-                  </div>
-                  <OptionList.Separator />
-                </OptionList.Item>
-                {environment &&
-                  project &&
-                  environment !== device.environmentName && (
-                    <OptionList.Item
-                      onClick={async () => {
-                        await switchEnvironment({
-                          api,
-                          device,
-                          environment,
-                          project,
-                        });
-                        reload();
-                        reloadDevice();
-                      }}
-                    >
-                      <div className="flex flex-row items-center gap-lg">
-                        <div>
-                          <ArrowsCounterClockwise size={16} />
-                        </div>
-                        <div>Switch to {environment}</div>
-                      </div>
-                    </OptionList.Item>
-                  )}
-              </>
-            )}
-            <OptionList.Separator />
-            <OptionList.Item
-              onClick={() => {
-                setIsUpdate(true);
-              }}
-            >
-              <div className="flex flex-row items-center gap-lg">
-                <div>
-                  <GearSix size={16} />
                 </div>
-                <div>Settings</div>
+              </OptionList.Item>
+              <OptionList.Separator />
+              <OptionList.Item>
+                <div className="flex flex-col">
+                  <span className="bodyMd-medium text-text-default">
+                    Connected
+                  </span>
+                  <span className="bodySm text-text-soft">
+                    {device.projectName}/{device.environmentName}
+                  </span>
+                </div>
+              </OptionList.Item>
+              <OptionList.Item
+                onClick={() => {
+                  setShowQR(true);
+                }}
+              >
+                <div className="flex flex-row items-center gap-lg">
+                  <div>
+                    <QrCode size={16} />
+                  </div>
+                  <div>Show QR Code</div>
+                </div>
+              </OptionList.Item>
+              <OptionList.Item
+                onClick={() => {
+                  getConfig();
+                }}
+              >
+                <div className="flex flex-row items-center gap-lg">
+                  <div>
+                    <Copy size={16} />
+                  </div>
+                  <div>Copy WG Config</div>
+                </div>
+                <OptionList.Separator />
+              </OptionList.Item>
+              {environment &&
+                project &&
+                environment !== device.environmentName && (
+                  <OptionList.Item
+                    onClick={async () => {
+                      await switchEnvironment({
+                        api,
+                        device,
+                        environment,
+                        project,
+                      });
+                      reload();
+                      reloadDevice();
+                    }}
+                  >
+                    <div className="flex flex-row items-center gap-lg">
+                      <div>
+                        <ArrowsCounterClockwise size={16} />
+                      </div>
+                      <div>Switch to {environment}</div>
+                    </div>
+                  </OptionList.Item>
+                )}
+            </>
+          )}
+          <OptionList.Separator />
+          <OptionList.Item
+            onClick={() => {
+              setIsUpdate(true);
+            }}
+          >
+            <div className="flex flex-row items-center gap-lg">
+              <div>
+                <GearSix size={16} />
               </div>
-            </OptionList.Item>
-          </OptionList.Content>
-        </OptionList.Root>
-        <HandleConsoleDevices
-          {...{
-            isUpdate: true,
-            data: device,
-            visible: isUpdate,
-            setVisible: () => setIsUpdate(false),
-          }}
-        />
-        <ShowWireguardConfig
-          {...{
-            visible: showQR,
-            setVisible: () => setShowQR(false),
-            data: { device: parseName(device) },
-            mode: 'qr',
-          }}
-        />
-      </>
-    )
+              <div>Settings</div>
+            </div>
+          </OptionList.Item>
+        </OptionList.Content>
+      </OptionList.Root>
+      <HandleConsoleDevices
+        {...{
+          isUpdate: true,
+          data: device,
+          visible: isUpdate,
+          setVisible: () => setIsUpdate(false),
+        }}
+      />
+      <ShowWireguardConfig
+        {...{
+          visible: showQR,
+          setVisible: () => setShowQR(false),
+          data: { device: parseName(device) },
+          mode: 'qr',
+        }}
+      />
+    </>
   );
 };
 
