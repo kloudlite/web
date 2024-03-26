@@ -11,6 +11,7 @@ import logger from '~/lib/client/helpers/log';
 import { IRemixCtx } from '~/lib/types/common';
 import { getPagination, getSearch } from '~/console/server/utils/common';
 import HandleConsoleDevices from '~/console/page-components/handle-console-devices';
+import fake from '~/root/fake-data-generator/fake';
 import Tools from './tools';
 import ConsoleDeviceResourcesV2 from './console-device-resources-v2';
 
@@ -41,7 +42,13 @@ const ConsoleVPN = () => {
 
   return (
     <>
-      <LoadingComp data={promise}>
+      <LoadingComp
+        data={promise}
+        skeletonData={{
+          devicesData: fake.ConsoleListConsoleVpnDevicesQuery
+            .core_listVPNDevices as any,
+        }}
+      >
         {({ devicesData }) => {
           const devices = devicesData?.edges?.map(({ node }) => node);
           if (!devices) {

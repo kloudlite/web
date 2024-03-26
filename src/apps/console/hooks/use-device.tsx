@@ -66,6 +66,7 @@ const getDevice = async (
 const useActiveDevice = () => {
   const api = useConsoleApi();
   const { account } = useParams();
+  const [reload, setReload] = useState(true);
   const [state, setState] = useState<{
     device?: IConsoleDevice;
     loading: boolean;
@@ -74,41 +75,47 @@ const useActiveDevice = () => {
     loading: true,
   });
   useEffect(() => {
-    (async () => {
-      try {
-        setState((prev) => ({ ...prev, loading: true }));
-        const { data, errors } = await api.listDnsHosts();
-        if (errors) {
-          throw errors[0];
+    if (reload) {
+      (async () => {
+        try {
+          setState((prev) => ({ ...prev, loading: true }));
+          const { data, errors } = await api.listDnsHosts();
+          if (errors) {
+            throw errors[0];
+          }
+
+          const hosts = parseNodes(data);
+
+          const device = await getDevice(hosts);
+
+          if (device.accountName !== account) {
+            throw new Error('No active device found');
+          }
+
+          const { data: dev, errors: dErr } = await api.getConsoleVpnDevice({
+            name: device.name,
+          });
+
+          if (dErr) {
+            throw dErr[0];
+          }
+
+          setState((prev) => ({ ...prev, device: dev }));
+        } catch (e) {
+          const er = e as Error;
+          setState((prev) => ({ ...prev, error: er }));
+        } finally {
+          setState((prev) => ({ ...prev, loading: false }));
         }
+      })();
+      setReload(false);
+    }
+  }, [reload]);
 
-        const hosts = parseNodes(data);
-
-        const device = await getDevice(hosts);
-
-        if (device.accountName !== account) {
-          throw new Error('No active device found');
-        }
-
-        const { data: dev, errors: dErr } = await api.getConsoleVpnDevice({
-          name: device.name,
-        });
-
-        if (dErr) {
-          throw dErr[0];
-        }
-
-        setState((prev) => ({ ...prev, device: dev }));
-      } catch (e) {
-        const er = e as Error;
-        setState((prev) => ({ ...prev, error: er }));
-      } finally {
-        setState((prev) => ({ ...prev, loading: false }));
-      }
-    })();
-  }, []);
-
-  return state;
+  const reloadDevice = () => {
+    setReload(true);
+  };
+  return { ...state, reloadDevice };
 };
 
 export default useActiveDevice;

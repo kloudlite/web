@@ -26,7 +26,7 @@ import {
   XCircleFill,
 } from '@jengaicons/react';
 import dayjs from 'dayjs';
-import LogComp from '~/root/lib/client/components/logger';
+import LogComp from '~/lib/client/components/logger';
 import LogAction from '~/console/page-components/log-action';
 import { useDataState } from '~/console/page-components/common-state';
 import { IAccountContext } from '~/console/routes/_main+/$account+/_layout';

@@ -2789,8 +2789,8 @@ mutation consoleDeletePV($clusterName: String!, $pvName: String!) {
   infra_deletePV(clusterName: $clusterName, pvName: $pvName)
 }
 
-query consoleListBuildRuns($buildID: ID!, $search: SearchBuildRuns, $pq: CursorPaginationIn) {
-  cr_listBuildRuns(buildID: $buildID, search: $search, pq: $pq) {
+query consoleListBuildRuns($search: SearchBuildRuns, $pq: CursorPaginationIn) {
+  cr_listBuildRuns(search: $search, pq: $pq) {
     edges {
       cursor
       node {
@@ -2872,8 +2872,8 @@ query consoleListBuildRuns($buildID: ID!, $search: SearchBuildRuns, $pq: CursorP
   }
 }
 
-query consoleGetBuildRun($buildID: ID!, $buildRunName: String!) {
-  cr_getBuildRun(buildID: $buildID, buildRunName: $buildRunName) {
+query consoleGetBuildRun($buildId: ID!, $buildRunName: String!) {
+  cr_getBuildRun(buildID: $buildId, buildRunName: $buildRunName) {
     clusterName
     creationTime
     markedForDeletion

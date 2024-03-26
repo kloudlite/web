@@ -269,6 +269,7 @@ const DevicesMenu = () => {
                           project,
                         });
                         reload();
+                        orgDevice.reloadDevice();
                       }}
                     >
                       <div className="flex flex-row items-center gap-lg">
