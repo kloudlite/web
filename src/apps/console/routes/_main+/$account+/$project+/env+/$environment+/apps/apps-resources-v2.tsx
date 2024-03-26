@@ -121,7 +121,6 @@ interface IResource {
 
 const GridView = ({ items = [], onAction: _ }: IResource) => {
   const { account, project, environment } = useParams();
-
   return (
     <Grid.Root className="!grid-cols-1 md:!grid-cols-3" linkComponent={Link}>
       {items.map((item, index) => {
