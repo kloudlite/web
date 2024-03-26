@@ -376,7 +376,6 @@ const BuildRunResources = ({ items = [] }: { items: BaseType[] }) => {
 
   useWatchReload(
     items.map((i) => {
-      console.log(repoName, i.id, parseName(account));
       return `account:${parseName(account)}.repo:${repoName}.build-run:${i.id}`;
     })
   );

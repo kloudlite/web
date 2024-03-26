@@ -183,8 +183,7 @@ const DevicesMenu = () => {
 
   const { environment, project } = useParams();
 
-  const orgDevice = useActiveDevice();
-  const device = orgDevice?.device;
+  const { device, reloadDevice } = useActiveDevice();
 
   const getConfig = async () => {
     try {
@@ -269,7 +268,7 @@ const DevicesMenu = () => {
                           project,
                         });
                         reload();
-                        orgDevice.reloadDevice();
+                        reloadDevice();
                       }}
                     >
                       <div className="flex flex-row items-center gap-lg">
