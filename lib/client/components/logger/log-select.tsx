@@ -5,18 +5,17 @@ import type {
   IMenuItemRender,
   ISelect,
 } from '@oshq/react-select';
-import { ChevronUpDown, CircleNotch, X } from '@jengaicons/react';
-import { cn } from '../utils';
-import AnimateHide from './animate-hide';
+import { cn } from '~/components/utils';
+import AnimateHide from '~/components/atoms/animate-hide';
 
 const menuItemRender = (props: IMenuItemRender) => {
   const { innerProps, render, active, focused } = props;
   return (
     <div
       {...innerProps}
-      className={cn('px-xl py-lg cursor-pointer select-none', {
+      className={cn('cursor-pointer select-none', {
         'bg-surface-basic-hovered': !!focused && !active,
-        'bg-surface-basic-active': !!active,
+        'bg-surface-success-pressed': !!active,
       })}
     >
       {typeof render === 'string'
@@ -32,48 +31,10 @@ const groupRender = ({ label }: IGroupRender) => {
   );
 };
 
-const suffixRender = ({
-  loading,
-  showclear,
-  clear,
-  error,
-  disabled,
-}: {
-  loading: boolean;
-  clear: (() => void) | undefined;
-  showclear: boolean | undefined;
-  error: boolean;
-  disabled: boolean;
-}) => {
-  const iconSize = 16;
-  return (
-    <div
-      className={cn(
-        'px-lg flex flex-row items-center gap-lg',
-        error && !disabled ? 'text-text-critical' : ''
-      )}
-    >
-      {loading && (
-        <span className="animate-spin">
-          <CircleNotch size={iconSize} />
-        </span>
-      )}
-      <ChevronUpDown size={iconSize} color="currentColor" />
-      {showclear && (
-        <span onClick={clear} className="cursor-pointer">
-          <X size={iconSize} color="currentColor" />
-        </span>
-      )}
-    </div>
-  );
-};
-
 const Select = <T, U extends boolean | undefined = undefined>(
   props: ISelect<T, U> & {
     label?: ReactNode;
-    size?: 'md' | 'lg';
     message?: ReactNode;
-    loading?: boolean;
     error?: boolean;
   }
 ) => {
@@ -81,7 +42,6 @@ const Select = <T, U extends boolean | undefined = undefined>(
     value,
     options,
     label,
-    size = 'md',
     placeholder,
     message,
     error = false,
@@ -90,7 +50,6 @@ const Select = <T, U extends boolean | undefined = undefined>(
     valueRender,
     creatable,
     multiple,
-    loading,
     onSearch,
     searchable,
     showclear,
@@ -100,7 +59,7 @@ const Select = <T, U extends boolean | undefined = undefined>(
   } = props;
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col min-w-10xl">
       <div className="flex flex-col gap-md">
         {label && (
           <div className="bodyMd-medium text-text-default h-4xl">{label}</div>
@@ -110,23 +69,20 @@ const Select = <T, U extends boolean | undefined = undefined>(
             <SelectZener
               className={() => {
                 const c = cn(
-                  'rounded flex flex-row items-center border bodyMd outline-none cursor-default',
-                  {
-                    'py-[10px] px-lg': size === 'lg',
-                    'py-[6px] px-lg': size === 'md',
-                  },
+                  'rounded flex flex-row items-center border outline-none cursor-default p-0 bodySm',
                   error && !disabled
                     ? 'bg-surface-critical-subdued border-text-critical text-text-critical'
                     : ''
                 );
                 return {
-                  default: `${c} border-border-default bg-surface-basic-default text-text-default`,
+                  default: `${c} border-none hljs`,
                   disabled: `${c} border-border-disabled text-text-disabled`,
-                  focus: `${c} bg-surface-basic-default border-border-default text-text-default ring-offset-1 ring-2 ring-border-focus`,
+                  focus: `${c} border-border-default text-text-default ring-offset-1 ring-2 ring-border-focus`,
                 };
               }}
               open={open}
-              menuClass="shadow-popover bg-surface-basic-default rounded py-lg"
+              // container bg
+              menuClass="shadow-popover hljs"
               menuItemRender={menuItemRender}
               value={value}
               options={options}
@@ -142,15 +98,15 @@ const Select = <T, U extends boolean | undefined = undefined>(
                 </div>
               }
               showclear={showclear}
-              suffixRender={({ clear, showclear }) =>
-                suffixRender({
-                  loading: loading || false,
-                  clear,
-                  showclear,
-                  error,
-                  disabled: !!disabled,
-                })
-              }
+              // suffixRender={({ clear, showclear }) =>
+              //   suffixRender({
+              //     loading: loading || false,
+              //     clear,
+              //     showclear,
+              //     error,
+              //     disabled: !!disabled,
+              //   })
+              // }
               onChange={onChange}
               groupRender={groupRender}
               disabled={disabled}
