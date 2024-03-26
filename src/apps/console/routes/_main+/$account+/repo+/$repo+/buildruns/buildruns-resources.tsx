@@ -31,6 +31,8 @@ import { useDataState } from '~/console/page-components/common-state';
 import { IAccountContext } from '~/console/routes/_main+/$account+/_layout';
 import ListV2 from '~/console/components/listV2';
 import { SyncStatusV2 } from '~/console/components/sync-status';
+import { useWatchReload } from '~/lib/client/helpers/socket/useWatch';
+import { IRepoContext } from '~/console/routes/_main+/$account+/repo+/$repo+/_layout';
 
 const RESOURCE_NAME = 'build run';
 type BaseType = ExtractNodeType<IBuildRuns>;
@@ -368,6 +370,15 @@ const ListView = ({ items }: { items: BaseType[] }) => {
 const BuildRunResources = ({ items = [] }: { items: BaseType[] }) => {
   const [showDeleteDialog, setShowDeleteDialog] = useState<BaseType | null>(
     null
+  );
+  const { account } = useOutletContext<IAccountContext>();
+  const { repoName } = useOutletContext<IRepoContext>();
+
+  useWatchReload(
+    items.map((i) => {
+      console.log(repoName, i.id, parseName(account));
+      return `account:${parseName(account)}.repo:${repoName}.build-run:${i.id}`;
+    })
   );
 
   const props: IResource = {

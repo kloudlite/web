@@ -16,9 +16,7 @@ export const loader = async (ctx: IRemixCtx) => {
   const promise = pWrapper(async () => {
     const { data, errors } = await GQLServerHandler(ctx.request).listBuildRuns({
       pq: getPagination(ctx),
-      search: {
-        buildId: build,
-      },
+      search: {},
     });
     console.log(data);
     if (errors) {
