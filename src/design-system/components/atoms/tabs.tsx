@@ -171,14 +171,8 @@ const Root = forwardRef<HTMLDivElement, ITabs<any>>(
     },
     ref
   ) => {
-    const [active, setActive] = useState(value);
     let id = useId();
     id = useMemo(() => id, [children, value, basePath, size, variant]);
-    useEffect(() => {
-      if (onChange) {
-        onChange(active);
-      }
-    }, [active]);
     return (
       <RovingFocusGroup.Root
         orientation="horizontal"
@@ -196,7 +190,7 @@ const Root = forwardRef<HTMLDivElement, ITabs<any>>(
         asChild
       >
         <motion.div layout layoutRoot>
-          <LayoutGroup id={id}>
+          <LayoutGroup id={id} inherit>
             {React.Children.map(children, (child) => {
               if (!child) {
                 throw Error('Tab child is required');
@@ -213,7 +207,7 @@ const Root = forwardRef<HTMLDivElement, ITabs<any>>(
                   <TabBase
                     {...tabChildProps}
                     onClick={() => {
-                      setActive(tabChildProps.value);
+                      onChange?.(tabChildProps.value);
                     }}
                     fitted={fitted}
                     to={basePath + (tabChildProps.to || '')}
