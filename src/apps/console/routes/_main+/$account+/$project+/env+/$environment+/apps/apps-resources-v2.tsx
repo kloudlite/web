@@ -4,7 +4,7 @@ import {
   Link as LinkIcon,
   Repeat,
 } from '@jengaicons/react';
-import { Link, useOutletContext, useParams } from '@remix-run/react';
+import { Link, useParams } from '@remix-run/react';
 import { generateKey, titleCase } from '~/components/utils';
 import {
   ListItem,
@@ -31,7 +31,6 @@ import { SyncStatusV2 } from '~/console/components/sync-status';
 import { useWatchReload } from '~/lib/client/helpers/socket/useWatch';
 import ListV2 from '~/console/components/listV2';
 import useActiveDevice from '~/console/hooks/use-device';
-import { IEnvironmentContext } from '../_layout';
 
 const RESOURCE_NAME = 'app';
 type BaseType = ExtractNodeType<IApps>;
@@ -256,8 +255,7 @@ const ListView = ({ items = [], onAction }: IResource) => {
 const AppsResourcesV2 = ({ items = [] }: Omit<IResource, 'onAction'>) => {
   const api = useConsoleApi();
   const { environment, project, account } = useParams();
-  const orgDevice = useActiveDevice();
-  const device = orgDevice?.device;
+  const { device } = useActiveDevice();
   const reload = useReload();
 
   useWatchReload(
