@@ -185,7 +185,7 @@ const ListView = ({ items, onAction }: IResource) => {
                       )
                     }
                   >
-                    {i.spec?.routing?.mode}{' '}
+                    {i.spec?.routing?.mode}
                   </Badge>
                 ),
               },
