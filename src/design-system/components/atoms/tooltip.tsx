@@ -59,6 +59,7 @@ export const Root = ({
               side={side || 'right'}
               align={align || 'start'}
               alignOffset={0}
+              onClick={(e) => e.preventDefault()}
             >
               <motion.div
                 onKeyDown={(e) => console.log(e)}
