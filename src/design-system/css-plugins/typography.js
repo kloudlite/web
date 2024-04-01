@@ -38,6 +38,12 @@ function typography() {
       '.bodyLg-underline': {
         '@apply bodyLg underline': {},
       },
+      '.bodyXl': {
+        '@apply font-normal font-sans text-lg leading-lg': {},
+      },
+      '.bodyXXl': {
+        '@apply font-normal font-sans text-xl leading-bodyXXl-lineHeight': {},
+      },
       '.bodyXl-medium': {
         '@apply font-medium font-sans text-lg leading-lg': {},
       },
