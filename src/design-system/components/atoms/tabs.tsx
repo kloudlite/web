@@ -1,13 +1,11 @@
 import * as RovingFocusGroup from '@radix-ui/react-roving-focus';
-import { LayoutGroup, motion } from 'framer-motion';
+import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
 import React, {
   KeyboardEvent,
   ReactElement,
   ReactNode,
   forwardRef,
-  useEffect,
   useId,
-  useMemo,
   useState,
 } from 'react';
 import { cn } from '../utils';
@@ -28,6 +26,7 @@ interface ITabBase extends IBase {
   active?: boolean;
   onClick?: (e: KeyboardEvent<HTMLSpanElement>) => void;
   prefix?: JSX.Element;
+  layoutId: string;
 }
 
 interface ITabs<T = string> extends IBase {
@@ -55,6 +54,7 @@ const TabBase = ({
   variant = 'plain',
   size = 'md',
   prefix,
+  layoutId,
 }: ITabBase) => {
   let Component: any = LinkComponent || 'div';
 
@@ -141,19 +141,21 @@ const TabBase = ({
           {variant === 'plain' && <div className="h-md bg-none w-full z-0" />}
         </Component>
       </RovingFocusGroup.Item>
-      {variant === 'filled' && active && (
-        <motion.span
-          layoutId="bubble"
-          className="absolute inset-0 rounded-lg bg-surface-basic-default border border-border-default shadow-button"
-          transition={{ type: 'spring', bounce: 0.1, duration: 0.3 }}
-        />
-      )}
+      <AnimatePresence>
+        {variant === 'filled' && active && (
+          <motion.div
+            layoutId={layoutId}
+            className="absolute inset-0 rounded-lg bg-surface-basic-default border border-border-default shadow-button"
+            transition={{ type: 'spring', bounce: 0.1, duration: 0.3 }}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 };
 
 const Tab = <T,>({ to, label, prefix, value: _ }: ITab<T>) => (
-  <TabBase to={to} label={label} prefix={prefix} />
+  <TabBase to={to} label={label} prefix={prefix} layoutId="" />
 );
 
 const Root = forwardRef<HTMLDivElement, ITabs<any>>(
@@ -171,8 +173,8 @@ const Root = forwardRef<HTMLDivElement, ITabs<any>>(
     },
     ref
   ) => {
-    let id = useId();
-    id = useMemo(() => id, [children, value, basePath, size, variant]);
+    const id = useId();
+    // id = useMemo(() => id, [children, value, basePath, size, variant]);
     return (
       <RovingFocusGroup.Root
         orientation="horizontal"
@@ -190,7 +192,7 @@ const Root = forwardRef<HTMLDivElement, ITabs<any>>(
         asChild
       >
         <motion.div layout layoutRoot>
-          <LayoutGroup id={id} inherit>
+          <LayoutGroup id={id}>
             {React.Children.map(children, (child) => {
               if (!child) {
                 throw Error('Tab child is required');
@@ -199,7 +201,7 @@ const Root = forwardRef<HTMLDivElement, ITabs<any>>(
               const tabChildProps: ITab = tabChild.props;
 
               return (
-                <motion.div
+                <div
                   className={cn('snap-start', {
                     'px-xl md:px-0': variant === 'plain',
                   })}
@@ -209,6 +211,7 @@ const Root = forwardRef<HTMLDivElement, ITabs<any>>(
                     onClick={() => {
                       onChange?.(tabChildProps.value);
                     }}
+                    layoutId={id}
                     fitted={fitted}
                     to={basePath + (tabChildProps.to || '')}
                     active={value === tabChildProps.value}
@@ -216,7 +219,7 @@ const Root = forwardRef<HTMLDivElement, ITabs<any>>(
                     variant={variant}
                     size={size}
                   />
-                </motion.div>
+                </div>
               );
             })}
           </LayoutGroup>
