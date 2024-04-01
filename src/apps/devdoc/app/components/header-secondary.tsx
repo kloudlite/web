@@ -35,7 +35,7 @@ const HeaderSecondary = ({
   const { config } = useConfig();
   const { state, setState } = useMenu();
   return (
-    <div className="flex flex-row sticky top-0 left-0 right-0 p-2 bg-surface-basic-default border-b border-border-default min-h-[68px] z-50">
+    <div className="flex flex-row sticky top-0 left-0 right-0 p-2 bg-surface-basic-subdued border-b border-border-default min-h-[68px] z-50">
       <Wrapper className="flex">
         <nav className="flex flex-row items-center gap-6xl w-full">
           {config.logo}

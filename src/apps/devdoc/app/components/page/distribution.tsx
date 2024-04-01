@@ -21,7 +21,7 @@ const DiscoverSection = () => {
       className="grid grid-cols-1 md:!grid-cols-2 lg:!grid-cols-3 2xl:!grid-cols-4 3xl:!grid-cols-[352px_320px_320px_320px] gap-3xl lg:!gap-5xl"
       title={
         <>
-          Discover <span className="text-text-primary">Distribution</span>
+          Discover <span className="text-text-primary">Kl-Distribution</span>
         </>
       }
       desc="Dive-in to know how Distribution can transform the container image management"
@@ -95,12 +95,12 @@ const DistributionRoot = () => {
               <div className="flex flex-col items-center lg:!items-start gap-3xl">
                 <Chips.Chip
                   item="distribution"
-                  label={<div className="bodyLg-medium">Distribution</div>}
+                  label={<div className="bodyLg-medium">Kl-Distribution</div>}
                 />
                 <h1 className="heading4xl-marketing md:!heading5xl-marketing lg:!heading6xl-marketing text-text-default">
                   Package & Distribute your Environments
                 </h1>
-                <p className="bodyLg-medium md:!bodyXl-medium text-text-soft">
+                <p className="bodyXl lg:!bodyXXl text-text-soft">
                   Cloud-accelerated Build System, Container Registry, & Helm
                   Repos built to distribute and deploy with ease
                 </p>

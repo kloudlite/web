@@ -8,9 +8,9 @@ import SectionWrapper from './section-wrapper';
 import Button from '../button';
 
 interface IHorizontalTopTabItem {
-  label: string;
+  label: ReactNode;
   id: string;
-  desc: string;
+  desc: ReactNode;
   active: boolean;
   className?: string;
   onClick: () => void;
@@ -27,7 +27,7 @@ const HorizontalTopTabDevopsItem = ({
   return (
     <div
       className={cn(
-        'flex flex-col gap-4xl p-xl lg:!p-4xl bg-surface-basic-default relative cursor-pointer lg:min-h-[192px] lg:max-h-[192px] ',
+        'flex flex-col gap-4xl p-xl lg:!p-4xl bg-surface-basic-default relative cursor-pointer lg:min-h-[192px] lg:min-h-[288px] lg:max-h-[288px] ',
         className
       )}
       onClick={onClick}
@@ -40,9 +40,7 @@ const HorizontalTopTabDevopsItem = ({
       >
         {label}
       </h5>
-      <p className="bodyLg text-text-soft line-clamp-2 md:line-clamp-3">
-        {desc}
-      </p>
+      <p className="bodyXl text-text-soft line-clamp-6">{desc}</p>
       {active && (
         <motion.div
           transition={{ type: 'spring', bounce: 0.1, duration: 0.3 }}
@@ -73,7 +71,7 @@ const HorizontalTopTabDevops = ({
     <SectionWrapper className="flex-col">
       <div className="flex flex-col md:!flex-row gap-3xl md:!gap-8xl lg:!gap-10xl">
         <div className="flex flex-col gap-md flex-1">
-          <p className="bodyLg-medium lg:!bodyXl-medium text-text-disabled">
+          <p className="bodyXl lg:!bodyXXl text-text-disabled">
             What does it offer?
           </p>
           <h2 className="heading3xl-marketing md:!heading4xl-marketing lg:!heading5xl-marketing text-text-default">
@@ -81,7 +79,7 @@ const HorizontalTopTabDevops = ({
           </h2>
         </div>
         <div className="flex flex-col gap-3xl md:!gap-4xl flex-1">
-          <p className="bodyLg-medium lg:!bodyXl-medium text-text-soft">
+          <p className="bodyXl lg:!bodyXXl text-text-soft">
             Simplify software development and testing with automated
             environments, tools, and configurations
           </p>
@@ -90,7 +88,6 @@ const HorizontalTopTabDevops = ({
       </div>
       <GraphExtended>
         <div className="flex flex-col gap-3xl lg:!gap-5xl">
-          {' '}
           {/**
             Desktop mode 
        * */}

@@ -104,7 +104,7 @@ export const createComponents = ({
       ul: (props) => {
         let cs = props.className;
         if (!cs) {
-          cs = 'list-disc pl-5xl';
+          cs = 'list-disc pl-xl';
         }
 
         return <ul {...props} className={cs} />;

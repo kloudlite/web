@@ -43,7 +43,7 @@ const Header = ({
   }, []);
 
   return (
-    <div className="flex flex-row sticky top-0 left-0 right-0 p-2 bg-surface-basic-default border-b border-border-default min-h-[76px] z-50">
+    <div className="flex flex-row sticky top-0 left-0 right-0 p-2 bg-surface-basic-subdued border-b border-border-default min-h-[76px] z-50">
       <nav className="px-3xl md:!px-5xl lg:!px-8xl xl:!px-11xl 2xl:!px-12xl xl:!max-w-[1024px] 2xl:!max-w-[1120px] box-content flex flex-row items-center gap-6xl lg:m-auto w-full">
         {config.logo}
         <ul className="hidden md:flex flex-1 flex-row items-center justify-end gap-4xl list-none">

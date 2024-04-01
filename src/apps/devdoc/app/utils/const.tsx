@@ -108,18 +108,18 @@ const consts = {
     ],
     tutorials: [
       {
-        title: 'Get started with InfraOps',
+        title: 'Get started with Kl-InfraOps',
       },
       {
-        title: 'Keep building with DevOps',
+        title: 'Keep building with Kl-DevOps',
       },
       {
-        title: 'Explore further into Distribution',
+        title: 'Explore further into Kl-Distribution',
       },
     ],
     suites: [
       {
-        title: 'DevOps',
+        title: 'Kl-DevOps',
         desc: 'Environments crafted for development and production workloads',
         img: <img src={devopsIcon.src} className="" />,
         imgPad:
@@ -127,7 +127,7 @@ const consts = {
         to: 'devops',
       },
       {
-        title: 'InfraOps',
+        title: 'Kl-InfraOps',
         desc: 'Cloud agnostic & cost effective infrastructure management at your fingertips',
         imgPad:
           'p-3xl md:!max-h-[200px] md:!min-h-[200px] lg:!max-h-[244px] 3xl:!min-h-[280px] lg:!py-5xl 3xl:!py-4xl box-border w-auto',
@@ -135,7 +135,7 @@ const consts = {
         to: 'infraops',
       },
       {
-        title: 'Distribution',
+        title: 'Kl-Distribution',
         desc: 'Build system and package registries to build and ship your environments',
         imgPad:
           'p-3xl md:!max-h-[200px] md:!min-h-[200px] lg:!max-h-[244px] 3xl:!min-h-[280px] lg:!py-5xl 3xl:!py-4xl box-border w-auto',
@@ -244,22 +244,43 @@ const consts = {
   devops: {
     advantages: [
       {
-        label: 'Faster development',
+        label: (
+          <div>
+            Faster
+            <br />
+            development
+          </div>
+        ),
         id: 'faster-dev',
         desc: 'Automation of environment setup ensures faster developer inner loops',
       },
       {
-        label: 'Seamless environments',
+        label: (
+          <div>
+            Seamless
+            <br /> environments
+          </div>
+        ),
         id: 'seamless-env',
         desc: 'Setup, configure, deploy, and observe environments with ease',
       },
       {
-        label: 'Trouble-free maintenance',
+        label: (
+          <div>
+            Trouble-free
+            <br /> maintenance
+          </div>
+        ),
         id: 'trouble-free',
         desc: 'Automated infrastructure management & analytics-driven maintenance',
       },
       {
-        label: 'Embedded data security',
+        label: (
+          <div>
+            Embedded data
+            <br /> security
+          </div>
+        ),
         id: 'embedded-data',
         desc: 'Out of the box SSL ensures encryption of your data at rest or in motion with ease',
       },

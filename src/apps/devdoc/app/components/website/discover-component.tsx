@@ -10,13 +10,8 @@ interface IFeatureItem {
 const FeatureItem = ({ icon: Icon, label }: IFeatureItem) => {
   return (
     <div className="p-4xl flex flex-col justify-between gap-4xl bg-surface-basic-default min-h-[256px]">
-      <span
-        className="flex items-center justify-center rounded-full text-text-on-primary h-10xl w-10xl"
-        style={{
-          background: 'linear-gradient(170deg, #3B82F6 6.19%, #1E3A8A 95.65%)',
-        }}
-      >
-        <Icon icon={48} />
+      <span className="flex items-center justify-center rounded-full text-text-on-primary h-10xl w-10xl bg-icon-primary">
+        <Icon size={48} />
       </span>
       <span className="headingLg text-text-default">{label}</span>
     </div>
@@ -37,14 +32,14 @@ const Discover = ({ features, title, desc, className }: IDiscover) => {
     <SectionWrapper className="flex-col">
       <div className="flex flex-col gap-3xl text-center">
         <div className="flex flex-col gap-md">
-          <p className="bodyLg-medium lg:!bodyXl-medium text-text-disabled">
+          <p className="bodyXl lg:!bodyXXl text-text-disabled">
             Salient features
           </p>
           <h3 className="heading3xl-marketing md:!heading4xl-marketing lg:!heading5xl-marketing text-text-default">
             {title}
           </h3>
         </div>
-        <p className="bodyLg-medium lg:!bodyXl-medium text-text-soft">{desc}</p>
+        <p className="bodyXl lg:!bodyXXl text-text-soft">{desc}</p>
       </div>
       <GraphExtended>
         <div className={cn(className)}>

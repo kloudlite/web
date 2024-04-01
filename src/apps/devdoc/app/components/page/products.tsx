@@ -34,7 +34,37 @@ import Button from '../button';
 
 const products = [
   {
-    type: 'InfraOps',
+    type: 'Kl-DevOps',
+    title: (
+      <span>
+        NoOps <br className="hidden lg:!block" /> development
+      </span>
+    ),
+    desc: (
+      <span>
+        Self-Serve environments crafted for <br className="hidden lg:!block" />
+        development, staging & production workloads
+      </span>
+    ),
+    features: [
+      {
+        title: 'Ephemeral workspaces',
+      },
+      {
+        title: 'Scalable environments',
+      },
+      {
+        title: 'Secure VPN for remote local',
+      },
+      {
+        title: 'Automated backing services',
+      },
+    ],
+    link: '/devops',
+    logo: InfraOps,
+  },
+  {
+    type: 'Kl-InfraOps',
     title: (
       <span>
         Cloud-native <br className="hidden lg:!block" /> at the core
@@ -65,37 +95,7 @@ const products = [
     logo: DevOps,
   },
   {
-    type: 'DevOps',
-    title: (
-      <span>
-        NoOps <br className="hidden lg:!block" /> development
-      </span>
-    ),
-    desc: (
-      <span>
-        Self-Serve environments crafted for <br className="hidden lg:!block" />
-        development, staging & production workloads
-      </span>
-    ),
-    features: [
-      {
-        title: 'Ephemeral workspaces',
-      },
-      {
-        title: 'Scalable environments',
-      },
-      {
-        title: 'Secure VPN for remote local',
-      },
-      {
-        title: 'Automated backing services',
-      },
-    ],
-    link: '/devops',
-    logo: InfraOps,
-  },
-  {
-    type: 'Distribution',
+    type: 'Kl-Distribution',
     title: (
       <span>
         Simply build <br className="hidden lg:!block" /> and deploy
@@ -206,7 +206,7 @@ const benefitsItems = [
 
 const recommendedTabs = [
   {
-    title: 'InfraOps',
+    title: 'Kl-InfraOps',
     desc: 'Dive in to set up your InfraOps effortlessly',
     content: 'Explore our knowledge bank',
     subContent:
@@ -215,7 +215,7 @@ const recommendedTabs = [
     id: 'infraops',
   },
   {
-    title: 'DevOps',
+    title: 'Kl-DevOps',
     desc: 'Explore the DevOps APIs to build your app',
     content: 'Explore our knowledge bank',
     subContent:
@@ -224,7 +224,7 @@ const recommendedTabs = [
     id: 'devops',
   },
   {
-    title: 'Distribution',
+    title: 'Kl-Distribution',
     desc: 'Access the resources to ensure a smooth build',
     content: 'Explore our knowledge bank',
     subContent:
@@ -255,18 +255,14 @@ const ProductCards = ({
         <div className="flex flex-col gap-5xl flex-1 xl:w-[480px] 2xl:!w-[512px] ">
           <div className="flex flex-col gap-4xl">
             <div className="flex flex-col gap-md">
-              <h5 className="bodyLg-medium lg:!bodyXl-medium text-text-disabled">
-                {type}
-              </h5>
+              <h5 className="bodyXl lg:!bodyXXl text-text-disabled">{type}</h5>
               <h3 className="heading3xl-marketing lg:!heading5xl-marketing text-text-default">
                 {title}
               </h3>
             </div>
-            <p className="bodyLg-medium lg:!bodyXl-medium text-text-soft">
-              {desc}
-            </p>
+            <p className="bodyXl lg:!bodyXXl text-text-soft">{desc}</p>
           </div>
-          <ul className="flex flex-col gap-2xl bodyLg-medium text-text-soft">
+          <ul className="flex flex-col gap-2xl bodyXl lg:!bodyXXl text-text-soft">
             {features?.map((f) => (
               <li
                 key={`${f.title}`}
@@ -311,7 +307,7 @@ const Benefits = () => {
           <h1 className="heading3xl-marketing lg:!heading6xl-marketing text-text-default">
             We understand because we&apos;ve been there too
           </h1>
-          <p className="bodyLg-medium lg:!bodyXl-medium text-text-soft">
+          <p className="bodyXl lg:!bodyXXl text-text-soft">
             So, we meticulously engineered our platform to provide you the below
             benefits
           </p>
@@ -332,7 +328,7 @@ const Benefits = () => {
                   {bi.items.map((bii) => (
                     <GraphItem key={bii.title}>
                       <div className="xl:h-[192px] xl:w-[256px] bg-surface-basic-subdued flex flex-col gap-4xl p-4xl">
-                        <span className="rounded-full border-2 border-border-default w-fit p-2xl">
+                        <span className="rounded-full w-fit p-2xl bg-icon-primary text-text-on-primary">
                           <bii.icon size={32} />
                         </span>
                         <span className="headingMd lg:!bodyLg-medium text-text-default flex-1">
@@ -368,7 +364,7 @@ const RecommendedItemButton = ({
       className="p-4xl bg-surface-basic-default flex flex-col  h-full gap-4xl"
     >
       <span className="heading2xl-marketing text-text-default">{title}</span>
-      <span className="bodyLg text-text-soft">{desc}</span>
+      <span className="bodyXl text-text-soft">{desc}</span>
     </div>
   );
 };
@@ -389,14 +385,14 @@ const RecommendedCard = ({
       <div className="flex flex-col p-5xl gap-5xl md:w-1/2">
         <div className="flex flex-col gap-4xl">
           <div className="flex flex-col gap-md">
-            <span className="bodyLg-medium md:!bodyXl-medium text-text-disabled">
+            <span className="bodyXl lg:!bodyXXl text-text-disabled">
               Recommended resources
             </span>
             <h3 className="heading3xl-marketing md:!heading4xl lg:!heading5xl-marketing text-text-default line-clamp-2">
               {content}
             </h3>
           </div>
-          <p className="bodyLg-medium md:!bodyXl-medium text-text-soft line-clamp-3">
+          <p className="bodyXl lg:!bodyXXl text-text-soft line-clamp-3">
             {subContent}
           </p>
         </div>
@@ -488,7 +484,7 @@ const ProductRoot = () => {
               <h1 className="heading4xl-marketing md:!heading5xl-marketing lg:!heading6xl-marketing text-text-default">
                 Kloudlite - a One click console for your code to cloud journey
               </h1>
-              <p className="bodyLg-medium md:!bodyXl-medium text-text-soft">
+              <p className="bodyXl lg:!bodyXXl text-text-soft">
                 Upgrade your development and deployment by merging efficient
                 DevOps, scalable cloud infrastructure, and continuous
                 optimization into a seamless, productive workflow

@@ -46,8 +46,8 @@ export const SuccessStoryDetailCard = ({
     <div className="bg-surface-basic-default p-3xl md:!p-5xl flex flex-col md:!flex-row md:!gap-7xl md:max-h-[288px] h-full">
       <div className="flex flex-col gap-3xl pb-3xl md:!pb-0 md:!gap-5xl flex-1">
         <div className="flex flex-col gap-3xl">
-          <p className="bodyLg text-text-soft line-clamp-5">{content}</p>
-          <span className="bodyLg text-text-soft line-clamp-1">
+          <p className="bodyXl text-text-soft line-clamp-5">{content}</p>
+          <span className="bodyXl text-text-soft line-clamp-1">
             {subContent}
           </span>
         </div>
@@ -88,9 +88,7 @@ const SuccessStories = ({
   return (
     <SectionWrapper className="flex-col">
       <div className="flex flex-col gap-md text-center">
-        <p className="bodyLg-medium lg:!bodyXl-medium text-text-disabled">
-          Case study
-        </p>
+        <p className="bodyXl lg:!bodyXXl text-text-disabled">Case study</p>
         <h3 className="heading3xl-marketing lg:!heading5xl-marketing text-text-default">
           {title || 'Success stories'}
         </h3>
