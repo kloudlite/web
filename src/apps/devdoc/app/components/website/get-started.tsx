@@ -50,9 +50,7 @@ const GetStarted = ({
   return (
     <SectionWrapper className="flex-col">
       <div className="flex flex-col gap-md text-center">
-        <p className="bodyLg-medium lg:!bodyXl-medium text-text-disabled">
-          Get started
-        </p>
+        <p className="bodyXl lg:!bodyXXl text-text-disabled">Get started</p>
         <h3 className="heading3xl-marketing md:!heading4xl lg:!heading5xl-marketing text-text-default">
           {title}
         </h3>

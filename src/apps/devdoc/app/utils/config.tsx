@@ -112,15 +112,15 @@ export default {
         className: 'w-[47%] md:w-auto',
         items: [
           {
-            title: 'DevOps',
+            title: 'Kl-DevOps',
             to: 'devops',
           },
           {
-            title: 'InfraOps',
+            title: 'Kl-InfraOps',
             to: 'infraops',
           },
           {
-            title: 'Distribution',
+            title: 'Kl-Distribution',
             to: 'distribution',
           },
         ],
@@ -186,19 +186,19 @@ export default {
         render: () => (
           <ul className="flex flex-col list-none w-full">
             <ProductMenuItem
-              title="DevOps"
+              title="Kl-DevOps"
               description="NoOps in every stage of devlopment"
               image={devops.src}
               to="/devops"
             />
             <ProductMenuItem
-              title="InfraOps"
+              title="Kl-InfraOps"
               description="Cloud-native at the core of infrastructure"
               image={infraops.src}
               to="/infraops"
             />
             <ProductMenuItem
-              title="Distribution"
+              title="Kl-Distribution"
               description="Build, deploy and scale at an acceleration"
               image={distribution.src}
               to="/distribution"

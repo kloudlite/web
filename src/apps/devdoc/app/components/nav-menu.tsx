@@ -27,10 +27,11 @@ const NavigationMenuDemo = ({
               LinkComponent={Link}
               to={to}
               toLabel="href"
+              className="!no-underline hover:!text-text-default"
               content={
                 <span
                   className={cn(
-                    'flex flex-row items-center gap-lg bodyLg-medium',
+                    'flex flex-row items-center gap-lg bodyLg-medium hover:text-text-default',
                     {
                       'text-text-soft': !active,
                       'text-text-default': !!active,

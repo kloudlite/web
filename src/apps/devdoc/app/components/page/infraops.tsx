@@ -167,7 +167,7 @@ const DiscoverSection = () => {
       className="grid grid-cols-1 md:!grid-cols-2 lg:!grid-cols-3 2xl:!grid-cols-4 3xl:!grid-cols-[352px_320px_320px_320px] gap-3xl lg:!gap-5xl"
       title={
         <>
-          Discover <span className="text-text-primary">InfraOps</span>
+          Discover <span className="text-text-primary">Kl-InfraOps</span>
         </>
       }
       desc="Dive-in to know how InfraOps can transform your infrastructure management"
@@ -196,13 +196,13 @@ const InfraRoot = () => {
               <div className="flex flex-col items-center lg:!items-start gap-3xl">
                 <Chips.Chip
                   item="infraops"
-                  label={<div className="bodyLg-medium">InfraOps</div>}
+                  label={<div className="bodyLg-medium">Kl-InfraOps</div>}
                 />
                 <h1 className="heading4xl-marketing md:!heading5xl-marketing lg:!heading6xl-marketing text-text-default">
                   Simple, cost-effective,
                   <br className="hidden 2xl:!block" /> cloud agnostic
                 </h1>
-                <p className="bodyLg-medium md:!bodyXl-medium text-text-soft">
+                <p className="bodyXl lg:!bodyXXl text-text-soft">
                   The freedom of cloud agnosticism with effortless
                   infrastructure management—Any Provider, Any Scale, Absolute
                   Security

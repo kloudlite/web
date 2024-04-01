@@ -240,9 +240,7 @@ const SuiteCard = ({
         <span className="heading2xl-marketing lg:!heading3xl-marketing text-text-default">
           {title}
         </span>
-        <span className="bodyLg-medium xl:!bodyXl-medium text-text-strong line-clamp-3">
-          {desc}
-        </span>
+        <span className="bodyXl text-text-strong line-clamp-3">{desc}</span>
       </div>
     </div>
   );
@@ -337,7 +335,7 @@ const TeamTaskSection = () => {
           Why <br className="hidden md:!block 3xl:!hidden" />
           Kloudlite?
         </h2>
-        <p className="bodyLg-medium xl:!bodyXl-medium text-text-soft">
+        <p className="bodyXl lg:!bodyXXl text-text-soft">
           A transformative solution for modern DevOps needs, built with
           precision and a deep understanding of developer and platform engineer
           challenges
@@ -483,7 +481,7 @@ const IndexRoot = () => {
               </span>{' '}
               <br /> platform engineering system
             </h1>
-            <p className="bodyLg-medium md:!bodyXl-medium text-text-soft text-center max-w-[528px] lg:!w-[688px] lg:!max-w-[688px]">
+            <p className="bodyXl lg:!bodyXXl text-text-soft text-center max-w-[528px] lg:!w-[688px] lg:!max-w-[688px]">
               Cloud agnostic platform designed for developers & platform
               engineers to ease code to cloud journey.
             </p>

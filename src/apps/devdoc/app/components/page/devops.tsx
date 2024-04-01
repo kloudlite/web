@@ -79,7 +79,7 @@ export const DiscoverSection = () => {
       className="grid grid-cols-1 md:!grid-cols-2 lg:!grid-cols-3 2xl:!grid-cols-4 3xl:!grid-cols-[352px_320px_320px_320px] gap-3xl lg:!gap-5xl "
       title={
         <>
-          Discover <span className="text-text-primary">DevOps</span>
+          Discover <span className="text-text-primary">Kl-DevOps</span>
         </>
       }
       desc="Simplify software development and testing with automated environments, tools, and configurations"
@@ -155,13 +155,13 @@ const DevopsPage = () => {
               <div className="flex flex-col items-center lg:!items-start gap-3xl">
                 <Chips.Chip
                   item="infraops"
-                  label={<div className="bodyLg-medium">DevOps</div>}
+                  label={<div className="bodyLg-medium">Kl-DevOps</div>}
                 />
                 <h1 className="heading4xl-marketing md:!heading5xl-marketing lg:!heading6xl-marketing text-text-default">
                   <span className="text-text-primary">NoOps</span> in any stage
                   of development
                 </h1>
-                <p className="bodyLg-medium md:!bodyXl-medium text-text-soft">
+                <p className="bodyXl md:!bodyXXl text-text-soft">
                   Dev-Prod parity for developers, by developers: DevOps
                   automation that redefines productivity
                 </p>

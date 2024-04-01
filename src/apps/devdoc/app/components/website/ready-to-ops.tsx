@@ -12,7 +12,7 @@ const ReadyToOps = () => {
               <h2 className="heading3xl-marketing md:!heading5xl-marketing text-text-default">
                 Ready to try Kloudlite?
               </h2>
-              <p className="bodyXl-medium text-text-soft">
+              <p className="bodyXXl text-text-soft">
                 Join the cult of our early adopters, and discover the power of
                 Kloudlite.
               </p>

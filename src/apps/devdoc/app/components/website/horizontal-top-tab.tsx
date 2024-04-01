@@ -24,7 +24,7 @@ export const AdvantageItem = ({
 }: IHorizontalTopTabItem) => {
   return (
     <div
-      className="flex flex-col gap-2xl p-3xl lg:gap-4xl lg:!py-5xl lg:!px-4xl bg-surface-basic-default relative cursor-pointer xl:min-h-[192px] xl:max-h-[192px] 3xl:min-h-[160px] 3xl:!max-h-[160px]"
+      className="flex flex-col gap-2xl p-3xl lg:gap-4xl lg:!py-[31px]  lg:!px-4xl bg-surface-basic-default relative cursor-pointer xl:min-h-[192px] xl:max-h-[192px] 3xl:min-h-[160px] 3xl:!max-h-[160px]"
       onClick={onClick}
     >
       <h5
@@ -39,7 +39,7 @@ export const AdvantageItem = ({
         {label}
       </h5>
 
-      <p className="bodyMd lg:!bodyLg text-text-soft line-clamp-2 md:line-clamp-3">
+      <p className="bodyXl text-text-soft line-clamp-2 md:line-clamp-3">
         {desc}
       </p>
       {active && (
@@ -73,7 +73,7 @@ const HorizontalTopTab = ({
     <SectionWrapper className="flex-col">
       <div className="flex flex-col md:!flex-row gap-3xl md:!gap-8xl lg:!gap-10xl">
         <div className="flex flex-col gap-md flex-1">
-          <p className="bodyLg-medium lg:!bodyXl-medium text-text-disabled">
+          <p className="bodyXl lg:!bodyXXl text-text-disabled">
             What does it offer?
           </p>
           <h2 className="heading3xl-marketing md:!heading4xl-marketing lg:!heading5xl-marketing text-text-default">
@@ -81,7 +81,7 @@ const HorizontalTopTab = ({
           </h2>
         </div>
         <div className="flex flex-col gap-3xl md:!gap-4xl flex-1">
-          <p className="bodyLg-medium lg:!bodyXl-medium text-text-soft">
+          <p className="bodyXl lg:!bodyXXl text-text-soft">
             Either you are a developer or a platform engineer, managing cloud
             infrastructure doesn't have to be complicated{' '}
           </p>
