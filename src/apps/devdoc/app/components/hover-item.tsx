@@ -56,12 +56,12 @@ const HoverItem = ({ children, to }: { children?: ReactNode; to?: string }) => {
   };
 
   return (
-    <Link href={to || ''} className="block relative hover:bg-black">
+    <Link href={to || ''} className="block relative hover:bg-black h-full">
       <div
         ref={ref}
         className="absolute -inset-xs z-0 g transition-opacity duration-300"
       />
-      <div className="relative z-[1] ">
+      <div className="relative z-[1] h-full">
         <div
           className="absolute inset-0 hover-container"
           onMouseMove={onMouseOver}

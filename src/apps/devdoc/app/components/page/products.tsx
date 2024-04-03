@@ -1,5 +1,4 @@
 import {
-  CheckCircleFill,
   ArrowRight,
   Stack,
   Globe,
@@ -31,6 +30,7 @@ import DevOps from '../../../images/product-landing/dev.svg';
 import Dist from '../../../images/product-landing/dist.svg';
 import Wrapper from '../wrapper';
 import Button from '../button';
+import ListTrack from '../website/list-track';
 
 const products = [
   {
@@ -129,78 +129,68 @@ const products = [
 
 const benefitsItems = [
   {
-    title: 'Developers',
-    items: [
-      {
-        title: 'Auto - Provision',
-        icon: Stack,
-      },
-      {
-        title: 'Run Anywhere',
-        icon: Globe,
-      },
-      {
-        title: 'Enhanced Application Security',
-        icon: SecureConfig,
-      },
-      {
-        title: 'Collaborative Environments',
-        icon: UsersThree,
-      },
-      {
-        title: 'Comprehensive Monitoring and Insights',
-        icon: ChartBar,
-      },
-      {
-        title: 'Plug your own CICDs and Observability',
-        icon: Search,
-      },
-      {
-        title: 'Streamlined Application Development',
-        icon: Monitor,
-      },
-      {
-        title: 'Cost - Efficient Resource Management',
-        icon: CostMonitoring,
-      },
-    ],
+    title: 'Auto - Provision',
+    icon: Stack,
   },
   {
-    title: 'Platform Engineers',
-    items: [
-      {
-        title: 'Faster Deployment',
-        icon: ClockCounterClockwise,
-      },
-      {
-        title: 'Flexible Autoscaling',
-        icon: Autoscaling,
-      },
-      {
-        title: 'Developer Centric',
-        icon: Developer,
-      },
-      {
-        title: 'Reduce Development Inner loop',
-        icon: InfinityIcon,
-      },
-      {
-        title: 'Simplified Infrastructure Management',
-        icon: TreeStructure,
-      },
-      {
-        title: 'Build system for faster deployments',
-        icon: GearSix,
-      },
-      {
-        title: 'Declarative Infrastructure, Projects, and Maintenance',
-        icon: Config,
-      },
-      {
-        title: 'Effective and Efficient Development Process',
-        icon: Code,
-      },
-    ],
+    title: 'Run Anywhere',
+    icon: Globe,
+  },
+  {
+    title: 'Enhanced Application Security',
+    icon: SecureConfig,
+  },
+  {
+    title: 'Collaborative Environments',
+    icon: UsersThree,
+  },
+  {
+    title: 'Comprehensive Monitoring and Insights',
+    icon: ChartBar,
+  },
+  {
+    title: 'Plug your own CICDs and Observability',
+    icon: Search,
+  },
+  {
+    title: 'Streamlined Application Development',
+    icon: Monitor,
+  },
+  {
+    title: 'Cost - Efficient Resource Management',
+    icon: CostMonitoring,
+  },
+  {
+    title: 'Faster Deployment',
+    icon: ClockCounterClockwise,
+  },
+  {
+    title: 'Flexible Autoscaling',
+    icon: Autoscaling,
+  },
+  {
+    title: 'Developer Centric',
+    icon: Developer,
+  },
+  {
+    title: 'Reduce Development Inner loop',
+    icon: InfinityIcon,
+  },
+  {
+    title: 'Simplified Infrastructure Management',
+    icon: TreeStructure,
+  },
+  {
+    title: 'Build system for faster deployments',
+    icon: GearSix,
+  },
+  {
+    title: 'Declarative Infrastructure, Projects, and Maintenance',
+    icon: Config,
+  },
+  {
+    title: 'Effective and Efficient Development Process',
+    icon: Code,
   },
 ];
 
@@ -263,17 +253,7 @@ const ProductCards = ({
             <p className="bodyXl lg:!bodyXXl text-text-soft">{desc}</p>
           </div>
           <ul className="flex flex-col gap-2xl bodyXl lg:!bodyXXl text-text-soft">
-            {features?.map((f) => (
-              <li
-                key={`${f.title}`}
-                className="flex flex-row items-center gap-lg"
-              >
-                <span className="text-icon-primary">
-                  <CheckCircleFill size={16} />
-                </span>
-                <span>{f.title}</span>
-              </li>
-            ))}
+            <ListTrack items={features} />
           </ul>
           <Button
             content={`Learn more about ${type}`}
@@ -302,7 +282,7 @@ const ProductCards = ({
 const Benefits = () => {
   return (
     <Container>
-      <div className="w-full py-6xl md:!py-8xl lg:!py-10xl flex flex-col gap-7xl lg:gap-10xl md:items-center lg:!items-start">
+      <div className="w-full py-6xl md:!py-8xl lg:!py-10xl flex flex-col gap-7xl lg:gap-10xl  w-full">
         <div className="flex flex-col gap-3xl w-full text-center md:!w-[500px] lg:!w-auto">
           <h1 className="heading3xl-marketing lg:!heading6xl-marketing text-text-default">
             We understand because we&apos;ve been there too
@@ -313,34 +293,68 @@ const Benefits = () => {
           </p>
         </div>
         <Graph className="-m-10xl p-10xl">
-          <div className="grid grid-cols-1 md:!grid-cols-2 gap-3xl lg:!gap-5xl">
-            {benefitsItems.map((bi) => (
-              <div
-                key={bi.title}
-                className="grid grid-rows-[96px_auto] gap-3xl lg:!gap-5xl"
-              >
-                <GraphItem>
-                  <div className="bg-surface-basic-subdued p-2xl flex items-center justify-center heading3xl-marketing text-text-default h-full">
-                    {bi.title}
-                  </div>
-                </GraphItem>
-                <div className="grid grid-cols-1 lg:!grid-cols-2 gap-3xl lg:!gap-5xl">
-                  {bi.items.map((bii) => (
-                    <GraphItem key={bii.title}>
-                      <div className="xl:h-[192px] xl:w-[256px] bg-surface-basic-subdued flex flex-col gap-4xl p-4xl">
-                        <span className="rounded-full w-fit p-2xl bg-icon-primary text-text-on-primary">
-                          <bii.icon size={32} />
-                        </span>
-                        <span className="headingMd lg:!bodyLg-medium text-text-default flex-1">
-                          {bii.title}
-                        </span>
-                      </div>
-                    </GraphItem>
-                  ))}
-                </div>
+          <div className="grid grid-cols-1 md:!grid-cols-2 xl:!grid-cols-[512px_auto] 2xl:!grid-cols-2 gap-5xl 3xl:!gap-8xl">
+            <GraphItem className="h-[96px] block md:!hidden">
+              <div className="bg-surface-basic-subdued p-2xl flex flex-col items-center justify-center heading3xl-marketing text-text-default h-full">
+                <span>Developers &</span>
+                <span>Platform Engineers</span>
               </div>
+            </GraphItem>
+            <GraphItem className="h-[96px] hidden md:!block">
+              <div className="bg-surface-basic-subdued p-2xl flex items-center justify-center heading3xl-marketing text-text-default h-full">
+                Developers
+              </div>
+            </GraphItem>
+            <GraphItem className="h-[96px] hidden md:!block">
+              <div className="bg-surface-basic-subdued p-2xl flex items-center justify-center heading3xl-marketing text-text-default h-full">
+                Platform Engineers
+              </div>
+            </GraphItem>
+          </div>
+
+          <div className="grid grid-cols-1 lg:!grid-cols-3 2xl:!grid-cols-4 3xl:!grid-cols-5 gap-3xl lg:!gap-5xl pt-5xl">
+            {benefitsItems.map((bii) => (
+              <GraphItem key={bii.title}>
+                <div className="xl:h-[192px] 2xl:max-w-[256px] bg-surface-basic-subdued flex flex-col gap-4xl p-4xl">
+                  <span className="rounded-full w-fit p-2xl bg-icon-primary text-text-on-primary">
+                    <bii.icon size={32} />
+                  </span>
+                  <span className="headingMd lg:!bodyLg-medium text-text-default flex-1">
+                    {bii.title}
+                  </span>
+                </div>
+              </GraphItem>
             ))}
           </div>
+
+          {/* <div className="grid grid-cols-1 md:!grid-cols-2 gap-3xl lg:!gap-5xl"> */}
+          {/*   {benefitsItems.map((bi) => ( */}
+          {/*     <div */}
+          {/*       key={bi.title} */}
+          {/*       className="grid grid-rows-[96px_auto] gap-3xl lg:!gap-5xl" */}
+          {/*     > */}
+          {/*       <GraphItem> */}
+          {/*         <div className="bg-surface-basic-subdued p-2xl flex items-center justify-center heading3xl-marketing text-text-default h-full"> */}
+          {/*           {bi.title} */}
+          {/*         </div> */}
+          {/*       </GraphItem> */}
+          {/*       <div className="grid grid-cols-1 lg:!grid-cols-2 gap-3xl lg:!gap-5xl"> */}
+          {/*         {bi.items.map((bii) => ( */}
+          {/*           <GraphItem key={bii.title}> */}
+          {/*             <div className="xl:h-[192px] xl:w-[256px] bg-surface-basic-subdued flex flex-col gap-4xl p-4xl"> */}
+          {/*               <span className="rounded-full w-fit p-2xl bg-icon-primary text-text-on-primary"> */}
+          {/*                 <bii.icon size={32} /> */}
+          {/*               </span> */}
+          {/*               <span className="headingMd lg:!bodyLg-medium text-text-default flex-1"> */}
+          {/*                 {bii.title} */}
+          {/*               </span> */}
+          {/*             </div> */}
+          {/*           </GraphItem> */}
+          {/*         ))} */}
+          {/*       </div> */}
+          {/*     </div> */}
+          {/*   ))} */}
+          {/* </div> */}
         </Graph>
       </div>
     </Container>

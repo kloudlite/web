@@ -232,7 +232,7 @@ const SuiteCard = ({
   desc: string;
 }) => {
   return (
-    <div className="bg-surface-basic-default flex flex-col h-full md:min-h-[360px] xl:max-h-[416px] xl:min-h-[416px] 2xl:!min-h-[448px]">
+    <div className="bg-surface-basic-default flex flex-col h-full md:min-h-[360px] lg:min-h-[440px] xl:min-h-[448px] 2xl:min-h-[416px] 3xl:min-h-[448px]">
       <span className={cn('self-center flex justify-center', imgPad)}>
         {img}
       </span>
@@ -240,7 +240,7 @@ const SuiteCard = ({
         <span className="heading2xl-marketing lg:!heading3xl-marketing text-text-default">
           {title}
         </span>
-        <span className="bodyXl text-text-strong line-clamp-3">{desc}</span>
+        <span className="bodyXl text-text-strong line-clamp-4">{desc}</span>
       </div>
     </div>
   );
@@ -468,7 +468,7 @@ const IndexRoot = () => {
   return (
     <div>
       <Wrapper className="flex flex-col py-6xl md:!pb-8xl md:!pt-11xl lg:!pt-[158px]">
-        <div className="w-full">
+        <div className="w-full z-[1]">
           <div className="flex flex-col gap-3xl text-center items-center">
             <h1 className="heading3xl-marketing md:!heading5xl-marketing xl:!heading6xl-marketing text-text-default text-center md:!w-[830px]">
               <span>Opensource </span>
@@ -478,8 +478,9 @@ const IndexRoot = () => {
                 </span>
                 {/** @ts-ignore * */}
                 <strike className="no-underline strike">Advanced</strike>
-              </span>{' '}
-              <br /> platform engineering system
+              </span>
+              <br /> platform engineering <br className="md:block lg:!hidden" />
+              system
             </h1>
             <p className="bodyXl lg:!bodyXXl text-text-soft text-center max-w-[528px] lg:!w-[688px] lg:!max-w-[688px]">
               Cloud agnostic platform designed for developers & platform
@@ -515,12 +516,14 @@ const IndexRoot = () => {
             className="illustration"
           />
         </div>
-        {/** <PartnerSection /> * */}
-        <SuiteSection />
-        <TeamTaskSection />
-        {/** <DontBelieve />* */}
-        <Exploring />
-        <ReadyTo />
+        <div className="flex flex-col py-6xl z-[1]">
+          {/** <PartnerSection /> * */}
+          <SuiteSection />
+          <TeamTaskSection />
+          {/** <DontBelieve />* */}
+          <Exploring />
+          <ReadyTo />
+        </div>
       </Wrapper>
     </div>
   );

@@ -156,7 +156,7 @@ const HelpAndSupportRoot = () => {
               community
             </p>
           </div>
-          <div className="max-w-[700px] w-[700px] m-auto">
+          <div className="max-w-[700px] w-full md:w-[700px] m-auto">
             <TextInput
               placeholder="Search for articles..."
               suffix={<span className="bodyMd text-text-soft">⌘K</span>}

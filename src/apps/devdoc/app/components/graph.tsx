@@ -1,35 +1,24 @@
 import { ReactNode, memo, useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/router';
 import { cn } from '../utils/commons';
 
 export const Graph = ({
   className,
   children,
   blurSize = 'md',
-  responsive = false,
 }: {
   className?: string;
   children: ReactNode;
-  blurSize?: 'md' | 'xs' | 'sm' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl';
-  responsive?: boolean;
+  blurSize?: 'md' | 'lg';
 }) => {
   return (
     <div
       className={cn(
         'graph',
-        'before:hidden xl:before:!flex',
+        'before:hidden xl:before:!flex ',
         {
-          'before:bg-[100%_5%,100%_5%,5%_100%,5%_100%]': blurSize === 'xs',
-          'before:bg-[100%_7%,100%_7%,7%_100%,7%_100%]': blurSize === 'sm',
-          'before:bg-[100%_10%,100%_10%,5%_100%,5%_100%] 2xl:before:bg-[100%_10%,100%_10%,10%_100%,10%_100%]':
-            blurSize === 'md' && responsive,
-          'before:bg-[100%_10%,100%_10%,10%_100%,10%_100%]':
-            blurSize === 'md' && !responsive,
-          'before:bg-[100%_13%,100%_13%,13%_100%,13%_100%]': blurSize === 'lg',
-          'before:bg-[100%_15%,100%_15%,15%_100%,15%_100%]': blurSize === 'xl',
-          'before:bg-[100%_17%,100%_17%,17%_100%,17%_100%]': blurSize === '2xl',
-          'before:bg-[100%_20%,100%_20%,20%_100%,20%_100%]': blurSize === '3xl',
-          'before:bg-[100%_23%,100%_23%,23%_100%,23%_100%]': blurSize === '4xl',
-          'before:bg-[100%_25%,100%_25%,25%_100%,25%_100%]': blurSize === '5xl',
+          'before:bg-[100%_6%,100%_6%,3%_100%,3%_100%]': blurSize === 'lg',
+          'before:bg-[100%_6%,100%_6%,6%_100%,6%_100%]': blurSize === 'md',
         },
         className
       )}
@@ -140,8 +129,9 @@ const LineVertical = memo(() => {
     ctx.stroke();
   };
 
+  const location = useRouter();
   useEffect(() => {
-    draw();
+    draw('resize');
     const drawEvent = () => {
       draw('resize');
     };
@@ -149,7 +139,7 @@ const LineVertical = memo(() => {
     return () => {
       window.removeEventListener('resize', drawEvent);
     };
-  }, [ref.current]);
+  }, [ref.current, location]);
 
   return <canvas ref={ref} className="h-full w-full pointer-events-none" />;
 });
