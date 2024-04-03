@@ -27,7 +27,7 @@ const HorizontalTopTabDevopsItem = ({
   return (
     <div
       className={cn(
-        'flex flex-col gap-4xl p-xl lg:!p-4xl bg-surface-basic-default relative cursor-pointer lg:min-h-[192px] lg:min-h-[288px] lg:max-h-[288px] ',
+        'flex flex-col gap-4xl p-xl lg:!p-4xl bg-surface-basic-default relative cursor-pointer lg:!min-h-[192px] lg:!min-h-[288px] lg:!max-h-[288px] 3xl:!min-h-[224px] 3xl:!max-h-[224px]',
         className
       )}
       onClick={onClick}
