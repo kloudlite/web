@@ -410,7 +410,7 @@ const _DontBelieve = () => {
       <h2 className="heading3xl-marketing md:!heading4xl-marketing xl:!heading5xl-marketing text-text-default text-center">
         Don&apos;t believe? Read for yourself..
       </h2>
-      <Graph className="-mx-10xl" blurSize="md" responsive>
+      <Graph className="-mx-10xl" blurSize="md">
         <div className="grid grid-cols-1 md:!grid-cols-3 gap-5xl px-10xl">
           {consts.home.messages.map((message) => (
             <GraphItem key={message.title}>

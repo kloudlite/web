@@ -4,7 +4,7 @@ import { Graph, GraphItem } from '../graph';
 const ReadyTo = () => {
   return (
     <div>
-      <Graph className="py-6xl px-3xl md:!px-0 md:!py-10xl" responsive>
+      <Graph className="py-6xl px-3xl md:!px-0 md:!py-10xl">
         <div className="max-w-[1120px] m-auto">
           <GraphItem>
             <div className="px-3xl pt-3xl pb-5xl md:!px-10xl md:!py-7xl flex flex-col gap-6xl items-center bg-surface-basic-subdued min-h-[288px] max-h-[288px]">
