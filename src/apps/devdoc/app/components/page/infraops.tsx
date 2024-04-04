@@ -1,9 +1,7 @@
-import { TextInput } from 'kl-design-system/atoms/input';
 import { ArrowRight, GithubLogoFill } from '@jengaicons/react';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import Chips from 'kl-design-system/atoms/chips';
-import CodeEditorPlaceholder from '~/app/components/website/code-editor-placeholder';
 import HorizontalTopTab from '~/app/components/website/horizontal-top-tab';
 import Discover from '~/app/components/website/discover-component';
 import GetStarted from '~/app/components/website/get-started';

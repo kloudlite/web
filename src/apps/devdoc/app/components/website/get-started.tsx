@@ -73,7 +73,7 @@ const GetStarted = ({
               </GraphItem>
             ))}
           </div>
-          <GraphItem lineRenderDeps={[activeTab]} className="md:hidden">
+          <GraphItem className="md:hidden">
             <GetStartedItem
               {...(tabs.find((t) => t.id === activeTab) || {})}
               onClick={() => {}}
@@ -81,10 +81,7 @@ const GetStarted = ({
             />
           </GraphItem>
 
-          <GraphItem
-            lineRenderDeps={[activeTab]}
-            className="flex items-center justify-center md:!hidden"
-          >
+          <GraphItem className="flex items-center justify-center md:!hidden">
             <div className="flex items-center justify-center">
               <Radio.Root
                 value={activeTab}
@@ -102,7 +99,7 @@ const GetStarted = ({
             </div>
           </GraphItem>
 
-          <GraphItem lineRenderDeps={[activeTab]}>
+          <GraphItem>
             <div className="bg-surface-basic-active h-full">{tab}</div>
           </GraphItem>
         </div>

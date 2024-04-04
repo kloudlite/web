@@ -8,7 +8,6 @@ import consts from '~/app/utils/const';
 import { successStories } from '~/app/utils/dummy-data';
 import Cover from '../../../images/distribution/distribution-cover.svg';
 import BuildDis from '../../../images/distribution/build-distribution.svg';
-import CreateDis from '../../../images/distribution/create-distribution.svg';
 import DistributeDis from '../../../images/distribution/distribute-distribution.svg';
 import Wrapper from '../wrapper';
 import Button from '../button';

@@ -47,20 +47,17 @@ export const GraphExtended = ({
   );
 };
 
-const _LineVertical = memo(({ dep }: { dep?: any[] }) => {
+const _LineVertical = memo(() => {
   const ref = useRef<HTMLCanvasElement>(null);
   const [res, setRes] = useState<{
     width: number;
     height: number;
   } | null>(null);
 
-  console.log('here inside');
   const draw = (drawEvent?: 'normal' | 'resize') => {
     if (!ref.current) {
       return;
     }
-
-    console.log('herer');
 
     const canvas = ref.current;
 
@@ -77,18 +74,6 @@ const _LineVertical = memo(({ dep }: { dep?: any[] }) => {
       };
 
       r = temp;
-
-      console.log('herer', 'resizing', res, r, dep);
-      setTimeout(() => {
-        console.log(
-          'new',
-          'resizing',
-          res,
-          ref.current.height * pixelRatio,
-          ref.current.height,
-          dep
-        );
-      }, 2000);
       if (!r) {
         return;
       }
