@@ -4,9 +4,7 @@ import ReadyToOps from '~/app/components/website/ready-to-ops';
 import GetStarted from '~/app/components/website/get-started';
 import SuccessStories from '~/app/components/website/success-stories';
 import Chips from 'kl-design-system/atoms/chips';
-
 import consts from '~/app/utils/const';
-
 import { successStories } from '~/app/utils/dummy-data';
 import Cover from '../../../images/distribution/distribution-cover.svg';
 import BuildDis from '../../../images/distribution/build-distribution.svg';
@@ -14,6 +12,7 @@ import CreateDis from '../../../images/distribution/create-distribution.svg';
 import DistributeDis from '../../../images/distribution/distribute-distribution.svg';
 import Wrapper from '../wrapper';
 import Button from '../button';
+import ResponsiveImage from '../website/responsive-image';
 
 const DiscoverSection = () => {
   return (
@@ -21,7 +20,11 @@ const DiscoverSection = () => {
       className="grid grid-cols-1 md:!grid-cols-2 lg:!grid-cols-3 2xl:!grid-cols-4 3xl:!grid-cols-[352px_320px_320px_320px] gap-3xl lg:!gap-5xl"
       title={
         <>
-          Discover <span className="text-text-primary">Kl-Distribution</span>
+          Discover{' '}
+          <span className="text-text-primary">
+            <br className="block md:!hidden" />
+            Kl-Distribution
+          </span>
         </>
       }
       desc="Dive-in to know how Distribution can transform the container image management"
@@ -51,11 +54,15 @@ const GetStartedSection = () => {
       case 'create':
       default:
         return (
-          <div className="relative h-full overflow-hidden flex items-end justify-center lg:!items-start lg:!justify-start 3xl:!justify-center">
-            <img
-              alt="create"
-              src={CreateDis.src}
-              className="lg:absolute bottom-0"
+          <div className="h-full flex items-center justify-center md:!items-end">
+            <ResponsiveImage
+              alt="Create your repository"
+              rmobile={consts.distribution.getStartedImages.repo.rmobile}
+              r768={consts.distribution.getStartedImages.repo.r768}
+              r1024={consts.distribution.getStartedImages.repo.r1024}
+              r1280={consts.distribution.getStartedImages.repo.r1280}
+              r1440={consts.distribution.getStartedImages.repo.r1440}
+              r1920={consts.distribution.getStartedImages.repo.r1920}
             />
           </div>
         );
@@ -124,7 +131,7 @@ const DistributionRoot = () => {
                 </div>
               </div>
             </div>
-            <div className="z-10">
+            <div className="z-10 relative lg:min-w-[448px] lg:top-[10%] 2xl:!top-0 pt-6xl md:!pt-6xl lg:!py-0">
               <img src={Cover.src} />
             </div>
           </div>

@@ -14,10 +14,11 @@ import consts from '~/app/utils/const';
 import NodePoolImg from '../../../images/nodepool-simple-to-use.svg';
 import FlexibleImage from '../../../images/flexible-illustration.svg';
 import CostIllustration from '../../../images/cost-illustration.svg';
-import providersImage from '../../../images/infraops/providers.svg';
+
 import cover from '../../../images/infraops/cover.svg';
 import Wrapper from '../wrapper';
 import Button from '../button';
+import ResponsiveImage from '../website/responsive-image';
 
 const AdvantageSection = () => {
   const [selectedTab, setSelectedTab] = useState(
@@ -85,66 +86,46 @@ const GetStartedSection = () => {
     switch (selectedTab) {
       case 'create':
         return (
-          <motion.div
-            className="relative h-full max-w-[521px] m-auto overflow-hidden"
-            style={{
-              filter:
-                'drop-shadow(0px 2px 16px rgba(33, 43, 54, 0.08)) drop-shadow(0px 0px 0px rgba(6, 44, 82, 0.10))',
-            }}
-          >
-            <div className="flex flex-col-reverse md:!flex-row items-center justify-between relative md:!absolute -bottom-[30px] right-0 left-0 md:p-2xl xl:!p-0">
-              <div className="rounded-lg border border-border-default p-4xl flex flex-col gap-3xl w-[305px] bg-surface-basic-active pointer-events-none">
-                <div className="flex flex-col gap-3xl pointere">
-                  <TextInput label="Name" value="Dev cluster 3" size="md" />
-                  <TextInput
-                    label="Nodepool 1"
-                    placeholder="Min 2 nodes"
-                    size="md"
-                  />
-                  <TextInput placeholder="Max 5 nodes" size="md" />
-                </div>
-                <Button content="Create" block />
-              </div>
-              <span className="text-icon-disabled -rotate-90 md:!rotate-0">
-                <ArrowRight size={32} />
-              </span>
-              <div className="rounded border border-border-default bg-surface-basic-default p-3xl shadow-filter">
-                <span className="">
-                  <GithubLogoFill size={60} />
-                </span>
-              </div>
-            </div>
+          <motion.div className="h-full flex items-end justify-center relative top-[18px] md:!top-0 p-3xl !pb-0 md:!p-0">
+            <ResponsiveImage
+              alt="Create cluster"
+              rmobile={consts.infraops.getStartedImages.createCluster.rmobile}
+              r768={consts.infraops.getStartedImages.createCluster.r768}
+              r1024={consts.infraops.getStartedImages.createCluster.r1024}
+              r1280={consts.infraops.getStartedImages.createCluster.r1280}
+              r1440={consts.infraops.getStartedImages.createCluster.r1440}
+              r1920={consts.infraops.getStartedImages.createCluster.r1920}
+            />
           </motion.div>
         );
       case 'access':
         return (
-          <motion.div
-            className="relative h-full max-w-[584px] m-auto overflow-hidden"
-            style={{
-              filter:
-                'drop-shadow(0px 2px 16px rgba(33, 43, 54, 0.08)) drop-shadow(0px 0px 0px rgba(6, 44, 82, 0.10))',
-            }}
-          >
-            <div className="flex flex-col-reverse md:!flex-row items-center justify-between relative md:!absolute bottom-0 right-0 left-0 px-2xl pt-2xl xl:!px-0 xl:!pt-0">
-              <div className="w-full h-full">
-                <CodeEditorPlaceholder />
-              </div>
-              <span className="text-icon-disabled -rotate-90 md:!rotate-0">
-                <ArrowRight size={32} />
-              </span>
-              <div className="rounded border border-border-default bg-surface-basic-default p-3xl shadow-filter">
-                <span className="">
-                  <GithubLogoFill size={60} />
-                </span>
-              </div>
-            </div>
+          <motion.div className="h-full flex items-end justify-center relative p-3xl !pb-0 md:!p-0">
+            <ResponsiveImage
+              alt="Accesss & Deploy"
+              rmobile={consts.infraops.getStartedImages.accessAndDeploy.rmobile}
+              r768={consts.infraops.getStartedImages.accessAndDeploy.r768}
+              r1024={consts.infraops.getStartedImages.accessAndDeploy.r1024}
+              r1280={consts.infraops.getStartedImages.accessAndDeploy.r1280}
+              r1440={consts.infraops.getStartedImages.accessAndDeploy.r1440}
+              r1920={consts.infraops.getStartedImages.accessAndDeploy.r1920}
+            />
           </motion.div>
         );
       case 'attach':
       default:
         return (
-          <motion.div className="h-full flex items-center justify-center p-2xl md:!p-0">
-            <img src={providersImage.src} />
+          <motion.div className="h-full flex items-center justify-center p-3xl md:!p-0">
+            <ResponsiveImage
+              alt="Attach repository"
+              rmobile={consts.infraops.getStartedImages.attachRepo.rmobile}
+              r768={consts.infraops.getStartedImages.attachRepo.r768}
+              r1024={consts.infraops.getStartedImages.attachRepo.r1024}
+              r1280={consts.infraops.getStartedImages.attachRepo.r1280}
+              r1440={consts.infraops.getStartedImages.attachRepo.r1440}
+              r1920={consts.infraops.getStartedImages.attachRepo.r1920}
+              hasFilter
+            />
           </motion.div>
         );
     }
@@ -167,7 +148,11 @@ const DiscoverSection = () => {
       className="grid grid-cols-1 md:!grid-cols-2 lg:!grid-cols-3 2xl:!grid-cols-4 3xl:!grid-cols-[352px_320px_320px_320px] gap-3xl lg:!gap-5xl"
       title={
         <>
-          Discover <span className="text-text-primary">Kl-InfraOps</span>
+          Discover{' '}
+          <span className="text-text-primary">
+            <br className="block md:!hidden" />
+            Kl-InfraOps
+          </span>
         </>
       }
       desc="Dive-in to know how InfraOps can transform your infrastructure management"

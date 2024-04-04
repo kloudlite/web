@@ -22,7 +22,7 @@ import { ReactNode } from 'react';
 import Link from 'next/link';
 import Container from '~/app/components/container';
 import ReadyToOps from '~/app/components/website/ready-to-ops';
-import { Graph, GraphItem } from '~/app/components/graph';
+import { Graph, GraphExtended, GraphItem } from '~/app/components/graph';
 import { cn } from '~/app/utils/commons';
 import Cover from '../../../images/product-landing/cover-product.svg';
 import InfraOps from '../../../images/product-landing/infra.svg';
@@ -31,6 +31,7 @@ import Dist from '../../../images/product-landing/dist.svg';
 import Wrapper from '../wrapper';
 import Button from '../button';
 import ListTrack from '../website/list-track';
+import SectionWrapper from '../website/section-wrapper';
 
 const products = [
   {
@@ -246,7 +247,7 @@ const ProductCards = ({
           <div className="flex flex-col gap-4xl">
             <div className="flex flex-col gap-md">
               <h5 className="bodyXl lg:!bodyXXl text-text-disabled">{type}</h5>
-              <h3 className="heading3xl-marketing lg:!heading5xl-marketing text-text-default">
+              <h3 className="heading4xl-marketing lg:!heading5xl-marketing text-text-default">
                 {title}
               </h3>
             </div>
@@ -255,14 +256,17 @@ const ProductCards = ({
           <ul className="flex flex-col gap-2xl bodyXl lg:!bodyXXl text-text-soft">
             <ListTrack items={features} />
           </ul>
-          <Button
-            content={`Learn more about ${type}`}
-            suffix={<ArrowRight />}
-            LinkComponent={Link}
-            to={link}
-            toLabel="href"
-            variant="primary-outline"
-          />
+          <div className="w-full md:!w-fit">
+            <Button
+              content={`Learn more about ${type}`}
+              suffix={<ArrowRight />}
+              LinkComponent={Link}
+              to={link}
+              toLabel="href"
+              block
+              variant="primary-outline"
+            />
+          </div>
         </div>
         <Graph className="-mx-10xl -my-8xl py-8xl ">
           <div className="grid grid-cols-1 lg:h-full px-10xl ">
@@ -281,18 +285,18 @@ const ProductCards = ({
 
 const Benefits = () => {
   return (
-    <Container>
-      <div className="w-full py-6xl md:!py-8xl lg:!py-10xl flex flex-col gap-7xl lg:gap-10xl  w-full">
-        <div className="flex flex-col gap-3xl w-full text-center md:!w-[500px] lg:!w-auto">
-          <h1 className="heading3xl-marketing lg:!heading6xl-marketing text-text-default">
-            We understand because we&apos;ve been there too
-          </h1>
-          <p className="bodyXl lg:!bodyXXl text-text-soft">
-            So, we meticulously engineered our platform to provide you the below
-            benefits
-          </p>
-        </div>
-        <Graph className="-m-10xl p-10xl">
+    <SectionWrapper className="flex-col">
+      <div className="flex flex-col gap-3xl w-full text-center md:!w-[500px] lg:!w-auto">
+        <h1 className="heading3xl-marketing lg:!heading6xl-marketing text-text-default">
+          We understand because we&apos;ve been there too
+        </h1>
+        <p className="bodyXl lg:!bodyXXl text-text-soft">
+          So, we meticulously engineered our platform to provide you the below
+          benefits
+        </p>
+      </div>
+      <GraphExtended>
+        <div>
           <div className="grid grid-cols-1 md:!grid-cols-2 xl:!grid-cols-[512px_auto] 2xl:!grid-cols-2 gap-5xl 3xl:!gap-8xl">
             <GraphItem className="h-[96px] block md:!hidden">
               <div className="bg-surface-basic-subdued p-2xl flex flex-col items-center justify-center heading3xl-marketing text-text-default h-full">
@@ -311,7 +315,6 @@ const Benefits = () => {
               </div>
             </GraphItem>
           </div>
-
           <div className="grid grid-cols-1 lg:!grid-cols-3 2xl:!grid-cols-4 3xl:!grid-cols-5 gap-3xl lg:!gap-5xl pt-5xl">
             {benefitsItems.map((bii) => (
               <GraphItem key={bii.title}>
@@ -326,38 +329,9 @@ const Benefits = () => {
               </GraphItem>
             ))}
           </div>
-
-          {/* <div className="grid grid-cols-1 md:!grid-cols-2 gap-3xl lg:!gap-5xl"> */}
-          {/*   {benefitsItems.map((bi) => ( */}
-          {/*     <div */}
-          {/*       key={bi.title} */}
-          {/*       className="grid grid-rows-[96px_auto] gap-3xl lg:!gap-5xl" */}
-          {/*     > */}
-          {/*       <GraphItem> */}
-          {/*         <div className="bg-surface-basic-subdued p-2xl flex items-center justify-center heading3xl-marketing text-text-default h-full"> */}
-          {/*           {bi.title} */}
-          {/*         </div> */}
-          {/*       </GraphItem> */}
-          {/*       <div className="grid grid-cols-1 lg:!grid-cols-2 gap-3xl lg:!gap-5xl"> */}
-          {/*         {bi.items.map((bii) => ( */}
-          {/*           <GraphItem key={bii.title}> */}
-          {/*             <div className="xl:h-[192px] xl:w-[256px] bg-surface-basic-subdued flex flex-col gap-4xl p-4xl"> */}
-          {/*               <span className="rounded-full w-fit p-2xl bg-icon-primary text-text-on-primary"> */}
-          {/*                 <bii.icon size={32} /> */}
-          {/*               </span> */}
-          {/*               <span className="headingMd lg:!bodyLg-medium text-text-default flex-1"> */}
-          {/*                 {bii.title} */}
-          {/*               </span> */}
-          {/*             </div> */}
-          {/*           </GraphItem> */}
-          {/*         ))} */}
-          {/*       </div> */}
-          {/*     </div> */}
-          {/*   ))} */}
-          {/* </div> */}
-        </Graph>
-      </div>
-    </Container>
+        </div>
+      </GraphExtended>
+    </SectionWrapper>
   );
 };
 
@@ -446,7 +420,7 @@ const RecommendedResources = ({
   title?: string;
 }) => {
   return (
-    <Graph className="-m-10xl p-10xl">
+    <GraphExtended>
       <div className="grid lg:!grid-rows-[auto_160px] gap-3xl lg:!gap-5xl">
         <GraphItem>
           <RecommendedCard
@@ -470,17 +444,15 @@ const RecommendedResources = ({
           ))}
         </div>
       </div>
-    </Graph>
+    </GraphExtended>
   );
 };
 
 const RecommendedSection = () => {
   return (
-    <Container>
-      <div className="flex flex-col py-6xl md:!py-8xl lg:!py-10xl xl:!py-11xl w-full">
-        <RecommendedResources tabs={recommendedTabs} />
-      </div>
-    </Container>
+    <SectionWrapper>
+      <RecommendedResources tabs={recommendedTabs} />
+    </SectionWrapper>
   );
 };
 
@@ -527,7 +499,7 @@ const ProductRoot = () => {
       </Wrapper>
       <Wrapper>
         <div className="product-graph flex items-center justify-center lg:!pb-10xl pb-6xl md:!pb-8xl 2xl:!pb-10xl ">
-          <img src={Cover.src} />
+          <img alt="cover" src={Cover.src} />
         </div>
 
         {products.map((p) => (

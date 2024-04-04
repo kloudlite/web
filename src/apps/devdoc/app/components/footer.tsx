@@ -68,7 +68,7 @@ const Footer = ({ config }: { config: IConfig }) => {
           <div className="flex lg:!hidden h-6xl md:!h-8xl border-y border-border-disabled -mx-5xl px-5xl">
             <div className="w-full border-x border-border-disabled" />
           </div>
-          <div className="px-lg 3xl:px-5xl 3xl:pr-13xl py-3xl md:!py-2xl lg:!py-10xl border-x border-border-disabled lg:!border-l lg:!border-r-0">
+          <div className="px-lg lg:!px-5xl 3xl:!pr-13xl py-3xl md:!py-2xl lg:!py-10xl border-x border-border-disabled lg:!border-l lg:!border-r-0">
             {config.footer.brand && config.footer.brand}
           </div>
           <div className="flex lg:!hidden h-xs border-t border-border-disabled -mx-5xl px-5xl">

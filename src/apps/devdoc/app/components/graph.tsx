@@ -1,7 +1,7 @@
 import { ReactNode, memo, useEffect, useRef, useState } from 'react';
-import { useRouter } from 'next/router';
 import { cn } from '../utils/commons';
 
+const strokeColor = '#D4D4D8';
 export const Graph = ({
   className,
   children,
@@ -18,7 +18,7 @@ export const Graph = ({
         'before:hidden xl:before:!flex ',
         {
           'before:bg-[100%_6%,100%_6%,3%_100%,3%_100%]': blurSize === 'lg',
-          'before:bg-[100%_6%,100%_6%,6%_100%,6%_100%]': blurSize === 'md',
+          'before:bg-[100%_6%,100%_6%,11%_100%,11%_100%]': blurSize === 'md',
         },
         className
       )}
@@ -47,20 +47,25 @@ export const GraphExtended = ({
   );
 };
 
-const LineVertical = memo(() => {
+const _LineVertical = memo(({ dep }: { dep?: any[] }) => {
   const ref = useRef<HTMLCanvasElement>(null);
   const [res, setRes] = useState<{
     width: number;
     height: number;
   } | null>(null);
+
+  console.log('here inside');
   const draw = (drawEvent?: 'normal' | 'resize') => {
     if (!ref.current) {
       return;
     }
 
+    console.log('herer');
+
     const canvas = ref.current;
 
     const ctx = canvas.getContext('2d');
+    if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     const pixelRatio = window.devicePixelRatio || 1;
     let r = res;
@@ -72,6 +77,18 @@ const LineVertical = memo(() => {
       };
 
       r = temp;
+
+      console.log('herer', 'resizing', res, r, dep);
+      setTimeout(() => {
+        console.log(
+          'new',
+          'resizing',
+          res,
+          ref.current.height * pixelRatio,
+          ref.current.height,
+          dep
+        );
+      }, 2000);
       if (!r) {
         return;
       }
@@ -88,7 +105,6 @@ const LineVertical = memo(() => {
 
     // Set the line properties
     ctx.strokeStyle = '#D4D4D8';
-    ctx.clearRect(0, 0, r.width, r.height);
     const width = 1 * pixelRatio;
     ctx.lineWidth = width;
 
@@ -129,9 +145,8 @@ const LineVertical = memo(() => {
     ctx.stroke();
   };
 
-  const location = useRouter();
   useEffect(() => {
-    draw('resize');
+    draw();
     const drawEvent = () => {
       draw('resize');
     };
@@ -139,15 +154,34 @@ const LineVertical = memo(() => {
     return () => {
       window.removeEventListener('resize', drawEvent);
     };
-  }, [ref.current, location]);
+  }, [ref.current]);
 
-  return <canvas ref={ref} className="h-full w-full pointer-events-none" />;
+  return (
+    <canvas ref={ref} className="h-full w-full pointer-events-none test" />
+  );
 });
 
 const Lines = memo(() => {
   return (
-    <div className="pointer-events-none absolute -left-[32px] -right-[32px] -top-[32px] -bottom-[32px] z-[21]">
-      <LineVertical />
+    <div className="pointer-events-none absolute inset-0 z-[21]">
+      <div className="relative h-full w-full">
+        <div
+          className="absolute left-0 -top-[20px] lg:!-top-[32px] -bottom-[20px] lg:!-bottom-[32px] w-xs  z-[21]"
+          style={{ background: strokeColor }}
+        />
+        <div
+          className="absolute -right-xs -top-[20px] lg:!-top-[32px] -bottom-[20px] lg:!-bottom-[32px] w-xs z-[21]"
+          style={{ background: strokeColor }}
+        />
+        <div
+          className="absolute -top-xs -left-[20px] -right-[20px] lg:!-left-[32px] lg:!-right-[32px] h-xs z-[21]"
+          style={{ background: strokeColor }}
+        />
+        <div
+          className="absolute bottom-0 -left-[20px] -right-[20px] lg:!-left-[32px] lg:!-right-[32px] h-xs z-[21]"
+          style={{ background: strokeColor }}
+        />
+      </div>
     </div>
   );
 });
@@ -162,7 +196,6 @@ export const GraphItem = ({
   return (
     <div className={`relative ${className || ''}`}>
       <Lines />
-
       {children}
     </div>
   );

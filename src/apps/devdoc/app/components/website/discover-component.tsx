@@ -30,16 +30,18 @@ interface IDiscover {
 const Discover = ({ features, title, desc, className }: IDiscover) => {
   return (
     <SectionWrapper className="flex-col">
-      <div className="flex flex-col gap-3xl text-center">
+      <div className="flex flex-col gap-3xl text-start md:!text-center">
         <div className="flex flex-col gap-md">
           <p className="bodyXl lg:!bodyXXl text-text-disabled">
             Salient features
           </p>
-          <h3 className="heading3xl-marketing md:!heading4xl-marketing lg:!heading5xl-marketing text-text-default">
+          <h3 className="heading4xl-marketing lg:!heading5xl-marketing text-text-default">
             {title}
           </h3>
         </div>
-        <p className="bodyXl lg:!bodyXXl text-text-soft">{desc}</p>
+        <p className="bodyXl lg:!bodyXXl text-text-soft max-w-[784px] m-auto">
+          {desc}
+        </p>
       </div>
       <GraphExtended>
         <div className={cn(className)}>

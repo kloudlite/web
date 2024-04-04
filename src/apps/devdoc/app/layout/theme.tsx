@@ -148,9 +148,10 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
           >
             <main
               className={cn(
-                ' w-full min-w-0 min-h-[calc(100vh-101px)] flex flex-col gap-6xl',
+                ' w-full min-w-0 min-h-[calc(100vh-101px)] flex flex-col',
                 !hideSidebar ? 'max-w-[72rem]' : '',
-                { 'md:p-3xl': activeThemeContext.layout === 'default' }
+                { 'md:p-3xl': activeThemeContext.layout === 'default' },
+                activeThemeContext.layout === 'raw' ? '' : 'gap-6xl'
               )}
             >
               <MDXProvider

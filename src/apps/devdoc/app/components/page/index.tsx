@@ -1,6 +1,6 @@
 import { Avatar } from 'kl-design-system/atoms/avatar';
 import Profile from 'kl-design-system/molecule/profile';
-import { AWSlogoFill, UsersThree } from '@jengaicons/react';
+import { UsersThree } from '@jengaicons/react';
 import Link from 'next/link';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { BrandLogo } from 'kl-design-system/branding/brand-logo';
@@ -21,18 +21,10 @@ import Button from '../button';
 const Partners = () => {
   return (
     <div>
-      <div className="hidden md:!flex flex-row items-center justify-center flex-wrap gap-8xl">
-        <AWSlogoFill size={56} />
-        <AWSlogoFill size={56} />
-        <AWSlogoFill size={56} />
-        <AWSlogoFill size={56} />
-        <AWSlogoFill size={56} />
-      </div>
-      <div className="flex md:!hidden flex-row items-center justify-center flex-wrap gap-5xl">
-        <AWSlogoFill size={40} />
-        <AWSlogoFill size={40} />
-        <AWSlogoFill size={40} />
-        <AWSlogoFill size={40} />
+      <div className="flex flex-row items-center justify-center flex-wrap gap-8xl">
+        {consts.home.partners.map((p) => {
+          return <img key={p} src={p} />;
+        })}
       </div>
     </div>
   );
@@ -240,7 +232,9 @@ const SuiteCard = ({
         <span className="heading2xl-marketing lg:!heading3xl-marketing text-text-default">
           {title}
         </span>
-        <span className="bodyXl text-text-strong line-clamp-4">{desc}</span>
+        <span className="bodyLg lg:!bodyXl text-text-strong line-clamp-4">
+          {desc}
+        </span>
       </div>
     </div>
   );
@@ -248,12 +242,12 @@ const SuiteCard = ({
 
 const SuiteSection = () => {
   return (
-    <div className="flex flex-col pt-7xl md:!pt-8xl xl:!pt-10xl">
+    <SectionWrapper className="flex-col">
       <h2 className="heading3xl-marketing md:!heading4xl-marketing xl:!heading5xl-marketing text-text-default text-center">
         Dive in: Kloudlite suite
       </h2>
-      <Graph className="-mx-10xl">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5xl px-10xl py-7xl md:!py-8xl xl:!py-10xl">
+      <GraphExtended>
+        <div className="grid grid-cols-1 md:!grid-cols-3 gap-3xl xl:!gap-5xl">
           {consts.home.suites.map((suite) => (
             <GraphItem key={suite.title}>
               <HoverItem to={suite.to}>
@@ -262,8 +256,8 @@ const SuiteSection = () => {
             </GraphItem>
           ))}
         </div>
-      </Graph>
-    </div>
+      </GraphExtended>
+    </SectionWrapper>
   );
 };
 
@@ -271,8 +265,8 @@ const TeamTaskSection = () => {
   const listOneRef = useRef<HTMLDivElement>(null);
   const listTwoRef = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
-  const [firsList, setFirstList] = useState(consts.home.teamTasks);
-  const [secondList, setSecondList] = useState<typeof consts.home.teamTasks>(
+  const [firsList, _setFirstList] = useState(consts.home.teamTasks);
+  const [secondList, _setSecondList] = useState<typeof consts.home.teamTasks>(
     []
   );
   const firstItemTitle = 'Focus on your business needs';
@@ -292,50 +286,16 @@ const TeamTaskSection = () => {
         clearInterval(ani);
       }
     };
-    const iv = setInterval(() => {
-      setFirstList((s) => {
-        const mainList = s.filter((v, index) => {
-          if (index === 0) {
-            return false;
-          }
-
-          return true;
-        });
-
-        setSecondList((s2) => {
-          let secondMList = s2;
-          if (s2.length > 5) {
-            secondMList = s2.filter((v, i) => {
-              if (i === s2.length - 1) {
-                mainList.push(v);
-                return false;
-              }
-              return true;
-            });
-          }
-          // @ts-ignore
-          secondMList = [s[0], ...secondMList];
-
-          return secondMList;
-        });
-
-        return mainList;
-      });
-    }, 1000);
-
-    return () => {
-      clearInterval(iv);
-    };
   }, []);
 
   return (
     <div className="flex flex-col md:!flex-row pt-7xl md:!pt-8xl xl:!pt-10xl relative">
-      <div className="flex flex-col gap-3xl md:gap-8xl justify-center md:max-w-[222px] lg:max-w-[384px] 3xl:max-w-[512px] md:!mr-6xl lg:!mr-8xl xl:!mr-10xl 3xl:!mr-12xl">
+      <div className="flex flex-col gap-3xl md:!gap-5xl lg:!gap-6xl justify-center md:max-w-[222px] lg:max-w-[384px] 3xl:max-w-[512px] md:!mr-6xl lg:!mr-8xl xl:!mr-10xl 3xl:!mr-12xl">
         <h2 className="heading3xl-marketing md:!heading4xl-marketing xl:!heading5xl-marketing text-text-default">
           Why <br className="hidden md:!block 3xl:!hidden" />
           Kloudlite?
         </h2>
-        <p className="bodyXl lg:!bodyXXl text-text-soft">
+        <p className="bodyLg-medium md:!bodyXl lg:!bodyXXl text-text-soft">
           A transformative solution for modern DevOps needs, built with
           precision and a deep understanding of developer and platform engineer
           challenges
@@ -453,10 +413,10 @@ const ReadyTo = () => {
   return <ReadyToOps />;
 };
 
-const _PartnerSection = () => {
+const PartnerSection = () => {
   return (
-    <div className="py-8xl px-5xl flex-col gap-6xl">
-      <p className="headingMd-marketing md:!headingLg-marketing text-text-strong text-center">
+    <div className="py-8xl px-5xl flex flex-col gap-7xl">
+      <p className="bodyLg-medium md:!bodyXl text-text-strong text-center">
         Join the cult of our early adopters, and discover the power of Kloudlite
       </p>
       <Partners />
@@ -467,22 +427,28 @@ const _PartnerSection = () => {
 const IndexRoot = () => {
   return (
     <div>
-      <Wrapper className="flex flex-col py-6xl md:!pb-8xl md:!pt-11xl lg:!pt-[158px]">
+      <Wrapper className="flex flex-col pt-6xl md:!pt-11xl lg:!pt-[158px]">
         <div className="w-full z-[1]">
           <div className="flex flex-col gap-3xl text-center items-center">
-            <h1 className="heading3xl-marketing md:!heading5xl-marketing xl:!heading6xl-marketing text-text-default text-center md:!w-[830px]">
-              <span>Opensource </span>
-              <span className="relative text-center">
-                <span className="text-text-warning absolute -top-2/3 left-1/2 transform -translate-x-1/2">
-                  NoOps
-                </span>
-                {/** @ts-ignore * */}
-                <strike className="no-underline strike">Advanced</strike>
+            <div className="flex flex-col">
+              <span className="block md:!hidden heading4xl-marketing md:!heading5xl-marketing xl:!heading6xl-marketing text-text-warning">
+                NoOps
               </span>
-              <br /> platform engineering <br className="md:block lg:!hidden" />
-              system
-            </h1>
-            <p className="bodyXl lg:!bodyXXl text-text-soft text-center max-w-[528px] lg:!w-[688px] lg:!max-w-[688px]">
+              <h1 className="heading4xl-marketing md:!heading5xl-marketing xl:!heading6xl-marketing text-text-default text-center md:!w-[830px]">
+                <span>Opensource </span>
+                <span className="block md:!inline relative text-center">
+                  <span className="hidden md:!block text-text-warning absolute -top-2/3 left-1/2 transform -translate-x-1/2">
+                    NoOps
+                  </span>
+                  {/** @ts-ignore * */}
+                  <strike className="no-underline strike">Advanced</strike>
+                </span>
+                <br className="hidden md:!block" /> platform engineering{' '}
+                <br className="md:block lg:!hidden" />
+                system
+              </h1>
+            </div>
+            <p className="bodyLg-medium md:!bodyXl lg:!bodyXXl text-text-soft text-center max-w-[528px] lg:!w-[688px] lg:!max-w-[688px]">
               Cloud agnostic platform designed for developers & platform
               engineers to ease code to cloud journey.
             </p>
@@ -516,8 +482,8 @@ const IndexRoot = () => {
             className="illustration"
           />
         </div>
-        <div className="flex flex-col py-6xl z-[1]">
-          {/** <PartnerSection /> * */}
+        <div className="flex flex-col pt-6xl z-[1]">
+          <PartnerSection />
           <SuiteSection />
           <TeamTaskSection />
           {/** <DontBelieve />* */}
