@@ -10,11 +10,12 @@ import ReadyToOps from '~/app/components/website/ready-to-ops';
 
 import { cn } from '~/app/utils/commons';
 import consts from '~/app/utils/const';
+import { AnimatePresence, motion } from 'framer-motion';
 import illustration from '../../../images/illustraion1.svg';
 
 import SectionWrapper from '../website/section-wrapper';
 import Wrapper from '../wrapper';
-import { teamTaskAnimationV3 } from './team-task-animation';
+import { teamTaskAnimationV4 } from './team-task-animation';
 import HoverItem from '../hover-item';
 import Button from '../button';
 
@@ -262,6 +263,7 @@ const SuiteSection = () => {
 };
 
 const TeamTaskSection = () => {
+  const [initalView, setInitialView] = useState(true);
   const listOneRef = useRef<HTMLDivElement>(null);
   const listTwoRef = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
@@ -273,17 +275,37 @@ const TeamTaskSection = () => {
   const firstItemColor = '#2563EB';
 
   useEffect(() => {
-    const ani = teamTaskAnimationV3({
+    let interval: NodeJS.Timeout | null = null;
+    const ani = teamTaskAnimationV4({
       listOneRef,
       listTwoRef,
       logoRef: logoRef.current?.innerHTML || '',
       orgLogo:
         document.querySelector('.team-card')?.querySelector('svg')?.outerHTML ||
         '',
+      events: {
+        onFinish: ({ start }) => {
+          setTimeout(() => {
+            if (interval) {
+              clearInterval(interval);
+            }
+            setInitialView(true);
+            setTimeout(() => {
+              setInitialView(false);
+              interval = start();
+            }, 2000);
+          }, 500);
+        },
+      },
     });
+
+    setTimeout(() => {
+      setInitialView(false);
+      interval = ani.start();
+    }, 3000);
     return () => {
-      if (ani) {
-        clearInterval(ani);
+      if (interval) {
+        clearInterval(interval);
       }
     };
   }, []);
@@ -302,59 +324,120 @@ const TeamTaskSection = () => {
         </p>
       </div>
       <div className="flex flex-col flex-1 relative pt-6xl md:!pt-0">
-        <Graph className="-mx-10xl">
-          <div className="grid grid-cols-2 gap-5xl 2xl:!gap-8xl 3xl:!gap-5xl px-10xl py-3xl md:py-8xl overflow-hidden">
-            <div className="w-full flex flex-col">
-              <h4 className="headingMd-marketing md:!headingXl-marketing text-text-default relative -top-[32px] -mt-[28px] right-1/2 transform translate-x-1/2 text-center">
-                Your team’s tasks
-              </h4>
-              <GraphItem className="basis-1/2">
-                <div className="flex p-xl md:!p-5xl flex-col bg-gradient-to-b from-[#E4E4E7] to-[#F3F4F6] h-[512px] max-h-[512px] overflow-hidden">
-                  <div className="pb-xl md:!pb-5xl">
-                    <TeamTaskCard
-                      title={firstItemTitle}
-                      color={firstItemColor}
-                    />
+        <Graph className="-mx-10xl relative">
+          <AnimatePresence initial={false}>
+            <div className="flex w-full h-[464px] md:!h-[608px]" />
+            {initalView && (
+              <motion.div
+                key="modal1"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{
+                  duration: 0.5,
+                }}
+                className="px-10xl md:!py-8xl overflow-hidden absolute inset-0"
+              >
+                <h4 className="headingMd-marketing md:!headingXl-marketing text-text-default relative md:!-top-[32px] md:!-mt-[28px] right-1/2 transform translate-x-1/2 text-center pb-3xl md:!pb-0">
+                  Your team’s tasks
+                </h4>
+                <GraphItem>
+                  <div className="flex flex-row bg-gradient-to-b from-[#E4E4E7] to-[#F3F4F6] h-[400px] md:!h-[512px] p-xl  md:!p-5xl gap-2xl md:!gap-3xl lg:!gap-5xl 2xl:!gap-8xl">
+                    <div className="flex flex-col flex-1 gap-2xl md:!gap-3xl lg:!gap-5xl overflow-hidden">
+                      {firsList
+                        .filter((f, i) => i % 2 === 0)
+                        .map((fl) => {
+                          return (
+                            <TeamTaskCard
+                              key={fl.title}
+                              color={fl.color}
+                              title={fl.title}
+                            />
+                          );
+                        })}
+                    </div>
+                    <div className="flex flex-col flex-1 gap-2xl md:!gap-3xl lg:!gap-5xl overflow-hidden">
+                      {firsList
+                        .filter((f, i) => i % 2 === 1)
+                        .map((fl) => {
+                          return (
+                            <TeamTaskCard
+                              key={fl.title}
+                              color={fl.color}
+                              title={fl.title}
+                            />
+                          );
+                        })}
+                    </div>
                   </div>
-                  <div
-                    ref={listOneRef}
-                    className="first-container w-full flex flex-col gap-xl md:!gap-5xl flex-1"
-                  >
-                    {firsList.map((tt) => (
-                      <TeamTaskCard
-                        key={tt.title}
-                        color={tt.color}
-                        title={tt.title}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </GraphItem>
-            </div>
+                </GraphItem>
+              </motion.div>
+            )}
 
-            <div className="w-full">
-              <h4 className="headingMd-marketing md:!headingXl-marketing text-text-default relative -top-[32px] -mt-[28px] right-1/2 transform translate-x-1/2 text-center">
-                Kloudlite solves
-              </h4>
-
-              <GraphItem className="basis-1/2">
-                <div className="flex p-xl md:!p-5xl flex-row bg-[linear-gradient(180deg,#93C5FD_0%,#DBEAFE_100%)] h-[512px] max-h-[512px] overflow-hidden">
-                  <div
-                    ref={listTwoRef}
-                    className="first-container w-full flex flex-col flex-1 space-y-xl md:!space-y-5xl"
-                  >
-                    {secondList.map((tt) => (
-                      <TeamTaskCard
-                        key={tt.title}
-                        color={tt.color}
-                        title={tt.title}
-                      />
-                    ))}
-                  </div>
+            {!initalView && (
+              <motion.div
+                key="modal"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{
+                  duration: 0.5,
+                }}
+                className="absolute inset-0 grid grid-cols-2 gap-5xl 2xl:!gap-8xl 3xl:!gap-5xl px-10xl md:py-8xl overflow-hidden"
+              >
+                <div className="w-full flex flex-col">
+                  <h4 className="headingMd-marketing md:!headingXl-marketing text-text-default relative md:!-top-[32px] md:!-mt-[28px] right-1/2 transform translate-x-1/2 text-center pb-3xl md:!pb-0">
+                    Your team’s tasks
+                  </h4>
+                  <GraphItem className="basis-1/2">
+                    <div className="flex p-xl md:!p-5xl flex-col bg-gradient-to-b from-[#E4E4E7] to-[#F3F4F6] h-[400px] md:!h-[512px] max-h-[512px] overflow-hidden">
+                      <div className="pb-xl md:!pb-5xl">
+                        <TeamTaskCard
+                          title={firstItemTitle}
+                          color={firstItemColor}
+                        />
+                      </div>
+                      <div
+                        ref={listOneRef}
+                        className="first-container w-full flex flex-col gap-xl md:!gap-5xl flex-1"
+                      >
+                        {firsList.map((tt) => (
+                          <TeamTaskCard
+                            key={tt.title}
+                            color={tt.color}
+                            title={tt.title}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </GraphItem>
                 </div>
-              </GraphItem>
-            </div>
-          </div>
+
+                <div className="w-full">
+                  <h4 className="headingMd-marketing md:!headingXl-marketing text-text-default relative md:!-top-[32px] md:!-mt-[28px] right-1/2 transform translate-x-1/2 text-center pb-3xl md:!pb-0">
+                    Kloudlite solves
+                  </h4>
+
+                  <GraphItem className="basis-1/2">
+                    <div className="flex p-xl md:!p-5xl flex-row bg-[linear-gradient(180deg,#93C5FD_0%,#DBEAFE_100%)] h-[400px] md:!h-[512px] max-h-[512px] overflow-hidden">
+                      <div
+                        ref={listTwoRef}
+                        className="first-container w-full flex flex-col flex-1 space-y-xl md:!space-y-5xl"
+                      >
+                        {secondList.map((tt) => (
+                          <TeamTaskCard
+                            key={tt.title}
+                            color={tt.color}
+                            title={tt.title}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  </GraphItem>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </Graph>
       </div>
       <div ref={logoRef} className="hidden">
