@@ -237,9 +237,7 @@ const SecretResourcesV2 = ({
   const reloadPage = useReload();
   const { project, environment, account } = useParams();
 
-  const filteredItems = items.filter((item) => {
-    return item.isReadyOnly ? null : item;
-  });
+  const filteredItems = items.filter((item) => !item.isReadyOnly);
 
   useWatchReload(
     filteredItems.map((i) => {

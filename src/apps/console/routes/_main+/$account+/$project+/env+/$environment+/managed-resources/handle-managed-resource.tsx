@@ -27,7 +27,6 @@ import MultiStep, { useMultiStep } from '~/console/components/multi-step';
 import ListV2 from '~/console/components/listV2';
 import { ListItem } from '~/console/components/console-list-components';
 import { CopyContentToClipboard } from '~/console/components/common-console-components';
-import { LoadingPlaceHolder } from '~/console/components/loading';
 
 type BaseType = ExtractNodeType<IManagedResources>;
 type IDialog = IDialogBase<BaseType> & {
@@ -406,7 +405,7 @@ export const ViewSecret = ({
             )}
           </MultiStep.Step>
           <MultiStep.Step step={1}>
-            {isLoading && <LoadingPlaceHolder />}
+            {isLoading}
             {data && (
               <ListV2.Root
                 data={{
