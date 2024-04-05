@@ -27,6 +27,7 @@ import MultiStep, { useMultiStep } from '~/console/components/multi-step';
 import ListV2 from '~/console/components/listV2';
 import { ListItem } from '~/console/components/console-list-components';
 import { CopyContentToClipboard } from '~/console/components/common-console-components';
+import { LoadingPlaceHolder } from '~/console/components/loading';
 
 type BaseType = ExtractNodeType<IManagedResources>;
 type IDialog = IDialogBase<BaseType> & {
@@ -405,53 +406,58 @@ export const ViewSecret = ({
             )}
           </MultiStep.Step>
           <MultiStep.Step step={1}>
-            {isLoading}
-            {data && (
-              <ListV2.Root
-                data={{
-                  headers: [
-                    {
-                      render: () => 'Key',
-                      name: 'key',
-                      className: 'min-w-[170px]',
-                    },
-                    {
-                      render: () => '',
-                      name: 'copy',
-                      className: 'max-w-[120px]',
-                    },
-                    {
-                      render: () => 'Value',
-                      name: 'value',
-                      className: 'flex-1',
-                    },
-                  ],
-                  rows: Object.entries(data.stringData).map(([key, value]) => {
-                    const v = value as string;
-                    return {
-                      columns: {
-                        key: {
-                          render: () => <ListItem data={key} />,
-                        },
-                        value: {
-                          render: () => (
-                            <ListItem data={v} className="w-[220px]" />
-                          ),
-                        },
-                        copy: {
-                          render: () => (
-                            <CopyContentToClipboard
-                              content={v}
-                              toastMessage={`${key} copied`}
-                              label="Copy Secret"
-                            />
-                          ),
-                        },
+            {isLoading ? (
+              <LoadingPlaceHolder />
+            ) : (
+              data && (
+                <ListV2.Root
+                  data={{
+                    headers: [
+                      {
+                        render: () => 'Key',
+                        name: 'key',
+                        className: 'min-w-[170px]',
                       },
-                    };
-                  }),
-                }}
-              />
+                      {
+                        render: () => '',
+                        name: 'copy',
+                        className: 'max-w-[120px]',
+                      },
+                      {
+                        render: () => 'Value',
+                        name: 'value',
+                        className: 'flex-1',
+                      },
+                    ],
+                    rows: Object.entries(data.stringData).map(
+                      ([key, value]) => {
+                        const v = value as string;
+                        return {
+                          columns: {
+                            key: {
+                              render: () => <ListItem data={key} />,
+                            },
+                            value: {
+                              render: () => (
+                                <ListItem data={v} className="w-[220px]" />
+                              ),
+                            },
+                            copy: {
+                              render: () => (
+                                <CopyContentToClipboard
+                                  content={v}
+                                  toastMessage={`${key} copied`}
+                                  label="Copy Secret"
+                                />
+                              ),
+                            },
+                          },
+                        };
+                      }
+                    ),
+                  }}
+                />
+              )
             )}
           </MultiStep.Step>
         </MultiStep.Root>
