@@ -183,11 +183,35 @@ code{
 
 
   .illustration{
-    scale: 130%;
-    transform: translateY(12%);
+    z-index:0;
+    scale: 164%;
+    transform: translate(2%, 24%);
     clip-path: inset(0px 10px 13px 10px);
   }
 
+
+  @media screen and (min-width:768px){
+    .illustration{
+      scale: 160%;
+      transform: translate(2%, 12%);
+    }
+  }
+
+
+  @media screen and (min-width:1024px){
+    .illustration{
+      scale: 140%;
+      transform: translate(0,17%);
+    }
+  }
+
+
+  @media screen and (min-width:1280px){
+    .illustration{
+      scale: 130%;
+      transform: translateY(12%);
+    }
+  }
 
   .strike{
     text-decoration: none;

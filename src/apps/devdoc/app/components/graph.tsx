@@ -1,35 +1,24 @@
 import { ReactNode, memo, useEffect, useRef, useState } from 'react';
 import { cn } from '../utils/commons';
 
+const strokeColor = '#D4D4D8';
 export const Graph = ({
   className,
   children,
   blurSize = 'md',
-  responsive = false,
 }: {
   className?: string;
   children: ReactNode;
-  blurSize?: 'md' | 'xs' | 'sm' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl';
-  responsive?: boolean;
+  blurSize?: 'md' | 'lg';
 }) => {
   return (
     <div
       className={cn(
         'graph',
-        'before:hidden xl:before:!flex',
+        'before:hidden xl:before:!flex ',
         {
-          'before:bg-[100%_5%,100%_5%,5%_100%,5%_100%]': blurSize === 'xs',
-          'before:bg-[100%_7%,100%_7%,7%_100%,7%_100%]': blurSize === 'sm',
-          'before:bg-[100%_10%,100%_10%,5%_100%,5%_100%] 2xl:before:bg-[100%_10%,100%_10%,10%_100%,10%_100%]':
-            blurSize === 'md' && responsive,
-          'before:bg-[100%_10%,100%_10%,10%_100%,10%_100%]':
-            blurSize === 'md' && !responsive,
-          'before:bg-[100%_13%,100%_13%,13%_100%,13%_100%]': blurSize === 'lg',
-          'before:bg-[100%_15%,100%_15%,15%_100%,15%_100%]': blurSize === 'xl',
-          'before:bg-[100%_17%,100%_17%,17%_100%,17%_100%]': blurSize === '2xl',
-          'before:bg-[100%_20%,100%_20%,20%_100%,20%_100%]': blurSize === '3xl',
-          'before:bg-[100%_23%,100%_23%,23%_100%,23%_100%]': blurSize === '4xl',
-          'before:bg-[100%_25%,100%_25%,25%_100%,25%_100%]': blurSize === '5xl',
+          'before:bg-[100%_6%,100%_6%,3%_100%,3%_100%]': blurSize === 'lg',
+          'before:bg-[100%_6%,100%_6%,11%_100%,11%_100%]': blurSize === 'md',
         },
         className
       )}
@@ -58,12 +47,13 @@ export const GraphExtended = ({
   );
 };
 
-const LineVertical = memo(() => {
+const _LineVertical = memo(() => {
   const ref = useRef<HTMLCanvasElement>(null);
   const [res, setRes] = useState<{
     width: number;
     height: number;
   } | null>(null);
+
   const draw = (drawEvent?: 'normal' | 'resize') => {
     if (!ref.current) {
       return;
@@ -72,6 +62,7 @@ const LineVertical = memo(() => {
     const canvas = ref.current;
 
     const ctx = canvas.getContext('2d');
+    if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     const pixelRatio = window.devicePixelRatio || 1;
     let r = res;
@@ -99,7 +90,6 @@ const LineVertical = memo(() => {
 
     // Set the line properties
     ctx.strokeStyle = '#D4D4D8';
-    ctx.clearRect(0, 0, r.width, r.height);
     const width = 1 * pixelRatio;
     ctx.lineWidth = width;
 
@@ -151,13 +141,32 @@ const LineVertical = memo(() => {
     };
   }, [ref.current]);
 
-  return <canvas ref={ref} className="h-full w-full pointer-events-none" />;
+  return (
+    <canvas ref={ref} className="h-full w-full pointer-events-none test" />
+  );
 });
 
 const Lines = memo(() => {
   return (
-    <div className="pointer-events-none absolute -left-[32px] -right-[32px] -top-[32px] -bottom-[32px] z-[21]">
-      <LineVertical />
+    <div className="pointer-events-none absolute inset-0 z-[21]">
+      <div className="relative h-full w-full">
+        <div
+          className="absolute left-0 -top-[20px] lg:!-top-[32px] -bottom-[20px] lg:!-bottom-[32px] w-xs  z-[21]"
+          style={{ background: strokeColor }}
+        />
+        <div
+          className="absolute -right-xs -top-[20px] lg:!-top-[32px] -bottom-[20px] lg:!-bottom-[32px] w-xs z-[21]"
+          style={{ background: strokeColor }}
+        />
+        <div
+          className="absolute -top-xs -left-[20px] -right-[20px] lg:!-left-[32px] lg:!-right-[32px] h-xs z-[21]"
+          style={{ background: strokeColor }}
+        />
+        <div
+          className="absolute bottom-0 -left-[20px] -right-[20px] lg:!-left-[32px] lg:!-right-[32px] h-xs z-[21]"
+          style={{ background: strokeColor }}
+        />
+      </div>
     </div>
   );
 });
@@ -172,7 +181,6 @@ export const GraphItem = ({
   return (
     <div className={`relative ${className || ''}`}>
       <Lines />
-
       {children}
     </div>
   );

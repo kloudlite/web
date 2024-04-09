@@ -1,0 +1,12 @@
+{
+  "index":{
+    "title":"Blog",
+    "type":"page",
+    "theme":{
+      "sidebar":false,
+      "toc":false,
+      "header":"secondary",
+      "breadcrumb":false
+    }
+  }
+}

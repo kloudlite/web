@@ -39,7 +39,7 @@ export const AdvantageItem = ({
         {label}
       </h5>
 
-      <p className="bodyXl text-text-soft line-clamp-2 md:line-clamp-3">
+      <p className="bodyLg md:!bodyXl text-text-soft line-clamp-3 md:line-clamp-3">
         {desc}
       </p>
       {active && (

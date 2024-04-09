@@ -1,6 +1,9 @@
 import { RefObject } from 'react';
 
 const resetItem = (item: HTMLDivElement, orgLogo: string) => {
+  if (!item) {
+    return item;
+  }
   item.style.position = 'relative';
   item.style.top = '0px';
   item.style.width = '100%';
@@ -11,6 +14,205 @@ const resetItem = (item: HTMLDivElement, orgLogo: string) => {
 };
 
 const isMobile = () => window.innerWidth < 768;
+
+export const teamTaskAnimationV4 = ({
+  listOneRef,
+  listTwoRef,
+  logoRef,
+  orgLogo,
+  events,
+}: {
+  listOneRef: RefObject<HTMLDivElement>;
+  listTwoRef: RefObject<HTMLDivElement>;
+  logoRef: string;
+  orgLogo: string;
+  events?: {
+    onFinish: ({ start }: { start: () => NodeJS.Timeout }) => void;
+  };
+}) => {
+  const start = () => {
+    const interval: NodeJS.Timeout | null = setInterval(() => {
+      if (document.hidden) {
+        return interval;
+      }
+
+      if (listOneRef.current?.children.length === 0) {
+        events?.onFinish?.({ start });
+        return interval;
+      }
+      // get the first item to move from listOneRef to listTwoRef
+      const firstElement = resetItem(
+        listOneRef?.current?.firstElementChild as HTMLDivElement,
+        orgLogo
+      );
+
+      // recheck if list's are not null cause it is inside interval
+      if (!listOneRef.current || !listTwoRef.current) {
+        return interval;
+      }
+
+      // reset transition for list
+      listOneRef.current.style.transition = 'none';
+      listTwoRef.current.style.transition = 'none';
+
+      // make sure firstelement of listOneRef is not null
+      if (firstElement) {
+        // get boundary parameters to calculate positon
+        const rect1 = firstElement.getBoundingClientRect();
+        const rect2 = listTwoRef.current?.getBoundingClientRect();
+        const deltaX = rect2.left - rect1.left;
+        const deltaY = rect2.top - rect1.top;
+
+        const paddingDesk = 32;
+        const paddingMobile = 12;
+
+        // clone item for restoring later
+        const clonedElement = resetItem(firstElement, orgLogo).cloneNode(
+          true
+        ) as HTMLDivElement;
+
+        // get logo element for animation
+        const logoItem = firstElement.querySelector('.team-task-avatar')
+          ?.firstChild as HTMLDivElement;
+
+        // make item absolute so that it is on top (z-index) of list containers
+        firstElement.style.position = 'absolute';
+
+        firstElement.style.zIndex = '22';
+        // since position is absolute, manually need to set top and width of item
+        if (isMobile()) {
+          firstElement.style.setProperty(
+            '--deltaYInitial',
+            `${deltaY * -1 + paddingMobile}px`
+          );
+        } else {
+          firstElement.style.setProperty(
+            '--deltaYInitial',
+            `${deltaY * -1 + paddingDesk}px`
+          );
+        }
+        // for mobile screen
+        if (isMobile()) {
+          firstElement.style.width = `calc(100% - ${paddingMobile * 2}px)`;
+        } else {
+          firstElement.style.width = `calc(100% - ${paddingDesk * 2}px)`;
+        }
+        // just a ui touchup
+        firstElement.classList.add('shadow-card');
+
+        // imitate empty item for insert and remove animation for both list
+
+        if (isMobile()) {
+          listOneRef.current.style.paddingTop = `${
+            rect1.height + paddingMobile
+          }px`;
+          listTwoRef.current.style.paddingTop = `${
+            rect1.height + paddingMobile
+          }px`;
+        } else {
+          listOneRef.current.style.paddingTop = `${
+            rect1.height + paddingDesk
+          }px`;
+          listTwoRef.current.style.paddingTop = `${
+            rect1.height + paddingDesk
+          }px`;
+        }
+        listTwoRef.current.style.transition = 'padding 0.2s linear';
+
+        // item animation propertys
+        if (isMobile()) {
+          firstElement.style.setProperty('--deltaX', `${deltaX}px`);
+          firstElement.style.setProperty('--deltaY', `${paddingMobile}px`);
+        } else {
+          firstElement.style.setProperty('--deltaX', `${deltaX}px`);
+          firstElement.style.setProperty('--deltaY', `${paddingDesk}px`);
+        }
+        // add animations classes for item and logo to start animation
+        firstElement.classList.add('task-teams-card-rotate-animate');
+        logoItem.classList.add('task-teams-logo-animate');
+
+        // change the logo midway
+        setTimeout(() => {
+          logoItem.innerHTML = logoRef;
+        }, 300);
+
+        setTimeout(() => {
+          if (listOneRef.current) {
+            listOneRef.current.style.transition = 'padding 0.3s ease-in-out';
+            listOneRef.current.style.paddingTop = '0px';
+          }
+        }, 200);
+
+        // code to execute once the item animation is ended
+        firstElement.onanimationend = (e) => {
+          // make sure the lists are not null
+          if (!listOneRef.current || !listTwoRef.current) {
+            return;
+          }
+
+          // check if the ended animation is 'team-card-animate'
+          if (e.animationName === 'team-card-animate') {
+            listTwoRef.current.style.transition = 'none';
+            // reset item properties as it has reached to listTwoRef
+            firstElement.style.width = `100%`;
+            firstElement.style.zIndex = '0';
+            firstElement.style.position = 'relative';
+            firstElement.style.top = '0';
+
+            // append the item to listTwoRef at the top and this also removes item from listOneRef because of reference
+            listTwoRef.current?.prepend(firstElement);
+
+            // reset list properties
+            listOneRef.current.style.transition = 'none';
+            listTwoRef.current.style.paddingTop = '0px';
+            listTwoRef.current.style.transition = 'none';
+            firstElement.classList.remove('shadow-card');
+
+            // for infinite animation append original item to end of listOneRef
+            // listOneRef.current.append(clonedElement);
+
+            // add some delay and reset animation
+            if (!listOneRef.current || !listTwoRef.current) {
+              return;
+            }
+            logoItem.classList.remove('task-teams-logo-animate');
+            clonedElement.classList.remove('task-teams-card-rotate-animate');
+            clonedElement.style.setProperty('--deltaX', `0px`);
+            clonedElement.style.setProperty('--deltaY', `0px`);
+            firstElement.classList.remove('task-teams-card-rotate-animate');
+            firstElement.style.setProperty('--deltaX', `0px`);
+            firstElement.style.setProperty('--deltaY', `0px`);
+            listOneRef.current.style.transition = 'padding 0.1s ease-in-out';
+            listOneRef.current.style.paddingTop = '0px';
+
+            // when second list is full, remove last element every time new element is added
+            // if (
+            //   listTwoRef.current.scrollHeight - listTwoRef.current.clientHeight >=
+            //   rect1.height
+            // ) {
+            //   const { lastChild } = listTwoRef.current;
+            //   if (lastChild) {
+            //     listTwoRef.current.removeChild(lastChild);
+            //   }
+            // }
+          }
+        };
+      }
+      return interval;
+    }, 1000);
+
+    return interval;
+  };
+
+  // listOneRef and listTwoRef might be null
+  if (!listOneRef.current || !listTwoRef.current) {
+    return { start };
+  }
+
+  // execute move item in a interval
+
+  return { start };
+};
 
 export const teamTaskAnimationV3 = ({
   listOneRef,
@@ -96,10 +298,12 @@ export const teamTaskAnimationV3 = ({
       // imitate empty item for insert and remove animation for both list
 
       if (isMobile()) {
-        listOneRef.current.style.paddingTop = `${rect1.height + paddingMobile
-          }px`;
-        listTwoRef.current.style.paddingTop = `${rect1.height + paddingMobile
-          }px`;
+        listOneRef.current.style.paddingTop = `${
+          rect1.height + paddingMobile
+        }px`;
+        listTwoRef.current.style.paddingTop = `${
+          rect1.height + paddingMobile
+        }px`;
       } else {
         listOneRef.current.style.paddingTop = `${rect1.height + paddingDesk}px`;
         listTwoRef.current.style.paddingTop = `${rect1.height + paddingDesk}px`;

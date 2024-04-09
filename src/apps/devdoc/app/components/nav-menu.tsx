@@ -18,7 +18,7 @@ const NavigationMenuDemo = ({
 }) => {
   return (
     <NavigationMenu.Root className="relative z-[1]">
-      <NavigationMenu.List className="">
+      <NavigationMenu.List>
         <NavigationMenu.Item>
           <NavigationMenu.Trigger asChild>
             <Button
@@ -51,7 +51,7 @@ const NavigationMenuDemo = ({
       </NavigationMenu.List>
 
       <div className="perspective-[2000px] absolute w-fit min-w-[350px] top-full transform -translate-x-1/2 left-1/2 flex justify-center">
-        <NavigationMenu.Viewport className="w-full shadow-popover data-[state=open]:animate-scaleIn data-[state=closed]:animate-scaleOut relative mt-[10px] h-[var(--radix-navigation-menu-viewport-height)] w-full origin-[top_center] overflow-hidden rounded-[6px] bg-white transition-[width,_height] duration-300 sm:w-[var(--radix-navigation-menu-viewport-width)]" />
+        <NavigationMenu.Viewport className="w-full shadow-popover data-[state=open]:animate-scaleIn data-[state=closed]:animate-scaleOut relative mt-[20px] h-[var(--radix-navigation-menu-viewport-height)] w-full origin-[top_center] overflow-hidden rounded-[6px] bg-white transition-[width,_height] duration-300 sm:w-[var(--radix-navigation-menu-viewport-width)]" />
       </div>
     </NavigationMenu.Root>
   );

@@ -10,36 +10,40 @@ export function Breadcrumb({
 }: {
   activePath: Item[];
 }): ReactElement {
+  console.log('activePath', activePath);
   return (
     <div className="nextra-breadcrumb flex items-center gap-md overflow-hidden">
-      {activePath.map((item, index) => {
-        const isLink = !item.children || item.withIndexPage;
-        const isActive = index === activePath.length - 1;
+      {activePath
+        .filter((f) => f.name !== 'index')
+        .map((item, index) => {
+          const isLink = !!item.children;
+          const isActive = index === activePath.length - 1;
 
-        return (
-          <Fragment key={item.route + item.name}>
-            {index > 0 && <ChevronRight size={16} />}
-            <div
-              className={cn(
-                'whitespace-nowrap transition-colors text-text-default',
-                {
-                  'bodyMd-medium': isActive,
-                  'bodyMd min-w-[24px] overflow-hidden text-ellipsis':
-                    !isActive,
-                  'hover:text-text-strong': !!isLink,
-                }
-              )}
-              title={item.title}
-            >
-              {isLink && !isActive ? (
-                <Anchor href={item.route}>{item.title}</Anchor>
-              ) : (
-                item.title
-              )}
-            </div>
-          </Fragment>
-        );
-      })}
+          console.log(isLink, isActive);
+          return (
+            <Fragment key={item.route + item.name}>
+              {index > 0 && <ChevronRight size={16} />}
+              <div
+                className={cn(
+                  'whitespace-nowrap transition-colors text-text-default',
+                  {
+                    'bodyMd-medium': isActive,
+                    'bodyMd min-w-[24px] overflow-hidden text-ellipsis':
+                      !isActive,
+                    'hover:text-text-strong': !!isLink,
+                  }
+                )}
+                title={item.title}
+              >
+                {isLink && !isActive ? (
+                  <Anchor href={item.route}>{item.title}</Anchor>
+                ) : (
+                  item.title
+                )}
+              </div>
+            </Fragment>
+          );
+        })}
     </div>
   );
 }

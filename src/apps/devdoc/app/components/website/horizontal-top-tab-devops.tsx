@@ -27,7 +27,7 @@ const HorizontalTopTabDevopsItem = ({
   return (
     <div
       className={cn(
-        'flex flex-col gap-4xl p-xl lg:!p-4xl bg-surface-basic-default relative cursor-pointer lg:min-h-[192px] lg:min-h-[288px] lg:max-h-[288px] ',
+        'h-full flex flex-col gap-4xl p-xl lg:!p-4xl bg-surface-basic-default relative cursor-pointer lg:!min-h-[192px] lg:!min-h-[288px] lg:!max-h-[288px] 3xl:!min-h-[224px] 3xl:!max-h-[224px]',
         className
       )}
       onClick={onClick}
@@ -40,7 +40,7 @@ const HorizontalTopTabDevopsItem = ({
       >
         {label}
       </h5>
-      <p className="bodyXl text-text-soft line-clamp-6">{desc}</p>
+      <p className="bodyLg md:!bodyXl text-text-soft line-clamp-6">{desc}</p>
       {active && (
         <motion.div
           transition={{ type: 'spring', bounce: 0.1, duration: 0.3 }}
@@ -140,7 +140,7 @@ const HorizontalTopTabDevops = ({
               {tab}
             </div>
           </GraphItem>
-        </div>{' '}
+        </div>
       </GraphExtended>
     </SectionWrapper>
   );
