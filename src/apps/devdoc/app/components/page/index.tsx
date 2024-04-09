@@ -4,13 +4,13 @@ import { UsersThree } from '@jengaicons/react';
 import Link from 'next/link';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { BrandLogo } from 'kl-design-system/branding/brand-logo';
+import { AnimatePresence, motion } from 'framer-motion';
 import ProgressTracker from '~/app/components/progress-tracker';
 import { Graph, GraphExtended, GraphItem } from '~/app/components/graph';
 import ReadyToOps from '~/app/components/website/ready-to-ops';
 
 import { cn } from '~/app/utils/commons';
 import consts from '~/app/utils/const';
-import { AnimatePresence, motion } from 'framer-motion';
 import illustration from '../../../images/illustraion1.svg';
 
 import SectionWrapper from '../website/section-wrapper';
@@ -24,7 +24,7 @@ const Partners = () => {
     <div>
       <div className="flex flex-row items-center justify-center flex-wrap gap-8xl">
         {consts.home.partners.map((p) => {
-          return <img key={p} src={p} />;
+          return <img alt="partners" key={p} src={p} />;
         })}
       </div>
     </div>
@@ -334,7 +334,7 @@ const TeamTaskSection = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{
-                  duration: 0.5,
+                  duration: 1,
                 }}
                 className="px-10xl md:!py-8xl overflow-hidden absolute inset-0"
               >
@@ -381,7 +381,7 @@ const TeamTaskSection = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{
-                  duration: 0.5,
+                  duration: 1,
                 }}
                 className="absolute inset-0 grid grid-cols-2 gap-5xl 2xl:!gap-8xl 3xl:!gap-5xl px-10xl md:py-8xl overflow-hidden"
               >

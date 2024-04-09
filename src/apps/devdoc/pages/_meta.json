@@ -1,78 +1,104 @@
 {
-    "index":{
-        "title":"Kloudlite",
+  "index":{
+    "title":"Kloudlite",
+    "type":"page",
+    "display":"hidden",
+    "theme":{
+      "layout":"raw",
+      "sidebar":false,
+      "toc":false,
+      "header":"secondary"
+    }
+  },
+  "infraops":{
+    "title":"InfraOps",
+    "type":"page",
+    "display":"hidden",
+    "theme":{
+      "layout":"raw",
+      "sidebar":false,
+      "toc":false,
+      "header":"secondary"
+    }
+  },
+  "devops":{
+    "title":"DevOps",
+    "type":"page",
+    "display":"hidden",
+    "theme":{
+      "layout":"raw",
+      "sidebar":false,
+      "toc":false,
+      "header":"secondary"
+    }
+  },
+  "distribution":{
+    "title":"Distribution",
+    "type":"page",
+    "display":"hidden",
+    "theme":{
+      "layout":"raw",
+      "sidebar":false,
+      "toc":false,
+      "header":"secondary"
+    }
+  },
+  "product":{
+    "title":"Product",
+    "type":"page",
+    "display":"hidden",
+    "theme":{
+      "layout":"raw",
+      "sidebar":false,
+      "toc":false,
+      "header":"secondary"
+    }
+  },
+  "contact-us":{
+    "title":"Contact us",
+    "type":"page",
+    "display":"hidden",
+    "theme":{
+      "layout":"raw",
+      "sidebar":false,
+      "toc":false,
+      "header":"secondary"
+    }
+  },
+  "privacy-policy":{
+    "title":"Privacy Policy",
+    "type":"page",
+    "display":"hidden",
+    "theme":{
+      "layout":"raw",
+      "sidebar":false,
+      "toc":false,
+      "header":"secondary"
+    }
+  },
+  "terms-of-services":{
+    "title":"Terms of Services",
+    "type":"page",
+    "display":"hidden",
+    "theme":{
+      "layout":"raw",
+      "sidebar":false,
+      "toc":false,
+      "header":"secondary"
+    }
+  },
+    "docs":{
+        "title":"Docs",
         "type":"page",
-        "display":"hidden",
-        "theme":{
-            "layout":"raw"
-        }
-    },
-    "infraops":{
-        "title":"InfraOps",
-        "type":"page",
-        "display":"hidden",
-        "theme":{
-            "layout":"raw"
-        }
-    },
-    "devops":{
-        "title":"DevOps",
-        "type":"page",
-        "display":"hidden",
-        "theme":{
-            "layout":"raw"
-        }
-    },
-    "distribution":{
-        "title":"Distribution",
-        "type":"page",
-        "display":"hidden",
-        "theme":{
-            "layout":"raw"
-        }
-    },
-    "product":{
-        "title":"Product",
-        "type":"page",
-        "display":"hidden",
-        "theme":{
-            "layout":"raw"
-        }
-    },
-    "contact-us":{
-        "title":"Contact us",
-        "type":"page",
-        "display":"hidden",
-        "theme":{
-            "layout":"raw"
-        }
+        "display":"hidden"
     },
     "help-and-support":{
         "title":"Help and Support",
         "type":"page",
-        "display":"hidden",
-        "theme":{
-            "layout":"raw"
-        }
+        "display":"hidden"
     },
-    "privacy-policy":{
-        "title":"Privacy Policy",
-        "type":"page",
-        "display":"hidden",
-        "theme":{
-            "layout":"raw"
-        }
-    },
-    "terms-of-services":{
-        "title":"Terms of Services",
-        "type":"page",
-        "display":"hidden",
-        "theme":{
-            "layout":"raw"
-        }
-    },
-    "docs":{
-        "title":"Docs",
+    "blog":{
+        "title":"Blog",
         "type":"page",
         "display":"hidden"
     }

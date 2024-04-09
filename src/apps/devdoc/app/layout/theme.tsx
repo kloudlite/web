@@ -64,13 +64,17 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
     flatDocsDirectories,
     activeIndex,
     activePath,
-    activeType,
     activeThemeContext,
     docsDirectories,
     directories,
   } = pageData;
 
-  const hideSidebar = activeType === 'page';
+  const showSidebar = activeThemeContext.sidebar;
+  const headerType = activeThemeContext?.header || 'secondary';
+  const showToc = activeThemeContext.toc;
+  const showBreadcrum = activeThemeContext?.breadcrumb;
+
+  console.log(pageData);
   return (
     <div className="bg-surface-basic-subdued min-h-screen antialiased">
       <Head>
@@ -109,7 +113,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
         />
       </Head>
       <ActiveAnchorProvider>
-        {activeThemeContext.layout !== 'raw' ? (
+        {headerType === 'primary' ? (
           <Header navitems={config?.headerPrimary} activePath={activePath} />
         ) : (
           // @ts-ignore
@@ -131,26 +135,25 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
             docsDirectories={docsDirectories}
             fullDirectories={directories}
             headings={headings}
-            asPopover={hideSidebar}
+            asPopover={!showSidebar}
             rawLayout={activeThemeContext.layout === 'raw'}
             includePlaceholder
           />
-          {!hideSidebar && (
+          {showToc && (
             <nav className="order-last w-[230px] max-w-[230px] min-w-[226px] sticky top-[calc(var(--kl-navbar-height))] self-start hidden lg:block">
               <TOC headings={headings} />
             </nav>
           )}
           <article
             className={cn(
-              'flex-1 overflow-x-hidden',
+              'flex-1',
               activeThemeContext.layout === 'raw' ? '' : 'pt-xl'
             )}
           >
             <main
               className={cn(
                 ' w-full min-w-0 min-h-[calc(100vh-101px)] flex flex-col',
-                !hideSidebar ? 'max-w-[72rem]' : '',
-                { 'md:p-3xl': activeThemeContext.layout === 'default' },
+                showSidebar ? 'max-w-[72rem]' : '',
                 activeThemeContext.layout === 'raw' ? '' : 'gap-6xl'
               )}
             >
@@ -160,7 +163,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
                 })}
               >
                 <div className="flex-1">
-                  {activeThemeContext.layout !== 'raw' && (
+                  {activeThemeContext.layout !== 'raw' && showBreadcrum && (
                     <div className="mb-2xl">
                       <Breadcrumb activePath={activePath} />
                     </div>
@@ -176,7 +179,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
                     : null}
                 </div>
 
-                {!hideSidebar && (
+                {showSidebar && (
                   <NavLinks
                     flatDirectories={flatDocsDirectories}
                     currentIndex={activeIndex}
@@ -194,6 +197,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
 
 export default function Layout(props: NextraThemeLayoutProps) {
   const { pageOpts } = props;
+  console.log(pageOpts);
   return (
     <ConfigProvider pageOpts={pageOpts} config={config}>
       <Main {...props} />

@@ -33,11 +33,13 @@ const FooterMenu = ({ title, className, items }: IFooterMenu) => {
         className
       )}
     >
-      <div className="headingSm text-text-default px-lg py-sm">{title}</div>
-      <ul className="list-none">
+      <div className="headingMd text-text-default px-lg py-sm">{title}</div>
+      <ul className="list-none flex flex-col gap-lg">
         {items?.map((item) => (
           <li key={item.to}>
-            <FooterLink to={item.to}>{item.title}</FooterLink>
+            <FooterLink to={item.to}>
+              <span className="bodyLg text-text-soft">{item.title}</span>
+            </FooterLink>
           </li>
         ))}
       </ul>

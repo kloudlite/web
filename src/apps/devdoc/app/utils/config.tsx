@@ -54,12 +54,12 @@ const BrandMenu = ({ className }: { className?: string }) => {
   return (
     <div
       className={cn(
-        'flex flex-col gap-3xl pr-4xl lg:w-[296px] order-last md:order-first',
+        'flex flex-col gap-3xl pr-4xl lg:w-[296px] order-last md:order-first md:!justify-between md:!h-full',
         className
       )}
     >
-      <div className="flex flex-col md:!flex-row justify-between lg:!flex-col gap-3xl flex-1">
-        <div className="flex flex-col items-start gap-lg max-w-[300px]">
+      <div className="flex flex-col md:!flex-row lg:!flex-col gap-3xl flex-1 lg:!min-h-[236px] md:!justify-between lg:!justify-start md:!items-center lg:!items-start">
+        <div className="flex flex-col items-start gap-xl max-w-[300px]">
           <a href="/" aria-label="kloudlite">
             <BrandLogo size={brandIconSize} detailed />
           </a>

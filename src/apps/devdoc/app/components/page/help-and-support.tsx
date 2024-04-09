@@ -6,13 +6,15 @@ import {
   Domain,
   Link as LinkIcon,
   Webhook,
+  HandWaving,
 } from '@jengaicons/react';
 import Link from 'next/link';
 import { BrandLogo } from 'kl-design-system/branding/brand-logo';
-import { GraphExtended, GraphItem } from '~/app/components/graph';
 import { ReactNode } from 'react';
+import { GraphExtended, GraphItem } from '~/app/components/graph';
 import Wrapper from '../wrapper';
 import SectionWrapper from '../website/section-wrapper';
+import HoverItem from '../hover-item';
 
 const popularArticles = [
   {
@@ -46,7 +48,7 @@ const supportTopics = [
     icon: <BrandLogo size={32} color="currentColor" />,
     title: 'Kloudlite Overview',
     desc: 'Learn about Kloudlite and how it can help you',
-    link: '/',
+    link: '/help-and-support/kloudlite-overview',
   },
   {
     icon: <GearSix size={32} />,
@@ -105,7 +107,7 @@ const PopularArticleItem = ({
   return (
     <Link
       href={link}
-      className="bodyLg-medium text-text-strong py-lg px-xl flex flex-row gap-xl items-center"
+      className="bodyLg-medium text-text-strong py-lg px-xl flex flex-row gap-xl items-center hover:bg-surface-basic-hovered rounded"
     >
       <span className="flex-1">{title}</span>
       <span>
@@ -116,29 +118,24 @@ const PopularArticleItem = ({
 };
 
 const TopicItem = ({
-  link,
   title,
   icon,
   desc,
 }: {
   title: ReactNode;
-  link: string;
   icon: ReactNode;
   desc: ReactNode;
 }) => {
   return (
-    <Link
-      href={link}
-      className="p-3xl lg:!px-5xl lg:!pt-8xl lg:!pb-5xl flex flex-col gap-5xl bg-surface-basic-default h-full lg:min-h-[288px] help-card-graph"
-    >
-      <div className="bg-surface-basic-default flex w-8xl h-8xl rounded-full items-center justify-center p-2xl border border-border-default text-icon-default">
+    <div className="p-3xl lg:!px-5xl lg:!pt-8xl lg:!pb-5xl flex flex-col gap-5xl bg-surface-basic-default h-full lg:min-h-[288px] help-card-graph">
+      <div className="bg-icon-primary flex w-8xl h-8xl rounded-full items-center justify-center p-2xl text-icon-on-primary">
         {icon}
       </div>
       <div className="flex flex-col gap-3xl">
         <h4 className="headingXl-marketing text-text-default">{title}</h4>
         <p className="text-text-soft bodyLg line-clamp-2">{desc}</p>
       </div>
-    </Link>
+    </div>
   );
 };
 
@@ -148,8 +145,11 @@ const HelpAndSupportRoot = () => {
       <div className="flex flex-col w-full">
         <div className="flex flex-col gap-6xl text-center w-full">
           <div className="flex flex-col gap-3xl">
-            <h1 className="heading3xl-marketing md:!heading4xl-marketing lg:!heading5xl-marketing text-text-default">
-              👋 How can we help you today?
+            <h1 className="flex items-center justify-center gap-lg heading3xl-marketing md:!heading4xl-marketing lg:!heading5xl-marketing text-text-default">
+              <span>
+                <HandWaving size={56} />
+              </span>
+              <span> How can we help you today?</span>
             </h1>
             <p className="bodyMd-medium md:!bodyLg-medium lg:!bodyXl-medium text-text-soft">
               Discover solutions through our documentation, guides, and
@@ -167,13 +167,13 @@ const HelpAndSupportRoot = () => {
         </div>
         <GraphExtended className="lg:mt-5xl">
           <GraphItem>
-            <div className="px-xl md:!px-3xl py-4xl md:!py-5xl gap-4xl md:!gap-5xl flex flex-col bg-surface-basic-default min-h-[289px]">
+            <div className="px-xl md:!px-3xl py-4xl md:!py-5xl gap-4xl md:!gap-5xl flex flex-col bg-surface-basic-default min-h-[289px] 3xl:!min-h-[256px] 3xl:max-h-[256px]">
               <h2 className="px-xl heading2xl-marketing text-text-default">
                 Popular articles
               </h2>
-              <div className="flex flex-col md:!flex-row flex-wrap gap-x-6xl gap-y-xl">
+              <div className="grid grid-cols-1 md:!grid-cols-2 3xl:!grid-cols-3 gap-x-6xl gap-y-xl">
                 {popularArticles.map((pa) => (
-                  <div key={pa.title} className="md:w-[calc(50%-40px)]">
+                  <div key={pa.title} className="basis-1/3">
                     <PopularArticleItem {...pa} />
                   </div>
                 ))}
@@ -183,7 +183,9 @@ const HelpAndSupportRoot = () => {
           <div className="grid grid-cols-1 md:!grid-cols-3 gap-3xl md:!gap-5xl mt-3xl md:!mt-5xl">
             {supportTopics.map((st) => (
               <GraphItem key={st.title}>
-                <TopicItem {...st} />
+                <HoverItem to={st.link}>
+                  <TopicItem {...st} />
+                </HoverItem>
               </GraphItem>
             ))}
           </div>
@@ -202,7 +204,9 @@ const HelpAndSupportRoot = () => {
           <div className="grid grid-cols-1 md:!grid-cols-3 gap-3xl md:!gap-5xl">
             {unknownTopics.map((ut) => (
               <GraphItem key={ut.title}>
-                <TopicItem {...ut} />
+                <HoverItem to={ut.link}>
+                  <TopicItem {...ut} />
+                </HoverItem>
               </GraphItem>
             ))}
           </div>
