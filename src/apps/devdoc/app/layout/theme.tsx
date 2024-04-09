@@ -69,8 +69,11 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
     directories,
   } = pageData;
 
+  const tempActiveThemeContext: typeof activeThemeContext & {
+    header?: 'primary' | 'secondary';
+  } = activeThemeContext;
   const showSidebar = activeThemeContext.sidebar;
-  const headerType = activeThemeContext?.header || 'secondary';
+  const headerType = tempActiveThemeContext?.header || 'secondary';
   const showToc = activeThemeContext.toc;
   const showBreadcrum = activeThemeContext?.breadcrumb;
 
