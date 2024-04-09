@@ -4,7 +4,7 @@ import {
   CaretUpFill,
   Eye,
   EyeSlash,
-  XCircleFill,
+  X,
 } from '@jengaicons/react';
 import {
   ChangeEventHandler,
@@ -272,7 +272,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
                 }
               )}
             >
-              <XCircleFill size={16} color="currentColor" />
+              <X size={16} color="currentColor" />
             </button>
           )}
           {type === 'password' && !disabled && (
