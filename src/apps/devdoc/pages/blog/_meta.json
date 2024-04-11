@@ -6,7 +6,8 @@
       "sidebar":false,
       "toc":false,
       "header":"secondary",
-      "breadcrumb":false
+      "breadcrumb":false,
+      "timestamp":false
     }
   }
 }

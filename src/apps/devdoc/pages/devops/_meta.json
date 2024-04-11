@@ -1,0 +1,11 @@
+{
+  "index":{
+    "title":"Kl-DevOps",
+    "theme":{
+      "layout":"raw",
+      "sidebar":false,
+      "toc":false,
+      "header":"secondary"
+    }
+  }
+}

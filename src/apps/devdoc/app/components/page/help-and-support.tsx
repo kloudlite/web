@@ -145,10 +145,9 @@ const HelpAndSupportRoot = () => {
       <div className="flex flex-col w-full">
         <div className="flex flex-col gap-6xl text-center w-full">
           <div className="flex flex-col gap-3xl">
-            <h1 className="flex items-center justify-center gap-lg heading3xl-marketing md:!heading4xl-marketing lg:!heading5xl-marketing text-text-default">
-              <span>
-                <HandWaving size={56} />
-              </span>
+            <h1 className="heading3xl-marketing md:!heading4xl-marketing lg:!heading5xl-marketing text-text-default">
+              <HandWaving size={56} className="hidden md:!inline" />
+              <HandWaving size={32} className="inline md:!hidden" />
               <span> How can we help you today?</span>
             </h1>
             <p className="bodyMd-medium md:!bodyLg-medium lg:!bodyXl-medium text-text-soft">

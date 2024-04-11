@@ -18,6 +18,7 @@ import Wrapper from '../wrapper';
 import { teamTaskAnimationV4 } from './team-task-animation';
 import HoverItem from '../hover-item';
 import Button from '../button';
+import ResponsiveImage from '../website/responsive-image';
 
 const Partners = () => {
   return (
@@ -101,7 +102,7 @@ const UntoldCard = ({
 };
 
 const TutorialItemCard = ({
-  logo,
+  logo: Icon,
   children,
   to,
 }: {
@@ -110,16 +111,21 @@ const TutorialItemCard = ({
   to: string;
 }) => {
   return (
-    <Link href={to} className="flex flex-row items-center gap-xl">
+    <Link
+      href={to}
+      className="flex flex-row items-center md:!items-start md:!flex-col gap-xl border border-border-default rounded-md p-xl lg:!p-2xl 3xl:!p-3xl"
+    >
       <span
         className={cn(
-          'h-[52px] w-[52px] rounded',
-          !logo ? 'bg-surface-basic-subdued' : ''
+          'rounded-full text-text-on-primary bg-icon-primary p-lg w-fit'
         )}
       >
-        {logo}
+        <Icon size={26} />
       </span>
-      <span className="headingMd-marketing xl:headingLg-marketing text-text-default">
+      <span className="hidden lg:!block headingMd text-text-default">
+        {children}
+      </span>
+      <span className="block lg:!hidden headingSm text-text-default">
         {children}
       </span>
     </Link>
@@ -130,12 +136,30 @@ const TutorialCard = () => {
   return (
     <UntoldCard className="flex flex-col gap-4xl h-full">
       <span className="bodyLg-medium text-text-disabled">Latest tutorials</span>
-      <div className="flex flex-col gap-2xl">
-        {consts.home.tutorials.map((tut) => (
-          <TutorialItemCard key={tut.title} to="/">
-            {tut.title}
-          </TutorialItemCard>
-        ))}
+      <div className="grid grid-cols-1 md:!grid-cols-2 gap-2xl">
+        {consts.home.tutorials.map((tut) => {
+          if (tut.type === 'more') {
+            return (
+              <Link
+                href={tut.to}
+                key={tut.title}
+                className="hidden md:!flex flex-row items-center justify-center gap-xl border border-border-default rounded-md md:!p-xl lg:!p-2xl 3xl:!p-3xl"
+              >
+                <span className="hidden lg:!block headingMd text-text-default">
+                  {tut.title}
+                </span>
+                <span className="block lg:!hidden headingSm text-text-default">
+                  {tut.title}
+                </span>
+              </Link>
+            );
+          }
+          return (
+            <TutorialItemCard key={tut.title} to={tut.to} logo={tut.icon}>
+              {tut.title}
+            </TutorialItemCard>
+          );
+        })}
       </div>
     </UntoldCard>
   );
@@ -150,7 +174,17 @@ const FeaturedCard = () => {
           Develop, Deploy, Distribute
         </span>
       </div>
-      <div className="bg-surface-basic-subdued h-[160px] 3xl:!h-[148px]" />
+      <div className="flex items-center justify-center bg-surface-basic-subdued rounded-md h-[117px] md:!h-[134px] lg:!h-[192px] 3xl:!h-[180px]">
+        <ResponsiveImage
+          rmobile={consts.home.images.featured.rmobile}
+          r768={consts.home.images.featured.r768}
+          r1024={consts.home.images.featured.r1024}
+          r1280={consts.home.images.featured.r1280}
+          r1440={consts.home.images.featured.r1440}
+          r1920={consts.home.images.featured.r1920}
+          alt="Featured"
+        />
+      </div>
       <p className="bodyMd text-text-soft">
         From developing the code to deploying to, distributing, we got you
         covered at each touch point.
@@ -161,7 +195,7 @@ const FeaturedCard = () => {
 
 const CommunityCard = () => {
   return (
-    <UntoldCard className="flex flex-col gap-3xl h-full min-h-[256px] max-h-[288px]">
+    <UntoldCard className="flex flex-col gap-2xl 2xl:!gap-3xl h-full 2xl:max-h-[256px] max-h-[288px]">
       <span className="p-2xl rounded-full border border-border-disabled w-fit">
         <UsersThree size={32} />
       </span>
@@ -324,7 +358,7 @@ const TeamTaskSection = () => {
         </p>
       </div>
       <div className="flex flex-col flex-1 relative pt-6xl md:!pt-0">
-        <Graph className="-mx-10xl relative">
+        <Graph className="lg:-mx-10xl relative">
           <AnimatePresence initial={false}>
             <div className="flex w-full h-[464px] md:!h-[608px]" />
             {initalView && (
@@ -336,14 +370,14 @@ const TeamTaskSection = () => {
                 transition={{
                   duration: 1,
                 }}
-                className="px-10xl md:!py-8xl overflow-hidden absolute inset-0"
+                className="lg:px-10xl md:!py-8xl md:!overflow-hidden absolute inset-0"
               >
                 <h4 className="headingMd-marketing md:!headingXl-marketing text-text-default relative md:!-top-[32px] md:!-mt-[28px] right-1/2 transform translate-x-1/2 text-center pb-3xl md:!pb-0">
                   Your team’s tasks
                 </h4>
                 <GraphItem>
                   <div className="flex flex-row bg-gradient-to-b from-[#E4E4E7] to-[#F3F4F6] h-[400px] md:!h-[512px] p-xl  md:!p-5xl gap-2xl md:!gap-3xl lg:!gap-5xl 2xl:!gap-8xl">
-                    <div className="flex flex-col flex-1 gap-2xl md:!gap-3xl lg:!gap-5xl overflow-hidden">
+                    <div className="flex flex-col flex-1 gap-2xl md:!gap-3xl lg:!gap-5xl md:overflow-hidden">
                       {firsList
                         .filter((f, i) => i % 2 === 0)
                         .map((fl) => {
@@ -356,7 +390,7 @@ const TeamTaskSection = () => {
                           );
                         })}
                     </div>
-                    <div className="flex flex-col flex-1 gap-2xl md:!gap-3xl lg:!gap-5xl overflow-hidden">
+                    <div className="flex flex-col flex-1 gap-2xl md:!gap-3xl lg:!gap-5xl md:overflow-hidden">
                       {firsList
                         .filter((f, i) => i % 2 === 1)
                         .map((fl) => {
@@ -383,7 +417,7 @@ const TeamTaskSection = () => {
                 transition={{
                   duration: 1,
                 }}
-                className="absolute inset-0 grid grid-cols-2 gap-5xl 2xl:!gap-8xl 3xl:!gap-5xl px-10xl md:py-8xl overflow-hidden"
+                className="absolute inset-0 grid grid-cols-2 gap-5xl 2xl:!gap-8xl 3xl:!gap-5xl lg:px-10xl md:py-8xl "
               >
                 <div className="w-full flex flex-col">
                   <h4 className="headingMd-marketing md:!headingXl-marketing text-text-default relative md:!-top-[32px] md:!-mt-[28px] right-1/2 transform translate-x-1/2 text-center pb-3xl md:!pb-0">
@@ -510,14 +544,14 @@ const PartnerSection = () => {
 const IndexRoot = () => {
   return (
     <div>
-      <Wrapper className="flex flex-col pt-6xl md:!pt-11xl lg:!pt-[158px]">
+      <Wrapper className="flex flex-col pt-6xl md:!pt-11xl lg:!pt-[158px] overflow-x-hidden">
         <div className="w-full z-[1]">
           <div className="flex flex-col gap-3xl text-center items-center">
             <div className="flex flex-col">
               <span className="block md:!hidden heading4xl-marketing md:!heading5xl-marketing xl:!heading6xl-marketing text-text-warning">
                 NoOps
               </span>
-              <h1 className="heading4xl-marketing md:!heading5xl-marketing xl:!heading6xl-marketing text-text-default text-center md:!w-[830px]">
+              <h1 className="heading4xl-marketing md:!heading5xl-marketing xl:!heading6xl-marketing text-text-default text-center lg:!w-[830px]">
                 <span>Opensource </span>
                 <span className="block md:!inline relative text-center">
                   <span className="hidden md:!block text-text-warning absolute -top-2/3 left-1/2 transform -translate-x-1/2">
