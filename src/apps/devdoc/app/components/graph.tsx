@@ -38,11 +38,11 @@ export const GraphExtended = ({
   return (
     <Graph
       className={cn(
-        '-mx-11xl 3xl:!-mx-12xl py-7xl md:!py-8xl lg:!py-10xl',
+        'lg:-mx-11xl 3xl:!-mx-12xl py-7xl md:!py-8xl lg:!py-10xl',
         className
       )}
     >
-      <div className="px-11xl 3xl:!px-12xl">{children}</div>
+      <div className="lg:px-11xl 3xl:!px-12xl">{children}</div>
     </Graph>
   );
 };

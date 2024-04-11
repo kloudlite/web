@@ -4,7 +4,8 @@
     "theme":{
       "sidebar":false,
       "toc":false,
-      "header":"secondary"
+      "header":"secondary",
+      "timestamp":false
     }
   },
   "what-is-kloudlite":{

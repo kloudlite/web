@@ -65,7 +65,7 @@ const Footer = ({ config }: { config: IConfig }) => {
     'menu' in config.footer
   )
     return (
-      <footer className="bg-surface-basic-default">
+      <footer className="bg-surface-basic-default overflow-hidden">
         <div className="px-3xl md:!px-5xl lg:!px-8xl xl:!px-11xl 2xl:!px-12xl 3xl:!px-15xl lg:!max-w-[896px] xl:!max-w-[1024px] 2xl:!max-w-[1120px] 3xl:!max-w-[1410px] box-content flex flex-col-reverse flex-wrap lg:!flex-row lg:gap-x-2xl m-auto">
           <div className="flex lg:!hidden h-6xl md:!h-8xl border-y border-border-disabled -mx-5xl px-5xl">
             <div className="w-full border-x border-border-disabled" />

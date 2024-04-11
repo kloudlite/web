@@ -19,6 +19,7 @@ import useMenu from '~/app/utils/use-menu';
 import { ActiveAnchorProvider } from '~/app/utils/active-anchor';
 import { ConfigProvider } from '~/app/utils/use-config';
 import config from '~/app/utils/config';
+import Profile from 'kl-design-system/molecule/profile';
 import { createComponents } from './mdx-components';
 
 function GitTimestamp({ timestamp }: { timestamp: Date }) {
@@ -37,8 +38,29 @@ function GitTimestamp({ timestamp }: { timestamp: Date }) {
   );
 }
 
+const BlogHeader = ({
+  frontMatter,
+  timestamp,
+}: {
+  frontMatter: {
+    [key: string]: any;
+  };
+  timestamp: string;
+}) => {
+  return (
+    <div className="flex flex-col gap-5xl pt-2xl">
+      <div className="flex flex-col gap-xl">
+        <h1 className="heading3xl text-text-strong">{frontMatter.title}</h1>
+        <p className="bodyLg text-text-strong">{frontMatter.describe}</p>
+      </div>
+      <Profile name={`Written by ${frontMatter.author}`} subtitle={timestamp} />
+    </div>
+  );
+};
+
 const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
   const { title, frontMatter, pageMap, headings } = pageOpts;
+  console.log('frontmatter', frontMatter);
 
   const { state } = useMenu();
 
@@ -74,10 +96,28 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
   } = activeThemeContext;
   const showSidebar = activeThemeContext.sidebar;
   const headerType = tempActiveThemeContext?.header || 'secondary';
-  const showToc = activeThemeContext.toc;
+  const showToc = activeThemeContext.toc || false;
   const showBreadcrum = activeThemeContext?.breadcrumb;
 
-  console.log(pageData);
+  let pageType = 'normal';
+
+  if (
+    activePath.length > 0 &&
+    activePath[activePath.length - 1].kind === 'MdxPage' &&
+    activePath[activePath.length - 1].route !== activePath[0].route &&
+    ['blog', 'help-and-support'].includes(activePath[0].name)
+  ) {
+    pageType = 'blog';
+  }
+  console.log(
+    pageData,
+    pageType,
+    activePath.length > 0,
+    activePath[activePath.length - 1].kind === 'MdxPage',
+    activePath[activePath.length - 1].name !== activePath[0].name,
+    ['blog', 'help-and-support'].includes(activePath[0].name)
+  );
+
   return (
     <div className="bg-surface-basic-subdued min-h-screen antialiased">
       <Head>
@@ -130,8 +170,9 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
           className={cn(
             'min-h-[calc(100vh-76px)] flex-row',
             activeThemeContext.layout === 'default'
-              ? 'px-3xl md:!px-5xl lg:!px-8xl xl:!px-11xl 2xl:!px-12xl xl:max-w-[1280px] 2xl:max-w-[1440px]'
-              : 'max-w-none'
+              ? 'lg:m-auto lg:!max-w-[896px] w-full px-3xl md:!px-5xl lg:!px-8xl xl:!px-11xl 2xl:!px-12xl xl:!max-w-[1024px] 2xl:!max-w-[1120px] 3xl:!min-w-[1408px] lg:!box-content'
+              : 'max-w-none',
+            pageType === 'blog' ? 'py-8xl' : ''
           )}
         >
           <Sidebar
@@ -171,7 +212,18 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
                       <Breadcrumb activePath={activePath} />
                     </div>
                   )}
-
+                  {pageType === 'blog' && frontMatter?.title && (
+                    <BlogHeader
+                      frontMatter={frontMatter}
+                      timestamp={
+                        pageOpts.timestamp
+                          ? GitTimestamp({
+                              timestamp: new Date(pageOpts.timestamp),
+                            })
+                          : ''
+                      }
+                    />
+                  )}
                   {children}
                 </div>
                 <div className="bodyLg text-text-strong">
@@ -200,7 +252,6 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
 
 export default function Layout(props: NextraThemeLayoutProps) {
   const { pageOpts } = props;
-  console.log(pageOpts);
   return (
     <ConfigProvider pageOpts={pageOpts} config={config}>
       <Main {...props} />
