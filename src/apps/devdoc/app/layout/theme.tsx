@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import type { NextraThemeLayoutProps } from 'nextra';
 import { MDXProvider } from 'nextra/mdx';
-import { useEffect, useMemo } from 'react';
+import { ReactNode, useEffect, useMemo } from 'react';
 import { useFSRoute } from 'nextra/hooks';
 import { normalizePages } from 'nextra/normalize-pages';
 import { useRouter } from 'next/router';
@@ -45,7 +45,7 @@ const BlogHeader = ({
   frontMatter: {
     [key: string]: any;
   };
-  timestamp: string;
+  timestamp: string | ReactNode;
 }) => {
   return (
     <div className="flex flex-col gap-5xl pt-2xl">
@@ -60,8 +60,6 @@ const BlogHeader = ({
 
 const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
   const { title, frontMatter, pageMap, headings } = pageOpts;
-  console.log('frontmatter', frontMatter);
-
   const { state } = useMenu();
 
   useEffect(() => {
@@ -109,14 +107,17 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
   ) {
     pageType = 'blog';
   }
-  console.log(
-    pageData,
-    pageType,
-    activePath.length > 0,
-    activePath[activePath.length - 1].kind === 'MdxPage',
-    activePath[activePath.length - 1].name !== activePath[0].name,
-    ['blog', 'help-and-support'].includes(activePath[0].name)
-  );
+
+  if (
+    activePath.length > 0 &&
+    activePath[activePath.length - 1].kind === 'MdxPage' &&
+    activePath[activePath.length - 1].route !== activePath[0].route &&
+    ['docs'].includes(activePath[0].name)
+  ) {
+    pageType = 'docs';
+  }
+
+  console.log(pageData);
 
   return (
     <div className="bg-surface-basic-subdued min-h-screen antialiased">
@@ -198,7 +199,8 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
               className={cn(
                 ' w-full min-w-0 min-h-[calc(100vh-101px)] flex flex-col',
                 showSidebar ? 'max-w-[72rem]' : '',
-                activeThemeContext.layout === 'raw' ? '' : 'gap-6xl'
+                activeThemeContext.layout === 'raw' ? '' : 'gap-6xl',
+                pageType === 'docs' ? 'py-6xl px-7xl' : ''
               )}
             >
               <MDXProvider

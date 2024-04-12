@@ -18,7 +18,7 @@ const ContactRoot = () => {
       <div className="gap-5xl md:!gap-8xl xl:!gap-10xl flex flex-col lg:!flex-row w-full">
         <form
           action="/api/request-demo"
-          className="flex flex-col gap-5xl flex-1 md:px-8xl lg:!px-0 3xl:!p-5xl"
+          className="flex flex-col gap-5xl flex-1 md:px-8xl lg:!px-0"
         >
           <div className="flex flex-col gap-3xl">
             <TextInput label="Full name" size="lg" />
