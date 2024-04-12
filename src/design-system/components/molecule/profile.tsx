@@ -1,11 +1,11 @@
-import { forwardRef } from 'react';
+import { ReactNode, forwardRef } from 'react';
 import { AvatarBase, IAvatar } from '../atoms/avatar';
 import { BounceIt } from '../bounce-it';
 import { cn } from '../utils';
 
 interface IProfile extends IAvatar {
-  name?: string;
-  subtitle?: string;
+  name?: ReactNode;
+  subtitle?: ReactNode;
 }
 
 const Profile = forwardRef<HTMLButtonElement, IProfile>(
