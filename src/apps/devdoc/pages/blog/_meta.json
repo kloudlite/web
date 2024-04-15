@@ -9,5 +9,14 @@
       "breadcrumb":false,
       "timestamp":false
     }
+  },
+  "what-is-kloudlite":{
+    "title":"What is Kloudlite?",
+    "type":"page",
+    "theme":{
+      "sidebar":false,
+      "toc":true,
+      "header":"secondary"
+    }
   }
 }

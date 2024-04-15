@@ -1,17 +1,18 @@
 import Link from 'next/link';
 import { BrandLogo } from 'kl-design-system/branding/brand-logo';
 import {
+  CloudAgnostics,
+  Container,
   GithubLogoFill,
+  Infinity,
   LinkedinLogoFill,
   TwitterNewLogoFill,
 } from '@jengaicons/react';
 import { ReactNode } from 'react';
 import { cn } from './commons';
 import { IConfig } from './use-config';
-import devops from '../../images/home/devops.svg';
-import infraops from '../../images/home/infraops.svg';
-import distribution from '../../images/home/distribution.svg';
 import Button from '../components/button';
+import { NavListItem } from '../components/nav-menu-v2';
 
 const gitUrl = 'https://github.com/kloudlite/kloudlite';
 const linkedinUrl = 'https://linkedin.com/company/kloudlite-io';
@@ -96,12 +97,7 @@ export default {
   siteTitle: 'Kloudlite',
   logo: (
     <Link href="/">
-      <div className="hidden md:block">
-        <BrandLogo detailed size={28} />
-      </div>
-      <div className="md:hidden">
-        <BrandLogo detailed={false} size={28} />
-      </div>
+      <BrandLogo detailed size={28} />
     </Link>
   ),
   footer: {
@@ -151,6 +147,14 @@ export default {
             title: 'Contact us',
             to: 'contact-us',
           },
+          {
+            title: 'Documentations',
+            to: 'docs',
+          },
+          {
+            title: 'Blog',
+            to: 'blog',
+          },
         ],
       },
     ],
@@ -182,34 +186,39 @@ export default {
       {
         title: 'Product',
         to: '/product',
-        type: 'dropdown',
+        type: 'popup',
         render: () => (
-          <ul className="flex flex-col list-none w-full">
-            <ProductMenuItem
-              title="Kl-DevOps"
-              description="NoOps in every stage of devlopment"
-              image={devops.src}
-              to="/devops"
-            />
-            <ProductMenuItem
-              title="Kl-InfraOps"
-              description="Cloud-native at the core of infrastructure"
-              image={infraops.src}
-              to="/infraops"
-            />
-            <ProductMenuItem
-              title="Kl-Distribution"
-              description="Build, deploy and scale at an acceleration"
-              image={distribution.src}
-              to="/distribution"
-            />
-          </ul>
+          <div className="w-[327px]">
+            <ul className="flex flex-col">
+              <NavListItem
+                href="/devops"
+                title="DevOps"
+                icon={<Infinity size={28} />}
+              >
+                NoOps in every stage of devlopment
+              </NavListItem>
+              <NavListItem
+                href="/infraops"
+                title="InfraOps"
+                icon={<CloudAgnostics size={28} />}
+              >
+                Cloud-native at the core of infrastructure
+              </NavListItem>
+              <NavListItem
+                href="/distribution"
+                title="Distribution"
+                icon={<Container size={28} />}
+              >
+                Build, deploy and scale at an acceleration
+              </NavListItem>
+            </ul>
+          </div>
         ),
       },
       {
         title: 'Help',
         to: '/help-and-support',
-        type: 'link',
+        type: 'normal',
       },
     ],
     extra: (

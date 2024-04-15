@@ -5,6 +5,7 @@ import { ReactNode, useEffect, useMemo } from 'react';
 import { useFSRoute } from 'nextra/hooks';
 import { normalizePages } from 'nextra/normalize-pages';
 import { useRouter } from 'next/router';
+import Profile from 'kl-design-system/molecule/profile';
 import Footer from '~/app/components/footer';
 import Container from '~/app/components/container';
 import { NavLinks } from '~/app/components/nav-links';
@@ -19,7 +20,6 @@ import useMenu from '~/app/utils/use-menu';
 import { ActiveAnchorProvider } from '~/app/utils/active-anchor';
 import { ConfigProvider } from '~/app/utils/use-config';
 import config from '~/app/utils/config';
-import Profile from 'kl-design-system/molecule/profile';
 import { createComponents } from './mdx-components';
 
 function GitTimestamp({ timestamp }: { timestamp: Date }) {
@@ -200,7 +200,10 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
                 ' w-full min-w-0 min-h-[calc(100vh-101px)] flex flex-col',
                 showSidebar ? 'max-w-[72rem]' : '',
                 activeThemeContext.layout === 'raw' ? '' : 'gap-6xl',
-                pageType === 'docs' ? 'py-6xl px-7xl' : ''
+                pageType === 'docs' ? 'py-6xl px-7xl' : '',
+                pageType === 'blog'
+                  ? 'lg:!pr-8xl xl:!pr-10xl 2xl:!pr-11xl 3xl:pr-15xl'
+                  : ''
               )}
             >
               <MDXProvider
