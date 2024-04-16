@@ -67,16 +67,49 @@ import featuredImage1024 from '~/images/home/featured/1024.svg';
 import featuredImage1280 from '~/images/home/featured/1280.svg';
 import featuredImage1440 from '~/images/home/featured/1440.svg';
 import featuredImage1920 from '~/images/home/featured/1920.svg';
-import RedPlutoIcon from '../../images/home/companies/red.svg';
-import FibrIcon from '../../images/home/companies/fibr.svg';
-import PlaxonicIcon from '../../images/home/companies/plaxonic.svg';
-import distributionIcon from '../../images/home/distribution.svg';
-import infraopsIcon from '../../images/home/infraops.svg';
-import devopsIcon from '../../images/home/devops.svg';
+import RedPlutoIcon from '~/images/home/companies/red.svg';
+import FibrIcon from '~/images/home/companies/fibr.svg';
+import PlaxonicIcon from '~/images/home/companies/plaxonic.svg';
+import CrewIcon from '~/images/home/companies/crew.svg';
+import BoltzIcon from '~/images/home/companies/boltz.svg';
+import TalescaleIcon from '~/images/home/companies/talescale.svg';
+import distributionIcon from '~/images/home/distribution.svg';
+import infraopsIcon from '~/images/home/infraops.svg';
+import devopsIcon from '~/images/home/devops.svg';
+import AnscerIcon from '~/images/home/companies/anser.svg';
 
 const consts = {
   home: {
-    partners: [PlaxonicIcon.src, FibrIcon.src, RedPlutoIcon.src],
+    partners: [
+      {
+        icon: PlaxonicIcon.src,
+        className: 'w-[135px]',
+      },
+      {
+        icon: FibrIcon.src,
+        className: 'w-[102px]',
+      },
+      {
+        icon: RedPlutoIcon.src,
+        className: 'w-[202px]',
+      },
+      {
+        icon: CrewIcon.src,
+        className: 'w-[163px]',
+      },
+      {
+        icon: AnscerIcon.src,
+        className: 'w-[135px]',
+      },
+      {
+        icon: BoltzIcon.src,
+        className: 'w-[190px]',
+      },
+      {
+        icon: TalescaleIcon.src,
+        className: 'w-[186px]',
+      },
+    ],
     teamTasks: [
       {
         title: 'Develop, Git Push',

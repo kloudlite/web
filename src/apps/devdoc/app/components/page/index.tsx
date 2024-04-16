@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { BrandLogo } from 'kl-design-system/branding/brand-logo';
 import { AnimatePresence, motion } from 'framer-motion';
+import { Splide, SplideSlide, SplideTrack } from '@splidejs/react-splide';
+import { AutoScroll } from '@splidejs/splide-extension-auto-scroll';
 import ProgressTracker from '~/app/components/progress-tracker';
 import { Graph, GraphExtended, GraphItem } from '~/app/components/graph';
 import ReadyToOps from '~/app/components/website/ready-to-ops';
@@ -19,15 +21,53 @@ import { teamTaskAnimationV4 } from './team-task-animation';
 import HoverItem from '../hover-item';
 import Button from '../button';
 import ResponsiveImage from '../website/responsive-image';
+import '@splidejs/react-splide/css/core';
 
 const Partners = () => {
   return (
-    <div>
-      <div className="flex flex-row items-center justify-center flex-wrap gap-8xl">
-        {consts.home.partners.map((p) => {
-          return <img alt="partners" key={p} src={p} />;
-        })}
-      </div>
+    <div className="relative">
+      <div
+        className="z-10 absolute top-0 -left-[5px] md:!-left-[50px] bottom-0 w-[50px]"
+        style={{
+          background:
+            'linear-gradient(270deg, rgba(250, 250, 250, 0.00) 0%, #FAFAFA 63.74%)',
+        }}
+      />
+      <div
+        className="z-10 absolute top-0 -right-[5px] md:!-right-[50px] bottom-0 w-[50px]"
+        style={{
+          background:
+            'linear-gradient(270deg, #FAFAFA 36.26%, rgba(250, 250, 250, 0.00) 100%)',
+        }}
+      />
+      <Splide
+        className="md:!-mx-[50px] max-w-[calc(100vw_-_40px)]"
+        extensions={{ AutoScroll }}
+        options={{
+          arrows: false,
+          pagination: false,
+          perPage: 7,
+          type: 'loop',
+          gap: '48px',
+          autoWidth: true,
+          drag: false,
+          autoScroll: {
+            speed: 0.5,
+          },
+        }}
+        aria-label="My Favorite Images"
+        hasTrack={false}
+      >
+        <SplideTrack className="partners-slide-track">
+          {consts.home.partners.map((p) => {
+            return (
+              <SplideSlide key={p.icon}>
+                <img alt="partners" className={p.className} src={p.icon} />
+              </SplideSlide>
+            );
+          })}
+        </SplideTrack>
+      </Splide>
     </div>
   );
 };
@@ -532,8 +572,8 @@ const ReadyTo = () => {
 
 const PartnerSection = () => {
   return (
-    <div className="py-8xl px-5xl flex flex-col gap-7xl">
-      <p className="bodyLg-medium md:!bodyXl text-text-strong text-center">
+    <div className="py-8xl flex flex-col gap-8xl">
+      <p className="bodyXl md:!bodyXXl text-text-strong text-center">
         Join the cult of our early adopters, and discover the power of Kloudlite
       </p>
       <Partners />

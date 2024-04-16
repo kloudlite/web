@@ -348,3 +348,9 @@ canvas {
   image-rendering: pixelated;
   image-rendering: crisp-edges;
 }
+
+
+.partners-slide-track ul{
+  display: flex;
+  align-items: center;
+}

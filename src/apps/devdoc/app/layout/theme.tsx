@@ -117,8 +117,6 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
     pageType = 'docs';
   }
 
-  console.log(pageData);
-
   return (
     <div className="bg-surface-basic-subdued min-h-screen antialiased">
       <Head>
@@ -197,10 +195,12 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
           >
             <main
               className={cn(
-                ' w-full min-w-0 min-h-[calc(100vh-101px)] flex flex-col',
+                ' w-full min-w-0 min-h-[calc(100vh-101px)] flex flex-col ',
                 showSidebar ? 'max-w-[72rem]' : '',
                 activeThemeContext.layout === 'raw' ? '' : 'gap-6xl',
-                pageType === 'docs' ? 'py-6xl px-7xl' : '',
+                pageType === 'docs'
+                  ? 'py-6xl xl:px-3xl 3xl:!px-7xl lg:!max-w-[394px] xl:!max-w-[510px] 2xl:!max-w-[650px] 3xl:!max-w-[938px]'
+                  : '',
                 pageType === 'blog'
                   ? 'lg:!pr-8xl xl:!pr-10xl 2xl:!pr-11xl 3xl:pr-15xl'
                   : ''

@@ -8,7 +8,6 @@ import {
   LinkedinLogoFill,
   TwitterNewLogoFill,
 } from '@jengaicons/react';
-import { ReactNode } from 'react';
 import { cn } from './commons';
 import { IConfig } from './use-config';
 import Button from '../components/button';
@@ -19,35 +18,6 @@ const linkedinUrl = 'https://linkedin.com/company/kloudlite-io';
 const xUrl = 'https://x.com/kloudlite';
 export const supportEmail = 'launch@kloudlite.io';
 
-const ProductMenuItem = ({
-  title,
-  image,
-  description,
-  to,
-}: {
-  title: ReactNode;
-  image: string;
-  description: ReactNode;
-  to: string;
-}) => {
-  return (
-    <li>
-      <a
-        href={to}
-        className="flex flex-row items-center gap-xl px-xl py-lg bg-surface-basic-subdued hover:bg-surface-basic-active w-full"
-      >
-        <img
-          src={image}
-          className="rounded border border-border-default bg-surface-basic-default h-[54px] w-[54px] p-md"
-        />
-        <div className="flex flex-col justify-center gap-sm">
-          <div className="bodyMd-semibold text-text-default">{title}</div>
-          <p className="bodySm text-text-soft">{description}</p>
-        </div>
-      </a>
-    </li>
-  );
-};
 const BrandMenu = ({ className }: { className?: string }) => {
   const socialIconSize = 24;
   const brandIconSize = 28;
