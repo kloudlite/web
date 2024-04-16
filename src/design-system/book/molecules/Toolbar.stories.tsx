@@ -1,7 +1,7 @@
-import { ArrowDown, ArrowUp, InfoFill, Search } from '@jengaicons/react';
 import { useState } from 'react';
 import OptionList from '~/components/atoms/option-list';
 import Toolbar from '~/components/atoms/toolbar';
+import { ArrowDown, ArrowUp, InfoFill, Search } from '~/components/icons';
 
 export default {
   title: 'Molecules/Toolbar',

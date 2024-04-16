@@ -1,15 +1,15 @@
 import {
+  ToastContainer as Container,
+  ToastPosition,
+  toast as t,
+} from 'react-toastify';
+import {
   CheckCircle,
   Info,
   Warning,
   WarningCircle,
   X,
-} from '@jengaicons/react';
-import {
-  ToastContainer as Container,
-  ToastPosition,
-  toast as t,
-} from 'react-toastify';
+} from '~/components/icons';
 
 export const toast = {
   info: t.info,
