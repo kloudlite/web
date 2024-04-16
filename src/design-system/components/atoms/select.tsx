@@ -5,7 +5,7 @@ import type {
   IMenuItemRender,
   ISelect,
 } from '@oshq/react-select';
-import { ChevronUpDown, CircleNotch, X } from '@jengaicons/react';
+import { ChevronUpDown, CircleNotch, X } from '~/components/icons';
 import { cn } from '../utils';
 import AnimateHide from './animate-hide';
 

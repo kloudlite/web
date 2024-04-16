@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeftFill } from '@jengaicons/react';
+import { ArrowLeftFill } from '~/components/icons';
 import { IconButton } from '../atoms/button';
 
 interface ISubHeader {
