@@ -1,7 +1,7 @@
 /* eslint-disable no-nested-ternary */
-import { Spinner } from '@jengaicons/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import React, { KeyboardEventHandler, MouseEventHandler } from 'react';
+import { Spinner } from '~/components/icons';
 import { cn } from '../utils';
 
 type ButtonTypes = 'submit' | 'button';
