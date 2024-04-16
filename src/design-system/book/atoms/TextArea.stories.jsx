@@ -1,4 +1,4 @@
-import { Info } from '@jengaicons/react';
+import { Info } from '~/components/icons';
 import { Button } from '../../components/atoms/button';
 import { TextArea } from '../../components/atoms/input';
 

@@ -1,5 +1,5 @@
-import { ArrowsDownUp, Check } from '@jengaicons/react';
 import { useState } from 'react';
+import { ArrowsDownUp, Check } from '~/components/icons';
 import ActionList from '../../components/atoms/action-list';
 
 export default {
