@@ -2,6 +2,7 @@ import noScrollbar from './css-plugins/no-scrollbar.js';
 import noSpinner from './css-plugins/no-spinner.js';
 import scrollbar from './css-plugins/scrollbar.js';
 import typography from './css-plugins/typography.js';
+import perspective from './css-plugins/perspective.js';
 
 const primitives = {
   colors: {
@@ -398,13 +399,7 @@ const config = {
     scrollbar(),
     noScrollbar(),
     noSpinner(),
-    ({ matchUtilities }) => {
-      matchUtilities({
-        perspective: (value) => ({
-          perspective: value,
-        }),
-      });
-    },
+    perspective(),
   ],
 };
 
