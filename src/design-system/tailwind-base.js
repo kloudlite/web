@@ -305,7 +305,7 @@ const config = {
         basic: {
           default: primitives.colors.grey['50'],
           subdued: primitives.colors.zinc['50'],
-          hovered: primitives.colors.zinc['50'],
+          hovered: primitives.colors.grey['100'],
           pressed: primitives.colors.zinc['200'],
           input: primitives.colors.grey['50'],
           active: primitives.colors.zinc['100'],
