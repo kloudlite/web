@@ -41,7 +41,7 @@ const Partners = () => {
         }}
       />
       <Splide
-        className="md:!-mx-[50px] max-w-[calc(100vw_-_40px)]"
+        className="md:!-mx-[50px] max-w-[calc(100vw_-_40px)] cursor-pointer"
         extensions={{ AutoScroll }}
         options={{
           arrows: false,
@@ -50,7 +50,7 @@ const Partners = () => {
           type: 'loop',
           gap: '48px',
           autoWidth: true,
-          drag: false,
+          // drag: false,
           autoScroll: {
             speed: 0.5,
           },

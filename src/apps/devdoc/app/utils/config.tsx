@@ -158,7 +158,23 @@ export default {
         to: '/product',
         type: 'popup',
         render: () => (
-          <div className="w-[327px]">
+          <div className="w-[450px] flex flex-row gap-xl p-xl">
+            <a
+              href="/product"
+              className="w-[164px] bg-[linear-gradient(170deg,#3B82F6_6.19%,#1E3A8A_95.65%)] rounded py-4xl px-3xl box-content flex flex-col justify-end gap-2xl"
+            >
+              <div>
+                <BrandLogo size={32} detailed={false} darkBg />
+              </div>
+              <div className="flex flex-col gap-lg">
+                <span className="headingLg-marketing text-text-on-primary">
+                  Code-to-cloud console
+                </span>
+                <span className="bodySm text-text-on-primary">
+                  Boost development with efficient Kloudlite solution.
+                </span>
+              </div>
+            </a>
             <ul className="flex flex-col">
               <NavListItem
                 href="/devops"

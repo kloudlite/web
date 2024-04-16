@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 import classNames from 'classnames';
 import { PageItem } from 'nextra/normalize-pages';
+import { ChevronDown } from '@jengaicons/react';
 import useConfig from '../utils/use-config';
 import { cn } from '../utils/commons';
 
@@ -19,14 +20,14 @@ export const NavListItem = React.forwardRef<
     <NavigationMenu.Link asChild>
       <a
         className={classNames(
-          'flex flex-row gap-xl items-center px-xl py-lg hover:bg-surface-basic-active cursor-pointer',
+          'rounded flex flex-row gap-xl items-center px-xl py-lg hover:bg-surface-basic-hovered cursor-pointer',
           className
         )}
         {...props}
         ref={ref}
         href={href}
       >
-        <div className="h-[44px] w-[44px] flex items-center justify-center rounded border border-border-default p-lg bg-icon-on-primary text-icon-primary">
+        <div className="h-[44px] w-[44px] flex items-center justify-center rounded p-lg bg-icon-primary text-text-on-primary">
           {icon}
         </div>
         <div className="flex flex-col">
@@ -49,12 +50,14 @@ const NavMenuButton = ({
     <NavigationMenu.Trigger asChild>
       <span
         className={cn(
-          'bodyLg-medium text-text-soft cursor-pointer px-2xl flex hover:!text-text-default  data-[state=open]:text-text-default',
+          'transition-colors group flex-row gap-lg items-center bodyLg-medium text-text-soft cursor-pointer px-2xl flex hover:!text-text-default  data-[state=open]:text-text-default',
           className
         )}
       >
-        {' '}
         {children}
+        <span className="flex transition-transform duration-[250] ease-in group-data-[state=open]:-rotate-180">
+          <ChevronDown size={16} />
+        </span>
       </span>
     </NavigationMenu.Trigger>
   );
@@ -115,8 +118,6 @@ const NavigationMenuV2 = ({ activePath }: { activePath?: PageItem[] }) => {
   if (!headerSecondary) {
     return null;
   }
-
-  console.log('active', activePath);
   return (
     <NavigationMenu.Root className="relative z-[1] flex w-full justify-end">
       <NavigationMenu.List className="m-0 flex list-none rounded-[6px] p-1">
@@ -151,7 +152,7 @@ const NavigationMenuV2 = ({ activePath }: { activePath?: PageItem[] }) => {
       </NavigationMenu.List>
 
       <div className="perspective-[2000px] absolute  w-full  top-full transform -translate-x-1/2 left-1/2 flex justify-end">
-        <NavigationMenu.Viewport className="shadow-popover data-[state=open]:animate-scaleIn data-[state=closed]:animate-scaleOut relative mt-[22px] h-[var(--radix-navigation-menu-viewport-height)] origin-[top_center] overflow-hidden rounded bg-surface-basic-subdued transition-[width,_height] duration-300 sm:w-[var(--radix-navigation-menu-viewport-width)]" />
+        <NavigationMenu.Viewport className="shadow-popover data-[state=open]:animate-scaleIn data-[state=closed]:animate-scaleOut relative mt-[22px] h-[var(--radix-navigation-menu-viewport-height)] origin-[top_center] overflow-hidden rounded bg-surface-basic-default transition-[width,_height] duration-300 sm:w-[var(--radix-navigation-menu-viewport-width)]" />
       </div>
     </NavigationMenu.Root>
   );
