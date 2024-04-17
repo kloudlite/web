@@ -1,12 +1,5 @@
 /* eslint-disable react/no-unused-prop-types */
 import {
-  CaretDownFill,
-  CaretUpFill,
-  Eye,
-  EyeSlash,
-  XCircleFill,
-} from '@jengaicons/react';
-import {
   ChangeEventHandler,
   FocusEventHandler,
   KeyboardEventHandler,
@@ -19,6 +12,13 @@ import {
   useRef,
   useState,
 } from 'react';
+import {
+  CaretDownFill,
+  CaretUpFill,
+  Eye,
+  EyeSlash,
+  X,
+} from '~/components/icons';
 import { cn } from '../utils';
 import AnimateHide from './animate-hide';
 
@@ -272,7 +272,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
                 }
               )}
             >
-              <XCircleFill size={16} color="currentColor" />
+              <X size={16} color="currentColor" />
             </button>
           )}
           {type === 'password' && !disabled && (

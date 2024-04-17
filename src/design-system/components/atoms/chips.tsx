@@ -1,4 +1,3 @@
-import { Spinner, XFill } from '@jengaicons/react';
 import * as RovingFocusGroup from '@radix-ui/react-roving-focus';
 import { motion } from 'framer-motion';
 import React, {
@@ -10,6 +9,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { Spinner, XFill } from '~/components/icons';
 import { cn } from '../utils';
 
 type ChipTypes =
