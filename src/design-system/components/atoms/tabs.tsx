@@ -128,14 +128,14 @@ const TabBase = ({
             <motion.div
               layoutId="underline"
               className={cn(
-                'h-md bg-surface-primary-pressed z-10 absolute bottom-0 w-full'
+                'h-md bg-surface-primary-pressed z-10 absolute left-0 bottom-0 w-full'
               )}
             />
           )}
           {variant === 'plain' && hoverd && (
             <motion.div
               layoutId="hoverd-underline"
-              className="h-md bg-border-default group-active:bg-border-tertiary bg-none absolute bottom-0 w-full z-0"
+              className="h-md bg-border-default group-active:bg-border-tertiary bg-none absolute bottom-0 w-full z-0 left-0"
             />
           )}
           {variant === 'plain' && <div className="h-md bg-none w-full z-0" />}

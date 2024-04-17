@@ -10,7 +10,6 @@ export function Breadcrumb({
 }: {
   activePath: Item[];
 }): ReactElement {
-  console.log('activePath', activePath);
   return (
     <div className="nextra-breadcrumb flex items-center gap-md overflow-hidden">
       {activePath
@@ -24,15 +23,12 @@ export function Breadcrumb({
             <Fragment key={item.route + item.name}>
               {index > 0 && <ChevronRight size={16} />}
               <div
-                className={cn(
-                  'whitespace-nowrap transition-colors text-text-default',
-                  {
-                    'bodyMd-medium': isActive,
-                    'bodyMd min-w-[24px] overflow-hidden text-ellipsis':
-                      !isActive,
-                    'hover:text-text-strong': !!isLink,
-                  }
-                )}
+                className={cn('whitespace-nowrap transition-colors', {
+                  'bodyMd-medium text-text-default': isActive,
+                  'bodyMd min-w-[24px] overflow-hidden text-ellipsis text-text-strong':
+                    !isActive,
+                  'hover:text-text-strong': !!isLink,
+                })}
                 title={item.title}
               >
                 {isLink && !isActive ? (

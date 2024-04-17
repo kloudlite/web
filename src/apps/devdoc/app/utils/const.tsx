@@ -31,6 +31,7 @@ import {
   TreeStructure,
   TwitterNewLogo,
   Vpn,
+  Infinity as InfinityIcon,
 } from '@jengaicons/react';
 
 import providersImageMobile from '~/images/infraops/providers/mobile.svg';
@@ -60,6 +61,12 @@ import repoImage1024 from '~/images/distribution/repo/1024.svg';
 import repoImage1280 from '~/images/distribution/repo/1280.svg';
 import repoImage1440 from '~/images/distribution/repo/1440.svg';
 import repoImage1920 from '~/images/distribution/repo/1920.svg';
+import featuredImageMobile from '~/images/home/featured/mobile.svg';
+import featuredImage768 from '~/images/home/featured/768.svg';
+import featuredImage1024 from '~/images/home/featured/1024.svg';
+import featuredImage1280 from '~/images/home/featured/1280.svg';
+import featuredImage1440 from '~/images/home/featured/1440.svg';
+import featuredImage1920 from '~/images/home/featured/1920.svg';
 import RedPlutoIcon from '../../images/home/companies/red.svg';
 import FibrIcon from '../../images/home/companies/fibr.svg';
 import PlaxonicIcon from '../../images/home/companies/plaxonic.svg';
@@ -138,15 +145,39 @@ const consts = {
         time: '10:01 PM · Apr 7, 2022',
       },
     ],
+    images: {
+      featured: {
+        rmobile: featuredImageMobile.src,
+        r768: featuredImage768.src,
+        r1024: featuredImage1024.src,
+        r1280: featuredImage1280.src,
+        r1440: featuredImage1440.src,
+        r1920: featuredImage1920.src,
+      },
+    },
     tutorials: [
       {
-        title: 'Get started with Kl-InfraOps',
-      },
-      {
         title: 'Keep building with Kl-DevOps',
+        icon: InfinityIcon,
+        to: '/devops',
+        type: 'normal',
       },
       {
-        title: 'Explore further into Kl-Distribution',
+        title: 'Keep building with Kl-InfraOps',
+        icon: CloudAgnostics,
+        to: '/infraops',
+        type: 'normal',
+      },
+      {
+        title: 'Keep building with Kl-Distribution',
+        icon: Container,
+        to: '/distribution',
+        type: 'normal',
+      },
+      {
+        title: 'And more...',
+        to: '/more',
+        type: 'more',
       },
     ],
     suites: [

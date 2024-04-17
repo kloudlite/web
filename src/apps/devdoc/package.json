@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
+    "build": "rm -rf .next && rm -rf out && next build",
+    "start": "pnpm build && npx serve out",
+    "release": "pnpm build && firebase deploy"
   },
   "keywords": [],
   "author": "",

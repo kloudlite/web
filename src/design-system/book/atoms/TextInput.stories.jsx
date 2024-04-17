@@ -1,5 +1,5 @@
-import { Search } from '@jengaicons/react';
 import { TextInput } from '~/components/atoms/input';
+import { Search } from '~/components/icons';
 
 export default {
   title: 'Atoms/TextInput',
