@@ -5,7 +5,7 @@ import {
   WarningFill,
   WarningOctagonFill,
   X,
-} from '@jengaicons/react';
+} from '~/components/icons';
 import { cn } from '../utils';
 import { IconButton } from '../atoms/button';
 
