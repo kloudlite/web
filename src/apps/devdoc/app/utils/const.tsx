@@ -77,8 +77,14 @@ import distributionIcon from '~/images/home/distribution.svg';
 import infraopsIcon from '~/images/home/infraops.svg';
 import devopsIcon from '~/images/home/devops.svg';
 import AnscerIcon from '~/images/home/companies/anser.svg';
+import BlogCover from '~/images/blog/blog-cover.jpeg';
 
 const consts = {
+  blog: {
+    images: {
+      cover: BlogCover.src,
+    },
+  },
   home: {
     partners: [
       {

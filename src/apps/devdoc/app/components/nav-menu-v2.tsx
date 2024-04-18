@@ -145,7 +145,7 @@ const NavigationMenuV2 = ({ activePath }: { activePath?: PageItem[] }) => {
           >
             <path
               d="M12.0458 1.31216C12.8181 0.577204 14.0311 0.577202 14.8034 1.31216L26.8492 12.776H0L12.0458 1.31216Z"
-              fill="#FAFAFA"
+              fill="#FFFFFF"
             />
           </svg>
         </NavigationMenu.Indicator>

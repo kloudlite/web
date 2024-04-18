@@ -2,8 +2,10 @@ import { Search } from '@jengaicons/react';
 import { TextInput } from 'kl-design-system/atoms/input';
 import Tab from 'kl-design-system/atoms/tabs';
 import { ReactNode, useState } from 'react';
+import consts from '~/app/utils/const';
 import { GraphExtended, GraphItem } from '../graph';
 import SectionWrapper from '../website/section-wrapper';
+import HoverItem from '../hover-item';
 
 const tabs = [
   {
@@ -88,7 +90,7 @@ const TabCard = ({
   return (
     <div className="h-full flex flex-col bg-surface-basic-default 2xl:!min-h-[176px]">
       <img className="h-[240px]" src={img} />
-      <div className="flex flex-col gap-xl 2xl:p-3xl 3xl:p-4xl">
+      <div className="flex flex-col gap-lg md:!gap-xl p-3xl 2xl:!p-3xl 3xl:!p-4xl">
         <h3 className="heading3xl-marketing text-text-default">{label}</h3>
         <p className="bodyXl text-text-strong">{desc}</p>
       </div>
@@ -102,35 +104,41 @@ const BlogHome = () => {
   );
   return (
     <div className="flex flex-col">
-      <div className="py-10xl flex flex-col">
+      <div className="py-6xl md:!py-8xl lg:!py-10xl flex flex-col">
         <div className="flex flex-col gap-3xl">
-          <h1 className="heading5xl-marketing">Blog</h1>
-          <p className="bodyXXl text-text-soft">
+          <h1 className="heading4xl-marketing lg:!heading5xl-marketing">
+            Blog
+          </h1>
+          <p className="bodyXl lg:!bodyXXl text-text-soft">
             The one stop shop for latest tech trends, tools, insights, and
             analysis
           </p>
         </div>
-        <div className="flex flex-row items-center justify-between pt-5xl">
-          <Tab.Root value={tab} onChange={setTab}>
-            {tabs.map((t) => (
-              <Tab.Tab key={t.value} label={t.label} value={t.value} />
-            ))}
-          </Tab.Root>
-          <div className="w-[330px]">
+        <div className="flex flex-col gap-3xl md:!gap-0 md:!flex-row md:!items-center justify-between pt-5xl">
+          <div className="-ml-xl md:!ml-0">
+            <Tab.Root value={tab} onChange={setTab}>
+              {tabs.map((t) => (
+                <Tab.Tab key={t.value} label={t.label} value={t.value} />
+              ))}
+            </Tab.Root>
+          </div>
+          <div className="w-full md:!w-[330px]">
             <TextInput placeholder="Search" prefixIcon={<Search />} />
           </div>
         </div>
         <SectionWrapper className="flex flex-col" noPadding>
           <GraphExtended>
-            <div className="grid grid-cols-3 gap-5xl">
+            <div className="grid grid-cols-1 md:!grid-cols-3 gap-5xl">
               {tabItems[tab].map((ti) => {
                 return (
                   <GraphItem key={ti.label}>
-                    <TabCard
-                      label={ti.label}
-                      desc={ti.desc}
-                      img="https://s3-alpha-sig.figma.com/img/00b4/62fc/41bbcc28adba5a2fbfcc1bda3fcfa8b5?Expires=1713139200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=dDBCOY1clpXXoQcjT3J6d0~BC6pt2iRRRpFi9o92d5plwaypARZLTqscwBdKIJDN-1XraK12BxL70VN60b-vNlgPPwaPYm1uzDLzDKNR~PbjakKKG2U-b0K9XtcPTkq1ozd9swbIYbmIeFRckevFiDv04EzWFVsi~Ofskl0dqxFewAbGLlLurytwp84m7vHo6bzYo82jqHLLVKBwPm42xmj~PPS5PitFyDy8SplM0RfH0E~4zb7hwR2EZmHjJ8J0nZqPLfeE7hHfT8od1GaNhVL09QTeSfLJeDi5s0TUp1u87us1mbeuYJbVIOvp1N72tZkSpA44qrkCcXnIxhHVqg__"
-                    />
+                    <HoverItem to="">
+                      <TabCard
+                        label={ti.label}
+                        desc={ti.desc}
+                        img={consts.blog.images.cover}
+                      />
+                    </HoverItem>
                   </GraphItem>
                 );
               })}

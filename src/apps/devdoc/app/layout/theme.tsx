@@ -53,7 +53,7 @@ const BlogHeader = ({
         <h1 className="heading3xl text-text-strong">{frontMatter.title}</h1>
         <p className="bodyLg text-text-strong">{frontMatter.describe}</p>
       </div>
-      <Profile name={`Written by ${frontMatter.author}`} subtitle={timestamp} />
+      <Profile responsive={false} name={`Written by ${frontMatter.author}`} subtitle={timestamp} />
     </div>
   );
 };
@@ -171,7 +171,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
             activeThemeContext.layout === 'default'
               ? 'lg:m-auto lg:!max-w-[896px] w-full px-3xl md:!px-5xl lg:!px-8xl xl:!px-11xl 2xl:!px-12xl xl:!max-w-[1024px] 2xl:!max-w-[1120px] 3xl:!min-w-[1408px] lg:!box-content'
               : 'max-w-none',
-            pageType === 'blog' ? 'py-8xl' : ''
+            pageType === 'blog' ? 'py-6xl md:!py-8xl' : ''
           )}
         >
           <Sidebar

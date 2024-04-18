@@ -286,7 +286,7 @@ const ProductCards = ({
 const Benefits = () => {
   return (
     <SectionWrapper className="flex-col">
-      <div className="flex flex-col gap-3xl w-full text-center md:!w-[500px] lg:!w-auto">
+      <div className="flex flex-col gap-3xl w-full text-center md:!m-auto md:!w-[500px] lg:!w-auto">
         <h1 className="heading3xl-marketing lg:!heading6xl-marketing text-text-default">
           We understand because we&apos;ve been there too
         </h1>
