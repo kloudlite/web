@@ -1,5 +1,5 @@
-import { ArrowDown, ArrowUp, Search } from '@jengaicons/react';
 import { useState } from 'react';
+import { ArrowDown, ArrowUp, Search } from '~/components/icons';
 import { Button } from '../../components/atoms/button';
 import OptionList from '../../components/atoms/option-list';
 import Profile from '../../components/molecule/profile';

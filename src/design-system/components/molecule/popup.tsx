@@ -1,7 +1,7 @@
-import { X } from '@jengaicons/react';
 import * as Dialog from '@radix-ui/react-dialog';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ComponentProps, ReactNode } from 'react';
+import { X } from '~/components/icons';
 import { IButton, IconButton, Button as NativeButton } from '../atoms/button';
 import { ChildrenProps } from '../types';
 import { cn } from '../utils';

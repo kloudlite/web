@@ -1,4 +1,4 @@
-import { CalendarCheckFill, CaretDownFill } from '@jengaicons/react';
+import { CalendarCheckFill, CaretDownFill } from '~/components/icons';
 import { Button } from '../../components/atoms/button';
 
 export default {
