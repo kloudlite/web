@@ -22,7 +22,7 @@ const Writer = () => {
       }}
       plugins={[
         toolbarPlugin({
-          toolbarContents: () => <ToolbarContent />,
+          toolbarContents: ToolbarContent,
         }),
         headingsPlugin(),
         diffSourcePlugin({
