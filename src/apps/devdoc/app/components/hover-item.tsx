@@ -16,7 +16,15 @@ function convertToAngle(x: number, y: number, height: number, width: number) {
   return angleDeg;
 }
 
-const HoverItem = ({ children, to }: { children?: ReactNode; to?: string }) => {
+const HoverItem = ({
+  children,
+  to,
+  enable = true,
+}: {
+  children?: ReactNode;
+  to?: string;
+  enable?: boolean;
+}) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const onMouseOver = (e: MouseEvent<HTMLDivElement>) => {
@@ -55,6 +63,9 @@ const HoverItem = ({ children, to }: { children?: ReactNode; to?: string }) => {
     }
   };
 
+  if (!enable) {
+    return children;
+  }
   return (
     <Link href={to || ''} className="block relative hover:bg-black h-full">
       <div

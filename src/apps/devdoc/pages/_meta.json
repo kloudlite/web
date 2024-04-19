@@ -109,9 +109,15 @@
         "type":"page",
         "display":"hidden"
     },
-    "customer-stories":{
-        "title":"Customer Stories",
-        "type":"page",
-        "display":"hidden"
+  "customer-stories":{
+    "title":"Customer stories",
+    "type":"page",
+    "display":"hidden",
+    "theme":{
+      "layout":"raw",
+      "sidebar":false,
+      "toc":false,
+      "header":"secondary"
     }
+  }
 }

@@ -21,6 +21,7 @@ import HoverItem from '../hover-item';
 import Button from '../button';
 import ResponsiveImage from '../website/responsive-image';
 import '@splidejs/react-splide/css/core';
+import { Block } from '../commons';
 
 const Partners = () => {
   return (
@@ -321,22 +322,17 @@ const SuiteCard = ({
 
 const SuiteSection = () => {
   return (
-    <SectionWrapper className="flex-col">
-      <h2 className="heading3xl-marketing md:!heading4xl-marketing xl:!heading5xl-marketing text-text-default text-center">
-        Dive in: Kloudlite suite
-      </h2>
-      <GraphExtended>
-        <div className="grid grid-cols-1 md:!grid-cols-3 gap-3xl xl:!gap-5xl">
-          {consts.home.suites.map((suite) => (
-            <GraphItem key={suite.title}>
-              <HoverItem to={suite.to}>
-                <SuiteCard {...suite} />
-              </HoverItem>
-            </GraphItem>
-          ))}
-        </div>
-      </GraphExtended>
-    </SectionWrapper>
+    <Block title="Dive in: Kloudlite suite">
+      <div className="grid grid-cols-1 md:!grid-cols-3 gap-3xl xl:!gap-5xl">
+        {consts.home.suites.map((suite) => (
+          <GraphItem key={suite.title}>
+            <HoverItem to={suite.to}>
+              <SuiteCard {...suite} />
+            </HoverItem>
+          </GraphItem>
+        ))}
+      </div>
+    </Block>
   );
 };
 
@@ -470,27 +466,22 @@ const _DontBelieve = () => {
 
 const Exploring = () => {
   return (
-    <SectionWrapper className="flex-col">
-      <h2 className="heading3xl-marketing md:!heading4xl-marketing xl:!heading5xl-marketing text-text-default text-center">
-        Unveil the untold - Keep exploring
-      </h2>
-      <GraphExtended>
-        <div className="grid grid-cols-1 md:!grid-cols-2 xl:!grid-cols-[480px_512px] 2xl:!grid-cols-[544px_544px] 3xl:!grid-cols-[672px_704px] gap-3xl xl:!gap-5xl">
-          <GraphItem>
-            <TutorialCard />
-          </GraphItem>
-          <GraphItem>
-            <FeaturedCard />
-          </GraphItem>
-          <GraphItem>
-            <CommunityCard />
-          </GraphItem>
-          <GraphItem>
-            <ChangeLogCard />
-          </GraphItem>
-        </div>
-      </GraphExtended>
-    </SectionWrapper>
+    <Block title="Unveil the untold - Keep exploring">
+      <div className="grid grid-cols-1 md:!grid-cols-2 xl:!grid-cols-[480px_512px] 2xl:!grid-cols-[544px_544px] 3xl:!grid-cols-[672px_704px] gap-3xl xl:!gap-5xl">
+        <GraphItem>
+          <TutorialCard />
+        </GraphItem>
+        <GraphItem>
+          <FeaturedCard />
+        </GraphItem>
+        <GraphItem>
+          <CommunityCard />
+        </GraphItem>
+        <GraphItem>
+          <ChangeLogCard />
+        </GraphItem>
+      </div>
+    </Block>
   );
 };
 

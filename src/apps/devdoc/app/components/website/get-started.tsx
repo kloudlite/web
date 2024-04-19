@@ -1,8 +1,8 @@
 import { ReactNode } from 'react';
 import Radio from 'kl-design-system/atoms/radio';
 import { cn } from '~/app/utils/commons';
-import { GraphExtended, GraphItem } from '../graph';
-import SectionWrapper from './section-wrapper';
+import { GraphItem } from '../graph';
+import { Block } from '../commons';
 
 interface IGetStartedItem {
   label?: string;
@@ -48,63 +48,62 @@ const GetStarted = ({
   tabContainerClassName,
 }: IGetStarted) => {
   return (
-    <SectionWrapper className="flex-col">
-      <div className="flex flex-col gap-md text-center">
-        <p className="bodyXl lg:!bodyXXl text-text-disabled">Get started</p>
-        <h3 className="heading3xl-marketing md:!heading4xl lg:!heading5xl-marketing text-text-default">
-          {title}
-        </h3>
-      </div>
-      <GraphExtended>
-        <div className="grid grid-rows-[112px_50px] md:!grid-rows-none md:!grid-cols-[250px_auto] lg:!grid-cols-[448px_auto] md:!gap-3xl lg:!gap-5xl">
-          <div
-            className={cn(
-              'hidden md:!grid gap-3xl lg:!gap-5xl',
-              tabContainerClassName
-            )}
-          >
-            {tabs.map((gs) => (
-              <GraphItem key={gs.id}>
-                <GetStartedItem
-                  {...gs}
-                  onClick={() => onTabChange(gs)}
-                  active={gs.id === activeTab}
-                />
-              </GraphItem>
-            ))}
-          </div>
-          <GraphItem className="md:hidden">
-            <GetStartedItem
-              {...(tabs.find((t) => t.id === activeTab) || {})}
-              onClick={() => {}}
-              active
-            />
-          </GraphItem>
-
-          <GraphItem className="flex items-center justify-center md:!hidden">
-            <div className="flex items-center justify-center">
-              <Radio.Root
-                value={activeTab}
-                className="!flex-row"
-                onChange={(t) =>
-                  onTabChange(tabs.find((tab) => tab.id === t) || {})
-                }
-              >
-                {tabs.map((item) => (
-                  <Radio.Item key={item.id} value={item.id || ''}>
-                    {true}
-                  </Radio.Item>
-                ))}
-              </Radio.Root>
-            </div>
-          </GraphItem>
-
-          <GraphItem>
-            <div className="bg-surface-basic-active h-full">{tab}</div>
-          </GraphItem>
+    <Block
+      title={
+        <div className="flex flex-col">
+          <p className="bodyXl lg:!bodyXXl text-text-disabled">Get started</p>
+          <span>{title}</span>
         </div>
-      </GraphExtended>
-    </SectionWrapper>
+      }
+    >
+      <div className="grid grid-rows-[112px_50px] md:!grid-rows-none md:!grid-cols-[250px_auto] lg:!grid-cols-[448px_auto] md:!gap-3xl lg:!gap-5xl">
+        <div
+          className={cn(
+            'hidden md:!grid gap-3xl lg:!gap-5xl',
+            tabContainerClassName
+          )}
+        >
+          {tabs.map((gs) => (
+            <GraphItem key={gs.id}>
+              <GetStartedItem
+                {...gs}
+                onClick={() => onTabChange(gs)}
+                active={gs.id === activeTab}
+              />
+            </GraphItem>
+          ))}
+        </div>
+        <GraphItem className="md:hidden">
+          <GetStartedItem
+            {...(tabs.find((t) => t.id === activeTab) || {})}
+            onClick={() => {}}
+            active
+          />
+        </GraphItem>
+
+        <GraphItem className="flex items-center justify-center md:!hidden">
+          <div className="flex items-center justify-center">
+            <Radio.Root
+              value={activeTab}
+              className="!flex-row"
+              onChange={(t) =>
+                onTabChange(tabs.find((tab) => tab.id === t) || {})
+              }
+            >
+              {tabs.map((item) => (
+                <Radio.Item key={item.id} value={item.id || ''}>
+                  {true}
+                </Radio.Item>
+              ))}
+            </Radio.Root>
+          </div>
+        </GraphItem>
+
+        <GraphItem>
+          <div className="bg-surface-basic-active h-full">{tab}</div>
+        </GraphItem>
+      </div>
+    </Block>
   );
 };
 

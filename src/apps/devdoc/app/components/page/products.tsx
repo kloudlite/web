@@ -24,14 +24,15 @@ import Container from '~/app/components/container';
 import ReadyToOps from '~/app/components/website/ready-to-ops';
 import { Graph, GraphExtended, GraphItem } from '~/app/components/graph';
 import { cn } from '~/app/utils/commons';
-import Cover from '../../../images/product-landing/cover-product.svg';
-import InfraOps from '../../../images/product-landing/infra.svg';
-import DevOps from '../../../images/product-landing/dev.svg';
-import Dist from '../../../images/product-landing/dist.svg';
+import Cover from '~/images/product-landing/cover-product.svg';
+import InfraOps from '~/images/product-landing/infra.svg';
+import DevOps from '~/images/product-landing/dev.svg';
+import Dist from '~/images/product-landing/dist.svg';
 import Wrapper from '../wrapper';
 import Button from '../button';
 import ListTrack from '../website/list-track';
 import SectionWrapper from '../website/section-wrapper';
+import { Block, Head } from '../commons';
 
 const products = [
   {
@@ -285,53 +286,46 @@ const ProductCards = ({
 
 const Benefits = () => {
   return (
-    <SectionWrapper className="flex-col">
-      <div className="flex flex-col gap-3xl w-full text-center md:!m-auto md:!w-[500px] lg:!w-auto">
-        <h1 className="heading3xl-marketing lg:!heading6xl-marketing text-text-default">
-          We understand because we&apos;ve been there too
-        </h1>
-        <p className="bodyXl lg:!bodyXXl text-text-soft">
-          So, we meticulously engineered our platform to provide you the below
-          benefits
-        </p>
-      </div>
-      <GraphExtended>
-        <div>
-          <div className="grid grid-cols-1 md:!grid-cols-2 xl:!grid-cols-[512px_auto] 2xl:!grid-cols-2 gap-5xl 3xl:!gap-8xl">
-            <GraphItem className="h-[96px] block md:!hidden">
-              <div className="bg-surface-basic-subdued p-2xl flex flex-col items-center justify-center heading3xl-marketing text-text-default h-full">
-                <span>Developers &</span>
-                <span>Platform Engineers</span>
-              </div>
-            </GraphItem>
-            <GraphItem className="h-[96px] hidden md:!block">
-              <div className="bg-surface-basic-subdued p-2xl flex items-center justify-center heading3xl-marketing text-text-default h-full">
-                Developers
-              </div>
-            </GraphItem>
-            <GraphItem className="h-[96px] hidden md:!block">
-              <div className="bg-surface-basic-subdued p-2xl flex items-center justify-center heading3xl-marketing text-text-default h-full">
-                Platform Engineers
-              </div>
-            </GraphItem>
-          </div>
-          <div className="grid grid-cols-1 lg:!grid-cols-3 2xl:!grid-cols-4 3xl:!grid-cols-5 gap-3xl lg:!gap-5xl pt-5xl">
-            {benefitsItems.map((bii) => (
-              <GraphItem key={bii.title}>
-                <div className="xl:h-[192px] 2xl:max-w-[256px] bg-surface-basic-subdued flex flex-col gap-4xl p-4xl">
-                  <span className="rounded-full w-fit p-2xl bg-icon-primary text-text-on-primary">
-                    <bii.icon size={32} />
-                  </span>
-                  <span className="headingMd lg:!bodyLg-medium text-text-default flex-1">
-                    {bii.title}
-                  </span>
-                </div>
-              </GraphItem>
-            ))}
-          </div>
+    <Block
+      title="We understand because we've been there too"
+      desc="So, we meticulously engineered our platform to provide you the below
+          benefits"
+    >
+      <div>
+        <div className="grid grid-cols-1 md:!grid-cols-2 xl:!grid-cols-[512px_auto] 2xl:!grid-cols-2 gap-5xl 3xl:!gap-8xl">
+          <GraphItem className="h-[96px] block md:!hidden">
+            <div className="bg-surface-basic-subdued p-2xl flex flex-col items-center justify-center heading3xl-marketing text-text-default h-full">
+              <span>Developers &</span>
+              <span>Platform Engineers</span>
+            </div>
+          </GraphItem>
+          <GraphItem className="h-[96px] hidden md:!block">
+            <div className="bg-surface-basic-subdued p-2xl flex items-center justify-center heading3xl-marketing text-text-default h-full">
+              Developers
+            </div>
+          </GraphItem>
+          <GraphItem className="h-[96px] hidden md:!block">
+            <div className="bg-surface-basic-subdued p-2xl flex items-center justify-center heading3xl-marketing text-text-default h-full">
+              Platform Engineers
+            </div>
+          </GraphItem>
         </div>
-      </GraphExtended>
-    </SectionWrapper>
+        <div className="grid grid-cols-1 lg:!grid-cols-3 2xl:!grid-cols-4 3xl:!grid-cols-5 gap-3xl lg:!gap-5xl pt-5xl">
+          {benefitsItems.map((bii) => (
+            <GraphItem key={bii.title}>
+              <div className="xl:h-[192px] 2xl:max-w-[256px] bg-surface-basic-subdued flex flex-col gap-4xl p-4xl">
+                <span className="rounded-full w-fit p-2xl bg-icon-primary text-text-on-primary">
+                  <bii.icon size={32} />
+                </span>
+                <span className="headingMd lg:!bodyLg-medium text-text-default flex-1">
+                  {bii.title}
+                </span>
+              </div>
+            </GraphItem>
+          ))}
+        </div>
+      </div>
+    </Block>
   );
 };
 
@@ -464,38 +458,14 @@ const ProductRoot = () => {
   return (
     <div>
       <Wrapper className="relative flex justify-center lg:justify-start py-6xl md:!py-8xl lg:!py-10xl">
-        <div className="flex flex-col z-10 w-full items-center">
-          <div className="flex flex-col gap-6xl lg:!items-center text-center max-w-[870px]">
-            <div className="flex flex-col gap-3xl">
-              <h1 className="heading4xl-marketing md:!heading5xl-marketing lg:!heading6xl-marketing text-text-default">
-                Kloudlite - a One click console for your code to cloud journey
-              </h1>
-              <p className="bodyXl lg:!bodyXXl text-text-soft">
-                Upgrade your development and deployment by merging efficient
+        <Head
+          heading="Kloudlite - a One click console for your code to cloud journey
+"
+          desc="Upgrade your development and deployment by merging efficient
                 DevOps, scalable cloud infrastructure, and continuous
                 optimization into a seamless, productive workflow
-              </p>
-            </div>
-            <div className="flex md:!flex-row flex-col gap-4xl md:!items-center justify-center xl:!justify-start">
-              <div>
-                <Button
-                  block
-                  size="lg"
-                  content="Start your free trial"
-                  variant="primary"
-                />
-              </div>
-              <div>
-                <Button
-                  block
-                  size="lg"
-                  content="Schedule a demo"
-                  variant="basic"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+"
+        />
       </Wrapper>
       <Wrapper>
         <div className="product-graph flex items-center justify-center lg:!pb-10xl pb-6xl md:!pb-8xl 2xl:!pb-10xl ">
