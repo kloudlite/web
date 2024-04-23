@@ -274,10 +274,13 @@ code{
     background-repeat: no-repeat;
   }
 }
+
+@media screen and (min-width:768px){
    .product-graph{
     background-image: url("/product/graph-product.svg");
     background-position: center;
   }
+}
 
   .help-card-graph{
     background-image: url("/help-and-support/card-graph.svg");
@@ -353,4 +356,9 @@ canvas {
 .partners-slide-track ul{
   display: flex;
   align-items: center;
+}
+
+
+.rounded-image > img{
+  @apply rounded-lg;
 }

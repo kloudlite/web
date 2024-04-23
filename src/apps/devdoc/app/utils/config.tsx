@@ -78,15 +78,15 @@ export default {
         className: 'w-[47%] md:w-auto',
         items: [
           {
-            title: 'Kl-DevOps',
+            title: 'DevOps',
             to: 'devops',
           },
           {
-            title: 'Kl-InfraOps',
+            title: 'InfraOps',
             to: 'infraops',
           },
           {
-            title: 'Kl-Distribution',
+            title: 'Distribution',
             to: 'distribution',
           },
         ],

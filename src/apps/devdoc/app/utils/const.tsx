@@ -222,19 +222,19 @@ const consts = {
     },
     tutorials: [
       {
-        title: 'Keep building with Kl-DevOps',
+        title: 'Keep building with DevOps',
         icon: InfinityIcon,
         to: '/devops',
         type: 'normal',
       },
       {
-        title: 'Keep building with Kl-InfraOps',
+        title: 'Keep building with InfraOps',
         icon: CloudAgnostics,
         to: '/infraops',
         type: 'normal',
       },
       {
-        title: 'Keep building with Kl-Distribution',
+        title: 'Keep building with Distribution',
         icon: Container,
         to: '/distribution',
         type: 'normal',
@@ -247,7 +247,7 @@ const consts = {
     ],
     suites: [
       {
-        title: 'Kl-DevOps',
+        title: 'DevOps',
         desc: 'Environments crafted for development and production workloads',
         img: <img src={devopsIcon.src} className="" />,
         imgPad:
@@ -255,7 +255,7 @@ const consts = {
         to: 'devops',
       },
       {
-        title: 'Kl-InfraOps',
+        title: 'InfraOps',
         desc: 'Cloud agnostic & cost effective infrastructure management at your fingertips',
         imgPad:
           'p-3xl md:!max-h-[200px] md:!min-h-[200px] lg:!min-h-[244px] lg:!max-h-[244px] 3xl:!min-h-[280px] lg:!py-5xl 3xl:!py-4xl box-border w-auto',
@@ -263,7 +263,7 @@ const consts = {
         to: 'infraops',
       },
       {
-        title: 'Kl-Distribution',
+        title: 'Distribution',
         desc: 'Build system and package registries to build and ship your environments',
         imgPad:
           'p-3xl md:!max-h-[200px] md:!min-h-[200px] lg:!min-h-[244px] lg:!max-h-[244px] 3xl:!min-h-[280px] lg:!py-5xl 3xl:!py-4xl box-border w-auto',

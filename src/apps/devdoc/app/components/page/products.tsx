@@ -36,7 +36,7 @@ import { Block, Head } from '../commons';
 
 const products = [
   {
-    type: 'Kl-DevOps',
+    type: 'DevOps',
     title: (
       <span>
         NoOps <br className="hidden lg:!block" /> development
@@ -66,7 +66,7 @@ const products = [
     logo: InfraOps,
   },
   {
-    type: 'Kl-InfraOps',
+    type: 'InfraOps',
     title: (
       <span>
         Cloud-native <br className="hidden lg:!block" /> at the core
@@ -97,7 +97,7 @@ const products = [
     logo: DevOps,
   },
   {
-    type: 'Kl-Distribution',
+    type: 'Distribution',
     title: (
       <span>
         Simply build <br className="hidden lg:!block" /> and deploy
@@ -139,30 +139,6 @@ const benefitsItems = [
     icon: Globe,
   },
   {
-    title: 'Enhanced Application Security',
-    icon: SecureConfig,
-  },
-  {
-    title: 'Collaborative Environments',
-    icon: UsersThree,
-  },
-  {
-    title: 'Comprehensive Monitoring and Insights',
-    icon: ChartBar,
-  },
-  {
-    title: 'Plug your own CICDs and Observability',
-    icon: Search,
-  },
-  {
-    title: 'Streamlined Application Development',
-    icon: Monitor,
-  },
-  {
-    title: 'Cost - Efficient Resource Management',
-    icon: CostMonitoring,
-  },
-  {
     title: 'Faster Deployment',
     icon: ClockCounterClockwise,
   },
@@ -171,12 +147,37 @@ const benefitsItems = [
     icon: Autoscaling,
   },
   {
-    title: 'Developer Centric',
+    title: (
+      <span>
+        Developer <br className="hidden 2xl:!block 3xl:!hidden" />
+        Centric
+      </span>
+    ),
     icon: Developer,
+  },
+  {
+    title: 'Collaborative Environments',
+    icon: UsersThree,
+  },
+  {
+    title: 'Enhanced Application Security',
+    icon: SecureConfig,
+  },
+  {
+    title: 'Comprehensive Monitoring and Insights',
+    icon: ChartBar,
   },
   {
     title: 'Reduce Development Inner loop',
     icon: InfinityIcon,
+  },
+  {
+    title: 'Streamlined Application Development',
+    icon: Monitor,
+  },
+  {
+    title: 'Plug your own CICDs and Observability',
+    icon: Search,
   },
   {
     title: 'Simplified Infrastructure Management',
@@ -187,18 +188,22 @@ const benefitsItems = [
     icon: GearSix,
   },
   {
-    title: 'Declarative Infrastructure, Projects, and Maintenance',
-    icon: Config,
+    title: 'Cost - Efficient Resource Management',
+    icon: CostMonitoring,
   },
   {
     title: 'Effective and Efficient Development Process',
     icon: Code,
   },
+  {
+    title: 'Declarative Infrastructure, Projects, and Maintenance',
+    icon: Config,
+  },
 ];
 
 const recommendedTabs = [
   {
-    title: 'Kl-InfraOps',
+    title: 'InfraOps',
     desc: 'Dive in to set up your InfraOps effortlessly',
     content: 'Explore our knowledge bank',
     subContent:
@@ -207,7 +212,7 @@ const recommendedTabs = [
     id: 'infraops',
   },
   {
-    title: 'Kl-DevOps',
+    title: 'DevOps',
     desc: 'Explore the DevOps APIs to build your app',
     content: 'Explore our knowledge bank',
     subContent:
@@ -216,7 +221,7 @@ const recommendedTabs = [
     id: 'devops',
   },
   {
-    title: 'Kl-Distribution',
+    title: 'Distribution',
     desc: 'Access the resources to ensure a smooth build',
     content: 'Explore our knowledge bank',
     subContent:
@@ -269,7 +274,7 @@ const ProductCards = ({
             />
           </div>
         </div>
-        <Graph className="lg:-mx-10xl -my-8xl py-8xl ">
+        <Graph className="lg:-mx-10xl -mt-[60px] py-8xl ">
           <div className="grid grid-cols-1 lg:h-full lg:px-10xl ">
             <GraphItem className="flex items-center justify-center md:min-w-[491px] xl:!min-w-[512px] xl:h-[512px] 3xl:!w-[608px]">
               <div className=" bg-surface-basic-subdued p-3xl w-full h-full md:!p-5xl xl:!p-0 flex items-center justify-center">
@@ -290,9 +295,11 @@ const Benefits = () => {
       title="We understand because we've been there too"
       desc="So, we meticulously engineered our platform to provide you the below
           benefits"
+      titleClass="md:!max-w-[494px] lg:!max-w-[746px] m-auto"
+      descClass="md:!max-w-[476px] xl:!max-w-none lg:!max-w-[588px]"
     >
       <div>
-        <div className="grid grid-cols-1 md:!grid-cols-2 xl:!grid-cols-[512px_auto] 2xl:!grid-cols-2 gap-5xl 3xl:!gap-8xl">
+        <div className="grid grid-cols-1 md:!grid-cols-2 xl:!grid-cols-[512px_auto] 2xl:!grid-cols-2 gap-3xl lg:!gap-5xl 3xl:!gap-8xl">
           <GraphItem className="h-[96px] block md:!hidden">
             <div className="bg-surface-basic-subdued p-2xl flex flex-col items-center justify-center heading3xl-marketing text-text-default h-full">
               <span>Developers &</span>
@@ -310,19 +317,22 @@ const Benefits = () => {
             </div>
           </GraphItem>
         </div>
-        <div className="grid grid-cols-1 lg:!grid-cols-3 2xl:!grid-cols-4 3xl:!grid-cols-5 gap-3xl lg:!gap-5xl pt-5xl">
-          {benefitsItems.map((bii) => (
-            <GraphItem key={bii.title}>
-              <div className="xl:h-[192px] 2xl:max-w-[256px] bg-surface-basic-subdued flex flex-col gap-4xl p-4xl">
-                <span className="rounded-full w-fit p-2xl bg-icon-primary text-text-on-primary">
-                  <bii.icon size={32} />
-                </span>
-                <span className="headingMd lg:!bodyLg-medium text-text-default flex-1">
-                  {bii.title}
-                </span>
-              </div>
-            </GraphItem>
-          ))}
+        <div className="grid grid-cols-1 md:!grid-cols-2 lg:!grid-cols-3 2xl:!grid-cols-4 3xl:!grid-cols-5 gap-3xl lg:!gap-5xl pt-5xl">
+          {benefitsItems.map((bii, index) => {
+            const i = index;
+            return (
+              <GraphItem key={i}>
+                <div className="xl:h-[192px] 2xl:max-w-[256px] bg-surface-basic-subdued flex flex-col gap-4xl p-4xl">
+                  <span className="rounded-full w-fit p-2xl bg-icon-primary text-text-on-primary">
+                    <bii.icon size={32} />
+                  </span>
+                  <span className="headingMd lg:!bodyLg-medium text-text-default flex-1">
+                    {bii.title}
+                  </span>
+                </div>
+              </GraphItem>
+            );
+          })}
         </div>
       </div>
     </Block>

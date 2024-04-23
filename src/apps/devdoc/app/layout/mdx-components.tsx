@@ -55,7 +55,7 @@ function HeadingLink({
         {
           h2: 'heading2xl-marketing',
           h3: 'headingXl-marketing',
-          h4: '',
+          h4: 'headingLg-marketing',
           h5: '',
           h6: '',
         }[Tag]
@@ -98,6 +98,7 @@ export const createComponents = ({
   components?: any;
   isRawLayout?: boolean;
 }): Components => {
+  console.log("coomponents", components)
   if (isRawLayout) {
     return {
       a: A,
@@ -127,7 +128,6 @@ export const createComponents = ({
       },
     };
   }
-  console.log('raw', isRawLayout);
   const context = { index: 0 };
   return {
     h1: (props) => (
@@ -138,14 +138,14 @@ export const createComponents = ({
     h4: (props) => <HeadingLink tag="h4" context={context} {...props} />,
     h5: (props) => <HeadingLink tag="h5" context={context} {...props} />,
     h6: (props) => <HeadingLink tag="h6" context={context} {...props} />,
-    ul: (props) => <ul className="" {...props} />,
-    ol: (props) => <ol className="" {...props} />,
-    li: (props) => <li className="" {...props} />,
-    blockquote: (props) => <blockquote className={cn()} {...props} />,
+    ul: (props) => <ul className="list-disc bodyLg text-text-strong pl-5xl" {...props} />,
+    ol: (props) => <ol className="bodyLg text-text-strong list-decimal pl-5xl" {...props} />,
+    li: (props) => <li className="mt-3xl" {...props} />,
+    blockquote: (props) => <blockquote className="" {...props} />,
     hr: (props) => <hr className="" {...props} />,
     a: Link,
     table: (props) => <Table className="" {...props} />,
-    p: (props) => <p className="bodyLg text-text-strong mt-3xl" {...props} />,
+    p: (props) => <p className="bodyLg text-text-strong mt-3xl rounded-image" {...props} />,
     tr: Tr,
     th: Th,
     td: Td,

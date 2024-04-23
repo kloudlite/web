@@ -133,7 +133,7 @@ const DiscoverSection = () => {
           Discover{' '}
           <span className="text-text-primary">
             <br className="block md:!hidden" />
-            Kl-InfraOps
+            InfraOps
           </span>
         </>
       }
@@ -165,7 +165,7 @@ const InfraRoot = () => {
         desc="The freedom of cloud agnosticism with effortless infrastructure management-Any Provider, Any Scale, Absolute Security"
         headClassName="md:!max-w-[630px] 2xl:!min-w-[630px]"
         align="left"
-        tag="Kl-InfraOps"
+        tag="InfraOps"
         cover={cover.src}
       />
       <Wrapper>

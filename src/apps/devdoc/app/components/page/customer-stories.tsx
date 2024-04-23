@@ -1,5 +1,3 @@
-import { Button } from 'kl-design-system/atoms/button';
-import Chips from 'kl-design-system/atoms/chips';
 import consts from '~/app/utils/const';
 import Wrapper from '../wrapper';
 import ReadyToOps from '../website/ready-to-ops';

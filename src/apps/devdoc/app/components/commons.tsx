@@ -36,6 +36,7 @@ export const DetailCard = ({
               compact ? 'h-8xl' : 'h-10xl mb-[28px]'
             )}
           >
+            {/* @ts-ignore */}
             <Icon size={compact ? 32 : 48} />
           </div>
           <div className="flex flex-col gap-xl">
@@ -58,18 +59,32 @@ export const DetailCard = ({
 export const TitleBlock = ({
   title,
   desc,
+  titleClass,
+  descClass,
 }: {
   title: ReactNode;
   desc?: ReactNode;
+  titleClass?: string;
+  descClass?: string;
 }) => {
   return (
     <div className="flex flex-col gap-3xl text-start md:!text-center">
       <div className="flex flex-col gap-md">
-        <h3 className="heading4xl-marketing lg:!heading5xl-marketing text-text-default">
+        <h3
+          className={cn(
+            'heading4xl-marketing lg:!heading5xl-marketing text-text-default',
+            titleClass
+          )}
+        >
           {title}
         </h3>
       </div>
-      <p className="bodyXl lg:!bodyXXl text-text-soft max-w-[784px] m-auto">
+      <p
+        className={cn(
+          'bodyXl lg:!bodyXXl text-text-soft max-w-[784px] m-auto',
+          descClass
+        )}
+      >
         {desc}
       </p>
     </div>
@@ -81,15 +96,24 @@ export const Block = ({
   desc,
   className,
   children,
+  titleClass,
+  descClass,
 }: {
   title: ReactNode;
   desc?: ReactNode;
   className?: string;
   children?: ReactNode;
+  titleClass?: string;
+  descClass?: string;
 }) => {
   return (
     <SectionWrapper className={cn('flex-col', className)}>
-      <TitleBlock title={title} desc={desc} />
+      <TitleBlock
+        title={title}
+        desc={desc}
+        titleClass={titleClass}
+        descClass={descClass}
+      />
       <GraphExtended>{children}</GraphExtended>
     </SectionWrapper>
   );
@@ -213,7 +237,7 @@ export const HeroTwo = ({
               coverClassName
             )}
           >
-            <img src={cover} />
+            <img src={cover} alt="cover" />
           </div>
         </div>
       </div>

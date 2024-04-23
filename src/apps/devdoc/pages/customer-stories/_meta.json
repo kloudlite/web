@@ -1,0 +1,20 @@
+{
+  "index":{
+    "title":"Customer stories",
+    "theme":{
+      "layout":"raw",
+      "sidebar":false,
+      "toc":false,
+      "header":"secondary"
+    }
+  },
+  "anscer-robotics":{
+    "title":"Anser robotics",
+    "type":"page",
+    "theme":{
+      "sidebar":false,
+      "toc":false,
+      "header":"secondary"
+    }
+  }
+}

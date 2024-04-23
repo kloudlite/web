@@ -7,7 +7,7 @@ import { BrandLogo } from 'kl-design-system/branding/brand-logo';
 import { Splide, SplideSlide, SplideTrack } from '@splidejs/react-splide';
 import { AutoScroll } from '@splidejs/splide-extension-auto-scroll';
 import ProgressTracker from '~/app/components/progress-tracker';
-import { Graph, GraphExtended, GraphItem } from '~/app/components/graph';
+import { Graph, GraphItem } from '~/app/components/graph';
 import ReadyToOps from '~/app/components/website/ready-to-ops';
 
 import { cn } from '~/app/utils/commons';

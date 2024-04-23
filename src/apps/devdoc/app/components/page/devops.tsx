@@ -78,7 +78,7 @@ export const DiscoverSection = () => {
           Discover{' '}
           <span className="text-text-primary">
             <br className="block md:!hidden" />
-            Kl-DevOps
+            DevOps
           </span>
         </>
       }
@@ -171,7 +171,7 @@ const DevopsPage = () => {
           </>
         }
         desc="Dev-Prod parity for developers, by developers: DevOps automation that redefines productivity"
-        tag="Kl-DevOps"
+        tag="DevOps"
         cover={Cover.src}
         coverClassName=""
       />

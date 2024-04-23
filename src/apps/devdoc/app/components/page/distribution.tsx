@@ -21,7 +21,7 @@ const DiscoverSection = () => {
           Discover{' '}
           <span className="text-text-primary">
             <br className="block md:!hidden" />
-            Kl-Distribution
+            Distribution
           </span>
         </>
       }
@@ -92,7 +92,7 @@ const DistributionRoot = () => {
         desc="Cloud-accelerated Build System, Container Registry, & Helm Repos built to distribute and deploy with ease"
         headClassName="md:!max-w-[630px] 2xl:!min-w-[630px]"
         align="left"
-        tag="Kl-Distribution"
+        tag="Distribution"
         cover={Cover.src}
       />
       <Wrapper>
