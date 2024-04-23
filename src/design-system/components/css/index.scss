@@ -1541,7 +1541,7 @@ video {
 
 .bg-surface-basic-hovered{
   --tw-bg-opacity: 1;
-  background-color: rgb(250 250 250 / var(--tw-bg-opacity));
+  background-color: rgb(243 244 246 / var(--tw-bg-opacity));
 }
 
 .bg-surface-basic-input{
@@ -1680,6 +1680,10 @@ video {
 
 .fill-icon-disabled{
   fill: #9CA3AF;
+}
+
+.fill-icon-primary{
+  fill: #2563EB;
 }
 
 .fill-icon-secondary{
@@ -1903,6 +1907,11 @@ video {
 .text-icon-default{
   --tw-text-opacity: 1;
   color: rgb(17 24 39 / var(--tw-text-opacity));
+}
+
+.text-icon-primary{
+  --tw-text-opacity: 1;
+  color: rgb(37 99 235 / var(--tw-text-opacity));
 }
 
 .text-icon-secondary{
@@ -2173,7 +2182,7 @@ select{
 
 .hover\:bg-surface-basic-hovered:hover{
   --tw-bg-opacity: 1;
-  background-color: rgb(250 250 250 / var(--tw-bg-opacity));
+  background-color: rgb(243 244 246 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-surface-basic-pressed:hover{
@@ -2256,7 +2265,7 @@ select{
 
 .focus\:bg-surface-basic-hovered:focus{
   --tw-bg-opacity: 1;
-  background-color: rgb(250 250 250 / var(--tw-bg-opacity));
+  background-color: rgb(243 244 246 / var(--tw-bg-opacity));
 }
 
 .focus\:underline:focus{

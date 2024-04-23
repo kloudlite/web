@@ -2,6 +2,7 @@ import noScrollbar from './css-plugins/no-scrollbar.js';
 import noSpinner from './css-plugins/no-spinner.js';
 import scrollbar from './css-plugins/scrollbar.js';
 import typography from './css-plugins/typography.js';
+import perspective from './css-plugins/perspective.js';
 
 const primitives = {
   colors: {
@@ -133,6 +134,7 @@ const primitives = {
     40: '160px',
     48: '192px',
     60: '240px',
+    64: '256px',
     'form-text-field-height': '36px',
   },
   fontSize: {
@@ -178,36 +180,36 @@ const config = {
           '100%': { transform: 'translateX(100%) scaleX(0.5)' },
         },
         enterFromRight: {
-          from: { opacity: 0, transform: 'translateX(200px)' },
-          to: { opacity: 1, transform: 'translateX(0)' },
+          from: { opacity: '0', transform: 'translateX(200px)' },
+          to: { opacity: '1', transform: 'translateX(0)' },
         },
         enterFromLeft: {
-          from: { opacity: 0, transform: 'translateX(-200px)' },
-          to: { opacity: 1, transform: 'translateX(0)' },
+          from: { opacity: '0', transform: 'translateX(-200px)' },
+          to: { opacity: '1', transform: 'translateX(0)' },
         },
         exitToRight: {
-          from: { opacity: 1, transform: 'translateX(0)' },
-          to: { opacity: 0, transform: 'translateX(200px)' },
+          from: { opacity: '1', transform: 'translateX(0)' },
+          to: { opacity: '0', transform: 'translateX(200px)' },
         },
         exitToLeft: {
-          from: { opacity: 1, transform: 'translateX(0)' },
-          to: { opacity: 0, transform: 'translateX(-200px)' },
+          from: { opacity: '1', transform: 'translateX(0)' },
+          to: { opacity: '0', transform: 'translateX(-200px)' },
         },
         scaleIn: {
-          from: { opacity: 0, transform: 'rotateX(-10deg) scale(0.9)' },
-          to: { opacity: 1, transform: 'rotateX(0deg) scale(1)' },
+          from: { opacity: '0', transform: 'rotateX(-10deg) scale(0.9)' },
+          to: { opacity: '1', transform: 'rotateX(0deg) scale(1)' },
         },
         scaleOut: {
-          from: { opacity: 1, transform: 'rotateX(0deg) scale(1)' },
-          to: { opacity: 0, transform: 'rotateX(-10deg) scale(0.95)' },
+          from: { opacity: '1', transform: 'rotateX(0deg) scale(1)' },
+          to: { opacity: '0', transform: 'rotateX(-10deg) scale(0.95)' },
         },
         fadeIn: {
-          from: { opacity: 0 },
-          to: { opacity: 1 },
+          from: { opacity: '0' },
+          to: { opacity: '1' },
         },
         fadeOut: {
-          from: { opacity: 1 },
-          to: { opacity: 0 },
+          from: { opacity: '1' },
+          to: { opacity: '0' },
         },
       },
       animation: {
@@ -295,6 +297,7 @@ const config = {
       '12xl': primitives.spacing['40'],
       '13xl': primitives.spacing['48'],
       '14xl': primitives.spacing['60'],
+      '15xl': primitives.spacing['64'],
       'form-text-field-height': primitives.spacing['form-text-field-height'],
     },
     colors: {
@@ -302,7 +305,7 @@ const config = {
         basic: {
           default: primitives.colors.grey['50'],
           subdued: primitives.colors.zinc['50'],
-          hovered: primitives.colors.zinc['50'],
+          hovered: primitives.colors.grey['100'],
           pressed: primitives.colors.zinc['200'],
           input: primitives.colors.grey['50'],
           active: primitives.colors.zinc['100'],
@@ -391,7 +394,13 @@ const config = {
       black: 'black',
     },
   },
-  plugins: [typography(), scrollbar(), noScrollbar(), noSpinner()],
+  plugins: [
+    typography(),
+    scrollbar(),
+    noScrollbar(),
+    noSpinner(),
+    perspective(),
+  ],
 };
 
 export const LightTitlebarColor = config.theme.colors.surface.basic.subdued;

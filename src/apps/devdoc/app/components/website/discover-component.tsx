@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { cn } from '~/app/utils/commons';
-import { GraphExtended, GraphItem } from '../graph';
-import SectionWrapper from './section-wrapper';
+import { GraphItem } from '../graph';
+import { Block } from '../commons';
 
 interface IFeatureItem {
   icon: any;
@@ -29,30 +29,25 @@ interface IDiscover {
 }
 const Discover = ({ features, title, desc, className }: IDiscover) => {
   return (
-    <SectionWrapper className="flex-col">
-      <div className="flex flex-col gap-3xl text-start md:!text-center">
+    <Block
+      title={
         <div className="flex flex-col gap-md">
           <p className="bodyXl lg:!bodyXXl text-text-disabled">
             Salient features
           </p>
-          <h3 className="heading4xl-marketing lg:!heading5xl-marketing text-text-default">
-            {title}
-          </h3>
+          <span>{title}</span>
         </div>
-        <p className="bodyXl lg:!bodyXXl text-text-soft max-w-[784px] m-auto">
-          {desc}
-        </p>
+      }
+      desc={desc}
+    >
+      <div className={cn(className)}>
+        {features.map((feature) => (
+          <GraphItem key={feature.label}>
+            <FeatureItem {...feature} />
+          </GraphItem>
+        ))}
       </div>
-      <GraphExtended>
-        <div className={cn(className)}>
-          {features.map((feature) => (
-            <GraphItem key={feature.label}>
-              <FeatureItem {...feature} />
-            </GraphItem>
-          ))}
-        </div>
-      </GraphExtended>
-    </SectionWrapper>
+    </Block>
   );
 };
 

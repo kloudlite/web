@@ -13,7 +13,7 @@ export interface IHeaderSecondary {
   items: {
     title: string;
     to: string;
-    type: 'dropdown' | 'link';
+    type: 'popup' | 'normal';
     render?: () => ReactNode;
   }[];
   extra?: ReactNode;

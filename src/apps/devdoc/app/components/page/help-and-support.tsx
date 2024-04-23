@@ -150,7 +150,12 @@ const HelpAndSupportRoot = () => {
               <HandWaving size={32} className="inline md:!hidden" />
               <span> How can we help you today?</span>
             </h1>
-            <p className="bodyMd-medium md:!bodyLg-medium lg:!bodyXl-medium text-text-soft">
+            <p className="hidden md:!block md:!bodyXl lg:!bodyXXl text-text-soft">
+              Discover solutions through our documentation, guides, and
+              community
+            </p>
+
+            <p className="md:hidden bodyMd-medium text-text-soft">
               Discover solutions through our documentation, guides, and
               community
             </p>
@@ -195,7 +200,10 @@ const HelpAndSupportRoot = () => {
           <h2 className="heading3xl-marketing md:!heading4xl-marketing lg:!heading5xl-marketing text-text-default">
             Couldn’t fine what you needed?
           </h2>
-          <p className="bodyMd-medium md:!bodyLg-medium lg:!bodyXl-medium text-text-soft">
+          <p className="hidden md:!block md:!bodyXl lg:!bodyXXl text-text-soft">
+            Don’t worry, we’ve got more options for you
+          </p>
+          <p className="bodyMd-medium md:hidden text-text-soft">
             Don’t worry, we’ve got more options for you
           </p>
         </div>

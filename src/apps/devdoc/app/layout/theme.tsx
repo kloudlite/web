@@ -1,10 +1,11 @@
 import Head from 'next/head';
 import type { NextraThemeLayoutProps } from 'nextra';
 import { MDXProvider } from 'nextra/mdx';
-import { useEffect, useMemo } from 'react';
+import { ReactNode, useEffect, useMemo } from 'react';
 import { useFSRoute } from 'nextra/hooks';
-import { normalizePages } from 'nextra/normalize-pages';
+import { Item, normalizePages } from 'nextra/normalize-pages';
 import { useRouter } from 'next/router';
+import Profile from 'kl-design-system/molecule/profile';
 import Footer from '~/app/components/footer';
 import Container from '~/app/components/container';
 import { NavLinks } from '~/app/components/nav-links';
@@ -19,7 +20,7 @@ import useMenu from '~/app/utils/use-menu';
 import { ActiveAnchorProvider } from '~/app/utils/active-anchor';
 import { ConfigProvider } from '~/app/utils/use-config';
 import config from '~/app/utils/config';
-import Profile from 'kl-design-system/molecule/profile';
+import { Button } from 'kl-design-system/atoms/button';
 import { createComponents } from './mdx-components';
 
 function GitTimestamp({ timestamp }: { timestamp: Date }) {
@@ -38,30 +39,84 @@ function GitTimestamp({ timestamp }: { timestamp: Date }) {
   );
 }
 
-const BlogHeader = ({
+const CompanyElement = ({ name, value }: { name: string; value: string }) => {
+  return (
+    <div className="flex flex-col gap-lg">
+      <div className="headingMd text-surface-tertiary-default">{name}</div>
+      <div className="bodyMd text-surface-tertiary-default">{value}</div>
+    </div>
+  );
+};
+
+const CompanyPanel = ({
   frontMatter,
-  timestamp,
 }: {
   frontMatter: {
     [key: string]: any;
   };
-  timestamp: string;
+}) => {
+  return (
+    <div className="flex flex-col gap-3xl rounded-lg border border-border-default bg-surface-basic-subdued px-3xl pt-3xl pb-5xl">
+      <CompanyElement name="Company name" value={frontMatter?.companyName} />
+      <CompanyElement name="About" value={frontMatter?.companyAbout} />
+      <CompanyElement name="Industry" value={frontMatter?.companyIndustry} />
+      <CompanyElement name="Solutions" value={frontMatter?.companySolutions} />
+      <div className="h-xs bg-border-default w-full" />
+      <div className="flex flex-col gap-xl">
+        <div className="headingMd text-surface-tertiary-default">
+          Ready to get started?
+        </div>
+        <div>
+          <Button variant="tertiary" content="Contact sales" />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const findPageType = (activePath: Item[], names: string[]) => {
+  return (
+    activePath.length > 0 &&
+    activePath[activePath.length - 1].kind === 'MdxPage' &&
+    activePath[activePath.length - 1].route !== activePath[0].route &&
+    [...names].includes(activePath[0].name)
+  );
+};
+
+const BlogHeader = ({
+  frontMatter,
+  timestamp,
+  author = true,
+}: {
+  frontMatter: {
+    [key: string]: any;
+  };
+  timestamp: string | ReactNode;
+  author?: boolean;
 }) => {
   return (
     <div className="flex flex-col gap-5xl pt-2xl">
       <div className="flex flex-col gap-xl">
-        <h1 className="heading3xl text-text-strong">{frontMatter.title}</h1>
-        <p className="bodyLg text-text-strong">{frontMatter.describe}</p>
+        <h1 className="heading3xl text-text-strong">
+          {frontMatter.title || frontMatter.companyName}
+        </h1>
+        <p className="bodyLg text-text-strong">
+          {frontMatter.describe || frontMatter.companyDescription}
+        </p>
       </div>
-      <Profile name={`Written by ${frontMatter.author}`} subtitle={timestamp} />
+      {author && (
+        <Profile
+          responsive={false}
+          name={`Written by ${frontMatter.author}`}
+          subtitle={timestamp}
+        />
+      )}
     </div>
   );
 };
 
 const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
   const { title, frontMatter, pageMap, headings } = pageOpts;
-  console.log('frontmatter', frontMatter);
-
   const { state } = useMenu();
 
   useEffect(() => {
@@ -101,22 +156,19 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
 
   let pageType = 'normal';
 
-  if (
-    activePath.length > 0 &&
-    activePath[activePath.length - 1].kind === 'MdxPage' &&
-    activePath[activePath.length - 1].route !== activePath[0].route &&
-    ['blog', 'help-and-support'].includes(activePath[0].name)
-  ) {
+  if (findPageType(activePath, ['blog', 'help-and-support'])) {
     pageType = 'blog';
   }
-  console.log(
-    pageData,
-    pageType,
-    activePath.length > 0,
-    activePath[activePath.length - 1].kind === 'MdxPage',
-    activePath[activePath.length - 1].name !== activePath[0].name,
-    ['blog', 'help-and-support'].includes(activePath[0].name)
-  );
+
+  if (findPageType(activePath, ['docs'])) {
+    pageType = 'docs';
+  }
+
+  if (findPageType(activePath, ['customer-stories'])) {
+    pageType = 'customer-stories';
+  }
+
+
 
   return (
     <div className="bg-surface-basic-subdued min-h-screen antialiased">
@@ -172,7 +224,9 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
             activeThemeContext.layout === 'default'
               ? 'lg:m-auto lg:!max-w-[896px] w-full px-3xl md:!px-5xl lg:!px-8xl xl:!px-11xl 2xl:!px-12xl xl:!max-w-[1024px] 2xl:!max-w-[1120px] 3xl:!min-w-[1408px] lg:!box-content'
               : 'max-w-none',
-            pageType === 'blog' ? 'py-8xl' : ''
+            ['blog', 'customer-stories'].includes(pageType)
+              ? 'py-6xl md:!py-8xl'
+              : ''
           )}
         >
           <Sidebar
@@ -188,6 +242,11 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
               <TOC headings={headings} />
             </nav>
           )}
+          {pageType === 'customer-stories' && (
+            <div className="order-last w-[300px] max-w-[300px] min-w-[300px] sticky top-[20%] self-start hidden lg:block pb-2xl">
+              <CompanyPanel frontMatter={frontMatter} />
+            </div>
+          )}
           <article
             className={cn(
               'flex-1',
@@ -196,9 +255,15 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
           >
             <main
               className={cn(
-                ' w-full min-w-0 min-h-[calc(100vh-101px)] flex flex-col',
+                ' w-full min-w-0 min-h-[calc(100vh-101px)] flex flex-col ',
                 showSidebar ? 'max-w-[72rem]' : '',
-                activeThemeContext.layout === 'raw' ? '' : 'gap-6xl'
+                activeThemeContext.layout === 'raw' ? '' : 'gap-6xl',
+                pageType === 'docs'
+                  ? 'py-6xl xl:px-3xl 3xl:!px-7xl lg:!max-w-[394px] xl:!max-w-[510px] 2xl:!max-w-[650px] 3xl:!max-w-[938px]'
+                  : '',
+                ['blog', 'customer-stories'].includes(pageType)
+                  ? 'lg:!pr-8xl xl:!pr-10xl 2xl:!pr-11xl 3xl:!pr-15xl'
+                  : ''
               )}
             >
               <MDXProvider
@@ -212,18 +277,20 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
                       <Breadcrumb activePath={activePath} />
                     </div>
                   )}
-                  {pageType === 'blog' && frontMatter?.title && (
-                    <BlogHeader
-                      frontMatter={frontMatter}
-                      timestamp={
-                        pageOpts.timestamp
-                          ? GitTimestamp({
-                              timestamp: new Date(pageOpts.timestamp),
-                            })
-                          : ''
-                      }
-                    />
-                  )}
+                  {['blog', 'customer-stories'].includes(pageType) &&
+                    (frontMatter?.title || frontMatter?.companyName) && (
+                      <BlogHeader
+                        author={pageType !== 'customer-stories'}
+                        frontMatter={frontMatter}
+                        timestamp={
+                          pageOpts.timestamp
+                            ? GitTimestamp({
+                                timestamp: new Date(pageOpts.timestamp),
+                              })
+                            : ''
+                        }
+                      />
+                    )}
                   {children}
                 </div>
                 <div className="bodyLg text-text-strong">

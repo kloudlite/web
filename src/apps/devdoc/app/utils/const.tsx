@@ -32,6 +32,13 @@ import {
   TwitterNewLogo,
   Vpn,
   Infinity as InfinityIcon,
+  AnscerRoboticsLogo,
+  BoltchemLogo,
+  PlaxonicLogo,
+  Agritech,
+  Robot,
+  Flask,
+  DesktopTower,
 } from '@jengaicons/react';
 
 import providersImageMobile from '~/images/infraops/providers/mobile.svg';
@@ -67,16 +74,74 @@ import featuredImage1024 from '~/images/home/featured/1024.svg';
 import featuredImage1280 from '~/images/home/featured/1280.svg';
 import featuredImage1440 from '~/images/home/featured/1440.svg';
 import featuredImage1920 from '~/images/home/featured/1920.svg';
-import RedPlutoIcon from '../../images/home/companies/red.svg';
-import FibrIcon from '../../images/home/companies/fibr.svg';
-import PlaxonicIcon from '../../images/home/companies/plaxonic.svg';
-import distributionIcon from '../../images/home/distribution.svg';
-import infraopsIcon from '../../images/home/infraops.svg';
-import devopsIcon from '../../images/home/devops.svg';
+import RedPlutoIcon from '~/images/home/companies/red.svg';
+import FibrIcon from '~/images/home/companies/fibr.svg';
+import PlaxonicIcon from '~/images/home/companies/plaxonic.svg';
+import CrewIcon from '~/images/home/companies/crew.svg';
+import BoltzIcon from '~/images/home/companies/boltz.svg';
+import TalescaleIcon from '~/images/home/companies/talescale.svg';
+import distributionIcon from '~/images/home/distribution.svg';
+import infraopsIcon from '~/images/home/infraops.svg';
+import devopsIcon from '~/images/home/devops.svg';
+import AnscerIcon from '~/images/home/companies/anser.svg';
+import BlogCover from '~/images/blog/blog-cover.jpeg';
+
+import CreateProject1920 from '~/images/devops/create_project/1980.svg';
+import CreateProject1440 from '~/images/devops/create_project/1440.svg';
+import CreateProject1280 from '~/images/devops/create_project/1280.svg';
+import CreateProject1024 from '~/images/devops/create_project/1024.svg';
+import CreateProject768 from '~/images/devops/create_project/768.svg';
+import CreateProjectMobile from '~/images/devops/create_project/mobile.svg';
+
+import SetupBackSVC1980 from '~/images/devops/setup_back_svc/1920.svg';
+import SetupBackSVC1440 from '~/images/devops/setup_back_svc/1440.svg';
+import SetupBackSVC1280 from '~/images/devops/setup_back_svc/1280.svg';
+import SetupBackSVC1024 from '~/images/devops/setup_back_svc/1024.svg';
+import SetupBackSVC768 from '~/images/devops/setup_back_svc/768.svg';
+import SetupBackSVCMobile from '~/images/devops/setup_back_svc/mobile.svg';
+
+import ConfigDevops from '~/images/devops/config-devops.svg';
+import DeployDevops from '~/images/devops/deploy-devops.svg';
+
+const partners = [
+  {
+    icon: PlaxonicIcon.src,
+    className: 'w-[135px]',
+  },
+  {
+    icon: FibrIcon.src,
+    className: 'w-[102px]',
+  },
+  {
+    icon: RedPlutoIcon.src,
+    className: 'w-[202px]',
+  },
+  {
+    icon: CrewIcon.src,
+    className: 'w-[163px]',
+  },
+  {
+    icon: AnscerIcon.src,
+    className: 'w-[135px]',
+  },
+  {
+    icon: BoltzIcon.src,
+    className: 'w-[190px]',
+  },
+  {
+    icon: TalescaleIcon.src,
+    className: 'w-[186px]',
+  },
+];
 
 const consts = {
+  blog: {
+    images: {
+      cover: BlogCover.src,
+    },
+  },
   home: {
-    partners: [PlaxonicIcon.src, FibrIcon.src, RedPlutoIcon.src],
+    partners,
     teamTasks: [
       {
         title: 'Develop, Git Push',
@@ -157,19 +222,19 @@ const consts = {
     },
     tutorials: [
       {
-        title: 'Keep building with Kl-DevOps',
+        title: 'Keep building with DevOps',
         icon: InfinityIcon,
         to: '/devops',
         type: 'normal',
       },
       {
-        title: 'Keep building with Kl-InfraOps',
+        title: 'Keep building with InfraOps',
         icon: CloudAgnostics,
         to: '/infraops',
         type: 'normal',
       },
       {
-        title: 'Keep building with Kl-Distribution',
+        title: 'Keep building with Distribution',
         icon: Container,
         to: '/distribution',
         type: 'normal',
@@ -182,7 +247,7 @@ const consts = {
     ],
     suites: [
       {
-        title: 'Kl-DevOps',
+        title: 'DevOps',
         desc: 'Environments crafted for development and production workloads',
         img: <img src={devopsIcon.src} className="" />,
         imgPad:
@@ -190,7 +255,7 @@ const consts = {
         to: 'devops',
       },
       {
-        title: 'Kl-InfraOps',
+        title: 'InfraOps',
         desc: 'Cloud agnostic & cost effective infrastructure management at your fingertips',
         imgPad:
           'p-3xl md:!max-h-[200px] md:!min-h-[200px] lg:!min-h-[244px] lg:!max-h-[244px] 3xl:!min-h-[280px] lg:!py-5xl 3xl:!py-4xl box-border w-auto',
@@ -198,7 +263,7 @@ const consts = {
         to: 'infraops',
       },
       {
-        title: 'Kl-Distribution',
+        title: 'Distribution',
         desc: 'Build system and package registries to build and ship your environments',
         imgPad:
           'p-3xl md:!max-h-[200px] md:!min-h-[200px] lg:!min-h-[244px] lg:!max-h-[244px] 3xl:!min-h-[280px] lg:!py-5xl 3xl:!py-4xl box-border w-auto',
@@ -331,6 +396,42 @@ const consts = {
     ],
   },
   devops: {
+    images: {
+      getStartedImages: {
+        setupBackingSvc: {
+          rmobile: SetupBackSVCMobile.src,
+          r768: SetupBackSVC768.src,
+          r1024: SetupBackSVC1024.src,
+          r1280: SetupBackSVC1280.src,
+          r1440: SetupBackSVC1440.src,
+          r1920: SetupBackSVC1980.src,
+        },
+        createProject: {
+          rmobile: CreateProjectMobile.src,
+          r768: CreateProject768.src,
+          r1024: CreateProject1024.src,
+          r1280: CreateProject1280.src,
+          r1440: CreateProject1440.src,
+          r1920: CreateProject1920.src,
+        },
+        configDevops: {
+          rmobile: ConfigDevops.src,
+          r768: ConfigDevops.src,
+          r1024: ConfigDevops.src,
+          r1280: ConfigDevops.src,
+          r1440: ConfigDevops.src,
+          r1920: ConfigDevops.src,
+        },
+        deployDevops: {
+          rmobile: DeployDevops.src,
+          r768: DeployDevops.src,
+          r1024: DeployDevops.src,
+          r1280: DeployDevops.src,
+          r1440: DeployDevops.src,
+          r1920: DeployDevops.src,
+        },
+      },
+    },
     advantages: [
       {
         label: (
@@ -498,6 +599,55 @@ const consts = {
         id: 'distribute',
       },
     ],
+  },
+  customerstories: {
+    casestudies: [
+      {
+        title: 'Anscer robotics',
+        content:
+          'Anscer Robotics is an industrial robotics company that automates factories & warehouses using mobile robotics, IoT & warehouse software solutions.',
+        icon: AnscerRoboticsLogo,
+      },
+      {
+        title: 'Boltchem',
+        content:
+          'Boltzmann is an AI Drug Discovery platform that focuses on building AI powered data driven solutions to empower scientists and researchers.',
+        icon: BoltchemLogo,
+      },
+      {
+        title: 'Plaxonic',
+        content:
+          'Plaxonic is an IT service and product company, which provides advanced digital solutions & research to enterprises across the world.',
+        icon: PlaxonicLogo,
+      },
+    ],
+    industries: [
+      {
+        title: 'Agritech',
+        content:
+          'Advanced DevOps, InfraOps automation solutions, and data-driven farming for improved yield and efficiency',
+        icon: Agritech,
+      },
+      {
+        title: 'Robotics',
+        content:
+          'Advanced DevOps, InfraOps automation solutions, and data-driven farming for improved yield and efficiency',
+        icon: Robot,
+      },
+      {
+        title: 'Biotech',
+        content:
+          'Simple, cost-effective and cloud-agnostic automation solutions, facilitating innovative medical research',
+        icon: Flask,
+      },
+      {
+        title: 'IT & ITES',
+        content:
+          'Kloudlite with its advanced automation suite functions as an extended InfraOps & DevOps arm for the IT & ITES businesses',
+        icon: DesktopTower,
+      },
+    ],
+    clients: partners,
   },
 };
 

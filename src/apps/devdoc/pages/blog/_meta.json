@@ -9,5 +9,32 @@
       "breadcrumb":false,
       "timestamp":false
     }
+  },
+  "containerisation-reviving-legacy-apps-for-developers":{
+    "title":"Containerisation: Reviving Legacy Apps for Developers",
+    "type":"page",
+    "theme":{
+      "sidebar":false,
+      "toc":true,
+      "header":"secondary"
+    }
+  },
+  "demystifying-7-common-misconceptions-about-containers":{
+    "title":"Demystifying 7 Common Misconceptions About Containers",
+    "type":"page",
+    "theme":{
+      "sidebar":false,
+      "toc":true,
+      "header":"secondary"
+    }
+  },
+  "the-evolution-of-development-workflows-an-introduction-to-deaas":{
+    "title":"The Evolution of Development Workflows: An Introduction to DEaaS",
+    "type":"page",
+    "theme":{
+      "sidebar":false,
+      "toc":true,
+      "header":"secondary"
+    }
   }
 }

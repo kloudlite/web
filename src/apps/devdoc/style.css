@@ -7,6 +7,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .drop-shadow-indicator {
+    filter: drop-shadow(0px -1px 2px rgba(0, 0, 0, 0.10)) drop-shadow(0px 2px 10px rgba(0, 0, 0, 0.10));
+  }
+}
+
 :root {
     --kl-navbar-height:76px;
   }
@@ -268,10 +274,13 @@ code{
     background-repeat: no-repeat;
   }
 }
+
+@media screen and (min-width:768px){
    .product-graph{
     background-image: url("/product/graph-product.svg");
     background-position: center;
   }
+}
 
   .help-card-graph{
     background-image: url("/help-and-support/card-graph.svg");
@@ -341,4 +350,15 @@ canvas {
   image-rendering: -webkit-crisp-edges;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
+}
+
+
+.partners-slide-track ul{
+  display: flex;
+  align-items: center;
+}
+
+
+.rounded-image > img{
+  @apply rounded-lg;
 }

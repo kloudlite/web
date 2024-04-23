@@ -1,52 +1,23 @@
 import Link from 'next/link';
 import { BrandLogo } from 'kl-design-system/branding/brand-logo';
 import {
+  CloudAgnostics,
+  Container,
   GithubLogoFill,
+  Infinity,
   LinkedinLogoFill,
   TwitterNewLogoFill,
 } from '@jengaicons/react';
-import { ReactNode } from 'react';
 import { cn } from './commons';
 import { IConfig } from './use-config';
-import devops from '../../images/home/devops.svg';
-import infraops from '../../images/home/infraops.svg';
-import distribution from '../../images/home/distribution.svg';
 import Button from '../components/button';
+import { NavListItem } from '../components/nav-menu-v2';
 
 const gitUrl = 'https://github.com/kloudlite/kloudlite';
 const linkedinUrl = 'https://linkedin.com/company/kloudlite-io';
 const xUrl = 'https://x.com/kloudlite';
 export const supportEmail = 'launch@kloudlite.io';
 
-const ProductMenuItem = ({
-  title,
-  image,
-  description,
-  to,
-}: {
-  title: ReactNode;
-  image: string;
-  description: ReactNode;
-  to: string;
-}) => {
-  return (
-    <li>
-      <a
-        href={to}
-        className="flex flex-row items-center gap-xl px-xl py-lg bg-surface-basic-subdued hover:bg-surface-basic-active w-full"
-      >
-        <img
-          src={image}
-          className="rounded border border-border-default bg-surface-basic-default h-[54px] w-[54px] p-md"
-        />
-        <div className="flex flex-col justify-center gap-sm">
-          <div className="bodyMd-semibold text-text-default">{title}</div>
-          <p className="bodySm text-text-soft">{description}</p>
-        </div>
-      </a>
-    </li>
-  );
-};
 const BrandMenu = ({ className }: { className?: string }) => {
   const socialIconSize = 24;
   const brandIconSize = 28;
@@ -96,12 +67,7 @@ export default {
   siteTitle: 'Kloudlite',
   logo: (
     <Link href="/">
-      <div className="hidden md:block">
-        <BrandLogo detailed size={28} />
-      </div>
-      <div className="md:hidden">
-        <BrandLogo detailed={false} size={28} />
-      </div>
+      <BrandLogo detailed size={28} />
     </Link>
   ),
   footer: {
@@ -112,15 +78,15 @@ export default {
         className: 'w-[47%] md:w-auto',
         items: [
           {
-            title: 'Kl-DevOps',
+            title: 'DevOps',
             to: 'devops',
           },
           {
-            title: 'Kl-InfraOps',
+            title: 'InfraOps',
             to: 'infraops',
           },
           {
-            title: 'Kl-Distribution',
+            title: 'Distribution',
             to: 'distribution',
           },
         ],
@@ -150,6 +116,14 @@ export default {
           {
             title: 'Contact us',
             to: 'contact-us',
+          },
+          {
+            title: 'Documentations',
+            to: 'docs',
+          },
+          {
+            title: 'Blog',
+            to: 'blog',
           },
         ],
       },
@@ -182,34 +156,55 @@ export default {
       {
         title: 'Product',
         to: '/product',
-        type: 'dropdown',
+        type: 'popup',
         render: () => (
-          <ul className="flex flex-col list-none w-full">
-            <ProductMenuItem
-              title="Kl-DevOps"
-              description="NoOps in every stage of devlopment"
-              image={devops.src}
-              to="/devops"
-            />
-            <ProductMenuItem
-              title="Kl-InfraOps"
-              description="Cloud-native at the core of infrastructure"
-              image={infraops.src}
-              to="/infraops"
-            />
-            <ProductMenuItem
-              title="Kl-Distribution"
-              description="Build, deploy and scale at an acceleration"
-              image={distribution.src}
-              to="/distribution"
-            />
-          </ul>
+          <div className="w-[450px] flex flex-row gap-xl p-xl">
+            <a
+              href="/product"
+              className="w-[164px] bg-[linear-gradient(170deg,#3B82F6_6.19%,#1E3A8A_95.65%)] rounded py-4xl px-3xl box-content flex flex-col justify-end gap-2xl"
+            >
+              <div>
+                <BrandLogo size={32} detailed={false} darkBg />
+              </div>
+              <div className="flex flex-col gap-lg">
+                <span className="headingLg-marketing text-text-on-primary">
+                  Code-to-cloud console
+                </span>
+                <span className="bodySm text-text-on-primary">
+                  Boost development with efficient Kloudlite solution.
+                </span>
+              </div>
+            </a>
+            <ul className="flex flex-col">
+              <NavListItem
+                href="/devops"
+                title="DevOps"
+                icon={<Infinity size={28} />}
+              >
+                NoOps in every stage of devlopment
+              </NavListItem>
+              <NavListItem
+                href="/infraops"
+                title="InfraOps"
+                icon={<CloudAgnostics size={28} />}
+              >
+                Cloud-native at the core of infrastructure
+              </NavListItem>
+              <NavListItem
+                href="/distribution"
+                title="Distribution"
+                icon={<Container size={28} />}
+              >
+                Build, deploy and scale at an acceleration
+              </NavListItem>
+            </ul>
+          </div>
         ),
       },
       {
         title: 'Help',
         to: '/help-and-support',
-        type: 'link',
+        type: 'normal',
       },
     ],
     extra: (
