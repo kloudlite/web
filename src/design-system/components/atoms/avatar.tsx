@@ -7,6 +7,7 @@ const colors = {
   three: ['fill-icon-success', 'text-icon-success'],
   four: ['fill-icon-critical', 'text-icon-critical'],
   five: ['fill-icon-secondary', 'text-icon-secondary'],
+  six: ['fill-icon-primary', 'text-icon-primary'],
 };
 
 type AvatarSizes = 'xs' | 'sm' | 'md' | 'lg' | (string & NonNullable<unknown>);

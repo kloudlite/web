@@ -1,15 +1,16 @@
-import { forwardRef } from 'react';
+import { ReactNode, forwardRef } from 'react';
 import { AvatarBase, IAvatar } from '../atoms/avatar';
 import { BounceIt } from '../bounce-it';
 import { cn } from '../utils';
 
 interface IProfile extends IAvatar {
-  name?: string;
-  subtitle?: string;
+  name?: ReactNode;
+  subtitle?: ReactNode;
+  responsive?: boolean;
 }
 
 const Profile = forwardRef<HTMLButtonElement, IProfile>(
-  ({ name, subtitle, color, size, ...props }, ref) => {
+  ({ name, subtitle, color, responsive = true, size, ...props }, ref) => {
     return (
       <BounceIt className="w-fit">
         <button
@@ -21,7 +22,12 @@ const Profile = forwardRef<HTMLButtonElement, IProfile>(
         >
           <AvatarBase color={color} size={size} image={props.image} />
           {(name || subtitle) && (
-            <div className=" flex-col items-start hidden md:flex">
+            <div
+              className={cn(
+                'flex-col items-start',
+                responsive ? 'hidden md:flex' : ' flex'
+              )}
+            >
               {name && (
                 <div className="bodyMd-medium gap-y-md pulsable">{name}</div>
               )}
