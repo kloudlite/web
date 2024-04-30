@@ -50,7 +50,7 @@ export const SearchBox = ({ InputElement = Toolbar.TextInput }) => {
   );
 
   return (
-    <div className="w-full">
+    <div className="w-[260px]">
       <InputElement
         value={search}
         onChange={(e) => {

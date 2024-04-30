@@ -26,7 +26,7 @@ import { BreadcrumSlash, tabIconSize } from '~/console/utils/commons';
 import { IMSvTemplates } from '~/console/server/gql/queries/managed-templates-queries';
 import { ICluster } from '~/console/server/gql/queries/cluster-queries';
 import { Button } from '~/components/atoms/button';
-import { IAccountContext } from '../_layout';
+import { IAccountContext } from '../../_layout';
 
 export interface IProjectContext extends IAccountContext {
   project: IProject;

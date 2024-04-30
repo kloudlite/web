@@ -161,7 +161,7 @@ const ListView = ({ items }: { items: BaseType[] }) => {
                 render: () => <ExtraButton project={i} />,
               },
             },
-            to: `/${account}/${id}/environments`,
+            to: `/${account}/projects/${id}/environments`,
           };
         }),
       }}

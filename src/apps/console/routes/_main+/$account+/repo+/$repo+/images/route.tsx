@@ -49,9 +49,6 @@ const Images = () => {
 
         return (
           <Wrapper
-            header={{
-              title: 'Images',
-            }}
             empty={{
               is: tags.length === 0,
               title: 'This is where you’ll manage your images.',

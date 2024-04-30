@@ -11,7 +11,6 @@ import { getPagination, getSearch } from '~/console/server/utils/common';
 import logger from '~/root/lib/client/helpers/log';
 import { IRemixCtx } from '~/root/lib/types/common';
 import fake from '~/root/fake-data-generator/fake';
-import SecondarySubHeader from '~/console/components/secondary-sub-header';
 import HandleCrCred from './handle-cr-cred';
 import Tools from './tools';
 import CredResourcesV2 from './cred-resources-V2';
@@ -52,20 +51,6 @@ const ContainerRegistryAccessManagement = () => {
           const creds = credentials.edges?.map(({ node }) => node);
           return (
             <div className="flex flex-col gap-6xl">
-              <SecondarySubHeader
-                title="Container registry"
-                action={
-                  creds.length > 0 && (
-                    <Button
-                      content="Create new credential"
-                      variant="primary"
-                      onClick={() => {
-                        setVisible(true);
-                      }}
-                    />
-                  )
-                }
-              />
               <Wrapper
                 empty={{
                   is: creds?.length === 0,
@@ -84,7 +69,21 @@ const ContainerRegistryAccessManagement = () => {
                     },
                   },
                 }}
-                tools={<Tools />}
+                tools={
+                  <Tools
+                    extra={
+                      creds.length > 0 && (
+                        <Button
+                          content="Create new credential"
+                          variant="primary"
+                          onClick={() => {
+                            setVisible(true);
+                          }}
+                        />
+                      )
+                    }
+                  />
+                }
               >
                 <CredResourcesV2 items={creds} />
               </Wrapper>
@@ -95,6 +94,20 @@ const ContainerRegistryAccessManagement = () => {
       <HandleCrCred {...{ isUpdate: false, visible, setVisible }} />
     </>
   );
+};
+
+export const handle = () => {
+  return {
+    breadcrumV2: () => [
+      {
+        type: 'separator',
+      },
+      {
+        type: 'plain',
+        content: 'Access Management',
+      },
+    ],
+  };
 };
 
 export default ContainerRegistryAccessManagement;

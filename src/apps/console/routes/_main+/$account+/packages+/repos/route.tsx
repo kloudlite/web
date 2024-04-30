@@ -11,7 +11,6 @@ import { getPagination, getSearch } from '~/console/server/utils/common';
 import logger from '~/root/lib/client/helpers/log';
 import { IRemixCtx } from '~/root/lib/types/common';
 import fake from '~/root/fake-data-generator/fake';
-import SecondarySubHeader from '~/console/components/secondary-sub-header';
 import HandleRepo from './handle-repo';
 import Tools from './tools';
 import RepoResourcesV2 from './repo-resources-v2';
@@ -52,22 +51,6 @@ const ContainerRegistryRepos = () => {
 
           return (
             <div className="flex flex-col gap-6xl">
-              <SecondarySubHeader
-                title={
-                  <div className="flex flex-row gap-xl items-center">
-                    <span>Container Repos</span>
-                  </div>
-                }
-                action={
-                  <Button
-                    content="Create new repository"
-                    variant="primary"
-                    onClick={() => {
-                      setVisible(true);
-                    }}
-                  />
-                }
-              />
               <Wrapper
                 empty={{
                   is: repos?.length === 0,
@@ -86,7 +69,21 @@ const ContainerRegistryRepos = () => {
                     },
                   },
                 }}
-                tools={<Tools />}
+                tools={
+                  <Tools
+                    extra={
+                      repos.length > 0 && (
+                        <Button
+                          content="Create new repository"
+                          variant="primary"
+                          onClick={() => {
+                            setVisible(true);
+                          }}
+                        />
+                      )
+                    }
+                  />
+                }
               >
                 <RepoResourcesV2 items={repos} />
               </Wrapper>
@@ -103,6 +100,20 @@ const ContainerRegistryRepos = () => {
       />
     </>
   );
+};
+
+export const handle = () => {
+  return {
+    breadcrumV2: () => [
+      {
+        type: 'separator',
+      },
+      {
+        type: 'plain',
+        content: 'Container Repos',
+      },
+    ],
+  };
 };
 
 export default ContainerRegistryRepos;

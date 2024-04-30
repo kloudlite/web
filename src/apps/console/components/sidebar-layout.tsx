@@ -28,11 +28,11 @@ const SidebarLayout = ({
   const { activePath } = useActivePath({ parent: parentPath });
   return (
     <>
-      {!!headerTitle || !!headerActions ? (
-        <SubHeader title={headerTitle} actions={headerActions} />
-      ) : (
-        <div className="pt-6xl" />
-      )}
+      {/* {!!headerTitle || !!headerActions ? ( */}
+      {/*   <SubHeader title={headerTitle} actions={headerActions} /> */}
+      {/* ) : ( */}
+      {/*   <div className="pt-6xl" /> */}
+      {/* )} */}
       <div className="flex flex-col md:flex-row">
         <div className="flex flex-col">
           <div className="flex flex-col">

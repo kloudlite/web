@@ -142,7 +142,19 @@ export const loader = async (ctx: IRemixCtx) => {
 export const handle = () => {
   return {
     navbar: <Tabs />,
-    breadcrum: () => <LocalBreadcrum />,
+    breadcrumV2: () => [
+      {
+        type: 'plain',
+        content: 'Packages',
+      },
+      {
+        type: 'separator',
+      },
+      {
+        type: 'plain',
+        content: 'Container Repos',
+      },
+    ],
   };
 };
 

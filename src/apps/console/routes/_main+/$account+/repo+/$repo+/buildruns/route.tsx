@@ -51,9 +51,6 @@ const BuildRuns = () => {
         const { pageInfo, totalCount } = buildRunData;
         return (
           <Wrapper
-            header={{
-              title: 'Build Runs',
-            }}
             empty={{
               is: buildruns.length === 0,
               title: 'This is where you’ll manage your buildruns',

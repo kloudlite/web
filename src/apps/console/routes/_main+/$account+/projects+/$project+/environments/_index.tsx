@@ -1,6 +1,6 @@
 import { Plus } from '~/console/components/icons';
 import { defer } from '@remix-run/node';
-import { useLoaderData } from '@remix-run/react';
+import { useLoaderData, useOutletContext } from '@remix-run/react';
 import { useState } from 'react';
 import { Button } from '~/components/atoms/button.jsx';
 import { LoadingComp, pWrapper } from '~/console/components/loading-component';
@@ -34,6 +34,7 @@ export const loader = async (ctx: IRemixCtx) => {
       throw errors[0];
     }
 
+    console.log('env');
     return {
       environmentData: data || {},
     };
@@ -57,7 +58,6 @@ const Workspaces = () => {
         }}
       >
         {({ environmentData }) => {
-          // console.log('environment: ', environmentData);
           console.log(environmentData);
 
           const environments = parseNodes(environmentData);
@@ -68,19 +68,6 @@ const Workspaces = () => {
 
           return (
             <Wrapper
-              header={{
-                title: 'Environments',
-                action: environments.length > 0 && (
-                  <Button
-                    variant="primary"
-                    content="Create Environment"
-                    prefix={<Plus />}
-                    onClick={() => {
-                      setShowAddWS({ type: 'add', data: null });
-                    }}
-                  />
-                ),
-              }}
               empty={{
                 is: environments?.length === 0,
                 title: 'This is where you’ll manage your environment.',
@@ -98,7 +85,22 @@ const Workspaces = () => {
                   },
                 },
               }}
-              tools={<Tools />}
+              tools={
+                <Tools
+                  extra={
+                    environments.length > 0 && (
+                      <Button
+                        variant="primary"
+                        content="Create Environment"
+                        prefix={<Plus />}
+                        onClick={() => {
+                          setShowAddWS({ type: 'add', data: null });
+                        }}
+                      />
+                    )
+                  }
+                />
+              }
             >
               <EnvironmentResourcesV2 items={environments || []} />
             </Wrapper>

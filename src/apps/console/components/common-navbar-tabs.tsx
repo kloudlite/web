@@ -1,11 +1,9 @@
 import { ChevronLeft } from '~/console/components/icons';
 import { Link } from '@remix-run/react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ReactNode, useContext, useState } from 'react';
+import { ReactNode } from 'react';
 import ScrollArea from '~/components/atoms/scroll-area';
 import Tabs from '~/components/atoms/tabs';
-import { BrandLogo } from '~/components/branding/brand-logo';
-import { TopBarContext } from '~/components/organisms/top-bar';
 import { useActivePath } from '~/root/lib/client/hooks/use-active-path';
 
 interface CommonTabsProps {
@@ -27,12 +25,6 @@ export const CommonTabs = ({
   backButton = null,
 }: CommonTabsProps) => {
   const { activePath } = useActivePath({ parent: baseurl });
-
-  const context = useContext(TopBarContext);
-  const { isSticked } = context || {};
-
-  const [activeTab, setActiveTab] = useState(`/${activePath.split('/')[1]}`);
-
   return (
     <div className="flex flex-row items-center">
       <AnimatePresence>
@@ -70,7 +62,6 @@ export const CommonTabs = ({
             value={`/${activePath.split('/')[1]}`}
             fitted
             LinkComponent={Link}
-            onChange={(tab) => setActiveTab(tab)}
           >
             {tabs.map(({ value, to, label }) => {
               return <Tabs.Tab {...{ value, to, label }} key={value} />;
@@ -78,23 +69,6 @@ export const CommonTabs = ({
           </Tabs.Root>
         </ScrollArea>
       )}
-
-      <AnimatePresence>
-        {!!isSticked && tabs && (
-          <motion.div
-            layoutId="small-logo"
-            initial={{ y: 10, opacity: 0 }}
-            exit={{ y: 10, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.2, type: 'spring', bounce: 0.1 }}
-            className="flex flex-row items-center overflow-hidden"
-          >
-            <div className="flex justify-center items-center pl-2xl">
-              <BrandLogo size={18} detailed />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import { useParams, useSearchParams } from '@remix-run/react';
-import { useMemo } from 'react';
+import { ReactNode, useMemo } from 'react';
 import CommonTools from '~/console/components/common-tools';
 import { FilterType } from '~/console/components/filters';
 import { useConsoleApi } from '~/console/server/gql/api-provider';
@@ -7,7 +7,7 @@ import { parseName, parseNodes } from '~/console/server/r-utils/common';
 import { ensureAccountClientSide } from '~/console/server/utils/auth-utils';
 import { isValidRegex } from '~/console/server/utils/common';
 
-const Tools = () => {
+const Tools = ({ extra }: { extra?: ReactNode }) => {
   const [searchParams] = useSearchParams();
 
   const params = useParams();
@@ -52,7 +52,7 @@ const Tools = () => {
     [searchParams]
   );
 
-  return <CommonTools {...{ options }} />;
+  return <CommonTools {...{ options }} extra={extra} />;
 };
 
 export default Tools;

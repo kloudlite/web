@@ -65,11 +65,8 @@ const Wrapper = ({
       )}
       <div className="flex flex-col">
         {!isEmpty && tools}
-        <div className={cn('flex flex-col gap-6xl')}>
+        <div className={cn('flex flex-col gap-3xl')}>
           {!isEmpty && !isSearchResultEmpty && children}
-          {!isEmpty && pagination && (
-            <CustomPagination pagination={pagination} />
-          )}
           {isEmpty && (
             <EmptyState
               image={
@@ -108,6 +105,9 @@ const Wrapper = ({
               image={noResultFound?.image || <SmileySad size={40} />}
               action={noResultFound?.action}
             />
+          )}
+          {!isEmpty && pagination && (
+            <CustomPagination pagination={pagination} />
           )}
         </div>
       </div>

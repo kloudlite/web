@@ -10,8 +10,6 @@ import { IRemixCtx } from '~/root/lib/types/common';
 import fake from '~/root/fake-data-generator/fake';
 import { ensureAccountSet } from '~/console/server/utils/auth-utils';
 import { GQLServerHandler } from '~/console/server/gql/saved-queries';
-// import useActiveDevice from '~/console/hooks/use-device';
-// import { useEffect } from 'react';
 import Tools from './tools';
 import ProjectResourcesV2 from './project-resources-v2';
 
@@ -178,24 +176,38 @@ const Projects = () => {
 
         return (
           <Wrapper
-            header={{
-              title: 'Projects',
-              action: projects.length > 0 && (
-                <Button
-                  variant="primary"
-                  content="Create Project"
-                  prefix={<Plus />}
-                  to={`/${account}/new-project`}
-                  LinkComponent={Link}
-                />
-              ),
-            }}
+            // header={{
+            //   title: 'Projects',
+            //   action: projects.length > 0 && (
+            //     <Button
+            //       variant="primary"
+            //       content="Create Project"
+            //       prefix={<Plus />}
+            //       to={`/${account}/new-project`}
+            //       LinkComponent={Link}
+            //     />
+            //   ),
+            // }}
             empty={getEmptyState({
               projectLength: projects.length,
               clustersLength: clustersCount,
               secretsLength: cloudProviderSecretsCount,
             })}
-            tools={<Tools />}
+            tools={
+              <Tools
+                extra={
+                  projects.length > 0 && (
+                    <Button
+                      variant="primary"
+                      content="Create Project"
+                      prefix={<Plus />}
+                      to={`/${account}/new-project`}
+                      LinkComponent={Link}
+                    />
+                  )
+                }
+              />
+            }
             pagination={{
               pageInfo: projectsData.pageInfo,
             }}

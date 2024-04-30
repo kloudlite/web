@@ -54,18 +54,6 @@ const Builds = () => {
 
           return (
             <Wrapper
-              header={{
-                title: 'Build Integrations',
-                action: builds.length > 0 && (
-                  <Button
-                    content="Create build"
-                    variant="primary"
-                    to="../new-build"
-                    LinkComponent={Link}
-                    prefix={<Plus />}
-                  />
-                ),
-              }}
               empty={{
                 is: builds.length === 0,
                 title: 'This is where you’ll manage your Build Integrations.',
@@ -83,7 +71,21 @@ const Builds = () => {
                   </p>
                 ),
               }}
-              tools={<Tools />}
+              tools={
+                <Tools
+                  extra={
+                    builds.length > 0 && (
+                      <Button
+                        content="Create build"
+                        variant="primary"
+                        to="../new-build"
+                        LinkComponent={Link}
+                        prefix={<Plus />}
+                      />
+                    )
+                  }
+                />
+              }
             >
               <BuildResources items={builds} />
             </Wrapper>

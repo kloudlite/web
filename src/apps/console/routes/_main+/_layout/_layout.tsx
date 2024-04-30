@@ -6,18 +6,28 @@ import {
   useLocation,
   useParams,
 } from '@remix-run/react';
-import { cloneElement, useCallback } from 'react';
+import {
+  ReactNode,
+  cloneElement,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import Container from '~/components/atoms/container';
 import OptionList from '~/components/atoms/option-list';
 import { BrandLogo } from '~/components/branding/brand-logo';
 import Profile from '~/components/molecule/profile';
 import { TopBar } from '~/components/organisms/top-bar';
-import { generateKey, titleCase } from '~/components/utils';
+import { cn, generateKey, titleCase } from '~/components/utils';
 import Breadcrum from '~/console/components/breadcrum';
 import { CommonTabs } from '~/console/components/common-navbar-tabs';
 import LogoWrapper from '~/console/components/logo-wrapper';
 import { ViewModeProvider } from '~/console/components/view-mode';
-import { IAccounts } from '~/console/server/gql/queries/account-queries';
+import {
+  IAccount,
+  IAccounts,
+} from '~/console/server/gql/queries/account-queries';
 import { setupAccountContext } from '~/console/server/utils/auth-utils';
 import { constants } from '~/console/server/utils/constants';
 import { LightTitlebarColor } from '~/design-system/tailwind-base';
@@ -26,6 +36,7 @@ import withContext from '~/root/lib/app-setup/with-contxt';
 import { useExternalRedirect } from '~/root/lib/client/helpers/use-redirect';
 import { SubNavDataProvider } from '~/root/lib/client/hooks/use-create-subnav-action';
 import useMatches, {
+  useDataFromMatches,
   useHandleFromMatches,
 } from '~/root/lib/client/hooks/use-custom-matches';
 import { UnsavedChangesProvider } from '~/root/lib/client/hooks/use-unsaved-changes';
@@ -37,7 +48,27 @@ import {
   Container as ContainerIcon,
   GearSix,
   Project,
+  VirtualMachine,
+  User,
+  ChevronUpDown,
+  Buildings,
+  Search,
+  Check,
+  Plus,
+  ChevronLeft,
 } from '~/console/components/icons';
+import Sidebar from '~/components/organisms/side-bar';
+import { useActivePath } from '~/root/lib/client/hooks/use-active-path';
+import Header from '~/components/organisms/headerV2';
+import { Button } from '~/components/atoms/button';
+import { useConsoleApi } from '~/console/server/gql/api-provider';
+import useCustomSwr from '~/root/lib/client/hooks/use-custom-swr';
+import { useSearch } from '~/root/lib/client/helpers/search-filter';
+import { parseName } from '~/console/server/r-utils/common';
+import { IProject } from '~/console/server/gql/queries/project-queries';
+import { AnimatePresence, motion } from 'framer-motion';
+import ScrollArea from '~/components/atoms/scroll-area';
+import Tabs from '~/components/atoms/tabs';
 
 const restActions = (ctx: IExtRemixCtx) => {
   return withContext(ctx, {});
@@ -59,55 +90,129 @@ export const meta = () => {
   ];
 };
 
-const AccountTabs = () => {
+const AccountSwitch = () => {
+  const api = useConsoleApi();
   const { account } = useParams();
-  const iconSize = 16;
+
+  const { data: accounts } = useCustomSwr(
+    () => '/accounts',
+    async () => api.listAccounts({})
+  );
+
+  const [searchText, setSearchText] = useState('');
+
+  const searchResp = useSearch(
+    {
+      data:
+        accounts?.map((i) => {
+          return {
+            ...i,
+            searchField: i.displayName,
+          };
+        }) || [],
+      searchText,
+      keys: ['searchField'],
+    },
+    [searchText, accounts]
+  );
+
+  const [open, setOpen] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const [isMouseOver, setIsMouseOver] = useState<boolean>(false);
+
+  useEffect(() => {
+    setSearchText('');
+  }, [open]);
+
   return (
-    <CommonTabs
-      baseurl={`/${account}`}
-      tabs={[
-        {
-          label: (
-            <span className="flex flex-row items-center gap-lg">
-              <Project size={iconSize} />
-              Projects
-            </span>
-          ),
-          to: '/projects',
-          value: '/projects',
-        },
-        {
-          label: (
-            <span className="flex flex-row items-center gap-lg">
-              <InfraAsCode size={iconSize} />
-              Infrastructure
-            </span>
-          ),
-          to: '/infra',
-          value: '/infra',
-        },
-        {
-          label: (
-            <span className="flex flex-row items-center gap-lg">
-              <ContainerIcon size={iconSize} />
-              Packages
-            </span>
-          ),
-          to: '/packages/repos',
-          value: '/packages',
-        },
-        {
-          label: (
-            <span className="flex flex-row items-center gap-lg">
-              <GearSix size={iconSize} />
-              Settings
-            </span>
-          ),
-          to: '/settings',
-          value: '/settings',
-        },
-      ]}
-    />
+    <div className="flex flex-row items-center flex-shrink-0 flex-1 justify-between">
+      <Button
+        variant="plain"
+        size="sm"
+        content={accounts?.find((a) => parseName(a) === account)?.displayName}
+        prefix={<Buildings className="flex-shrink-0" />}
+        className="!px-lg flex-shrink-0 max-w-[158px] truncate"
+      />
+
+      <OptionList.Root open={open} onOpenChange={setOpen} modal={false}>
+        <OptionList.Trigger>
+          <button
+            ref={buttonRef}
+            aria-label="accounts"
+            className={cn(
+              'outline-none rounded py-lg px-md mx-md',
+              open || isMouseOver ? 'bg-surface-basic-pressed' : ''
+            )}
+            onMouseOver={() => {
+              setIsMouseOver(true);
+            }}
+            onMouseOut={() => {
+              setIsMouseOver(false);
+            }}
+            onFocus={() => {
+              //
+            }}
+            onBlur={() => {
+              //
+            }}
+          >
+            <div className="flex flex-row items-center gap-md">
+              <ChevronUpDown size={16} />
+            </div>
+          </button>
+        </OptionList.Trigger>
+        <OptionList.Content className="!pt-0 !pb-md" align="end">
+          <div className="p-[3px] pb-0">
+            <OptionList.TextInput
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              prefixIcon={<Search />}
+              focusRing={false}
+              placeholder="Search teams"
+              compact
+              className="border-0 rounded-none"
+            />
+          </div>
+          <OptionList.Separator />
+
+          {/* <div className="bodySm-medium text-text-soft py-md px-xl">Teams</div> */}
+
+          {/* <OptionList.Separator /> */}
+
+          {searchResp?.map((item) => {
+            return (
+              <OptionList.Link
+                key={parseName(item)}
+                LinkComponent={Link}
+                to={`/${parseName(item)}/projects`}
+                className={cn(
+                  'flex flex-row items-center justify-between',
+                  parseName(item) === parseName(account)
+                    ? 'bg-surface-basic-pressed hover:!bg-surface-basic-pressed'
+                    : ''
+                )}
+              >
+                <span>{item.displayName}</span>
+                {parseName(item) === parseName(account) && (
+                  <span>
+                    <Check size={16} />
+                  </span>
+                )}
+              </OptionList.Link>
+            );
+          })}
+
+          <OptionList.Separator />
+          <OptionList.Link
+            LinkComponent={Link}
+            to="/new-team"
+            className="text-text-primary"
+          >
+            <Plus size={16} /> <span>Create team</span>
+          </OptionList.Link>
+        </OptionList.Content>
+      </OptionList.Root>
+    </div>
   );
 };
 
@@ -122,11 +227,44 @@ const Logo = () => {
 
 export const handle = () => {
   return {
-    navbar: <AccountTabs />,
     logo: <Logo />,
   };
 };
 
+const sideTopMenuItems = ({ account }: { account: string }) => {
+  return [
+    {
+      icon: <Project />,
+      children: 'Projects',
+      to: `/${account}/projects`,
+    },
+    {
+      icon: <InfraAsCode />,
+      children: 'Infra',
+      to: `/${account}/infra/clusters`,
+    },
+    {
+      icon: <ContainerIcon />,
+      children: 'Packages',
+      to: `/${account}/packages/repos`,
+    },
+  ];
+};
+
+const sideBottomMenuItems = ({ account }: { account: string }) => {
+  return [
+    {
+      icon: <GearSix />,
+      children: 'Settings',
+      to: `/${account}/settings/general`,
+    },
+    {
+      icon: <User />,
+      children: 'Accounts',
+      to: `/${account}/profile`,
+    },
+  ];
+};
 // OptionList for various actions
 const ProfileMenu = ({ hideProfileName }: { hideProfileName: boolean }) => {
   const { user } = useLoaderData();
@@ -185,8 +323,10 @@ const ProfileMenu = ({ hideProfileName }: { hideProfileName: boolean }) => {
 
 const Console = () => {
   const loaderData = useLoaderData<typeof loader>();
-
+  const { account, project } = useParams();
   const matches = useMatches();
+
+  const { activePath } = useActivePath({ parent: `` });
 
   const navbar = useHandleFromMatches('navbar', null);
   const logo = useHandleFromMatches('logo', null);
@@ -213,42 +353,81 @@ const Console = () => {
     );
   }
 
+  const project1 = useDataFromMatches<IProject>('project', {});
+  const breadcrumV2 = matches.reduce((acc, curr) => {
+    if (curr.handle?.breadcrumV2) {
+      return [...acc, ...(curr.handle?.breadcrumV2?.() || [])];
+    }
+    return acc;
+  }, []);
+
+  console.log(breadcrumV2, matches, project1);
+
+  const [hideAccountSwitcher, setHideAccountSwitcher] = useState(false);
   return (
-    <div className="flex flex-col bg-surface-basic-subdued min-h-full">
-      <TopBar
-        fixed
-        breadcrum={
-          noBreadCrum ? null : (
-            <Breadcrum.Root>
-              {breadcrum.map((bc: any, index) =>
-                cloneElement(bc.handle.breadcrum(bc), {
-                  key: generateKey(index),
-                })
-              )}
-            </Breadcrum.Root>
-          )
-        }
-        logo={logo ? cloneElement(logo, { size: 24 }) : null}
-        // tabs={navbar === constants.nan ? null : navbar}
-        tabs={navbar === constants.nan ? null : navbar}
-        actions={
-          <div className="flex flex-row gap-2xl items-center">
-            {!!devicesMenu && devicesMenu()}
-            {!!headerExtra && headerExtra()}
-            <ProfileMenu hideProfileName={hideProfileName} />
-          </div>
-        }
-      />
+    <div className="flex flex-row bg-surface-basic-subdued min-h-full">
+      <Sidebar.Root
+        linkComponent={Link}
+        toLabel="to"
+        onCollapseChange={(e) => {
+          if (e.type === 'end' && e.value === 'close') {
+            setHideAccountSwitcher(true);
+          } else {
+            setHideAccountSwitcher(false);
+          }
+        }}
+      >
+        <Sidebar.Header>
+          <span className="flex-shrink-0">
+            <BrandLogo size={24} />
+          </span>
+          {!hideAccountSwitcher && (
+            <div className="flex flex-row items-center flex-1">
+              <div className="bodyMd text-icon-disabled">/</div>
+              <AccountSwitch />
+            </div>
+          )}
+        </Sidebar.Header>
+        {sideTopMenuItems({ account: account || '' }).map((sm) => {
+          return (
+            <Sidebar.Item
+              active={activePath.startsWith(sm.to)}
+              key={sm.to}
+              {...sm}
+            />
+          );
+        })}
+        <div className="flex-1" />
+
+        {sideBottomMenuItems({ account: account || '' }).map((sm) => {
+          return (
+            <Sidebar.Item
+              active={activePath.startsWith(sm.to)}
+              key={sm.to}
+              {...sm}
+            />
+          );
+        })}
+      </Sidebar.Root>
       <ViewModeProvider>
         <SubNavDataProvider>
           <UnsavedChangesProvider>
-            <Container className="pb-5xl">
-              <Outlet
-                context={{
-                  ...loaderData,
-                }}
-              />
-            </Container>
+            <div className="flex flex-col w-full">
+              {/* {b} */}
+              <Header items={breadcrumV2} />
+              <Container className={cn('pb-5xl', navbar ? 'pt-4xl' : 'pt-6xl')}>
+                {navbar && (
+                  <div className="mb-5xl border-b border-border-default">
+                    {navbar}
+                  </div>
+                )}
+                <Outlet
+                  context={{
+                    ...loaderData,
+                  }}
+                />
+              </Container>
+            </div>
           </UnsavedChangesProvider>
         </SubNavDataProvider>
       </ViewModeProvider>

@@ -1,4 +1,6 @@
 export {
+  HelmLogo,
+  User,
   Warning,
   WarningCircleFill,
   Domain,

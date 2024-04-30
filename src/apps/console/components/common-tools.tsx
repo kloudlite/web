@@ -5,7 +5,7 @@ import {
   Plus,
 } from '~/console/components/icons';
 import { useSearchParams } from '@remix-run/react';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import OptionList from '~/components/atoms/option-list';
 import Toolbar from '~/components/atoms/toolbar';
 import { cn } from '~/components/utils';
@@ -121,12 +121,14 @@ interface ICommonTools extends IModeProps {
   options: FilterType[];
   noViewMode?: boolean;
   noSort?: boolean;
+  extra?: ReactNode;
 }
 
 const CommonTools = ({
   options,
   noViewMode = false,
   noSort = false,
+  extra,
 }: ICommonTools) => {
   const [appliedFilters, setAppliedFilters] = useState<IAppliedFilters>({});
   const [sortbyOptionListOpen, setSortybyOptionListOpen] = useState(false);
@@ -137,7 +139,7 @@ const CommonTools = ({
   });
 
   return (
-    <div className={cn('flex flex-col bg-surface-basic-subdued pb-6xl')}>
+    <div className={cn('flex flex-col bg-surface-basic-subdued pb-3xl')}>
       <div>
         {/* Toolbar for md and up */}
         <div className="hidden md:flex">
@@ -151,6 +153,8 @@ const CommonTools = ({
               />
             )}
             {!noViewMode && <ViewMode />}
+            <div className="flex-1" />
+            {extra}
           </Toolbar.Root>
         </div>
 
@@ -172,7 +176,6 @@ const CommonTools = ({
           </Toolbar.Root>
         </div>
       </div>
-
       <Filters appliedFilters={appliedFilters} />
     </div>
   );

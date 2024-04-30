@@ -5,7 +5,7 @@ import {
   useAppState,
 } from '~/console/page-components/app-states';
 import { BottomNavigation } from '~/console/components/commons';
-import { FadeIn } from '../../../../../../../page-components/util';
+import { FadeIn } from '~/console/page-components/util';
 import { EnvironmentVariables } from './app-environment-variables';
 import { ConfigMounts } from './app-config-mount';
 
