@@ -17,6 +17,7 @@ import { DIALOG_TYPE } from '~/console/utils/commons';
 import { IRemixCtx } from '~/lib/types/common';
 import fake from '~/root/fake-data-generator/fake';
 import SecretResourcesV2 from '~/console/page-components/secret-resource-v2';
+import { breadcrumItems } from '~/components/organisms/headerV2';
 import HandleSecret from './handle-secret';
 import Tools from './tools';
 
@@ -61,18 +62,6 @@ const Secrets = () => {
           }
           return (
             <Wrapper
-              secondaryHeader={{
-                title: 'Secrets',
-                action: secrets.length > 0 && (
-                  <Button
-                    content="Add new secret"
-                    variant="primary"
-                    onClick={() => {
-                      setHandleSecret({ type: DIALOG_TYPE.ADD, data: null });
-                    }}
-                  />
-                ),
-              }}
               empty={{
                 is: secrets.length === 0,
                 title: 'This is where you’ll manage your Secret.',
@@ -90,7 +79,24 @@ const Secrets = () => {
                   },
                 },
               }}
-              tools={<Tools />}
+              tools={
+                <Tools
+                  extra={
+                    secrets.length > 0 && (
+                      <Button
+                        content="Add new secret"
+                        variant="primary"
+                        onClick={() => {
+                          setHandleSecret({
+                            type: DIALOG_TYPE.ADD,
+                            data: null,
+                          });
+                        }}
+                      />
+                    )
+                  }
+                />
+              }
             >
               <SecretResourcesV2 items={secrets} linkComponent={Link} />
             </Wrapper>
@@ -100,6 +106,22 @@ const Secrets = () => {
       <HandleSecret show={showHandleSecret} setShow={setHandleSecret} />
     </>
   );
+};
+
+export const handle = () => {
+  return {
+    breadcrumV2: breadcrumItems(() => {
+      return [
+        {
+          type: 'separator',
+        },
+        {
+          type: 'plain',
+          content: 'Secrets',
+        },
+      ];
+    }),
+  };
 };
 
 export default Secrets;

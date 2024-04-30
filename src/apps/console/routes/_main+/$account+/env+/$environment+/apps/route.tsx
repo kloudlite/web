@@ -11,8 +11,25 @@ import { IRemixCtx } from '~/lib/types/common';
 import { clearAppState } from '~/console/page-components/app-states';
 import { useEffect } from 'react';
 import { Button } from '~/components/atoms/button';
+import { breadcrumItems } from '~/components/organisms/headerV2';
 import Tools from './tools';
 import AppsResourcesV2 from './apps-resources-v2';
+
+export const handle = () => {
+  return {
+    breadcrumV2: breadcrumItems(() => {
+      return [
+        {
+          type: 'separator',
+        },
+        {
+          type: 'plain',
+          content: 'Apps',
+        },
+      ];
+    }),
+  };
+};
 
 export const loader = async (ctx: IRemixCtx) => {
   ensureAccountSet(ctx);
@@ -57,18 +74,6 @@ const Apps = () => {
         return (
           <div>
             <Wrapper
-              header={{
-                title: 'Apps',
-                action: apps?.length > 0 && (
-                  <Button
-                    variant="primary"
-                    content="Create new app"
-                    prefix={<Plus />}
-                    to="../new-app"
-                    LinkComponent={Link}
-                  />
-                ),
-              }}
               empty={{
                 is: apps?.length === 0,
                 title: 'This is where you’ll manage your Apps.',
@@ -82,7 +87,21 @@ const Apps = () => {
                   to: '../new-app',
                 },
               }}
-              tools={<Tools />}
+              tools={
+                <Tools
+                  extra={
+                    apps?.length > 0 && (
+                      <Button
+                        variant="primary"
+                        content="Create new app"
+                        prefix={<Plus />}
+                        to="../new-app"
+                        LinkComponent={Link}
+                      />
+                    )
+                  }
+                />
+              }
             >
               <AppsResourcesV2 items={apps} />
             </Wrapper>

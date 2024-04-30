@@ -17,6 +17,7 @@ import { DIALOG_TYPE } from '~/console/utils/commons';
 import { IRemixCtx } from '~/lib/types/common';
 import fake from '~/root/fake-data-generator/fake';
 import ConfigResourcesV2 from '~/console/page-components/config-resource-v2';
+import { breadcrumItems } from '~/components/organisms/headerV2';
 import HandleConfig from './handle-config';
 import Tools from './tools';
 
@@ -59,18 +60,6 @@ const Configs = () => {
 
           return (
             <Wrapper
-              secondaryHeader={{
-                title: 'Configs',
-                action: configs.length > 0 && (
-                  <Button
-                    content="Add new config"
-                    variant="primary"
-                    onClick={() => {
-                      setHandleConfig({ type: DIALOG_TYPE.ADD, data: null });
-                    }}
-                  />
-                ),
-              }}
               empty={{
                 is: configs.length === 0,
                 title: 'This is where you’ll manage your Config.',
@@ -91,7 +80,24 @@ const Configs = () => {
                 pageInfo,
                 totalCount,
               }}
-              tools={<Tools />}
+              tools={
+                <Tools
+                  extra={
+                    configs.length > 0 && (
+                      <Button
+                        content="Add new config"
+                        variant="primary"
+                        onClick={() => {
+                          setHandleConfig({
+                            type: DIALOG_TYPE.ADD,
+                            data: null,
+                          });
+                        }}
+                      />
+                    )
+                  }
+                />
+              }
             >
               <ConfigResourcesV2 items={configs} linkComponent={Link} />
             </Wrapper>
@@ -101,6 +107,22 @@ const Configs = () => {
       <HandleConfig show={showHandleConfig} setShow={setHandleConfig} />
     </>
   );
+};
+
+export const handle = () => {
+  return {
+    breadcrumV2: breadcrumItems(() => {
+      return [
+        {
+          type: 'separator',
+        },
+        {
+          type: 'plain',
+          content: 'Configs',
+        },
+      ];
+    }),
+  };
 };
 
 export default Configs;

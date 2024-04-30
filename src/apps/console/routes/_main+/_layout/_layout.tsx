@@ -317,10 +317,6 @@ const Console = () => {
 
   const { activePath } = useActivePath({ parent: account || '' });
 
-  useEffect(() => {
-    console.log('activePath', activePath);
-  }, [activePath]);
-
   const navbar = useHandleFromMatches('navbar', null);
   // const logo = useHandleFromMatches('logo', null);
 
@@ -356,7 +352,7 @@ const Console = () => {
     return acc;
   }, [] as any);
 
-  console.log(breadcrumV2, matches);
+  // console.log(breadcrumV2, matches);
 
   return (
     <div className="flex flex-row bg-surface-basic-subdued min-h-full">

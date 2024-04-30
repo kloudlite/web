@@ -13,6 +13,20 @@ import { GQLServerHandler } from '~/console/server/gql/saved-queries';
 import Tools from './tools';
 import ClusterResourcesV2 from './cluster-resources-v2';
 
+export const handle = () => {
+  return {
+    breadcrumV2: () => [
+      {
+        type: 'separator',
+      },
+      {
+        type: 'plain',
+        content: 'Clusters',
+      },
+    ],
+  };
+};
+
 export const loader = async (ctx: IRemixCtx) => {
   const promise = pWrapper(async () => {
     ensureAccountSet(ctx);
@@ -130,18 +144,6 @@ const Clusters = () => {
         const { pageInfo, totalCount } = clustersData;
         return (
           <Wrapper
-            header={{
-              title: 'Clusters',
-              action: clusters.length > 0 && (
-                <Button
-                  content="Create cluster"
-                  variant="primary"
-                  prefix={<Plus />}
-                  LinkComponent={Link}
-                  to={`/${account}/new-cluster`}
-                />
-              ),
-            }}
             empty={getEmptyState({
               clustersCount: clusters.length,
               cloudProviderSecretsCount: secretsCount,
@@ -150,7 +152,19 @@ const Clusters = () => {
               pageInfo,
               totalCount,
             }}
-            tools={<Tools />}
+            tools={
+              <Tools
+                extra={
+                  clusters.length > 0 && (
+                    <Button
+                      content="Add new cluster"
+                      variant="primary"
+                      to={`/${account}/new-cluster`}
+                    />
+                  )
+                }
+              />
+            }
           >
             <ClusterResourcesV2 items={clusters} />
           </Wrapper>

@@ -15,16 +15,26 @@ import { IConfig } from '~/console/server/gql/queries/config-queries';
 import { GQLServerHandler } from '~/console/server/gql/saved-queries';
 import { parseName } from '~/console/server/r-utils/common';
 import { ensureAccountSet } from '~/console/server/utils/auth-utils';
-import { constants } from '~/console/server/utils/constants';
 import { useReload } from '~/lib/client/helpers/reloader';
 import { IRemixCtx } from '~/lib/types/common';
+import { breadcrumItems } from '~/components/organisms/headerV2';
 import Handle, { updateConfig } from './handle';
 import Resources from './resources';
 import Tools from './tools';
 
 export const handle = () => {
   return {
-    navbar: constants.nan,
+    breadcrumV2: breadcrumItems(() => {
+      return [
+        {
+          type: 'separator',
+        },
+        {
+          type: 'plain',
+          content: 'Secrets',
+        },
+      ];
+    }),
   };
 };
 

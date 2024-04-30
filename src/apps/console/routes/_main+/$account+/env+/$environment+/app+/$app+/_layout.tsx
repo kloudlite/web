@@ -13,9 +13,9 @@ import logger from '~/lib/client/helpers/log';
 import { IRemixCtx } from '~/lib/types/common';
 
 import { LoadingComp, pWrapper } from '~/console/components/loading-component';
-import { BreadcrumSlash } from '~/console/utils/commons';
-import Breadcrum from '~/console/components/breadcrum';
 import { Truncate } from '~/root/lib/utils/common';
+import { breadcrumItems } from '~/components/organisms/headerV2';
+import { parseName } from '~/console/server/r-utils/common';
 import { IEnvironmentContext } from '../../_layout';
 
 const LocalTabs = () => {
@@ -23,10 +23,6 @@ const LocalTabs = () => {
   return (
     <CommonTabs
       baseurl={`/${account}/env/${environment}/app/${app}`}
-      backButton={{
-        to: `/${account}/env/${environment}/apps`,
-        label: 'Apps',
-      }}
       tabs={[
         {
           label: 'Logs & Metrics',
@@ -43,25 +39,36 @@ const LocalTabs = () => {
   );
 };
 
-const LocalBreadcrum = ({ data }: { data: IApp }) => {
-  const { displayName } = data;
-  return (
-    <div className="flex flex-row items-center">
-      <BreadcrumSlash />
-      <Breadcrum.Button
-        content={<Truncate length={15}>{displayName || ''}</Truncate>}
-      />
-    </div>
-  );
-};
-
-export const handle = ({ promise: { app, error } }: { promise: any }) => {
+export const handle = ({ promise: { app, error } }: any) => {
   if (error) {
     return {};
   }
+
   return {
     navbar: <LocalTabs />,
-    breadcrum: () => <LocalBreadcrum data={app} />,
+    breadcrumV2: breadcrumItems(() => {
+      const { account, environment } = useParams();
+
+      return [
+        {
+          type: 'separator',
+        },
+        {
+          type: 'plain',
+          content: 'Apps',
+          path: `/${account}/env/${environment}/apps`,
+        },
+        {
+          type: 'separator',
+        },
+        {
+          type: 'plain',
+          content: (
+            <Truncate length={15}>{app.displayName || parseName(app)}</Truncate>
+          ),
+        },
+      ];
+    }),
   };
 };
 

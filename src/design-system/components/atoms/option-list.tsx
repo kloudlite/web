@@ -165,29 +165,35 @@ const OptionMenuContent = forwardRef<
 );
 OptionMenuContent.displayName = OptionMenuPrimitive.Content.displayName;
 
-const OptionItemRaw = ({
-  children,
-  active,
-  className,
-}: {
-  children?: ReactNode;
-  active?: boolean;
-  className?: string;
-}) => {
-  return (
-    <div
-      className={cn(
-        'group relative flex flex-row gap-xl items-center bodyMd gap cursor-pointer select-none py-lg px-xl text-text-default outline-none transition-colors focus:bg-surface-basic-hovered hover:bg-surface-basic-hovered data-[disabled]:pointer-events-none data-[disabled]:text-text-disabled',
-        {
-          'bg-surface-basic-active': !!active,
-        },
-        className
-      )}
-    >
-      {children}
-    </div>
-  );
-};
+const OptionItemRaw = forwardRef<HTMLDivElement, IOptionMenuItem>(
+  (
+    {
+      children,
+      active,
+      className,
+    }: {
+      children?: ReactNode;
+      active?: boolean;
+      className?: string;
+    },
+    ref
+  ) => {
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          'group relative flex flex-row gap-xl items-center bodyMd gap cursor-pointer select-none py-lg px-xl text-text-default outline-none transition-colors focus:bg-surface-basic-hovered hover:bg-surface-basic-hovered data-[disabled]:pointer-events-none data-[disabled]:text-text-disabled',
+          {
+            'bg-surface-basic-active': !!active,
+          },
+          className
+        )}
+      >
+        {children}
+      </div>
+    );
+  }
+);
 
 const OptionMenuItem = forwardRef<HTMLDivElement, IOptionMenuItem>(
   ({ className, ...props }, ref) => {
@@ -198,9 +204,17 @@ const OptionMenuItem = forwardRef<HTMLDivElement, IOptionMenuItem>(
         onSelect={props.onClick}
         asChild
       >
-        <OptionItemRaw className={className} active={props.active}>
+        <div
+          className={cn(
+            'group relative flex flex-row gap-xl items-center bodyMd gap cursor-pointer select-none py-lg px-xl text-text-default outline-none transition-colors focus:bg-surface-basic-hovered hover:bg-surface-basic-hovered data-[disabled]:pointer-events-none data-[disabled]:text-text-disabled',
+            {
+              'bg-surface-basic-active': !!props.active,
+            },
+            className
+          )}
+        >
           {props.children}
-        </OptionItemRaw>
+        </div>
       </OptionMenuPrimitive.Item>
     );
   }

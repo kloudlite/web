@@ -8,6 +8,7 @@ import { parseNodes } from '~/console/server/r-utils/common';
 import { IRemixCtx } from '~/lib/types/common';
 import fake from '~/root/fake-data-generator/fake';
 import { Button } from '~/components/atoms/button';
+import { breadcrumItems } from '~/components/organisms/headerV2';
 import Tools from './tools';
 import ManagedResourceResourcesV2 from './managed-resources-resource-v2';
 
@@ -44,18 +45,6 @@ const KlOperatorServices = () => {
 
         return (
           <Wrapper
-            header={{
-              title: 'Managed resources',
-              action: managedResources.length > 0 && (
-                <Button
-                  variant="primary"
-                  content="Create managed resource"
-                  prefix={<Plus />}
-                  to="../new-managed-resource"
-                  LinkComponent={Link}
-                />
-              ),
-            }}
             empty={{
               is: managedResources.length === 0,
               title: 'This is where you’ll manage your Managed resources.',
@@ -72,7 +61,21 @@ const KlOperatorServices = () => {
                 LinkComponent: Link,
               },
             }}
-            tools={<Tools />}
+            tools={
+              <Tools
+                extra={
+                  managedResources.length > 0 && (
+                    <Button
+                      variant="primary"
+                      content="Create managed resource"
+                      prefix={<Plus />}
+                      to="../new-managed-resource"
+                      LinkComponent={Link}
+                    />
+                  )
+                }
+              />
+            }
           >
             <ManagedResourceResourcesV2
               items={managedResources}
@@ -83,6 +86,22 @@ const KlOperatorServices = () => {
       }}
     </LoadingComp>
   );
+};
+
+export const handle = () => {
+  return {
+    breadcrumV2: breadcrumItems(() => {
+      return [
+        {
+          type: 'separator',
+        },
+        {
+          type: 'plain',
+          content: 'Managed Resources',
+        },
+      ];
+    }),
+  };
 };
 
 export default KlOperatorServices;

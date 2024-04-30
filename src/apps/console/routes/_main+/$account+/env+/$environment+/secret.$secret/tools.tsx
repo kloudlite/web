@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import Toolbar from '~/components/atoms/toolbar';
 import ViewMode from '~/console/components/view-mode';
 
 const Tools = ({
   searchText,
   setSearchText,
+  extra,
 }: {
   searchText: string;
   setSearchText: React.Dispatch<React.SetStateAction<string>>;
+  extra?: ReactNode;
 }) => {
   return (
     <div className="mb-6xl">
@@ -22,6 +24,9 @@ const Tools = ({
           />
         </div>
         <ViewMode />
+
+        <div className="flex-1" />
+        {extra}
       </Toolbar.Root>
     </div>
   );

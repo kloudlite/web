@@ -1,12 +1,15 @@
 import { ChevronUpDown } from '~/components/icons';
 import { ReactNode, useRef, useState } from 'react';
+import { Link } from '@remix-run/react';
 import { Button } from '../atoms/button';
 import OptionList from '../atoms/option-list';
 import { cn } from '../utils';
+import { ChildrenProps } from '../types';
 
 interface IItem {
   type: 'plain';
   content: ReactNode;
+  path?: string;
 }
 
 interface IItemAdvance {
@@ -22,16 +25,29 @@ interface ISeparator {
 }
 
 const Separator = () => {
-  return <div className="bodyMd text-icon-disabled">/</div>;
+  return <div className="bodyMd text-icon-disabled !py-md">/</div>;
 };
 
-const Item = ({ children }: { children?: ReactNode }) => {
+const Item = ({
+  children,
+  path,
+}: ChildrenProps & {
+  path?: string;
+}) => {
   return (
     <Button
       variant="plain"
       content={children}
       size="sm"
-      className="!px-lg bodyMd-medium"
+      className="!px-lg bodyMd-medium !py-md"
+      {...{
+        ...(path
+          ? {
+              LinkComponent: Link,
+              to: path,
+            }
+          : {}),
+      }}
     />
   );
 };
@@ -96,9 +112,12 @@ const ItemAdvance = ({
   );
 };
 
+type IItems = (IItem | IItemAdvance | ISeparator)[];
 type IRoot = {
-  items: (IItem | IItemAdvance | ISeparator)[];
+  items: IItems;
 };
+
+export const breadcrumItems = (cf: () => IItems) => cf;
 
 const Header = ({ items }: IRoot) => {
   console.log(items);
@@ -114,7 +133,11 @@ const Header = ({ items }: IRoot) => {
       {(items || []).map((i, key) => {
         const k = key;
         if (i.type === 'plain') {
-          return <Item key={k}>{i.content}</Item>;
+          return (
+            <Item path={i.path} key={k}>
+              {i.content}
+            </Item>
+          );
         }
         if (i.type === 'advance') {
           return <ItemAdvance key={k} {...i} />;

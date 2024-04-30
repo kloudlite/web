@@ -14,6 +14,7 @@ import { IRemixCtx } from '~/lib/types/common';
 import { useState } from 'react';
 import fake from '~/root/fake-data-generator/fake';
 import { Button } from '~/components/atoms/button';
+import { breadcrumItems } from '~/components/organisms/headerV2';
 import Tools from './tools';
 import HandleRouter from './handle-router';
 import RouterResourcesV2 from './router-resources-V2';
@@ -57,19 +58,6 @@ const Routers = () => {
           }
           return (
             <Wrapper
-              header={{
-                title: 'Routers',
-                action: routers.length > 0 && (
-                  <Button
-                    variant="primary"
-                    content="Create Router"
-                    prefix={<Plus />}
-                    onClick={() => {
-                      setVisible(true);
-                    }}
-                  />
-                ),
-              }}
               empty={{
                 is: routers.length === 0,
                 title: 'This is where you’ll manage your Routers.',
@@ -86,7 +74,22 @@ const Routers = () => {
                   },
                 },
               }}
-              tools={<Tools />}
+              tools={
+                <Tools
+                  extra={
+                    routers.length > 0 && (
+                      <Button
+                        variant="primary"
+                        content="Create Router"
+                        prefix={<Plus />}
+                        onClick={() => {
+                          setVisible(true);
+                        }}
+                      />
+                    )
+                  }
+                />
+              }
             >
               <RouterResourcesV2 items={routers} />
             </Wrapper>
@@ -96,6 +99,22 @@ const Routers = () => {
       <HandleRouter {...{ visible, setVisible, isUpdate: false }} />
     </>
   );
+};
+
+export const handle = () => {
+  return {
+    breadcrumV2: breadcrumItems(() => {
+      return [
+        {
+          type: 'separator',
+        },
+        {
+          type: 'plain',
+          content: 'Router',
+        },
+      ];
+    }),
+  };
 };
 
 export default Routers;

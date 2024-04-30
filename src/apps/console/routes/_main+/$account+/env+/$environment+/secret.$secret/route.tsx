@@ -14,17 +14,51 @@ import { useConsoleApi } from '~/console/server/gql/api-provider';
 import { GQLServerHandler } from '~/console/server/gql/saved-queries';
 import { parseName } from '~/console/server/r-utils/common';
 import { ensureAccountSet } from '~/console/server/utils/auth-utils';
-import { constants } from '~/console/server/utils/constants';
 import { useReload } from '~/lib/client/helpers/reloader';
 import { IRemixCtx } from '~/lib/types/common';
 import { ISecret } from '~/console/server/gql/queries/secret-queries';
+import { breadcrumItems } from '~/components/organisms/headerV2';
+import { CommonTabs } from '~/console/components/common-navbar-tabs';
 import Handle, { updateSecret } from './handle';
 import Resources from './resources';
 import Tools from './tools';
 
-export const handle = () => {
+const SecretTabs = () => {
+  const { account, environment } = useParams();
+  return (
+    <CommonTabs
+      backButton={{
+        to: `/${account}/env/${environment}/cs/secrets`,
+        label: 'Secrets',
+      }}
+      baseurl={`/${account}/env/${environment}`}
+    />
+  );
+};
+
+export const handle = ({ promise: { secret } }: any) => {
   return {
-    navbar: constants.nan,
+    navbar: <SecretTabs />,
+    breadcrumV2: breadcrumItems(() => {
+      const { account, environment } = useParams();
+      return [
+        {
+          type: 'separator',
+        },
+        {
+          type: 'plain',
+          content: 'Secrets',
+          path: `/${account}/env/${environment}/cs/secrets`,
+        },
+        {
+          type: 'separator',
+        },
+        {
+          type: 'plain',
+          content: secret.displayName || parseName(secret),
+        },
+      ];
+    }),
   };
 };
 
@@ -44,7 +78,7 @@ export const loader = async (ctx: IRemixCtx) => {
     return { secret: data };
   });
 
-  return defer({ promise });
+  return defer({ promise: await promise });
 };
 
 const ConfigBody = ({ secret }: { secret: ISecret }) => {
@@ -98,61 +132,6 @@ const ConfigBody = ({ secret }: { secret: ISecret }) => {
   return (
     <>
       <Wrapper
-        header={{
-          title: parseName(secret),
-          backurl: `/${account}/env/${environment}/cs/secrets`,
-          action: Object.keys(modifiedItems).length > 0 && (
-            <div className="flex flex-row items-center gap-lg">
-              <Button
-                variant="outline"
-                content="Add new entry"
-                prefix={<Plus />}
-                onClick={() =>
-                  setShowHandleConfig({
-                    type: 'Add',
-                    data: modifiedItems,
-                  })
-                }
-              />
-              {changesCount() > 0 && (
-                <Button variant="basic" content="Discard" />
-              )}
-              {changesCount() > 0 && (
-                <Button
-                  variant="primary"
-                  content={`Commit ${changesCount()} changes`}
-                  loading={configUpdating}
-                  onClick={async () => {
-                    setConfigUpdating(true);
-                    const k = Object.entries(modifiedItems).reduce(
-                      (acc, [key, val]) => {
-                        if (val.delete) {
-                          return { ...acc };
-                        }
-                        return {
-                          ...acc,
-                          [key]: val.newvalue ? val.newvalue : val.value,
-                        };
-                      },
-                      {}
-                    );
-                    if (!environment) {
-                      throw new Error('environment is required!.');
-                    }
-                    await updateSecret({
-                      api,
-                      secret,
-                      environment,
-                      data: k,
-                      reload,
-                    });
-                    setConfigUpdating(false);
-                  }}
-                />
-              )}
-            </div>
-          ),
-        }}
         empty={{
           is: Object.keys(modifiedItems).length === 0,
           title: 'This is where you’ll manage your secrets.',
@@ -166,7 +145,65 @@ const ConfigBody = ({ secret }: { secret: ISecret }) => {
               setShowHandleConfig({ type: 'add', data: modifiedItems }),
           },
         }}
-        tools={<Tools searchText={searchText} setSearchText={setSearchText} />}
+        tools={
+          <Tools
+            searchText={searchText}
+            setSearchText={setSearchText}
+            extra={
+              Object.keys(modifiedItems).length > 0 && (
+                <div className="flex flex-row items-center gap-lg">
+                  <Button
+                    variant="outline"
+                    content="Add new entry"
+                    prefix={<Plus />}
+                    onClick={() =>
+                      setShowHandleConfig({
+                        type: 'Add',
+                        data: modifiedItems,
+                      })
+                    }
+                  />
+                  {changesCount() > 0 && (
+                    <Button variant="basic" content="Discard" />
+                  )}
+                  {changesCount() > 0 && (
+                    <Button
+                      variant="primary"
+                      content={`Commit ${changesCount()} changes`}
+                      loading={configUpdating}
+                      onClick={async () => {
+                        setConfigUpdating(true);
+                        const k = Object.entries(modifiedItems).reduce(
+                          (acc, [key, val]) => {
+                            if (val.delete) {
+                              return { ...acc };
+                            }
+                            return {
+                              ...acc,
+                              [key]: val.newvalue ? val.newvalue : val.value,
+                            };
+                          },
+                          {}
+                        );
+                        if (!environment) {
+                          throw new Error('environment is required!.');
+                        }
+                        await updateSecret({
+                          api,
+                          secret,
+                          environment,
+                          data: k,
+                          reload,
+                        });
+                        setConfigUpdating(false);
+                      }}
+                    />
+                  )}
+                </div>
+              )
+            }
+          />
+        }
       >
         <Resources
           searchText={searchText.trim()}

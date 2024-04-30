@@ -1,8 +1,8 @@
 import { useSearchParams } from '@remix-run/react';
-import { useMemo } from 'react';
+import { ReactNode, useMemo } from 'react';
 import CommonTools from '~/console/components/common-tools';
 
-const Tools = () => {
+const Tools = ({ extra }: { extra?: ReactNode }) => {
   const [searchParams] = useSearchParams();
 
   const options = useMemo(
@@ -23,7 +23,7 @@ const Tools = () => {
     [searchParams]
   );
 
-  return <CommonTools {...{ options }} />;
+  return <CommonTools {...{ options, extra }} />;
 };
 
 export default Tools;
