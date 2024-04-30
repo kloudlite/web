@@ -1,4 +1,24 @@
+export const Line = ({ size }: { size?: number }) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+      viewBox="0 0 16 16"
+      fill="none"
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M8 1C8.55228 1 9 1.44772 9 2V14C9 14.5523 8.55228 15 8 15C7.44772 15 7 14.5523 7 14V2C7 1.44772 7.44772 1 8 1Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+};
+
 export {
+  BellSimple,
   Warning,
   WarningCircleFill,
   Domain,
@@ -77,4 +97,5 @@ export {
   HamburgerFill,
   CalendarCheckFill,
   GearFill,
+  EnvelopeSimple,
 } from '@jengaicons/react';
