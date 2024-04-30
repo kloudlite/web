@@ -100,7 +100,7 @@ const AppDetail = () => {
         <NameIdView
           displayName={values.displayName}
           name={values.name}
-          resType="project"
+          resType="environment"
           errors={errors.name}
           label="Application name"
           placeholder="Enter application name"

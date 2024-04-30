@@ -20,16 +20,8 @@ export type IRouter = NN<ConsoleGetRouterQuery['core_getRouter']>;
 export const routerQueries = (executor: IExecutor) => ({
   createRouter: executor(
     gql`
-      mutation Core_createRouter(
-        $projectName: String!
-        $envName: String!
-        $router: RouterIn!
-      ) {
-        core_createRouter(
-          projectName: $projectName
-          envName: $envName
-          router: $router
-        ) {
+      mutation Core_createRouter($envName: String!, $router: RouterIn!) {
+        core_createRouter(envName: $envName, router: $router) {
           id
         }
       }
@@ -42,16 +34,8 @@ export const routerQueries = (executor: IExecutor) => ({
   ),
   updateRouter: executor(
     gql`
-      mutation Core_updateRouter(
-        $projectName: String!
-        $envName: String!
-        $router: RouterIn!
-      ) {
-        core_updateRouter(
-          projectName: $projectName
-          envName: $envName
-          router: $router
-        ) {
+      mutation Core_updateRouter($envName: String!, $router: RouterIn!) {
+        core_updateRouter(envName: $envName, router: $router) {
           id
         }
       }
@@ -64,16 +48,8 @@ export const routerQueries = (executor: IExecutor) => ({
   ),
   deleteRouter: executor(
     gql`
-      mutation Core_deleteRouter(
-        $projectName: String!
-        $envName: String!
-        $routerName: String!
-      ) {
-        core_deleteRouter(
-          projectName: $projectName
-          envName: $envName
-          routerName: $routerName
-        )
+      mutation Core_deleteRouter($envName: String!, $routerName: String!) {
+        core_deleteRouter(envName: $envName, routerName: $routerName)
       }
     `,
     {
@@ -85,17 +61,11 @@ export const routerQueries = (executor: IExecutor) => ({
   listRouters: executor(
     gql`
       query Core_listRouters(
-        $projectName: String!
         $envName: String!
         $search: SearchRouters
         $pq: CursorPaginationIn
       ) {
-        core_listRouters(
-          projectName: $projectName
-          envName: $envName
-          search: $search
-          pq: $pq
-        ) {
+        core_listRouters(envName: $envName, search: $search, pq: $pq) {
           edges {
             cursor
             node {
@@ -119,7 +89,6 @@ export const routerQueries = (executor: IExecutor) => ({
                 name
                 namespace
               }
-              projectName
               recordVersion
               spec {
                 backendProtocol
@@ -203,16 +172,8 @@ export const routerQueries = (executor: IExecutor) => ({
   ),
   getRouter: executor(
     gql`
-      query Core_getRouter(
-        $projectName: String!
-        $envName: String!
-        $name: String!
-      ) {
-        core_getRouter(
-          projectName: $projectName
-          envName: $envName
-          name: $name
-        ) {
+      query Core_getRouter($envName: String!, $name: String!) {
+        core_getRouter(envName: $envName, name: $name) {
           createdBy {
             userEmail
             userId
@@ -232,7 +193,6 @@ export const routerQueries = (executor: IExecutor) => ({
             name
             namespace
           }
-          projectName
           spec {
             backendProtocol
             basicAuth {

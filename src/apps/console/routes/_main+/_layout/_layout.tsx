@@ -6,37 +6,22 @@ import {
   useLocation,
   useParams,
 } from '@remix-run/react';
-import {
-  ReactNode,
-  cloneElement,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Container from '~/components/atoms/container';
 import OptionList from '~/components/atoms/option-list';
 import { BrandLogo } from '~/components/branding/brand-logo';
 import Profile from '~/components/molecule/profile';
-import { TopBar } from '~/components/organisms/top-bar';
-import { cn, generateKey, titleCase } from '~/components/utils';
-import Breadcrum from '~/console/components/breadcrum';
-import { CommonTabs } from '~/console/components/common-navbar-tabs';
+import { cn, titleCase } from '~/components/utils';
 import LogoWrapper from '~/console/components/logo-wrapper';
 import { ViewModeProvider } from '~/console/components/view-mode';
-import {
-  IAccount,
-  IAccounts,
-} from '~/console/server/gql/queries/account-queries';
+import { IAccounts } from '~/console/server/gql/queries/account-queries';
 import { setupAccountContext } from '~/console/server/utils/auth-utils';
-import { constants } from '~/console/server/utils/constants';
 import { LightTitlebarColor } from '~/design-system/tailwind-base';
 import { getCookie } from '~/root/lib/app-setup/cookies';
 import withContext from '~/root/lib/app-setup/with-contxt';
 import { useExternalRedirect } from '~/root/lib/client/helpers/use-redirect';
 import { SubNavDataProvider } from '~/root/lib/client/hooks/use-create-subnav-action';
 import useMatches, {
-  useDataFromMatches,
   useHandleFromMatches,
 } from '~/root/lib/client/hooks/use-custom-matches';
 import { UnsavedChangesProvider } from '~/root/lib/client/hooks/use-unsaved-changes';
@@ -48,14 +33,12 @@ import {
   Container as ContainerIcon,
   GearSix,
   Project,
-  VirtualMachine,
   User,
   ChevronUpDown,
   Buildings,
   Search,
   Check,
   Plus,
-  ChevronLeft,
 } from '~/console/components/icons';
 import Sidebar from '~/components/organisms/side-bar';
 import { useActivePath } from '~/root/lib/client/hooks/use-active-path';
@@ -65,10 +48,6 @@ import { useConsoleApi } from '~/console/server/gql/api-provider';
 import useCustomSwr from '~/root/lib/client/hooks/use-custom-swr';
 import { useSearch } from '~/root/lib/client/helpers/search-filter';
 import { parseName } from '~/console/server/r-utils/common';
-import { IProject } from '~/console/server/gql/queries/project-queries';
-import { AnimatePresence, motion } from 'framer-motion';
-import ScrollArea from '~/components/atoms/scroll-area';
-import Tabs from '~/components/atoms/tabs';
 
 const restActions = (ctx: IExtRemixCtx) => {
   return withContext(ctx, {});
@@ -85,7 +64,7 @@ export type IConsoleRootContext = {
 
 export const meta = () => {
   return [
-    { title: 'Projects' },
+    { title: 'Environments' },
     { name: 'theme-color', content: LightTitlebarColor },
   ];
 };
@@ -184,16 +163,16 @@ const AccountSwitch = () => {
               <OptionList.Link
                 key={parseName(item)}
                 LinkComponent={Link}
-                to={`/${parseName(item)}/projects`}
+                to={`/${parseName(item)}/environments`}
                 className={cn(
                   'flex flex-row items-center justify-between',
-                  parseName(item) === parseName(account)
+                  parseName(item) === account
                     ? 'bg-surface-basic-pressed hover:!bg-surface-basic-pressed'
                     : ''
                 )}
               >
                 <span>{item.displayName}</span>
-                {parseName(item) === parseName(account) && (
+                {parseName(item) === account && (
                   <span>
                     <Check size={16} />
                   </span>
@@ -219,7 +198,7 @@ const AccountSwitch = () => {
 const Logo = () => {
   const { account } = useParams();
   return (
-    <LogoWrapper to={`/${account}/projects`}>
+    <LogoWrapper to={`/${account}/environments`}>
       <BrandLogo />
     </LogoWrapper>
   );
@@ -235,18 +214,21 @@ const sideTopMenuItems = ({ account }: { account: string }) => {
   return [
     {
       icon: <Project />,
-      children: 'Projects',
-      to: `/${account}/projects`,
+      children: 'Environments',
+      to: `/${account}/environments`,
+      keys: ['/env', '/environments'],
     },
     {
       icon: <InfraAsCode />,
       children: 'Infra',
       to: `/${account}/infra/clusters`,
+      keys: [`/infra`],
     },
     {
       icon: <ContainerIcon />,
       children: 'Packages',
       to: `/${account}/packages/repos`,
+      keys: [`/packages`, '/repo'],
     },
   ];
 };
@@ -257,16 +239,23 @@ const sideBottomMenuItems = ({ account }: { account: string }) => {
       icon: <GearSix />,
       children: 'Settings',
       to: `/${account}/settings/general`,
+      keys: [`/settings`],
     },
     {
       icon: <User />,
       children: 'Accounts',
       to: `/${account}/profile`,
+      keys: [`/profile`],
     },
   ];
 };
+
+const isActive = (keys: string[], activePath: string) => {
+  return keys.some((k) => activePath.startsWith(k));
+};
+
 // OptionList for various actions
-const ProfileMenu = ({ hideProfileName }: { hideProfileName: boolean }) => {
+const _ProfileMenu = ({ hideProfileName }: { hideProfileName: boolean }) => {
   const { user } = useLoaderData();
   const cookie = getCookie();
   const { pathname } = useLocation();
@@ -323,25 +312,31 @@ const ProfileMenu = ({ hideProfileName }: { hideProfileName: boolean }) => {
 
 const Console = () => {
   const loaderData = useLoaderData<typeof loader>();
-  const { account, project } = useParams();
+  const { account } = useParams();
   const matches = useMatches();
 
-  const { activePath } = useActivePath({ parent: `` });
+  const { activePath } = useActivePath({ parent: account || '' });
+
+  useEffect(() => {
+    console.log('activePath', activePath);
+  }, [activePath]);
 
   const navbar = useHandleFromMatches('navbar', null);
-  const logo = useHandleFromMatches('logo', null);
+  // const logo = useHandleFromMatches('logo', null);
 
   const noMainLayout = useHandleFromMatches('noMainLayout', null);
 
-  const devicesMenu = useHandleFromMatches('devicesMenu', null);
-  const noBreadCrum = useHandleFromMatches('noBreadCrum', false);
-  const hideProfileName = useHandleFromMatches('hideProfileName', false);
+  // const devicesMenu = useHandleFromMatches('devicesMenu', null);
+  // const noBreadCrum = useHandleFromMatches('noBreadCrum', false);
+  // const hideProfileName = useHandleFromMatches('hideProfileName', false);
+  //
+  // const headerExtra = useHandleFromMatches('headerExtra', null);
+  //
+  // const breadcrum = useCallback(() => {
+  //   return matches.filter((m) => m.handle?.breadcrum);
+  // }, [matches])();
 
-  const headerExtra = useHandleFromMatches('headerExtra', null);
-
-  const breadcrum = useCallback(() => {
-    return matches.filter((m) => m.handle?.breadcrum);
-  }, [matches])();
+  const [hideAccountSwitcher, setHideAccountSwitcher] = useState(false);
 
   if (noMainLayout) {
     return (
@@ -353,17 +348,16 @@ const Console = () => {
     );
   }
 
-  const project1 = useDataFromMatches<IProject>('project', {});
+  // const project1 = useDataFromMatches<IProject>('project', {});
   const breadcrumV2 = matches.reduce((acc, curr) => {
     if (curr.handle?.breadcrumV2) {
       return [...acc, ...(curr.handle?.breadcrumV2?.() || [])];
     }
     return acc;
-  }, []);
+  }, [] as any);
 
-  console.log(breadcrumV2, matches, project1);
+  console.log(breadcrumV2, matches);
 
-  const [hideAccountSwitcher, setHideAccountSwitcher] = useState(false);
   return (
     <div className="flex flex-row bg-surface-basic-subdued min-h-full">
       <Sidebar.Root
@@ -391,7 +385,7 @@ const Console = () => {
         {sideTopMenuItems({ account: account || '' }).map((sm) => {
           return (
             <Sidebar.Item
-              active={activePath.startsWith(sm.to)}
+              active={isActive(sm.keys, activePath)}
               key={sm.to}
               {...sm}
             />
@@ -402,7 +396,7 @@ const Console = () => {
         {sideBottomMenuItems({ account: account || '' }).map((sm) => {
           return (
             <Sidebar.Item
-              active={activePath.startsWith(sm.to)}
+              active={isActive(sm.keys, activePath)}
               key={sm.to}
               {...sm}
             />

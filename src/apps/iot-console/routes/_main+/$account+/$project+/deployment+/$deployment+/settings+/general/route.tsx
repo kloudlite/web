@@ -41,8 +41,8 @@ export const updateDeployment = async ({
         name: data.name,
         displayName: data.displayName,
         CIDR: data.CIDR,
-        exposedIps: data.exposedIps,
-        exposedDomains: data.exposedDomains,
+        // exposedIps: data.exposedIps,
+        // exposedDomains: data.exposedDomains,
         exposedServices: data.exposedServices.map((service) => {
           return {
             name: service.name,
@@ -84,8 +84,8 @@ const ProjectSettingGeneral = () => {
         displayName: deployment.displayName,
         cidr: deployment.CIDR,
         exposedServices: deployment.exposedServices,
-        exposedIps: deployment.exposedIps,
-        exposedDomains: deployment.exposedDomains,
+        // exposedIps: deployment.exposedIps,
+        // exposedDomains: deployment.exposedDomains,
       },
       validationSchema: Yup.object({
         displayName: Yup.string().required('Name is required.'),
@@ -98,8 +98,8 @@ const ProjectSettingGeneral = () => {
             displayName: val.displayName,
             CIDR: val.cidr,
             exposedServices: val.exposedServices,
-            exposedIps: val.exposedIps,
-            exposedDomains: val.exposedDomains,
+            // exposedIps: val.exposedIps,
+            // exposedDomains: val.exposedDomains,
           },
           projectName: project.name,
         });
@@ -109,9 +109,10 @@ const ProjectSettingGeneral = () => {
 
   const checkChanges = () => {
     if (
-      values.displayName !== deployment.displayName ||
-      values.exposedIps !== deployment.exposedIps ||
-      values.exposedDomains !== deployment.exposedDomains
+      values.displayName !== deployment.displayName
+      // ||
+      // values.exposedIps !== deployment.exposedIps ||
+      // values.exposedDomains !== deployment.exposedDomains
     ) {
       return true;
     }
@@ -225,7 +226,7 @@ const ProjectSettingGeneral = () => {
                 size="lg"
                 label="Exposed ips"
                 multiple
-                value={values.exposedIps || []}
+                value={[]}
                 options={async () => []}
                 onChange={(val, v) => {
                   handleChange('exposedIps')(dummyEvent(v));
@@ -240,7 +241,7 @@ const ProjectSettingGeneral = () => {
                 size="lg"
                 label="Exposed domains"
                 multiple
-                value={values.exposedDomains || []}
+                value={[]}
                 options={async () => []}
                 onChange={(val, v) => {
                   handleChange('exposedDomains')(dummyEvent(v));

@@ -214,7 +214,7 @@ const Accounts = () => {
                 const { isInvite, displayName, inviteToken } = account;
                 return (
                   <List.Row
-                    {...(isInvite ? {} : { to: `/${name}/projects` })}
+                    {...(isInvite ? {} : { to: `/${name}/environments` })}
                     key={name}
                     plain
                     className={cn(

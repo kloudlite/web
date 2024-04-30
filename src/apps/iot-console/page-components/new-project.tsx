@@ -100,7 +100,7 @@ const NewProject = () => {
               <TitleBox subtitle="Create your project under production effortlessly." />
               <NameIdView
                 label="Project name"
-                resType="project"
+                resType="environment"
                 name={values.name}
                 displayName={values.displayName}
                 errors={errors.name}

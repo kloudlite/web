@@ -98,9 +98,9 @@ const CurrentBreadcrum = ({
 };
 
 const Tabs = () => {
-  const { account, project } = useParams();
+  const { account } = useParams();
 
-  return <CommonTabs baseurl={`/${account}/${project}`} tabs={tabs} />;
+  return <CommonTabs baseurl={`/${account}`} tabs={tabs} />;
 };
 
 const Logo = () => {

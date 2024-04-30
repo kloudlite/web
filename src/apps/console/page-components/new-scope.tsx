@@ -7,7 +7,6 @@ import { useReload } from '~/root/lib/client/helpers/reloader';
 import useForm, { dummyEvent } from '~/root/lib/client/hooks/use-form';
 import Yup from '~/root/lib/server/helpers/yup';
 import { handleError } from '~/root/lib/utils/common';
-import { Switch } from '~/components/atoms/switch';
 import { Checkbox } from '~/components/atoms/checkbox';
 import Banner from '~/components/molecule/banner';
 import { IDialog } from '../components/types.d';
@@ -20,7 +19,7 @@ const HandleScope = ({ show, setShow }: IDialog<IEnvironment | null>) => {
   const api = useConsoleApi();
   const reloadPage = useReload();
 
-  const { project: projectName } = useParams();
+  const { cluster: clusterName } = useParams();
 
   const [validationSchema, setValidationSchema] = useState<any>(
     Yup.object({
@@ -47,20 +46,19 @@ const HandleScope = ({ show, setShow }: IDialog<IEnvironment | null>) => {
     validationSchema,
 
     onSubmit: async (val) => {
-      if (!projectName) {
-        throw new Error('Project name is required!.');
+      if (!clusterName) {
+        throw new Error('cluster name is required!.');
       }
       try {
         if (show?.type === DIALOG_TYPE.ADD) {
           const { errors: e } = await api.createEnvironment({
-            projectName,
             env: {
+              clusterName,
               metadata: {
                 name: val.name,
               },
               displayName: val.displayName,
               spec: {
-                projectName: projectName || '',
                 routing: {
                   mode: val.environmentRoutingMode ? 'public' : 'private',
                 },
@@ -70,20 +68,15 @@ const HandleScope = ({ show, setShow }: IDialog<IEnvironment | null>) => {
           if (e) {
             throw e[0];
           }
-          toast.success('Environment created successfully');
+          toast.success('environment created successfully');
         } else {
           const { errors: e } = await api.updateEnvironment({
-            projectName,
             env: {
+              clusterName,
               metadata: {
-                namespace: projectName,
                 name: parseName(show?.data),
               },
               displayName: val.displayName,
-              spec: {
-                targetNamespace: `${projectName}=${val.name}`,
-                projectName: projectName || '',
-              },
             },
           });
           if (e) {

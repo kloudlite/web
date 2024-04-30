@@ -73,13 +73,11 @@ export const baseQueries = (executor: IExecutor) => ({
       query Core_checkNameAvailability(
         $resType: ConsoleResType!
         $name: String!
-        $projectName: String
         $envName: String
       ) {
         core_checkNameAvailability(
           resType: $resType
           name: $name
-          projectName: $projectName
           envName: $envName
         ) {
           result

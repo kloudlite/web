@@ -34,8 +34,8 @@ const Root = (props: IDialog) => {
             name: props.data.name,
             cidr: props.data.CIDR,
             exposedServices: props.data.exposedServices,
-            exposedIps: props.data.exposedIps,
-            exposedDomains: props.data.exposedDomains,
+            // exposedIps: props.data.exposedIps,
+            // exposedDomains: props.data.exposedDomains,
             isNameError: false,
           }
         : {
@@ -60,8 +60,8 @@ const Root = (props: IDialog) => {
                 name: val.name,
                 displayName: val.displayName,
                 CIDR: val.cidr,
-                exposedIps: val.exposedIps,
-                exposedDomains: val.exposedDomains,
+                // exposedIps: val.exposedIps,
+                // exposedDomains: val.exposedDomains,
                 exposedServices: val.exposedServices.map((service) => {
                   return {
                     name: service.name,
@@ -80,8 +80,8 @@ const Root = (props: IDialog) => {
                 name: val.name,
                 displayName: val.displayName,
                 CIDR: val.cidr,
-                exposedIps: val.exposedIps,
-                exposedDomains: val.exposedDomains,
+                // exposedIps: val.exposedIps,
+                // exposedDomains: val.exposedDomains,
                 exposedServices: val.exposedServices.map((service) => {
                   return {
                     name: service.name,
@@ -123,7 +123,7 @@ const Root = (props: IDialog) => {
       <Popup.Content>
         <div className="flex flex-col gap-2xl">
           <NameIdView
-            resType="project"
+            resType="environment"
             displayName={values.displayName}
             name={values.name}
             label="Deployment name"

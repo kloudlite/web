@@ -97,8 +97,6 @@ export const iotDeploymentQueries = (executor: IExecutor) => ({
             userId
             userName
           }
-          exposedDomains
-          exposedIps
           markedForDeletion
           name
           projectName
@@ -147,8 +145,6 @@ export const iotDeploymentQueries = (executor: IExecutor) => ({
                 userId
                 userName
               }
-              exposedDomains
-              exposedIps
               markedForDeletion
               name
               projectName
