@@ -21,6 +21,7 @@ const PopupHook = () => {
   const [_show, setShow] = useState(false);
   return (
     <div className="flex flex-row">
+      {/* @ts-ignore */}
       <Sidebar.Root onCollapseChange={setShow}>
         <Sidebar.Header>
           <BrandLogo size={24} />

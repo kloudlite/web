@@ -10,6 +10,7 @@ export default {
 const PopupHook = () => {
   return (
     <div className="flex flex-row">
+      {/* @ts-ignore */}
       <Header />
     </div>
   );
