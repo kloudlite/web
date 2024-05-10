@@ -101,6 +101,7 @@ const primitives = {
       700: '#3F3F46',
       800: '#27272A',
       900: '#18181B',
+      1000: '#EEEEF0',
     },
     grey: {
       50: '#FFFFFF',
@@ -138,6 +139,7 @@ const primitives = {
     'form-text-field-height': '36px',
   },
   fontSize: {
+    xxs: '10px',
     xs: '12px',
     sm: '14px',
     md: '16px',
@@ -150,6 +152,7 @@ const primitives = {
     '6xl': '64px',
   },
   lineHeight: {
+    xxs: '14px',
     xs: '16px',
     sm: '20px',
     md: '24px',
@@ -308,7 +311,7 @@ const config = {
           hovered: primitives.colors.grey['100'],
           pressed: primitives.colors.zinc['200'],
           input: primitives.colors.grey['50'],
-          active: primitives.colors.zinc['100'],
+          active: primitives.colors.zinc['1000'],
         },
         primary: {
           default: primitives.colors.blue['500'],

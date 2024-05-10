@@ -143,7 +143,7 @@ export const ButtonBase = React.forwardRef<
       tabIndex={tabIndex}
       target={target}
       className={cn(
-        'pulsable',
+        'pulsable flex-nowrap',
         {
           'w-full': !!block,
           'w-fit': !block,
@@ -339,8 +339,7 @@ export const ButtonBase = React.forwardRef<
           size: 16,
           color: 'currentColor',
         })}
-      {!iconOnly && content}
-
+      {!iconOnly && <span className="block truncate">{content}</span>}
       {!!suffix &&
         React.cloneElement(suffix, {
           size: 16,
