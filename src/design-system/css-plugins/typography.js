@@ -2,6 +2,9 @@ function typography() {
   // @ts-ignore
   return ({ addComponents }) => {
     addComponents({
+      '.bodyXs': {
+        '@apply text-xxs leading-xxs font-sans font-normal': {},
+      },
       '.bodyMono': {
         '@apply text-sm leading-sm font-mono': {},
       },

@@ -66,7 +66,7 @@ interface IOptionMenuRadio extends IBase {
   value: string;
 }
 
-interface IOptionMenuSeparator extends Omit<IBase, 'onClick' | 'children'> { }
+interface IOptionMenuSeparator extends Omit<IBase, 'onClick' | 'children'> {}
 
 interface IOptionMenuTabs extends IBase {
   onChange?: (v: string) => void;
@@ -165,22 +165,50 @@ const OptionMenuContent = forwardRef<
 );
 OptionMenuContent.displayName = OptionMenuPrimitive.Content.displayName;
 
+const OptionItemRaw = ({
+  children,
+  active,
+  className,
+}: {
+  children?: ReactNode;
+  active?: boolean;
+  className?: string;
+}) => {
+  return (
+    <div
+      className={cn(
+        'group relative flex flex-row gap-xl items-center bodyMd gap cursor-pointer select-none py-lg px-xl text-text-default outline-none transition-colors focus:bg-surface-basic-hovered hover:bg-surface-basic-hovered data-[disabled]:pointer-events-none data-[disabled]:text-text-disabled',
+        {
+          'bg-surface-basic-active': !!active,
+        },
+        className
+      )}
+    >
+      {children}
+    </div>
+  );
+};
+
 const OptionMenuItem = forwardRef<HTMLDivElement, IOptionMenuItem>(
   ({ className, ...props }, ref) => {
     return (
       <OptionMenuPrimitive.Item
         ref={ref}
         {...preventDefaultEvents}
-        className={cn(
-          'group relative flex flex-row gap-xl items-center bodyMd gap cursor-pointer select-none py-lg px-xl text-text-default outline-none transition-colors focus:bg-surface-basic-hovered hover:bg-surface-basic-hovered data-[disabled]:pointer-events-none data-[disabled]:text-text-disabled',
-          {
-            'bg-surface-basic-active': !!props.active,
-          },
-          className
-        )}
         onSelect={props.onClick}
+        asChild
       >
-        {props.children}
+        <div
+          className={cn(
+            'group relative flex flex-row gap-xl items-center bodyMd gap cursor-pointer select-none py-lg px-xl text-text-default outline-none transition-colors focus:bg-surface-basic-hovered hover:bg-surface-basic-hovered data-[disabled]:pointer-events-none data-[disabled]:text-text-disabled',
+            {
+              'bg-surface-basic-active': !!props.active,
+            },
+            className
+          )}
+        >
+          {props.children}
+        </div>
       </OptionMenuPrimitive.Item>
     );
   }
@@ -563,6 +591,7 @@ const OptionList = {
     Tab: Tabs.Tab,
   },
   Link: OptionMenuLink,
+  OptionItemRaw,
 };
 
 export default OptionList;
