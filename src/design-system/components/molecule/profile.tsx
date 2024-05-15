@@ -29,11 +29,15 @@ const Profile = forwardRef<HTMLButtonElement, IProfile>(
               )}
             >
               {name && (
-                <div className="bodyMd-medium gap-y-md pulsable">{name}</div>
+                <div className="bodyMd-medium gap-y-md pulsable text-text-default dark:text-text-darktheme-default">
+                  {name}
+                </div>
               )}
 
               {subtitle && (
-                <div className="bodySm text-text-soft pulsable">{subtitle}</div>
+                <div className="bodySm text-text-soft dark:text-text-darktheme-soft pulsable">
+                  {subtitle}
+                </div>
               )}
             </div>
           )}

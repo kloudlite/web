@@ -80,28 +80,31 @@ const ChipBase = React.forwardRef<HTMLButtonElement, IChipBase>(
         {...mprops}
         className={cn(
           'rounded border bodySm-medium py-px flex items-center transition-all outline-none flex-row gap-md ring-offset-1 h-fit',
-          'focus-within:ring-2 focus-within:ring-border-focus',
+          'focus-within:ring-2 focus-within:ring-border-focus dark:focus-within:ring-0 dark:focus-within:ring-border-darktheme-focus',
           'w-fit flex-shrink-0',
           {
-            'text-text-default': !disabled,
-            'text-text-disabled': disabled,
+            'text-text-default dark:text-text-darktheme-default': !disabled,
+            'text-text-disabled dark:text-text-darktheme-disabled': disabled,
           },
           {
             'pointer-events-none': disabled,
           },
           {
-            'border-border-default': !disabled,
-            'border-border-disabled': disabled,
+            'border-border-default dark:border-border-darktheme-default':
+              !disabled,
+            'border-border-disabled dark:border-border-darktheme-disabled':
+              disabled,
           },
           {
-            'bg-surface-basic-default': !disabled,
+            'bg-surface-basic-default dark:bg-surface-darktheme-basic-default':
+              !disabled,
           },
           {
             'pr-md pl-lg py-md': compType === 'REMOVABLE',
             'px-lg py-md': compType !== 'REMOVABLE',
           },
           {
-            'hover:bg-surface-basic-hovered active:bg-surface-basic-pressed focus-visible:ring-2 focus-visible:ring-border-focus':
+            'hover:bg-surface-basic-hovered active:bg-surface-basic-pressed focus-visible:ring-2 focus-visible:ring-border-focus dark:hover:bg-surface-darktheme-basic-hovered dark:active:bg-surface-darktheme-basic-pressed dark:focus-visible:ring-0 dark:focus-visible:ring-border-darktheme-focus':
               compType === 'CLICKABLE',
           }
         )}
@@ -113,7 +116,9 @@ const ChipBase = React.forwardRef<HTMLButtonElement, IChipBase>(
         {prefix &&
           !loading &&
           (typeof prefix === 'string' ? (
-            <span className="bodySm text-text-soft">{prefix}</span>
+            <span className="bodySm text-text-soft dark:text-text-darktheme-soft">
+              {prefix}
+            </span>
           ) : (
             React.cloneElement(prefix, {
               size: 12,
@@ -145,7 +150,7 @@ const ChipBase = React.forwardRef<HTMLButtonElement, IChipBase>(
                 }
               }}
               className={cn(
-                'outline-none flex items-center rounded-sm ring-offset-0 justify-center hover:bg-surface-basic-hovered active:bg-surface-basic-pressed',
+                'outline-none flex items-center rounded-sm ring-offset-0 justify-center hover:bg-surface-basic-hovered active:bg-surface-basic-pressed dark:hover:bg-surface-darktheme-basic-hovered dark:active:bg-surface-darktheme-basic-pressed',
                 {
                   'cursor-default': disabled,
                 }

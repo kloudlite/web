@@ -198,17 +198,9 @@ const OptionMenuItem = forwardRef<HTMLDivElement, IOptionMenuItem>(
         onSelect={props.onClick}
         asChild
       >
-        <div
-          className={cn(
-            'group relative flex flex-row gap-xl items-center bodyMd gap cursor-pointer select-none py-lg px-xl text-text-default outline-none transition-colors focus:bg-surface-basic-hovered hover:bg-surface-basic-hovered data-[disabled]:pointer-events-none data-[disabled]:text-text-disabled',
-            {
-              'bg-surface-basic-active': !!props.active,
-            },
-            className
-          )}
-        >
+        <OptionItemRaw className={className} active={props.active}>
           {props.children}
-        </div>
+        </OptionItemRaw>
       </OptionMenuPrimitive.Item>
     );
   }

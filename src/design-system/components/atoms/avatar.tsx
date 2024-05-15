@@ -8,6 +8,7 @@ const colors = {
   four: ['fill-icon-critical', 'text-icon-critical'],
   five: ['fill-icon-secondary', 'text-icon-secondary'],
   six: ['fill-icon-primary', 'text-icon-primary'],
+  dark: ['dark:fill-icon-darktheme-soft', 'dark:text-icon-darktheme-soft'],
 };
 
 type AvatarSizes = 'xs' | 'sm' | 'md' | 'lg' | (string & NonNullable<unknown>);
@@ -17,6 +18,7 @@ type AvatarColors =
   | 'three'
   | 'four'
   | 'five'
+  | 'dark'
   | (string & NonNullable<unknown>);
 
 export interface IAvatar {
@@ -42,7 +44,7 @@ export const AvatarBase = ({ size = 'md', color = 'one', image }: IAvatar) => {
         'relative flex flex-row items-center justify-center',
         'outline-none transition-all',
         'rounded-full',
-        'border border-border-default',
+        'border border-border-default dark:border-border-darktheme-default',
         {
           'w-8xl h-8xl': size === 'lg',
           'w-6xl h-6xl': size === 'md',
@@ -56,7 +58,8 @@ export const AvatarBase = ({ size = 'md', color = 'one', image }: IAvatar) => {
             }
           : '',
         {
-          'bg-surface-basic-default': !isExternal,
+          'bg-surface-basic-default dark:bg-surface-darktheme-basic-input':
+            !isExternal,
         }
       )}
     >

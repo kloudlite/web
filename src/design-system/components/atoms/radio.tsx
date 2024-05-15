@@ -50,11 +50,14 @@ export const Item = ({
       >
         <RadioGroupPrimitive.Item
           className={cn(
-            'w-2xl h-2xl outline-none rounded-full border pulsable pulsable-hidden ring-border-focus ring-offset-1 focus:ring-2 transition-all flex items-center justify-center border-border-default',
+            'w-2xl h-2xl outline-none rounded-full border pulsable pulsable-hidden ring-border-focus dark:ring-border-darktheme-focus ring-offset-1 dark:ring-offset-0 focus:ring-2 transition-all flex items-center justify-center border-border-default dark:border-border-darktheme-default',
             {
-              'hover:bg-surface-basic-hovered': !disabled,
-              'data-[state=checked]:border-border-primary': !disabled,
-              'data-[disabled]:border-border-disabled': disabled,
+              'hover:bg-surface-basic-hovered dark:hover:bg-surface-darktheme-basic-hovered':
+                !disabled,
+              'data-[state=checked]:border-border-primary dark:data-[state=checked]:border-border-darktheme-primary':
+                !disabled,
+              'data-[disabled]:border-border-disabled dark:data-[disabled]:border-border-darktheme-disabled':
+                disabled,
             }
           )}
           value={value}
@@ -63,16 +66,18 @@ export const Item = ({
         >
           <RadioGroupPrimitive.Indicator
             className={cn('block w-lg h-lg rounded-full', {
-              'bg-icon-disabled': disabled,
-              'bg-surface-primary-default': !disabled,
+              'bg-icon-disabled dark:bg-icon-darktheme-disabled': disabled,
+              'bg-surface-primary-default dark:bg-surface-darktheme-primary-default':
+                !disabled,
             })}
           />
         </RadioGroupPrimitive.Item>
         <div
           className={cn(
             {
-              'text-text-disabled': disabled,
-              'text-text-default cursor-pointer': !disabled,
+              'text-text-disabled dark:text-text-darktheme-disabled': disabled,
+              'text-text-default dark:text-text-darktheme-default cursor-pointer':
+                !disabled,
             },
             'bodyMd-medium pl-lg select-none flex-1'
           )}
