@@ -8,8 +8,8 @@ import { cn } from '../utils';
 
 const Header = ({ children, showclose = true }: any) => {
   return (
-    <div className="border-b border-border-default p-3xl flex flex-row items-center min-h-[69px]">
-      <Dialog.Title className="headingLg text-text-strong flex-1">
+    <div className="border-b border-border-default dark:border-border-darktheme-default p-3xl flex flex-row items-center min-h-[69px]">
+      <Dialog.Title className="headingLg text-text-strong dark:text-text-darktheme-default flex-1">
         {children}
       </Dialog.Title>
       {showclose && (
@@ -46,7 +46,7 @@ const Form = (props: ComponentProps<'form'>) => {
 
 const Footer = ({ children }: ChildrenProps) => {
   return (
-    <div className="p-3xl flex flex-row justify-end gap-lg bg-surface-basic-active">
+    <div className="p-3xl flex flex-row justify-end gap-lg bg-surface-basic-active dark:bg-surface-darktheme-basic-active">
       {children}
     </div>
   );
@@ -105,7 +105,8 @@ const PopupRoot = ({
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2, ease: 'anticipate' }}
                 className={cn('fixed inset-0 z-[9999999]', {
-                  'bg-text-default/60': backdrop,
+                  'bg-text-default/60 dark:bg-text-darktheme-disabled/60':
+                    backdrop,
                 })}
               />
             </Dialog.Overlay>
@@ -117,10 +118,10 @@ const PopupRoot = ({
                 transition={{ duration: 0.3, ease: 'anticipate' }}
                 className={cn(
                   'flex flex-col',
-                  'z-[99999999] outline-none transform overflow-hidden md:rounded bg-surface-basic-default shadow-modal',
+                  'z-[99999999] outline-none transform overflow-hidden md:rounded bg-surface-basic-default dark:bg-surface-darktheme-basic-default shadow-modal',
                   'fixed top-1/2 left-1/2',
                   'w-full h-full md:!h-auto md:w-[612px]',
-                  'border border-border-default',
+                  'border border-border-default dark:border-border-darktheme-default',
                   className
                 )}
               >
