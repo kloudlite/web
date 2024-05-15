@@ -29,7 +29,6 @@ import {
   ShuffleAngular,
   SpotManagement,
   TreeStructure,
-  TwitterNewLogo,
   Vpn,
   Infinity as InfinityIcon,
   AnscerRoboticsLogo,
@@ -39,6 +38,13 @@ import {
   Robot,
   Flask,
   DesktopTower,
+  TwitterNewLogoFill,
+  Developer,
+  Handshake,
+  ChevronDoubleLeft,
+  // LockKeyOpen,
+  // Cube,
+  // SpeakerHigh,
 } from '@jengaicons/react';
 
 import providersImageMobile from '~/images/infraops/providers/mobile.svg';
@@ -74,16 +80,10 @@ import featuredImage1024 from '~/images/home/featured/1024.svg';
 import featuredImage1280 from '~/images/home/featured/1280.svg';
 import featuredImage1440 from '~/images/home/featured/1440.svg';
 import featuredImage1920 from '~/images/home/featured/1920.svg';
-import RedPlutoIcon from '~/images/home/companies/red.svg';
-import FibrIcon from '~/images/home/companies/fibr.svg';
-import PlaxonicIcon from '~/images/home/companies/plaxonic.svg';
-import CrewIcon from '~/images/home/companies/crew.svg';
-import BoltzIcon from '~/images/home/companies/boltz.svg';
-import TalescaleIcon from '~/images/home/companies/talescale.svg';
+
 import distributionIcon from '~/images/home/distribution.svg';
 import infraopsIcon from '~/images/home/infraops.svg';
 import devopsIcon from '~/images/home/devops.svg';
-import AnscerIcon from '~/images/home/companies/anser.svg';
 import BlogCover from '~/images/blog/blog-cover.jpeg';
 
 import CreateProject1920 from '~/images/devops/create_project/1980.svg';
@@ -103,38 +103,310 @@ import SetupBackSVCMobile from '~/images/devops/setup_back_svc/mobile.svg';
 import ConfigDevops from '~/images/devops/config-devops.svg';
 import DeployDevops from '~/images/devops/deploy-devops.svg';
 
+import collaborate1440 from '~/images/homeNew/collaborate1440.svg';
+import nocommit1440 from '~/images/homeNew/nocommit1440.svg';
+import integrate1440 from '~/images/homeNew/integrate1440.svg';
+import connect1440 from '~/images/homeNew/connect1440.svg';
+
+import collaborate1440Dark from '~/images/homeNew/collaborate1440-dark.svg';
+import integrate1440Dark from '~/images/homeNew/integrate1440-dark.svg';
+import connect1440Dark from '~/images/homeNew/connect1440-dark.svg';
+
+import explore from '~/images/explore.jpeg';
+
+import RedPlutoIcon from '~/images/home/companies/red.svg';
+import FibrIcon from '~/images/home/companies/fibr.svg';
+import PlaxonicIcon from '~/images/home/companies/plaxonic.svg';
+import CrewIcon from '~/images/home/companies/crew.svg';
+import BoltzIcon from '~/images/home/companies/boltz.svg';
+import TalescaleIcon from '~/images/home/companies/talescale.svg';
+import AnscerIcon from '~/images/home/companies/anser.svg';
+
+import Workflow from '~/images/homeNew/exploring/workflow.jpeg';
+import Collarative from '~/images/homeNew/exploring/collarative.jpeg';
+import RemoteLocal from '~/images/homeNew/exploring/remote-local.jpeg';
+import nocommit1440Dark from '~/images/homeNew/nocommit1440-dark.svg';
+import PlaxonicSvg from '../icons/Plaxonic';
+import FibrSvg from '../icons/Fibr';
+import RedPlutoSvg from '../icons/RedPluto';
+import CrewScaleSvg from '../icons/CrewScale';
+import AnserSvg from '../icons/AnserRobotics';
+import BoltzmanSvg from '../icons/Boltzman';
+import TalescaleSvg from '../icons/Talescale';
+
 const partners = [
   {
     icon: PlaxonicIcon.src,
-    className: 'w-[135px]',
+    className: 'wb-w-[135px]',
   },
   {
     icon: FibrIcon.src,
-    className: 'w-[102px]',
+    className: 'wb-w-[102px]',
   },
   {
     icon: RedPlutoIcon.src,
-    className: 'w-[202px]',
+    className: 'wb-w-[202px]',
   },
   {
     icon: CrewIcon.src,
-    className: 'w-[163px]',
+    className: 'wb-w-[163px]',
   },
   {
     icon: AnscerIcon.src,
-    className: 'w-[135px]',
+    className: 'wb-w-[135px]',
   },
   {
     icon: BoltzIcon.src,
-    className: 'w-[190px]',
+    className: 'wb-w-[190px]',
   },
   {
     icon: TalescaleIcon.src,
-    className: 'w-[186px]',
+    className: 'wb-w-[186px]',
+  },
+];
+
+const partnersNew = [
+  {
+    icon: <PlaxonicSvg />,
+    className: 'wb-w-[128px]',
+    id: 'plaxonic',
+  },
+  {
+    icon: <FibrSvg />,
+    className: 'wb-w-[128px]',
+    id: 'fibr',
+  },
+  {
+    icon: <RedPlutoSvg />,
+    className: 'wb-w-[160px]',
+    id: 'redpluto',
+  },
+  {
+    icon: <CrewScaleSvg />,
+    className: 'wb-w-[128px]',
+    id: 'crewscale',
+  },
+  {
+    icon: <AnserSvg />,
+    className: 'wb-w-[128px]',
+    id: 'anser',
+  },
+  {
+    icon: <BoltzmanSvg />,
+    className: 'wb-w-[128px]',
+    id: 'boltzman',
+  },
+  {
+    icon: <TalescaleSvg />,
+    className: 'wb-w-[128px]',
+    id: 'talescale',
   },
 ];
 
 const consts = {
+  homeNew: {
+    partners: partnersNew,
+    exploring: [
+      {
+        img: RemoteLocal.src,
+        label: 'Remote local environments',
+        desc: 'Discover how Kloudlite pioneers transformative remote local environments.',
+      },
+
+      {
+        img: Collarative.src,
+        label: 'Collaborative development',
+        desc: 'In a globalized landscape, collaborative development faces challenges but fuels innovation.',
+      },
+
+      {
+        img: Workflow.src,
+        label: 'Development workflow',
+        desc: 'Kloudlite revolutionizes software development with streamlined efficiency and productivity',
+      },
+    ],
+    howitworks: {
+      images: {
+        collaborate: {
+          r1440: collaborate1440.src,
+          r1440Dark: collaborate1440Dark.src,
+        },
+        connect: {
+          r1440: connect1440.src,
+          r1440Dark: connect1440Dark.src,
+        },
+        integrate: {
+          r1440: integrate1440.src,
+          r1440Dark: integrate1440Dark.src,
+        },
+        nocommit: {
+          r1440: nocommit1440.src,
+          r1440Dark: nocommit1440Dark.src,
+        },
+      },
+      items: [
+        {
+          label: 'Collaborative Environments',
+          id: 'collaborate',
+          desc: 'Teams can collaborate in the same env to develop & test interdependent services together.',
+        },
+        {
+          label: 'No commit-No deploy-Just code',
+          id: 'nocommit',
+          desc: 'Code & test instantly without commits or deployments, accelerating development cycle.',
+        },
+        {
+          label: 'Integrate with any IDE',
+
+          id: 'integrate',
+          desc: 'Compatible with any SSH-supporting  ODE for seamless tool interaction.',
+        },
+        {
+          label: 'Connect & Debug on Any Device',
+          id: 'connect',
+          desc: 'Debug & develop from any device, anywhere, ensuring on-the-go control and updates',
+        },
+      ],
+    },
+    kloudliteDevelopmentData: [
+      {
+        label: '100% Dev-Prod parity',
+        desc: 'Achieve perfect parity across all elements, from configurations to network settings, ensuring that development mirrors production accurately.',
+        icon: Developer,
+      },
+      {
+        label: 'Collaborative',
+        desc: 'Teams can connect and collaborate on some environment to develop and test multiple dependent services together.',
+        icon: Handshake,
+      },
+
+      // {
+      //   label: 'Fully Containerized',
+      //   desc: 'All environments are containerised, ensuring consistent, isolated development and production for reliability and scalability.',
+      //   icon: Container,
+      // },
+      {
+        label: 'Shift-left approach',
+        desc: 'Integrate early testing for immediate feedback and faster issue resolution, boosting quality.',
+        icon: ChevronDoubleLeft,
+      },
+
+      {
+        label: 'Ephemeral & Lightweight in Nature',
+        desc: 'Use temporary, efficient environments for quick setup and teardown, reducing overhead and boosting productivity.',
+        icon: Container,
+      },
+      // {
+      //   label: 'Config & Secrets',
+      //   desc: 'Securely and efficiently manage configurations and secrets, ensuring proper handling of sensitive information.',
+      //   icon: Config,
+      // },
+
+      // {
+      //   label: 'Access to dependent services',
+      //   desc: 'Easily connect to dependent services within your environment, streamlining complex development interactions.',
+      //   icon: LockKeyOpen,
+      // },
+      // {
+      //   label: 'Service discovery',
+      //   desc: 'Automatically detect and integrate network services, simplifying management of dependencies.',
+      //   icon: Cube,
+      // },
+
+      // {
+      //   label: 'Volume Mounts',
+      //   desc: 'Effortlessly integrate persistent storage for consistent data access across sessions.',
+      //   icon: SpeakerHigh,
+      // },
+    ],
+
+    faqData: [
+      {
+        title: 'What are remote local environments?',
+        desc: 'Remote local environments blend local and remote development, allowing developers to work as if locally but on cloud-based infrastructure. This setup enables seamless access, consistent environments, collaboration across locations, resource efficiency, and scalable resources. It merges the convenience of local development with the power and flexibility of remote capabilities to enhance productivity.',
+        classNames: 'wb-pb-lg 3xl:wb-pb-md',
+      },
+      {
+        title: 'How does Kloudlite Development Environments work?',
+        desc: 'Kloudlite establishes a WireGuard VPN mesh that connects all infrastructure running workloads with developer devices. With this network connection in place, developers can access environments directly from their local machines. They have the capability to clone environments, switch between them, and collaborate seamlessly without the need to worry about building and deploying applications.',
+        classNames: 'wb-pb-lg 3xl:wb-pb-md',
+      },
+      {
+        title: 'How to use Kloudlite?',
+        desc: 'Developers can connect their existing infrastructure, such as managed clusters and devices, to the Kloudlite team and begin creating environments on this infrastructure. Using the kl CLI tool from their local devices, developers can establish a connection to the remote environment. This tool allows them to create local development containers that link to environments running remotely.',
+
+        classNames: 'wb-pb-lg 3xl:wb-pb-md',
+      },
+      {
+        title: 'How to collaborate?',
+        desc: "Kloudlite includes a feature that allows for intercepting services running within an environment. Once a service is intercepted, all traffic intended for that application is redirected to the developer's local development container. This enables multiple developers to connect to the same environment and intercept services operating within it. Such functionality facilitates collaboration and assists in the development of applications with multiple microservices, each managed by different developers.",
+        classNames: 'wb-pb-xl 3xl:wb-pb-lg',
+      },
+      {
+        title: 'How to testing is possible without building and deploying?',
+        desc: 'With Kloudlite, testing is made possible without the need for building and deploying because it connects the local development container directly to the running remote environment using a VPN connection. This allows developers to work locally on their code but test and debug it in real-time as it interacts with other services in the remote environment. This method enhances productivity by minimizing the time and complexity involved in iteration cycles.',
+        classNames: 'wb-pb-lg',
+      },
+      {
+        title: 'Is Kloudlite secure?',
+        desc: 'Kloudlite ensures robust security through its VPN, which is built using the WireGuard protocol. This setup provides complete encryption, making it inherently secure.',
+        classNames: 'wb-pb-5xl',
+      },
+      {
+        title: 'How does Kloudlite help to reduce Development Inner loop?',
+        desc: 'Kloudlite reduces the development inner loop by enabling developers to work on local containers connected to remote environments via a VPN. This setup allows for real-time testing and debugging without frequent builds or deployments. The service interception feature further streamlines the process by letting developers focus on their components, speeding up iterations and enhancing productivity.',
+        classNames: 'wb-pb-lg 3xl:wb-pb-md',
+      },
+      {
+        title: 'Can you use Kloudlite with any IDE and Git repository?',
+        desc: 'Kloudlite facilitates the creation of SSH-enabled development containers, allowing integration with any IDE that supports remote SSH connections. This includes popular IDEs such as Visual Studio Code, IntelliJ IDEA, PyCharm, and Eclipse, among others. Developers can seamlessly connect their IDEs to these containers for a streamlined and efficient coding experience directly from their preferred development environment.',
+        classNames: 'wb-pb-lg 3xl:wb-pb-md',
+      },
+      {
+        title: 'Can I self host Kloudlite?',
+        desc: 'Yes you can self host kloudlite. It is opensource under apache public license',
+        classNames: 'wb-pb-[28px]',
+      },
+      {
+        title: 'How to setup Kloudlite with my IDE?',
+        desc: 'Simply configure your IDE’s SSH settings to connect with Kloudlite, then access your development environment directly from your preferred IDE.',
+        classNames: 'wb-pb-5xl 3xl:wb-pb-[28px]',
+      },
+    ],
+
+    recommendedTabs: [
+      {
+        title: 'InfraOps',
+        desc: 'Dive in to set up your InfraOps effortlessly',
+        content: 'Explore our knowledge bank',
+        subContent:
+          'Tap into our extensive collection of resources and guides tailored to help you navigate around platform',
+        link: '/',
+        id: 'infraops',
+        image: explore.src,
+      },
+      {
+        title: 'DevOps',
+        desc: 'Explore the DevOps APIs to build your app',
+        content: 'Explore our knowledge bank',
+        subContent:
+          'Tap into our extensive collection of resources and guides tailored to help you navigate around platform',
+        link: '/',
+        id: 'devops',
+        image: explore.src,
+      },
+      {
+        title: 'Distribution',
+        desc: 'Access the resources to ensure a smooth build',
+        content: 'Explore our knowledge bank',
+        subContent:
+          'Tap into our extensive collection of resources and guides tailored to help you navigate around platform',
+        link: '/',
+        id: 'distribution',
+        image: explore.src,
+      },
+    ],
+  },
   blog: {
     images: {
       cover: BlogCover.src,
@@ -188,25 +460,25 @@ const consts = {
       {
         title: 'Astroman',
         subtitle: 'subtitle',
-        company: <TwitterNewLogo size={24} />,
+        company: <TwitterNewLogoFill size={24} />,
         message:
-          'We use @Kloudlite on a daily basis for several internal processes, and I cannot rave enough about them. Incredible flexibility and features combined with super intuitive UI',
+          'We use Kloudlite on a daily basis for several internal processes, and I cannot rave enough about them. Incredible flexibility and features combined with super intuitive UI',
         time: '10:01 PM · Apr 7, 2022',
       },
       {
         title: 'Astroman 1',
         subtitle: 'subtitle',
-        company: <TwitterNewLogo size={24} />,
+        company: <TwitterNewLogoFill size={24} />,
         message:
-          'We use @Kloudlite on a daily basis for several internal processes, and I cannot rave enough about them. Incredible flexibility and features combined with super intuitive UI',
+          'We use Kloudlite on a daily basis for several internal processes, and I cannot rave enough about them. Incredible flexibility and features combined with super intuitive UI',
         time: '10:01 PM · Apr 7, 2022',
       },
       {
         title: 'Astroman 2',
         subtitle: 'subtitle',
-        company: <TwitterNewLogo size={24} />,
+        company: <TwitterNewLogoFill size={24} />,
         message:
-          'We use @Kloudlite on a daily basis for several internal processes, and I cannot rave enough about them. Incredible flexibility and features combined with super intuitive UI',
+          'We use Kloudlite on a daily basis for several internal processes, and I cannot rave enough about them. Incredible flexibility and features combined with super intuitive UI',
         time: '10:01 PM · Apr 7, 2022',
       },
     ],

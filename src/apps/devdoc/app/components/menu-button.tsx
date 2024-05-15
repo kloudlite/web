@@ -30,6 +30,7 @@ const MenuToggle = ({
           closed: { d: 'M 2 2.5 L 20 2.5' },
           open: { d: 'M 3 16.5 L 17 2.5' },
         }}
+        className="wb-stroke-icon-default dark:wb-stroke-icon-darktheme-default"
       />
       <Path
         d="M 2 9.423 L 20 9.423"
@@ -38,12 +39,14 @@ const MenuToggle = ({
           open: { opacity: 0 },
         }}
         transition={{ duration: 0.1 }}
+        className="wb-stroke-icon-default dark:wb-stroke-icon-darktheme-default"
       />
       <Path
         variants={{
           closed: { d: 'M 2 16.346 L 20 16.346' },
           open: { d: 'M 3 2.5 L 17 16.346' },
         }}
+        className="wb-stroke-icon-default dark:wb-stroke-icon-darktheme-default"
       />
     </motion.svg>
   </button>

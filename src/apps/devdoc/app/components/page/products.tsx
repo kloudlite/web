@@ -16,7 +16,7 @@ import {
   GearSix,
   Config,
   Code,
-} from '@jengaicons/react';
+} from '~/app/icons/icons';
 import Image from 'next/image';
 import { ReactNode } from 'react';
 import Link from 'next/link';

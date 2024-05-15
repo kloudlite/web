@@ -24,10 +24,12 @@ export interface IConfig {
   footer?:
     | {
         brand?: ReactNode;
+        extra?: ReactNode;
         menu: {
           title: string;
           className?: string;
           items: { title: string; to: string }[];
+          showExtra?: boolean;
         }[];
       }
     | ReactNode;

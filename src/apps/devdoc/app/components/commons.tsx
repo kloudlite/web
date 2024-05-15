@@ -68,25 +68,27 @@ export const TitleBlock = ({
   descClass?: string;
 }) => {
   return (
-    <div className="flex flex-col gap-3xl text-start md:!text-center">
+    <div className="wb-flex wb-flex-col wb-gap-3xl wb-text-center">
       <div className="flex flex-col gap-md">
         <h3
           className={cn(
-            'heading4xl-marketing lg:!heading5xl-marketing text-text-default',
+            'wb-heading3xl-marketing md:wb-heading4xl-marketing lg:wb-heading5xl-marketing wb-text-text-default dark:wb-text-text-darktheme-default',
             titleClass
           )}
         >
           {title}
         </h3>
       </div>
-      <p
-        className={cn(
-          'bodyXl lg:!bodyXXl text-text-soft max-w-[784px] m-auto',
-          descClass
-        )}
-      >
-        {desc}
-      </p>
+      {desc && (
+        <p
+          className={cn(
+            'wb-bodyLg md:wb-bodyXl lg:wb-bodyXXl wb-text-text-soft dark:wb-text-text-darktheme-soft wb-max-w-[784px] wb-m-auto',
+            descClass
+          )}
+        >
+          {desc}
+        </p>
+      )}
     </div>
   );
 };
@@ -98,6 +100,7 @@ export const Block = ({
   children,
   titleClass,
   descClass,
+  hasGraph = true,
 }: {
   title: ReactNode;
   desc?: ReactNode;
@@ -105,16 +108,17 @@ export const Block = ({
   children?: ReactNode;
   titleClass?: string;
   descClass?: string;
+  hasGraph?: boolean;
 }) => {
   return (
-    <SectionWrapper className={cn('flex-col', className)}>
+    <SectionWrapper className={cn('wb-flex-col', className)}>
       <TitleBlock
         title={title}
         desc={desc}
         titleClass={titleClass}
         descClass={descClass}
       />
-      <GraphExtended>{children}</GraphExtended>
+      {hasGraph ? <GraphExtended>{children}</GraphExtended> : children}
     </SectionWrapper>
   );
 };

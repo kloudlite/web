@@ -14,9 +14,9 @@ export const HeaderLink = ({
   return (
     <Link
       href={to}
-      className={cn('bodyLg-medium hover:underline', {
-        'text-text-soft': !active,
-        'text-text-default': !!active,
+      className={cn('wb-bodyLg-medium hover:wb-underline', {
+        'wb-text-text-soft dark:wb-text-text-darktheme-soft': !active,
+        'wb-text-text-default dark:wb-text-text-darktheme-default': !!active,
       })}
     >
       {children}

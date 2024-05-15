@@ -2,7 +2,7 @@ import { Button } from 'kl-design-system/atoms/button';
 import Link from 'next/link';
 import { ReactNode, isValidElement } from 'react';
 import { cn } from '../utils/commons';
-import { IConfig } from '../utils/use-config';
+import useConfig, { IConfig } from '../utils/use-config';
 
 const FooterLink = ({ to, children }: { to: string; children: ReactNode }) => {
   return (
@@ -20,34 +20,44 @@ const FooterLink = ({ to, children }: { to: string; children: ReactNode }) => {
 interface IFooterMenu {
   title: string;
   className?: string;
+  showExtra?: boolean;
   items: {
     title: string;
     to: string;
   }[];
 }
-const FooterMenu = ({ title, className, items }: IFooterMenu) => {
+const FooterMenu = ({ title: _, showExtra, className, items }: IFooterMenu) => {
+  const { config } = useConfig();
+  const { footer } = config;
   return (
     <div
       className={cn(
-        'py-3xl md:!py-8xl lg:!py-10xl flex md:!flex-1 flex-col gap-2xl md:!pl-2xl pr-2xl md:!border-r md:first:!border-l border-border-disabled basis-1/2 odd:border-r',
+        'wb-py-3xl md:wb-py-8xl lg:wb-py-10xl wb-flex md:wb-flex-1 wb-flex-col wb-gap-2xl md:wb-pl-2xl wb-pr-2xl md:wb-border-r md:first:wb-border-l wb-border-border-disabled dark:wb-border-border-darktheme-default wb-basis-1/2 odd:wb-border-r wb-justify-between',
         className
       )}
     >
-      <div className="headingMd text-text-default px-lg py-sm">{title}</div>
-      <ul className="list-none flex flex-col gap-lg">
+      {/* <div className="headingMd text-text-default dark:text-text-darktheme-default px-lg py-sm"> */}
+      {/*   {title} */}
+      {/* </div> */}
+      <ul className="wb-list-none wb-flex wb-flex-col wb-gap-lg">
         {items?.map((item) => (
           <li key={item.to}>
             <FooterLink to={item.to}>
-              <span className="bodyLg text-text-soft">{item.title}</span>
+              <span className="wb-bodyLg wb-text-text-soft dark:wb-text-text-darktheme-soft">
+                {item.title}
+              </span>
             </FooterLink>
           </li>
         ))}
       </ul>
+      {/* @ts-ignore */}
+      {showExtra && footer?.extra}
     </div>
   );
 };
 
 const Footer = ({ config }: { config: IConfig }) => {
+  console.log(config.footer);
   if (!config || !config.footer) {
     return null;
   }
@@ -65,18 +75,18 @@ const Footer = ({ config }: { config: IConfig }) => {
     'menu' in config.footer
   )
     return (
-      <footer className="bg-surface-basic-default overflow-hidden">
-        <div className="px-3xl md:!px-5xl lg:!px-8xl xl:!px-11xl 2xl:!px-12xl 3xl:!px-15xl lg:!max-w-[896px] xl:!max-w-[1024px] 2xl:!max-w-[1120px] 3xl:!max-w-[1410px] box-content flex flex-col-reverse flex-wrap lg:!flex-row lg:gap-x-2xl m-auto">
-          <div className="flex lg:!hidden h-6xl md:!h-8xl border-y border-border-disabled -mx-5xl px-5xl">
-            <div className="w-full border-x border-border-disabled" />
+      <footer className="wb-bg-surface-basic-default dark:wb-bg-surface-darktheme-basic-default wb-overflow-hidden">
+        <div className="wb-px-3xl md:wb-px-5xl lg:wb-px-8xl xl:wb-px-11xl 2xl:wb-px-12xl 3xl:wb-px-15xl lg:wb-max-w-[896px] xl:wb-max-w-[1024px] 2xl:wb-max-w-[1120px] 3xl:wb-max-w-[1410px] wb-box-content wb-flex wb-flex-col-reverse wb-flex-wrap lg:wb-flex-row lg:wb-gap-x-2xl wb-m-auto">
+          <div className="wb-flex lg:wb-hidden wb-h-6xl md:wb-h-8xl wb-border-y wb-border-border-disabled dark:wb-border-border-darktheme-default -wb-mx-5xl wb-px-5xl">
+            <div className="wb-w-full wb-border-x wb-border-border-disabled dark:wb-border-border-darktheme-default" />
           </div>
-          <div className="px-lg lg:!px-5xl 3xl:!pr-13xl py-3xl md:!py-2xl lg:!py-10xl border-x border-border-disabled lg:!border-l lg:!border-r-0">
+          <div className="wb-px-lg lg:wb-px-5xl 3xl:wb-pr-13xl wb-py-3xl md:wb-py-2xl lg:wb-py-10xl wb-border-x wb-border-border-disabled dark:wb-border-border-darktheme-default lg:wb-border-l lg:wb-border-r-0">
             {config.footer.brand && config.footer.brand}
           </div>
-          <div className="flex lg:!hidden h-xs border-t border-border-disabled -mx-5xl px-5xl">
-            <div className="w-full border-x border-border-disabled" />
+          <div className="wb-flex lg:wb-hidden wb-h-xs wb-border-t wb-border-border-disabled dark:wb-border-border-darktheme-default -wb-mx-5xl wb-px-5xl">
+            <div className="wb-w-full wb-border-x wb-border-border-disabled dark:wb-border-border-darktheme-default" />
           </div>
-          <div className="flex flex-row flex-wrap justify-between flex-1 border-x border-border-disabled md:!border-0">
+          <div className="wb-flex wb-flex-row wb-flex-wrap wb-justify-between wb-flex-1 wb-border-x wb-border-border-disabled dark:wb-border-border-darktheme-default md:wb-border-0">
             {config.footer.menu.map((item) => (
               <FooterMenu key={item.title} {...item} />
             ))}

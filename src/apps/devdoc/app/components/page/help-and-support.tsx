@@ -107,7 +107,7 @@ const PopularArticleItem = ({
   return (
     <Link
       href={link}
-      className="bodyLg-medium text-text-strong py-lg px-xl flex flex-row gap-xl items-center hover:bg-surface-basic-hovered rounded"
+      className="bodyLg-medium py-lg px-xl flex flex-row gap-xl items-center rounded text-text-strong dark:text-text-darktheme-strong hover:bg-surface-basic-hovered dark:hover:bg-surface-darktheme-basic-hovered"
     >
       <span className="flex-1">{title}</span>
       <span>
@@ -127,13 +127,17 @@ const TopicItem = ({
   desc: ReactNode;
 }) => {
   return (
-    <div className="p-3xl lg:!px-5xl lg:!pt-8xl lg:!pb-5xl flex flex-col gap-5xl bg-surface-basic-default h-full lg:min-h-[288px] help-card-graph">
-      <div className="bg-icon-primary flex w-8xl h-8xl rounded-full items-center justify-center p-2xl text-icon-on-primary">
+    <div className="p-3xl lg:!p-5xl flex flex-col gap-5xl h-full lg:min-h-[256px] lg:max-h-[288px] bg-surface-basic-default dark:bg-surface-darktheme-basic-default">
+      <div className="flex w-8xl h-8xl rounded-full items-center justify-center p-2xl text-icon-on-primary dark:text-icon-darktheme-on-primary bg-icon-primary dark:bg-surface-darktheme-primary-default">
         {icon}
       </div>
       <div className="flex flex-col gap-3xl">
-        <h4 className="headingXl-marketing text-text-default">{title}</h4>
-        <p className="text-text-soft bodyLg line-clamp-2">{desc}</p>
+        <h4 className="headingXl-marketing text-text-default dark:text-text-darktheme-default">
+          {title}
+        </h4>
+        <p className="bodyLg line-clamp-2 text-text-soft dark:text-text-darktheme-soft">
+          {desc}
+        </p>
       </div>
     </div>
   );
@@ -145,12 +149,12 @@ const HelpAndSupportRoot = () => {
       <div className="flex flex-col w-full">
         <div className="flex flex-col gap-6xl text-center w-full">
           <div className="flex flex-col gap-3xl">
-            <h1 className="heading3xl-marketing md:!heading4xl-marketing lg:!heading5xl-marketing text-text-default">
+            <h1 className="heading3xl-marketing md:!heading4xl-marketing lg:!heading5xl-marketing text-text-default dark:text-text-darktheme-default">
               <HandWaving size={56} className="hidden md:!inline" />
               <HandWaving size={32} className="inline md:!hidden" />
               <span> How can we help you today?</span>
             </h1>
-            <p className="hidden md:!block md:!bodyXl lg:!bodyXXl text-text-soft">
+            <p className="hidden md:!block md:!bodyXl lg:!bodyXXl text-text-soft dark:text-text-darktheme-soft">
               Discover solutions through our documentation, guides, and
               community
             </p>
@@ -171,8 +175,8 @@ const HelpAndSupportRoot = () => {
         </div>
         <GraphExtended className="lg:mt-5xl">
           <GraphItem>
-            <div className="px-xl md:!px-3xl py-4xl md:!py-5xl gap-4xl md:!gap-5xl flex flex-col bg-surface-basic-default min-h-[289px] 3xl:!min-h-[256px] 3xl:max-h-[256px]">
-              <h2 className="px-xl heading2xl-marketing text-text-default">
+            <div className="px-xl md:!px-3xl py-4xl md:!py-5xl gap-4xl md:!gap-5xl flex flex-col min-h-[289px] 3xl:!min-h-[256px] 3xl:max-h-[256px] bg-surface-basic-default dark:bg-surface-darktheme-basic-default">
+              <h2 className="px-xl heading2xl-marketing text-text-default dark:text-text-darktheme-default">
                 Popular articles
               </h2>
               <div className="grid grid-cols-1 md:!grid-cols-2 3xl:!grid-cols-3 gap-x-6xl gap-y-xl">
@@ -197,13 +201,13 @@ const HelpAndSupportRoot = () => {
       </div>
       <SectionWrapper className="flex flex-col w-full">
         <div className="flex flex-col gap-3xl text-center">
-          <h2 className="heading3xl-marketing md:!heading4xl-marketing lg:!heading5xl-marketing text-text-default">
+          <h2 className="heading3xl-marketing md:!heading4xl-marketing lg:!heading5xl-marketing text-text-default dark:text-text-darktheme-default">
             Couldn’t fine what you needed?
           </h2>
-          <p className="hidden md:!block md:!bodyXl lg:!bodyXXl text-text-soft">
+          <p className="hidden md:!block md:!bodyXl lg:!bodyXXl text-text-soft dark:text-text-darktheme-soft">
             Don’t worry, we’ve got more options for you
           </p>
-          <p className="bodyMd-medium md:hidden text-text-soft">
+          <p className="bodyMd-medium md:hidden text-text-soft dark:text-text-darktheme-soft">
             Don’t worry, we’ve got more options for you
           </p>
         </div>

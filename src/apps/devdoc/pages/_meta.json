@@ -12,6 +12,20 @@
       "header":"secondary"
     }
   },
+
+  "new-home":{
+    "title":"Kloudlite",
+    "type":"page",
+    "display":"hidden",
+    "theme":{
+      "layout":"raw",
+      "breadcrumb": false,
+      "footer": false,
+      "sidebar": false,
+      "toc": false,
+      "header":"secondary"
+    }
+  },
   "infraops":{
     "title":"InfraOps",
     "type":"page",
