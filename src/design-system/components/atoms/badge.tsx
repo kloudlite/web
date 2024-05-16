@@ -5,9 +5,15 @@ interface IBadge {
   type?: 'neutral' | 'info' | 'success' | 'warning' | 'critical';
   children: ReactNode;
   icon?: JSX.Element;
+  className?: string;
 }
 
-export const Badge = ({ type = 'neutral', children, icon }: IBadge) => {
+export const Badge = ({
+  type = 'neutral',
+  children,
+  icon,
+  className,
+}: IBadge) => {
   const iconProps = { size: 12, color: 'currentColor' };
 
   return (
@@ -25,7 +31,8 @@ export const Badge = ({ type = 'neutral', children, icon }: IBadge) => {
             type === 'warning',
           'border-border-critical bg-surface-critical-subdued text-text-critical':
             type === 'critical',
-        }
+        },
+        className
       )}
     >
       {!!icon && cloneElement(icon, iconProps)}
