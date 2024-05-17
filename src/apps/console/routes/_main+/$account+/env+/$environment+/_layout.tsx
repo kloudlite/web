@@ -183,7 +183,7 @@ const CurrentBreadcrum = ({ environment }: { environment: IEnvironment }) => {
       <span className="mx-md" />
       <Breadcrum.Button
         to={`/${account}/environments`}
-        LinkComponent={Link}
+        linkComponent={Link}
         content="Envs"
       />
       <BreadcrumSlash />
@@ -198,7 +198,7 @@ const CurrentBreadcrum = ({ environment }: { environment: IEnvironment }) => {
         content={environment.displayName}
         size="sm"
         variant="plain"
-        LinkComponent={Link}
+        linkComponent={Link}
         to={`/${account}/env/${parseName(environment)}/apps`}
       />
 

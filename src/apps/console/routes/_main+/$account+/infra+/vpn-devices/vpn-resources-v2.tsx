@@ -215,10 +215,16 @@ const ListView = ({ items = [], onDelete, showWgConfig }: IResource) => {
                     />
                   ) : (
                     <ListItem
+                      noTooltip
                       data={
-                        <span className="bodyMd-semibold">
-                          {i.creationMethod}
-                        </span>
+                        <div>
+                          <Button
+                            variant="plain"
+                            onClick={() => showWgConfig(i)}
+                            content="View"
+                            suffix={<Eye />}
+                          />
+                        </div>
                       }
                     />
                   ),
@@ -350,6 +356,7 @@ const VPNResourcesV2 = ({ items = [] }: { items: BaseType[] }) => {
         setVisible={() => setShowWireguardConfig(null)}
         visible={!!showWireguardConfig}
         deviceName={parseName(showWireguardConfig)}
+        creationMethod={showWireguardConfig?.creationMethod || ''}
       />
     </>
   );
