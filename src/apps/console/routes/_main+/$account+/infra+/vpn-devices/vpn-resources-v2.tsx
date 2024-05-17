@@ -232,7 +232,7 @@ const ListView = ({ items = [], onDelete, showWgConfig }: IResource) => {
               host: {
                 render: () => (
                   <div className="flex w-fit truncate">
-                    <DeviceHostView hostName={`${parseName(i)}.local`} />
+                    <DeviceHostView hostName={`${parseName(i)}.device.local`} />
                   </div>
                 ),
                 // render: () => (
