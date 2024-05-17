@@ -46,7 +46,7 @@ interface IBaseButton {
   onPointerDown?: MouseEventHandler<HTMLButtonElement>;
   onKeyDown?: KeyboardEventHandler<HTMLButtonElement>;
   to?: string;
-  LinkComponent?: any;
+  linkComponent?: any;
   disabled?: boolean;
   block?: boolean;
   type?: ButtonTypes;
@@ -84,7 +84,7 @@ export const ButtonBase = React.forwardRef<
   const {
     onClick = () => {},
     to = '',
-    LinkComponent = motion.button,
+    linkComponent = motion.button,
     disabled = false,
     suffix,
     prefix,
@@ -108,17 +108,17 @@ export const ButtonBase = React.forwardRef<
     ...mprops
   } = props;
 
-  let Component: any = LinkComponent;
+  let Component: any = linkComponent;
 
   let tempToLabel = toLabel;
 
   let extraProps = {} as any;
   if (to) {
-    if (LinkComponent === motion.button) {
+    if (linkComponent === motion.button) {
       Component = motion.a;
       tempToLabel = 'href';
     } else {
-      Component = LinkComponent;
+      Component = linkComponent;
     }
   }
 
