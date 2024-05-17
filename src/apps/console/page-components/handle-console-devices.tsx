@@ -373,7 +373,7 @@ export const ShowWireguardConfig = ({
         {creationMethod === 'kl' ? (
           <div className="flex flex-col gap-2xl">
             <div className="bodyLg-medium text-text-default">
-              This device is managed by Kloudlite command line
+              This device is managed by Kloudlite command line.
             </div>
             <div className="flex flex-col gap-lg bodyMd text-text-default list-disc list-outside pl-2xl" />
             <Button
