@@ -12,7 +12,7 @@ interface ICodeView {
   language?: string;
   title?: string;
   preClassName?: string;
-  multilineData?: boolean;
+  isMultilineData?: boolean;
 }
 const CodeView = ({
   data,
@@ -21,7 +21,7 @@ const CodeView = ({
   language = 'shell',
   title,
   preClassName,
-  multilineData,
+  isMultilineData,
 }: ICodeView) => {
   const { copy: cpy } = useClipboard({
     onSuccess() {
@@ -54,7 +54,7 @@ const CodeView = ({
         <div className="bodyMd-medium text-text-default">{title}</div>
       )}
       <div className="bodyMd text-text-strong">
-        {multilineData ? (
+        {isMultilineData ? (
           <div
             onClick={() => {
               if (copy) cpy(data);

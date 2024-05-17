@@ -352,7 +352,7 @@ export const ShowWireguardConfig = ({
             <CodeView
               data={config}
               showShellPrompt={false}
-              multilineData
+              isMultilineData
               copy
             />
           </div>
