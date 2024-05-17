@@ -40,12 +40,13 @@ import {
   DesktopTower,
   TwitterNewLogoFill,
   Developer,
-  Handshake,
-  ChevronDoubleLeft,
-  // LockKeyOpen,
-  // Cube,
-  // SpeakerHigh,
-} from '@jengaicons/react';
+  Users,
+  SelectionForeground,
+  Code,
+  DeBugging,
+  LockSimple,
+  Lightbulb,
+} from '~/app/icons/icons';
 
 import providersImageMobile from '~/images/infraops/providers/mobile.svg';
 import providersImage768 from '~/images/infraops/providers/768.svg';
@@ -111,6 +112,17 @@ import connect1440 from '~/images/homeNew/connect1440.svg';
 import collaborate1440Dark from '~/images/homeNew/collaborate1440-dark.svg';
 import integrate1440Dark from '~/images/homeNew/integrate1440-dark.svg';
 import connect1440Dark from '~/images/homeNew/connect1440-dark.svg';
+import nocommit1440Dark from '~/images/homeNew/nocommit1440-dark.svg';
+
+import collaborateMobileDark from '~/images/homeNew/collaborateMobile-dark.svg';
+import integrateMobileDark from '~/images/homeNew/integrateMobile-dark.svg';
+import connectMobileDark from '~/images/homeNew/connectMobile-dark.svg';
+import nocommitMobileDark from '~/images/homeNew/nocommitMobile-dark.svg';
+
+import collaborateMobile from '~/images/homeNew/collaborateMobile.svg';
+import integrateMobile from '~/images/homeNew/integrateMobile.svg';
+import connectMobile from '~/images/homeNew/connectMobile.svg';
+import nocommitMobile from '~/images/homeNew/nocommitMobile.svg';
 
 import explore from '~/images/explore.jpeg';
 
@@ -125,7 +137,6 @@ import AnscerIcon from '~/images/home/companies/anser.svg';
 import Workflow from '~/images/homeNew/exploring/workflow.jpeg';
 import Collarative from '~/images/homeNew/exploring/collarative.jpeg';
 import RemoteLocal from '~/images/homeNew/exploring/remote-local.jpeg';
-import nocommit1440Dark from '~/images/homeNew/nocommit1440-dark.svg';
 import PlaxonicSvg from '../icons/Plaxonic';
 import FibrSvg from '../icons/Fibr';
 import RedPlutoSvg from '../icons/RedPluto';
@@ -228,96 +239,97 @@ const consts = {
     howitworks: {
       images: {
         collaborate: {
+          rmobile: collaborateMobile.src,
+          rmobileDark: collaborateMobileDark.src,
           r1440: collaborate1440.src,
           r1440Dark: collaborate1440Dark.src,
         },
         connect: {
+          rmobile: connectMobile.src,
+          rmobileDark: connectMobileDark.src,
           r1440: connect1440.src,
           r1440Dark: connect1440Dark.src,
         },
         integrate: {
+          rmobile: integrateMobile.src,
+          rmobileDark: integrateMobileDark.src,
           r1440: integrate1440.src,
           r1440Dark: integrate1440Dark.src,
         },
         nocommit: {
+          rmobile: nocommitMobile.src,
+          rmobileDark: nocommitMobileDark.src,
           r1440: nocommit1440.src,
           r1440Dark: nocommit1440Dark.src,
         },
       },
       items: [
         {
-          label: 'Collaborative Environments',
+          label: 'Shift Left with Confidence',
           id: 'collaborate',
+          desc: 'Detecting issues early in the development cycle will reduce late fixes, ensuring more reliable applications',
+        },
+        {
+          label: 'Collaboration Effortlessly',
+          id: 'nocommit',
           desc: 'Teams can collaborate in the same env to develop & test interdependent services together.',
         },
         {
-          label: 'No commit-No deploy-Just code',
-          id: 'nocommit',
-          desc: 'Code & test instantly without commits or deployments, accelerating development cycle.',
-        },
-        {
-          label: 'Integrate with any IDE',
+          label: 'Shorten your Inner Loops',
 
           id: 'integrate',
-          desc: 'Compatible with any SSH-supporting  ODE for seamless tool interaction.',
+          desc: 'Connect, code, and see changes in real-time - speed up your development and feedback loops',
         },
         {
-          label: 'Connect & Debug on Any Device',
+          label: 'Use Existing Workflows',
           id: 'connect',
-          desc: 'Debug & develop from any device, anywhere, ensuring on-the-go control and updates',
+          desc: 'Integrate with your existing tools; continue using the workflows you’re familiar, with zero disruptions',
         },
       ],
     },
     kloudliteDevelopmentData: [
       {
-        label: '100% Dev-Prod parity',
-        desc: 'Achieve perfect parity across all elements, from configurations to network settings, ensuring that development mirrors production accurately.',
+        label: 'Instant Setup, Infinite Scale',
+        desc: 'Jump right into development with environments that scale as you grow',
+        icon: InfinityIcon,
+      },
+      {
+        label: '100% Dev-Prod Parity',
+        desc: 'What you develop is what you deploy - no surprises.',
         icon: Developer,
       },
-      {
-        label: 'Collaborative',
-        desc: 'Teams can connect and collaborate on some environment to develop and test multiple dependent services together.',
-        icon: Handshake,
-      },
 
-      // {
-      //   label: 'Fully Containerized',
-      //   desc: 'All environments are containerised, ensuring consistent, isolated development and production for reliability and scalability.',
-      //   icon: Container,
-      // },
       {
-        label: 'Shift-left approach',
-        desc: 'Integrate early testing for immediate feedback and faster issue resolution, boosting quality.',
-        icon: ChevronDoubleLeft,
+        label: 'Seamless Collaboration Anywhere',
+        desc: 'Team up in real-time, in any environment, with zero hassle',
+        icon: Users,
       },
 
       {
-        label: 'Ephemeral & Lightweight in Nature',
-        desc: 'Use temporary, efficient environments for quick setup and teardown, reducing overhead and boosting productivity.',
-        icon: Container,
+        label: 'Cut the Config Clutter',
+        desc: 'Manage configs and secrets centrally - keep your code clean and lean',
+        icon: SelectionForeground,
       },
-      // {
-      //   label: 'Config & Secrets',
-      //   desc: 'Securely and efficiently manage configurations and secrets, ensuring proper handling of sensitive information.',
-      //   icon: Config,
-      // },
-
-      // {
-      //   label: 'Access to dependent services',
-      //   desc: 'Easily connect to dependent services within your environment, streamlining complex development interactions.',
-      //   icon: LockKeyOpen,
-      // },
-      // {
-      //   label: 'Service discovery',
-      //   desc: 'Automatically detect and integrate network services, simplifying management of dependencies.',
-      //   icon: Cube,
-      // },
-
-      // {
-      //   label: 'Volume Mounts',
-      //   desc: 'Effortlessly integrate persistent storage for consistent data access across sessions.',
-      //   icon: SpeakerHigh,
-      // },
+      {
+        label: 'Develop Faster',
+        desc: 'Pre-built environments mean less setup and more coding',
+        icon: Code,
+      },
+      {
+        label: 'Debug on the Fly',
+        desc: 'Intercept and debug applications without breaking your flow',
+        icon: DeBugging,
+      },
+      {
+        label: 'Secure by Design',
+        desc: 'Safeguard your development with built-in security at every layer',
+        icon: LockSimple,
+      },
+      {
+        label: 'Empower Innovation',
+        desc: 'Free your focus for creativity with streamlined workflows',
+        icon: Lightbulb,
+      },
     ],
 
     faqData: [

@@ -40,7 +40,6 @@ export function TOC({ headings }: TOCProps): ReactElement {
     );
 
     if (anchor) {
-      console.log(activeSlug, anchor);
       setTimeout(() => {
         scrollIntoView(anchor, {
           behavior: 'smooth',
@@ -58,40 +57,41 @@ export function TOC({ headings }: TOCProps): ReactElement {
     <div
       ref={tocRef}
       className={cn(
-        'md:h-[calc(100vh-var(--kl-navbar-height))] overflow-x-hidden overflow-y-auto kl-scrollbar-transparent hover:kl-scrollbar-colored scrollbar-gutter grow pr-md pt-6xl'
+        'md:wb-h-[calc(100vh_-_var(--kl-navbar-height))] wb-overflow-x-hidden wb-overflow-y-auto kl-scrollbar-transparent hover:kl-scrollbar-colored scrollbar-gutter wb-grow wb-pr-md wb-pt-6xl'
       )}
     >
       {hasHeadings && (
         <>
           <LayoutGroup>
-            <ul className="flex flex-col">
+            <ul className="wb-flex wb-flex-col">
               {items.map(({ id, value, depth }, index) => {
                 return (
                   <li
-                    className={cn('flex flex-row relative', {
-                      'ml-2xl pl-md border-l border-border-default': depth > 2,
-                      'mb-lg': depth === 2,
-                      'pb-lg': depth > 2 && items?.[index + 1]?.depth > 2,
+                    className={cn('wb-flex wb-flex-row wb-relative', {
+                      'wb-ml-2xl wb-pl-md wb-border-l wb-border-border-default dark:wb-border-border-darktheme-default':
+                        depth > 2,
+                      'wb-mb-lg': depth === 2,
+                      'wb-pb-lg': depth > 2 && items?.[index + 1]?.depth > 2,
                     })}
                     key={id}
                   >
                     <a
                       href={`#${id}`}
                       className={cn(
-                        'flex px-2xl py-lg rounded min-w-0 w-full',
+                        'wb-flex wb-px-2xl wb-py-lg wb-rounded wb-min-w-0 wb-w-full hover:wb-bg-surface-basic-hovered dark:hover:wb-bg-surface-darktheme-basic-hovered',
                         activeAnchor[id]?.isActive
-                          ? 'bg-surface-basic-active bodyMd-medium  text-text-primary relative'
-                          : 'bodyMd text-text-soft'
+                          ? 'wb-bg-surface-basic-active dark:wb-bg-surface-darktheme-basic-active wb-bodyMd-medium  wb-text-text-primary dark:wb-text-text-darktheme-primary wb-relative'
+                          : 'wb-bodyMd wb-text-text-soft dark:wb-text-text-darktheme-soft'
                       )}
                     >
                       {depth > 2 && activeAnchor[id]?.isActive && (
                         <motion.div
                           layoutId="toc-line"
-                          className="border-l-2 border-border-primary rounded h-full absolute -left-[5px] top-0"
+                          className="wb-border-l-2 wb-border-border-primary dark:wb-border-border-darktheme-primary wb-rounded wb-h-full wb-absolute -wb-left-[5px] wb-top-0"
                         />
                       )}
 
-                      <span className="block truncate">{value}</span>
+                      <span className="wb-block wb-truncate">{value}</span>
                     </a>
                   </li>
                 );
@@ -103,7 +103,7 @@ export function TOC({ headings }: TOCProps): ReactElement {
 
       <div
         className={cn(
-          'sticky pb-6xl bottom-0 bg-surface-basic-subdued shadow-[0_-12px_16px_#FAFAFA]'
+          'wb-sticky wb-pb-6xl wb-bottom-0 wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued wb-shadow-[0_-12px_16px_theme(colors.surface.basic.default)] dark:wb-shadow-[0_-12px_16px_theme(colors.surface.darktheme.basic.default)]'
         )}
       >
         {/* {renderComponent(config.editLink.component, {
@@ -113,7 +113,7 @@ export function TOC({ headings }: TOCProps): ReactElement {
           })}
 
           {renderComponent(config.toc.extraContent)} */}
-        <hr className="border-border-default mb-5xl" />
+        <hr className="wb-border-border-default dark:wb-border-border-darktheme-default wb-mb-5xl" />
         {config.feedback ? (
           <Button
             content={
@@ -136,7 +136,7 @@ export function TOC({ headings }: TOCProps): ReactElement {
           variant="plain"
           size="lg"
         />
-        {config.scrollToTop && <BackToTop className="opacity-0" />}
+        {config.scrollToTop && <BackToTop className="wb-opacity-0" />}
       </div>
     </div>
   );

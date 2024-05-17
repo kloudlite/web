@@ -78,6 +78,9 @@ function typography() {
       '.heading2xl': {
         '@apply wb-font-semibold wb-text-2xl wb-leading-xl wb-font-sans': {},
       },
+      '.heading2xl-Re': {
+        '@apply wb-font-normal wb-text-2xl wb-leading-xl wb-font-sans': {},
+      },
       '.heading2xl-marketing': {
         '@apply wb-heading2xl wb-font-familjen': {},
       },
@@ -114,6 +117,10 @@ function typography() {
       },
       '.heading7xl-marketing': {
         '@apply wb-font-bold wb-text-7xl wb-leading-7xl wb-font-familjen': {},
+      },
+
+      '.heading7xl-1-marketing': {
+        '@apply wb-font-normal wb-text-7xl wb-leading-7xl wb-font-sriracha': {},
       },
     });
   };

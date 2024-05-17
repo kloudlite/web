@@ -43,7 +43,7 @@ type FolderProps = {
 const classes = {
   link: cn(
     'wb-flex wb-flex-row wb-items-center wb-rounded wb-py-lg wb-px-2xl wb-transition-all [word-break:break-word]',
-    'wb-cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:wb-border'
+    'wb-cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:wb-border hover:wb-bg-surface-basic-hovered dark:hover:wb-bg-surface-darktheme-basic-hovered'
   ),
   inactive: cn('wb-bodyMd wb-text-text-soft dark:wb-text-text-darktheme-soft'),
   active: cn(
@@ -190,7 +190,7 @@ function Separator({ title }: { title: string }): ReactElement {
       className={cn(
         '[word-break:break-word]',
         title
-          ? 'wb-headingSm wb-text-text-default wb-py-lg wb-px-2xl wb-my-md'
+          ? 'wb-headingSm wb-text-text-default dark:wb-text-text-darktheme-default wb-py-lg wb-px-2xl wb-my-md'
           : ''
       )}
     >
@@ -369,9 +369,9 @@ export function Sidebar({
         className={cn(
           'kl-sidebar wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued wb-z-40 kl-sidebar-container wb-flex-col wb-pb-6xl md:wb-pt-0',
           '',
-          'md:wb-top-[calc(var(--kl-navbar-height))] md:wb-shrink-0 motion-reduce:wb-transform-none',
+          'md:wb-top-0 md:wb-shrink-0 motion-reduce:wb-transform-none',
           'wb-transform-gpu wb-transition-all wb-ease-in-out',
-          'print:wb-hidden wb-pr-3xl',
+          'print:wb-hidden',
           showSidebar ? 'md:wb-w-[244px]' : '',
           asPopover ? 'md:wb-hidden' : 'wb-flex md:wb-sticky md:wb-self-start',
           menu
@@ -394,7 +394,7 @@ export function Sidebar({
           >
             <div
               className={cn(
-                'wb-overflow-y-hidden wb-overflow-x-hidden hover:wb-overflow-y-auto wb-scrollbar-gutter',
+                'wb-overflow-y-hidden wb-overflow-x-hidden hover:wb-overflow-y-auto scrollbar-gutter md:wb-pr-3xl',
                 'wb-grow md:wb-h-[calc(100vh-var(--kl-navbar-height))]',
                 {
                   'no-scrollbar': !showSidebar,

@@ -18,6 +18,7 @@ const Slider = ({
   hasDots = true,
   className,
   active,
+  autoPlay = false,
 }: {
   children?: ReactNode;
   graph?: boolean;
@@ -25,6 +26,7 @@ const Slider = ({
   hasDots?: boolean;
   className?: string;
   active?: string;
+  autoPlay?: boolean;
 }) => {
   const ref = useRef<SlickSlider>(null);
   const settings = {
@@ -62,6 +64,7 @@ const Slider = ({
           beforeChange={(e, n) => {
             onMove?.(n);
           }}
+          autoplay={autoPlay}
           ref={ref}
         >
           {children}

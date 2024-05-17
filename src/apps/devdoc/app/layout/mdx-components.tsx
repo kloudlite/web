@@ -169,7 +169,12 @@ export const createComponents = ({
     td: Td,
     // details: Details,
     // summary: Summary,
-    pre: (props) => <pre {...props} className="wb-mt-3xl" />,
+    pre: (props) => (
+      <pre
+        {...props}
+        className="wb-mt-3xl wb-bg-surface-basic-input dark:wb-bg-surface-darktheme-basic-input wb-border wb-border-border-default dark:wb-border-border-darktheme-default wb-rounded wb-p-xl"
+      />
+    ),
     // code: Code,
     ...components,
   };

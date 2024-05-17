@@ -46,10 +46,6 @@ html{
   @apply -wb-ml-[47px] -wb-mt-[3px] wb-bg-surface-basic-pressed wb-border-surface-basic-subdued wb-rounded-full wb-flex wb-items-center wb-justify-center wb-text-center wb-border-4 wb-box-content wb-headingMd wb-text-text-default wb-absolute;
 }
 
-.kl-sidebar{
-  -webkit-mask-image: linear-gradient(transparent,#000 20px),linear-gradient(270deg,#000 10px,transparent 0);
-    mask-image: linear-gradient(transparent,#000 20px),linear-gradient(270deg,#000 10px,transparent 0);
-}
 
 .kl-footer{
   order: -99999;
@@ -57,7 +53,6 @@ html{
 
 pre{
   overflow-x: auto;
-  @apply wb-bg-surface-basic-input wb-shadow-card wb-rounded wb-border wb-border-border-default wb-p-xl;
 }
 
 code{
@@ -79,6 +74,8 @@ code{
 }
 
 @media (max-width: 767px) {
+
+
     .kl-sidebar-container {
       @apply wb-fixed wb-inset-0 wb-w-full wb-bottom-0 wb-z-50 wb-overscroll-contain wb-pr-0 wb-pb-3xl;
       transition: transform 0.8s cubic-bezier(0.52, 0.16, 0.04, 1);
@@ -198,6 +195,11 @@ code{
 
 
   @media screen and (min-width:768px){
+
+.kl-sidebar{
+  -webkit-mask-image: linear-gradient(transparent,#000 20px),linear-gradient(270deg,#000 10px,transparent 0);
+    mask-image: linear-gradient(transparent,#000 20px),linear-gradient(270deg,#000 10px,transparent 0);
+}
     .illustration{
       scale: 160%;
       transform: translate(2%, 12%);

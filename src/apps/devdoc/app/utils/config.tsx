@@ -9,12 +9,14 @@ import {
   Sun,
   TwitterNewLogoFill,
 } from '~/app/icons/icons';
+import OssIcon from '~/images/homeNew/oss.svg';
+import OssIconDark from '~/images/homeNew/oss-dark.svg';
 import { cn } from './commons';
 import { IConfig } from './use-config';
 import Button from '../components/button';
 import { useTheme } from './useTheme';
 
-const gitUrl = 'https://github.com/kloudlite/kloudlite';
+export const gitUrl = 'https://github.com/kloudlite/kloudlite';
 const linkedinUrl = 'https://linkedin.com/company/kloudlite-io';
 const xUrl = 'https://x.com/kloudlite';
 export const supportEmail = 'launch@kloudlite.io';
@@ -22,7 +24,7 @@ const socialIconSize = 18;
 
 const SocialMenu = () => {
   return (
-    <div className="wb-flex wb-flex-row wb-items-center wb-gap-xl wb-text-icon-soft dark:wb-text-icon-darktheme-soft md:wb-justify-end wb-pr-2xl">
+    <div className="wb-flex wb-flex-row wb-items-center wb-gap-xl wb-text-icon-strong dark:wb-text-icon-darktheme-strong  wb-pr-2xl">
       <a href={gitUrl} aria-label="kloudlite-github">
         <GithubLogoFill size={socialIconSize} />
       </a>
@@ -48,39 +50,44 @@ const BrandMenu = ({ className }: { className?: string }) => {
         className
       )}
     >
-      <div className="wb-flex wb-flex-col md:wb-flex-row lg:wb-flex-col wb-gap-3xl wb-flex-1 lg:wb-min-h-[236px] md:wb-justify-between lg:wb-justify-start md:wb-items-center lg:wb-items-start">
-        <div className="wb-flex wb-flex-col wb-items-start wb-gap-xl wb-max-w-[300px]">
-          <a href="/" aria-label="kloudlite">
-            <BrandLogo size={brandIconSize} detailed />
-          </a>
-          <span className="wb-bodySm wb-text-text-soft dark:wb-text-text-darktheme-soft">
-            Boost your efficiency, speed up deployments, enhance collaboration
-          </span>
+      <div className="wb-flex wb-flex-row">
+        <div className="wb-flex wb-flex-col wb-gap-3xl wb-flex-1 lg:wb-min-h-[236px] wb-items-start">
+          <div className="wb-flex wb-flex-col wb-items-start wb-gap-xl wb-max-w-[300px]">
+            <a href="/" aria-label="kloudlite">
+              <BrandLogo size={brandIconSize} detailed />
+            </a>
+            <span className="wb-bodySm wb-text-text-soft dark:wb-text-text-darktheme-soft">
+              Boost your efficiency, speed up deployments, enhance collaboration
+            </span>
+          </div>
+          <ButtonGroup.Root
+            variant="outline"
+            selectable
+            value={theme}
+            onValueChange={(v: any) => {
+              setTheme(v);
+            }}
+          >
+            <ButtonGroup.IconButton value="light" icon={<Sun />} />
+            <ButtonGroup.IconButton value="dark" icon={<Moon />} />
+            <ButtonGroup.IconButton value="system" icon={<Monitor />} />
+          </ButtonGroup.Root>
         </div>
-        <div className="wb-flex wb-flex-col wb-gap-lg">
-          <div className="wb-flex wb-flex-row wb-items-center wb-justify-start md:wb-justify-end lg:wb-justify-start wb-gap-3xl wb-text-text-soft">
-            <ButtonGroup.Root
-              variant="outline"
-              selectable
-              value={theme}
-              onValueChange={(v: any) => {
-                setTheme(v);
-              }}
-            >
-              <ButtonGroup.IconButton value="light" icon={<Sun />} />
-              <ButtonGroup.IconButton value="dark" icon={<Moon />} />
-              <ButtonGroup.IconButton value="system" icon={<Monitor />} />
-            </ButtonGroup.Root>
+        <div className="wb-bodyMd wb-text-text-soft dark:wb-text-text-darktheme-soft wb-hidden md:wb-flex lg:wb-hidden wb-flex-col wb-gap-3xl wb-items-end">
+          <div>
+            <img className="dark:wb-hidden" src={OssIcon.src} />
+            <img className="wb-hidden dark:wb-block" src={OssIconDark.src} />
           </div>
-          <div className="wb-bodyMd wb-text-text-soft dark:wb-text-text-darktheme-soft wb-hidden md:wb-block lg:wb-hidden">
-            © {new Date().getFullYear()} Kloudlite Labs Pvt Ltd.
-          </div>
+          <SocialMenu />
+          <div>© {new Date().getFullYear()} Kloudlite Labs Pvt Ltd.</div>
         </div>
       </div>
-      <div className="wb-bodyMd wb-text-text-soft dark:wb-text-text-darktheme-soft md:wb-hidden lg:wb-block wb-flex wb-flex-col wb-gap-3xl">
-        <div className="wb-block md:wb-hidden">
-          <SocialMenu />
+      <div className="wb-bodyMd wb-text-text-soft dark:wb-text-text-darktheme-soft wb-flex md:wb-hidden lg:wb-flex wb-flex-col wb-gap-3xl">
+        <div className="lg:wb-hidden">
+          <img className="dark:wb-hidden" src={OssIcon.src} />
+          <img className="wb-hidden dark:wb-block" src={OssIconDark.src} />
         </div>
+        <SocialMenu />
         <div>© {new Date().getFullYear()} Kloudlite Labs Pvt Ltd.</div>
       </div>
     </div>
@@ -97,14 +104,15 @@ export default {
   footer: {
     brand: <BrandMenu className="md:wb-order-[-9999]" />,
     extra: (
-      <div className="wb-hidden md:wb-block">
-        <SocialMenu />
+      <div className="wb-hidden lg:wb-block">
+        <img className="dark:wb-hidden" src={OssIcon.src} />
+        <img className="wb-hidden dark:wb-block" src={OssIconDark.src} />
       </div>
     ),
     menu: [
       {
         title: 'Developers',
-        className: 'w-[47%] md:w-auto',
+        className: 'w-[47%] md:w-auto lg:wb-items-end wb-flex',
         showExtra: false,
         items: [
           {
@@ -123,7 +131,7 @@ export default {
       },
       {
         title: 'Resources',
-        className: 'w-[47%] md:w-auto',
+        className: 'w-[47%] md:w-auto lg:wb-items-end wb-flex',
         showExtra: false,
         items: [
           {
@@ -142,7 +150,7 @@ export default {
       },
       {
         title: 'Company',
-        className: 'w-[47%] md:w-auto',
+        className: 'w-[47%] md:w-auto lg:wb-items-end wb-flex',
         showExtra: true,
         items: [
           {

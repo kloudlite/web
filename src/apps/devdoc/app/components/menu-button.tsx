@@ -21,9 +21,9 @@ const MenuToggle = ({
   <button onClick={onClick} aria-label="menu-button">
     <motion.svg
       animate={toggle ? 'open' : 'closed'}
-      width="23"
-      height="23"
-      viewBox="0 0 23 23"
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
     >
       <Path
         variants={{
