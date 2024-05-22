@@ -32,7 +32,7 @@ export function BackToTop({
     <Button
       className={className}
       ref={ref}
-      content={content || 'Scroll on top'}
+      content={content}
       suffix={suffix}
       prefix={prefix}
       onClick={scrollToTop}
