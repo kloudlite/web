@@ -24,7 +24,7 @@ export const SubHeader = ({
             variant="basic"
             icon={<ArrowLeftFill />}
             to={backUrl}
-            LinkComponent={LinkComponent}
+            linkComponent={LinkComponent}
           />
         )}
         <motion.div className="text-text-strong heading2xl">{title}</motion.div>
