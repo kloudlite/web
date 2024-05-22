@@ -1,20 +1,23 @@
-import { ReactNode } from 'react';
+import { CSSProperties, ReactNode } from 'react';
 import { cn } from '~/app/utils/commons';
 
 const SectionWrapper = ({
   children,
   className,
   noPadding = false,
+  style,
 }: {
   children: ReactNode;
   className?: string;
   noPadding?: boolean;
+  style?: CSSProperties | undefined;
 }) => {
   return (
     <div
+      style={style}
       className={cn(
-        'flex',
-        !noPadding ? 'pt-7xl md:!pt-8xl xl:!pt-10xl' : '',
+        'wb-flex',
+        !noPadding ? 'wb-pt-6xl md:wb-pt-8xl xl:wb-pt-10xl' : '',
         className
       )}
     >

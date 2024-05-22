@@ -1,0 +1,19 @@
+<svg width="1120" height="480" viewBox="0 0 1120 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="1120" height="480" fill="#0F0F11"/>
+<path d="M319.365 180.945C354.561 145.749 411.626 145.749 446.822 180.945L505.061 239.183L438.587 305.657C404.907 339.338 350.3 339.338 316.62 305.657V305.657C282.94 271.977 282.94 217.37 316.62 183.69L319.365 180.945Z" stroke="url(#paint0_angular_842_31471)" stroke-width="50"/>
+<path d="M774.363 330C724.658 379.706 644.069 379.706 594.363 330L504.363 240L594.363 150C644.069 100.294 724.658 100.294 774.363 150V150C824.069 199.706 824.069 280.294 774.363 330V330Z" stroke="url(#paint1_angular_842_31471)" stroke-width="50"/>
+<path d="M362.9 255.251L352.324 244.675L362.9 234.099" stroke="#EEEEF0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M387.261 225.667L373.438 263.683" stroke="#EEEEF0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M397.797 234.099L408.373 244.675L397.797 255.251" stroke="#EEEEF0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M673.826 232.429C671.9 231.936 669.892 231.86 667.934 232.203C665.976 232.547 664.114 233.302 662.471 234.421C660.827 235.539 659.441 236.994 658.403 238.689C657.365 240.384 656.699 242.281 656.45 244.253C656.201 246.225 656.375 248.227 656.959 250.127C657.543 252.027 658.524 253.781 659.838 255.272C661.152 256.764 662.768 257.959 664.579 258.778C666.39 259.597 668.354 260.022 670.342 260.024H696.736C698.672 260.024 700.58 259.477 702.092 258.268C703.995 256.745 706.426 254.535 708.385 252.016C710.289 249.478 711.562 246.524 712.1 243.397C712.637 240.271 712.425 237.061 711.479 234.033C710.533 231.005 708.881 228.245 706.659 225.98C704.437 223.716 701.709 222.012 698.699 221.008C695.689 220.005 692.484 219.731 689.348 220.21C686.212 220.688 683.234 221.905 680.66 223.759C678.087 225.614 675.99 228.054 674.545 230.878C673.099 233.702 672.345 236.829 672.344 240.001" stroke="#EEEEF0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<defs>
+<radialGradient id="paint0_angular_842_31471" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(380.349 241.929) rotate(-1.26098) scale(156.466 156.314)">
+<stop stop-color="#1D4ED8"/>
+<stop offset="1" stop-color="#1D4ED8" stop-opacity="0"/>
+</radialGradient>
+<radialGradient id="paint1_angular_842_31471" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(684.363 240) rotate(180) scale(225.775)">
+<stop stop-color="#1D4ED8"/>
+<stop offset="1" stop-color="#1D4ED8" stop-opacity="0"/>
+</radialGradient>
+</defs>
+</svg>

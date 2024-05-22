@@ -11,7 +11,7 @@ const Wrapper = ({
   return (
     <div
       className={cn(
-        'lg:m-auto lg:!max-w-[896px] w-full px-3xl md:!px-5xl lg:!px-8xl xl:!px-11xl 2xl:!px-12xl xl:!max-w-[1024px] 2xl:!max-w-[1120px] 3xl:!min-w-[1408px] lg:!box-content',
+        'lg:wb-m-auto lg:wb-max-w-[896px] wb-w-full wb-px-3xl md:wb-px-5xl lg:wb-px-8xl xl:wb-px-11xl 2xl:wb-px-12xl xl:wb-max-w-[1024px] 2xl:wb-max-w-[1120px] 3xl:wb-min-w-[1408px] lg:wb-box-content',
         className
       )}
     >

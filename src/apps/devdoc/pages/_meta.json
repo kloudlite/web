@@ -12,41 +12,21 @@
       "header":"secondary"
     }
   },
-  "infraops":{
-    "title":"InfraOps",
+  "new-home":{
+    "title":"Kloudlite",
     "type":"page",
     "display":"hidden",
     "theme":{
       "layout":"raw",
-      "sidebar":false,
-      "toc":false,
+      "breadcrumb": false,
+      "footer": false,
+      "sidebar": false,
+      "toc": false,
       "header":"secondary"
     }
   },
-  "devops":{
-    "title":"DevOps",
-    "type":"page",
-    "display":"hidden",
-    "theme":{
-      "layout":"raw",
-      "sidebar":false,
-      "toc":false,
-      "header":"secondary"
-    }
-  },
-  "distribution":{
-    "title":"Distribution",
-    "type":"page",
-    "display":"hidden",
-    "theme":{
-      "layout":"raw",
-      "sidebar":false,
-      "toc":false,
-      "header":"secondary"
-    }
-  },
-  "product":{
-    "title":"Product",
+  "change-logs":{
+    "title":"Changelogs",
     "type":"page",
     "display":"hidden",
     "theme":{

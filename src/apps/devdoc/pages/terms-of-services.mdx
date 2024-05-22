@@ -1,33 +1,33 @@
 export const Headings = ({ children }) => {
-  return <p className="bodyMd-medium">{children}</p>;
+  return <p className="wb-bodyMd-medium wb-text-text-default dark:wb-text-text-darktheme-default">{children}</p>;
 };
 
 export const SubList = ({ children }) => {
-  return <ul className="list-[circle] pl-xl">{children.props.children}</ul>;
+  return <ul className="wb-list-[circle] pl-xl">{children.props.children}</ul>;
 };
 
 export const ListRoman = ({ children }) => {
-  return <ol type="a" className="list-[lower-alpha] pl-5xl flex flex-col gap-md marker:!font-normal">{children.props.children}</ol>;
+  return <ol type="a" className="wb-list-[lower-alpha] wb-pl-5xl wb-flex wb-flex-col wb-gap-md marker:!wb-font-normal">{children.props.children}</ol>;
 };
 
 export const ListDecimalBold = ({ children }) => {
-  return <ol type="1" className="list-[decimal] pl-5xl flex flex-col gap-md marker:font-bold">{children.props.children}</ol>;
+  return <ol type="1" className="wb-list-[decimal] wb-pl-5xl wb-flex wb-flex-col wb-gap-md marker:wb-font-bold">{children.props.children}</ol>;
 };
 
-<div className="bg-surface-basic-subdued">
-  <div className="max-w-[1440px] m-auto px-3xl md:!px-8xl lg:!px-11xl xl:!px-13xl 2xl:!px-14xl pb-6xl md:!pb-8xl xl:!pb-10xl">
-    <h1 className="heading4xl-marketing md:!heading5xl-marketing lg:!heading6xl-marketing text-text-default py-6xl md:!py-8xl xl:!py-10xl">
+<div className="wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued">
+  <div className="wb-max-w-[1440px] wb-m-auto wb-px-3xl md:wb-px-8xl lg:wb-px-11xl xl:wb-px-13xl 2xl:wb-px-14xl wb-pb-6xl md:wb-pb-8xl xl:wb-pb-10xl">
+    <h1 className="wb-heading4xl-marketing md:wb-heading5xl-marketing lg:wb-heading6xl-marketing wb-text-text-default dark:wb-text-text-darktheme-default wb-py-6xl md:wb-py-8xl xl:wb-py-10xl">
       Policies & Guidlines
     </h1>
     <div>
-      <div className="flex flex-col gap-lg">
+      <div className="wb-flex wb-flex-col wb-gap-lg">
         <Headings>TERMS OF USE</Headings>
-        <span className="text-text-soft bodySm">
+        <span className="wb-text-text-soft dark:wb-text-text-darktheme-soft wb-bodySm">
           Updated: 12th Dec 2023 (Giving this date, considering the website
           go-live date)
         </span>
       </div>
-      <div className="bodyLg text-text-strong flex flex-col gap-4xl pt-4xl">
+      <div className="wb-bodyLg wb-text-text-strong dark:wb-text-text-darktheme-strong wb-flex wb-flex-col wb-gap-4xl wb-pt-4xl">
         Kloudlite Labs Pvt Ltd. operate this website ("Site"). This Site may
         provide you with access to a variety of web pages, documents, software,
         services, images, graphics, audio, video, forums, discussion groups,

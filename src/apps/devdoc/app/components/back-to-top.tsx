@@ -12,7 +12,7 @@ export function BackToTop({ className }: { className?: string }): ReactElement {
   useEffect(() => {
     function toggleVisible() {
       const { scrollTop } = document.documentElement;
-      ref.current?.classList.toggle('opacity-0', scrollTop < 300);
+      ref.current?.classList.toggle('wb-opacity-0', scrollTop < 300);
     }
 
     window.addEventListener('scroll', toggleVisible);

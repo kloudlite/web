@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import p from './package.json' assert { type: 'json' };
+import p from './package.json' with { type: 'json' };
 
 const {
   externalDependencies,

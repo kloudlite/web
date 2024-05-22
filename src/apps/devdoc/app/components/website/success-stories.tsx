@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { Button } from 'kl-design-system/atoms/button';
-import { ArrowRight } from '@jengaicons/react';
+import { ArrowRight } from '~/app/icons/icons';
 import Image from 'next/image';
 import Radio from 'kl-design-system/atoms/radio';
 import { cn } from '~/app/utils/commons';

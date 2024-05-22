@@ -37,6 +37,7 @@ function HeadingLink({
     slugs.set(heading, [id, (context.index += 1)]);
     observer?.observe(heading);
 
+    console.log(children);
     return () => {
       observer?.disconnect();
       slugs.delete(heading);
@@ -51,11 +52,11 @@ function HeadingLink({
   return (
     <Tag
       className={cn(
-        'text-text-default group mt-6xl',
+        'wb-text-text-default dark:wb-text-text-darktheme-default wb-group wb-mt-6xl',
         {
-          h2: 'heading2xl-marketing',
-          h3: 'headingXl-marketing',
-          h4: 'headingLg-marketing',
+          h2: 'wb-heading2xl-marketing',
+          h3: 'wb-headingXl-marketing',
+          h4: 'wb-headingLg-marketing',
           h5: '',
           h6: '',
         }[Tag]
@@ -67,7 +68,7 @@ function HeadingLink({
         <a
           href={`#${id}`}
           id={id}
-          className="subheading-anchor invisible group-hover:visible transition-all"
+          className="subheading-anchor wb-invisible group-hover:wb-visible wb-transition-all"
           aria-label="Permalink for this section"
           ref={obRef}
         />
@@ -98,14 +99,14 @@ export const createComponents = ({
   components?: any;
   isRawLayout?: boolean;
 }): Components => {
-  console.log("coomponents", components)
+  console.log('coomponents', components);
   if (isRawLayout) {
     return {
       a: A,
       ul: (props) => {
         let cs = props.className;
         if (!cs) {
-          cs = 'list-disc pl-xl';
+          cs = 'wb-list-disc wb-pl-xl';
         }
 
         return <ul {...props} className={cs} />;
@@ -113,7 +114,7 @@ export const createComponents = ({
       ol: (props) => {
         let cs = props.className;
         if (!cs) {
-          cs = 'list-decimal pl-5xl';
+          cs = 'wb-list-decimal wb-pl-5xl';
         }
 
         return <ol {...props} className={cs} />;
@@ -121,7 +122,7 @@ export const createComponents = ({
       li: (props) => {
         let cs = props.className;
         if (!cs) {
-          cs = 'pb-lg custom-li';
+          cs = 'wb-pb-lg custom-li';
         }
 
         return <li {...props} className={cs} />;
@@ -131,27 +132,50 @@ export const createComponents = ({
   const context = { index: 0 };
   return {
     h1: (props) => (
-      <h1 className="heading4xl-marketing text-text-strong mt-sm" {...props} />
+      <h1
+        className="wb-heading4xl-marketing wb-mt-sm wb-text-text-strong dark:wb-text-text-darktheme-strong"
+        {...props}
+      />
     ),
     h2: (props) => <HeadingLink tag="h2" context={context} {...props} />,
     h3: (props) => <HeadingLink tag="h3" context={context} {...props} />,
     h4: (props) => <HeadingLink tag="h4" context={context} {...props} />,
     h5: (props) => <HeadingLink tag="h5" context={context} {...props} />,
     h6: (props) => <HeadingLink tag="h6" context={context} {...props} />,
-    ul: (props) => <ul className="list-disc bodyLg text-text-strong pl-5xl" {...props} />,
-    ol: (props) => <ol className="bodyLg text-text-strong list-decimal pl-5xl" {...props} />,
-    li: (props) => <li className="mt-3xl" {...props} />,
+    ul: (props) => (
+      <ul
+        className="wb-list-disc wb-bodyLg wb-pl-5xl wb-text-text-strong dark:wb-text-text-darktheme-strong"
+        {...props}
+      />
+    ),
+    ol: (props) => (
+      <ol
+        className="wb-bodyLg wb-list-decimal wb-pl-5xl wb-text-text-strong dark:wb-text-text-darktheme-strong"
+        {...props}
+      />
+    ),
+    li: (props) => <li className="wb-mt-3xl" {...props} />,
     blockquote: (props) => <blockquote className="" {...props} />,
     hr: (props) => <hr className="" {...props} />,
     a: Link,
     table: (props) => <Table className="" {...props} />,
-    p: (props) => <p className="bodyLg text-text-strong mt-3xl rounded-image" {...props} />,
+    p: (props) => (
+      <p
+        className="wb-bodyLg wb-mt-3xl rounded-image wb-text-text-strong dark:wb-text-text-darktheme-strong wb-break-words"
+        {...props}
+      />
+    ),
     tr: Tr,
     th: Th,
     td: Td,
     // details: Details,
     // summary: Summary,
-    pre: (props) => <pre {...props} className="mt-3xl" />,
+    pre: (props) => (
+      <pre
+        {...props}
+        className="wb-mt-3xl wb-bg-surface-basic-input dark:wb-bg-surface-darktheme-basic-input wb-border wb-border-border-default dark:wb-border-border-darktheme-default wb-rounded wb-p-xl"
+      />
+    ),
     // code: Code,
     ...components,
   };
