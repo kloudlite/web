@@ -68,7 +68,7 @@ export const Root = ({
                 exit={{ y: -2, opacity: 0 }}
                 transition={{ duration: 0.3, ease: 'anticipate' }}
                 className={cn(
-                  'z-[99999999999] bodySm-default text-text-default px-lg py-md shadow-popover bg-surface-basic-default rounded max-w-[200px] overflow-hidden',
+                  'z-[99999999999] bodySm-default text-text-default px-lg py-md shadow-popover bg-surface-basic-default rounded max-w-[200px] overflow-hidden [pointer-events:all]',
                   className
                 )}
               >
