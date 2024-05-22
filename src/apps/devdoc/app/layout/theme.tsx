@@ -5,6 +5,7 @@ import { useEffect, useMemo } from 'react';
 import { useFSRoute } from 'nextra/hooks';
 import { Item, normalizePages } from 'nextra/normalize-pages';
 import { useRouter } from 'next/router';
+import { ArrowUpLg } from '@jengaicons/react';
 import Footer from '~/app/components/footer';
 import Container from '~/app/components/container';
 import { NavLinks } from '~/app/components/nav-links';
@@ -22,6 +23,7 @@ import config, { basePath } from '~/app/utils/config';
 import { createComponents } from './mdx-components';
 import { BlogHeader, BlogTags } from '../components/blog-utils';
 import { CompanyPanel } from '../components/company-utils';
+import { BackToTop } from '../components/back-to-top';
 
 function GitTimestamp({ timestamp }: { timestamp: Date }) {
   const { locale = DEFAULT_LOCALE } = useRouter();
@@ -243,6 +245,18 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
               </MDXProvider>
             </main>
           </article>
+          {['blog'].includes(pageType) && (
+            <div className="wb-z-50 wb-fixed wb-bottom-3xl wb-right-3xl md:wb-bottom-8xl md:wb-right-8xl">
+              <BackToTop
+                className="wb-shadow-darktheme-popover !wb-hidden"
+                variant="basic"
+                content="Back to top"
+                prefix={<ArrowUpLg />}
+                suffix={<div />}
+                size="md"
+              />
+            </div>
+          )}
         </Container>
         <Footer config={config} />
       </ActiveAnchorProvider>

@@ -1,5 +1,5 @@
 import { ArrowCircleUp } from '@jengaicons/react';
-import { Button } from 'kl-design-system/atoms/button';
+import { Button, IButton } from 'kl-design-system/atoms/button';
 import type { ReactElement } from 'react';
 import { useEffect, useRef } from 'react';
 
@@ -7,12 +7,19 @@ function scrollToTop() {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-export function BackToTop({ className }: { className?: string }): ReactElement {
+export function BackToTop({
+  className,
+  variant = 'plain',
+  suffix = <ArrowCircleUp />,
+  prefix,
+  content,
+  size,
+}: IButton): ReactElement {
   const ref = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     function toggleVisible() {
       const { scrollTop } = document.documentElement;
-      ref.current?.classList.toggle('wb-opacity-0', scrollTop < 300);
+      ref.current?.classList.toggle('!wb-hidden', scrollTop < 300);
     }
 
     window.addEventListener('scroll', toggleVisible);
@@ -25,11 +32,12 @@ export function BackToTop({ className }: { className?: string }): ReactElement {
     <Button
       className={className}
       ref={ref}
-      content="Scroll on top"
-      suffix={<ArrowCircleUp />}
+      content={content || 'Scroll on top'}
+      suffix={suffix}
+      prefix={prefix}
       onClick={scrollToTop}
-      variant="plain"
-      size="lg"
+      variant={variant}
+      size={size || 'lg'}
     />
   );
 }
