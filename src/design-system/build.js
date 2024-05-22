@@ -1,6 +1,6 @@
 import { build } from 'esbuild';
 import { sassPlugin } from 'esbuild-sass-plugin';
-import p from './package.json' assert { type: 'json' };
+import p from './package.json' with { type: "json" };
 
 const { externalDependencies } = p;
 

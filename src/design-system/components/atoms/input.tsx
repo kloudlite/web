@@ -22,7 +22,7 @@ import {
 import { cn } from '../utils';
 import AnimateHide from './animate-hide';
 
-type InputSizes = 'md' | 'lg' | (undefined & NonNullable<unknown>);
+type InputSizes = 'md' | 'lg' | 'xl' | (undefined & NonNullable<unknown>);
 
 export interface IInputRow {
   value?: string | number;
@@ -135,7 +135,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
             })}
           >
             <label
-              className="select-none bodyMd-medium text-text-default pulsable min-w-[33%]"
+              className="select-none bodyMd-medium pulsable min-w-[33%] text-text-soft dark:text-text-darktheme-soft"
               htmlFor={id}
             >
               {label}
@@ -152,16 +152,17 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
         <div
           ref={containerRef}
           className={cn(
-            'transition-all px-lg rounded border flex flex-row items-center relative ring-offset-1 pulsable',
+            'transition-all rounded border flex flex-row items-center relative ring-offset-1 dark:ring-offset-0 pulsable ring-border-focus dark:ring-border-darktheme-focus',
             {
               'text-text-critical bg-surface-critical-subdued border-border-critical':
                 error,
-              'text-text-default border-border-default bg-surface-basic-input':
+              'text-text-default dark:text-text-darktheme-default border-border-default dark:border-border-darktheme-default bg-surface-basic-input dark:bg-surface-darktheme-basic-input':
                 !error,
               'text-text-disabled border-border-disabled bg-surface-basic-input':
                 disabled,
               'pr-0': component !== 'input',
             },
+            size === 'xl' ? 'h-[60px] !px-2xl' : 'px-lg',
             className
           )}
         >
@@ -193,14 +194,15 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
             id={id}
             tabIndex={tabIndex}
             className={cn(
-              textFieldClassName,
               'outline-none flex-1 w-full h-full',
-              'rounded bodyMd bg-transparent',
+              'rounded bg-transparent',
               {
-                'text-text-critical placeholder:text-text-critical/70 bgh':
+                'text-text-critical dark:text-text-darktheme-critical placeholder:text-text-critical/70 bgh':
                   error && !disabled,
-                'text-text-default': !error && !disabled,
-                'text-text-disabled': disabled,
+                'text-text-default dark:text-text-darktheme-default dark:placeholder:text-text-darktheme-soft':
+                  !error && !disabled,
+                'text-text-disabled dark:text-text-darktheme-disabled':
+                  disabled,
               },
               {
                 'py-xl': size === 'lg',
@@ -211,7 +213,9 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
               },
               {
                 'no-spinner': type === 'number',
-              }
+              },
+              size === 'xl' ? '' : 'bodyMd',
+              textFieldClassName
             )}
             value={value}
             onChange={(e: any) => {
@@ -221,10 +225,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
             }}
             onFocus={(e: any) => {
               if (focusRing) {
-                containerRef.current?.classList.add(
-                  'ring-2',
-                  'ring-border-focus'
-                );
+                containerRef.current?.classList.add('ring-2');
               }
               onFocus(e);
             }}
@@ -233,10 +234,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
             onKeyDown={onKeyDown}
             autoComplete={autoComplete}
             onBlur={(e: any) => {
-              containerRef.current?.classList.remove(
-                'ring-2',
-                'ring-border-focus'
-              );
+              containerRef.current?.classList.remove('ring-2');
 
               onBlur(e);
             }}
@@ -245,7 +243,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
           {!!suffix && <div className="cursor-default">{suffix}</div>}
           {!!suffixIcon && (
             <div
-              className={cn('pl-lg bodyMd', {
+              className={cn('pl-lg bodyMd dark:text-text-darktheme-default', {
                 'text-text-critical': error,
                 'text-text-strong': !error && !disabled,
                 'text-text-disabled': disabled,
