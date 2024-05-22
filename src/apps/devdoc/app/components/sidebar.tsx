@@ -25,7 +25,7 @@ import { Anchor } from './anchor';
 import useMenu from '../utils/use-menu';
 import { cn } from '../utils/commons';
 import useConfig from '../utils/use-config';
-import { MobileMenu } from './header-secondary';
+import HeaderSecondary, { MobileMenu } from './header-secondary';
 
 const TreeState: Record<string, boolean> = Object.create(null);
 
@@ -315,11 +315,11 @@ export function Sidebar({
   const mounted = useMounted();
   useEffect(() => {
     if (menu) {
-      document.body.classList.add('wb-overflow-hidden', 'md:wb-overflow-auto');
+      document.body.classList.add('wb-overflow-hidden', 'lg:wb-overflow-auto');
     } else {
       document.body.classList.remove(
         'wb-overflow-hidden',
-        'md:wb-overflow-auto'
+        'lg:wb-overflow-auto'
       );
     }
   }, [menu]);
@@ -327,7 +327,7 @@ export function Sidebar({
   useEffect(() => {
     const activeElement = sidebarRef.current?.querySelector('li.active');
 
-    if (activeElement && (window.innerWidth > 767 || menu)) {
+    if (activeElement && (window.innerWidth > 1023 || menu)) {
       const scroll = () => {
         scrollIntoView(activeElement, {
           block: 'center',
@@ -367,16 +367,15 @@ export function Sidebar({
       />
       <aside
         className={cn(
-          'kl-sidebar wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued wb-z-40 kl-sidebar-container wb-flex-col wb-pb-6xl md:wb-pt-0',
-          '',
-          'md:wb-top-0 md:wb-shrink-0 motion-reduce:wb-transform-none',
+          'kl-sidebar wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued wb-z-40 kl-sidebar-container wb-flex-col wb-pb-6xl lg:wb-pt-0',
+          'lg:wb-top-0 lg:wb-shrink-0 motion-reduce:wb-transform-none',
           'wb-transform-gpu wb-transition-all wb-ease-in-out',
           'print:wb-hidden',
-          showSidebar ? 'md:wb-w-[244px]' : '',
-          asPopover ? 'md:wb-hidden' : 'wb-flex md:wb-sticky md:wb-self-start',
+          showSidebar ? 'lg:wb-w-[244px]' : '',
+          asPopover ? 'lg:wb-hidden' : 'wb-flex lg:wb-sticky lg:wb-self-start',
           menu
-            ? 'max-md:[transform:translate3d(0,0,0)]'
-            : 'max-md:[transform:translate3d(0,-100%,0)]'
+            ? 'max-lg:[transform:translate3d(0,0,0)]'
+            : 'max-lg:[transform:translate3d(0,-100%,0)]'
         )}
         ref={containerRef}
       >
@@ -394,14 +393,14 @@ export function Sidebar({
           >
             <div
               className={cn(
-                'wb-overflow-y-hidden wb-overflow-x-hidden hover:wb-overflow-y-auto scrollbar-gutter md:wb-pr-3xl',
-                'wb-grow md:wb-h-[calc(100vh-var(--kl-navbar-height))]',
+                'wb-overflow-y-auto md:wb-overflow-y-hidden wb-overflow-x-hidden hover:wb-overflow-y-auto scrollbar-gutter lg:wb-pr-3xl',
+                'wb-grow lg:wb-h-[calc(100vh-var(--kl-navbar-height))]',
                 {
                   'no-scrollbar': !showSidebar,
                 },
                 {
-                  'md:wb-pt-2xl': !!rawLayout,
-                  'md:wb-pt-6xl': !rawLayout,
+                  'lg:wb-pt-2xl': !!rawLayout,
+                  'lg:wb-pt-6xl': !rawLayout,
                 }
               )}
               ref={sidebarRef}
@@ -410,7 +409,7 @@ export function Sidebar({
               {(!asPopover || !showSidebar) && (
                 <Collapse isOpen={showSidebar} horizontal>
                   <Menu
-                    className="nextra-menu-desktop max-md:wb-hidden"
+                    className="nextra-menu-desktop max-lg:wb-hidden"
                     // The sidebar menu, shows only the docs directories.
                     directories={docsDirectories}
                     // When the viewport size is larger than `md`, hide the anchors in
@@ -421,18 +420,26 @@ export function Sidebar({
                 </Collapse>
               )}
               {mounted &&
-                window.innerWidth < 768 &&
+                window.innerWidth < 1024 &&
                 (rawLayout ? (
                   // @ts-ignore
                   <MobileMenu {...config.headerSecondary} />
                 ) : (
-                  <Menu
-                    className="nextra-menu-mobile md:wb-hidden"
-                    // The mobile dropdown menu, shows all the directories.
-                    directories={fullDirectories}
-                    // Always show the anchor links on mobile (`md`).
-                    anchors={anchors}
-                  />
+                  <div>
+                    <div className="lg:wb-hidden wb-sticky wb-top-0 wb-z-50">
+                      <HeaderSecondary />
+                    </div>
+
+                    <div className="wb-px-xl">
+                      <Menu
+                        className="nextra-menu-mobile lg:wb-hidden"
+                        // The mobile dropdown menu, shows all the directories.
+                        directories={fullDirectories}
+                        // Always show the anchor links on mobile (`md`).
+                        anchors={anchors}
+                      />
+                    </div>
+                  </div>
                 ))}
             </div>
           </OnFocusItemContext.Provider>

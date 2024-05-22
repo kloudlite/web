@@ -85,7 +85,7 @@ import featuredImage1920 from '~/images/home/featured/1920.svg';
 import distributionIcon from '~/images/home/distribution.svg';
 import infraopsIcon from '~/images/home/infraops.svg';
 import devopsIcon from '~/images/home/devops.svg';
-import BlogCover from '~/images/blog/blog-cover.jpeg';
+import BlogCover from '~/public/blog/blog-cover.jpeg';
 
 import CreateProject1920 from '~/images/devops/create_project/1980.svg';
 import CreateProject1440 from '~/images/devops/create_project/1440.svg';
@@ -135,7 +135,7 @@ import TalescaleIcon from '~/images/home/companies/talescale.svg';
 import AnscerIcon from '~/images/home/companies/anser.svg';
 
 import Workflow from '~/images/homeNew/exploring/workflow.jpeg';
-import Collarative from '~/images/homeNew/exploring/collarative.jpeg';
+import Collarative from '~/images/homeNew/exploring/collaborative.jpeg';
 import RemoteLocal from '~/images/homeNew/exploring/remote-local.jpeg';
 import PlaxonicSvg from '../icons/Plaxonic';
 import FibrSvg from '../icons/Fibr';
@@ -232,6 +232,7 @@ const consts = {
 
       {
         img: Workflow.src,
+        // img: Collarative.src,
         label: 'Development workflow',
         desc: 'Kloudlite revolutionizes software development with streamlined efficiency and productivity',
       },

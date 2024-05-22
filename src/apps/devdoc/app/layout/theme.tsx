@@ -1,11 +1,10 @@
 import Head from 'next/head';
 import type { NextraThemeLayoutProps } from 'nextra';
 import { MDXProvider } from 'nextra/mdx';
-import { ReactNode, useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useFSRoute } from 'nextra/hooks';
 import { Item, normalizePages } from 'nextra/normalize-pages';
 import { useRouter } from 'next/router';
-import Profile from 'kl-design-system/molecule/profile';
 import Footer from '~/app/components/footer';
 import Container from '~/app/components/container';
 import { NavLinks } from '~/app/components/nav-links';
@@ -19,10 +18,10 @@ import { cn } from '~/app/utils/commons';
 import useMenu from '~/app/utils/use-menu';
 import { ActiveAnchorProvider } from '~/app/utils/active-anchor';
 import { ConfigProvider } from '~/app/utils/use-config';
-import config from '~/app/utils/config';
-import { Button } from 'kl-design-system/atoms/button';
-import { Chip } from 'kl-design-system/atoms/chips';
+import config, { basePath } from '~/app/utils/config';
 import { createComponents } from './mdx-components';
+import { BlogHeader, BlogTags } from '../components/blog-utils';
+import { CompanyPanel } from '../components/company-utils';
 
 function GitTimestamp({ timestamp }: { timestamp: Date }) {
   const { locale = DEFAULT_LOCALE } = useRouter();
@@ -40,41 +39,6 @@ function GitTimestamp({ timestamp }: { timestamp: Date }) {
   );
 }
 
-const CompanyElement = ({ name, value }: { name: string; value: string }) => {
-  return (
-    <div className="flex flex-col gap-lg">
-      <div className="headingMd text-surface-tertiary-default">{name}</div>
-      <div className="bodyMd text-surface-tertiary-default">{value}</div>
-    </div>
-  );
-};
-
-const CompanyPanel = ({
-  frontMatter,
-}: {
-  frontMatter: {
-    [key: string]: any;
-  };
-}) => {
-  return (
-    <div className="flex flex-col gap-3xl rounded-lg border border-border-default bg-surface-basic-subdued px-3xl pt-3xl pb-5xl">
-      <CompanyElement name="Company name" value={frontMatter?.companyName} />
-      <CompanyElement name="About" value={frontMatter?.companyAbout} />
-      <CompanyElement name="Industry" value={frontMatter?.companyIndustry} />
-      <CompanyElement name="Solutions" value={frontMatter?.companySolutions} />
-      <div className="h-xs bg-border-default w-full" />
-      <div className="flex flex-col gap-xl">
-        <div className="headingMd text-surface-tertiary-default">
-          Ready to get started?
-        </div>
-        <div>
-          <Button variant="tertiary" content="Contact sales" />
-        </div>
-      </div>
-    </div>
-  );
-};
-
 const findPageType = (activePath: Item[], names: string[]) => {
   return (
     activePath.length > 0 &&
@@ -84,50 +48,9 @@ const findPageType = (activePath: Item[], names: string[]) => {
   );
 };
 
-const BlogHeader = ({
-  frontMatter,
-  timestamp,
-  author = true,
-}: {
-  frontMatter: {
-    [key: string]: any;
-  };
-  timestamp: string | ReactNode;
-  author?: boolean;
-}) => {
-  return (
-    <div className="wb-flex wb-flex-col wb-gap-5xl wb-pt-2xl wb-pb-xl">
-      <div className="wb-flex wb-flex-col wb-gap-xl">
-        <h1 className="wb-heading3xl wb-text-text-strong dark:wb-text-text-darktheme-strong">
-          {frontMatter.title || frontMatter.companyName}
-        </h1>
-        <p className="wb-bodyLg wb-text-text-strong dark:wb-text-text-darktheme-strong">
-          {frontMatter.describe || frontMatter.companyDescription}
-        </p>
-      </div>
-      {author && (
-        <Profile
-          responsive={false}
-          name={`Written by ${frontMatter.author}`}
-          subtitle={timestamp}
-        />
-      )}
-    </div>
-  );
-};
-
-const BlogTags = ({ tags = [] }: { tags: string[] }) => {
-  return (
-    <div className="flex flex-row items-center gap-lg">
-      {tags.map((t) => (
-        <Chip key={t} item={t} label={t} />
-      ))}
-    </div>
-  );
-};
-
 const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
   const { title, frontMatter, pageMap, headings } = pageOpts;
+
   const { state } = useMenu();
 
   useEffect(() => {
@@ -183,7 +106,29 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
     <div className="wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued wb-min-h-screen wb-antialiased">
       <Head>
         <title>{title === 'Index' ? config.siteTitle : title}</title>
-        <meta name="og:image" content={frontMatter.image} />
+        <meta name="description" content={frontMatter.description} />
+        <meta name="og:image" content={`${basePath}${frontMatter.image}`} />
+        <meta property="og:title" content={frontMatter.title || 'Kloudlite'} />
+        <meta
+          property="og:description"
+          content={frontMatter.description || 'Kloudlite'}
+        />
+
+        {/* twitter metadata */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@KloudLite" />
+        <meta
+          name="twitter:creator"
+          content={frontMatter.author || 'Kloudlite'}
+        />
+        <meta
+          name="twitter:image"
+          content={`${basePath}${frontMatter.image}`}
+        />
+        <meta
+          name="twitter:description"
+          content={frontMatter.description || 'Kloudlite'}
+        />
       </Head>
       <ActiveAnchorProvider>
         {headerType === 'primary' ? (
@@ -228,7 +173,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
           <article
             className={cn(
               'wb-flex-1 wb-w-full',
-              activeThemeContext.layout === 'raw' ? '' : 'wb-pt-xl'
+              activeThemeContext.layout === 'raw' ? '' : 'lg:wb-pt-xl'
             )}
           >
             <main
@@ -237,7 +182,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
                 showSidebar ? 'wb-max-w-[72rem]' : '',
                 activeThemeContext.layout === 'raw' ? '' : 'gap-6xl',
                 pageType === 'docs'
-                  ? 'wb-py-6xl xl:wb-px-3xl 3xl:!wb-px-7xl lg:!wb-max-w-[394px] xl:!wb-max-w-[510px] 2xl:!wb-max-w-[650px] 3xl:!wb-max-w-[938px]'
+                  ? 'wb-py-3xl lg:wb-py-6xl xl:wb-px-3xl 3xl:!wb-px-7xl lg:!wb-max-w-[394px] xl:!wb-max-w-[510px] 2xl:!wb-max-w-[650px] 3xl:!wb-max-w-[938px]'
                   : '',
                 ['customer-stories'].includes(pageType)
                   ? 'lg:!wb-pr-8xl xl:!wb-pr-10xl 2xl:!wb-pr-11xl 3xl:!wb-pr-15xl'
@@ -283,7 +228,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
                 activeThemeContext.timestamp &&
                 pageOpts.timestamp &&
                 activeThemeContext.layout !== 'raw' ? (
-                  <div className="wb-bodyLg wb-text-text-strong dark:wb-text-text-darktheme-strong">
+                  <div className="wb-bodyLg wb-text-text-strong dark:wb-text-text-darktheme-strong wb-pb-xl">
                     {GitTimestamp({ timestamp: new Date(pageOpts.timestamp) })}
                   </div>
                 ) : null}

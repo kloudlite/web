@@ -4,6 +4,7 @@
 // eslint-disable-next-line import/no-relative-packages
 import tailwindBase from '../../design-system/tailwind-base';
 import typography from './css-plugins/typography';
+import scrollbar from './css-plugins/scrollbar';
 // @ts-ignore
 
 export default {
@@ -13,7 +14,7 @@ export default {
     './images/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: tailwindBase.theme,
-  plugins: [typography()],
+  plugins: [typography(), scrollbar()],
   prefix: 'wb-',
   darkMode: 'selector',
   // darkMode: 'class',

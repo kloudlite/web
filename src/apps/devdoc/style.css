@@ -65,15 +65,8 @@ code{
   background-size: cover;
 }
 
-.kl-scrollbar-transparent::-webkit-scrollbar-thumb{
-  scrollbar-color:  transparent;
-}
 
-.kl-scrollbar-colored::-webkit-scrollbar-thumb{
-  scrollbar-color: auto;
-}
-
-@media (max-width: 767px) {
+@media (max-width: 1023px) {
 
 
     .kl-sidebar-container {
@@ -196,10 +189,6 @@ code{
 
   @media screen and (min-width:768px){
 
-.kl-sidebar{
-  -webkit-mask-image: linear-gradient(transparent,#000 20px),linear-gradient(270deg,#000 10px,transparent 0);
-    mask-image: linear-gradient(transparent,#000 20px),linear-gradient(270deg,#000 10px,transparent 0);
-}
     .illustration{
       scale: 160%;
       transform: translate(2%, 12%);
@@ -212,6 +201,11 @@ code{
       scale: 140%;
       transform: translate(0,17%);
     }
+
+.kl-sidebar{
+  -webkit-mask-image: linear-gradient(transparent,#000 20px),linear-gradient(270deg,#000 10px,transparent 0);
+    mask-image: linear-gradient(transparent,#000 20px),linear-gradient(270deg,#000 10px,transparent 0);
+}
   }
   
 
@@ -280,8 +274,6 @@ code{
   }
 
    .secure-graph{
-      background-position: bottom;
-      position: relative;
       @apply wb-bg-[url("/secure-at-core-bg.svg")] dark:wb-bg-[url("/secure-at-core-bg-dark.svg")]; 
   }
 }

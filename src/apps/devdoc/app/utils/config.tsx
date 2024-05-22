@@ -16,6 +16,7 @@ import { IConfig } from './use-config';
 import Button from '../components/button';
 import { useTheme } from './useTheme';
 
+export const basePath = 'https://kloudlite.io';
 export const gitUrl = 'https://github.com/kloudlite/kloudlite';
 const linkedinUrl = 'https://linkedin.com/company/kloudlite-io';
 const xUrl = 'https://x.com/kloudlite';
@@ -46,7 +47,7 @@ const BrandMenu = ({ className }: { className?: string }) => {
   return (
     <div
       className={cn(
-        'wb-flex wb-flex-col wb-gap-7xl md:wb-gap-3xl wb-pr-4xl lg:wb-w-[296px] wb-order-last md:wb-order-first md:wb-justify-between md:wb-h-full',
+        'wb-flex wb-flex-col wb-gap-7xl md:wb-gap-3xl wb-pr-4xl lg:wb-w-[211px] xl:wb-w-[296px] wb-order-last md:wb-order-first md:wb-justify-between md:wb-h-full',
         className
       )}
     >
@@ -74,19 +75,11 @@ const BrandMenu = ({ className }: { className?: string }) => {
           </ButtonGroup.Root>
         </div>
         <div className="wb-bodyMd wb-text-text-soft dark:wb-text-text-darktheme-soft wb-hidden md:wb-flex lg:wb-hidden wb-flex-col wb-gap-3xl wb-items-end">
-          <div>
-            <img className="dark:wb-hidden" src={OssIcon.src} />
-            <img className="wb-hidden dark:wb-block" src={OssIconDark.src} />
-          </div>
           <SocialMenu />
           <div>© {new Date().getFullYear()} Kloudlite Labs Pvt Ltd.</div>
         </div>
       </div>
       <div className="wb-bodyMd wb-text-text-soft dark:wb-text-text-darktheme-soft wb-flex md:wb-hidden lg:wb-flex wb-flex-col wb-gap-3xl">
-        <div className="lg:wb-hidden">
-          <img className="dark:wb-hidden" src={OssIcon.src} />
-          <img className="wb-hidden dark:wb-block" src={OssIconDark.src} />
-        </div>
         <SocialMenu />
         <div>© {new Date().getFullYear()} Kloudlite Labs Pvt Ltd.</div>
       </div>
@@ -104,7 +97,7 @@ export default {
   footer: {
     brand: <BrandMenu className="md:wb-order-[-9999]" />,
     extra: (
-      <div className="wb-hidden lg:wb-block">
+      <div>
         <img className="dark:wb-hidden" src={OssIcon.src} />
         <img className="wb-hidden dark:wb-block" src={OssIconDark.src} />
       </div>
@@ -112,7 +105,7 @@ export default {
     menu: [
       {
         title: 'Developers',
-        className: 'w-[47%] md:w-auto lg:wb-items-end wb-flex',
+        className: 'wb-basis-1/2 md:wb-basis-auto lg:wb-items-end wb-flex',
         showExtra: false,
         items: [
           {
@@ -131,7 +124,7 @@ export default {
       },
       {
         title: 'Resources',
-        className: 'w-[47%] md:w-auto lg:wb-items-end wb-flex',
+        className: 'wb-basis-1/2 md:wb-basis-auto lg:wb-items-end wb-flex',
         showExtra: false,
         items: [
           {
@@ -150,7 +143,7 @@ export default {
       },
       {
         title: 'Company',
-        className: 'w-[47%] md:w-auto lg:wb-items-end wb-flex',
+        className: 'wb-basis-1/2 md:wb-basis-auto lg:wb-items-end wb-flex',
         showExtra: true,
         items: [
           {
@@ -210,23 +203,26 @@ export default {
       },
     ],
     extra: (
-      <div className="wb-flex wb-flex-col md:wb-flex-row wb-gap-xl md:wb-items-center wb-mt-6xl md:wb-mt-0 wb-px-2xl md:wb-px-0">
+      <div className="wb-flex wb-flex-col lg:wb-flex-row wb-gap-xl lg:wb-items-center wb-mt-6xl lg:wb-mt-0 wb-px-2xl lg:wb-px-0">
         <a
           href={gitUrl}
           aria-label="kloudlite-github"
-          className="wb-hidden md:wb-block wb-text-icon-default dark:wb-text-icon-darktheme-default"
+          className="wb-hidden lg:wb-block wb-text-icon-default dark:wb-text-icon-darktheme-default"
         >
           <GithubLogoFill size={24} />
         </a>
-        <div className="md:wb-hidden">
+        <div className="lg:wb-hidden">
           <Button
             prefix={<GithubLogoFill />}
             content="Github"
             variant="basic"
             block
+            LinkComponent={Link}
+            toLabel="href"
+            to={gitUrl}
           />
         </div>
-        <span className="hidden md:block wb-h-2xl wb-w-xs wb-bg-border-default dark:wb-bg-border-darktheme-default" />
+        <span className="hidden lg:block wb-h-2xl wb-w-xs wb-bg-border-default dark:wb-bg-border-darktheme-default" />
         <div>
           <Button
             content="Join waitlist"

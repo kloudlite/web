@@ -27,10 +27,10 @@ const HorizontalTopTabItem = ({
   return (
     <div
       className={cn(
-        'wb-min-h-[244px] wb-h-full wb-flex wb-flex-col wb-gap-3xl md:wb-gap-4xl wb-p-2xl xl:wb-p-3xl 2xl:wb-px-3xl 2xl:wb-py-4xl 3xl:wb-p-4xl wb-relative wb-cursor-pointer lg:wb-min-h-[192px] lg:wb-min-h-[400px] lg:wb-max-h-[400px]  xl:wb-min-h-[352px] xl:wb-max-h-[352px] 2xl:wb-min-h-[320px] 2xl:wb-max-h-[320px] 3xl:wb-min-h-[256px] 3xl:wb-max-h-[256px]',
+        'wb-min-h-[244px] wb-h-full wb-flex wb-flex-col wb-gap-3xl md:wb-gap-4xl wb-p-2xl xl:wb-p-3xl 2xl:wb-px-3xl 2xl:wb-py-4xl 3xl:wb-p-4xl wb-relative wb-cursor-pointer lg:wb-min-h-[192px] lg:wb-min-h-[400px] lg:wb-max-h-[400px]  xl:wb-min-h-[352px] xl:wb-max-h-[352px] 2xl:wb-min-h-[320px] 2xl:wb-max-h-[320px] 3xl:wb-min-h-[256px] 3xl:wb-max-h-[256px] wb-transition-all',
         active
-          ? 'md:wb-bg-surface-primary-subdued md:dark:wb-bg-surface-darktheme-primary-subdued'
-          : ' wb-bg-surface-basic-default dark:wb-bg-surface-darktheme-basic-default',
+          ? 'wb-bg-surface-basic-default dark:wb-bg-surface-darktheme-basic-default md:wb-bg-surface-primary-subdued md:dark:wb-bg-surface-darktheme-primary-subdued'
+          : 'wb-bg-surface-basic-default dark:wb-bg-surface-darktheme-basic-default',
         className
       )}
       onClick={onClick}
@@ -48,15 +48,22 @@ const HorizontalTopTabItem = ({
       </h5>
       <p
         className={cn('wb-bodyXl', {
-          'wb-text-text-default dark:wb-text-text-darktheme-default': true,
+          'wb-text-text-default dark:wb-text-text-darktheme-default wb-transition-all':
+            true,
         })}
       >
         {desc}
       </p>
       {active && (
         <motion.div
-          transition={{ type: 'spring', bounce: 0.1, duration: 0.3 }}
-          className="wb-hidden md:wb-block wb-absolute wb-bottom-0 wb-left-0 wb-right-0 wb-h-[3px] wb-bg-border-primary dark:wb-bg-border-darktheme-primary"
+          transition={{ type: 'ease-in', bounce: 0.1, duration: 3 }}
+          initial={{
+            width: 0,
+          }}
+          animate={{
+            width: '100%',
+          }}
+          className="wb-hidden md:wb-block wb-absolute wb-bottom-0 wb-left-0 wb-right-0 wb-h-[3px] wb-bg-border-focus dark:wb-bg-border-darktheme-focus"
         />
       )}
     </div>
@@ -117,7 +124,7 @@ const HorizontalTopTab = ({
             {tabs.map((t) => (
               <div key={t.id}>
                 <HorizontalTopTabItem {...t} onClick={() => {}} active />
-                <div className="wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued wb-flex wb-items-center wb-justify-center">
+                <div className="wb-border-t wb-border-border-dark dark:wb-border-border-darktheme-dark wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued wb-flex wb-items-center wb-justify-center">
                   <div className="wb-hidden dark:wb-block">
                     <img
                       className="wb-flex wb-h-[160px] wb-p-2xl wb-items-center wb-justify-center"

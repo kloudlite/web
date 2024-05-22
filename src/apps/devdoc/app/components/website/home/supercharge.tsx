@@ -1,5 +1,3 @@
-import { Button } from 'kl-design-system/atoms/button';
-import { ArrowRight } from '~/app/icons/icons';
 import { GraphExtended, GraphItem } from '../../graph';
 import TextInputBig from '../../textinput-big';
 
@@ -25,7 +23,7 @@ const SuperCharge = ({
               modern developer teams
             </p>
           </div>
-          <div className="wb-hidden md:wb-block wb-w-full lg:wb-w-[610px]">
+          <div className="wb-w-full lg:wb-w-[610px]">
             <TextInputBig
               value={value}
               onChange={({ target }) => {
@@ -37,15 +35,6 @@ const SuperCharge = ({
                 }
               }}
               onSuffixClicked={onEnter}
-            />
-          </div>
-          <div className="md:wb-hidden">
-            <Button
-              size="sm"
-              content="Join waitlist"
-              suffix={<ArrowRight />}
-              variant="primary"
-              onClick={onEnter}
             />
           </div>
         </div>

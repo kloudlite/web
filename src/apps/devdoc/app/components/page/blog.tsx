@@ -156,7 +156,7 @@ const BlogHome = () => {
   const blogPosts =
     blogPage?.kind === 'Folder'
       ? blogPage.children.filter(
-          (f) => f.kind === 'MdxPage' && f.frontMatter
+          (f) => f.kind === 'MdxPage' && f.frontMatter && !f.frontMatter.draft
         ) || ([] as PageMapItem[])
       : ([] as PageMapItem[]);
 
@@ -179,7 +179,7 @@ const BlogHome = () => {
         </div>
         <div className="wb-flex wb-flex-col wb-gap-3xl md:wb-gap-0 md:wb-flex-row md:wb-items-center wb-justify-between wb-pt-5xl">
           <div className="-wb-ml-xl md:wb-ml-0">
-            <Tab.Root value={tab} onChange={setTab}>
+            <Tab.Root size="sm" value={tab} onChange={setTab}>
               {tabs.map((t) => (
                 <Tab.Tab key={t.value} label={t.label} value={t.value} />
               ))}
@@ -244,7 +244,7 @@ const BlogHome = () => {
                         <ListDetailItem frontMatter={bp.frontMatter} />
                       </div>
                       {index < page.length - 1 && (
-                        <div className="md:wb-hidden -wb-mx-6xl wb-h-[1.5px] wb-bg-border-dark dark:wb-bg-border-darktheme-dark" />
+                        <div className="md:wb-hidden wb-h-[1.5px] wb-bg-border-dark dark:wb-bg-border-darktheme-dark" />
                       )}
                     </a>
                   );

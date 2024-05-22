@@ -18,16 +18,16 @@ const HeaderSecondary = ({
   const { config } = useConfig();
   const { state, setState } = useMenu();
   return (
-    <div className="md:wb-relative wb-flex wb-flex-row wb-top-0 wb-left-0 wb-right-0 wb-p-2 wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued wb-border-b wb-border-border-default dark:wb-border-border-darktheme-default wb-min-h-[var(--kl-navbar-height)] wb-z-50">
+    <div className="lg:wb-relative wb-flex wb-flex-row wb-top-0 wb-left-0 wb-right-0 wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued wb-border-b wb-border-border-default dark:wb-border-border-darktheme-default wb-min-h-[var(--kl-navbar-height)] wb-z-50">
       <Wrapper className="wb-flex">
         <nav className="wb-flex wb-flex-row wb-items-center wb-gap-6xl wb-w-full">
           {config.logo}
-          <ul className="wb-hidden md:!wb-flex wb-flex-1 wb-flex-row wb-items-center wb-justify-end wb-gap-4xl wb-list-none">
+          <ul className="wb-hidden lg:wb-flex wb-flex-1 wb-flex-row wb-items-center wb-justify-end wb-gap-4xl wb-list-none">
             <NavigationMenuV2 activePath={activePath} />
           </ul>
 
-          <div className="wb-hidden md:!wb-flex">{extra}</div>
-          <div className="wb-flex-1 wb-flex wb-flex-row wb-gap-2xl md:!wb-hidden wb-items-center wb-justify-end">
+          <div className="wb-hidden lg:wb-flex">{extra}</div>
+          <div className="wb-flex-1 wb-flex wb-flex-row wb-gap-2xl lg:wb-hidden wb-items-center wb-justify-end">
             <a
               href={gitUrl}
               aria-label="kloudlite-github"

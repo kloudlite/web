@@ -28,6 +28,9 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
+      "~/public/*": [
+        "./public/*"
+      ],
       "~/images/*": [
         "./images/*"
       ],

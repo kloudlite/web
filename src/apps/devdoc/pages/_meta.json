@@ -12,7 +12,6 @@
       "header":"secondary"
     }
   },
-
   "new-home":{
     "title":"Kloudlite",
     "type":"page",
@@ -26,41 +25,8 @@
       "header":"secondary"
     }
   },
-  "infraops":{
-    "title":"InfraOps",
-    "type":"page",
-    "display":"hidden",
-    "theme":{
-      "layout":"raw",
-      "sidebar":false,
-      "toc":false,
-      "header":"secondary"
-    }
-  },
-  "devops":{
-    "title":"DevOps",
-    "type":"page",
-    "display":"hidden",
-    "theme":{
-      "layout":"raw",
-      "sidebar":false,
-      "toc":false,
-      "header":"secondary"
-    }
-  },
-  "distribution":{
-    "title":"Distribution",
-    "type":"page",
-    "display":"hidden",
-    "theme":{
-      "layout":"raw",
-      "sidebar":false,
-      "toc":false,
-      "header":"secondary"
-    }
-  },
-  "product":{
-    "title":"Product",
+  "change-logs":{
+    "title":"Changelogs",
     "type":"page",
     "display":"hidden",
     "theme":{

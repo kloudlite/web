@@ -643,15 +643,6 @@ Rich transformations are also applied:
 - On en/em dashes: a -- b, a --- b
 
 
-| Tables | are   | also  | supported | and    | will   | overflow | cleanly | if     | needed |
-|--------|-------|-------|-----------|--------|--------|----------|---------|--------|--------|
-| col 1  | col 2 | col 3 | col 4     | col 5  | col 6  | col 7    | col 8   | col 9  | col 10 |
-| col 1  | col 2 | col 3 | col 4     | col 5  | col 6  | col 7    | col 8   | col 9  | col 10 |
-| col 1  | col 2 | col 3 | col 4     | col 5  | col 6  | col 7    | col 8   | col 9  | col 10 |
-| col 1  | col 2 | col 3 | col 4     | col 5  | col 6  | col 7    | col 8   | col 9  | col 10 |
-| col 1  | col 2 | col 3 | col 4     | col 5  | col 6  | col 7    | col 8   | col 9  | col 10 |
-
-
 ## Step 2 — Code
 
 This is `inline code`. This is a <^>variable<^>. This is an `in-line code <^>variable<^>`.
@@ -923,8 +914,6 @@ Embedding a terminal recording from Asciinema (id, cols, rows):
 
 You can also embed a tweet from Twitter by passing the URL for the tweet:
 
-[twitter https://twitter.com/MattIPv4/status/1576415168426573825]
-
 Like a few other embeds, you can also pass optional flags to customize the embed:
 
 - Pass any integer value (between 250 and 550) to set a custom width for the embed (e.g. `[twitter https://twitter.com/MattIPv4/status/1576415168426573825 400]`)
@@ -951,13 +940,6 @@ You can also embed Slideshow (url1, url2, ...urls, height, width):
 
 _Both the width and height are optional, with the defaults being 480 and 270 respectively._
 
-### Image compare
-
-Compare two images side by side (url1, url2, height, width):
-
-[compare https://assets.digitalocean.com/banners/python.png https://assets.digitalocean.com/banners/javascript.png]
-
-_Both the width and height are optional, with the defaults being 480 and 270 respectively._
 
 ## Step 6 — Tutorials
 

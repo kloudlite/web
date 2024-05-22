@@ -37,6 +37,7 @@ function HeadingLink({
     slugs.set(heading, [id, (context.index += 1)]);
     observer?.observe(heading);
 
+    console.log(children);
     return () => {
       observer?.disconnect();
       slugs.delete(heading);
@@ -160,7 +161,7 @@ export const createComponents = ({
     table: (props) => <Table className="" {...props} />,
     p: (props) => (
       <p
-        className="wb-bodyLg wb-mt-3xl rounded-image wb-text-text-strong dark:wb-text-text-darktheme-strong"
+        className="wb-bodyLg wb-mt-3xl rounded-image wb-text-text-strong dark:wb-text-text-darktheme-strong wb-break-words"
         {...props}
       />
     ),

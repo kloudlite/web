@@ -85,7 +85,7 @@ const KDElement = ({
       >
         <span
           className={cn(
-            'wb-headingLg md:wb-heading3xl',
+            'wb-headingLg md:wb-heading2xl',
             isActive
               ? 'wb-text-text-default dark:wb-text-text-darktheme-default'
               : 'wb-text-text-soft dark:wb-text-text-darktheme-soft'
@@ -95,7 +95,7 @@ const KDElement = ({
         </span>
         <span
           className={cn(
-            'wb-bodyLg md:wb-heading2xl-Re wb-transition-colors wb-text-text-soft dark:wb-text-text-darktheme-soft'
+            'wb-bodyLg md:wb-bodyXl wb-transition-colors wb-text-text-soft dark:wb-text-text-darktheme-soft'
           )}
         >
           {kd.desc}

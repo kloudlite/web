@@ -2,7 +2,7 @@ import { Button } from 'kl-design-system/atoms/button';
 import Link from 'next/link';
 import { ReactNode, isValidElement } from 'react';
 import { cn } from '../utils/commons';
-import useConfig, { IConfig } from '../utils/use-config';
+import { IConfig } from '../utils/use-config';
 
 const FooterLink = ({ to, children }: { to: string; children: ReactNode }) => {
   return (
@@ -18,17 +18,13 @@ const FooterLink = ({ to, children }: { to: string; children: ReactNode }) => {
 };
 
 interface IFooterMenu {
-  title: string;
   className?: string;
-  showExtra?: boolean;
   items: {
     title: string;
     to: string;
   }[];
 }
-const FooterMenu = ({ title: _, showExtra, className, items }: IFooterMenu) => {
-  const { config } = useConfig();
-  const { footer } = config;
+const FooterMenu = ({ className, items }: IFooterMenu) => {
   return (
     <div
       className={cn(
@@ -36,9 +32,6 @@ const FooterMenu = ({ title: _, showExtra, className, items }: IFooterMenu) => {
         className
       )}
     >
-      {/* <div className="headingMd text-text-default dark:text-text-darktheme-default px-lg py-sm"> */}
-      {/*   {title} */}
-      {/* </div> */}
       <ul className="wb-list-none wb-flex wb-flex-col wb-gap-lg">
         {items?.map((item) => (
           <li key={item.to}>
@@ -50,8 +43,6 @@ const FooterMenu = ({ title: _, showExtra, className, items }: IFooterMenu) => {
           </li>
         ))}
       </ul>
-      {/* @ts-ignore */}
-      {showExtra && footer?.extra}
     </div>
   );
 };
@@ -87,6 +78,11 @@ const Footer = ({ config }: { config: IConfig }) => {
             {config.footer.menu.map((item) => (
               <FooterMenu key={item.title} {...item} />
             ))}
+            {config.footer.extra && (
+              <div className="wb-basis-1/2 md:wb-basis-auto wb-items-start md:wb-items-end wb-py-3xl md:wb-py-8xl lg:wb-py-10xl wb-flex md:wb-flex-1 wb-flex-col wb-gap-2xl md:wb-pl-2xl wb-pr-2xl lg:wb-border-r lg:first:wb-border-l wb-border-border-disabled dark:wb-border-border-darktheme-default lg:wb-basis-auto lg:odd:wb-border-r wb-justify-between">
+                {config.footer.extra}
+              </div>
+            )}
           </div>
         </div>
       </footer>

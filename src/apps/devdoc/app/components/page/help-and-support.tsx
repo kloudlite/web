@@ -107,7 +107,7 @@ const PopularArticleItem = ({
   return (
     <Link
       href={link}
-      className="bodyLg-medium py-lg px-xl flex flex-row gap-xl items-center rounded text-text-strong dark:text-text-darktheme-strong hover:bg-surface-basic-hovered dark:hover:bg-surface-darktheme-basic-hovered"
+      className="wb-bodyLg-medium wb-py-lg wb-px-xl wb-flex wb-flex-row wb-gap-xl wb-items-center wb-rounded wb-text-text-strong dark:wb-text-text-darktheme-strong hover:wb-bg-surface-basic-hovered dark:hover:bg-surface-darktheme-basic-hovered"
     >
       <span className="flex-1">{title}</span>
       <span>
@@ -127,15 +127,15 @@ const TopicItem = ({
   desc: ReactNode;
 }) => {
   return (
-    <div className="p-3xl lg:!p-5xl flex flex-col gap-5xl h-full lg:min-h-[256px] lg:max-h-[288px] bg-surface-basic-default dark:bg-surface-darktheme-basic-default">
-      <div className="flex w-8xl h-8xl rounded-full items-center justify-center p-2xl text-icon-on-primary dark:text-icon-darktheme-on-primary bg-icon-primary dark:bg-surface-darktheme-primary-default">
+    <div className="wb-p-3xl lg:wb-p-5xl wb-flex wb-flex-col wb-gap-5xl wb-h-full lg:wb-min-h-[256px] lg:wb-max-h-[288px] wb-bg-surface-basic-default dark:wb-bg-surface-darktheme-basic-default">
+      <div className="wb-flex wb-w-8xl wb-h-8xl wb-rounded-full wb-items-center wb-justify-center wb-p-2xl wb-text-icon-on-primary dark:wb-text-icon-darktheme-on-primary wb-bg-icon-primary dark:wb-bg-surface-darktheme-primary-default">
         {icon}
       </div>
-      <div className="flex flex-col gap-3xl">
-        <h4 className="headingXl-marketing text-text-default dark:text-text-darktheme-default">
+      <div className="wb-flex wb-flex-col wb-gap-3xl">
+        <h4 className="wb-headingXl-marketing wb-text-text-default dark:wb-text-text-darktheme-default">
           {title}
         </h4>
-        <p className="bodyLg line-clamp-2 text-text-soft dark:text-text-darktheme-soft">
+        <p className="wb-bodyLg wb-line-clamp-2 wb-text-text-soft dark:wb-text-text-darktheme-soft">
           {desc}
         </p>
       </div>
@@ -145,50 +145,50 @@ const TopicItem = ({
 
 const HelpAndSupportRoot = () => {
   return (
-    <Wrapper className="relative flex flex-col items-center pt-6xl md:!pt-8xl lg:!pt-10xl">
-      <div className="flex flex-col w-full">
-        <div className="flex flex-col gap-6xl text-center w-full">
-          <div className="flex flex-col gap-3xl">
-            <h1 className="heading3xl-marketing md:!heading4xl-marketing lg:!heading5xl-marketing text-text-default dark:text-text-darktheme-default">
-              <HandWaving size={56} className="hidden md:!inline" />
-              <HandWaving size={32} className="inline md:!hidden" />
+    <Wrapper className="wb-relative wb-flex wb-flex-col wb-items-center wb-pt-6xl md:wb-pt-8xl lg:wb-pt-10xl">
+      <div className="wb-flex wb-flex-col wb-w-full">
+        <div className="wb-flex wb-flex-col wb-gap-6xl wb-text-center wb-w-full">
+          <div className="wb-flex wb-flex-col wb-gap-3xl">
+            <h1 className="wb-heading3xl-marketing md:wb-heading4xl-marketing lg:wb-heading5xl-marketing wb-text-text-default dark:wb-text-text-darktheme-default">
+              <HandWaving size={56} className="wb-hidden md:wb-inline" />
+              <HandWaving size={32} className="wb-inline md:wb-hidden" />
               <span> How can we help you today?</span>
             </h1>
-            <p className="hidden md:!block md:!bodyXl lg:!bodyXXl text-text-soft dark:text-text-darktheme-soft">
+            <p className="wb-hidden md:wb-block md:wb-bodyXl lg:wb-bodyXXl wb-text-text-soft dark:wb-text-text-darktheme-soft">
               Discover solutions through our documentation, guides, and
               community
             </p>
 
-            <p className="md:hidden bodyMd-medium text-text-soft">
+            <p className="md:wb-hidden wb-bodyMd-medium wb-text-text-soft dark:wb-text-text-darktheme-soft">
               Discover solutions through our documentation, guides, and
               community
             </p>
           </div>
-          <div className="max-w-[700px] w-full md:w-[700px] m-auto">
+          <div className="wb-max-w-[700px] wb-w-full md:wb-w-[700px] wb-m-auto">
             <TextInput
               placeholder="Search for articles..."
-              suffix={<span className="bodyMd text-text-soft">⌘K</span>}
+              suffix={<span className="wb-bodyMd wb-text-text-soft">⌘K</span>}
               prefixIcon={<Search />}
               size="lg"
             />
           </div>
         </div>
-        <GraphExtended className="lg:mt-5xl">
+        <GraphExtended className="lg:wb-mt-5xl">
           <GraphItem>
-            <div className="px-xl md:!px-3xl py-4xl md:!py-5xl gap-4xl md:!gap-5xl flex flex-col min-h-[289px] 3xl:!min-h-[256px] 3xl:max-h-[256px] bg-surface-basic-default dark:bg-surface-darktheme-basic-default">
-              <h2 className="px-xl heading2xl-marketing text-text-default dark:text-text-darktheme-default">
+            <div className="wb-px-xl md:wb-px-3xl wb-py-4xl md:wb-py-5xl wb-gap-4xl md:wb-gap-5xl wb-flex wb-flex-col wb-min-h-[289px] 3xl:wb-min-h-[256px] 3xl:wb-max-h-[256px] wb-bg-surface-basic-default dark:wb-bg-surface-darktheme-basic-default">
+              <h2 className="wb-px-xl wb-heading2xl-marketing wb-text-text-default dark:wb-text-text-darktheme-default">
                 Popular articles
               </h2>
-              <div className="grid grid-cols-1 md:!grid-cols-2 3xl:!grid-cols-3 gap-x-6xl gap-y-xl">
+              <div className="wb-grid wb-grid-cols-1 md:wb-grid-cols-2 3xl:wb-grid-cols-3 wb-gap-x-6xl wb-gap-y-xl">
                 {popularArticles.map((pa) => (
-                  <div key={pa.title} className="basis-1/3">
+                  <div key={pa.title} className="wb-basis-1/3">
                     <PopularArticleItem {...pa} />
                   </div>
                 ))}
               </div>
             </div>
           </GraphItem>
-          <div className="grid grid-cols-1 md:!grid-cols-3 gap-3xl md:!gap-5xl mt-3xl md:!mt-5xl">
+          <div className="wb-grid wb-grid-cols-1 md:wb-grid-cols-3 wb-gap-3xl md:wb-gap-5xl wb-mt-3xl md:wb-mt-5xl">
             {supportTopics.map((st) => (
               <GraphItem key={st.title}>
                 <HoverItem to={st.link}>
@@ -199,20 +199,20 @@ const HelpAndSupportRoot = () => {
           </div>
         </GraphExtended>
       </div>
-      <SectionWrapper className="flex flex-col w-full">
-        <div className="flex flex-col gap-3xl text-center">
-          <h2 className="heading3xl-marketing md:!heading4xl-marketing lg:!heading5xl-marketing text-text-default dark:text-text-darktheme-default">
+      <SectionWrapper className="wb-flex wb-flex-col wb-w-full">
+        <div className="wb-flex wb-flex-col wb-gap-3xl wb-text-center">
+          <h2 className="wb-heading3xl-marketing md:wb-heading4xl-marketing lg:wb-heading5xl-marketing wb-text-text-default dark:wb-text-text-darktheme-default">
             Couldn’t fine what you needed?
           </h2>
-          <p className="hidden md:!block md:!bodyXl lg:!bodyXXl text-text-soft dark:text-text-darktheme-soft">
+          <p className="wb-hidden md:wb-block md:wb-bodyXl lg:wb-bodyXXl wb-text-text-soft dark:wb-text-text-darktheme-soft">
             Don’t worry, we’ve got more options for you
           </p>
-          <p className="bodyMd-medium md:hidden text-text-soft dark:text-text-darktheme-soft">
+          <p className="wb-bodyMd-medium md:wb-hidden wb-text-text-soft dark:wb-text-text-darktheme-soft">
             Don’t worry, we’ve got more options for you
           </p>
         </div>
         <GraphExtended className="lg:mt-5xl">
-          <div className="grid grid-cols-1 md:!grid-cols-3 gap-3xl md:!gap-5xl">
+          <div className="wb-grid wb-grid-cols-1 md:wb-grid-cols-3 wb-gap-3xl md:wb-gap-5xl">
             {unknownTopics.map((ut) => (
               <GraphItem key={ut.title}>
                 <HoverItem to={ut.link}>

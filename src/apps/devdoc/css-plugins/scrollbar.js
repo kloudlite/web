@@ -8,16 +8,17 @@ function scrollbar() {
           height: '6px',
         },
         '&::-webkit-scrollbar-track': {
-          '@apply bg-transparent': {},
+          '@apply wb-bg-transparent': {},
         },
         '&::-webkit-scrollbar-thumb': {
-          '@apply bg-surface-primary-subdued rounded cursor-pointer': {},
+          '@apply wb-bg-black dark:wb-bg-black wb-rounded wb-cursor-pointer':
+            {},
         },
         '&::-webkit-scrollbar-track-piece': {
-          '@apply bg-transparent': {},
+          '@apply wb-bg-transparent': {},
         },
         '&::-webkit-scrollbar-thumb:hover': {
-          '@apply bg-surface-primary-default': {},
+          '@apply wb-bg-surface-primary-default': {},
         },
       },
     });
