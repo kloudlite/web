@@ -151,7 +151,7 @@ const OptionMenuContent = forwardRef<
               exit={{ opacity: 0, scale: 0.85 }}
               transition={{ duration: 0.3, ease: 'anticipate' }}
               className={cn(
-                'z-50 border border-border-default shadow-popover bg-surface-basic-default rounded min-w-[160px] overflow-hidden origin-top py-lg',
+                'z-50 border border-border-default dark:border-border-darktheme-default shadow-popover bg-surface-basic-default dark:bg-surface-darktheme-basic-default rounded min-w-[160px] overflow-hidden origin-top py-lg',
                 className
               )}
             >
@@ -165,29 +165,37 @@ const OptionMenuContent = forwardRef<
 );
 OptionMenuContent.displayName = OptionMenuPrimitive.Content.displayName;
 
-const OptionItemRaw = ({
-  children,
-  active,
-  className,
-}: {
-  children?: ReactNode;
-  active?: boolean;
-  className?: string;
-}) => {
-  return (
-    <div
-      className={cn(
-        'group relative flex flex-row gap-xl items-center bodyMd gap cursor-pointer select-none py-lg px-xl text-text-default outline-none transition-colors focus:bg-surface-basic-hovered hover:bg-surface-basic-hovered data-[disabled]:pointer-events-none data-[disabled]:text-text-disabled',
-        {
-          'bg-surface-basic-active': !!active,
-        },
-        className
-      )}
-    >
-      {children}
-    </div>
-  );
-};
+const OptionItemRaw = forwardRef(
+  (
+    {
+      children,
+      active,
+      className,
+    }: {
+      children?: ReactNode;
+      active?: boolean;
+      className?: string;
+    },
+    ref
+  ) => {
+    return (
+      <div
+        // @ts-ignore
+        ref={ref}
+        className={cn(
+          'group relative flex flex-row gap-xl items-center bodyMd gap cursor-pointer select-none py-lg px-xl text-text-default dark:text-text-darktheme-default outline-none transition-colors focus:bg-surface-basic-hovered dark:focus:bg-surface-darktheme-basic-hovered hover:bg-surface-basic-hovered dark:hover:bg-surface-darktheme-basic-hovered data-[disabled]:pointer-events-none data-[disabled]:text-text-disabled dark:data-[disabled]:text-text-darktheme-disabled',
+          {
+            'bg-surface-basic-active dark:bg-surface-darktheme-basic-active':
+              !!active,
+          },
+          className
+        )}
+      >
+        {children}
+      </div>
+    );
+  }
+);
 
 const OptionMenuItem = forwardRef<HTMLDivElement, IOptionMenuItem>(
   ({ className, ...props }, ref) => {
@@ -198,9 +206,18 @@ const OptionMenuItem = forwardRef<HTMLDivElement, IOptionMenuItem>(
         onSelect={props.onClick}
         asChild
       >
-        <OptionItemRaw className={className} active={props.active}>
+        <div
+          className={cn(
+            'group relative flex flex-row gap-xl items-center bodyMd gap cursor-pointer select-none py-lg px-xl text-text-default dark:text-text-darktheme-default outline-none transition-colors focus:bg-surface-basic-hovered dark:focus:bg-surface-darktheme-basic-hovered hover:bg-surface-basic-hovered dark:hover:bg-surface-darktheme-basic-hovered data-[disabled]:pointer-events-none data-[disabled]:text-text-disabled dark:data-[disabled]:text-text-darktheme-disabled',
+            {
+              'bg-surface-basic-active dark:bg-surface-darktheme-basic-active':
+                !!props.active,
+            },
+            className
+          )}
+        >
           {props.children}
-        </OptionItemRaw>
+        </div>
       </OptionMenuPrimitive.Item>
     );
   }
@@ -223,7 +240,7 @@ const OptionMenuLink = forwardRef<HTMLDivElement, IOptionMenuLink>(
       <OptionMenuPrimitive.Item
         ref={ref}
         className={cn(
-          'group relative flex flex-row gap-xl items-center bodyMd gap cursor-pointer select-none py-lg px-xl text-text-default outline-none transition-colors focus:bg-surface-basic-hovered hover:bg-surface-basic-hovered data-[disabled]:pointer-events-none data-[disabled]:text-text-disabled',
+          'group relative flex flex-row gap-xl items-center bodyMd gap cursor-pointer select-none py-lg px-xl text-text-default dark:text-text-darktheme-default outline-none transition-colors focus:bg-surface-basic-hovered dark:focus:bg-surface-darktheme-basic-hovered hover:bg-surface-basic-hovered dark:hover:bg-surface-darktheme-basic-hovered data-[disabled]:pointer-events-none data-[disabled]:text-text-disabled dark:data-[disabled]:text-text-darktheme-disabled',
           className
         )}
         {...preventDefaultEvents}
@@ -289,14 +306,14 @@ const OptionMenuTextInputItem = forwardRef<
             if (props.focusRing) {
               event.target?.parentElement?.classList?.add(
                 'ring-2',
-                'ring-border-focus'
+                'ring-border-focus dark:ring-border-darktheme-focus'
               );
             }
           }}
           onBlur={(e) => {
             e.target?.parentElement?.classList?.remove(
               'ring-2',
-              'ring-border-focus'
+              'ring-border-focus dark:ring-border-darktheme-focus'
             );
           }}
           onKeyDown={(e) => {
@@ -324,9 +341,9 @@ const OptionMenuCheckboxItem = forwardRef<HTMLDivElement, IOptionMenuCheckbox>(
     <OptionMenuPrimitive.CheckboxItem
       ref={ref}
       className={cn(
-        'group relative flex flex-row gap-xl items-center bodyMd gap cursor-pointer select-none py-lg px-xl text-text-default outline-none transition-colors focus:bg-surface-basic-hovered hover:bg-surface-basic-hovered data-[disabled]:pointer-events-none data-[disabled]:text-text-disabled',
+        'group relative flex flex-row gap-xl items-center bodyMd gap cursor-pointer select-none py-lg px-xl text-text-default dark:text-text-darktheme-default outline-none transition-colors focus:bg-surface-basic-hovered hover:bg-surface-basic-hovered dark:focus:bg-surface-darktheme-basic-hovered dark:hover:bg-surface-darktheme-basic-hovered data-[disabled]:pointer-events-none data-[disabled]:text-text-disabled dark:data-[disabled]:text-text-darktheme-disabled',
         {
-          'data-[state=checked]:bg-surface-primary-subdued data-[state=checked]:text-text-primary':
+          'data-[state=checked]:bg-surface-primary-subdued data-[state=checked]:text-text-primary dark:data-[state=checked]:bg-surface-darktheme-primary-subdued data-[state=checked]:text-text-darktheme-primary':
             !showIndicator,
         },
         className
@@ -337,7 +354,7 @@ const OptionMenuCheckboxItem = forwardRef<HTMLDivElement, IOptionMenuCheckbox>(
       onSelect={props.onClick}
     >
       {showIndicator && (
-        <span className="w-2xl h-2xl rounded border transition-all flex items-center justify-center border-border-default group-data-[state=checked]:border-border-primary group-data-[state=checked]:bg-surface-primary-default group-data-[disabled]:border-border-disabled group-data-[disabled]:bg-surface-basic-default ">
+        <span className="w-2xl h-2xl rounded border transition-all flex items-center justify-center border-border-default group-data-[state=checked]:border-border-primary group-data-[state=checked]:bg-surface-primary-default group-data-[disabled]:border-border-disabled group-data-[disabled]:bg-surface-basic-default dark:border-border-darktheme-default dark:group-data-[state=checked]:border-border-darktheme-primary dark:group-data-[state=checked]:bg-surface-darktheme-primary-default dark:group-data-[disabled]:border-border-darktheme-disabled dark:group-data-[disabled]:bg-surface-darktheme-basic-default">
           <OptionMenuPrimitive.ItemIndicator>
             <svg
               width="14"
@@ -351,7 +368,7 @@ const OptionMenuCheckboxItem = forwardRef<HTMLDivElement, IOptionMenuCheckbox>(
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 className={cn(
-                  'stroke-text-on-primary group-data-[disabled]:stroke-text-disabled'
+                  'stroke-text-on-primary group-data-[disabled]:stroke-text-disabled dark:stroke-text-darktheme-on-primary dark:group-data-[disabled]:stroke-text-darktheme-disabled'
                 )}
               />
             </svg>
@@ -370,9 +387,9 @@ const OptionMenuRadioItem = forwardRef<HTMLDivElement, IOptionMenuRadio>(
     <OptionMenuPrimitive.RadioItem
       ref={ref}
       className={cn(
-        'group relative flex flex-row gap-xl items-center bodyMd gap cursor-pointer select-none py-lg px-xl text-text-default outline-none transition-colors focus:bg-surface-basic-hovered hover:bg-surface-basic-hovered data-[disabled]:pointer-events-none data-[disabled]:text-text-disabled',
+        'group relative flex flex-row gap-xl items-center bodyMd gap cursor-pointer select-none py-lg px-xl text-text-default dark:text-text-darktheme-default outline-none transition-colors focus:bg-surface-basic-hovered hover:bg-surface-basic-hovered dark:focus:bg-surface-darktheme-basic-hovered dark:hover:bg-surface-darktheme-basic-hovered data-[disabled]:pointer-events-none data-[disabled]:text-text-disabled dark:data-[disabled]:text-text-darktheme-disabled',
         {
-          'data-[state=checked]:bg-surface-primary-subdued data-[state=checked]:text-text-primary':
+          'data-[state=checked]:bg-surface-primary-subdued data-[state=checked]:text-text-primary dark:data-[state=checked]:bg-surface-darktheme-primary-subdued dark:data-[state=checked]:text-text-darktheme-primary':
             !showIndicator,
         },
         className
@@ -384,13 +401,13 @@ const OptionMenuRadioItem = forwardRef<HTMLDivElement, IOptionMenuRadio>(
       {showIndicator && (
         <span
           className={cn(
-            'w-2xl h-2xl rounded-full border transition-all flex items-center justify-center border-border-default group-data-[state=checked]:border-border-primary group-data-[disabled]:border-border-disabled'
+            'w-2xl h-2xl rounded-full border transition-all flex items-center justify-center border-border-default dark:border-border-darktheme-default group-data-[state=checked]:border-border-primary group-data-[disabled]:border-border-disabled dark:group-data-[state=checked]:border-border-darktheme-primary dark:group-data-[disabled]:border-border-darktheme-disabled'
           )}
         >
           <OptionMenuPrimitive.ItemIndicator>
             <div
               className={cn(
-                'block w-lg h-lg rounded-full bg-surface-primary-default group-data-[disabled]:bg-icon-disabled'
+                'block w-lg h-lg rounded-full bg-surface-primary-default group-data-[disabled]:bg-icon-disabled dark:bg-surface-darktheme-primary-default group-data-[disabled]:bg-icon-darktheme-disabled'
               )}
             />
           </OptionMenuPrimitive.ItemIndicator>
@@ -406,7 +423,10 @@ const OptionMenuSeparator = forwardRef<HTMLDivElement, IOptionMenuSeparator>(
   ({ className, ...props }, ref) => (
     <OptionMenuPrimitive.Separator
       ref={ref}
-      className={cn('h-xs bg-border-disabled my-md', className)}
+      className={cn(
+        'h-xs bg-border-disabled dark:bg-border-darktheme-default my-md',
+        className
+      )}
       {...props}
     />
   )
