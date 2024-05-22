@@ -168,7 +168,7 @@ export const ButtonBase = React.forwardRef<
               'secondary-plain',
             ].includes(variant),
         },
-        'relative ring-offset-1',
+        'relative ring-offset-1 dark:ring-offset-0',
         'outline-none',
         'flex flex-row gap-lg items-center justify-center',
         'disabled:text-text-disabled dark:disabled:text-text-darktheme-disabled disabled:bg-surface-basic-disabled dark:disabled:bg-surface-darktheme-basic-disabled',
