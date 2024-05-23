@@ -1,7 +1,7 @@
 import { Search } from '@jengaicons/react';
 import { TextInput } from 'kl-design-system/atoms/input';
 import Tab from 'kl-design-system/atoms/tabs';
-import { ReactNode, useState } from 'react';
+import { useState } from 'react';
 import { PageMapItem } from 'nextra';
 import { useRouter } from 'next/router';
 import { usePagination } from 'kl-design-system/molecule/pagination';
@@ -11,7 +11,6 @@ import { cn } from '~/app/utils/commons';
 import remoteLocal from '~/images/homeNew/exploring/remote-local.jpeg';
 import collaborative from '~/images/homeNew/exploring/collaborative.jpeg';
 import workflow from '~/images/homeNew/exploring/workflow.jpeg';
-import HoverItem from '../hover-item';
 import SectionWrapper from '../website/section-wrapper';
 import { GraphExtended, GraphItem } from '../graph';
 import { Block } from '../commons';
