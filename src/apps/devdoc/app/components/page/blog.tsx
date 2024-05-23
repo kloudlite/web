@@ -5,15 +5,18 @@ import { ReactNode, useState } from 'react';
 import { PageMapItem } from 'nextra';
 import { useRouter } from 'next/router';
 import { usePagination } from 'kl-design-system/molecule/pagination';
-import consts from '~/app/utils/const';
 import useConfig from '~/app/utils/use-config';
 import { DEFAULT_LOCALE } from '~/app/utils/constants';
 import { cn } from '~/app/utils/commons';
+import remoteLocal from '~/images/homeNew/exploring/remote-local.jpeg';
+import collaborative from '~/images/homeNew/exploring/collaborative.jpeg';
+import workflow from '~/images/homeNew/exploring/workflow.jpeg';
 import HoverItem from '../hover-item';
 import SectionWrapper from '../website/section-wrapper';
 import { GraphExtended, GraphItem } from '../graph';
 import { Block } from '../commons';
 import Pagination from '../website/pagination';
+import { ExploringItem } from '../website/home/keep-exploring';
 
 const tabs = [
   {
@@ -33,81 +36,57 @@ const tabs = [
 const tabItems = {
   overview: [
     {
-      label: 'Kloudlite',
-      desc: 'Glimpses of our journey, people, culture, and everything.',
-      img: '',
+      label: 'Remote local environments',
+      desc: 'Discover how Kloudlite pioneers transformative remote local environments.',
+      img: remoteLocal.src,
     },
     {
-      label: 'Engineering',
-      desc: 'From the principles of coding, to the launch of your advanced apps.',
-      img: '',
+      label: 'Collaborative development',
+      desc: 'In a globalized landscape, collaborative development faces challenges but fuels innovation.',
+      img: collaborative.src,
     },
     {
-      label: 'Community',
-      desc: 'Ask anything and get the right answers from our experts',
-      img: '',
+      label: 'Development workflow',
+      desc: 'Kloudlite revolutionizes software development with streamlined efficiency and productivity',
+      img: workflow.src,
     },
   ],
 
   engineering: [
     {
-      label: 'Kloudlite',
-      desc: 'Glimpses of our journey, people, culture, and everything.',
-      img: '',
+      label: 'Remote local environments',
+      desc: 'Discover how Kloudlite pioneers transformative remote local environments.',
+      img: remoteLocal.src,
     },
     {
-      label: 'Engineering',
-      desc: 'From the principles of coding, to the launch of your advanced apps.',
-      img: '',
+      label: 'Collaborative development',
+      desc: 'In a globalized landscape, collaborative development faces challenges but fuels innovation.',
+      img: collaborative.src,
     },
     {
-      label: 'Community',
-      desc: 'Ask anything and get the right answers from our experts',
-      img: '',
+      label: 'Development workflow',
+      desc: 'Kloudlite revolutionizes software development with streamlined efficiency and productivity',
+      img: workflow.src,
     },
   ],
 
   community: [
     {
-      label: 'Kloudlite',
-      desc: 'Glimpses of our journey, people, culture, and everything.',
-      img: '',
+      label: 'Remote local environments',
+      desc: 'Discover how Kloudlite pioneers transformative remote local environments.',
+      img: remoteLocal.src,
     },
     {
-      label: 'Engineering',
-      desc: 'From the principles of coding, to the launch of your advanced apps.',
-      img: '',
+      label: 'Collaborative development',
+      desc: 'In a globalized landscape, collaborative development faces challenges but fuels innovation.',
+      img: collaborative.src,
     },
     {
-      label: 'Community',
-      desc: 'Ask anything and get the right answers from our experts',
-      img: '',
+      label: 'Development workflow',
+      desc: 'Kloudlite revolutionizes software development with streamlined efficiency and productivity',
+      img: workflow.src,
     },
   ],
-};
-
-const TabCard = ({
-  label,
-  desc,
-  img,
-}: {
-  label: ReactNode;
-  desc: ReactNode;
-  img: string;
-}) => {
-  return (
-    <div className="wb-h-full wb-flex wb-flex-col 2xl:wb-min-h-[176px] wb-bg-surface-basic-default dark:wb-bg-surface-darktheme-basic-default">
-      <img className="wb-h-[260px]" src={img} />
-      <div className="wb-flex wb-flex-col wb-gap-lg md:wb-gap-xl wb-p-3xl 2xl:wb-p-3xl 3xl:wb-p-4xl">
-        <h3 className="wb-heading3xl-marketing wb-text-text-default dark:wb-text-text-darktheme-default">
-          {label}
-        </h3>
-        <p className="wb-bodyXl wb-text-text-strong dark:wb-text-text-darktheme-strong">
-          {desc}
-        </p>
-      </div>
-    </div>
-  );
 };
 
 const ListDetailItem = ({
@@ -195,13 +174,7 @@ const BlogHome = () => {
               {tabItems[tab].map((ti) => {
                 return (
                   <GraphItem key={ti.label}>
-                    <HoverItem to="">
-                      <TabCard
-                        label={ti.label}
-                        desc={ti.desc}
-                        img={consts.blog.images.cover}
-                      />
-                    </HoverItem>
+                    <ExploringItem {...ti} />
                   </GraphItem>
                 );
               })}
