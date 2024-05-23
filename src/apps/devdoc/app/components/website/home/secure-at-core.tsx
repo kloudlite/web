@@ -19,7 +19,7 @@ const SecureAtCore = () => {
     >
       <Block
         title="Secure at the core"
-        desc="Built using Kloudlite Global VPN Mesh with wireguard at it’s core"
+        desc="Built using Kloudlite Global VPN Mesh with wireguard at its core"
         hasGraph={false}
       >
         <div className="wb-relative secure-graph wb-py-6xl md:wb-py-10xl wb-flex wb-flex-row wb-items-center wb-justify-center [background-position:bottom] 3xl:[background-position:unset]">

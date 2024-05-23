@@ -130,7 +130,7 @@ const KloudliteDevelopment = () => {
                   Why Kloudlite?
                 </h3>
                 <p className="wb-hidden md:wb-block wb-bodyLg md:wb-bodyXl wb-text-text-soft dark:wb-text-text-darktheme-soft">
-                  It is built with belief that you should develop your
+                  It is built with the belief that you should develop your
                   application as you run your application
                 </p>
               </div>

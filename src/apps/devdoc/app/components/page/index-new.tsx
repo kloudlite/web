@@ -1,11 +1,11 @@
 import { useState } from 'react';
+import { Badge } from 'kl-design-system/atoms/badge';
+import { addDoc, collection, getFirestore } from 'firebase/firestore';
+import { FirebaseApp } from 'firebase/app';
 import { GraphExtended } from '~/app/components/graph';
 import HomeIllustrationMobileDark from '~/images/homeNew/illustration-mobile-dark.svg';
 import HomeIllustrationMobile from '~/images/homeNew/illustration-mobile.svg';
-import { Badge } from 'kl-design-system/atoms/badge';
 import { useFirebase } from '~/app/utils/useFirebase';
-import { addDoc, collection, getFirestore } from 'firebase/firestore';
-import { FirebaseApp } from 'firebase/app';
 import hero from '~/images/homeNew/hero';
 import Wrapper from '../wrapper';
 import InviteCodeDialog from '../website/invite-code-dialog';
@@ -41,14 +41,14 @@ const Title = () => {
       </h1>
       <p className="wb-bodyLg md:wb-bodyXl lg:wb-bodyXXl wb-text-text-soft dark:wb-text-text-darktheme-soft wb-text-center wb-max-w-[528px] lg:wb-w-[688px] lg:wb-max-w-full xl:wb-w-[920px]">
         <span className="wb-hidden md:wb-block">
-          with Kloudlite’s unified remote local environments,{' '}
+          With Kloudlite’s unified remote local environments,{' '}
           <br className="wb-hidden 3xl:wb-block" />
-          Now Integrate the comfort of local coding with the power of remote
+          integrate the comfort of local coding with the power of remote
           environments
         </span>
         <span className="wb-block md:wb-hidden">
-          with Kloudlite, now Integrate the comfort of local coding with the
-          power of remote environments.
+          With Kloudlite, Integrate the comfort of local coding with the power
+          of remote environments.
         </span>
       </p>
     </div>
