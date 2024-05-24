@@ -6,7 +6,7 @@ import { Block } from '../../commons';
 import Slider from '../../slider';
 import { GraphItem } from '../../graph';
 
-const ExploringItem = ({
+export const ExploringItem = ({
   label,
   desc,
   img,

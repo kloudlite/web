@@ -136,7 +136,9 @@ export function TOC({ headings }: TOCProps): ReactElement {
           variant="plain"
           size="lg"
         />
-        {config.scrollToTop && <BackToTop className="wb-opacity-0" />}
+        {config.scrollToTop && (
+          <BackToTop className="!wb-hidden" content="Scroll to top" />
+        )}
       </div>
     </div>
   );
