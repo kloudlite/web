@@ -273,6 +273,10 @@ const config = {
           '0px 0px 0px 1px rgba(63, 63, 68, 0.05)',
         ],
         focus: '0px 0px 0px 2px #60A5FA;',
+        'darktheme-popover': [
+          '0px 0px 2px 0px rgba(250, 250, 250, 0.20)',
+          '0px 2px 10px 0px rgba(250, 250, 250, 0.10);',
+        ],
       },
       maxWidth: { ...width },
       minWidth: { ...width },

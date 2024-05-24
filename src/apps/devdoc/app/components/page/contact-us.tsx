@@ -66,56 +66,56 @@ const SupportIcon = (props: ComponentProps<'svg'>) => {
 
 const ContactRoot = () => {
   return (
-    <Wrapper className="relative flex flex-col items-center py-6xl md:!py-8xl lg:!py-10xl gap-6xl md:!gap-8xl xl:!gap-10xl">
-      <div className="flex flex-col gap-3xl text-center">
-        <h1 className="heading4xl-marketing md:!heading5xl-marketing lg:!heading6xl-marketing text-text-default dark:text-text-darktheme-default">
+    <Wrapper className="wb-relative wb-flex wb-flex-col wb-items-center wb-py-6xl md:wb-py-8xl lg:wb-py-10xl wb-gap-6xl md:wb-gap-8xl xl:wb-gap-10xl">
+      <div className="wb-flex wb-flex-col wb-gap-3xl wb-text-center">
+        <h1 className="wb-heading4xl-marketing md:wb-heading5xl-marketing lg:wb-heading6xl-marketing wb-text-text-default dark:wb-text-text-darktheme-default">
           Contact us
         </h1>
-        <p className="bodyLg-medium md:!bodyXl-medium text-text-soft dark:text-text-darktheme-soft">
+        <p className="wb-bodyLg-medium md:wb-bodyXl-medium wb-text-text-soft dark:wb-text-text-darktheme-soft">
           Get in touch and let us know how we can help.
         </p>
       </div>
-      <div className="gap-5xl md:!gap-8xl xl:!gap-10xl flex flex-col lg:!flex-row w-full">
+      <div className="wb-gap-5xl md:wb-gap-8xl xl:wb-gap-10xl wb-flex wb-flex-col lg:wb-flex-row w-full">
         <form
           action="/api/request-demo"
-          className="flex flex-col gap-5xl flex-1 p-3xl md:!p-6xl border border-border-default dark:border-border-darktheme-default rounded-lg"
+          className="wb-flex wb-flex-col wb-gap-5xl wb-flex-1 wb-p-3xl md:wb-p-6xl wb-border wb-border-border-default dark:wb-border-border-darktheme-default wb-rounded-lg"
         >
-          <div className="flex flex-col gap-3xl">
+          <div className="wb-flex wb-flex-col wb-gap-3xl">
             <TextInput label="Full name" size="lg" />
-            <div className="flex flex-col md:!flex-row gap-3xl">
-              <div className="basis-full">
+            <div className="wb-flex wb-flex-col md:wb-flex-row wb-gap-3xl">
+              <div className="wb-basis-full">
                 <TextInput label="Company name" size="lg" />
               </div>
-              <div className="basis-full">
+              <div className="wb-basis-full">
                 <TextInput label="Email" size="lg" />
               </div>
             </div>
-            <div className="flex flex-col md:!flex-row gap-3xl">
-              <div className="basis-full">
+            <div className="wb-flex wb-flex-col md:wb-flex-row wb-gap-3xl">
+              <div className="wb-basis-full">
                 <TextInput label="Country" size="lg" />
               </div>
-              <div className="basis-full">
+              <div className="wb-basis-full">
                 <TextInput label="Mobile" size="lg" />
               </div>
             </div>
             <TextArea label="Message" />
           </div>
-          <div className="w-full md:!w-fit">
+          <div className="wb-w-full md:wb-w-fit">
             <Button type="submit" content="Request demo" size="lg" block />
           </div>
         </form>
-        <div className="h-xs lg:!h-auto lg:!w-xs bg-border-default dark:bg-border-darktheme-default" />
-        <div className="flex-1 flex flex-col md:!flex-row lg:!flex-col gap-7xl md:!gap-10xl justify-center md:!justify-between lg:!max-w-[300px]">
-          <div className="flex flex-col p-5xl gap-6xl border border-border-default dark:border-border-darktheme-default rounded-lg">
-            <div className="text-icon-primary dark:text-icon-darktheme-primary">
+        <div className="wb-h-xs lg:wb-h-auto lg:wb-w-xs wb-bg-border-default dark:wb-bg-border-darktheme-default" />
+        <div className="wb-flex-1 wb-flex wb-flex-col md:wb-flex-row lg:wb-flex-col wb-gap-7xl md:wb-gap-10xl wb-justify-center md:wb-justify-between lg:wb-max-w-[300px]">
+          <div className="wb-flex wb-flex-col wb-p-5xl wb-gap-6xl wb-border wb-border-border-default dark:wb-border-border-darktheme-default wb-rounded-lg">
+            <div className="wb-text-icon-primary dark:wb-text-icon-darktheme-primary">
               <SupportIcon height={66} width={66} />
             </div>
-            <div className="flex flex-col gap-xl">
-              <div className="flex flex-col gap-lg">
-                <span className="headingXl text-text-default dark:text-text-darktheme-default">
+            <div className="wb-flex wb-flex-col wb-gap-xl">
+              <div className="wb-flex wb-flex-col wb-gap-lg">
+                <span className="wb-headingXl wb-text-text-default dark:wb-text-text-darktheme-default">
                   Reach us to
                 </span>
-                <span className="bodyXl text-text-soft dark:text-text-darktheme-soft">
+                <span className="wb-bodyXl wb-text-text-soft dark:wb-text-text-darktheme-soft">
                   We’re here to help with any questions you may have.
                 </span>
               </div>

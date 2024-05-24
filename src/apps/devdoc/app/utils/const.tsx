@@ -268,7 +268,7 @@ const consts = {
         {
           label: 'Shift Left with Confidence',
           id: 'collaborate',
-          desc: 'Detecting issues early in the development cycle will reduce late fixes, ensuring more reliable applications',
+          desc: 'Detecting issues early in the development cycle reduces late fixes, ensuring more reliable applications',
         },
         {
           label: 'Collaboration Effortlessly',
@@ -296,7 +296,7 @@ const consts = {
       },
       {
         label: '100% Dev-Prod Parity',
-        desc: 'What you develop is what you deploy - no surprises.',
+        desc: 'What you develop is what you deploy - no surprises',
         icon: Developer,
       },
 
