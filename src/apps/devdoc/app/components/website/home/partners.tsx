@@ -39,7 +39,7 @@ const PartnerSection = () => {
   return (
     <div className="wb-pt-8xl lg:wb-pb-8xl lg:wb-pt-12xl wb-flex wb-flex-col">
       <p className="wb-bodyLg-medium wb-text-text-strong dark:wb-text-text-darktheme-default wb-text-center">
-        Join the cult of our early adopters, and discover the power of Kloudlite
+        Join the cult of our early adopters and discover the power of Kloudlite
       </p>
       <Partners />
     </div>
