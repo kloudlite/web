@@ -50,8 +50,10 @@ const findPageType = (activePath: Item[], names: string[]) => {
   );
 };
 
+const isBlogPage = (route: string) => route.includes('/docs');
+
 const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
-  const { title, frontMatter, pageMap, headings } = pageOpts;
+  const { title, frontMatter, pageMap, headings, route } = pageOpts;
 
   const { state } = useMenu();
 
@@ -96,7 +98,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
     pageType = 'blog';
   }
 
-  if (findPageType(activePath, ['docs'])) {
+  if (isBlogPage(route)) {
     pageType = 'docs';
   }
 

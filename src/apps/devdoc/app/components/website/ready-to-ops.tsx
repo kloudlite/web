@@ -24,7 +24,7 @@ const ReadyToOps = () => {
                 variant="primary"
                 size="lg"
                 to="https://auth.kloudlite.io"
-                LinkComponent={Link}
+                linkComponent={Link}
                 toLabel="href"
               />
             </div>

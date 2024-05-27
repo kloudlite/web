@@ -1,7 +1,12 @@
 import { TextInput, TextArea } from 'kl-design-system/atoms/input';
 import Link from 'next/link';
 import { ComponentProps } from 'react';
+import { addDoc, collection, getFirestore } from '@firebase/firestore';
+import { FirebaseApp } from 'firebase/app';
+import { useForm } from 'react-hook-form';
+import { useFirebase } from '~/app/utils/useFirebase';
 import { supportEmail } from '~/app/utils/config';
+import { toast } from 'kl-design-system/molecule/toast';
 import Wrapper from '../wrapper';
 import Button from '../button';
 
@@ -64,7 +69,50 @@ const SupportIcon = (props: ComponentProps<'svg'>) => {
   );
 };
 
+const addContact = async (
+  app: FirebaseApp | null,
+  data: {
+    email: string;
+    fullname: string;
+    companyName: string;
+    mobile: string;
+    country: string;
+    message: string;
+  }
+) => {
+  if (!app) {
+    return;
+  }
+  const firestore = getFirestore(app);
+  const col = collection(firestore, 'web-contact-form');
+
+  const contactData = {
+    ...data,
+    createdAt: new Date(),
+  };
+
+  await addDoc(col, contactData);
+  toast.info('Request for demo has be sent successfully.');
+};
+
+type Inputs = {
+  fullname: string;
+  email: string;
+  mobile: string;
+  country: string;
+  message: string;
+  companyName: string;
+};
+
 const ContactRoot = () => {
+  const { firebaseApp } = useFirebase();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>();
+
   return (
     <Wrapper className="wb-relative wb-flex wb-flex-col wb-items-center wb-py-6xl md:wb-py-8xl lg:wb-py-10xl wb-gap-6xl md:wb-gap-8xl xl:wb-gap-10xl">
       <div className="wb-flex wb-flex-col wb-gap-3xl wb-text-center">
@@ -77,28 +125,80 @@ const ContactRoot = () => {
       </div>
       <div className="wb-gap-5xl md:wb-gap-8xl xl:wb-gap-10xl wb-flex wb-flex-col lg:wb-flex-row w-full">
         <form
-          action="/api/request-demo"
+          onSubmit={handleSubmit((d) => {
+            addContact(firebaseApp, d);
+          })}
           className="wb-flex wb-flex-col wb-gap-5xl wb-flex-1 wb-p-3xl md:wb-p-6xl wb-border wb-border-border-default dark:wb-border-border-darktheme-default wb-rounded-lg"
         >
           <div className="wb-flex wb-flex-col wb-gap-3xl">
-            <TextInput label="Full name" size="lg" />
+            <TextInput
+              label="Full name"
+              size="lg"
+              {...register('fullname', { required: 'Full name is required' })}
+              error={!!errors.fullname}
+              message={errors.fullname?.message}
+            />
             <div className="wb-flex wb-flex-col md:wb-flex-row wb-gap-3xl">
               <div className="wb-basis-full">
-                <TextInput label="Company name" size="lg" />
+                <TextInput
+                  label="Company name"
+                  size="lg"
+                  {...register('companyName', {
+                    required: 'Company name is required',
+                  })}
+                  error={!!errors.companyName}
+                  message={errors.companyName?.message}
+                />
               </div>
               <div className="wb-basis-full">
-                <TextInput label="Email" size="lg" />
+                <TextInput
+                  label="Email"
+                  size="lg"
+                  {...register('email', {
+                    required: 'Email is required',
+                    pattern: {
+                      value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                      message: 'Invalid email address',
+                    },
+                  })}
+                  error={!!errors.email}
+                  message={errors.email?.message}
+                />
               </div>
             </div>
             <div className="wb-flex wb-flex-col md:wb-flex-row wb-gap-3xl">
               <div className="wb-basis-full">
-                <TextInput label="Country" size="lg" />
+                <TextInput
+                  label="Country"
+                  size="lg"
+                  {...register('country', { required: 'Country is required' })}
+                  error={!!errors.country}
+                  message={errors.country?.message}
+                />
               </div>
               <div className="wb-basis-full">
-                <TextInput label="Mobile" size="lg" />
+                <TextInput
+                  label="Mobile"
+                  size="lg"
+                  {...register('mobile', {
+                    required: 'Mobile is required',
+
+                    pattern: {
+                      value: /^[^a-zA-Z]*$/,
+                      message: 'Invalid mobile number',
+                    },
+                  })}
+                  error={!!errors.mobile}
+                  message={errors.mobile?.message}
+                />
               </div>
             </div>
-            <TextArea label="Message" />
+            <TextArea
+              label="Message"
+              {...register('message', { required: 'Message is required' })}
+              error={!!errors.message}
+              message={errors.message?.message}
+            />
           </div>
           <div className="wb-w-full md:wb-w-fit">
             <Button type="submit" content="Request demo" size="lg" block />
@@ -122,7 +222,7 @@ const ContactRoot = () => {
               <Button
                 variant="plain"
                 content={supportEmail}
-                LinkComponent={Link}
+                linkComponent={Link}
                 to={`mailto:${supportEmail}`}
                 toLabel="href"
               />

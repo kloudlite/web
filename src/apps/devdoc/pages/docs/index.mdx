@@ -1,0 +1,33 @@
+# Need for Distributed Development Environments
+
+## Problem: Building distrubuted applications
+Modern applications are often composed of multiple microservices, frontends, and supporting services. One of the significant challenges developers face is the lengthy development inner loop, which involves building, deploying, and configuring the entire stack before testing can begin. 
+
+This process is time-consuming and inefficient, leading to wasted development hours.
+
+<img src="/dev-hell.png" alt="dev-hell" className="wb-p-3xl wb-mt-3xl wb-bg-white" />
+
+When services are spread across different environments, developers spend considerable time ensuring all components are correctly configured and can communicate seamlessly. 
+
+Each change necessitates a new build and deployment cycle, further extending the time to test and iterate, hindering productivity and slowing down the feedback loop. These delays make it harder to catch and fix issues promptly.
+
+## Solution: Distributed Development Environments
+Effective development & testing requires that the entire stack operates within the same network, whether set up locally or remotely. 
+
+<img src="/connected-env.png" alt="dev-hell" className="wb-p-3xl wb-mt-3xl wb-bg-white" />
+
+We need integrated remote-local environments where all services and the development IDE are brought into the same network. By doing so, developers can eliminate the need to build and deploy applications before testing. 
+
+Instead, they can test while they code, significantly reducing the development inner loop. 
+
+A unified environment where local development setups connect seamlessly to remote services and infrastructure allows for real-time testing and debugging, enabling developers to focus on coding and testing rather than managing infrastructure & configs.
+
+<img src="/app-intercept.png" alt="dev-hell" className="wb-p-3xl wb-mt-3xl wb-bg-white" />
+
+**Shift Left Advantage :**
+Moreover, adopting a "shift left" approach is crucial in modern development practices. Shifting left means integrating testing and quality checks early in the development process rather than at the end. This approach helps identify and resolve issues sooner, reducing the risk of defects and improving the overall quality of the application.
+
+
+Integrated remote-local environments are essential for effective shift-left practices. When developers can test their changes in real-time without the need for repeated build and deployment cycles, they receive immediate feedback, allowing them to address issues as they code. This leads to faster iterations, more reliable code, and a significant reduction in the time and effort required to deliver high-quality software.
+
+By enabling seamless integration between local and remote resources and bringing all services and the development IDE into the same network, developers can achieve the efficiency and speed necessary to maintain high productivity and deliver robust applications quickly.

@@ -15,10 +15,7 @@ const Partners = () => {
         {consts.homeNew.partners.map((p, i) => {
           const ii = i;
           return (
-            <div
-              key={ii}
-              className="graph2 wb-py-8xl lg:wb-pb-10xl lg:wb-pt-8xl wb-px-2xl"
-            >
+            <div key={ii} className="graph2 wb-py-8xl lg:wb-py-8xl wb-px-2xl">
               <GraphItem
                 className={cn(
                   'wb-h-[64px] wb-flex wb-px-2xl wb-items-center wb-justify-center wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued',

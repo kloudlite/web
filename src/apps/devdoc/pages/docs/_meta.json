@@ -1,14 +1,63 @@
 {
-    "devops":{
-        "title":"DevOps",
-        "type":"page"
+    "--introduction--":{
+        "title":"Introduction",
+        "type":"separator"
     },
-    "infraops":{
-        "title":"InfraOps",
-        "type":"page"
+    "index":{
+        "title":"Remote Locals"
     },
-    "distribution":{
-        "title":"Distribution",
-        "type":"page"
+    "why-kloudlite":{
+        "title":"Why kloudlite?"
+    },
+    "how-does-it-work":{
+        "title":"How does it work?"
+    },
+    "architecture":{
+        "title":"Architecture"
+    },
+    "--getting-started--":{
+        "title":"Getting Started",
+        "type":"separator"
+    },
+    "attach-your-cluster":{
+        "title":"Attach your cluster"
+    },
+    "create-environment":{
+        "title":"Create Environment"
+    },
+    "setup-local-box":{
+        "title":"Setup Local Machine"
+    },
+    "access-n-intercept":{
+        "title":"Access & Intercept!"
+    },
+    "--reference--":{
+        "title":"Features",
+        "type":"separator"
+    },
+    "local-devices":{
+        "title":"Local Dev Envs"
+    },
+    "any-wireguard":{
+        "title":"Wireguard devices"
+    },
+    "kubernetes-clusters":{
+        "title":"Kubernetes Clusters"
+    },
+    "work-in-progress":{
+        "title":"Work in progress.."
+    },
+    "---references-":{
+        "title":"Reference",
+        "type":"separator"
+    },
+    "github":{
+        "title":"Github"
+    },
+    "feature-request":{
+        "title":"Feature Request"
+    },
+    "help-n-support":{
+        "title":"Help & Support"
     }
 }

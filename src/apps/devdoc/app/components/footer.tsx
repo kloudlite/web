@@ -8,7 +8,7 @@ const FooterLink = ({ to, children }: { to: string; children: ReactNode }) => {
   return (
     <Button
       content={<div>{children}</div>}
-      LinkComponent={Link}
+      linkComponent={Link}
       toLabel="href"
       to={to}
       variant="plain"

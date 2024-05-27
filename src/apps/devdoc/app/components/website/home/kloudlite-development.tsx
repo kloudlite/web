@@ -137,7 +137,7 @@ const KloudliteDevelopment = () => {
             </div>
           </AnimatePresence>
         </GraphItem>
-        <GraphItem className="wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued wb-flex wb-flex-row ">
+        <GraphItem className="wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued wb-flex wb-flex-row xl:wb-pb-3xl 2xl:wb-pb-xl 3xl:wb-pb-0">
           <div ref={ref} className="wb-pt-3xl md:wb-pt-6xl wb-flex wb-flex-col">
             {consts.homeNew.kloudliteDevelopmentData.map((kd, index) => {
               return (

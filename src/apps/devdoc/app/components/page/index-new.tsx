@@ -1,14 +1,10 @@
-import { useState } from 'react';
 import { Badge } from 'kl-design-system/atoms/badge';
-import { addDoc, collection, getFirestore } from 'firebase/firestore';
-import { FirebaseApp } from 'firebase/app';
-import { GraphExtended } from '~/app/components/graph';
-import HomeIllustrationMobileDark from '~/images/homeNew/illustration-mobile-dark.svg';
-import HomeIllustrationMobile from '~/images/homeNew/illustration-mobile.svg';
-import { useFirebase } from '~/app/utils/useFirebase';
 import hero from '~/images/homeNew/hero';
+import HomeIllustrationMobile from '~/images/homeNew/illustration-mobile.svg';
+import HomeIllustrationMobileDark from '~/images/homeNew/illustration-mobile-dark.svg';
+import { GraphExtended } from '~/app/components/graph';
+import { authUrl } from '~/app/utils/config';
 import Wrapper from '../wrapper';
-import InviteCodeDialog from '../website/invite-code-dialog';
 import OpenSource from '../website/home/opensource';
 import KeepExploring from '../website/home/keep-exploring';
 import FaqSection from '../website/home/faq';
@@ -16,9 +12,9 @@ import HowItWorksSection from '../website/home/how-it-works';
 import PartnerSection from '../website/home/partners';
 import SecureAtCore from '../website/home/secure-at-core';
 import KloudliteDevelopment from '../website/home/kloudlite-development';
-import TextInputBig from '../textinput-big';
-import SuperCharge from '../website/home/supercharge';
 import DynamicImage from '../dynamic-image';
+import ProviderUI from '../website/provider-ui';
+import SuperCharge from '../website/home/supercharge';
 
 const Title = () => {
   return (
@@ -103,96 +99,49 @@ const Illustration = () => {
           src={HomeIllustrationMobile.src}
         />
       </div>
-      <KloudliteDevelopment />
     </Wrapper>
   );
 };
 
-const addWaitingList = async (
-  app: FirebaseApp | null,
-  data: { email: string }
-) => {
-  if (!app) {
-    return;
-  }
-  const firestore = getFirestore(app);
-  const col = collection(firestore, 'web-waiting-lists');
-
-  const newUser = {
-    ...data,
-    createdAt: new Date(),
-  };
-
-  const user = await addDoc(col, newUser);
-  console.log(user);
-};
-
 const Index = () => {
-  const [waitlistEmail, setWaitlistEmail] = useState('');
-  const [superChargeValue, setSuperChargeValue] = useState('');
-  const [showInviteDialog, setShowInviteDialog] = useState(false);
-
-  const { firebaseApp } = useFirebase();
-
   return (
     <div>
       <Wrapper className="wb-relative wb-flex wb-justify-center lg:wb-justify-start wb-py-6xl md:wb-pt-8xl lg:wb-pt-10xl">
         <div className="wb-w-full wb-z-[1]">
           <Title />
           <div className="wb-pt-6xl wb-flex md:wb-flex-row wb-flex-col wb-gap-4xl md:wb-items-center wb-justify-center">
-            <div className="md:wb-w-[610px] wb-flex wb-flex-col wb-gap-xl wb-text-center">
-              <TextInputBig
-                value={waitlistEmail}
-                onChange={({ target }) => {
-                  setWaitlistEmail(target.value);
-                }}
-                onEnter={() => {
-                  if (waitlistEmail) {
-                    addWaitingList(firebaseApp, { email: waitlistEmail });
-                    setShowInviteDialog(true);
-                  }
-                }}
-                onSuffixClicked={() => {
-                  addWaitingList(firebaseApp, { email: waitlistEmail });
-                  setShowInviteDialog(true);
-                }}
-              />
+            <div
+              id="join-waitlist"
+              className="md:wb-w-[610px] wb-flex wb-flex-col wb-gap-xl wb-items-center"
+            >
+              <ProviderUI />
               <span className="wb-text-text-strong dark:wb-text-text-darktheme-strong wb-bodyLg">
                 Got an invite code?{' '}
-                <span className="hover:wb-bodyLg-underline wb-underline-offset-4 !wb-text-text-default dark:!wb-text-text-darktheme-default wb-cursor-pointer">
-                  Click here
-                </span>{' '}
-                to access
+                <a
+                  href={`${authUrl}/signup`}
+                  className="hover:wb-bodyLg-underline wb-underline-offset-4 "
+                >
+                  <span className="!wb-text-text-default dark:!wb-text-text-darktheme-default wb-cursor-pointer">
+                    Click here
+                  </span>{' '}
+                  to access
+                </a>
               </span>
             </div>
           </div>
         </div>
       </Wrapper>
       <Illustration />
-      <div className="wb-px-3xl lg:wb-px-0 2xl:wb-max-w-[1440px] 3xl:wb-max-w-[1600px] wb-m-auto">
-        <SecureAtCore />
-      </div>
       <Wrapper>
+        <KloudliteDevelopment />
+        <SecureAtCore />
         <PartnerSection />
         <HowItWorksSection />
         <FaqSection />
         <KeepExploring />
         <OpenSource />
-        <SuperCharge
-          value={superChargeValue}
-          onChange={setSuperChargeValue}
-          onEnter={() => {
-            if (superChargeValue) {
-              addWaitingList(firebaseApp, { email: superChargeValue });
-              setShowInviteDialog(true);
-            }
-          }}
-        />
+        <SuperCharge />
       </Wrapper>
-      <InviteCodeDialog
-        show={showInviteDialog}
-        onOpenChange={setShowInviteDialog}
-      />
     </div>
   );
 };

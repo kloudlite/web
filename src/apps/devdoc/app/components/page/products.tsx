@@ -266,7 +266,7 @@ const ProductCards = ({
             <Button
               content={`Learn more about ${type}`}
               suffix={<ArrowRight />}
-              LinkComponent={Link}
+              linkComponent={Link}
               to={link}
               toLabel="href"
               block

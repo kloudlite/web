@@ -1,10 +1,11 @@
 import { ReactNode, useState } from 'react';
-import consts from '~/app/utils/const';
 import { Button } from 'kl-design-system/atoms/button';
+import consts from '~/app/utils/const';
 import { ArrowRight } from '~/app/icons/icons';
 import { Block } from '../../commons';
 import Slider from '../../slider';
 import { GraphItem } from '../../graph';
+import { Anchor } from '../../anchor';
 
 export const ExploringItem = ({
   label,
@@ -16,9 +17,12 @@ export const ExploringItem = ({
   img: string;
 }) => {
   return (
-    <div className="wb-h-full wb-flex wb-flex-col wb-bg-surface-basic-default dark:wb-bg-surface-darktheme-basic-default md:wb-min-h-[416px] 2xl:wb-min-h-[176px] 3xl:wb-min-h-[416px] 3xl:wb-max-h-[416px] wb-group hover:wb-will-change-contents">
+    <Anchor
+      href="#"
+      className="wb-h-full wb-flex wb-flex-col wb-bg-surface-basic-default dark:wb-bg-surface-darktheme-basic-default md:wb-min-h-[416px] 2xl:wb-min-h-[176px] 3xl:wb-min-h-[416px] 3xl:wb-max-h-[416px] wb-group hover:wb-will-change-contents focus:wb-will-change-contents wb-ring-offset-0 wb-ring-border-focus dark:wb-ring-border-darktheme-focus wb-outline-none focus-visible:wb-ring-2"
+    >
       <img
-        className="wb-object-cover wb-h-[156px] lg:wb-h-[136px] xl:wb-h-[160px] 2xl:wb-h-[192px] 3xl:wb-h-[232px] md:group-hover:wb-h-[136px] lg:group-hover:wb-h-[116px] xl:group-hover:wb-h-[140px] 2xl:group-hover:wb-h-[156px] 3xl:group-hover:wb-h-[206px] wb-transition-[height] wb-ease-in-out wb-duration-300 group-hover:wb-will-change-[height]"
+        className="wb-object-cover wb-h-[156px] lg:wb-h-[136px] xl:wb-h-[160px] 2xl:wb-h-[192px] 3xl:wb-h-[232px] md:group-hover:wb-h-[136px] lg:group-hover:wb-h-[116px] xl:group-hover:wb-h-[140px] 2xl:group-hover:wb-h-[156px] 3xl:group-hover:wb-h-[206px] wb-transition-[height] wb-ease-in-out wb-duration-300 md:group-focus-within:wb-h-[136px] lg:group-focus-within:wb-h-[116px] xl:group-focus-within:wb-h-[140px] 2xl:group-focus-within:wb-h-[156px] 3xl:group-focus-within::wb-h-[206px]"
         src={img}
       />
       <div className="wb-flex wb-flex-col wb-gap-lg md:wb-gap-xl wb-p-3xl 2xl:wb-p-4xl">
@@ -29,14 +33,14 @@ export const ExploringItem = ({
           {desc}
         </p>
       </div>
-      <div className="wb-hidden md:wb-block wb-absolute wb-bottom-0 wb-px-3xl 2xl:wb-px-4xl wb-pt-xl wb-pb-0 wb-opacity-0 group-hover:wb-opacity-100 wb-transition-[padding,opacity] group-hover:wb-pb-3xl 2xl:group-hover:wb-pb-4xl group-hover:wb-will-change-[opacity,padding] wb-duration-300 wb-ease-in-out">
+      <div className="wb-hidden md:wb-block wb-absolute wb-bottom-0 wb-px-3xl 2xl:wb-px-4xl wb-pt-xl wb-pb-0 wb-opacity-0 group-hover:wb-opacity-100 wb-transition-[padding,opacity] group-hover:wb-pb-3xl 2xl:group-hover:wb-pb-4xl group-hover:wb-will-change-[opacity,padding] group-focus-within::wb-pb-3xl 2xl:group-focus-within:wb-pb-4xl group-focus-within:wb-opacity-100 group-focus-within:wb-will-change-[opacity,padding] wb-duration-300 wb-ease-in-out">
         <Button
           content="Read more"
           suffix={<ArrowRight />}
           variant="primary-plain"
         />
       </div>
-    </div>
+    </Anchor>
   );
 };
 

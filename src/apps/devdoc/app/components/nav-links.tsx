@@ -37,7 +37,7 @@ export const NavLinks = ({
       <div className="wb-flex-1 md:wb-flex-none wb-self-start">
         {prev && (
           <Button
-            LinkComponent={Link}
+            linkComponent={Link}
             toLabel="href"
             content={prev.title}
             className="self-start"
@@ -50,7 +50,7 @@ export const NavLinks = ({
       <div className="wb-flex-1 md:wb-flex-none wb-self-end">
         {next && (
           <Button
-            LinkComponent={Link}
+            linkComponent={Link}
             toLabel="href"
             content={next.title}
             className="self-end ml-auto"

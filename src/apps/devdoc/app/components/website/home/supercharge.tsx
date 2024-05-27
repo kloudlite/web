@@ -1,19 +1,11 @@
 import { GraphExtended, GraphItem } from '../../graph';
-import TextInputBig from '../../textinput-big';
+import ProviderUI from '../provider-ui';
 
-const SuperCharge = ({
-  value,
-  onChange,
-  onEnter,
-}: {
-  value?: string;
-  onChange?: (value: string) => void;
-  onEnter?: () => void;
-}) => {
+const SuperCharge = () => {
   return (
     <GraphExtended>
       <GraphItem className="wb-bg-surface-basic-input dark:wb-bg-surface-darktheme-basic-input">
-        <div className="wb-flex wb-flex-col wb-p-3xl wb-gap-5xl md:wb-px-8xl md:wb-py-7xl md:wb-gap-6xl wb-items-center">
+        <div className="wb-flex wb-flex-col wb-p-3xl wb-gap-5xl md:wb-px-8xl md:wb-py-7xl md:wb-gap-6xl wb-items-center xl:wb-h-[288px]">
           <div className="wb-flex wb-flex-col wb-gap-2xl">
             <h4 className="wb-heading2xl-marketing md:wb-heading4xl-marketing wb-text-text-default dark:wb-text-text-darktheme-default wb-text-center">
               Supercharge your remote local environments
@@ -24,18 +16,7 @@ const SuperCharge = ({
             </p>
           </div>
           <div className="wb-w-full lg:wb-w-[610px]">
-            <TextInputBig
-              value={value}
-              onChange={({ target }) => {
-                onChange?.(target.value);
-              }}
-              onEnter={() => {
-                if (value) {
-                  onEnter?.();
-                }
-              }}
-              onSuffixClicked={onEnter}
-            />
+            <ProviderUI />
           </div>
         </div>
       </GraphItem>

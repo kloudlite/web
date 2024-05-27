@@ -129,7 +129,7 @@ const HorizontalTopTab = ({
                     <img
                       className="wb-flex wb-h-[160px] wb-p-2xl wb-items-center wb-justify-center"
                       // @ts-ignore
-                      src={images[t.id].rmobileDark}
+                      src={images[t.id].r1440Dark}
                     />
                   </div>
 
@@ -137,7 +137,7 @@ const HorizontalTopTab = ({
                     <img
                       className="wb-h-[160px] wb-p-2xl wb-flex wb-items-center wb-justify-center"
                       // @ts-ignore
-                      src={images[t.id].rmobile}
+                      src={images[t.id].r1440}
                     />
                   </div>
                 </div>

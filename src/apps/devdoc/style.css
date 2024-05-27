@@ -22,7 +22,7 @@ html{
     scroll-behavior: auto;
     -webkit-tap-highlight-color: transparent;
     /* scrollbar-gutter: stable; */
-    @apply wb-scroll-pt-[--kl-navbar-height] wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued;
+    @apply wb-scroll-pt-0 wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
 }
 .scrollbar-gutter{
@@ -234,7 +234,7 @@ code{
 
   @media screen and (min-width:1280px) {
     .graph{
-      @apply wb-relative [background-size:32px_32px] wb-bg-[linear-gradient(90deg,_#e4e4e783_1px,_transparent_1px),_linear-gradient(0deg,_#e4e4e783_1px,_transparent_1px)] dark:wb-bg-[linear-gradient(90deg,_#27272A_1px,_transparent_1px),_linear-gradient(0deg,_#27272A_1px,_transparent_1px)]; 
+      @apply wb-relative [background-size:32px_32px] wb-bg-[linear-gradient(90deg,_#e4e4e7cc_1.5px,_transparent_1.5px),_linear-gradient(0deg,_#e4e4e7cc_1.5px,_transparent_1.5px)] dark:wb-bg-[linear-gradient(90deg,_#27272Acc_1.5px,_transparent_1.5px),_linear-gradient(0deg,_#27272Acc_1.5px,_transparent_1.5px)]; 
     }
   
     .graph::before{
@@ -250,7 +250,7 @@ code{
     }
     .graph2{
       background-position: 16px 0px;
-      @apply wb-relative [background-size:32px_32px] wb-bg-[linear-gradient(90deg,_#e4e4e783_1px,_transparent_1px),_linear-gradient(0deg,_#e4e4e783_1px,_transparent_1px)] dark:wb-bg-[linear-gradient(90deg,_#27272A_1px,_transparent_1px),_linear-gradient(0deg,_#27272A_1px,_transparent_1px)]; 
+      @apply wb-relative [background-size:32px_32px] wb-bg-[linear-gradient(90deg,_#e4e4e7cc_1.5px,_transparent_1.5px),_linear-gradient(0deg,_#e4e4e7cc_1.5px,_transparent_1.5px)] dark:wb-bg-[linear-gradient(90deg,_#27272Acc_1.5px,_transparent_1.5px),_linear-gradient(0deg,_#27272Acc_1.5px,_transparent_1.5px)]; 
     }
   
     .graph2::before{

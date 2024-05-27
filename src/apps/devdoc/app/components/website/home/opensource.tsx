@@ -4,6 +4,7 @@ import { gitUrl } from '~/app/utils/config';
 import Link from 'next/link';
 import { BrandLogo } from 'kl-design-system/branding/brand-logo';
 import { GraphExtended, GraphItem } from '../../graph';
+import { Anchor } from '../../anchor';
 
 const OpenSource = () => {
   return (
@@ -23,7 +24,7 @@ const OpenSource = () => {
             </div>
             <div>
               <Button
-                LinkComponent={Link}
+                linkComponent={Link}
                 to={gitUrl}
                 toLabel="href"
                 prefix={<Star />}
@@ -33,9 +34,9 @@ const OpenSource = () => {
           </div>
         </GraphItem>
         <GraphItem className="wb-h-full wb-bg-surface-primary-subdued dark:wb-bg-surface-darktheme-primary-subdued">
-          <a
+          <Anchor
             href={gitUrl}
-            className="wb-p-5xl wb-flex-col wb-flex wb-gap-5xl wb-h-full wb-cursor-pointer"
+            className="wb-p-5xl wb-flex-col wb-flex wb-gap-5xl wb-h-full wb-cursor-pointer "
           >
             <div className="wb-flex wb-flex-col-reverse md:wb-flex-row wb-gap-2xl wb-flex-1">
               <div className="wb-flex-1 wb-heading2xl md:wb-heading4xl wb-text-text-default dark:wb-text-text-darktheme-default">
@@ -58,7 +59,7 @@ const OpenSource = () => {
                 <GithubLogoFill className="wb-w-[24px] wb-h-[24px] md:wb-w-[40px] md:wb-h-[40px]" />
               </div>
             </div>
-          </a>
+          </Anchor>
         </GraphItem>
       </div>
     </GraphExtended>

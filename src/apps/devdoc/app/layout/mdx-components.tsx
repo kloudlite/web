@@ -36,8 +36,6 @@ function HeadingLink({
     if (!heading) return;
     slugs.set(heading, [id, (context.index += 1)]);
     observer?.observe(heading);
-
-    console.log(children);
     return () => {
       observer?.disconnect();
       slugs.delete(heading);
@@ -52,13 +50,13 @@ function HeadingLink({
   return (
     <Tag
       className={cn(
-        'wb-text-text-default dark:wb-text-text-darktheme-default wb-group wb-mt-6xl',
+        'wb-text-text-default dark:wb-text-text-darktheme-default wb-group',
         {
-          h2: 'wb-heading2xl-marketing',
-          h3: 'wb-headingXl-marketing',
-          h4: 'wb-headingLg-marketing',
-          h5: '',
-          h6: '',
+          h2: 'wb-heading2xl-marketing wb-sticky wb-top-0 bg-surface-basic-subdued dark:bg-surface-darktheme-basic-subdued  wb-mt-[30px] wb-py-[10px]',
+          h3: 'wb-headingXl-marketing wb-mt-6xl',
+          h4: 'wb-headingLg-marketing wb-mt-6xl',
+          h5: 'wb-mt-6xl',
+          h6: 'wb-mt-6xl',
         }[Tag]
       )}
       {...props}
@@ -99,7 +97,6 @@ export const createComponents = ({
   components?: any;
   isRawLayout?: boolean;
 }): Components => {
-  console.log('coomponents', components);
   if (isRawLayout) {
     return {
       a: A,
@@ -161,7 +158,7 @@ export const createComponents = ({
     table: (props) => <Table className="" {...props} />,
     p: (props) => (
       <p
-        className="wb-bodyLg wb-mt-3xl rounded-image wb-text-text-strong dark:wb-text-text-darktheme-strong wb-break-words"
+        className="wb-bodyLg wb-mt-3xl rounded-image wb-text-text-strong dark:wb-text-text-darktheme-strong wb-break-words !wb-leading-[28px]"
         {...props}
       />
     ),

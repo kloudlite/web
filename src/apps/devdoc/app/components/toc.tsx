@@ -76,6 +76,7 @@ export function TOC({ headings }: TOCProps): ReactElement {
                     key={id}
                   >
                     <a
+                      title={value}
                       href={`#${id}`}
                       className={cn(
                         'wb-flex wb-px-2xl wb-py-lg wb-rounded wb-min-w-0 wb-w-full hover:wb-bg-surface-basic-hovered dark:hover:wb-bg-surface-darktheme-basic-hovered',
@@ -103,7 +104,7 @@ export function TOC({ headings }: TOCProps): ReactElement {
 
       <div
         className={cn(
-          'wb-sticky wb-pb-6xl wb-bottom-0 wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued wb-shadow-[0_-12px_16px_theme(colors.surface.basic.default)] dark:wb-shadow-[0_-12px_16px_theme(colors.surface.darktheme.basic.default)]'
+          'wb-sticky wb-pb-6xl wb-bottom-0 wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued wb-pt-xl'
         )}
       >
         {/* {renderComponent(config.editLink.component, {
@@ -124,7 +125,7 @@ export function TOC({ headings }: TOCProps): ReactElement {
               repository: config.gitRepoUrl,
               title: `Feedback for “${config.pageOpts?.title}”`,
             })}
-            LinkComponent={Link}
+            linkComponent={Link}
             toLabel="href"
             variant="plain"
             size="lg"

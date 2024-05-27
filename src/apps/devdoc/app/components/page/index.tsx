@@ -537,7 +537,7 @@ const IndexRoot = () => {
                 content="Get started for free"
                 to="https://auth.kloudlite.io"
                 toLabel="href"
-                LinkComponent={Link}
+                linkComponent={Link}
                 variant="primary"
               />
             </div>

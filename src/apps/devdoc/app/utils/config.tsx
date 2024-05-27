@@ -17,6 +17,7 @@ import Button from '../components/button';
 import { useTheme } from './useTheme';
 
 export const basePath = 'https://kloudlite.io';
+export const authUrl = 'https://auth.kloudlite.io';
 export const gitUrl = 'https://github.com/kloudlite/kloudlite';
 const linkedinUrl = 'https://linkedin.com/company/kloudlite-io';
 const xUrl = 'https://x.com/kloudlite';
@@ -199,7 +200,7 @@ export default {
       {
         title: 'Documentation',
         type: 'normal',
-        to: '#',
+        to: 'docs',
       },
     ],
     extra: (
@@ -217,7 +218,7 @@ export default {
             content="Github"
             variant="basic"
             block
-            LinkComponent={Link}
+            linkComponent={Link}
             toLabel="href"
             to={gitUrl}
           />
@@ -225,10 +226,10 @@ export default {
         <span className="hidden lg:block wb-h-2xl wb-w-xs wb-bg-border-default dark:wb-bg-border-darktheme-default" />
         <div>
           <Button
-            content="Join waitlist"
+            content="Signup to join waitlist"
             variant="primary"
-            to="#join-waitlist"
-            LinkComponent={Link}
+            to={`${authUrl}/signup`}
+            linkComponent={Link}
             toLabel="href"
             block
           />
