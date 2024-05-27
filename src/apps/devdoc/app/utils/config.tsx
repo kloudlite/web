@@ -111,11 +111,11 @@ export default {
         items: [
           {
             title: 'Documentation',
-            to: '#',
+            to: '/docs',
           },
           {
             title: 'Blog',
-            to: '#',
+            to: '/blog',
           },
           {
             title: 'Changelog',
