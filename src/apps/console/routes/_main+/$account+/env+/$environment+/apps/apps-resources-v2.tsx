@@ -68,7 +68,7 @@ type IExtraButton = {
 
 const InterceptPortView = ({
   ports = [],
-  devName,
+  devName = '',
 }: {
   ports: NN<ExtractNodeType<IApps>['spec']['intercept']>['portMappings'];
   devName: string;
@@ -83,7 +83,7 @@ const InterceptPortView = ({
           <div>
             <span className="bodyMd-medium text-text-soft">
               {' '}
-              intercepted by{' '}
+              intercepted to{' '}
               <span className="bodyMd-medium text-text-strong">{devName}</span>
             </span>
             <div className="flex flex-row gap-md py-md">
@@ -108,7 +108,7 @@ const InterceptPortView = ({
           )}
           <span className="text-text-soft">
             {' '}
-            intercepted by{' '}
+            intercepted to{' '}
             <span className="bodyMd-medium text-text-strong truncate">
               {devName}
             </span>

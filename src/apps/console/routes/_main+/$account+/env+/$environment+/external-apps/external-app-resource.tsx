@@ -64,7 +64,7 @@ type IExtraButton = {
 
 const InterceptPortView = ({
   ports = [],
-  devName,
+  devName = '',
 }: {
   ports: NN<
     NN<ExtractNodeType<IExternalApps>['spec']>['intercept']
