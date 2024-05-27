@@ -151,7 +151,7 @@ const OptionMenuContent = forwardRef<
               exit={{ opacity: 0, scale: 0.85 }}
               transition={{ duration: 0.3, ease: 'anticipate' }}
               className={cn(
-                'z-50 border border-border-default dark:border-border-darktheme-default shadow-popover bg-surface-basic-default dark:bg-surface-darktheme-basic-default rounded min-w-[160px] overflow-hidden origin-top py-lg',
+                'z-50 border border-border-default dark:border-border-darktheme-default shadow-popover dark:shadow-darktheme-popover bg-surface-basic-default dark:bg-surface-darktheme-basic-default rounded min-w-[160px] overflow-hidden origin-top py-lg',
                 className
               )}
             >

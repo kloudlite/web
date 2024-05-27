@@ -262,7 +262,7 @@ const config = {
         ],
         deep: [
           '0px 0px 0px 1px rgba(6, 44, 82, 0.1)',
-          '0px 2px 16px rgba(33, 43, 54, 0.08);',
+          '0px 2px 16px rgba(33, 43, 54, 0.08)',
         ],
         modal: [
           '0px 0px 1px rgba(0, 0, 0, 0.2)',
@@ -272,10 +272,10 @@ const config = {
           '0px 1px 3px rgba(63, 63, 68, 0.15)',
           '0px 0px 0px 1px rgba(63, 63, 68, 0.05)',
         ],
-        focus: '0px 0px 0px 2px #60A5FA;',
+        focus: '0px 0px 0px 2px #60A5FA',
         'darktheme-popover': [
           '0px 0px 2px 0px rgba(250, 250, 250, 0.20)',
-          '0px 2px 10px 0px rgba(250, 250, 250, 0.10);',
+          '0px 2px 10px 0px rgba(250, 250, 250, 0.10)',
         ],
       },
       maxWidth: { ...width },

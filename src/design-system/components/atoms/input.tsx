@@ -72,6 +72,7 @@ interface ITextArea extends IInputRow {
   prefix?: ReactNode;
   prefixIcon?: JSX.Element;
   resize?: boolean;
+  cols?: string;
 }
 
 export interface ITextInputBase extends IInputRow {
@@ -154,11 +155,11 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
           className={cn(
             'transition-all rounded border flex flex-row items-center relative ring-offset-1 dark:ring-offset-0 pulsable ring-border-focus dark:ring-border-darktheme-focus',
             {
-              'text-text-critical bg-surface-critical-subdued border-border-critical':
+              'text-text-critical bg-surface-critical-subdued border-border-critical dark:bg-surface-darktheme-critical-subdued dark:border-border-darktheme-critical':
                 error,
               'text-text-default dark:text-text-darktheme-default border-border-default dark:border-border-darktheme-default bg-surface-basic-input dark:bg-surface-darktheme-basic-input':
                 !error,
-              'text-text-disabled border-border-disabled bg-surface-basic-input':
+              'text-text-disabled border-border-disabled bg-surface-basic-input dark:text-text-darktheme-disabled dark:border-border-darktheme-disabled dark:bg-surface-darktheme-basic-input':
                 disabled,
               'pr-0': component !== 'input',
             },
@@ -244,9 +245,11 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
           {!!suffixIcon && (
             <div
               className={cn('pl-lg bodyMd dark:text-text-darktheme-default', {
-                'text-text-critical': error,
-                'text-text-strong': !error && !disabled,
-                'text-text-disabled': disabled,
+                'text-text-critical dark:text-text-darktheme-critical': error,
+                'text-text-strong dark:text-text-darktheme-strong':
+                  !error && !disabled,
+                'text-text-disabled dark:text-text-darktheme-disabled':
+                  disabled,
               })}
             >
               {cloneElement(suffixIcon, {
@@ -301,8 +304,8 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
             className={cn(
               'bodySm pulsable',
               {
-                'text-text-critical': error,
-                'text-text-default': !error,
+                'text-text-critical dark:text-text-darktheme-critical': error,
+                'text-text-default dark:text-text-darktheme-default': !error,
               },
               'pt-md'
             )}
@@ -409,31 +412,35 @@ export const TextInput = forwardRef<HTMLInputElement, ITextInput>(
   }
 );
 
-export const TextArea = ({
-  autoComplete = 'off',
-  onChange = (_) => {},
-  resize = false,
-  rows = '3',
-  ...etc
-}: ITextArea) => {
-  const ref = useRef(null);
-  const id = useId();
-  return (
-    <TextInputBase
-      {...{
-        ...etc,
-        id,
-        autoComplete,
-        onChange,
-        resize,
-        rows,
-        component: 'textarea',
-        ref,
-        type: 'text',
-      }}
-    />
-  );
-};
+export const TextArea = forwardRef<HTMLInputElement, ITextArea>(
+  (
+    {
+      autoComplete = 'off',
+      onChange = (_) => {},
+      resize = false,
+      rows = '3',
+      ...etc
+    },
+    ref
+  ) => {
+    const id = useId();
+    return (
+      <TextInputBase
+        {...{
+          ...etc,
+          id,
+          rows,
+          autoComplete,
+          onChange,
+          resize,
+          component: 'textarea',
+          ref,
+          type: 'text',
+        }}
+      />
+    );
+  }
+);
 
 export const PasswordInput = (props: IInputRow) => {
   const ref = useRef(null);
