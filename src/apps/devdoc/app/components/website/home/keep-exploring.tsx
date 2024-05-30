@@ -35,7 +35,7 @@ export const ExploringItem = ({
       </div>
       <div className="wb-hidden md:wb-block wb-absolute wb-bottom-0 wb-px-3xl 2xl:wb-px-4xl wb-pt-xl wb-pb-0 wb-opacity-0 group-hover:wb-opacity-100 wb-transition-[padding,opacity] group-hover:wb-pb-3xl 2xl:group-hover:wb-pb-4xl group-hover:wb-will-change-[opacity,padding] group-focus-within::wb-pb-3xl 2xl:group-focus-within:wb-pb-4xl group-focus-within:wb-opacity-100 group-focus-within:wb-will-change-[opacity,padding] wb-duration-300 wb-ease-in-out">
         <Button
-          content="Read more"
+          content={<span className="wb-bodyLg">Read more</span>}
           suffix={<ArrowRight />}
           variant="primary-plain"
         />

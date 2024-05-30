@@ -16,7 +16,7 @@ import { authUrl } from '~/app/utils/config';
 const fetchProviders = async () => {
   try {
     const res = await axios({
-      url: 'https://auth1.dev.kloudlite.io/api',
+      url: `${process.env.AUTH_URL}/api` || 'https://auth.kloudlite.io/api',
       method: 'post',
       withCredentials: false,
       data: {
@@ -63,9 +63,25 @@ const ProviderUI = () => {
   return (
     <motion.div
       className={cn(
-        'wb-overflow-y-hidden md:wb-max-h-[42px] wb-p-sm wb-w-full wb-transition-all',
-        reveal ? 'wb-max-h-[216px]' : 'wb-max-h-[42px]'
+        'wb-overflow-y-hidden md:!wb-max-h-[42px] wb-p-sm wb-w-full wb-transition-all'
       )}
+      style={{
+        maxHeight: reveal
+          ? `${
+              providers
+                ? `${
+                    Object.values(providers).filter((value) => !!value).length *
+                      50 +
+                    24 +
+                    12 +
+                    20 +
+                    50 +
+                    10
+                  }px`
+                : '116px'
+            }`
+          : '42px',
+      }}
     >
       <motion.div
         className={cn(

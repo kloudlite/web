@@ -20,7 +20,11 @@ const Title = () => {
   return (
     <div className="wb-flex wb-flex-col wb-gap-3xl wb-text-center wb-items-center">
       <div>
-        <Badge type="info">Open-Source (Apache 2.0)</Badge>
+        <Badge type="info">
+          <span className="wb-bodyMd md:wb-bodyLg">
+            Open-Source (Apache 2.0)
+          </span>
+        </Badge>
       </div>
       <h1 className="wb-heading4xl-marketing md:wb-heading6xl-marketing lg:wb-heading7xl-marketing wb-text-text-default dark:wb-text-text-darktheme-default wb-text-center lg:wb-w-[896px] xl:wb-w-[1024px] 2xl:wb-w-[1060px]">
         <div className="wb-hidden md:wb-block">

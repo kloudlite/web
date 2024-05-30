@@ -21,8 +21,7 @@
 html{
     scroll-behavior: auto;
     -webkit-tap-highlight-color: transparent;
-    /* scrollbar-gutter: stable; */
-    @apply wb-scroll-pt-0 wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued;
+    /* scrollbar-gutter: stable; */ @apply wb-scroll-pt-0 wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
 }
 .scrollbar-gutter{

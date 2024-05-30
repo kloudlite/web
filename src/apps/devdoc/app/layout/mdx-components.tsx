@@ -52,7 +52,7 @@ function HeadingLink({
       className={cn(
         'wb-text-text-default dark:wb-text-text-darktheme-default wb-group',
         {
-          h2: 'wb-heading2xl-marketing wb-sticky wb-top-0 bg-surface-basic-subdued dark:bg-surface-darktheme-basic-subdued  wb-mt-[30px] wb-py-[10px]',
+          h2: 'wb-heading2xl-marketing wb-sticky wb-top-0 wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued  wb-mt-[30px] wb-py-[10px]',
           h3: 'wb-headingXl-marketing wb-mt-6xl',
           h4: 'wb-headingLg-marketing wb-mt-6xl',
           h5: 'wb-mt-6xl',

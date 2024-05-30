@@ -2,23 +2,6 @@
   "hosting": {
     "public": "out",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
-    "redirects": [
-      {
-        "source": "/docs",
-        "destination": "/docs/devops",
-        "type": 301
-      },
-      {
-        "source": "/docs/devops",
-        "destination": "/docs/devops/what-is-devops",
-        "type": 301
-      },
-      {
-        "source": "/docs/infraops",
-        "destination": "/docs/infraops/what-is-infraops",
-        "type": 301
-      }
-    ],
     "cleanUrls": true,
     "trailingSlash": false
   }
