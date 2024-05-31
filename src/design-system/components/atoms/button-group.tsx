@@ -28,7 +28,6 @@ export interface IButtonGroupIconButton extends IIconButton {
 
 const IconButton = forwardRef<HTMLButtonElement, IButtonGroupIconButton>(
   (props, ref) => {
-    console.log(props);
     return (
       <ButtonGroupPrimitive.Item value={props.value} asChild ref={ref}>
         <ButtonBase
