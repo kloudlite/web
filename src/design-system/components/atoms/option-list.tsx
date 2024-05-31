@@ -48,6 +48,7 @@ interface IOptionMenuLink extends IBase {
   to: string;
   target?: string;
   rel?: string;
+  toLabel?: string;
 }
 
 interface IOptionMenuTextInput
@@ -225,12 +226,25 @@ const OptionMenuItem = forwardRef<HTMLDivElement, IOptionMenuItem>(
 OptionMenuItem.displayName = OptionMenuPrimitive.Item.displayName;
 
 const OptionMenuLink = forwardRef<HTMLDivElement, IOptionMenuLink>(
-  ({ className, LinkComponent = 'a', to = '', target, rel, children }, ref) => {
+  (
+    {
+      className,
+      LinkComponent = 'a',
+      to = '',
+      toLabel = 'to',
+      target,
+      rel,
+      children,
+    },
+    ref
+  ) => {
+    let tempToLabel = toLabel;
     let Component: any = LinkComponent;
 
     if (to) {
       if (LinkComponent === motion.button) {
         Component = 'a';
+        tempToLabel = 'href';
       } else {
         Component = LinkComponent;
       }
@@ -246,11 +260,7 @@ const OptionMenuLink = forwardRef<HTMLDivElement, IOptionMenuLink>(
         {...preventDefaultEvents}
         asChild
       >
-        <Component
-          {...(Component === 'a' ? { href: to } : { to })}
-          target={target}
-          rel={rel}
-        >
+        <Component {...{ [tempToLabel]: to }} target={target} rel={rel}>
           {children}
         </Component>
       </OptionMenuPrimitive.Item>
