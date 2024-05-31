@@ -6,6 +6,7 @@ import { useFSRoute } from 'nextra/hooks';
 import { Item, normalizePages } from 'nextra/normalize-pages';
 import { useRouter } from 'next/router';
 import { ArrowUpLg } from '@jengaicons/react';
+import axios from 'axios';
 import Footer from '~/app/components/footer';
 import Container from '~/app/components/container';
 import { NavLinks } from '~/app/components/nav-links';
@@ -18,12 +19,12 @@ import { DEFAULT_LOCALE } from '~/app/utils/constants';
 import { cn } from '~/app/utils/commons';
 import useMenu from '~/app/utils/use-menu';
 import { ActiveAnchorProvider } from '~/app/utils/active-anchor';
-import { ConfigProvider } from '~/app/utils/use-config';
 import config, { basePath } from '~/app/utils/config';
 import { createComponents } from './mdx-components';
 import { BlogHeader, BlogTags } from '../components/blog-utils';
 import { CompanyPanel } from '../components/company-utils';
 import { BackToTop } from '../components/back-to-top';
+import useConfig from '../utils/use-config';
 
 function GitTimestamp({ timestamp }: { timestamp: Date }) {
   const { locale = DEFAULT_LOCALE } = useRouter();
@@ -266,11 +267,63 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
   );
 };
 
+export const fetchProviders = async () => {
+  try {
+    const res = await axios({
+      url: `${process.env.AUTH_URL}/api` || 'https://auth.kloudlite.io/api',
+      method: 'post',
+      withCredentials: false,
+      data: {
+        method: 'loginPageInitUrls',
+        args: [{}],
+      },
+    });
+    if (res.data?.data) {
+      return res.data.data;
+    }
+    return null;
+  } catch (e) {
+    return null;
+  }
+};
+
+const getUser = async () => {
+  try {
+    const res = await axios({
+      url: `${process.env.AUTH_URL}/api` || 'https://auth.kloudlite.io/api',
+      method: 'post',
+      withCredentials: true,
+      data: {
+        method: 'whoAmI',
+        args: [{}],
+      },
+    });
+    if (res.data?.data) {
+      return res.data.data;
+    }
+    return null;
+  } catch (e) {
+    return null;
+  }
+};
+
 export default function Layout(props: NextraThemeLayoutProps) {
   const { pageOpts } = props;
-  return (
-    <ConfigProvider pageOpts={pageOpts} config={config}>
-      <Main {...props} />
-    </ConfigProvider>
-  );
+  const { setConfig } = useConfig();
+  useEffect(() => {
+    setConfig((prev) => ({ ...prev, userApiLoading: true }));
+    (async () => {
+      const user = await getUser();
+      setConfig((prev) => ({ ...prev, user, userApiLoading: false }));
+    })();
+
+    (async () => {
+      const prov = await fetchProviders();
+      setConfig((prev) => ({ ...prev, oathProviders: prov }));
+    })();
+
+    setConfig((prev) => ({ ...prev, pageOpts }));
+  }, []);
+
+  return <Main {...props} />;
 }

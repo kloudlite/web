@@ -127,6 +127,7 @@ const HorizontalTopTab = ({
                 <div className="wb-border-t wb-border-border-dark dark:wb-border-border-darktheme-dark wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued wb-flex wb-items-center wb-justify-center">
                   <div className="wb-hidden dark:wb-block">
                     <img
+                      alt="slide-light"
                       className="wb-flex wb-h-[160px] wb-p-2xl wb-items-center wb-justify-center"
                       // @ts-ignore
                       src={images[t.id].r1440Dark}
@@ -135,6 +136,7 @@ const HorizontalTopTab = ({
 
                   <div className="dark:wb-hidden">
                     <img
+                      alt="slide-dark"
                       className="wb-h-[160px] wb-p-2xl wb-flex wb-items-center wb-justify-center"
                       // @ts-ignore
                       src={images[t.id].r1440}

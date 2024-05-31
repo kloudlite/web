@@ -13,7 +13,6 @@ import OssIcon from '~/images/homeNew/oss.svg';
 import OssIconDark from '~/images/homeNew/oss-dark.svg';
 import { cn } from './commons';
 import { IConfig } from './use-config';
-import Button from '../components/button';
 import { useTheme } from './useTheme';
 
 export const basePath = 'https://kloudlite.io';
@@ -99,8 +98,12 @@ export default {
     brand: <BrandMenu className="md:wb-order-[-9999]" />,
     extra: (
       <div>
-        <img className="dark:wb-hidden" src={OssIcon.src} />
-        <img className="wb-hidden dark:wb-block" src={OssIconDark.src} />
+        <img className="dark:wb-hidden" src={OssIcon.src} alt="oss-light" />
+        <img
+          className="wb-hidden dark:wb-block"
+          src={OssIconDark.src}
+          alt="oss-dark"
+        />
       </div>
     ),
     menu: [
@@ -203,39 +206,6 @@ export default {
         to: 'docs',
       },
     ],
-    extra: (
-      <div className="wb-flex wb-flex-col lg:wb-flex-row wb-gap-xl lg:wb-items-center wb-mt-6xl lg:wb-mt-0 wb-px-2xl lg:wb-px-0">
-        <a
-          href={gitUrl}
-          aria-label="kloudlite-github"
-          className="wb-hidden lg:wb-block wb-text-icon-default dark:wb-text-icon-darktheme-default"
-        >
-          <GithubLogoFill size={24} />
-        </a>
-        <div className="lg:wb-hidden">
-          <Button
-            prefix={<GithubLogoFill />}
-            content="Github"
-            variant="basic"
-            block
-            linkComponent={Link}
-            toLabel="href"
-            to={gitUrl}
-          />
-        </div>
-        <span className="hidden lg:block wb-h-2xl wb-w-xs wb-bg-border-default dark:wb-bg-border-darktheme-default" />
-        <div>
-          <Button
-            content="Signup to join waitlist"
-            variant="primary"
-            to={`${authUrl}/signup`}
-            linkComponent={Link}
-            toLabel="href"
-            block
-          />
-        </div>
-      </div>
-    ),
   },
   urls: {
     auth: 'auth.kloudlite.io',

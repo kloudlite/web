@@ -279,7 +279,7 @@ const ProductCards = ({
             <GraphItem className="flex items-center justify-center md:min-w-[491px] xl:!min-w-[512px] xl:h-[512px] 3xl:!w-[608px]">
               <div className=" bg-surface-basic-subdued p-3xl w-full h-full md:!p-5xl xl:!p-0 flex items-center justify-center">
                 {/** @ts-ignore * */}
-                <img src={logo.src} />
+                <img alt="logo" src={logo.src} />
               </div>
             </GraphItem>
           </div>

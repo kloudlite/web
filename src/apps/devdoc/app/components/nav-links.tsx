@@ -27,7 +27,7 @@ export const NavLinks = ({
   return (
     <div
       className={cn(
-        'wb-py-6xl md:wb-px-xl wb-border-t wb-border-border-default dark:wb-border-border-darktheme-default  wb-flex wb-flex-col md:wb-flex-row wb-flex-wrap wb-items-center wb-gap-xl wb-bodyMd wb-text-text-default dark:wb-text-text-darktheme-default',
+        'wb-py-6xl md:wb-px-xl wb-border-t wb-border-border-default dark:wb-border-border-darktheme-default  wb-flex wb-flex-col md:wb-flex-row wb-flex-wrap wb-items-center wb-gap-xl wb-bodyMd wb-text-text-default dark:wb-text-text-darktheme-default print:wb-hidden',
         {
           'justify-between': !!prev,
           'justify-end': !prev,

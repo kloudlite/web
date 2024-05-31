@@ -1,16 +1,20 @@
 import { PageItem } from 'nextra/normalize-pages';
 import Link from 'next/link';
 import { GithubLogoFill } from '@jengaicons/react';
+import { Button } from 'kl-design-system/atoms/button';
+import Profile from 'kl-design-system/molecule/profile';
+import { useState } from 'react';
 import useConfig, { IHeaderSecondary } from '../utils/use-config';
 import { cn } from '../utils/commons';
 import MenuToggle from './menu-button';
 import useMenu from '../utils/use-menu';
 import Wrapper from './wrapper';
 import NavigationMenuV2 from './nav-menu-v2';
-import { gitUrl } from '../utils/config';
+import JoinProviders from './join-providers';
+import JoinProvidersDialog from './join-provider-dialog';
+import ProfileButtonUI from './profile-button-ui';
 
 const HeaderSecondary = ({
-  extra,
   activePath,
 }: Omit<IHeaderSecondary, 'items'> & {
   activePath?: PageItem[];
@@ -26,16 +30,33 @@ const HeaderSecondary = ({
             <NavigationMenuV2 activePath={activePath} />
           </ul>
 
-          <div className="wb-hidden lg:wb-flex">{extra}</div>
-          <div className="wb-flex-1 wb-flex wb-flex-row wb-gap-2xl lg:wb-hidden wb-items-center wb-justify-end">
-            <a
-              href={gitUrl}
-              aria-label="kloudlite-github"
-              className="wb-text-text-default dark:wb-text-text-darktheme-default"
-            >
-              <GithubLogoFill size={20} />
-            </a>
-            <MenuToggle onClick={() => setState(!state)} toggle={state} />
+          <div className="wb-flex-1 lg:wb-flex-none wb-flex wb-flex-row wb-gap-2xl wb-items-center wb-justify-end">
+            <div className="wb-flex wb-flex-col lg:wb-flex-row wb-gap-xl lg:wb-items-center">
+              <a
+                href={config.gitRepoUrl}
+                aria-label="kloudlite-github"
+                className="wb-hidden lg:wb-block wb-text-icon-default dark:wb-text-icon-darktheme-default"
+              >
+                <GithubLogoFill size={24} />
+              </a>
+              {!config.userApiLoading && (
+                <>
+                  <span className="wb-hidden lg:wb-block wb-h-2xl wb-w-xs wb-bg-border-default dark:wb-bg-border-darktheme-default" />
+                  <div>
+                    {config.user?.verified ? (
+                      <ProfileButtonUI />
+                    ) : (
+                      <div className="wb-hidden lg:wb-block">
+                        <JoinProviders />
+                      </div>
+                    )}
+                  </div>
+                </>
+              )}
+            </div>
+            <span className="wb-flex lg:wb-hidden">
+              <MenuToggle onClick={() => setState(!state)} toggle={state} />
+            </span>
           </div>
         </nav>
       </Wrapper>
@@ -45,7 +66,9 @@ const HeaderSecondary = ({
 
 export default HeaderSecondary;
 
-export const MobileMenu = ({ items = [], extra }: IHeaderSecondary) => {
+export const MobileMenu = ({ items = [] }: IHeaderSecondary) => {
+  const { config } = useConfig();
+  const [show, setShow] = useState(false);
   return (
     <div>
       <HeaderSecondary />
@@ -60,8 +83,27 @@ export const MobileMenu = ({ items = [], extra }: IHeaderSecondary) => {
           </Link>
         ))}
 
-        {extra}
+        <div className="lg:wb-hidden wb-flex wb-flex-col wb-gap-xl wb-pt-xl wb-px-xl">
+          <Button
+            prefix={<GithubLogoFill />}
+            content="Github"
+            variant="basic"
+            block
+            linkComponent={Link}
+            toLabel="href"
+            to={config.gitRepoUrl}
+          />
+          <Button
+            content="Signup to join waitlist"
+            variant="primary"
+            block
+            onClick={() => {
+              setShow(true);
+            }}
+          />
+        </div>
       </div>
+      <JoinProvidersDialog show={show} onOpenChange={setShow} />
     </div>
   );
 };

@@ -95,10 +95,12 @@ const Illustration = () => {
       </div>
       <div className="md:wb-hidden wb-flex wb-justify-center -wb-mx-3xl">
         <img
+          alt="illustration-dark"
           className="wb-hidden dark:wb-block wb-w-full wb-aspect-square"
           src={HomeIllustrationMobileDark.src}
         />
         <img
+          alt="illustration-light"
           className="dark:wb-hidden wb-w-full wb-aspect-square"
           src={HomeIllustrationMobile.src}
         />

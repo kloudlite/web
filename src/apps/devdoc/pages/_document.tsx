@@ -58,6 +58,7 @@ export default class Document extends NextDocument {
             src="//js.hs-scripts.com/22566314.js"
           />
           <script
+            // @ts-ignore
             dangerouslySetInnerHTML={{
               __html: `
                 try {

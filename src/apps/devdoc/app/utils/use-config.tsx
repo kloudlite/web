@@ -18,7 +18,25 @@ export interface IHeaderSecondary {
   }[];
   extra?: ReactNode;
 }
+
+type IProviders = {
+  githubLoginUrl: string | null;
+  gitlabLoginUrl: string | null;
+  googleLoginUrl: string | null;
+};
+
+type IUser = {
+  name: string;
+  email: string;
+  id: string;
+  verified: boolean;
+  approved: boolean;
+};
+
 export interface IConfig {
+  oathProviders?: IProviders | null;
+  user?: IUser | null;
+  userApiLoading?: boolean;
   siteTitle?: string;
   logo?: ReactNode;
   footer?:
@@ -68,10 +86,14 @@ export const ConfigProvider = ({
   config: c,
 }: {
   children: ReactNode;
-  pageOpts: PageOpts;
+  pageOpts?: PageOpts;
   config: IConfig;
 }) => {
-  const [config, setConfig] = useState<IConfig>({ ...c, pageOpts });
+  const [config, setConfig] = useState<IConfig>(
+    pageOpts
+      ? { ...c, pageOpts, userApiLoading: true }
+      : { ...c, userApiLoading: true }
+  );
   return (
     <ConfigContext.Provider
       value={useMemo(() => ({ config, setConfig }), [config, setConfig])}

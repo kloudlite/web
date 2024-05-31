@@ -534,7 +534,7 @@ const consts = {
       {
         title: 'DevOps',
         desc: 'Environments crafted for development and production workloads',
-        img: <img src={devopsIcon.src} className="" />,
+        img: <img src={devopsIcon.src} className="" alt="devops" />,
         imgPad:
           'p-3xl md:!max-h-[200px] md:!min-h-[200px] lg:!min-h-[244px] lg:!max-h-[244px] 3xl:!min-h-[280px] lg:!py-5xl 3xl:!py-4xl box-border w-auto',
         to: 'devops',
@@ -544,7 +544,7 @@ const consts = {
         desc: 'Cloud agnostic & cost effective infrastructure management at your fingertips',
         imgPad:
           'p-3xl md:!max-h-[200px] md:!min-h-[200px] lg:!min-h-[244px] lg:!max-h-[244px] 3xl:!min-h-[280px] lg:!py-5xl 3xl:!py-4xl box-border w-auto',
-        img: <img src={infraopsIcon.src} className="" />,
+        img: <img src={infraopsIcon.src} className="" alt="infraops" />,
         to: 'infraops',
       },
       {
@@ -552,7 +552,7 @@ const consts = {
         desc: 'Build system and package registries to build and ship your environments',
         imgPad:
           'p-3xl md:!max-h-[200px] md:!min-h-[200px] lg:!min-h-[244px] lg:!max-h-[244px] 3xl:!min-h-[280px] lg:!py-5xl 3xl:!py-4xl box-border w-auto',
-        img: <img src={distributionIcon.src} className="" />,
+        img: <img src={distributionIcon.src} className="" alt="distribution" />,
         to: 'distribution',
       },
     ],

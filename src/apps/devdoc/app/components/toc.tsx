@@ -49,7 +49,6 @@ export function TOC({ headings }: TOCProps): ReactElement {
           boundary: tocRef.current,
         });
       }, 100);
-      // anchor.scrollIntoView({ block: '' });
     }
   }, [activeSlug]);
 
@@ -107,13 +106,6 @@ export function TOC({ headings }: TOCProps): ReactElement {
           'wb-sticky wb-pb-6xl wb-bottom-0 wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued wb-pt-xl'
         )}
       >
-        {/* {renderComponent(config.editLink.component, {
-            filePath,
-            className: linkClassName,
-            children: renderComponent(config.editLink.text),
-          })}
-
-          {renderComponent(config.toc.extraContent)} */}
         <hr className="wb-border-border-default dark:wb-border-border-darktheme-default wb-mb-5xl" />
         {config.feedback ? (
           <Button

@@ -39,6 +39,7 @@ export const BlogHeader = ({
               <img
                 src={`https://gravatar.com/avatar/${frontMatter.gravatarHash}`}
                 className="wb-rounded-full"
+                alt="avatar"
               />
             }
           />

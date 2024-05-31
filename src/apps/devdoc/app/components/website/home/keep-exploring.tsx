@@ -22,6 +22,7 @@ export const ExploringItem = ({
       className="wb-h-full wb-flex wb-flex-col wb-bg-surface-basic-default dark:wb-bg-surface-darktheme-basic-default md:wb-min-h-[416px] 2xl:wb-min-h-[176px] 3xl:wb-min-h-[416px] 3xl:wb-max-h-[416px] wb-group hover:wb-will-change-contents focus:wb-will-change-contents wb-ring-offset-0 wb-ring-border-focus dark:wb-ring-border-darktheme-focus wb-outline-none focus-visible:wb-ring-2"
     >
       <img
+        alt="explore"
         className="wb-object-cover wb-h-[156px] lg:wb-h-[136px] xl:wb-h-[160px] 2xl:wb-h-[192px] 3xl:wb-h-[232px] md:group-hover:wb-h-[136px] lg:group-hover:wb-h-[116px] xl:group-hover:wb-h-[140px] 2xl:group-hover:wb-h-[156px] 3xl:group-hover:wb-h-[206px] wb-transition-[height] wb-ease-in-out wb-duration-300 md:group-focus-within:wb-h-[136px] lg:group-focus-within:wb-h-[116px] xl:group-focus-within:wb-h-[140px] 2xl:group-focus-within:wb-h-[156px] 3xl:group-focus-within::wb-h-[206px]"
         src={img}
       />
