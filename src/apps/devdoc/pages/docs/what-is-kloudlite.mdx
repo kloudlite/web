@@ -1,13 +1,39 @@
-# Kloudlite - Development Environments Reimagined
+# Kloudlite - Development Environment As A Service (DEaaS)
 
-Kloudlite is a platform to create and manage distributed development environments. It unifies remote and local development environments,
-streamlining the development process and making it easier for developers to develop application with out lengthy build and deployment cycles.
+Kloudlite is a Development Environment as a Service (DEaaS) platform designed to enable developers to create and manage distributed environments efficiently. 
 
+By integrating remote and local development setups, Kloudlite optimizes the development workflow. It reduces the need for lengthy build and deployment cycles, allowing developers to focus on coding and innovation, thereby improving productivity and efficiency.
 
-Kloudlite provides a consistent and secure environment across all stages of the development lifecycle, ensuring that developers can work efficiently and effectively.
+**Key Terminologies:**
 
+### Kloudlite Environment
 
-Kloudlite is a distributed development environment that unifies remote and local development environments. 
-It is designed to streamline the development process, making it easier for developers to build, test, and deploy applications. 
-Kloudlite provides a consistent and secure environment across all stages of the development lifecycle, ensuring that developers 
-can work efficiently and effectively.
+A Kloudlite environment encapsulates a set of stateless containerized applications and their configurations, including environment variables, secrets, and database connection strings. 
+
+Technically, it is a Kubernetes namespace where applications are deployed. This setup ensures synchronization of configurations, secrets, config mounts, network settings, and DNS with the local development environment.
+
+As the environment is stateless you can easily create and discard environments as needed, ensuring that you always have a clean and consistent environment for development.
+
+### Service Intercepts
+
+Kloudlite's service intercepts feature enables the tunneling of traffic directed to a service within the Kloudlite environment to 
+local development containers. This capability facilitates early testing and debugging, streamlining the development process.
+
+### Kloudlite Box
+
+A Kloudlite Box is a local development container where the developer's code is mounted and executed. It manages the following aspects:
+- Development dependencies via Devbox
+- Environment variables from configurations and secrets within the Kloudlite environment
+- Configuration and secret mounts from the Kloudlite environment
+- Network and DNS resolution aligned with the Kloudlite environment
+- Service intercepts
+
+For detailed instructions on utilizing Kloudlite Box, refer to the **Kloudlite CLI (`kl`)** documentation.
+
+### Kloudlite Managed Services & Managed Resources
+
+Kloudlite manages connection parameters and variables for various backing services like database servers, caching servers, and message brokers under Managed Services. Developers can add existing services or create new Managed Services, which are managed by Kloudlite operators on Kubernetes clusters. All sub-resource variables, such as databases and message topics, are managed under Managed Resources. These services and resources can be easily imported into your environment for use in your applications.
+
+### Kloudlite Managed Service Operators (Experimental)
+
+Kloudlite provides operators to manage backing services like databases, caches, and message brokers. These operators create and manage these services on Kubernetes clusters, working with custom resources to manage these services and their respective resources.
