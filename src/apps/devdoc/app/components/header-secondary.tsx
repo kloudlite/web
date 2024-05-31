@@ -2,7 +2,6 @@ import { PageItem } from 'nextra/normalize-pages';
 import Link from 'next/link';
 import { GithubLogoFill } from '@jengaicons/react';
 import { Button } from 'kl-design-system/atoms/button';
-import Profile from 'kl-design-system/molecule/profile';
 import { useState } from 'react';
 import useConfig, { IHeaderSecondary } from '../utils/use-config';
 import { cn } from '../utils/commons';
