@@ -1,9 +1,9 @@
 {
-    "index":{
-        "title": "Environments"
-    },
     "remote-local":{
         "title": "Remote Locals"
+    },
+    "environments":{
+        "title": "Environments"
     },
     "shift-left":{
         "title": "Shift Left"
