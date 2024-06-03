@@ -369,7 +369,7 @@ export function Sidebar({
         className={cn(
           'kl-sidebar wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued wb-z-40 kl-sidebar-container wb-flex-col wb-pb-6xl lg:wb-pt-0',
           'lg:wb-top-0 lg:wb-shrink-0 motion-reduce:wb-transform-none',
-          'wb-transform-gpu wb-transition-all wb-ease-in-out',
+          // 'wb-transform-gpu wb-transition-all wb-ease-in-out wb-duration-[3s]',
           'print:wb-hidden',
           showSidebar ? 'lg:wb-w-[244px]' : '',
           asPopover ? 'lg:wb-hidden' : 'wb-flex lg:wb-sticky lg:wb-self-start',

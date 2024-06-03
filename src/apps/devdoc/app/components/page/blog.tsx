@@ -1,7 +1,7 @@
 import { Search } from '@jengaicons/react';
 import { TextInput } from 'kl-design-system/atoms/input';
 import Tab from 'kl-design-system/atoms/tabs';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PageMapItem } from 'nextra';
 import { useRouter } from 'next/router';
 import { usePagination } from 'kl-design-system/molecule/pagination';
@@ -127,21 +127,27 @@ const BlogHome = () => {
   );
 
   const config = useConfig();
-  const blogPage = config.config.pageOpts?.pageMap.find(
-    (p) => p.kind === 'Folder' && p.route === '/blog'
-  );
 
-  const blogPosts =
-    blogPage?.kind === 'Folder'
-      ? blogPage.children.filter(
-          (f) => f.kind === 'MdxPage' && f.frontMatter && !f.frontMatter.draft
-        ) || ([] as PageMapItem[])
-      : ([] as PageMapItem[]);
+  const { page, pageNumber, setPageNumber, itemsPerPage, setItems, items } =
+    usePagination({
+      items: [] as any,
+      itemsPerPage: 10,
+    });
 
-  const { page, pageNumber, setPageNumber, itemsPerPage } = usePagination({
-    items: blogPosts || [],
-    itemsPerPage: 10,
-  });
+  useEffect(() => {
+    const blogPage = config.config.pageOpts?.pageMap.find(
+      (p) => p.kind === 'Folder' && p.route === '/blog'
+    );
+
+    const blogPosts =
+      blogPage?.kind === 'Folder'
+        ? blogPage.children.filter(
+            (f) => f.kind === 'MdxPage' && f.frontMatter && !f.frontMatter.draft
+          ) || ([] as PageMapItem[])
+        : ([] as PageMapItem[]);
+    // @ts-ignore
+    setItems(blogPosts);
+  }, [config]);
 
   return (
     <div className="wb-flex wb-flex-col">
@@ -155,7 +161,7 @@ const BlogHome = () => {
             analysis
           </p>
         </div>
-        <div className="wb-flex wb-flex-col wb-gap-3xl md:wb-gap-0 md:wb-flex-row md:wb-items-center wb-justify-between wb-pt-5xl">
+        <div className="wb-flex wb-flex-col wb-gap-3xl md:wb-gap-0 md:wb-flex-row md:wb-items-center wb-justify-between wb-pt-8xl">
           <div className="-wb-ml-xl md:wb-ml-0">
             <Tab.Root size="sm" value={tab} onChange={setTab}>
               {tabs.map((t) => (
@@ -194,7 +200,7 @@ const BlogHome = () => {
                 </GraphItem>
               </div>
               <GraphItem className="md:wb-min-h-[640px] wb-flex wb-flex-col wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued">
-                {page.map((bp, index) => {
+                {page.map((bp: any, index: any) => {
                   if (bp.kind !== 'MdxPage') {
                     return null;
                   }
@@ -206,7 +212,7 @@ const BlogHome = () => {
                     >
                       <div
                         className={cn(
-                          'flex wb-pt-3xl md:wb-py-xl wb-px-3xl md:wb-px-5xl wb-flex wb-flex-col md:wb-flex-row wb-gap-3xl md:wb-gap-2xl md:wb-flex-row md:wb-items-center lg:wb-h-8xl md:wb-line-clamp-1 wb-transition-all',
+                          'flex wb-pt-3xl md:wb-py-xl wb-px-3xl md:wb-px-5xl wb-flex wb-flex-col  wb-gap-3xl md:wb-gap-2xl md:wb-flex-row md:wb-items-center lg:wb-h-8xl md:wb-line-clamp-1 wb-transition-all',
                           index === page.length - 1 ? 'wb-pb-3xl' : ''
                         )}
                       >
@@ -224,12 +230,11 @@ const BlogHome = () => {
               </GraphItem>
               <GraphItem className="wb-px-5xl wb-py-xl wb-flex wb-flex-row wb-items-center wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued ">
                 <div className="wb-bodyLg wb-text-text-strong dark:wb-text-text-darktheme-strong wb-flex-1">
-                  1-{blogPosts.length < 10 ? blogPosts.length : 3} of{' '}
-                  {blogPosts.length}
+                  1-{items.length < 10 ? items.length : 3} of {items.length}
                 </div>
                 <div className="wb-flex wb-flex-row wb-items-center wb-gap-md">
                   <Pagination
-                    totalItems={blogPosts.length}
+                    totalItems={items.length}
                     onPageChanged={setPageNumber}
                     currentPage={pageNumber}
                     itemsPerPage={itemsPerPage}

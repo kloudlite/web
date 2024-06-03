@@ -11,7 +11,6 @@ import Wrapper from './wrapper';
 import NavigationMenuV2 from './nav-menu-v2';
 import JoinProviders from './join-providers';
 import JoinProvidersDialog from './join-provider-dialog';
-import ProfileButtonUI from './profile-button-ui';
 
 const HeaderSecondary = ({
   activePath,
@@ -38,20 +37,12 @@ const HeaderSecondary = ({
               >
                 <GithubLogoFill size={24} />
               </a>
-              {!config.userApiLoading && (
-                <>
-                  <span className="wb-hidden lg:wb-block wb-h-2xl wb-w-xs wb-bg-border-default dark:wb-bg-border-darktheme-default" />
-                  <div>
-                    {config.user?.verified ? (
-                      <ProfileButtonUI />
-                    ) : (
-                      <div className="wb-hidden lg:wb-block">
-                        <JoinProviders />
-                      </div>
-                    )}
-                  </div>
-                </>
-              )}
+              <>
+                <span className="wb-hidden lg:wb-block wb-h-2xl wb-w-xs wb-bg-border-default dark:wb-bg-border-darktheme-default" />
+                <div className="wb-hidden lg:wb-block">
+                  <JoinProviders />
+                </div>
+              </>
             </div>
             <span className="wb-flex lg:wb-hidden">
               <MenuToggle onClick={() => setState(!state)} toggle={state} />

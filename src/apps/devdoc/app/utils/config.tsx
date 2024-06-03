@@ -25,7 +25,7 @@ const socialIconSize = 18;
 
 const SocialMenu = () => {
   return (
-    <div className="wb-flex wb-flex-row wb-items-center wb-gap-xl wb-text-icon-strong dark:wb-text-icon-darktheme-strong  wb-pr-2xl">
+    <div className="wb-flex wb-flex-row wb-items-center wb-gap-xl wb-text-icon-strong dark:wb-text-icon-darktheme-strong wb-pr-2xl">
       <a href={gitUrl} aria-label="kloudlite-github">
         <GithubLogoFill size={socialIconSize} />
       </a>
@@ -47,7 +47,7 @@ const BrandMenu = ({ className }: { className?: string }) => {
   return (
     <div
       className={cn(
-        'wb-flex wb-flex-col wb-gap-7xl md:wb-gap-3xl wb-pr-4xl lg:wb-w-[211px] xl:wb-w-[296px] wb-order-last md:wb-order-first md:wb-justify-between md:wb-h-full',
+        'wb-flex wb-flex-col wb-gap-7xl md:wb-gap-3xl lg:wb-pr-4xl lg:wb-w-[211px] xl:wb-w-[296px] wb-order-last md:wb-order-first md:wb-justify-between md:wb-h-full',
         className
       )}
     >
@@ -74,7 +74,7 @@ const BrandMenu = ({ className }: { className?: string }) => {
             <ButtonGroup.IconButton value="system" icon={<Monitor />} />
           </ButtonGroup.Root>
         </div>
-        <div className="wb-bodyMd wb-text-text-soft dark:wb-text-text-darktheme-soft wb-hidden md:wb-flex lg:wb-hidden wb-flex-col wb-gap-3xl wb-items-end">
+        <div className="wb-bodyMd wb-text-text-soft dark:wb-text-text-darktheme-soft wb-hidden md:wb-flex lg:wb-hidden wb-flex-col wb-gap-3xl wb-items-end md:wb-self-end lg:wb-self-auto">
           <SocialMenu />
           <div>© {new Date().getFullYear()} Kloudlite Labs Pvt Ltd.</div>
         </div>
@@ -109,7 +109,7 @@ export default {
     menu: [
       {
         title: 'Developers',
-        className: 'wb-basis-1/2 md:wb-basis-auto lg:wb-items-end wb-flex',
+        className: 'wb-basis-1/2 md:wb-basis-auto wb-flex',
         showExtra: false,
         items: [
           {
@@ -128,7 +128,7 @@ export default {
       },
       {
         title: 'Resources',
-        className: 'wb-basis-1/2 md:wb-basis-auto lg:wb-items-end wb-flex',
+        className: 'wb-basis-1/2 md:wb-basis-auto wb-flex',
         showExtra: false,
         items: [
           {
@@ -147,7 +147,7 @@ export default {
       },
       {
         title: 'Company',
-        className: 'wb-basis-1/2 md:wb-basis-auto lg:wb-items-end wb-flex',
+        className: 'wb-basis-1/2 md:wb-basis-auto wb-flex',
         showExtra: true,
         items: [
           {
