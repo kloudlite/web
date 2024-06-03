@@ -42,14 +42,14 @@ type FolderProps = {
 
 const classes = {
   link: cn(
-    'wb-flex wb-flex-row wb-items-center wb-rounded wb-py-lg wb-px-2xl wb-transition-all [word-break:break-word]',
+    'wb-flex wb-flex-row wb-items-center wb-rounded wb-py-md wb-px-2xl wb-transition-all [word-break:break-word]',
     'wb-cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:wb-border hover:wb-bg-surface-basic-hovered dark:hover:wb-bg-surface-darktheme-basic-hovered'
   ),
   inactive: cn('wb-bodyMd wb-text-text-soft dark:wb-text-text-darktheme-soft'),
   active: cn(
     'wb-bodyMd-medium wb-text-text-primary dark:wb-text-text-darktheme-primary wb-bg-surface-basic-active dark:wb-bg-surface-darktheme-basic-active'
   ),
-  list: cn('wb-flex wb-flex-col wb-w-full wb-gap-lg'),
+  list: cn('wb-flex wb-flex-col wb-w-full wb-gap-md'),
 };
 
 function FolderImpl({ item, anchors }: FolderProps): ReactElement {
@@ -190,8 +190,9 @@ function Separator({ title }: { title: string }): ReactElement {
       className={cn(
         '[word-break:break-word]',
         title
-          ? 'wb-headingSm wb-text-text-default dark:wb-text-text-darktheme-default wb-py-lg wb-px-2xl wb-my-md'
-          : ''
+          ? 'wb-headingSm wb-text-text-default dark:wb-text-text-darktheme-default wb-py-md wb-px-2xl'
+          : '',
+        '[&:not(:first-child)]:wb-mt-5xl'
       )}
     >
       {title || (

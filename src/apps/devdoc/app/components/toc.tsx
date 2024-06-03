@@ -70,7 +70,7 @@ export function TOC({ headings }: TOCProps): ReactElement {
                       'wb-ml-2xl wb-pl-md wb-border-l wb-border-border-default dark:wb-border-border-darktheme-default':
                         depth > 2,
                       'wb-mb-lg': depth === 2,
-                      'wb-pb-lg': depth > 2 && items?.[index + 1]?.depth > 2,
+                      'wb-pb-md': depth > 2 && items?.[index + 1]?.depth > 2,
                     })}
                     key={id}
                   >
@@ -78,7 +78,7 @@ export function TOC({ headings }: TOCProps): ReactElement {
                       title={value}
                       href={`#${id}`}
                       className={cn(
-                        'wb-flex wb-px-2xl wb-py-lg wb-rounded wb-min-w-0 wb-w-full hover:wb-bg-surface-basic-hovered dark:hover:wb-bg-surface-darktheme-basic-hovered',
+                        'wb-flex wb-px-2xl wb-py-md wb-rounded wb-min-w-0 wb-w-full hover:wb-bg-surface-basic-hovered dark:hover:wb-bg-surface-darktheme-basic-hovered',
                         activeAnchor[id]?.isActive
                           ? 'wb-bg-surface-basic-active dark:wb-bg-surface-darktheme-basic-active wb-bodyMd-medium  wb-text-text-primary dark:wb-text-text-darktheme-primary wb-relative'
                           : 'wb-bodyMd wb-text-text-soft dark:wb-text-text-darktheme-soft'
@@ -106,7 +106,9 @@ export function TOC({ headings }: TOCProps): ReactElement {
           'wb-sticky wb-pb-6xl wb-bottom-0 wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued wb-pt-xl'
         )}
       >
-        <hr className="wb-border-border-default dark:wb-border-border-darktheme-default wb-mb-5xl" />
+        {hasHeadings && (
+          <hr className="wb-border-border-default dark:wb-border-border-darktheme-default wb-mb-5xl" />
+        )}
         {config.feedback ? (
           <Button
             content={
