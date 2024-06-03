@@ -147,10 +147,10 @@ const OptionMenuContent = forwardRef<
             onClick={(e) => e.stopPropagation()}
           >
             <motion.div
-              initial={{ opacity: 0, scale: 0.85 }}
+              initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.85 }}
-              transition={{ duration: 0.3, ease: 'anticipate' }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.2, ease: 'anticipate' }}
               className={cn(
                 'z-50 border border-border-default dark:border-border-darktheme-default shadow-popover dark:shadow-darktheme-popover bg-surface-basic-default dark:bg-surface-darktheme-basic-default rounded min-w-[160px] overflow-hidden origin-top py-lg',
                 className
