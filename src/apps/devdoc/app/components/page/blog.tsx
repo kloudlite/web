@@ -161,7 +161,7 @@ const BlogHome = () => {
             analysis
           </p>
         </div>
-        <div className="wb-flex wb-flex-col wb-gap-3xl md:wb-gap-0 md:wb-flex-row md:wb-items-center wb-justify-between wb-pt-8xl">
+        <div className="wb-flex wb-flex-col wb-gap-3xl md:wb-gap-0 md:wb-flex-row md:wb-items-center wb-justify-between wb-pt-5xl 3xl:wb-pt-8xl">
           <div className="-wb-ml-xl md:wb-ml-0">
             <Tab.Root size="sm" value={tab} onChange={setTab}>
               {tabs.map((t) => (
