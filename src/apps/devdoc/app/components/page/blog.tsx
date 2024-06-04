@@ -8,9 +8,7 @@ import { usePagination } from 'kl-design-system/molecule/pagination';
 import useConfig from '~/app/utils/use-config';
 import { DEFAULT_LOCALE } from '~/app/utils/constants';
 import { cn } from '~/app/utils/commons';
-import remoteLocal from '~/images/homeNew/exploring/remote-local.jpeg';
-import collaborative from '~/images/homeNew/exploring/collaborative.jpeg';
-import workflow from '~/images/homeNew/exploring/workflow.jpeg';
+import consts from '~/app/utils/const';
 import SectionWrapper from '../website/section-wrapper';
 import { GraphExtended, GraphItem } from '../graph';
 import { Block } from '../commons';
@@ -33,59 +31,9 @@ const tabs = [
 ];
 
 const tabItems = {
-  overview: [
-    {
-      label: 'Remote local environments',
-      desc: 'Discover how Kloudlite pioneers transformative remote local environments.',
-      img: remoteLocal.src,
-    },
-    {
-      label: 'Collaborative development',
-      desc: 'In a globalized landscape, collaborative development faces challenges but fuels innovation.',
-      img: collaborative.src,
-    },
-    {
-      label: 'Development workflow',
-      desc: 'Kloudlite revolutionizes software development with streamlined efficiency and productivity',
-      img: workflow.src,
-    },
-  ],
-
-  engineering: [
-    {
-      label: 'Remote local environments',
-      desc: 'Discover how Kloudlite pioneers transformative remote local environments.',
-      img: remoteLocal.src,
-    },
-    {
-      label: 'Collaborative development',
-      desc: 'In a globalized landscape, collaborative development faces challenges but fuels innovation.',
-      img: collaborative.src,
-    },
-    {
-      label: 'Development workflow',
-      desc: 'Kloudlite revolutionizes software development with streamlined efficiency and productivity',
-      img: workflow.src,
-    },
-  ],
-
-  community: [
-    {
-      label: 'Remote local environments',
-      desc: 'Discover how Kloudlite pioneers transformative remote local environments.',
-      img: remoteLocal.src,
-    },
-    {
-      label: 'Collaborative development',
-      desc: 'In a globalized landscape, collaborative development faces challenges but fuels innovation.',
-      img: collaborative.src,
-    },
-    {
-      label: 'Development workflow',
-      desc: 'Kloudlite revolutionizes software development with streamlined efficiency and productivity',
-      img: workflow.src,
-    },
-  ],
+  overview: consts.homeNew.exploring,
+  engineering: consts.homeNew.exploring,
+  community: consts.homeNew.exploring,
 };
 
 const ListDetailItem = ({
@@ -131,7 +79,7 @@ const BlogHome = () => {
   const { page, pageNumber, setPageNumber, itemsPerPage, setItems, items } =
     usePagination({
       items: [] as any,
-      itemsPerPage: 10,
+      itemsPerPage: 2,
     });
 
   useEffect(() => {
@@ -146,7 +94,12 @@ const BlogHome = () => {
           ) || ([] as PageMapItem[])
         : ([] as PageMapItem[]);
     // @ts-ignore
-    setItems(blogPosts);
+    setItems(
+      blogPosts.sort((a: any, b: any) => {
+        // @ts-ignore
+        return new Date(b?.frontMatter?.date) - new Date(a?.frontMatter?.date);
+      })
+    );
   }, [config]);
 
   return (

@@ -11,14 +11,16 @@ export const ExploringItem = ({
   label,
   desc,
   img,
+  to,
 }: {
   label: ReactNode;
   desc: ReactNode;
   img: string;
+  to?: string;
 }) => {
   return (
     <Anchor
-      href="#"
+      href={to}
       className="wb-h-full wb-flex wb-flex-col wb-bg-surface-basic-default dark:wb-bg-surface-darktheme-basic-default md:wb-min-h-[416px] 2xl:wb-min-h-[176px] 3xl:wb-min-h-[416px] 3xl:wb-max-h-[416px] wb-group hover:wb-will-change-contents focus:wb-will-change-contents wb-ring-offset-0 wb-ring-border-focus dark:wb-ring-border-darktheme-focus wb-outline-none focus-visible:wb-ring-2"
     >
       <img

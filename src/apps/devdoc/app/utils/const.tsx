@@ -222,19 +222,21 @@ const consts = {
         img: RemoteLocal.src,
         label: 'Remote local environments',
         desc: 'Discover how Kloudlite pioneers transformative remote local environments.',
+        to: '/blog/remote-local-environments',
       },
 
       {
         img: Collarative.src,
         label: 'Collaborative development',
         desc: 'In a globalized landscape, collaborative development faces challenges but fuels innovation.',
+        to: '/blog/collaborative-development',
       },
 
       {
         img: Workflow.src,
-        // img: Collarative.src,
         label: 'Development workflow',
         desc: 'Kloudlite revolutionizes software development with streamlined efficiency and productivity',
+        to: '/blog/development-workflow',
       },
     ],
     howitworks: {
