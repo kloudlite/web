@@ -51,62 +51,50 @@ const JoinProviders = () => {
                 </span>
               </div>
             ) : (
-              <>
+              <div className="wb-flex wb-flex-col wb-gap-xl wb-p-xl">
                 {oathProviders?.githubLoginUrl && (
-                  <OptionList.Link
+                  <Button
                     to={oathProviders.githubLoginUrl}
                     toLabel="href"
-                    LinkComponent={Link}
-                  >
-                    <div className="wb-flex wb-flex-row wb-gap-xl">
-                      <span>
-                        <GithubLogoFill size={20} />
-                      </span>
-                      <span>Github</span>
-                    </div>
-                  </OptionList.Link>
+                    linkComponent={Link}
+                    content="Continue with Github"
+                    prefix={<GithubLogoFill />}
+                    variant="basic"
+                    block
+                  />
                 )}
                 {oathProviders?.gitlabLoginUrl && (
-                  <OptionList.Link
+                  <Button
                     to={oathProviders.gitlabLoginUrl}
                     toLabel="href"
-                    LinkComponent={Link}
-                  >
-                    <div className="wb-flex wb-flex-row wb-gap-xl">
-                      <span>
-                        <GitlabLogoFill size={20} />
-                      </span>
-                      <span>Gitlab</span>
-                    </div>
-                  </OptionList.Link>
+                    linkComponent={Link}
+                    content="Continue with Gitlab"
+                    prefix={<GitlabLogoFill />}
+                    variant="purple"
+                    block
+                  />
                 )}
                 {oathProviders?.googleLoginUrl && (
-                  <OptionList.Link
+                  <Button
                     to={oathProviders.googleLoginUrl}
                     toLabel="href"
-                    LinkComponent={Link}
-                  >
-                    <div className="wb-flex wb-flex-row wb-gap-xl">
-                      <span>
-                        <GoogleLogo size={20} />
-                      </span>
-                      <span>Google</span>
-                    </div>
-                  </OptionList.Link>
+                    linkComponent={Link}
+                    content="Continue with Google"
+                    prefix={<GoogleLogo />}
+                    variant="primary"
+                    block
+                  />
                 )}
-                <OptionList.Link
+                <Button
                   to={`${process.env.AUTH_URL}/signup?mode=email`}
                   toLabel="href"
-                  LinkComponent={Link}
-                >
-                  <div className="wb-flex wb-flex-row wb-gap-xl">
-                    <span>
-                      <EnvelopeFill size={20} />
-                    </span>
-                    <span>Email</span>
-                  </div>
-                </OptionList.Link>
-              </>
+                  linkComponent={Link}
+                  content="Continue with Email"
+                  prefix={<EnvelopeFill />}
+                  variant="primary"
+                  block
+                />
+              </div>
             )}
           </>
         )}

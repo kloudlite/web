@@ -31,6 +31,14 @@ const ProviderUI = () => {
     return () => document.removeEventListener('keydown', unreveal);
   }, []);
 
+  if (config.user?.verified && !config.user.approved) {
+    return (
+      <div className="wb-text-text-default dark:wb-text-text-darktheme-default wb-bodyLg-medium">
+        You are already in our waitlist.
+      </div>
+    );
+  }
+
   return (
     <div>
       <motion.div
