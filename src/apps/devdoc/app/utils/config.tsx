@@ -203,7 +203,7 @@ export default {
       {
         title: 'Documentation',
         type: 'normal',
-        to: 'docs',
+        to: '/docs',
       },
     ],
   },
