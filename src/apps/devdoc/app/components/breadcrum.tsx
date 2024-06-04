@@ -31,7 +31,7 @@ export function Breadcrumb({
                   {
                     'wb-bodyMd-medium wb-text-text-default dark:wb-text-text-darktheme-default':
                       isActive,
-                    'wb-bodyMd wb-min-w-[24px] wb-overflow-hidden wb-text-ellipsis wb-text-text-strong dark:wb-text-text-darktheme-strong':
+                    'wb-bodyMd wb-min-w-[24px] wb-overflow-hidden wb-text-ellipsis wb-text-text-soft dark:wb-text-text-darktheme-soft':
                       !isActive,
                     'hover:wb-text-text-strong dark:hover:wb-text-text-darktheme-strong':
                       !!isLink,

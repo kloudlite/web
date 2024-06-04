@@ -11,6 +11,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { cn } from '~/app/utils/commons';
 import useConfig from '~/app/utils/use-config';
+import { ArrowRight } from '~/app/icons/icons';
 import JoinProvidersDialog from '../join-provider-dialog';
 
 const ProviderUI = () => {
@@ -30,11 +31,19 @@ const ProviderUI = () => {
     return () => document.removeEventListener('keydown', unreveal);
   }, []);
 
+  if (config.user?.verified && !config.user.approved) {
+    return (
+      <div className="wb-text-text-default dark:wb-text-text-darktheme-default wb-bodyLg-medium">
+        You are already in our waitlist.
+      </div>
+    );
+  }
+
   return (
     <div>
       <motion.div
         className={cn(
-          'wb-overflow-y-hidden md:wb-max-h-[42px] wb-p-sm wb-w-full wb-transition-all'
+          'wb-overflow-y-hidden md:wb-max-h-[50px] wb-p-sm wb-w-full wb-transition-all'
         )}
       >
         <motion.div
@@ -54,6 +63,9 @@ const ProviderUI = () => {
             <Button
               variant="primary"
               content="Signup to join waitlist"
+              size="lg"
+              suffix={<ArrowRight />}
+              className="!wb-h-[48px] !wb-px-4xl !wb-w-[302px]"
               onClick={() => {
                 setReveal(true);
               }}

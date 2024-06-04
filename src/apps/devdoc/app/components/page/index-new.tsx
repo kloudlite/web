@@ -58,13 +58,10 @@ const Title = () => {
 const Illustration = () => {
   return (
     <Wrapper className="-wb-mt-5xl">
-      <div className="hidden md:block wb-pb-5xl">
+      <div className="hidden md:block wb-pb-[80px] 3xl:wb-pb-[144px]">
         <GraphExtended
           innerClass="md:-wb-mx-[32px] lg:-wb-mx-[160px] -wb-mt-[2px] wb-flex wb-justify-center !wb-pt-[32px] 3xl:-wb-mx-[256px]"
           className="!wb-pb-[20px] xl:[background-position: unset] 2xl:[background-position:top] 3xl:[background-position:unset]"
-          style={{
-            paddingBottom: '64px !important',
-          }}
         >
           <DynamicImage
             light={hero.hero1920.src}

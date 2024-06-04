@@ -14,7 +14,6 @@ import { TOC } from '~/app/components/toc';
 import { Breadcrumb } from '~/app/components/breadcrum';
 import { Sidebar } from '~/app/components/sidebar';
 import HeaderSecondary from '~/app/components/header-secondary';
-import Header from '~/app/components/header';
 import { DEFAULT_LOCALE } from '~/app/utils/constants';
 import { cn } from '~/app/utils/commons';
 import useMenu from '~/app/utils/use-menu';
@@ -85,11 +84,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
     directories,
   } = pageData;
 
-  const tempActiveThemeContext: typeof activeThemeContext & {
-    header?: 'primary' | 'secondary';
-  } = activeThemeContext;
   const showSidebar = activeThemeContext.sidebar;
-  const headerType = tempActiveThemeContext?.header || 'secondary';
   const showToc = activeThemeContext.toc || false;
   const showBreadcrum = activeThemeContext?.breadcrumb;
 
@@ -136,16 +131,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
         />
       </Head>
       <ActiveAnchorProvider>
-        {headerType === 'primary' ? (
-          <Header navitems={config?.headerPrimary} activePath={activePath} />
-        ) : (
-          // @ts-ignore
-          <HeaderSecondary
-            {...config?.headerSecondary}
-            activePath={activePath}
-          />
-        )}
-
+        <HeaderSecondary {...config?.headerSecondary} activePath={activePath} />
         <Container
           className={cn(
             'wb-min-h-[calc(100vh-76px)] wb-flex-row',

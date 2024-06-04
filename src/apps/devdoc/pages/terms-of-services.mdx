@@ -1,3 +1,5 @@
+import PrivacyContainer from "../app/components/website/privacy-container"
+
 export const Headings = ({ children }) => {
   return <p className="wb-bodyMd-medium wb-text-text-default dark:wb-text-text-darktheme-default">{children}</p>;
 };
@@ -14,12 +16,11 @@ export const ListDecimalBold = ({ children }) => {
   return <ol type="1" className="wb-list-[decimal] wb-pl-5xl wb-flex wb-flex-col wb-gap-md marker:wb-font-bold">{children.props.children}</ol>;
 };
 
-<div className="wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued">
-  <div className="wb-max-w-[1440px] wb-m-auto wb-px-3xl md:wb-px-8xl lg:wb-px-11xl xl:wb-px-13xl 2xl:wb-px-14xl wb-pb-6xl md:wb-pb-8xl xl:wb-pb-10xl">
-    <h1 className="wb-heading4xl-marketing md:wb-heading5xl-marketing lg:wb-heading6xl-marketing wb-text-text-default dark:wb-text-text-darktheme-default wb-py-6xl md:wb-py-8xl xl:wb-py-10xl">
-      Policies & Guidlines
-    </h1>
-    <div>
+
+<PrivacyContainer
+  className="wb-pb-6xl md:wb-pb-8xl xl:wb-pb-[52px] 2xl:wb-pb-[68px]"
+  title="Policies & Guidlines"
+  subTitle={
       <div className="wb-flex wb-flex-col wb-gap-lg">
         <Headings>TERMS OF USE</Headings>
         <span className="wb-text-text-soft dark:wb-text-text-darktheme-soft wb-bodySm">
@@ -27,7 +28,9 @@ export const ListDecimalBold = ({ children }) => {
           go-live date)
         </span>
       </div>
-      <div className="wb-bodyLg wb-text-text-strong dark:wb-text-text-darktheme-strong wb-flex wb-flex-col wb-gap-4xl wb-pt-4xl">
+  }
+>
+
         Kloudlite Labs Pvt Ltd. operate this website ("Site"). This Site may
         provide you with access to a variety of web pages, documents, software,
         services, images, graphics, audio, video, forums, discussion groups,
@@ -139,8 +142,4 @@ export const ListDecimalBold = ({ children }) => {
         India, 560035<br></br>
 
         For a PDF version of the Terms of Services, please <a className="hover:underline text-text-primary" href="/documents/Kloudlite-Terms_of_use.pdf" download>click here</a>.
-        
-      </div>
-    </div>
-  </div>
-</div>
+</PrivacyContainer>

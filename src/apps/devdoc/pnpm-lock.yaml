@@ -6,14 +6,14 @@ settings:
 
 dependencies:
   '@firebase/firestore':
-    specifier: ^4.6.2
+    specifier: ^4.6.3
     version: 4.6.3(@firebase/app@0.10.5)
   '@jengaicons/react':
-    specifier: ^1.3.0
+    specifier: ^1.6.0
     version: 1.6.0(react@18.3.1)
   '@mdxeditor/editor':
-    specifier: ^2.20.4
-    version: 2.20.7(@codemirror/language@6.10.2)(@lezer/common@1.2.1)(@lezer/highlight@1.2.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)(yjs@13.6.15)
+    specifier: ^2.20.7
+    version: 2.20.7(@codemirror/language@6.10.1)(@lezer/common@1.2.1)(@lezer/highlight@1.2.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)(yjs@13.6.15)
   '@radix-ui/react-accordion':
     specifier: ^1.1.2
     version: 1.1.2(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
@@ -48,13 +48,13 @@ dependencies:
     specifier: ^5.0.0
     version: 5.0.0
   firebase:
-    specifier: ^10.8.0
+    specifier: ^10.12.2
     version: 10.12.2
   flexsearch:
-    specifier: ^0.7.31
+    specifier: ^0.7.43
     version: 0.7.43
   framer-motion:
-    specifier: ^10.16.16
+    specifier: ^10.18.0
     version: 10.18.0(react-dom@18.3.1)(react@18.3.1)
   git-url-parse:
     specifier: ^13.1.1
@@ -72,25 +72,25 @@ dependencies:
     specifier: file:../../design-system/out/kl-design-system-1.0.1.tgz
     version: file:../../design-system/out/kl-design-system-1.0.1.tgz(framer-motion@10.18.0)(react-dom@18.3.1)(react@18.3.1)
   next:
-    specifier: ^14.0.4
+    specifier: ^14.2.3
     version: 14.2.3(react-dom@18.3.1)(react@18.3.1)
   next-seo:
-    specifier: ^6.4.0
+    specifier: ^6.5.0
     version: 6.5.0(next@14.2.3)(react-dom@18.3.1)(react@18.3.1)
   next-themes:
     specifier: ^0.2.1
     version: 0.2.1(next@14.2.3)(react-dom@18.3.1)(react@18.3.1)
   nextra:
-    specifier: ^2.13.2
+    specifier: ^2.13.4
     version: 2.13.4(next@14.2.3)(react-dom@18.3.1)(react@18.3.1)
   nextra-theme-docs:
-    specifier: ^2.13.2
+    specifier: ^2.13.4
     version: 2.13.4(next@14.2.3)(nextra@2.13.4)(react-dom@18.3.1)(react@18.3.1)
   react:
-    specifier: ^18.2.0
+    specifier: ^18.3.1
     version: 18.3.1
   react-dom:
-    specifier: ^18.2.0
+    specifier: ^18.3.1
     version: 18.3.1(react@18.3.1)
   react-fast-marquee:
     specifier: ^1.6.4
@@ -114,7 +114,7 @@ dependencies:
     specifier: ^1.8.1
     version: 1.8.1(jquery@3.7.1)
   zod:
-    specifier: ^3.22.4
+    specifier: ^3.23.8
     version: 3.23.8
 
 devDependencies:
@@ -125,25 +125,25 @@ devDependencies:
     specifier: 20.8.4
     version: 20.8.4
   '@types/react':
-    specifier: ^18.2.46
+    specifier: ^18.3.3
     version: 18.3.3
   '@typescript-eslint/eslint-plugin':
-    specifier: ^6.16.0
+    specifier: ^6.21.0
     version: 6.21.0(@typescript-eslint/parser@6.21.0)(eslint@8.57.0)(typescript@5.2.2)
   '@typescript-eslint/parser':
-    specifier: ^6.16.0
+    specifier: ^6.21.0
     version: 6.21.0(eslint@8.57.0)(typescript@5.2.2)
   autoprefixer:
-    specifier: ^10.4.16
+    specifier: ^10.4.19
     version: 10.4.19(postcss@8.4.38)
   eslint:
-    specifier: ^8.56.0
+    specifier: ^8.57.0
     version: 8.57.0
   eslint-config-airbnb:
     specifier: 19.0.4
     version: 19.0.4(eslint-plugin-import@2.29.1)(eslint-plugin-jsx-a11y@6.8.0)(eslint-plugin-react-hooks@4.6.2)(eslint-plugin-react@7.34.2)(eslint@8.57.0)
   eslint-config-next:
-    specifier: ^14.0.4
+    specifier: ^14.2.3
     version: 14.2.3(eslint@8.57.0)(typescript@5.2.2)
   eslint-config-prettier:
     specifier: ^8.10.0
@@ -164,28 +164,28 @@ devDependencies:
     specifier: ^6.8.0
     version: 6.8.0(eslint@8.57.0)
   eslint-plugin-mdx:
-    specifier: ^3.1.1
+    specifier: ^3.1.5
     version: 3.1.5(eslint@8.57.0)
   eslint-plugin-prefer-arrow-functions:
-    specifier: ^3.2.4
+    specifier: ^3.3.2
     version: 3.3.2(eslint@8.57.0)
   eslint-plugin-prettier:
     specifier: ^4.2.1
     version: 4.2.1(eslint-config-prettier@8.10.0)(eslint@8.57.0)(prettier@2.8.8)
   eslint-plugin-react:
-    specifier: ^7.33.2
+    specifier: ^7.34.2
     version: 7.34.2(eslint@8.57.0)
   eslint-plugin-react-hooks:
-    specifier: ^4.6.0
+    specifier: ^4.6.2
     version: 4.6.2(eslint@8.57.0)
   postcss:
-    specifier: ^8.4.32
+    specifier: ^8.4.38
     version: 8.4.38
   prettier:
     specifier: ^2.8.8
     version: 2.8.8
   tailwindcss:
-    specifier: ^3.4.0
+    specifier: ^3.4.3
     version: 3.4.3
   typescript:
     specifier: 5.2.2
@@ -231,7 +231,7 @@ packages:
     resolution: {integrity: sha512-s3jaWicZd0pkP0jf5ysyHUI/RE7MHos6qlToFcGWXVp+ykHOy77OUMrfbgJ9it2C5bow7OIQwYYaHjk9XlBQ2A==}
     dev: false
 
-  /@codemirror/autocomplete@6.16.2(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.26.3)(@lezer/common@1.2.1):
+  /@codemirror/autocomplete@6.16.2(@codemirror/language@6.10.1)(@codemirror/state@6.4.1)(@codemirror/view@6.26.3)(@lezer/common@1.2.1):
     resolution: {integrity: sha512-MjfDrHy0gHKlPWsvSsikhO1+BOh+eBHNgfH1OXs1+DAf30IonQldgMM3kxLDTG9ktE7kDLaA1j/l7KMPA4KNfw==}
     peerDependencies:
       '@codemirror/language': ^6.0.0
@@ -239,7 +239,7 @@ packages:
       '@codemirror/view': ^6.0.0
       '@lezer/common': ^1.0.0
     dependencies:
-      '@codemirror/language': 6.10.2
+      '@codemirror/language': 6.10.1
       '@codemirror/state': 6.4.1
       '@codemirror/view': 6.26.3
       '@lezer/common': 1.2.1
@@ -248,7 +248,7 @@ packages:
   /@codemirror/commands@6.5.0:
     resolution: {integrity: sha512-rK+sj4fCAN/QfcY9BEzYMgp4wwL/q5aj/VfNSoH1RWPF9XS/dUwBkvlL3hpWgEjOqlpdN1uLC9UkjJ4tmyjJYg==}
     dependencies:
-      '@codemirror/language': 6.10.2
+      '@codemirror/language': 6.10.1
       '@codemirror/state': 6.4.1
       '@codemirror/view': 6.26.3
       '@lezer/common': 1.2.1
@@ -257,8 +257,8 @@ packages:
   /@codemirror/lang-css@6.2.1(@codemirror/view@6.26.3):
     resolution: {integrity: sha512-/UNWDNV5Viwi/1lpr/dIXJNWiwDxpw13I4pTUAsNxZdg6E0mI2kTQb0P2iHczg1Tu+H4EBgJR+hYhKiHKko7qg==}
     dependencies:
-      '@codemirror/autocomplete': 6.16.2(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.26.3)(@lezer/common@1.2.1)
-      '@codemirror/language': 6.10.2
+      '@codemirror/autocomplete': 6.16.2(@codemirror/language@6.10.1)(@codemirror/state@6.4.1)(@codemirror/view@6.26.3)(@lezer/common@1.2.1)
+      '@codemirror/language': 6.10.1
       '@codemirror/state': 6.4.1
       '@lezer/common': 1.2.1
       '@lezer/css': 1.1.8
@@ -269,10 +269,10 @@ packages:
   /@codemirror/lang-html@6.4.9:
     resolution: {integrity: sha512-aQv37pIMSlueybId/2PVSP6NPnmurFDVmZwzc7jszd2KAF8qd4VBbvNYPXWQq90WIARjsdVkPbw29pszmHws3Q==}
     dependencies:
-      '@codemirror/autocomplete': 6.16.2(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.26.3)(@lezer/common@1.2.1)
+      '@codemirror/autocomplete': 6.16.2(@codemirror/language@6.10.1)(@codemirror/state@6.4.1)(@codemirror/view@6.26.3)(@lezer/common@1.2.1)
       '@codemirror/lang-css': 6.2.1(@codemirror/view@6.26.3)
       '@codemirror/lang-javascript': 6.2.2
-      '@codemirror/language': 6.10.2
+      '@codemirror/language': 6.10.1
       '@codemirror/state': 6.4.1
       '@codemirror/view': 6.26.3
       '@lezer/common': 1.2.1
@@ -283,8 +283,8 @@ packages:
   /@codemirror/lang-javascript@6.2.2:
     resolution: {integrity: sha512-VGQfY+FCc285AhWuwjYxQyUQcYurWlxdKYT4bqwr3Twnd5wP5WSeu52t4tvvuWmljT4EmgEgZCqSieokhtY8hg==}
     dependencies:
-      '@codemirror/autocomplete': 6.16.2(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.26.3)(@lezer/common@1.2.1)
-      '@codemirror/language': 6.10.2
+      '@codemirror/autocomplete': 6.16.2(@codemirror/language@6.10.1)(@codemirror/state@6.4.1)(@codemirror/view@6.26.3)(@lezer/common@1.2.1)
+      '@codemirror/language': 6.10.1
       '@codemirror/lint': 6.8.0
       '@codemirror/state': 6.4.1
       '@codemirror/view': 6.26.3
@@ -295,17 +295,17 @@ packages:
   /@codemirror/lang-markdown@6.2.5:
     resolution: {integrity: sha512-Hgke565YcO4fd9pe2uLYxnMufHO5rQwRr+AAhFq8ABuhkrjyX8R5p5s+hZUTdV60O0dMRjxKhBLxz8pu/MkUVA==}
     dependencies:
-      '@codemirror/autocomplete': 6.16.2(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.26.3)(@lezer/common@1.2.1)
+      '@codemirror/autocomplete': 6.16.2(@codemirror/language@6.10.1)(@codemirror/state@6.4.1)(@codemirror/view@6.26.3)(@lezer/common@1.2.1)
       '@codemirror/lang-html': 6.4.9
-      '@codemirror/language': 6.10.2
+      '@codemirror/language': 6.10.1
       '@codemirror/state': 6.4.1
       '@codemirror/view': 6.26.3
       '@lezer/common': 1.2.1
       '@lezer/markdown': 1.3.0
     dev: false
 
-  /@codemirror/language@6.10.2:
-    resolution: {integrity: sha512-kgbTYTo0Au6dCSc/TFy7fK3fpJmgHDv1sG1KNQKJXVi+xBTEeBPY/M30YXiU6mMXeH+YIDLsbrT4ZwNRdtF+SA==}
+  /@codemirror/language@6.10.1:
+    resolution: {integrity: sha512-5GrXzrhq6k+gL5fjkAwt90nYDmjlzTIJV8THnxNFtNKWotMIlzzN+CpqxqwXOECnUdOndmSeWntVrVcv5axWRQ==}
     dependencies:
       '@codemirror/state': 6.4.1
       '@codemirror/view': 6.26.3
@@ -326,7 +326,7 @@ packages:
   /@codemirror/merge@6.6.2:
     resolution: {integrity: sha512-g6ltz4OLYbudvZfgLUp30yQngL+jMXrb9EHKXKT0lkWm6NjWxmjG4I2gcPqMlyb43UCPgEVlylKRBbj9AJ7H9A==}
     dependencies:
-      '@codemirror/language': 6.10.2
+      '@codemirror/language': 6.10.1
       '@codemirror/state': 6.4.1
       '@codemirror/view': 6.26.3
       '@lezer/highlight': 1.2.0
@@ -376,12 +376,12 @@ packages:
       react: ^16.8.0 || ^17 || ^18
       react-dom: ^16.8.0 || ^17 || ^18
     dependencies:
-      '@codemirror/autocomplete': 6.16.2(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.26.3)(@lezer/common@1.2.1)
+      '@codemirror/autocomplete': 6.16.2(@codemirror/language@6.10.1)(@codemirror/state@6.4.1)(@codemirror/view@6.26.3)(@lezer/common@1.2.1)
       '@codemirror/commands': 6.5.0
       '@codemirror/lang-css': 6.2.1(@codemirror/view@6.26.3)
       '@codemirror/lang-html': 6.4.9
       '@codemirror/lang-javascript': 6.2.2
-      '@codemirror/language': 6.10.2
+      '@codemirror/language': 6.10.1
       '@codemirror/state': 6.4.1
       '@codemirror/view': 6.26.3
       '@codesandbox/sandpack-client': 2.13.8
@@ -425,8 +425,8 @@ packages:
       eslint-visitor-keys: 3.4.3
     dev: true
 
-  /@eslint-community/regexpp@4.10.1:
-    resolution: {integrity: sha512-Zm2NGpWELsQAD1xsJzGQpYfvICSsFkEpU0jxBjfdC6uNEWXcHnfs9hScFWtXVDVl+rBQJGrl4g1vcKIejpH9dA==}
+  /@eslint-community/regexpp@4.10.0:
+    resolution: {integrity: sha512-Cu96Sd2By9mCNTx2iyKOmq10v22jUVQv0lQnlGNy16oE9589yE+QADPbrMGCkA51cKZSg3Pu/aTJVTGfL/qjUA==}
     engines: {node: ^12.0.0 || ^14.0.0 || >=16.0.0}
     dev: true
 
@@ -1322,7 +1322,7 @@ packages:
       react: 18.3.1
     dev: false
 
-  /@mdxeditor/editor@2.20.7(@codemirror/language@6.10.2)(@lezer/common@1.2.1)(@lezer/highlight@1.2.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)(yjs@13.6.15):
+  /@mdxeditor/editor@2.20.7(@codemirror/language@6.10.1)(@lezer/common@1.2.1)(@lezer/highlight@1.2.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)(yjs@13.6.15):
     resolution: {integrity: sha512-UCwKd3aHzOiPw2hz6q4aqA44TwbWSNLMWMXK5/T0iIIn2FfEfHtxrPSvnnPoHd6ofRlDfqx84/U0nGg+dqHdtg==}
     engines: {node: '>=16'}
     peerDependencies:
@@ -1353,7 +1353,7 @@ packages:
       '@radix-ui/react-toolbar': 1.0.4(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@radix-ui/react-tooltip': 1.0.7(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       classnames: 2.5.1
-      cm6-theme-basic-light: 0.2.0(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.26.3)(@lezer/highlight@1.2.0)
+      cm6-theme-basic-light: 0.2.0(@codemirror/language@6.10.1)(@codemirror/state@6.4.1)(@codemirror/view@6.26.3)(@lezer/highlight@1.2.0)
       codemirror: 6.0.1(@lezer/common@1.2.1)
       downshift: 7.6.2(react@18.3.1)
       js-yaml: 4.1.0
@@ -2711,7 +2711,7 @@ packages:
       typescript:
         optional: true
     dependencies:
-      '@eslint-community/regexpp': 4.10.1
+      '@eslint-community/regexpp': 4.10.0
       '@typescript-eslint/parser': 6.21.0(eslint@8.57.0)(typescript@5.2.2)
       '@typescript-eslint/scope-manager': 6.21.0
       '@typescript-eslint/type-utils': 6.21.0(eslint@8.57.0)(typescript@5.2.2)
@@ -3297,7 +3297,7 @@ packages:
     engines: {node: '>=6'}
     dev: false
 
-  /cm6-theme-basic-light@0.2.0(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.26.3)(@lezer/highlight@1.2.0):
+  /cm6-theme-basic-light@0.2.0(@codemirror/language@6.10.1)(@codemirror/state@6.4.1)(@codemirror/view@6.26.3)(@lezer/highlight@1.2.0):
     resolution: {integrity: sha512-1prg2gv44sYfpHscP26uLT/ePrh0mlmVwMSoSd3zYKQ92Ab3jPRLzyCnpyOCQLJbK+YdNs4HvMRqMNYdy4pMhA==}
     peerDependencies:
       '@codemirror/language': ^6.0.0
@@ -3305,7 +3305,7 @@ packages:
       '@codemirror/view': ^6.0.0
       '@lezer/highlight': ^1.0.0
     dependencies:
-      '@codemirror/language': 6.10.2
+      '@codemirror/language': 6.10.1
       '@codemirror/state': 6.4.1
       '@codemirror/view': 6.26.3
       '@lezer/highlight': 1.2.0
@@ -3314,9 +3314,9 @@ packages:
   /codemirror@6.0.1(@lezer/common@1.2.1):
     resolution: {integrity: sha512-J8j+nZ+CdWmIeFIGXEFbFPtpiYacFMDR8GlHK3IyHQJMCaVRfGx9NT+Hxivv1ckLWPvNdZqndbr/7lVhrf/Svg==}
     dependencies:
-      '@codemirror/autocomplete': 6.16.2(@codemirror/language@6.10.2)(@codemirror/state@6.4.1)(@codemirror/view@6.26.3)(@lezer/common@1.2.1)
+      '@codemirror/autocomplete': 6.16.2(@codemirror/language@6.10.1)(@codemirror/state@6.4.1)(@codemirror/view@6.26.3)(@lezer/common@1.2.1)
       '@codemirror/commands': 6.5.0
-      '@codemirror/language': 6.10.2
+      '@codemirror/language': 6.10.1
       '@codemirror/lint': 6.8.0
       '@codemirror/search': 6.5.6
       '@codemirror/state': 6.4.1
@@ -4455,7 +4455,7 @@ packages:
     hasBin: true
     dependencies:
       '@eslint-community/eslint-utils': 4.4.0(eslint@8.57.0)
-      '@eslint-community/regexpp': 4.10.1
+      '@eslint-community/regexpp': 4.10.0
       '@eslint/eslintrc': 2.1.4
       '@eslint/js': 8.57.0
       '@humanwhocodes/config-array': 0.11.14
@@ -9054,7 +9054,7 @@ packages:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
 
   file:../../design-system/out/kl-design-system-1.0.1.tgz(framer-motion@10.18.0)(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-ld3K8p1YDiEFOMAo8ufuZw1Och1KvndgEhRZKur9ID7noznScX2R4XzJikUUpJdKhmfKoe7/q+EYTz5pAhCFcQ==, tarball: file:../../design-system/out/kl-design-system-1.0.1.tgz}
+    resolution: {integrity: sha512-QFLEXaGJBbxBsteOmzPjCrZ+3kF/mluCTpvrhqY5NvfncfbF/pdLRzy7GBA4XpOJGKsmabegvY192bFKQqlfOQ==, tarball: file:../../design-system/out/kl-design-system-1.0.1.tgz}
     id: file:../../design-system/out/kl-design-system-1.0.1.tgz
     name: kl-design-system
     version: 1.0.1
