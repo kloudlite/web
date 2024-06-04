@@ -236,17 +236,6 @@ code{
       @apply wb-relative [background-size:32px_32px] wb-bg-[linear-gradient(90deg,_#e4e4e7cc_1.5px,_transparent_1.5px),_linear-gradient(0deg,_#e4e4e7cc_1.5px,_transparent_1.5px)] dark:wb-bg-[linear-gradient(90deg,_#27272Acc_1.5px,_transparent_1.5px),_linear-gradient(0deg,_#27272Acc_1.5px,_transparent_1.5px)]; 
     }
   
-    .graph::before{
-      content: '';
-      background: linear-gradient(to top, transparent 0%, #fafafa 100%),
-                  linear-gradient(to bottom, transparent 0%, #fafafa 100%),
-                  linear-gradient(to left, transparent 0%, #fafafa 100%),
-                  linear-gradient(to right, transparent 0%, #fafafa 100%);
-      background-repeat: no-repeat;
-      /* background-size: 100% 10%, 100% 10%, 10% 100%, 10% 100%; */
-      background-position: top, bottom, left, right;
-      @apply wb-bg-no-repeat wb-top-0 wb-left-0 wb-w-full wb-h-full wb-absolute wb-bg-[linear-gradient(to_top,_transparent_0%,_#fafafa_100%),_linear-gradient(to_bottom,_transparent_0%,_#fafafa_100%),_linear-gradient(to_left,_transparent_0%,_#fafafa_100%),_linear-gradient(to_right,_transparent_0%,_#fafafa_100%)] dark:wb-bg-[linear-gradient(to_top,_transparent_0%,_#0F0F11_100%),_linear-gradient(to_bottom,_transparent_0%,_#0F0F11_100%),_linear-gradient(to_left,_transparent_0%,_#0F0F11_100%),_linear-gradient(to_right,_transparent_0%,_#0F0F11_100%)];
-    }
     .graph2{
       background-position: 16px 0px;
       @apply wb-relative [background-size:32px_32px] wb-bg-[linear-gradient(90deg,_#e4e4e7cc_1.5px,_transparent_1.5px),_linear-gradient(0deg,_#e4e4e7cc_1.5px,_transparent_1.5px)] dark:wb-bg-[linear-gradient(90deg,_#27272Acc_1.5px,_transparent_1.5px),_linear-gradient(0deg,_#27272Acc_1.5px,_transparent_1.5px)]; 

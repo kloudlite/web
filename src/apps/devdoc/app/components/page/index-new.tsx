@@ -58,36 +58,38 @@ const Title = () => {
 const Illustration = () => {
   return (
     <Wrapper className="-wb-mt-5xl">
-      <div className="hidden md:block wb-pb-[80px] 3xl:wb-pb-[144px]">
+      <div className="hidden md:block wb-pb-[36px] 3xl:wb-pb-[100px]">
         <GraphExtended
           innerClass="md:-wb-mx-[32px] lg:-wb-mx-[160px] -wb-mt-[2px] wb-flex wb-justify-center !wb-pt-[32px] 3xl:-wb-mx-[256px]"
-          className="!wb-pb-[20px] xl:[background-position: unset] 2xl:[background-position:top] 3xl:[background-position:unset]"
+          className="!wb-pb-[64px] xl:[background-position: unset] 2xl:[background-position:top] 3xl:[background-position:unset]"
         >
-          <DynamicImage
-            light={hero.hero1920.src}
-            dark={hero.hero1920Dark.src}
-            media="1920"
-          />
-          <DynamicImage
-            light={hero.hero1440.src}
-            dark={hero.hero1440Dark.src}
-            media="1440"
-          />
-          <DynamicImage
-            light={hero.hero1280.src}
-            dark={hero.hero1280Dark.src}
-            media="1280"
-          />
-          <DynamicImage
-            light={hero.hero1024.src}
-            dark={hero.hero1024Dark.src}
-            media="1024"
-          />
-          <DynamicImage
-            light={hero.hero768.src}
-            dark={hero.hero768Dark.src}
-            media="768"
-          />
+          <div className="wb-relative">
+            <DynamicImage
+              light={hero.hero1920.src}
+              dark={hero.hero1920Dark.src}
+              media="1920"
+            />
+            <DynamicImage
+              light={hero.hero1440.src}
+              dark={hero.hero1440Dark.src}
+              media="1440"
+            />
+            <DynamicImage
+              light={hero.hero1280.src}
+              dark={hero.hero1280Dark.src}
+              media="1280"
+            />
+            <DynamicImage
+              light={hero.hero1024.src}
+              dark={hero.hero1024Dark.src}
+              media="1024"
+            />
+            <DynamicImage
+              light={hero.hero768.src}
+              dark={hero.hero768Dark.src}
+              media="768"
+            />
+          </div>
         </GraphExtended>
       </div>
       <div className="md:wb-hidden wb-flex wb-justify-center -wb-mx-3xl">

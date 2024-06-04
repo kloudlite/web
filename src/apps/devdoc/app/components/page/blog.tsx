@@ -79,7 +79,7 @@ const BlogHome = () => {
   const { page, pageNumber, setPageNumber, itemsPerPage, setItems, items } =
     usePagination({
       items: [] as any,
-      itemsPerPage: 2,
+      itemsPerPage: 10,
     });
 
   useEffect(() => {

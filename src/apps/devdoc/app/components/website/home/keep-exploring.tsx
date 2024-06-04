@@ -50,7 +50,10 @@ export const ExploringItem = ({
 const KeepExploring = () => {
   const [active, setActive] = useState(0);
   return (
-    <Block title="Unveil the untold - Keep exploring">
+    <Block
+      title="Unveil the untold - Keep exploring"
+      graphClass="xl:[clip-path:inset(24px_1.5px_24px_1.5px)] 3xl:[clip-path:inset(1.5px)]"
+    >
       <div className="wb-block md:wb-hidden">
         <Slider autoPlay active={`${active}`} onMove={(e) => setActive(e)}>
           {consts.homeNew.exploring.map((message) => (

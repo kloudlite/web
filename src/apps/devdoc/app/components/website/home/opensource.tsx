@@ -9,7 +9,7 @@ import { Anchor } from '../../anchor';
 const OpenSource = () => {
   return (
     <div className="3xl:wb-py-8xl">
-      <GraphExtended>
+      <GraphExtended className="xl:[clip-path:inset(24px_1.5px_24px_1.5px)] 3xl:[clip-path:inset(1.5px)]">
         <GraphItem className="lg:wb-h-[288px] wb-flex wb-flex-col md:wb-flex-row wb-bg-surface-primary-subdued dark:wb-bg-surface-darktheme-primary-subdued ">
           <div className="wb-h-full wb-bg-surface-basic-default dark:wb-bg-surface-darktheme-basic-default wb-flex-1">
             <div className="wb-p-3xl md:wb-p-5xl wb-flex-col wb-flex wb-gap-5xl">

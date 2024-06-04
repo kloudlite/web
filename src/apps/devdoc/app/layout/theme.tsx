@@ -211,9 +211,11 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
                   {children}
                 </div>
 
-                <div className="wb-pt-5xl">
-                  <BlogTags tags={frontMatter.tags || []} />
-                </div>
+                {frontMatter.tags && (
+                  <div className="wb-pt-5xl">
+                    <BlogTags tags={frontMatter.tags || []} />
+                  </div>
+                )}
 
                 {!['blog', 'customer-stories'].includes(pageType) &&
                 activeThemeContext.timestamp &&

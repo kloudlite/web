@@ -101,6 +101,7 @@ export const Block = ({
   titleClass,
   descClass,
   hasGraph = true,
+  graphClass,
 }: {
   title: ReactNode;
   desc?: ReactNode;
@@ -109,6 +110,7 @@ export const Block = ({
   titleClass?: string;
   descClass?: string;
   hasGraph?: boolean;
+  graphClass?: string;
 }) => {
   return (
     <SectionWrapper className={cn('wb-flex-col', className)}>
@@ -118,7 +120,11 @@ export const Block = ({
         titleClass={titleClass}
         descClass={descClass}
       />
-      {hasGraph ? <GraphExtended>{children}</GraphExtended> : children}
+      {hasGraph ? (
+        <GraphExtended className={graphClass}>{children}</GraphExtended>
+      ) : (
+        children
+      )}
     </SectionWrapper>
   );
 };

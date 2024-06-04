@@ -9,30 +9,64 @@ import {
 import { cn } from '../utils/commons';
 
 const strokeColor = 'wb-bg-border-dark dark:wb-bg-border-darktheme-dark';
+
+type Ifade = {
+  top?: string;
+  bottom?: string;
+  left?: string;
+  right?: string;
+};
 export const Graph = ({
   className,
   children,
-  blurSize = 'md',
   style,
+  fade = {
+    top: 'wb-h-10xl',
+    bottom: 'wb-h-10xl',
+    left: 'wb-w-10xl',
+    right: 'wb-w-10xl',
+  },
 }: {
   className?: string;
   children: ReactNode;
-  blurSize?: 'md' | 'lg';
   style?: CSSProperties | undefined;
+  fade?: Ifade;
 }) => {
   return (
     <div
       style={style}
-      className={cn(
-        'graph',
-        'before:wb-hidden xl:before:!wb-flex ',
-        {
-          'before:wb-bg-[100%_6%,100%_6%,3%_100%,3%_100%]': blurSize === 'lg',
-          'before:wb-bg-[100%_6%,100%_6%,11%_100%,11%_100%]': blurSize === 'md',
-        },
-        className
-      )}
+      className={cn('graph xl:[clip-path:inset(1.5px)] wb-relative', className)}
     >
+      <div className="wb-hidden xl:wb-block wb-absolute wb-inset-0">
+        {/* top */}
+        <div
+          className={cn(
+            'wb-absolute wb-top-0 wb-left-0 wb-right-0 wb-from-transparent wb-to-surface-basic-subdued dark:wb-to-surface-darktheme-basic-subdued wb-bg-gradient-to-t',
+            fade?.top || 'wb-h-10xl'
+          )}
+        />
+        {/* bottom */}
+        <div
+          className={cn(
+            'wb-absolute wb-bottom-0 wb-left-0 wb-right-0 wb-from-transparent wb-to-surface-basic-subdued dark:wb-to-surface-darktheme-basic-subdued wb-bg-gradient-to-b',
+            fade?.bottom || 'wb-h-10xl'
+          )}
+        />
+        {/* left */}
+        <div
+          className={cn(
+            'wb-absolute wb-bottom-0 wb-left-0 wb-top-0 wb-from-transparent wb-to-surface-basic-subdued dark:wb-to-surface-darktheme-basic-subdued wb-bg-gradient-to-l',
+            fade?.left || 'wb-w-10xl'
+          )}
+        />
+        {/* right */}
+        <div
+          className={cn(
+            'wb-absolute wb-bottom-0 wb-right-0 wb-top-0 wb-from-transparent wb-to-surface-basic-subdued dark:wb-to-surface-darktheme-basic-subdued wb-bg-gradient-to-r',
+            fade?.right || 'wb-w-10xl'
+          )}
+        />
+      </div>
       {children}
     </div>
   );
@@ -43,21 +77,24 @@ export const GraphExtended = ({
   className,
   innerClass,
   style,
+  fade,
 }: {
   children?: ReactNode;
   className?: string;
   innerClass?: string;
   style?: CSSProperties | undefined;
+  fade?: Ifade;
 }) => {
   return (
     <Graph
       className={cn(
-        'lg:-wb-mx-11xl 3xl:-wb-mx-12xl wb-py-7xl md:wb-py-8xl lg:wb-py-10xl',
+        'lg:-wb-mx-11xl xl:-wb-mx-10xl wb-py-7xl md:wb-py-8xl lg:wb-py-10xl',
         className
       )}
       style={style}
+      fade={fade}
     >
-      <div className={cn('lg:wb-px-11xl 3xl:wb-px-12xl', innerClass)}>
+      <div className={cn('lg:wb-px-11xl xl:wb-px-10xl', innerClass)}>
         {children}
       </div>
     </Graph>
