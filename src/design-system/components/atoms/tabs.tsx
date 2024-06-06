@@ -99,7 +99,13 @@ const TabBase = ({
       >
         <Component
           // eslint-disable-next-line no-nested-ternary
-          {...(to ? (Component === 'a' ? { href: to } : { to }) : {})}
+          {...(to
+            ? Component === 'a'
+              ? { href: to }
+              : { to }
+            : {
+                role: 'button',
+              })}
           prefetch="intent"
           onClick={onClick}
           className={cn(
