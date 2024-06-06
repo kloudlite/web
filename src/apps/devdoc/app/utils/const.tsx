@@ -1,103 +1,103 @@
 import {
-  AWSlogo,
-  Autoscaling,
-  AzurelogoFill,
-  BackingServices,
-  Binoculars,
-  ChartBar,
-  CloudAgnostics,
-  Config,
-  Container,
-  CostMonitoring,
-  Cpu,
-  CustomEnv,
-  DigitalOceanlogoFill,
-  FlexibleNodepool,
-  HelmLogo,
-  HourglassSimpleHigh,
-  InfraAsCode,
-  LiquidCompute,
-  LockKey,
-  MultiTenant,
-  NoOps,
-  Nodeless,
-  PlayPause,
-  RocketLaunch,
-  Search,
-  SecureConfig,
-  ShieldCheck,
-  ShuffleAngular,
-  SpotManagement,
-  TreeStructure,
-  Vpn,
-  Infinity as InfinityIcon,
-  AnscerRoboticsLogo,
-  BoltchemLogo,
-  PlaxonicLogo,
-  Agritech,
-  Robot,
-  Flask,
-  DesktopTower,
-  TwitterNewLogoFill,
-  Developer,
-  Users,
-  SelectionForeground,
-  Code,
-  DeBugging,
-  LockSimple,
-  Lightbulb,
+    AWSlogo,
+    Agritech,
+    AnscerRoboticsLogo,
+    Autoscaling,
+    AzurelogoFill,
+    BackingServices,
+    Binoculars,
+    BoltchemLogo,
+    ChartBar,
+    CloudAgnostics,
+    Code,
+    Config,
+    Container,
+    CostMonitoring,
+    Cpu,
+    CustomEnv,
+    DeBugging,
+    DesktopTower,
+    Developer,
+    DigitalOceanlogoFill,
+    Flask,
+    FlexibleNodepool,
+    HelmLogo,
+    HourglassSimpleHigh,
+    Infinity as InfinityIcon,
+    InfraAsCode,
+    Lightbulb,
+    LiquidCompute,
+    LockKey,
+    LockSimple,
+    MultiTenant,
+    NoOps,
+    Nodeless,
+    PlaxonicLogo,
+    PlayPause,
+    Robot,
+    RocketLaunch,
+    Search,
+    SecureConfig,
+    SelectionForeground,
+    ShieldCheck,
+    ShuffleAngular,
+    SpotManagement,
+    TreeStructure,
+    TwitterNewLogoFill,
+    Users,
+    Vpn,
 } from '~/app/icons/icons';
 
-import providersImageMobile from '~/images/infraops/providers/mobile.svg';
-import providersImage768 from '~/images/infraops/providers/768.svg';
 import providersImage1024 from '~/images/infraops/providers/1024.svg';
 import providersImage1280 from '~/images/infraops/providers/1280.svg';
 import providersImage1440 from '~/images/infraops/providers/1440.svg';
 import providersImage1920 from '~/images/infraops/providers/1920.svg';
+import providersImage768 from '~/images/infraops/providers/768.svg';
+import providersImageMobile from '~/images/infraops/providers/mobile.svg';
 
-import clusterImageMobile from '~/images/infraops/clusters/mobile.svg';
-import clusterImage768 from '~/images/infraops/clusters/768.svg';
 import clusterImage1024 from '~/images/infraops/clusters/1024.svg';
 import clusterImage1280 from '~/images/infraops/clusters/1280.svg';
 import clusterImage1440 from '~/images/infraops/clusters/1440.svg';
 import clusterImage1920 from '~/images/infraops/clusters/1920.svg';
+import clusterImage768 from '~/images/infraops/clusters/768.svg';
+import clusterImageMobile from '~/images/infraops/clusters/mobile.svg';
 
-import deployImageMobile from '~/images/infraops/deploy/mobile.svg';
-import deployImage768 from '~/images/infraops/deploy/768.svg';
 import deployImage1024 from '~/images/infraops/deploy/1024.svg';
 import deployImage1280 from '~/images/infraops/deploy/1280.svg';
 import deployImage1440 from '~/images/infraops/deploy/1440.svg';
 import deployImage1920 from '~/images/infraops/deploy/1920.svg';
+import deployImage768 from '~/images/infraops/deploy/768.svg';
+import deployImageMobile from '~/images/infraops/deploy/mobile.svg';
 
-import repoImageMobile from '~/images/distribution/repo/mobile.svg';
-import repoImage768 from '~/images/distribution/repo/768.svg';
 import repoImage1024 from '~/images/distribution/repo/1024.svg';
 import repoImage1280 from '~/images/distribution/repo/1280.svg';
 import repoImage1440 from '~/images/distribution/repo/1440.svg';
 import repoImage1920 from '~/images/distribution/repo/1920.svg';
-import featuredImageMobile from '~/images/home/featured/mobile.svg';
-import featuredImage768 from '~/images/home/featured/768.svg';
+import repoImage768 from '~/images/distribution/repo/768.svg';
+import repoImageMobile from '~/images/distribution/repo/mobile.svg';
 import featuredImage1024 from '~/images/home/featured/1024.svg';
 import featuredImage1280 from '~/images/home/featured/1280.svg';
 import featuredImage1440 from '~/images/home/featured/1440.svg';
 import featuredImage1920 from '~/images/home/featured/1920.svg';
+import featuredImage768 from '~/images/home/featured/768.svg';
+import featuredImageMobile from '~/images/home/featured/mobile.svg';
 
+import devopsIcon from '~/images/home/devops.svg';
 import distributionIcon from '~/images/home/distribution.svg';
 import infraopsIcon from '~/images/home/infraops.svg';
-import devopsIcon from '~/images/home/devops.svg';
 import BlogCover from '~/public/blog/blog-cover.jpeg';
 
-import CreateProject1920 from '~/images/devops/create_project/1980.svg';
-import CreateProject1440 from '~/images/devops/create_project/1440.svg';
-import CreateProject1280 from '~/images/devops/create_project/1280.svg';
 import CreateProject1024 from '~/images/devops/create_project/1024.svg';
+import CreateProject1280 from '~/images/devops/create_project/1280.svg';
+import CreateProject1440 from '~/images/devops/create_project/1440.svg';
+import CreateProject1920 from '~/images/devops/create_project/1980.svg';
 import CreateProject768 from '~/images/devops/create_project/768.svg';
 import CreateProjectMobile from '~/images/devops/create_project/mobile.svg';
 
-import SetupBackSVC1980 from '~/images/devops/setup_back_svc/1920.svg';
-import SetupBackSVC1440 from '~/images/devops/setup_back_svc/1440.svg';
-import SetupBackSVC1280 from '~/images/devops/setup_back_svc/1280.svg';
 import SetupBackSVC1024 from '~/images/devops/setup_back_svc/1024.svg';
+import SetupBackSVC1280 from '~/images/devops/setup_back_svc/1280.svg';
+import SetupBackSVC1440 from '~/images/devops/setup_back_svc/1440.svg';
+import SetupBackSVC1980 from '~/images/devops/setup_back_svc/1920.svg';
 import SetupBackSVC768 from '~/images/devops/setup_back_svc/768.svg';
 import SetupBackSVCMobile from '~/images/devops/setup_back_svc/mobile.svg';
 
@@ -105,44 +105,44 @@ import ConfigDevops from '~/images/devops/config-devops.svg';
 import DeployDevops from '~/images/devops/deploy-devops.svg';
 
 import collaborate1440 from '~/images/homeNew/collaborate1440.svg';
-import nocommit1440 from '~/images/homeNew/nocommit1440.svg';
-import integrate1440 from '~/images/homeNew/integrate1440.svg';
 import connect1440 from '~/images/homeNew/connect1440.svg';
+import integrate1440 from '~/images/homeNew/integrate1440.svg';
+import nocommit1440 from '~/images/homeNew/nocommit1440.svg';
 
 import collaborate1440Dark from '~/images/homeNew/collaborate1440-dark.svg';
-import integrate1440Dark from '~/images/homeNew/integrate1440-dark.svg';
 import connect1440Dark from '~/images/homeNew/connect1440-dark.svg';
+import integrate1440Dark from '~/images/homeNew/integrate1440-dark.svg';
 import nocommit1440Dark from '~/images/homeNew/nocommit1440-dark.svg';
 
 import collaborateMobileDark from '~/images/homeNew/collaborateMobile-dark.svg';
-import integrateMobileDark from '~/images/homeNew/integrateMobile-dark.svg';
 import connectMobileDark from '~/images/homeNew/connectMobile-dark.svg';
+import integrateMobileDark from '~/images/homeNew/integrateMobile-dark.svg';
 import nocommitMobileDark from '~/images/homeNew/nocommitMobile-dark.svg';
 
 import collaborateMobile from '~/images/homeNew/collaborateMobile.svg';
-import integrateMobile from '~/images/homeNew/integrateMobile.svg';
 import connectMobile from '~/images/homeNew/connectMobile.svg';
+import integrateMobile from '~/images/homeNew/integrateMobile.svg';
 import nocommitMobile from '~/images/homeNew/nocommitMobile.svg';
 
 import explore from '~/images/explore.jpeg';
 
-import RedPlutoIcon from '~/images/home/companies/red.svg';
+import AnscerIcon from '~/images/home/companies/anser.svg';
+import BoltzIcon from '~/images/home/companies/boltz.svg';
+import CrewIcon from '~/images/home/companies/crew.svg';
 import FibrIcon from '~/images/home/companies/fibr.svg';
 import PlaxonicIcon from '~/images/home/companies/plaxonic.svg';
-import CrewIcon from '~/images/home/companies/crew.svg';
-import BoltzIcon from '~/images/home/companies/boltz.svg';
+import RedPlutoIcon from '~/images/home/companies/red.svg';
 import TalescaleIcon from '~/images/home/companies/talescale.svg';
-import AnscerIcon from '~/images/home/companies/anser.svg';
 
-import Workflow from '~/images/homeNew/exploring/workflow.jpeg';
 import Collarative from '~/images/homeNew/exploring/collaborative.jpeg';
 import RemoteLocal from '~/images/homeNew/exploring/remote-local.jpeg';
-import PlaxonicSvg from '../icons/Plaxonic';
-import FibrSvg from '../icons/Fibr';
-import RedPlutoSvg from '../icons/RedPluto';
-import CrewScaleSvg from '../icons/CrewScale';
+import Workflow from '~/images/homeNew/exploring/workflow.jpeg';
 import AnserSvg from '../icons/AnserRobotics';
 import BoltzmanSvg from '../icons/Boltzman';
+import CrewScaleSvg from '../icons/CrewScale';
+import FibrSvg from '../icons/Fibr';
+import PlaxonicSvg from '../icons/Plaxonic';
+import RedPlutoSvg from '../icons/RedPluto';
 import TalescaleSvg from '../icons/Talescale';
 
 const partners = [
@@ -473,28 +473,25 @@ const consts = {
     ],
     messages: [
       {
-        title: 'Astroman',
-        subtitle: 'subtitle',
+        title: 'Raj Mohan',
+        subtitle: 'Co-founder, Anscer Robotics',
         company: <TwitterNewLogoFill size={24} />,
         message:
-          'We use Kloudlite on a daily basis for several internal processes, and I cannot rave enough about them. Incredible flexibility and features combined with super intuitive UI',
-        time: '10:01 PM · Apr 7, 2022',
+          'Thanks to Kloudlite, AnsCer Robotics streamlined deployment across edge devices, minimized downtime, and enhanced monitoring with Grafana integration. Remote config management simplified operations, boosting efficiency significantly. Kloudlite has been invaluable in optimizing our workflow.',
       },
       {
-        title: 'Astroman 1',
-        subtitle: 'subtitle',
+        title: 'Sunny Khanna',
+        subtitle: 'VP Engineering, Plaxonic',
         company: <TwitterNewLogoFill size={24} />,
         message:
-          'We use Kloudlite on a daily basis for several internal processes, and I cannot rave enough about them. Incredible flexibility and features combined with super intuitive UI',
-        time: '10:01 PM · Apr 7, 2022',
+          'Kloudlite transformed our processes at Plaxonic. It accelerated our development and deployment, minimizing downtime and optimizing efficiency. Highly recommend!',
       },
       {
-        title: 'Astroman 2',
-        subtitle: 'subtitle',
+        title: 'Pritam Roy',
+        subtitle: 'Co-founder, Pritam Roy',
         company: <TwitterNewLogoFill size={24} />,
         message:
-          'We use Kloudlite on a daily basis for several internal processes, and I cannot rave enough about them. Incredible flexibility and features combined with super intuitive UI',
-        time: '10:01 PM · Apr 7, 2022',
+          'Kloudlite has revolutionized Fibr’s development process, cutting launch times and costs significantly. With seamless deployment, real-time monitoring via Grafana, and remote config management, we’ve streamlined workflows and ensured secure, reliable applications.',
       },
     ],
     images: {

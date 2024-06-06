@@ -1,20 +1,21 @@
 import { Badge } from 'kl-design-system/atoms/badge';
-import hero from '~/images/homeNew/hero';
-import HomeIllustrationMobile from '~/images/homeNew/illustration-mobile.svg';
-import HomeIllustrationMobileDark from '~/images/homeNew/illustration-mobile-dark.svg';
 import { GraphExtended } from '~/app/components/graph';
 import { authUrl } from '~/app/utils/config';
-import Wrapper from '../wrapper';
-import OpenSource from '../website/home/opensource';
-import KeepExploring from '../website/home/keep-exploring';
+import hero from '~/images/homeNew/hero';
+import HomeIllustrationMobileDark from '~/images/homeNew/illustration-mobile-dark.svg';
+import HomeIllustrationMobile from '~/images/homeNew/illustration-mobile.svg';
+import DynamicImage from '../dynamic-image';
 import FaqSection from '../website/home/faq';
 import HowItWorksSection from '../website/home/how-it-works';
+import KeepExploring from '../website/home/keep-exploring';
+import KloudliteDevelopment from '../website/home/kloudlite-development';
+import DontBelieve from '../website/home/messages';
+import OpenSource from '../website/home/opensource';
 import PartnerSection from '../website/home/partners';
 import SecureAtCore from '../website/home/secure-at-core';
-import KloudliteDevelopment from '../website/home/kloudlite-development';
-import DynamicImage from '../dynamic-image';
-import ProviderUI from '../website/provider-ui';
 import SuperCharge from '../website/home/supercharge';
+import ProviderUI from '../website/provider-ui';
+import Wrapper from '../wrapper';
 
 const Title = () => {
   return (
@@ -142,6 +143,7 @@ const Index = () => {
         <SecureAtCore />
         <PartnerSection />
         <HowItWorksSection />
+        <DontBelieve />
         <FaqSection />
         <KeepExploring />
         <OpenSource />

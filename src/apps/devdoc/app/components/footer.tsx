@@ -1,3 +1,5 @@
+/** eslint-disable prefer-const */
+/** eslint-disable prettier/prettier */
 import { Button } from 'kl-design-system/atoms/button';
 import Link from 'next/link';
 import { ReactNode, isValidElement } from 'react';
@@ -33,15 +35,18 @@ const FooterMenu = ({ className, items }: IFooterMenu) => {
       )}
     >
       <ul className="wb-list-none wb-flex wb-flex-col wb-gap-lg">
-        {items?.map((item) => (
-          <li key={item.to}>
-            <FooterLink to={item.to}>
-              <span className="wb-bodyLg wb-text-text-strong dark:wb-text-text-darktheme-strong">
-                {item.title}
-              </span>
-            </FooterLink>
-          </li>
-        ))}
+        {items?.map((item, index) => {
+          const i = index;
+          return (
+            <li key={item.to + i}>
+              <FooterLink to={item.to}>
+                <span className="wb-bodyLg wb-text-text-strong dark:wb-text-text-darktheme-strong">
+                  {item.title}
+                </span>
+              </FooterLink>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
