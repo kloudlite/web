@@ -20,7 +20,7 @@ const HeaderSecondary = ({
   const { config } = useConfig();
   const { state, setState } = useMenu();
   return (
-    <div className="lg:wb-relative wb-flex wb-flex-row wb-top-0 wb-left-0 wb-right-0 wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued wb-border-b wb-border-border-default dark:wb-border-border-darktheme-default wb-min-h-[var(--kl-navbar-height)] wb-z-50">
+    <div className="lg:wb-relative wb-flex wb-flex-row wb-top-0 wb-left-0 wb-right-0 wb-bg-surface-basic-subdued wb-border-b wb-border-border-default wb-min-h-[var(--kl-navbar-height)] wb-z-50">
       <Wrapper className="wb-flex">
         <nav className="wb-flex wb-flex-row wb-items-center wb-gap-6xl wb-w-full">
           {config.logo}
@@ -33,12 +33,12 @@ const HeaderSecondary = ({
               <a
                 href={config.gitRepoUrl}
                 aria-label="kloudlite-github"
-                className="wb-hidden lg:wb-block wb-text-icon-default dark:wb-text-icon-darktheme-default"
+                className="wb-hidden lg:wb-block wb-text-icon-default"
               >
                 <GithubLogoFill size={24} />
               </a>
               <>
-                <span className="wb-hidden lg:wb-block wb-h-2xl wb-w-xs wb-bg-border-default dark:wb-bg-border-darktheme-default" />
+                <span className="wb-hidden lg:wb-block wb-h-2xl wb-w-xs wb-bg-border-default" />
                 <div className="wb-hidden lg:wb-block">
                   <JoinProviders />
                 </div>
@@ -67,7 +67,7 @@ export const MobileMenu = ({ items = [] }: IHeaderSecondary) => {
           <Link
             href={item.to}
             key={item.to}
-            className="wb-px-2xl wb-py-lg wb-text-text-soft dark:wb-text-text-darktheme-soft wb-bodyMd hover:wb-text-text-default dark:hover:wb-text-text-darktheme-default"
+            className="wb-px-2xl wb-py-lg wb-text-text-soft wb-bodyMd hover:wb-text-text-default"
           >
             {item.title}
           </Link>

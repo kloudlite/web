@@ -27,7 +27,7 @@ const Title = () => {
           </span>
         </Badge>
       </div>
-      <h1 className="wb-heading4xl-marketing md:wb-heading6xl-marketing lg:wb-heading7xl-marketing wb-text-text-default dark:wb-text-text-darktheme-default wb-text-center lg:wb-w-[896px] xl:wb-w-[1024px] 2xl:wb-w-[1060px]">
+      <h1 className="wb-heading4xl-marketing md:wb-heading6xl-marketing lg:wb-heading7xl-marketing wb-text-text-default wb-text-center lg:wb-w-[896px] xl:wb-w-[1024px] 2xl:wb-w-[1060px]">
         <div className="wb-hidden md:wb-block">
           Building distributed applications
           <span className="wb-heading7xl-1-marketing"> isn’t</span> complex
@@ -40,7 +40,7 @@ const Title = () => {
           <span className="wb-heading4xl-1-marketing"> anymore!</span>
         </div>
       </h1>
-      <p className="wb-bodyLg md:wb-bodyXl lg:wb-bodyXXl wb-text-text-soft dark:wb-text-text-darktheme-soft wb-text-center wb-max-w-[528px] lg:wb-w-[688px] lg:wb-max-w-full xl:wb-w-[920px]">
+      <p className="wb-bodyLg md:wb-bodyXl lg:wb-bodyXXl wb-text-text-soft wb-text-center wb-max-w-[528px] lg:wb-w-[688px] lg:wb-max-w-full xl:wb-w-[920px]">
         <span className="wb-hidden md:wb-block">
           With Kloudlite’s unified remote local environments,{' '}
           <br className="wb-hidden 3xl:wb-block" />
@@ -96,12 +96,12 @@ const Illustration = () => {
       <div className="md:wb-hidden wb-flex wb-justify-center -wb-mx-3xl">
         <img
           alt="illustration-dark"
-          className="wb-hidden dark:wb-block wb-w-full wb-aspect-square"
+          className="wb-hidden dark-block wb-w-full wb-aspect-square"
           src={HomeIllustrationMobileDark.src}
         />
         <img
           alt="illustration-light"
-          className="dark:wb-hidden wb-w-full wb-aspect-square"
+          className="dark-hidden wb-w-full wb-aspect-square"
           src={HomeIllustrationMobile.src}
         />
       </div>
@@ -121,13 +121,13 @@ const Index = () => {
               className="md:wb-w-[610px] wb-flex wb-flex-col wb-gap-xl wb-items-center"
             >
               <ProviderUI />
-              <span className="wb-text-text-strong dark:wb-text-text-darktheme-strong wb-bodyLg">
+              <span className="wb-text-text-strong wb-bodyLg">
                 Got an invite code?{' '}
                 <a
                   href={`${authUrl}/signup`}
                   className="hover:wb-bodyLg-underline wb-underline-offset-4 "
                 >
-                  <span className="!wb-text-text-default dark:!wb-text-text-darktheme-default wb-cursor-pointer">
+                  <span className="!wb-text-text-default wb-cursor-pointer">
                     Click here
                   </span>{' '}
                   to access

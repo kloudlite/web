@@ -44,10 +44,10 @@ const ListDetailItem = ({
   const { locale = DEFAULT_LOCALE } = useRouter();
   return (
     <>
-      <div className="wb-bodyLg md:wb-w-[180px] wb-capitalize wb-text-text-soft dark:wb-text-text-darktheme-soft wb-hidden md:wb-block">
+      <div className="wb-bodyLg md:wb-w-[180px] wb-capitalize wb-text-text-soft wb-hidden md:wb-block">
         {frontMatter?.category}
       </div>
-      <div className="wb-bodyLg wb-w-[200px] wb-text-text-soft dark:wb-text-text-darktheme-soft wb-hidden md:wb-block">
+      <div className="wb-bodyLg wb-w-[200px] wb-text-text-soft wb-hidden md:wb-block">
         {new Date(frontMatter?.date).toLocaleDateString(locale, {
           day: 'numeric',
           month: 'long',
@@ -55,10 +55,10 @@ const ListDetailItem = ({
         })}
       </div>
       <div className="wb-flex wb-flex-col wb-gap-md md:wb-hidden">
-        <div className="wb-bodyLg wb-w-[180px] wb-capitalize wb-text-text-soft dark:wb-text-text-darktheme-soft">
+        <div className="wb-bodyLg wb-w-[180px] wb-capitalize wb-text-text-soft">
           {frontMatter?.category}
         </div>
-        <div className="wb-bodyLg wb-w-[200px] wb-text-text-soft dark:wb-text-text-darktheme-soft">
+        <div className="wb-bodyLg wb-w-[200px] wb-text-text-soft">
           {new Date(frontMatter?.date).toLocaleDateString(locale, {
             day: 'numeric',
             month: 'long',
@@ -106,10 +106,10 @@ const BlogHome = () => {
     <div className="wb-flex wb-flex-col">
       <div className="wb-py-6xl md:wb-py-8xl lg:wb-py-10xl wb-flex wb-flex-col">
         <div className="wb-flex wb-flex-col wb-gap-3xl">
-          <h1 className="wb-heading4xl-marketing lg:wb-heading5xl-marketing wb-text-text-default dark:wb-text-text-darktheme-default">
+          <h1 className="wb-heading4xl-marketing lg:wb-heading5xl-marketing wb-text-text-default">
             Blog
           </h1>
-          <p className="wb-bodyXl lg:wb-bodyXXl wb-text-text-soft dark:wb-text-text-darktheme-soft">
+          <p className="wb-bodyXl lg:wb-bodyXXl wb-text-text-soft">
             The one stop shop for latest tech trends, tools, insights, and
             analysis
           </p>
@@ -145,14 +145,14 @@ const BlogHome = () => {
             <div className="wb-grid wb-grid-cols-1 md:wb-grid-rows-[64px_auto_64px] lg:wb-grid-rows-[64px_640px_64px]">
               <div className="wb-hidden md:wb-block">
                 <GraphItem>
-                  <div className="wb-flex wb-flex-row wb-items-center wb-py-xl wb-px-5xl wb-h-8xl wb-headingMd wb-text-text-default dark:wb-text-text-darktheme-default wb-bg-surface-basic-active dark:wb-bg-surface-darktheme-basic-active">
+                  <div className="wb-flex wb-flex-row wb-items-center wb-py-xl wb-px-5xl wb-h-8xl wb-headingMd wb-text-text-default wb-bg-surface-basic-active">
                     <span className="wb-flex-1">Name</span>
                     <span className="wb-w-[180px]">Category</span>
                     <span className="wb-w-[200px]">Published date</span>
                   </div>
                 </GraphItem>
               </div>
-              <GraphItem className="md:wb-min-h-[640px] wb-flex wb-flex-col wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued">
+              <GraphItem className="md:wb-min-h-[640px] wb-flex wb-flex-col wb-bg-surface-basic-subdued">
                 {page.map((bp: any, index: any) => {
                   if (bp.kind !== 'MdxPage') {
                     return null;
@@ -161,7 +161,7 @@ const BlogHome = () => {
                     <a
                       href={bp.route}
                       key={bp.name}
-                      className="flex flex-col wb-gap-3xl hover:wb-bg-surface-basic-hovered dark:hover:wb-bg-surface-darktheme-basic-hovered"
+                      className="flex flex-col wb-gap-3xl hover:wb-bg-surface-basic-hovered"
                     >
                       <div
                         className={cn(
@@ -169,20 +169,20 @@ const BlogHome = () => {
                           index === page.length - 1 ? 'wb-pb-3xl' : ''
                         )}
                       >
-                        <div className="wb-flex-1 wb-bodyLg wb-text-text-default dark:wb-text-text-darktheme-default lg:wb-line-clamp-1">
+                        <div className="wb-flex-1 wb-bodyLg wb-text-text-default lg:wb-line-clamp-1">
                           {bp.frontMatter?.title}
                         </div>
                         <ListDetailItem frontMatter={bp.frontMatter} />
                       </div>
                       {index < page.length - 1 && (
-                        <div className="md:wb-hidden wb-h-[1.5px] wb-bg-border-dark dark:wb-bg-border-darktheme-dark" />
+                        <div className="md:wb-hidden wb-h-[1.5px] wb-bg-border-dark" />
                       )}
                     </a>
                   );
                 })}
               </GraphItem>
-              <GraphItem className="wb-px-5xl wb-py-xl wb-flex wb-flex-row wb-items-center wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued ">
-                <div className="wb-bodyLg wb-text-text-strong dark:wb-text-text-darktheme-strong wb-flex-1">
+              <GraphItem className="wb-px-5xl wb-py-xl wb-flex wb-flex-row wb-items-center wb-bg-surface-basic-subdued">
+                <div className="wb-bodyLg wb-text-text-strong wb-flex-1">
                   1-{items.length < 10 ? items.length : 3} of {items.length}
                 </div>
                 <div className="wb-flex wb-flex-row wb-items-center wb-gap-md">

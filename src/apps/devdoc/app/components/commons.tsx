@@ -72,7 +72,7 @@ export const TitleBlock = ({
       <div className="flex flex-col gap-md">
         <h3
           className={cn(
-            'wb-heading3xl-marketing md:wb-heading4xl-marketing lg:wb-heading5xl-marketing wb-text-text-default dark:wb-text-text-darktheme-default',
+            'wb-heading3xl-marketing md:wb-heading4xl-marketing lg:wb-heading5xl-marketing wb-text-text-default',
             titleClass
           )}
         >
@@ -82,7 +82,7 @@ export const TitleBlock = ({
       {desc && (
         <p
           className={cn(
-            'wb-bodyLg md:wb-bodyXl lg:wb-bodyXXl wb-text-text-soft dark:wb-text-text-darktheme-soft wb-max-w-[784px] wb-m-auto',
+            'wb-bodyLg md:wb-bodyXl lg:wb-bodyXXl wb-text-text-soft wb-max-w-[784px] wb-m-auto',
             descClass
           )}
         >

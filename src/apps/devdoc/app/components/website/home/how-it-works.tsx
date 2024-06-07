@@ -14,12 +14,12 @@ const HowItWorksSection = () => {
         return (
           <div className="wb-flex wb-items-center wb-justify-center wb-h-full">
             <img
-              className="dark:wb-hidden  wb-max-h-full"
+              className="dark-hidden  wb-max-h-full"
               alt="distribute"
               src={imgs.collaborate.r1440}
             />
             <img
-              className="wb-hidden dark:wb-block  wb-max-h-full"
+              className="wb-hidden dark-block  wb-max-h-full"
               alt="distribute"
               src={imgs.collaborate.r1440Dark}
             />
@@ -29,12 +29,12 @@ const HowItWorksSection = () => {
         return (
           <div className="wb-flex wb-items-center wb-justify-center wb-h-full">
             <img
-              className="dark:wb-hidden  wb-max-h-full"
+              className="dark-hidden  wb-max-h-full"
               alt="distribute"
               src={imgs.nocommit.r1440}
             />
             <img
-              className="wb-hidden dark:wb-block  wb-max-h-full"
+              className="wb-hidden dark-block  wb-max-h-full"
               alt="distribute"
               src={imgs.nocommit.r1440Dark}
             />
@@ -44,12 +44,12 @@ const HowItWorksSection = () => {
         return (
           <div className="wb-flex wb-items-center wb-justify-center wb-h-full">
             <img
-              className="dark:wb-hidden  wb-max-h-full"
+              className="dark-hidden  wb-max-h-full"
               alt="distribute"
               src={imgs.integrate.r1440}
             />
             <img
-              className="wb-hidden dark:wb-block  wb-max-h-full"
+              className="wb-hidden dark-block  wb-max-h-full"
               alt="distribute"
               src={imgs.integrate.r1440Dark}
             />
@@ -60,12 +60,12 @@ const HowItWorksSection = () => {
         return (
           <div className="wb-flex wb-items-center wb-justify-center wb-h-full">
             <img
-              className="dark:wb-hidden wb-max-h-full"
+              className="dark-hidden wb-max-h-full"
               alt="distribute"
               src={imgs.connect.r1440}
             />
             <img
-              className="wb-hidden dark:wb-block wb-max-h-full"
+              className="wb-hidden dark-block wb-max-h-full"
               alt="distribute"
               src={imgs.connect.r1440Dark}
             />

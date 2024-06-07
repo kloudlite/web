@@ -8,7 +8,7 @@ import {
 } from 'react';
 import { cn } from '../utils/commons';
 
-const strokeColor = 'wb-bg-border-dark dark:wb-bg-border-darktheme-dark';
+const strokeColor = 'wb-bg-border-dark';
 
 type Ifade = {
   top?: string;
@@ -41,28 +41,28 @@ export const Graph = ({
         {/* top */}
         <div
           className={cn(
-            'wb-absolute wb-top-0 wb-left-0 wb-right-0 wb-from-transparent wb-to-surface-basic-subdued dark:wb-to-surface-darktheme-basic-subdued wb-bg-gradient-to-t',
+            'wb-absolute wb-top-0 wb-left-0 wb-right-0 wb-from-transparent wb-to-surface-basic-subdued wb-bg-gradient-to-t',
             fade?.top || 'wb-h-10xl'
           )}
         />
         {/* bottom */}
         <div
           className={cn(
-            'wb-absolute wb-bottom-0 wb-left-0 wb-right-0 wb-from-transparent wb-to-surface-basic-subdued dark:wb-to-surface-darktheme-basic-subdued wb-bg-gradient-to-b',
+            'wb-absolute wb-bottom-0 wb-left-0 wb-right-0 wb-from-transparent wb-to-surface-basic-subdued wb-bg-gradient-to-b',
             fade?.bottom || 'wb-h-10xl'
           )}
         />
         {/* left */}
         <div
           className={cn(
-            'wb-absolute wb-bottom-0 wb-left-0 wb-top-0 wb-from-transparent wb-to-surface-basic-subdued dark:wb-to-surface-darktheme-basic-subdued wb-bg-gradient-to-l',
+            'wb-absolute wb-bottom-0 wb-left-0 wb-top-0 wb-from-transparent wb-to-surface-basic-subdued wb-bg-gradient-to-l',
             fade?.left || 'wb-w-10xl'
           )}
         />
         {/* right */}
         <div
           className={cn(
-            'wb-absolute wb-bottom-0 wb-right-0 wb-top-0 wb-from-transparent wb-to-surface-basic-subdued dark:wb-to-surface-darktheme-basic-subdued wb-bg-gradient-to-r',
+            'wb-absolute wb-bottom-0 wb-right-0 wb-top-0 wb-from-transparent wb-to-surface-basic-subdued wb-bg-gradient-to-r',
             fade?.right || 'wb-w-10xl'
           )}
         />

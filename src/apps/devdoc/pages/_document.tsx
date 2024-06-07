@@ -3,10 +3,7 @@ import NextDocument, { Html, Head, Main, NextScript } from 'next/document';
 export default class Document extends NextDocument {
   render() {
     return (
-      <Html
-        lang="en"
-        className="wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued"
-      >
+      <Html lang="en" className="wb-group/html">
         <Head>
           <link rel="shortcut icon" href="/favicon.ico" />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -63,14 +60,9 @@ export default class Document extends NextDocument {
               __html: `
                 try {
                   if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                    document.documentElement.classList.add('wb-dark', 'dark')
-                    document.querySelector('html').classList.remove('wb-bg-surface-basic-subdued')
-                    document.querySelector('html').classList.add('wb-bg-surface-darktheme-basic-subdued')
-// document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0B1120')
+                    document.querySelector('html').setAttribute('data-theme', 'dark')
                   } else {
-                    document.documentElement.classList.remove('wb-dark', 'dark')
-                    document.querySelector('html').classList.add('wb-bg-surface-basic-subdued')
-                    document.querySelector('html').classList.remove('wb-bg-surface-darktheme-basic-subdued')
+                    document.querySelector('html').setAttribute('data-theme', 'light')                  
                   }
                 } catch (_) {}
               `,

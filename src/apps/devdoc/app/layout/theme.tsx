@@ -103,7 +103,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
   }
 
   return (
-    <div className="wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued wb-min-h-screen wb-antialiased">
+    <div className="wb-bg-surface-basic-subdued wb-min-h-screen wb-antialiased">
       <Head>
         <title>{title === 'Index' ? config.siteTitle : title}</title>
         <meta name="description" content={frontMatter.description} />
@@ -221,7 +221,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
                 activeThemeContext.timestamp &&
                 pageOpts.timestamp &&
                 activeThemeContext.layout !== 'raw' ? (
-                  <div className="wb-bodyLg wb-text-text-strong dark:wb-text-text-darktheme-strong wb-pb-xl">
+                  <div className="wb-bodyLg wb-text-text-strong wb-pb-xl">
                     {GitTimestamp({ timestamp: new Date(pageOpts.timestamp) })}
                   </div>
                 ) : null}

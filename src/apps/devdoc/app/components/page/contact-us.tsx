@@ -116,10 +116,10 @@ const ContactRoot = () => {
   return (
     <Wrapper className="wb-relative wb-flex wb-flex-col wb-items-center wb-py-6xl md:wb-py-8xl lg:wb-py-10xl wb-gap-6xl md:wb-gap-8xl xl:wb-gap-10xl">
       <div className="wb-flex wb-flex-col wb-gap-3xl wb-text-center">
-        <h1 className="wb-heading4xl-marketing md:wb-heading5xl-marketing lg:wb-heading6xl-marketing wb-text-text-default dark:wb-text-text-darktheme-default">
+        <h1 className="wb-heading4xl-marketing md:wb-heading5xl-marketing lg:wb-heading6xl-marketing wb-text-text-default">
           Contact us
         </h1>
-        <p className="wb-bodyLg-medium md:wb-bodyXl-medium wb-text-text-soft dark:wb-text-text-darktheme-soft">
+        <p className="wb-bodyLg-medium md:wb-bodyXl-medium wb-text-text-soft">
           Get in touch and let us know how we can help.
         </p>
       </div>
@@ -128,7 +128,7 @@ const ContactRoot = () => {
           onSubmit={handleSubmit((d) => {
             addContact(firebaseApp, d);
           })}
-          className="wb-flex wb-flex-col wb-gap-5xl wb-flex-1 wb-p-3xl md:wb-p-6xl wb-border wb-border-border-default dark:wb-border-border-darktheme-default wb-rounded-lg"
+          className="wb-flex wb-flex-col wb-gap-5xl wb-flex-1 wb-p-3xl md:wb-p-6xl wb-border wb-border-border-default wb-rounded-lg"
         >
           <div className="wb-flex wb-flex-col wb-gap-3xl">
             <TextInput
@@ -204,18 +204,18 @@ const ContactRoot = () => {
             <Button type="submit" content="Request demo" size="lg" block />
           </div>
         </form>
-        <div className="wb-h-xs lg:wb-h-auto lg:wb-w-xs wb-bg-border-default dark:wb-bg-border-darktheme-default" />
+        <div className="wb-h-xs lg:wb-h-auto lg:wb-w-xs wb-bg-border-default" />
         <div className="wb-flex-1 wb-flex wb-flex-col md:wb-flex-row lg:wb-flex-col wb-gap-7xl md:wb-gap-10xl wb-justify-center md:wb-justify-between lg:wb-max-w-[300px]">
-          <div className="wb-flex wb-flex-col wb-p-5xl wb-gap-6xl wb-border wb-border-border-default dark:wb-border-border-darktheme-default wb-rounded-lg">
-            <div className="wb-text-icon-primary dark:wb-text-icon-darktheme-primary">
+          <div className="wb-flex wb-flex-col wb-p-5xl wb-gap-6xl wb-border wb-border-border-default wb-rounded-lg">
+            <div className="wb-text-icon-primary">
               <SupportIcon height={66} width={66} />
             </div>
             <div className="wb-flex wb-flex-col wb-gap-xl">
               <div className="wb-flex wb-flex-col wb-gap-lg">
-                <span className="wb-headingXl wb-text-text-default dark:wb-text-text-darktheme-default">
+                <span className="wb-headingXl wb-text-text-default">
                   Reach us to
                 </span>
-                <span className="wb-bodyXl wb-text-text-soft dark:wb-text-text-darktheme-soft">
+                <span className="wb-bodyXl wb-text-text-soft">
                   We’re here to help with any questions you may have.
                 </span>
               </div>

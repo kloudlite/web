@@ -51,9 +51,9 @@ function HeadingLink({
     <>
       <Tag
         className={cn(
-          'wb-text-text-default dark:wb-text-text-darktheme-default wb-group',
+          'wb-text-text-default wb-group',
           {
-            h2: 'wb-heading2xl-marketing wb-sticky wb-top-0 wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued  wb-mt-[30px] wb-py-[10px]',
+            h2: 'wb-heading2xl-marketing wb-sticky wb-top-0 wb-bg-surface-basic-subdued  wb-mt-[30px] wb-py-[10px]',
             h3: 'wb-headingXl-marketing wb-mt-6xl',
             h4: 'wb-headingLg-marketing wb-mt-6xl',
             h5: 'wb-mt-6xl',
@@ -141,7 +141,7 @@ export const createComponents = ({
   return {
     h1: (props) => (
       <h1
-        className="wb-heading4xl-marketing wb-mt-sm wb-text-text-strong dark:wb-text-text-darktheme-strong"
+        className="wb-heading4xl-marketing wb-mt-sm wb-text-text-strong"
         {...props}
       />
     ),
@@ -152,13 +152,13 @@ export const createComponents = ({
     h6: (props) => <HeadingLink tag="h6" context={context} {...props} />,
     ul: (props) => (
       <ul
-        className="wb-list-disc wb-bodyLg wb-pl-5xl wb-text-text-strong dark:wb-text-text-darktheme-strong"
+        className="wb-list-disc wb-bodyLg wb-pl-5xl wb-text-text-strong"
         {...props}
       />
     ),
     ol: (props) => (
       <ol
-        className="wb-bodyLg wb-list-decimal wb-pl-5xl wb-text-text-strong dark:wb-text-text-darktheme-strong"
+        className="wb-bodyLg wb-list-decimal wb-pl-5xl wb-text-text-strong"
         {...props}
       />
     ),
@@ -169,7 +169,7 @@ export const createComponents = ({
     table: (props) => <Table className="" {...props} />,
     p: (props) => (
       <p
-        className="wb-bodyLg wb-mt-3xl rounded-image wb-text-text-strong dark:wb-text-text-darktheme-strong wb-break-words !wb-leading-[28px]"
+        className="wb-bodyLg wb-mt-3xl rounded-image wb-text-text-strong wb-break-words !wb-leading-[28px]"
         {...props}
       />
     ),
@@ -181,7 +181,7 @@ export const createComponents = ({
     pre: (props) => (
       <pre
         {...props}
-        className="wb-mt-3xl wb-bg-surface-basic-input dark:wb-bg-surface-darktheme-basic-input wb-border wb-border-border-default dark:wb-border-border-darktheme-default wb-rounded wb-p-xl"
+        className="wb-mt-3xl wb-bg-surface-basic-input wb-border wb-border-border-default wb-rounded wb-p-xl"
       />
     ),
     // code: Code,

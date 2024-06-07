@@ -6,7 +6,7 @@ import { forwardRef } from 'react';
 import { cn } from '../utils/commons';
 
 const defaultCss =
-  'wb-ring-offset-0 wb-ring-border-focus dark:wb-ring-border-darktheme-focus wb-outline-none focus-visible:wb-ring-2';
+  'wb-ring-offset-0 wb-ring-border-focus wb-outline-none focus-visible:wb-ring-2';
 
 export type AnchorProps = Omit<ComponentProps<'a'>, 'ref'> & {
   newWindow?: boolean;

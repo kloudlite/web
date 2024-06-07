@@ -17,10 +17,10 @@ export const BlogHeader = ({
   return (
     <div className="wb-flex wb-flex-col wb-gap-5xl wb-pt-2xl wb-pb-xl">
       <div className="wb-flex wb-flex-col wb-gap-xl">
-        <h1 className="wb-heading4xl wb-text-text-default dark:wb-text-text-darktheme-default">
+        <h1 className="wb-heading4xl wb-text-text-default">
           {frontMatter.title || frontMatter.companyName}
         </h1>
-        <p className="wb-bodyLg wb-text-text-strong dark:wb-text-text-darktheme-strong">
+        <p className="wb-bodyLg wb-text-text-strong">
           {frontMatter.describe || frontMatter.companyDescription}
         </p>
       </div>

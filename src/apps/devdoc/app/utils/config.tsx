@@ -25,7 +25,7 @@ const socialIconSize = 18;
 
 const SocialMenu = () => {
   return (
-    <div className="wb-flex wb-flex-row wb-items-center wb-gap-xl wb-text-icon-strong dark:wb-text-icon-darktheme-strong wb-pr-2xl">
+    <div className="wb-flex wb-flex-row wb-items-center wb-gap-xl wb-text-icon-strong wb-pr-2xl">
       <a href={gitUrl} aria-label="kloudlite-github">
         <GithubLogoFill size={socialIconSize} />
       </a>
@@ -57,7 +57,7 @@ const BrandMenu = ({ className }: { className?: string }) => {
             <a href="/" aria-label="kloudlite">
               <BrandLogo size={brandIconSize} detailed />
             </a>
-            <span className="wb-bodySm wb-text-text-soft dark:wb-text-text-darktheme-soft">
+            <span className="wb-bodySm wb-text-text-soft">
               Boost your efficiency, speed up deployments, enhance collaboration
             </span>
           </div>
@@ -74,12 +74,12 @@ const BrandMenu = ({ className }: { className?: string }) => {
             <ButtonGroup.IconButton value="system" icon={<Monitor />} />
           </ButtonGroup.Root>
         </div>
-        <div className="wb-bodyMd wb-text-text-soft dark:wb-text-text-darktheme-soft wb-hidden md:wb-flex lg:wb-hidden wb-flex-col wb-gap-3xl wb-items-end md:wb-self-end lg:wb-self-auto">
+        <div className="wb-bodyMd wb-text-text-soft wb-hidden md:wb-flex lg:wb-hidden wb-flex-col wb-gap-3xl wb-items-end md:wb-self-end lg:wb-self-auto">
           <SocialMenu />
           <div>© {new Date().getFullYear()} Kloudlite Labs Pvt Ltd.</div>
         </div>
       </div>
-      <div className="wb-bodyMd wb-text-text-soft dark:wb-text-text-darktheme-soft wb-flex md:wb-hidden lg:wb-flex wb-flex-col wb-gap-3xl">
+      <div className="wb-bodyMd wb-text-text-soft wb-flex md:wb-hidden lg:wb-flex wb-flex-col wb-gap-3xl">
         <SocialMenu />
         <div>© {new Date().getFullYear()} Kloudlite Labs Pvt Ltd.</div>
       </div>
@@ -98,9 +98,9 @@ export default {
     brand: <BrandMenu className="md:wb-order-[-9999]" />,
     extra: (
       <div>
-        <img className="dark:wb-hidden" src={OssIcon.src} alt="oss-light" />
+        <img className="dark-hidden" src={OssIcon.src} alt="oss-light" />
         <img
-          className="wb-hidden dark:wb-block"
+          className="wb-hidden dark-block"
           src={OssIconDark.src}
           alt="oss-dark"
         />

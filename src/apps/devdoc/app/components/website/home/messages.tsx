@@ -22,9 +22,9 @@ const MessageCard = ({
   message: ReactNode;
 }) => {
   return (
-    <div className="xl:wb-min-h-[320px] 2xl:wb-max-h-[288px] 3xl:wb-min-h-[256px] wb-flex wb-flex-col wb-gap-3xl wb-p-3xl wb-h-full wb-bg-surface-basic-default dark:wb-bg-surface-darktheme-basic-default wb-min-h-[224px]">
+    <div className="xl:wb-min-h-[320px] 2xl:wb-max-h-[288px] 3xl:wb-min-h-[256px] wb-flex wb-flex-col wb-gap-3xl wb-p-3xl wb-h-full wb-bg-surface-basic-default wb-min-h-[224px]">
       <div className="wb-flex wb-flex-row wb-items-center wb-gap-3xl">
-        <span className="wb-flex-1 dark:wb-hidden">
+        <span className="wb-flex-1 dark-hidden">
           <Profile
             responsive={false}
             name={title}
@@ -34,7 +34,7 @@ const MessageCard = ({
             noImage
           />
         </span>
-        <span className="wb-flex-1 wb-hidden dark:wb-block">
+        <span className="wb-flex-1 wb-hidden dark-block">
           <Profile
             responsive={false}
             name={title}
@@ -45,9 +45,7 @@ const MessageCard = ({
           />
         </span>
       </div>
-      <p className="wb-bodyLg wb-text-text-soft dark:wb-text-text-darktheme-soft">
-        {message}
-      </p>
+      <p className="wb-bodyLg wb-text-text-soft">{message}</p>
     </div>
   );
 };

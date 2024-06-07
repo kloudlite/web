@@ -9,9 +9,9 @@ import { motion } from 'framer-motion';
 import { Button, IconButton } from 'kl-design-system/atoms/button';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { ArrowRight } from '~/app/icons/icons';
 import { cn } from '~/app/utils/commons';
 import useConfig from '~/app/utils/use-config';
-import { ArrowRight } from '~/app/icons/icons';
 import JoinProvidersDialog from '../join-provider-dialog';
 
 const ProviderUI = () => {
@@ -33,7 +33,7 @@ const ProviderUI = () => {
 
   if (config.user?.verified && !config.user.approved) {
     return (
-      <div className="wb-text-text-default dark:wb-text-text-darktheme-default wb-bodyLg-medium">
+      <div className="wb-text-center wb-text-text-default wb-bodyLg-medium">
         You are already in our waitlist.
       </div>
     );
@@ -87,7 +87,7 @@ const ProviderUI = () => {
           >
             <motion.span
               className={cn(
-                'wb-text-text-default dark:wb-text-text-darktheme-default wb-transition-all wb-ease-in-out',
+                'wb-text-text-default wb-transition-all wb-ease-in-out',
                 reveal ? 'wb-opacity-100' : 'wb-opacity-0'
               )}
             >

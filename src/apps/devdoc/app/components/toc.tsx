@@ -67,7 +67,7 @@ export function TOC({ headings }: TOCProps): ReactElement {
                 return (
                   <li
                     className={cn('wb-flex wb-flex-row wb-relative', {
-                      'wb-ml-2xl wb-pl-md wb-border-l wb-border-border-default dark:wb-border-border-darktheme-default':
+                      'wb-ml-2xl wb-pl-md wb-border-l wb-border-border-default':
                         depth > 2,
                       'wb-mb-lg': depth === 2,
                       'wb-pb-md': depth > 2 && items?.[index + 1]?.depth > 2,
@@ -78,16 +78,16 @@ export function TOC({ headings }: TOCProps): ReactElement {
                       title={value}
                       href={`#${id}`}
                       className={cn(
-                        'wb-flex wb-px-2xl wb-py-md wb-rounded wb-min-w-0 wb-w-full hover:wb-bg-surface-basic-hovered dark:hover:wb-bg-surface-darktheme-basic-hovered',
+                        'wb-flex wb-px-2xl wb-py-md wb-rounded wb-min-w-0 wb-w-full hover:wb-bg-surface-basic-hovered',
                         activeAnchor[id]?.isActive
-                          ? 'wb-bg-surface-basic-active dark:wb-bg-surface-darktheme-basic-active wb-bodyMd-medium  wb-text-text-primary dark:wb-text-text-darktheme-primary wb-relative'
-                          : 'wb-bodyMd wb-text-text-soft dark:wb-text-text-darktheme-soft'
+                          ? 'wb-bg-surface-basic-active wb-bodyMd-medium  wb-text-text-primary wb-relative'
+                          : 'wb-bodyMd wb-text-text-soft'
                       )}
                     >
                       {depth > 2 && activeAnchor[id]?.isActive && (
                         <motion.div
                           layoutId="toc-line"
-                          className="wb-border-l-2 wb-border-border-primary dark:wb-border-border-darktheme-primary wb-rounded wb-h-full wb-absolute -wb-left-[5px] wb-top-0"
+                          className="wb-border-l-2 wb-border-border-primary wb-rounded wb-h-full wb-absolute -wb-left-[5px] wb-top-0"
                         />
                       )}
 
@@ -103,12 +103,10 @@ export function TOC({ headings }: TOCProps): ReactElement {
 
       <div
         className={cn(
-          'wb-sticky wb-pb-6xl wb-bottom-0 wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued wb-pt-xl'
+          'wb-sticky wb-pb-6xl wb-bottom-0 wb-bg-surface-basic-subdued wb-pt-xl'
         )}
       >
-        {hasHeadings && (
-          <hr className="wb-border-border-default dark:wb-border-border-darktheme-default wb-mb-5xl" />
-        )}
+        {hasHeadings && <hr className="wb-border-border-default wb-mb-5xl" />}
         {config.feedback ? (
           <Button
             content={

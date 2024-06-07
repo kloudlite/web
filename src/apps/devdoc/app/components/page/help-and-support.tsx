@@ -107,7 +107,7 @@ const PopularArticleItem = ({
   return (
     <Link
       href={link}
-      className="wb-bodyLg-medium wb-py-lg wb-px-xl wb-flex wb-flex-row wb-gap-xl wb-items-center wb-rounded wb-text-text-strong dark:wb-text-text-darktheme-strong hover:wb-bg-surface-basic-hovered dark:hover:bg-surface-darktheme-basic-hovered"
+      className="wb-bodyLg-medium wb-py-lg wb-px-xl wb-flex wb-flex-row wb-gap-xl wb-items-center wb-rounded wb-text-text-strong hover:wb-bg-surface-basic-hovered"
     >
       <span className="flex-1">{title}</span>
       <span>
@@ -127,17 +127,13 @@ const TopicItem = ({
   desc: ReactNode;
 }) => {
   return (
-    <div className="wb-p-3xl lg:wb-p-5xl wb-flex wb-flex-col wb-gap-5xl wb-h-full lg:wb-min-h-[256px] lg:wb-max-h-[288px] wb-bg-surface-basic-default dark:wb-bg-surface-darktheme-basic-default">
-      <div className="wb-flex wb-w-8xl wb-h-8xl wb-rounded-full wb-items-center wb-justify-center wb-p-2xl wb-text-icon-on-primary dark:wb-text-icon-darktheme-on-primary wb-bg-icon-primary dark:wb-bg-surface-darktheme-primary-default">
+    <div className="wb-p-3xl lg:wb-p-5xl wb-flex wb-flex-col wb-gap-5xl wb-h-full lg:wb-min-h-[256px] lg:wb-max-h-[288px] wb-bg-surface-basic-default">
+      <div className="wb-flex wb-w-8xl wb-h-8xl wb-rounded-full wb-items-center wb-justify-center wb-p-2xl wb-text-icon-on-primary wb-bg-icon-primary">
         {icon}
       </div>
       <div className="wb-flex wb-flex-col wb-gap-3xl">
-        <h4 className="wb-headingXl-marketing wb-text-text-default dark:wb-text-text-darktheme-default">
-          {title}
-        </h4>
-        <p className="wb-bodyLg wb-line-clamp-2 wb-text-text-soft dark:wb-text-text-darktheme-soft">
-          {desc}
-        </p>
+        <h4 className="wb-headingXl-marketing wb-text-text-default">{title}</h4>
+        <p className="wb-bodyLg wb-line-clamp-2 wb-text-text-soft">{desc}</p>
       </div>
     </div>
   );
@@ -149,17 +145,17 @@ const HelpAndSupportRoot = () => {
       <div className="wb-flex wb-flex-col wb-w-full">
         <div className="wb-flex wb-flex-col wb-gap-6xl wb-text-center wb-w-full">
           <div className="wb-flex wb-flex-col wb-gap-3xl">
-            <h1 className="wb-heading3xl-marketing md:wb-heading4xl-marketing lg:wb-heading5xl-marketing wb-text-text-default dark:wb-text-text-darktheme-default">
+            <h1 className="wb-heading3xl-marketing md:wb-heading4xl-marketing lg:wb-heading5xl-marketing wb-text-text-default">
               <HandWaving size={56} className="wb-hidden md:wb-inline" />
               <HandWaving size={32} className="wb-inline md:wb-hidden" />
               <span> How can we help you today?</span>
             </h1>
-            <p className="wb-hidden md:wb-block md:wb-bodyXl lg:wb-bodyXXl wb-text-text-soft dark:wb-text-text-darktheme-soft">
+            <p className="wb-hidden md:wb-block md:wb-bodyXl lg:wb-bodyXXl wb-text-text-soft">
               Discover solutions through our documentation, guides, and
               community
             </p>
 
-            <p className="md:wb-hidden wb-bodyMd-medium wb-text-text-soft dark:wb-text-text-darktheme-soft">
+            <p className="md:wb-hidden wb-bodyMd-medium wb-text-text-soft">
               Discover solutions through our documentation, guides, and
               community
             </p>
@@ -175,8 +171,8 @@ const HelpAndSupportRoot = () => {
         </div>
         <GraphExtended className="lg:wb-mt-5xl">
           <GraphItem>
-            <div className="wb-px-xl md:wb-px-3xl wb-py-4xl md:wb-py-5xl wb-gap-4xl md:wb-gap-5xl wb-flex wb-flex-col wb-min-h-[289px] 3xl:wb-min-h-[256px] 3xl:wb-max-h-[256px] wb-bg-surface-basic-default dark:wb-bg-surface-darktheme-basic-default">
-              <h2 className="wb-px-xl wb-heading2xl-marketing wb-text-text-default dark:wb-text-text-darktheme-default">
+            <div className="wb-px-xl md:wb-px-3xl wb-py-4xl md:wb-py-5xl wb-gap-4xl md:wb-gap-5xl wb-flex wb-flex-col wb-min-h-[289px] 3xl:wb-min-h-[256px] 3xl:wb-max-h-[256px] wb-bg-surface-basic-default">
+              <h2 className="wb-px-xl wb-heading2xl-marketing wb-text-text-default">
                 Popular articles
               </h2>
               <div className="wb-grid wb-grid-cols-1 md:wb-grid-cols-2 3xl:wb-grid-cols-3 wb-gap-x-6xl wb-gap-y-xl">
@@ -201,13 +197,13 @@ const HelpAndSupportRoot = () => {
       </div>
       <SectionWrapper className="wb-flex wb-flex-col wb-w-full">
         <div className="wb-flex wb-flex-col wb-gap-3xl wb-text-center">
-          <h2 className="wb-heading3xl-marketing md:wb-heading4xl-marketing lg:wb-heading5xl-marketing wb-text-text-default dark:wb-text-text-darktheme-default">
+          <h2 className="wb-heading3xl-marketing md:wb-heading4xl-marketing lg:wb-heading5xl-marketing wb-text-text-default">
             Couldn’t fine what you needed?
           </h2>
-          <p className="wb-hidden md:wb-block md:wb-bodyXl lg:wb-bodyXXl wb-text-text-soft dark:wb-text-text-darktheme-soft">
+          <p className="wb-hidden md:wb-block md:wb-bodyXl lg:wb-bodyXXl wb-text-text-soft">
             Don’t worry, we’ve got more options for you
           </p>
-          <p className="wb-bodyMd-medium md:wb-hidden wb-text-text-soft dark:wb-text-text-darktheme-soft">
+          <p className="wb-bodyMd-medium md:wb-hidden wb-text-text-soft">
             Don’t worry, we’ve got more options for you
           </p>
         </div>

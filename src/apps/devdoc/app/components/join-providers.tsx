@@ -26,7 +26,7 @@ const JoinProviders = () => {
         className="!wb-shadow-darktheme-popover !wb-min-w-[176px]"
       >
         {config.userApiLoading ? (
-          <div className="wb-text-text-default dark:wb-text-text-darktheme-default wb-flex wb-items-center wb-justify-center py-2xl">
+          <div className="wb-text-text-default wb-flex wb-items-center wb-justify-center py-2xl">
             <span className="wb-animate-spin">
               <CircleNotch size={20} />
             </span>
@@ -35,15 +35,15 @@ const JoinProviders = () => {
           <>
             {config.user?.approved && config.user.verified ? (
               <div className="wb-flex wb-flex-col wb-gap-4xl wb-max-w-[300px] wb-px-3xl wb-py-xl wb-text-center">
-                <span className="wb-headingXl-marketing wb-text-text-default dark:wb-text-text-darktheme-default">
+                <span className="wb-headingXl-marketing wb-text-text-default">
                   You&apos;ve been added to our waitlist!
                 </span>
-                <span className="wb-bodyLg wb-text-text-soft dark:wb-text-text-darktheme-soft">
+                <span className="wb-bodyLg wb-text-text-soft">
                   Do you have an invite code?
                   <br />
                   <Link
                     href={`${process.env.AUTH_URL}/signup`}
-                    className="wb-text-text-default dark:wb-text-text-darktheme-default hover:wb-underline wb-underline-offset-4"
+                    className="wb-text-text-default hover:wb-underline wb-underline-offset-4"
                   >
                     Click here
                   </Link>{' '}

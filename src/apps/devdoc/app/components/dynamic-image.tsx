@@ -14,12 +14,12 @@ const ColorImage = ({
       <img
         alt="light"
         src={light}
-        className={cn('dark:wb-hidden', imageClassName)}
+        className={cn('dark-hidden', imageClassName)}
       />
       <img
         src={dark}
         alt="dark"
-        className={cn('wb-hidden dark:wb-block', imageClassName)}
+        className={cn('wb-hidden dark-block', imageClassName)}
       />
     </>
   );

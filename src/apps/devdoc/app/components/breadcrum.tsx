@@ -29,12 +29,10 @@ export function Breadcrumb({
                 className={cn(
                   'wb-shrink-0 wb-transition-colors [vertical-align:middle]',
                   {
-                    'wb-bodyMd-medium wb-text-text-default dark:wb-text-text-darktheme-default':
-                      isActive,
-                    'wb-bodyMd wb-min-w-[24px] wb-overflow-hidden wb-text-ellipsis wb-text-text-soft dark:wb-text-text-darktheme-soft':
+                    'wb-bodyMd-medium wb-text-text-default': isActive,
+                    'wb-bodyMd wb-min-w-[24px] wb-overflow-hidden wb-text-ellipsis wb-text-text-soft':
                       !isActive,
-                    'hover:wb-text-text-strong dark:hover:wb-text-text-darktheme-strong':
-                      !!isLink,
+                    'hover:wb-text-text-strong': !!isLink,
                   }
                 )}
                 title={item.title}
