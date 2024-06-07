@@ -1,6 +1,10 @@
 /* @import url('https://rsms.me/inter/inter.css'); */
 /* @import url('https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap'); */
+@import "./css/primitives.css";
+@import "./css/default.css";
+@import "./css/dark.css";
 @import 'css/slider.css';
+
 html{
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }

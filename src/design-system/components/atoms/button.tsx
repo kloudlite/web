@@ -157,9 +157,9 @@ export const ButtonBase = React.forwardRef<
           bodyMd: variant?.includes('plain'),
         },
         {
-          'pointer-events-none !text-text-disabled dark:text-text-darktheme-disabled bg-surface-basic-disabled dark:bg-surface-darktheme-basic-disabled':
+          'pointer-events-none !text-text-disabled bg-surface-basic-disabled':
             disabled,
-          '!border-border-disabled dark:border-border-darktheme-disabled':
+          '!border-border-disabled':
             disabled &&
             ![
               'plain',
@@ -168,10 +168,10 @@ export const ButtonBase = React.forwardRef<
               'secondary-plain',
             ].includes(variant),
         },
-        'relative ring-offset-1 dark:ring-offset-0',
+        'relative ring-offset-1',
         'outline-none',
         'flex flex-row gap-lg items-center justify-center',
-        'disabled:text-text-disabled dark:disabled:text-text-darktheme-disabled disabled:bg-surface-basic-disabled dark:disabled:bg-surface-darktheme-basic-disabled',
+        'disabled:text-text-disabled disabled:bg-surface-basic-disabled',
         {
           // noRing
           'focus-visible:ring-2 focus:ring-border-focus focus:z-10': !noRing,
@@ -189,7 +189,7 @@ export const ButtonBase = React.forwardRef<
         {
           'border-none': noBorder,
           ...(!noBorder && {
-            'border-border-default disabled:border-border-disabled dark:border-border-darktheme-default':
+            'border-border-default disabled:border-border-disabled':
               variant === 'basic' ||
               variant === 'outline' ||
               variant === 'secondary-outline',
@@ -217,11 +217,11 @@ export const ButtonBase = React.forwardRef<
         },
         !disabled
           ? {
-              'bg-surface-basic-default hover:bg-surface-basic-hovered active:bg-surface-basic-pressed disabled:bg-surface-basic-default dark:bg-surface-darktheme-basic-default dark:hover:bg-surface-darktheme-basic-hovered dark:active:bg-surface-darktheme-basic-pressed':
+              'bg-surface-basic-default hover:bg-surface-basic-hovered active:bg-surface-basic-pressed disabled:bg-surface-basic-default':
                 variant === 'basic' && !selected,
-              'bg-surface-basic-pressed hover:bg-surface-basic-pressed active:bg-surface-basic-pressed disabled:bg-surface-basic-default dark:bg-surface-darktheme-basic-pressed dark:hover:bg-surface-darktheme-basic-pressed dark:active:bg-surface-darktheme-basic-pressed':
+              'bg-surface-basic-pressed hover:bg-surface-basic-pressed active:bg-surface-basic-pressed disabled:bg-surface-basic-default':
                 variant === 'basic' && selected,
-              'bg-surface-primary-default hover:bg-surface-primary-hovered active:bg-surface-primary-pressed disabled:bg-surface-basic-default dark:bg-surface-darktheme-primary-default dark:hover:bg-surface-darktheme-primary-hovered dark:active:bg-surface-darktheme-primary-pressed dark:disabled:bg-surface-darktheme-basic-default':
+              'bg-surface-primary-default hover:bg-surface-primary-hovered active:bg-surface-primary-pressed disabled:bg-surface-basic-default':
                 variant === 'primary',
               'bg-surface-secondary-default hover:bg-surface-secondary-hovered active:bg-surface-secondary-pressed disabled:bg-surface-basic-default':
                 variant === 'secondary',
@@ -233,9 +233,9 @@ export const ButtonBase = React.forwardRef<
                 variant === 'primary-outline',
               'bg-none hover:bg-surface-secondary-subdued active:bg-surface-secondary-subdued':
                 variant === 'secondary-outline',
-              'bg-none hover:bg-surface-basic-hovered active:bg-surface-basic-pressed dark:hover:bg-surface-darktheme-basic-hovered dark:active:bg-surface-darktheme-basic-pressed':
+              'bg-none hover:bg-surface-basic-hovered active:bg-surface-basic-pressed ':
                 variant === 'outline',
-              'bg-surface-basic-pressed shadow-none hover:bg-surface-basic-hovered active:bg-surface-basic-pressed hover:shadow-button dark:bg-surface-darktheme-basic-pressed dark:hover:bg-surface-darktheme-basic-hovered dark:active:bg-surface-darktheme-basic-pressed':
+              'bg-surface-basic-pressed shadow-none hover:bg-surface-basic-hovered active:bg-surface-basic-pressed hover:shadow-button':
                 variant === 'outline' && selected,
               'bg-none shadow-none':
                 (variant === 'plain' ||
@@ -243,11 +243,11 @@ export const ButtonBase = React.forwardRef<
                   variant === 'secondary-plain' ||
                   variant === 'critical-plain') &&
                 !iconOnly,
-              'shadow-none active:shadow-button bg-surface-basic-pressed dark:bg-surface-darktheme-basic-pressed':
+              'shadow-none active:shadow-button bg-surface-basic-pressed':
                 variant === 'plain' && !iconOnly && selected,
-              'bg-none shadow-none hover:bg-surface-basic-hovered active:bg-surface-basic-pressed active:shadow-button dark:hover:bg-surface-darktheme-basic-hovered dark:active:bg-surface-darktheme-basic-pressed active:shadow-button':
+              'bg-none shadow-none hover:bg-surface-basic-hovered active:bg-surface-basic-pressed active:shadow-button active:shadow-button':
                 variant === 'plain' && iconOnly,
-              'bg-surface-basic-pressed shadow-none hover:bg-surface-basic-hovered active:bg-surface-basic-pressed active:shadow-button dark:bg-surface-darktheme-basic-pressed dark:hover:bg-surface-darktheme-basic-hovered dark:active:bg-surface-darktheme-basic-pressed':
+              'bg-surface-basic-pressed shadow-none hover:bg-surface-basic-hovered active:bg-surface-basic-pressed active:shadow-button':
                 variant === 'plain' && iconOnly && selected,
               'bg-surface-purple-default hover:bg-surface-purple-hovered active:bg-surface-purple-pressed':
                 variant === 'purple',
@@ -258,7 +258,7 @@ export const ButtonBase = React.forwardRef<
             }
           : {},
         {
-          'text-text-default dark:text-text-darktheme-default':
+          'text-text-default':
             variant === 'basic' || variant === 'plain' || variant === 'outline',
           'text-text-on-primary':
             variant === 'primary' ||
