@@ -12,28 +12,15 @@
     "how-does-it-work":{
         "title":"How does it work?"
     },
-    "architecture":{
-        "title":"Architecture"
-    },
-    "--getting-started--":{
-        "title":"Getting Started",
-        "type":"separator"
-    },
-    "attach-your-cluster":{
-        "title":"Attach your cluster"
-    },
-    "create-environment":{
-        "title":"Create Environment"
-    },
-    "setup-local-box":{
-        "title":"Setup Local Machine"
-    },
-    "access-n-intercept":{
-        "title":"Access & Intercept!"
+    "getting-started":{
+        "title":"Getting Started"
     },
     "--reference--":{
         "title":"Features",
         "type":"separator"
+    },
+    "managed-services":{
+        "title":"Managed Services"
     },
     "local-devices":{
         "title":"Local Dev Envs"
@@ -50,6 +37,9 @@
     "---references-":{
         "title":"Reference",
         "type":"separator"
+    },
+    "architecture":{
+        "title":"Architecture"
     },
     "github":{
         "title":"Github"
