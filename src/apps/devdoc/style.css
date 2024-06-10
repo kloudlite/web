@@ -61,6 +61,12 @@ html {
   height: 28px;
   @apply -wb-ml-[47px] -wb-mt-[3px] wb-bg-surface-basic-pressed wb-border-surface-basic-subdued wb-rounded-full wb-flex wb-items-center wb-justify-center wb-text-center wb-border-4 wb-box-content wb-headingMd wb-text-text-default wb-absolute;
 }
+.kl-steps>h3{
+  @apply wb-sticky wb-top-[50px] wb-bg-surface-basic-subdued wb-pb-[6px] wb-mt-[6px];
+}
+.kl-steps>p{
+  @apply !wb-mt-[10px] !wb-mb-[10px];
+ }
 
 
 .kl-footer {
