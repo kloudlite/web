@@ -1,11 +1,61 @@
 # Getting Started
 
-## 4 Steps to get started
+## 4 Steps to Get Started
 
-### 1 - Attach your cluster
+### 1 - Attach Your Cluster
+Attach your cluster to Kloudlite using a Helm chart. First, create a cluster reference in Kloudlite, then follow the steps to attach the cluster.
 
-### 2 - Create Environment
+### 2 - Create an Environment
+Create a new environment in Kloudlite by providing an environment name and the cluster reference. Once your environment is set up, deploy your applications, configure settings, and import resources into the environment.
 
-### 3 - Setup Local Machine
+That's it! Your environment is ready to connect and use.
+
+### 3 - Set Up Your Local Machine
+Set up your local machine to connect to the environment using the Kloudlite CLI.
+
+First, navigate to your workspace and create a `kl.yaml` file with the following command:
+
+```bash
+kl init
+```
+
+You will be prompted to select the environment you want to connect to. Once selected, a `kl.yaml` file with the environment details will be created.
+
+Next, import the necessary configs, secrets, and resources. You can also create config mounts. Use the following commands:
+
+```bash
+# Add config to your local workspace
+kl add config
+
+# Add secret to your local workspace
+kl add secret
+
+# Add resource to your local workspace
+kl add mres
+
+# Add config mount to your local workspace
+kl mount config
+
+# Add secret mount to your local workspace
+kl mount secret
+```
+
+Add necessary packages to the local container using the command:
+
+```bash
+kl add package <package-name>
+```
 
 ### 4 - Access & Intercept!
+
+Access the development container with the following command:
+
+```bash
+kl box ssh
+```
+
+This command creates a development container and mounts your codebase to it. The container will include all necessary configs, secrets, resources, and packages. You can now start developing your application.
+
+The container runs an SSH service. You will receive the domain name and port to connect to the container.
+
+Attach your IDEs like VSCode or IntelliJ to the container and start developing your application.

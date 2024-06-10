@@ -3,7 +3,7 @@
         "title":"Introduction",
         "type":"separator"
     },
-    "what-is-kloudlite":{
+    "index":{
         "title":"What is kloudlite?"
     },
     "why-kloudlite":{
@@ -23,7 +23,7 @@
         "title":"Managed Services"
     },
     "local-devices":{
-        "title":"Local Dev Envs"
+        "title":"Local Dev Containers"
     },
     "any-wireguard":{
         "title":"Wireguard devices"
@@ -41,13 +41,27 @@
     "architecture":{
         "title":"Architecture"
     },
+    "api":{
+        "title":"API"
+    },
+    "---more-":{
+        "title":"Engage",
+        "type":"separator"
+    },
     "github":{
-        "title":"Github"
+        "title":"Community",
+        "href": "https://github.com/kloudlite/kloudlite/discussions"
     },
     "feature-request":{
-        "title":"Feature Request"
+        "title":"Feature Request",
+        "href":"https://github.com/kloudlite/kloudlite/issues/new?assignees=&labels=&projects=&template=feature_request.md&title="
+    },
+    "bug-report":{
+        "title":"Bug Report",
+        "href":"https://github.com/kloudlite/kloudlite/issues/new?assignees=&labels=&projects=&template=bug_report.md&title="
     },
     "help-n-support":{
-        "title":"Help & Support"
+        "title":"Help & Support",
+        "href":"http://localhost:3000/help-and-support"
     }
 }
