@@ -8,7 +8,7 @@ import Button from '../../button';
 
 const OpenSource = () => {
   return (
-    <div className="3xl:wb-py-8xl">
+    <div className="2xl:wb-py-8xl">
       <GraphExtended className="xl:[clip-path:inset(24px_1.5px_24px_1.5px)] 3xl:[clip-path:inset(1.5px)]">
         <GraphItem className="lg:wb-h-[288px] wb-flex wb-flex-col md:wb-flex-row wb-bg-surface-primary-subdued">
           <div className="wb-h-full wb-bg-surface-basic-default wb-flex-1">

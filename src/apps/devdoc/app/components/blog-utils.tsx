@@ -29,10 +29,7 @@ export const BlogHeader = ({
           <Profile
             responsive={false}
             name={
-              <span className="wb-bodyMd">
-                Written by{' '}
-                <span className="wb-bodyMd-semibold">{frontMatter.author}</span>
-              </span>
+              <span className="wb-bodyMd-semibold">{frontMatter.author}</span>
             }
             subtitle={timestamp}
             image={
@@ -56,7 +53,7 @@ export const BlogTags = ({ tags = [] }: { tags: string[] }) => {
   return (
     <div className="wb-flex wb-flex-row wb-flex-wrap wb-items-center wb-gap-lg">
       {tags.map((t) => (
-        <Chip key={t} item={t} label={t} />
+        <Chip key={t} item={t} label={<span className="wb-bodyLg">{t}</span>} />
       ))}
     </div>
   );

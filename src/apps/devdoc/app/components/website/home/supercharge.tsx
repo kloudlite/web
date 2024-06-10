@@ -1,9 +1,9 @@
 import { GraphExtended, GraphItem } from '../../graph';
-import ProviderUI from '../provider-ui';
+import JoinProvidersDialog from '../../join-provider-dialog';
 
 const SuperCharge = () => {
   return (
-    <div className="3xl:wb-py-8xl">
+    <div className="2xl:wb-py-8xl">
       <GraphExtended className="xl:[clip-path:inset(24px_1.5px_24px_1.5px)] 3xl:[clip-path:inset(1.5px)]">
         <GraphItem className="wb-bg-surface-basic-subdued">
           <div className="wb-flex wb-flex-col wb-p-3xl wb-gap-5xl md:wb-px-8xl md:wb-py-7xl md:wb-gap-6xl wb-items-center xl:wb-h-[288px]">
@@ -16,8 +16,8 @@ const SuperCharge = () => {
                 modern developer teams
               </p>
             </div>
-            <div className="wb-w-full lg:wb-w-[610px]">
-              <ProviderUI />
+            <div className="wb-w-full lg:wb-w-[300px]">
+              <JoinProvidersDialog />
             </div>
           </div>
         </GraphItem>

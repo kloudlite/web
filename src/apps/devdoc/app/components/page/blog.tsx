@@ -9,7 +9,6 @@ import useConfig from '~/app/utils/use-config';
 import { DEFAULT_LOCALE } from '~/app/utils/constants';
 import { cn } from '~/app/utils/commons';
 import consts from '~/app/utils/const';
-import Profile from 'kl-design-system/molecule/profile';
 import { Avatar } from 'kl-design-system/atoms/avatar';
 import SectionWrapper from '../website/section-wrapper';
 import { GraphExtended, GraphItem } from '../graph';

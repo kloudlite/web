@@ -46,7 +46,6 @@ import {
   TreeStructure,
   TwitterNewLogoFill,
   Users,
-    // eslint-disable-next-line prettier/prettier
   Vpn,
 } from '~/app/icons/icons';
 
