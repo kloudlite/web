@@ -866,7 +866,7 @@ video {
 *::-webkit-scrollbar-thumb {
   cursor: pointer;
   border-radius: 0.25rem;
-  background-color: var(--surface-primary-subdued);
+  background-color: var(--surface-basic-hovered);
 }
 
 *::-webkit-scrollbar-track-piece {
@@ -874,7 +874,7 @@ video {
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background-color: var(--surface-primary-default);
+  background-color: var(--surface-basic-pressed);
 }
 
 *, ::before, ::after {
