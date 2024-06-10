@@ -1,16 +1,17 @@
-# Getting Started
+import Steps from "~/app/components/steps";
 
 ## 4 Steps to Get Started
 
-### 1 - Attach Your Cluster
+<Steps>
+### Attach Your Cluster
 Attach your cluster to Kloudlite using a Helm chart. First, create a cluster reference in Kloudlite, then follow the steps to attach the cluster.
 
-### 2 - Create an Environment
+### Create an Environment
 Create a new environment in Kloudlite by providing an environment name and the cluster reference. Once your environment is set up, deploy your applications, configure settings, and import resources into the environment.
 
 That's it! Your environment is ready to connect and use.
 
-### 3 - Set Up Your Local Machine
+### Set Up Your Local Machine
 Set up your local machine to connect to the environment using the Kloudlite CLI.
 
 First, navigate to your workspace and create a `kl.yaml` file with the following command:
@@ -46,7 +47,7 @@ Add necessary packages to the local container using the command:
 kl add package <package-name>
 ```
 
-### 4 - Access & Intercept!
+### Access & Intercept!
 
 Access the development container with the following command:
 
@@ -59,3 +60,5 @@ This command creates a development container and mounts your codebase to it. The
 The container runs an SSH service. You will receive the domain name and port to connect to the container.
 
 Attach your IDEs like VSCode or IntelliJ to the container and start developing your application.
+
+</Steps>
