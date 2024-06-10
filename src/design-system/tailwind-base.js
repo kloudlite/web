@@ -264,7 +264,8 @@ const config = {
         },
       },
       text: {
-        default: 'var(--text-default)',
+        default:
+          'color-mix(in srgb, var(--text-default) calc(100% * <alpha-value>), transparent)',
         soft: 'var(--text-soft)',
         strong: 'var(--text-strong)',
         disabled: 'var(--text-disabled)',
