@@ -345,17 +345,34 @@ const consts = {
       },
       {
         title: 'How does Kloudlite Development Environments work?',
-        desc: 'Kloudlite Development Environments work by linking your computer to remote servers where your applications run. It uses containers on your local machine that replicate the setup of the remote servers, ensuring consistency. These containers connect through a secure network, allowing you to access and work with all necessary services without installing them locally. This setup enables developers to work efficiently, ensuring that what they build on their computers will function the same way when deployed on the remote servers.',
+        desc: `Kloudlite Development Environments work by linking your local machine to remote environment
+         where your applications run. Configs and Secrets are kept in sync between your local machine and the remote environment. 
+         Local containers will be in the same wireguard network as remote environment. 
+         These  connect through a secure network, allowing you to access and work with all necessary services without installing them locally. 
+         This setup enables developers to work efficiently, ensuring that what they build on their computers will function the same way when 
+         deployed on the remote servers.`,
         classNames: 'wb-pb-lg 3xl:wb-pb-md',
       },
       {
         title: 'How to use Kloudlite?',
-        desc: 'To use Kloudlite, start by installing it on your local machine and connecting it to your remote Kubernetes clusters. Create development environments (namespaces) in these clusters for your applications. Use WireGuard to securely connect your local machine to these remote environments, allowing seamless access to all necessary services. Finally, launch local development containers that mirror the remote setup, enabling you to develop and test your applications with full consistency and efficiency.',
+        desc: `To use Kloudlite, begin by attaching your cluster to the Kloudlite platform. 
+        Once your cluster is connected, you can create your environment and deploy your applications effortlessly. 
+        Use the \`kl\` CLI tool on your local machine to set up a local development container and connect it to your environment. 
+        This allows you to start coding and testing your applications in local development containers seamlessly integrated with remote 
+        environments.`,
         classNames: 'wb-pb-lg 3xl:wb-pb-md',
       },
       {
         title: 'How to collaborate?',
-        desc: 'To collaborate using Kloudlite, multiple developers can connect their local development containers to the same remote environment via a secure WireGuard network. This setup allows them to work on the same services and applications simultaneously, sharing configurations and secrets seamlessly. By using the same namespace in Kubernetes, they can ensure consistency and integration, facilitating real-time collaboration and testing without conflicts or discrepancies.',
+        desc: `
+        To collaborate using Kloudlite, multiple developers can connect their local development containers to the same 
+        remote environment via a secure WireGuard network. This setup allows them to work on different dependent services 
+        within the same environment, sharing configurations and secrets seamlessly. By using the same Kubernetes namespace, 
+        they ensure consistency and integration, facilitating real-time collaboration and testing without conflicts. 
+        Developers can also access services running on each other’s machines as they are on the same network. 
+        When a developer intercepts a service, all traffic to that service is rerouted to their local machine, enabling 
+        efficient collaboration and development without lengthy deployment loops.
+        `,
         classNames: 'wb-pb-xl 3xl:wb-pb-lg',
       },
       {
