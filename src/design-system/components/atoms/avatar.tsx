@@ -25,9 +25,15 @@ export interface IAvatar {
   size?: AvatarSizes;
   color?: AvatarColors;
   image?: ReactNode;
+  dot?: boolean;
 }
 
-export const AvatarBase = ({ size = 'md', color = 'one', image }: IAvatar) => {
+export const AvatarBase = ({
+  size = 'md',
+  color = 'one',
+  image,
+  dot,
+}: IAvatar) => {
   const isExternal = !Object.keys(colors).includes(color);
 
   return (
@@ -63,6 +69,9 @@ export const AvatarBase = ({ size = 'md', color = 'one', image }: IAvatar) => {
         }
       )}
     >
+      {dot && (
+        <span className="absolute h-lg w-lg bg-icon-critical -top-sm -left-sm rounded-full" />
+      )}
       {image && (
         <span
         // @ts-ignore
@@ -143,6 +152,6 @@ export const AvatarBase = ({ size = 'md', color = 'one', image }: IAvatar) => {
   );
 };
 
-export const Avatar = ({ size, color, image }: IAvatar) => {
-  return <AvatarBase size={size} color={color} image={image} />;
+export const Avatar = ({ size, color, image, dot }: IAvatar) => {
+  return <AvatarBase size={size} color={color} image={image} dot={dot} />;
 };
