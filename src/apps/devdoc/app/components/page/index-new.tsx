@@ -14,8 +14,8 @@ import OpenSource from '../website/home/opensource';
 import PartnerSection from '../website/home/partners';
 import SecureAtCore from '../website/home/secure-at-core';
 import SuperCharge from '../website/home/supercharge';
-import ProviderUI from '../website/provider-ui';
 import Wrapper from '../wrapper';
+import JoinProvidersDialog from '../join-provider-dialog';
 
 const Title = () => {
   return (
@@ -59,10 +59,10 @@ const Title = () => {
 const Illustration = () => {
   return (
     <Wrapper className="-wb-mt-5xl">
-      <div className="hidden md:block wb-pb-[36px] 3xl:wb-pb-[100px]">
+      <div className="hidden md:block wb-pb-[36px] 2xl:wb-pb-[128px]">
         <GraphExtended
           innerClass="md:-wb-mx-[32px] lg:-wb-mx-[160px] -wb-mt-[2px] wb-flex wb-justify-center !wb-pt-[32px] 3xl:-wb-mx-[256px]"
-          className="!wb-pb-[64px] xl:[background-position: unset] 2xl:[background-position:top] 3xl:[background-position:unset]"
+          className="!wb-pb-[32px] xl:[background-position: unset] 2xl:[background-position:top] 3xl:[background-position:unset]"
         >
           <div className="wb-relative">
             <DynamicImage
@@ -120,14 +120,14 @@ const Index = () => {
               id="join-waitlist"
               className="md:wb-w-[610px] wb-flex wb-flex-col wb-gap-xl wb-items-center"
             >
-              <ProviderUI />
+              <JoinProvidersDialog />
               <span className="wb-text-text-strong wb-bodyLg">
                 Got an invite code?{' '}
                 <a
                   href={`${authUrl}/signup`}
                   className="hover:wb-bodyLg-underline wb-underline-offset-4 "
                 >
-                  <span className="!wb-text-text-default wb-cursor-pointer wb-font-bold">
+                  <span className="!wb-text-text-default wb-cursor-pointer wb-font-medium">
                     Click here
                   </span>{' '}
                   to access

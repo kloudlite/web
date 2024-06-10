@@ -59,6 +59,11 @@ export function TOC({ headings }: TOCProps): ReactElement {
         'md:wb-h-[calc(100vh_-_var(--kl-navbar-height))] wb-overflow-x-hidden wb-overflow-y-auto kl-scrollbar-transparent hover:kl-scrollbar-colored scrollbar-gutter wb-grow wb-pr-md wb-pt-6xl'
       )}
     >
+      {config.activeDocTopic && (
+        <div className="wb-bodyMd wb-text-text-soft wb-px-2xl wb-py-md wb-mb-md">
+          {config.activeDocTopic}
+        </div>
+      )}
       {hasHeadings && (
         <>
           <LayoutGroup>

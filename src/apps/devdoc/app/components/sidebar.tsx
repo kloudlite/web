@@ -212,6 +212,13 @@ function File({
   const active = item.route && [route, `${route}/`].includes(`${item.route}/`);
   const { setState: setMenu } = useMenu();
 
+  const { setActiveDocTopic } = useConfig();
+  useEffect(() => {
+    if (active) {
+      setActiveDocTopic(item.title);
+    }
+  }, [active]);
+
   if (item.type === 'separator') {
     return <Separator title={item.title} />;
   }

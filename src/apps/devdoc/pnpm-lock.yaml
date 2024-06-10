@@ -9054,7 +9054,7 @@ packages:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
 
   file:../../design-system/out/kl-design-system-1.0.1.tgz(framer-motion@10.18.0)(react-dom@18.3.1)(react@18.3.1):
-    resolution: {integrity: sha512-NvcBNJB1vp5Df4xoFCZWhsNHu6FgGhK6sFrdcx14g/r+X8izsiGR81Qq1FZ0qLYCTrHRrJq/rpdsQimjn1wURw==, tarball: file:../../design-system/out/kl-design-system-1.0.1.tgz}
+    resolution: {integrity: sha512-MWilWs8wqBPThb1R2n/820NBIvCnZNDstpgV0w+UIsqsiyYuQIMkrtzz19UtVETBNtz4XgIu0AjSRyLlYO9ylw==, tarball: file:../../design-system/out/kl-design-system-1.0.1.tgz}
     id: file:../../design-system/out/kl-design-system-1.0.1.tgz
     name: kl-design-system
     version: 1.0.1

@@ -133,17 +133,21 @@ export default {
         className: 'wb-basis-1/2 md:wb-basis-auto wb-flex',
         showExtra: false,
         items: [
+          // {
+          //   title: 'Careers',
+          //   to: '#',
+          // },
+          // {
+          //   title: 'Pricing',
+          //   to: '#',
+          // },
           {
-            title: 'Careers',
-            to: '#',
+            title: 'Feature Request',
+            to: 'https://github.com/kloudlite/kloudlite/issues/new?assignees=&labels=&projects=&template=feature_request.md&title=',
           },
           {
-            title: 'Contact us',
-            to: '/contact-us',
-          },
-          {
-            title: 'Pricing',
-            to: '#',
+            title: 'Bug Report',
+            to: 'https://github.com/kloudlite/kloudlite/issues/new?assignees=&labels=&projects=&template=bug_report.md&title=',
           },
         ],
       },
@@ -153,9 +157,13 @@ export default {
         showExtra: true,
         items: [
           {
-            title: 'Help and support',
-            to: '/help-and-support',
+            title: 'Contact us',
+            to: '/contact-us',
           },
+          // {
+          //   title: 'Help and support',
+          //   to: '/help-and-support',
+          // },
           {
             title: 'Terms of services',
             to: '/terms-of-services',

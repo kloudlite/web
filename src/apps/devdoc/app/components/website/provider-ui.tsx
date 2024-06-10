@@ -15,7 +15,6 @@ import JoinProvidersDialog from '../join-provider-dialog';
 import Button from '../button';
 
 const ProviderUI = () => {
-  const [show, setShow] = useState(false);
   const [reveal, setReveal] = useState(false);
   const { config } = useConfig();
   const signupUrl = `${process.env.AUTH_URL}/signup?mode=email`;
@@ -71,13 +70,7 @@ const ProviderUI = () => {
             />
           </motion.div>
           <motion.div className={cn('wb-block md:wb-hidden')}>
-            <Button
-              variant="primary"
-              content="Signup to join waitlist"
-              onClick={() => {
-                setShow(true);
-              }}
-            />
+            <Button variant="primary" content="Signup to join waitlist" />
           </motion.div>
           <motion.div
             className={cn(
@@ -152,7 +145,7 @@ const ProviderUI = () => {
           </motion.div>
         </motion.div>
       </motion.div>
-      <JoinProvidersDialog show={show} onOpenChange={setShow} />
+      <JoinProvidersDialog />
     </div>
   );
 };

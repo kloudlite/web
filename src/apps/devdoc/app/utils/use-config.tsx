@@ -73,12 +73,14 @@ export interface IConfig {
     auth?: string;
     console?: string;
   };
+  activeDocTopic?: string;
 }
 
 const ConfigContext = createContext<{
   config: IConfig;
   setConfig: Dispatch<SetStateAction<IConfig>>;
-}>({ config: {}, setConfig() {} });
+  setActiveDocTopic: (topic: string) => void;
+}>({ config: {}, setConfig() {}, setActiveDocTopic() {} });
 
 export const ConfigProvider = ({
   children,
@@ -94,9 +96,16 @@ export const ConfigProvider = ({
       ? { ...c, pageOpts, userApiLoading: true }
       : { ...c, userApiLoading: true }
   );
+
+  const setActiveDocTopic = (topic: string) => {
+    setConfig((prev) => ({ ...prev, activeDocTopic: topic }));
+  };
   return (
     <ConfigContext.Provider
-      value={useMemo(() => ({ config, setConfig }), [config, setConfig])}
+      value={useMemo(
+        () => ({ config, setConfig, setActiveDocTopic }),
+        [config, setConfig, setActiveDocTopic]
+      )}
     >
       {children}
     </ConfigContext.Provider>

@@ -179,7 +179,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
                   ? 'lg:!wb-pr-8xl xl:!wb-pr-10xl 2xl:!wb-pr-11xl 3xl:!wb-pr-15xl'
                   : '',
                 ['blog'].includes(pageType)
-                  ? 'lg:!wb-pr-8xl xl:!wb-pr-10xl 2xl:!wb-pr-11xl 3xl:!wb-px-14xl'
+                  ? 'md:wb-px-5xl lg:wb-px-8xl xl:!wb-px-11xl 2xl:!wb-px-12xl 3xl:!wb-px-14xl'
                   : ''
               )}
             >

@@ -141,7 +141,7 @@ export const createComponents = ({
   return {
     h1: (props) => (
       <h1
-        className="wb-heading4xl-marketing wb-mt-sm wb-text-text-strong"
+        className="wb-heading4xl-marketing wb-mt-sm wb-text-text-default"
         {...props}
       />
     ),
@@ -152,13 +152,13 @@ export const createComponents = ({
     h6: (props) => <HeadingLink tag="h6" context={context} {...props} />,
     ul: (props) => (
       <ul
-        className="wb-list-disc wb-bodyLg wb-pl-5xl wb-text-text-strong"
+        className="wb-list-disc wb-bodyLg wb-pl-[15px] wb-list-outside wb-text-text-strong"
         {...props}
       />
     ),
     ol: (props) => (
       <ol
-        className="wb-bodyLg wb-list-decimal wb-pl-5xl wb-text-text-strong"
+        className="wb-bodyLg wb-list-decimal wb-pl-[15px] wb-list-outside wb-text-text-strong"
         {...props}
       />
     ),

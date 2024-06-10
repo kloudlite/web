@@ -2,14 +2,12 @@ import { PageItem } from 'nextra/normalize-pages';
 import Link from 'next/link';
 import { GithubLogoFill } from '@jengaicons/react';
 import { Button } from 'kl-design-system/atoms/button';
-import { useState } from 'react';
 import useConfig, { IHeaderSecondary } from '../utils/use-config';
 import { cn } from '../utils/commons';
 import MenuToggle from './menu-button';
 import useMenu from '../utils/use-menu';
 import Wrapper from './wrapper';
 import NavigationMenuV2 from './nav-menu-v2';
-import JoinProviders from './join-providers';
 import JoinProvidersDialog from './join-provider-dialog';
 
 const HeaderSecondary = ({
@@ -40,7 +38,7 @@ const HeaderSecondary = ({
               <>
                 <span className="wb-hidden lg:wb-block wb-h-2xl wb-w-xs wb-bg-border-default" />
                 <div className="wb-hidden lg:wb-block">
-                  <JoinProviders />
+                  <JoinProvidersDialog />
                 </div>
               </>
             </div>
@@ -58,7 +56,6 @@ export default HeaderSecondary;
 
 export const MobileMenu = ({ items = [] }: IHeaderSecondary) => {
   const { config } = useConfig();
-  const [show, setShow] = useState(false);
   return (
     <div>
       <HeaderSecondary />
@@ -83,17 +80,9 @@ export const MobileMenu = ({ items = [] }: IHeaderSecondary) => {
             toLabel="href"
             to={config.gitRepoUrl}
           />
-          <Button
-            content="Signup to join waitlist"
-            variant="primary"
-            block
-            onClick={() => {
-              setShow(true);
-            }}
-          />
+          <JoinProvidersDialog />
         </div>
       </div>
-      <JoinProvidersDialog show={show} onOpenChange={setShow} />
     </div>
   );
 };
