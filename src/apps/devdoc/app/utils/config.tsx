@@ -18,6 +18,8 @@ import { useTheme } from './useTheme';
 export const basePath = 'https://kloudlite.io';
 export const authUrl = 'https://auth.kloudlite.io';
 export const gitUrl = 'https://github.com/kloudlite/kloudlite';
+export const communityUrl =
+  'https://github.com/kloudlite/kloudlite/discussions';
 const linkedinUrl = 'https://linkedin.com/company/kloudlite-io';
 const xUrl = 'https://x.com/kloudlite';
 export const supportEmail = 'launch@kloudlite.io';
@@ -120,10 +122,10 @@ export default {
             title: 'Blog',
             to: '/blog',
           },
-          {
-            title: 'Changelog',
-            to: '#',
-          },
+          // {
+          //   title: 'Changelog',
+          //   to: '#',
+          // },
         ],
       },
       {
@@ -195,15 +197,20 @@ export default {
         type: 'normal',
         to: '/blog',
       },
-      {
-        title: 'Changelog',
-        type: 'normal',
-        to: '#',
-      },
+      // {
+      //   title: 'Changelog',
+      //   type: 'normal',
+      //   to: '#',
+      // },
       {
         title: 'Documentation',
         type: 'normal',
         to: '/docs',
+      },
+      {
+        title: 'Community',
+        type: 'normal',
+        to: communityUrl,
       },
     ],
   },

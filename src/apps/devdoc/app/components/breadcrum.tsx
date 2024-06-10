@@ -2,6 +2,8 @@ import type { Item } from 'nextra/normalize-pages';
 import type { ReactElement } from 'react';
 import { Fragment } from 'react';
 import { ChevronRight } from '@jengaicons/react';
+import { Button } from 'kl-design-system/atoms/button';
+import Link from 'next/link';
 import { Anchor } from './anchor';
 import { cn } from '../utils/commons';
 
@@ -32,7 +34,8 @@ export function Breadcrumb({
                     'wb-bodyMd-medium wb-text-text-default': isActive,
                     'wb-bodyMd wb-min-w-[24px] wb-overflow-hidden wb-text-ellipsis wb-text-text-soft':
                       !isActive,
-                    'hover:wb-text-text-strong': !!isLink,
+                    'hover:wb-text-text-strong hover:wb-underline wb-underline-offset-4':
+                      !!isLink,
                   }
                 )}
                 title={item.title}

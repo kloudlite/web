@@ -11,14 +11,13 @@ function scrollbar() {
           '@apply wb-bg-transparent': {},
         },
         '&::-webkit-scrollbar-thumb': {
-          '@apply wb-bg-black dark:wb-bg-black wb-rounded wb-cursor-pointer':
-            {},
+          '@apply wb-bg-surface-basic-hovered wb-rounded wb-cursor-pointer': {},
         },
         '&::-webkit-scrollbar-track-piece': {
           '@apply wb-bg-transparent': {},
         },
         '&::-webkit-scrollbar-thumb:hover': {
-          '@apply wb-bg-surface-primary-default': {},
+          '@apply wb-bg-surface-basic-pressed': {},
         },
       },
     });

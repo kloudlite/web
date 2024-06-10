@@ -37,7 +37,7 @@ const HorizontalTopTabItem = ({
     >
       <h5
         className={cn(
-          'wb-heading2xl-marketing wb-transition-all lg:wb-min-h-[84px] xl:wb-min-h-[96px] 3xl:wb-min-h-[auto] wb-shrink-0',
+          'wb-heading2xl-marketing wb-transition-all lg:wb-min-h-[84px] xl:wb-min-h-[auto] 3xl:wb-min-h-[auto] wb-shrink-0',
           {
             'wb-text-text-primary dark:wb-text-text-darktheme-primary': active,
             'wb-text-text-default dark:wb-text-text-darktheme-default': !active,
@@ -124,8 +124,8 @@ const HorizontalTopTab = ({
             {tabs.map((t) => (
               <div key={t.id}>
                 <HorizontalTopTabItem {...t} onClick={() => {}} active />
-                <div className="wb-border-t wb-border-border-dark dark:wb-border-border-darktheme-dark wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued wb-flex wb-items-center wb-justify-center">
-                  <div className="wb-hidden dark:wb-block">
+                <div className="wb-border-t wb-border-border-dark wb-bg-surface-basic-subdued wb-flex wb-items-center wb-justify-center">
+                  <div className="wb-hidden dark-block">
                     <img
                       alt="slide-light"
                       className="wb-flex wb-h-[160px] wb-p-2xl wb-items-center wb-justify-center"
@@ -134,7 +134,7 @@ const HorizontalTopTab = ({
                     />
                   </div>
 
-                  <div className="dark:wb-hidden">
+                  <div className="dark-hidden">
                     <img
                       alt="slide-dark"
                       className="wb-h-[160px] wb-p-2xl wb-flex wb-items-center wb-justify-center"
@@ -147,10 +147,10 @@ const HorizontalTopTab = ({
             ))}
           </Slider>
         </div>
-        <GraphItem className="wb-hidden lg:wb-flex wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued">
+        <GraphItem className="wb-hidden lg:wb-flex wb-bg-surface-basic-subdued">
           <div
             className={cn(
-              'wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued md:wb-h-[338px] xl:wb-h-[480px] xl:wb-max-h-[480px] wb-w-full',
+              'wb-bg-surface-basic-subdued md:wb-h-[338px] xl:wb-h-[480px] xl:wb-max-h-[480px] wb-w-full',
               tabContentClassName
             )}
           >

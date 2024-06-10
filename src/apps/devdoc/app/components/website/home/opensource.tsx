@@ -1,10 +1,10 @@
-import { GithubLogoFill, Star } from '~/app/icons/icons';
-import { Button } from 'kl-design-system/atoms/button';
 import Link from 'next/link';
 import { BrandLogo } from 'kl-design-system/branding/brand-logo';
+import { GithubLogoFill, Star } from '~/app/icons/icons';
 import { gitUrl } from '~/app/utils/config';
 import { GraphExtended, GraphItem } from '../../graph';
 import { Anchor } from '../../anchor';
+import Button from '../../button';
 
 const OpenSource = () => {
   return (

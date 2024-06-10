@@ -5,11 +5,11 @@ import {
   GitlabLogoFill,
   GoogleLogo,
 } from '@jengaicons/react';
-import { Button } from 'kl-design-system/atoms/button';
 import OptionList from 'kl-design-system/atoms/option-list';
 import { useState } from 'react';
 import Link from 'next/link';
 import useConfig from '../utils/use-config';
+import Button from './button';
 
 const JoinProviders = () => {
   const [open, setOpen] = useState(false);

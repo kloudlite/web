@@ -9,6 +9,8 @@ import useConfig from '~/app/utils/use-config';
 import { DEFAULT_LOCALE } from '~/app/utils/constants';
 import { cn } from '~/app/utils/commons';
 import consts from '~/app/utils/const';
+import Profile from 'kl-design-system/molecule/profile';
+import { Avatar } from 'kl-design-system/atoms/avatar';
 import SectionWrapper from '../website/section-wrapper';
 import { GraphExtended, GraphItem } from '../graph';
 import { Block } from '../commons';
@@ -36,6 +38,26 @@ const tabItems = {
   community: consts.homeNew.exploring,
 };
 
+const AvatarItem = ({ gravatarHash }: { gravatarHash?: string }) => {
+  return (
+    <div>
+      {gravatarHash ? (
+        <Avatar
+          size="sm"
+          image={
+            <img
+              src={`https://gravatar.com/avatar/${gravatarHash}`}
+              className="wb-rounded-full"
+              alt="avatar"
+            />
+          }
+        />
+      ) : (
+        <Avatar size="sm" />
+      )}
+    </div>
+  );
+};
 const ListDetailItem = ({
   frontMatter,
 }: {
@@ -54,6 +76,9 @@ const ListDetailItem = ({
           year: 'numeric',
         })}
       </div>
+      <div className="wb-hidden md:wb-block">
+        <AvatarItem gravatarHash={frontMatter?.gravatarHash} />
+      </div>
       <div className="wb-flex wb-flex-col wb-gap-md md:wb-hidden">
         <div className="wb-bodyLg wb-w-[180px] wb-capitalize wb-text-text-soft">
           {frontMatter?.category}
@@ -64,6 +89,9 @@ const ListDetailItem = ({
             month: 'long',
             year: 'numeric',
           })}
+        </div>
+        <div className="wb-pt-3xl">
+          <AvatarItem gravatarHash={frontMatter?.gravatarHash} />
         </div>
       </div>
     </>
@@ -118,7 +146,11 @@ const BlogHome = () => {
           <div className="-wb-ml-xl md:wb-ml-0">
             <Tab.Root size="sm" value={tab} onChange={setTab}>
               {tabs.map((t) => (
-                <Tab.Tab key={t.value} label={t.label} value={t.value} />
+                <Tab.Tab
+                  key={t.value}
+                  label={<span className="wb-bodyLg-medium">{t.label}</span>}
+                  value={t.value}
+                />
               ))}
             </Tab.Root>
           </div>
@@ -142,17 +174,18 @@ const BlogHome = () => {
             title="Latest blogs"
             titleClass="md:!wb-heading3xl-marketing lg:!wb-heading3xl-marketing xl:!wb-heading3xl-marketing 2xl:!wb-heading3xl-marketing 3xl:wb-heading3xl-marketing wb-text-start"
           >
-            <div className="wb-grid wb-grid-cols-1 md:wb-grid-rows-[64px_auto_64px] lg:wb-grid-rows-[64px_640px_64px]">
+            <div className="wb-grid wb-grid-cols-1 md:wb-grid-rows-[64px_auto_64px] lg:wb-grid-rows-[64px_auto_64px]">
               <div className="wb-hidden md:wb-block">
                 <GraphItem>
-                  <div className="wb-flex wb-flex-row wb-items-center wb-py-xl wb-px-5xl wb-h-8xl wb-headingMd wb-text-text-default wb-bg-surface-basic-active">
+                  <div className="wb-flex wb-flex-row wb-items-center wb-gap-3xl wb-py-xl wb-px-5xl wb-h-8xl wb-headingMd wb-text-text-default wb-bg-surface-basic-active">
                     <span className="wb-flex-1">Name</span>
                     <span className="wb-w-[180px]">Category</span>
                     <span className="wb-w-[200px]">Published date</span>
+                    <span className="wb-w-[30px] wb-flex" />
                   </div>
                 </GraphItem>
               </div>
-              <GraphItem className="md:wb-min-h-[640px] wb-flex wb-flex-col wb-bg-surface-basic-subdued">
+              <GraphItem className="wb-flex wb-flex-col wb-bg-surface-basic-subdued">
                 {page.map((bp: any, index: any) => {
                   if (bp.kind !== 'MdxPage') {
                     return null;

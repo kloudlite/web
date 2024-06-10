@@ -127,7 +127,7 @@ const Index = () => {
                   href={`${authUrl}/signup`}
                   className="hover:wb-bodyLg-underline wb-underline-offset-4 "
                 >
-                  <span className="!wb-text-text-default wb-cursor-pointer">
+                  <span className="!wb-text-text-default wb-cursor-pointer wb-font-bold">
                     Click here
                   </span>{' '}
                   to access

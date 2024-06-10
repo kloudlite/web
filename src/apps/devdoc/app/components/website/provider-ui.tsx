@@ -6,13 +6,13 @@ import {
   X,
 } from '@jengaicons/react';
 import { motion } from 'framer-motion';
-import { Button, IconButton } from 'kl-design-system/atoms/button';
+import { IconButton } from 'kl-design-system/atoms/button';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { ArrowRight } from '~/app/icons/icons';
 import { cn } from '~/app/utils/commons';
 import useConfig from '~/app/utils/use-config';
 import JoinProvidersDialog from '../join-provider-dialog';
+import Button from '../button';
 
 const ProviderUI = () => {
   const [show, setShow] = useState(false);
@@ -64,7 +64,6 @@ const ProviderUI = () => {
               variant="primary"
               content="Signup to join waitlist"
               size="lg"
-              suffix={<ArrowRight />}
               className="!wb-h-[48px] !wb-px-4xl !wb-w-[302px]"
               onClick={() => {
                 setReveal(true);

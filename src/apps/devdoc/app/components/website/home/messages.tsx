@@ -11,14 +11,10 @@ import Slider from '../../slider';
 const MessageCard = ({
   title,
   subtitle,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-  company,
   message,
 }: {
   title: string;
   subtitle: string;
-  company: ReactNode;
   message: ReactNode;
 }) => {
   return (
@@ -27,8 +23,8 @@ const MessageCard = ({
         <span className="wb-flex-1 dark-hidden">
           <Profile
             responsive={false}
-            name={title}
-            subtitle={subtitle}
+            name={<span className="wb-bodyLg-medium">{title}</span>}
+            subtitle={<span className="wb-bodyMd">{subtitle}</span>}
             color="one"
             size="md"
             noImage
@@ -37,8 +33,8 @@ const MessageCard = ({
         <span className="wb-flex-1 wb-hidden dark-block">
           <Profile
             responsive={false}
-            name={title}
-            subtitle={subtitle}
+            name={<span className="wb-bodyLg-medium">{title}</span>}
+            subtitle={<span className="wb-bodyMd">{subtitle}</span>}
             color="dark"
             size="md"
             noImage
