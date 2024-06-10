@@ -340,17 +340,17 @@ const consts = {
       {
         title: 'What are remote local environments?',
         desc: "Kloudlite Remote Local environments refer to a hybrid development setup where remote Kubernetes-based environments are seamlessly integrated with local development containers. These local containers run on the developer's machine and are connected to the remote environments via a secure WireGuard network, enabling access to remote services as if they were local. This setup ensures development-production parity by synchronizing configurations and secrets, allowing developers to use their local IDEs for coding while maintaining a consistent and secure environment.",
-        classNames: 'wb-pb-lg 3xl:wb-pb-md',
+        classNames: 'wb-pb-2xl 3xl:wb-pb-xl',
       },
       {
         title: 'How does Kloudlite Development Environments work?',
         desc: 'Kloudlite Development Environments work by linking your computer to remote servers where your applications run. It uses containers on your local machine that replicate the setup of the remote servers, ensuring consistency. These containers connect through a secure network, allowing you to access and work with all necessary services without installing them locally. This setup enables developers to work efficiently, ensuring that what they build on their computers will function the same way when deployed on the remote servers.',
-        classNames: 'wb-pb-lg 3xl:wb-pb-md',
+        classNames: 'wb-pb-xl 3xl:wb-pb-lg',
       },
       {
         title: 'How to use Kloudlite?',
         desc: 'To use Kloudlite, start by installing it on your local machine and connecting it to your remote Kubernetes clusters. Create development environments (namespaces) in these clusters for your applications. Use WireGuard to securely connect your local machine to these remote environments, allowing seamless access to all necessary services. Finally, launch local development containers that mirror the remote setup, enabling you to develop and test your applications with full consistency and efficiency.',
-        classNames: 'wb-pb-lg 3xl:wb-pb-md',
+        classNames: 'wb-pb-xl 3xl:wb-pb-lg',
       },
       {
         title: 'How to collaborate?',
@@ -360,32 +360,32 @@ const consts = {
       {
         title: 'How to testing is possible without building and deploying?',
         desc: 'Testing in Kloudlite is possible without building and deploying because it allows you to run your local application within the same WireGuard network as the remote environment. This setup lets you test your code changes directly by accessing all necessary remote services and configurations, ensuring a consistent and integrated environment. By avoiding the build and deploy cycle, you can start testing immediately, saving time and quickly identifying and addressing any issues.',
-        classNames: 'wb-pb-lg',
+        classNames: 'wb-pb-xl 3xl:wb-pb-lg',
       },
       {
         title: 'Is Kloudlite secure?',
         desc: 'Yes, Kloudlite is secure. It uses WireGuard for creating a secure, encrypted network connection between your local machine and remote environments, ensuring that all data transmitted is protected. Additionally, it synchronizes configurations and secrets securely, maintaining strict control over access and permissions. This setup ensures that your development environment mirrors production security measures, providing a safe and reliable platform for development and testing.',
-        classNames: 'wb-pb-5xl',
+        classNames: 'wb-pb-xl 3xl:wb-pb-lg',
       },
       {
         title: 'How does Kloudlite help to reduce Development Inner loop?',
         desc: 'Kloudlite helps reduce the Development Inner Loop by allowing developers to instantly test code changes in a local development container that is connected to the remote environment via a secure WireGuard network. This setup eliminates the need for repeated building and deploying, as the local container can directly access remote services and configurations. By enabling real-time testing and debugging within the same environment where the application will run, Kloudlite significantly speeds up the development cycle and enhances productivity.',
-        classNames: 'wb-pb-lg 3xl:wb-pb-md',
+        classNames: 'wb-pb-xl 3xl:wb-pb-lg',
       },
       {
         title: 'Can you use Kloudlite with any IDE and Git repository?',
         desc: "Yes, you can use Kloudlite with any IDE and Git repository. Kloudlite's development containers come with SSH servers, allowing seamless integration with your preferred IDE. This means you can connect your IDE directly to the container for real-time coding and testing. Additionally, since Kloudlite syncs your local workspace with the development container, you can use any Git repository to manage your code, ensuring smooth version control and collaboration across different development environments.",
-        classNames: 'wb-pb-lg 3xl:wb-pb-md',
+        classNames: 'wb-pb-xl 3xl:wb-pb-lg',
       },
       {
         title: 'Can I self host Kloudlite?',
         desc: 'Yes, you can self-host Kloudlite on your own infrastructure, giving you full control over your development environments, security, and configurations, whether on-premises or in the cloud.',
-        classNames: 'wb-pb-[28px]',
+        classNames: 'wb-pb-0',
       },
       {
         title: 'How to setup Kloudlite with my IDE?',
         desc: 'To set up Kloudlite with your IDE, install Kloudlite on your local machine and start your development container. Connect your IDE to this container via SSH using the provided server details. This allows your IDE to interact directly with the container, enabling real-time coding, testing, and debugging as if you were working in the remote environment, with seamless access to all necessary services and configurations.',
-        classNames: 'wb-pb-5xl 3xl:wb-pb-[28px]',
+        classNames: 'wb-pb-lg 3xl:wb-pb-md',
       },
     ],
 
