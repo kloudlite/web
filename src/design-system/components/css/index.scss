@@ -1925,6 +1925,10 @@ video {
   background-color: var(--surface-warning-subdued);
 }
 
+.bg-text-default\/60 {
+  background-color: color-mix(in srgb, var(--text-default) calc(100% * 0.6), transparent);
+}
+
 .bg-transparent {
   background-color: transparent;
 }
@@ -2235,7 +2239,8 @@ video {
 }
 
 .text-text-default {
-  color: var(--text-default);
+  --tw-text-opacity: 1;
+  color: color-mix(in srgb, var(--text-default) calc(100% * var(--tw-text-opacity)), transparent);
 }
 
 .text-text-disabled {
@@ -2506,7 +2511,12 @@ select{
 }
 
 .hover\:text-text-default:hover {
-  color: var(--text-default);
+  --tw-text-opacity: 1;
+  color: color-mix(in srgb, var(--text-default) calc(100% * var(--tw-text-opacity)), transparent);
+}
+
+.hover\:text-text-default\/50:hover {
+  color: color-mix(in srgb, var(--text-default) calc(100% * 0.5), transparent);
 }
 
 .hover\:text-text-on-primary:hover {
@@ -2602,7 +2612,8 @@ select{
 }
 
 .active\:text-text-default:active {
-  color: var(--text-default);
+  --tw-text-opacity: 1;
+  color: color-mix(in srgb, var(--text-default) calc(100% * var(--tw-text-opacity)), transparent);
 }
 
 .active\:text-text-on-primary:active {
