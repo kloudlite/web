@@ -52,6 +52,7 @@
 --text-disabled: var(--zinc-600);
 --text-primary: var(--blue-400);
 --text-on-primary: var(--zinc-100);
+--text-on-secondary: var(--grey-900);
 --text-secondary: var(--amber-500);
 --text-critical: var(--red-500);
 --text-warning: var(--amber-500);
