@@ -32,11 +32,7 @@ import { isDev } from '~/lib/client/helpers/log';
 import { Button } from '~/components/atoms/button';
 import { ChildrenProps } from '~/components/types';
 import Page404 from '~/components/organisms/page-404';
-import {
-  consoleBaseUrl,
-  getClientEnv,
-  getServerEnv,
-} from '~/root/lib/configs/base-url.cjs';
+import { getClientEnv, getServerEnv } from '~/root/lib/configs/base-url.cjs';
 import { useDataFromMatches } from '../client/hooks/use-custom-matches';
 
 export const links: LinksFunction = () => [
@@ -134,7 +130,7 @@ export function ErrorBoundary() {
 }
 
 export const _404Main = () => {
-  return <Page404 link={consoleBaseUrl} />;
+  return <Page404 link="/" />;
 };
 
 export const meta = () => {
