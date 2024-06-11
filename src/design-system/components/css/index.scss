@@ -157,6 +157,7 @@
   --text-disabled: var(--grey-400);
   --text-primary: var(--blue-600);
   --text-on-primary: var(--grey-50);
+  --text-on-secondary: var(--grey-50);
   --text-secondary: var(--amber-600);
   --text-critical: var(--red-600);
   --text-warning: var(--amber-600);
@@ -232,6 +233,7 @@
   --text-disabled: var(--zinc-600);
   --text-primary: var(--blue-400);
   --text-on-primary: var(--zinc-100);
+  --text-on-secondary: var(--grey-900);
   --text-secondary: var(--amber-500);
   --text-critical: var(--red-500);
   --text-warning: var(--amber-500);
@@ -2249,6 +2251,10 @@ video {
 
 .text-text-on-primary {
   color: var(--text-on-primary);
+}
+
+.text-text-on-secondary {
+  color: var(--text-on-secondary);
 }
 
 .text-text-primary {

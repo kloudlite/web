@@ -265,7 +265,6 @@ export const ButtonBase = React.forwardRef<
             variant === 'critical' ||
             variant === 'secondary' ||
             variant === 'secondary-outline' ||
-            variant === 'tertiary' ||
             variant === 'purple' ||
             variant === 'warning',
           'text-text-critical':
@@ -273,6 +272,7 @@ export const ButtonBase = React.forwardRef<
           'text-text-primary':
             variant === 'primary-outline' || variant === 'primary-plain',
           'text-text-secondary': variant === 'secondary-plain',
+          'text-text-on-secondary': variant === 'tertiary',
         },
         {
           'focus:underline': noRing,

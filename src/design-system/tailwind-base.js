@@ -271,6 +271,7 @@ const config = {
         disabled: 'var(--text-disabled)',
         primary: 'var(--text-primary)',
         'on-primary': 'var(--text-on-primary)',
+        'on-secondary': 'var(--text-on-secondary)',
         secondary: 'var(--text-secondary)',
         critical: 'var(--text-critical)',
         warning: 'var(--text-warning)',
