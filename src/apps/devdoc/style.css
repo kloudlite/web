@@ -73,8 +73,27 @@ html {
   order: -99999;
 }
 
+.nextra-code-block {
+  @apply wb-relative;
+}
+
+.nextra-code-block button{
+  @apply wb-bg-surface-basic-hovered wb-p-lg wb-border wb-border-border-default wb-rounded wb-text-text-default wb-cursor-pointer;
+}
+
+.nx-right-0{
+  @apply wb-right-0;
+}
+
+.nx-top-0{
+  @apply wb-top-0;
+}
+.nx-absolute{
+  @apply wb-absolute;
+}
 pre {
   overflow-x: auto;
+  @apply wb-mt-3xl wb-bg-surface-basic-input wb-border wb-border-border-default wb-rounded wb-p-xl;
 }
 
 code {
