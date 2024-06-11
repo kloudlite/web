@@ -7,7 +7,7 @@ interface IPage404 {
   link?: string;
 }
 
-export const Page404 = ({
+const Page404 = ({
   heading = 'Whoops (404)! Page not found',
   content = 'We’ll get to the bottom of it, no matter how many rabbit holes we must go down. In the meantime, feel free to browse other areas of our site.',
   link,
@@ -25,3 +25,5 @@ export const Page404 = ({
     </div>
   );
 };
+
+export default Page404;

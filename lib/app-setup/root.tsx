@@ -31,7 +31,7 @@ import { ReloadIndicator } from '~/lib/client/components/reload-indicator';
 import { isDev } from '~/lib/client/helpers/log';
 import { Button } from '~/components/atoms/button';
 import { ChildrenProps } from '~/components/types';
-import { Page404 } from '~/components/organisms/page-404';
+import Page404 from '~/components/organisms/page-404';
 import { getClientEnv, getServerEnv } from '../configs/base-url.cjs';
 import { useDataFromMatches } from '../client/hooks/use-custom-matches';
 
@@ -130,7 +130,7 @@ export function ErrorBoundary() {
 }
 
 export const _404Main = () => {
-  return <div>{Page404({})}</div>;
+  return <Page404 />;
 };
 
 export const meta = () => {

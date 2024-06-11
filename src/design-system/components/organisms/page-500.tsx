@@ -7,7 +7,7 @@ interface IPage404 {
   link?: string;
 }
 
-export const Page500 = ({
+const Page500 = ({
   heading = 'Internal server error',
   content = 'The server encountered an error and could not complete your requests.',
   link,
@@ -25,3 +25,5 @@ export const Page500 = ({
     </div>
   );
 };
+
+export default Page500;
