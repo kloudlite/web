@@ -18,7 +18,7 @@ export const Page500 = ({
       <div className="flex flex-col items-center justify-center gap-5xl max-w-md text-center">
         <div className="flex flex-col gap-3xl">
           <div className="heading3xl">{heading}</div>
-          <div className="bodyMd text-text-soft w-[544px]">{content}</div>
+          <div className="bodyMd text-text-soft md:w-[544px]">{content}</div>
         </div>
         <Button variant="basic" size="md" content="Go to homepage" to={link} />
       </div>
