@@ -1,27 +1,27 @@
-import { Avatar } from 'kl-design-system/atoms/avatar';
-import Profile from 'kl-design-system/molecule/profile';
 import { UsersThree } from '@jengaicons/react';
-import Link from 'next/link';
-import { ReactNode, useEffect, useRef, useState } from 'react';
-import { BrandLogo } from 'kl-design-system/branding/brand-logo';
 import { Splide, SplideSlide, SplideTrack } from '@splidejs/react-splide';
 import { AutoScroll } from '@splidejs/splide-extension-auto-scroll';
-import ProgressTracker from '~/app/components/progress-tracker';
+import { Avatar } from 'kl-design-system/atoms/avatar';
+import { BrandLogo } from 'kl-design-system/branding/brand-logo';
+import Profile from 'kl-design-system/molecule/profile';
+import Link from 'next/link';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import { Graph, GraphItem } from '~/app/components/graph';
+import ProgressTracker from '~/app/components/progress-tracker';
 import ReadyToOps from '~/app/components/website/ready-to-ops';
 
 import { cn } from '~/app/utils/commons';
 import consts from '~/app/utils/const';
 import illustration from '../../../images/illustraion1.svg';
 
+import '@splidejs/react-splide/css/core';
+import Button from '../button';
+import { Block } from '../commons';
+import HoverItem from '../hover-item';
+import ResponsiveImage from '../website/responsive-image';
 import SectionWrapper from '../website/section-wrapper';
 import Wrapper from '../wrapper';
 import { teamTaskAnimationV3 } from './team-task-animation';
-import HoverItem from '../hover-item';
-import Button from '../button';
-import ResponsiveImage from '../website/responsive-image';
-import '@splidejs/react-splide/css/core';
-import { Block } from '../commons';
 
 const Partners = () => {
   return (
@@ -110,13 +110,11 @@ const MessageCard = ({
   subtitle,
   company,
   message,
-  time,
 }: {
   title: string;
   subtitle: string;
   company: ReactNode;
   message: ReactNode;
-  time: ReactNode;
 }) => {
   return (
     <div className="flex flex-col justify-between gap-3xl p-3xl bg-surface-basic-default min-h-[224px]">
@@ -127,7 +125,6 @@ const MessageCard = ({
         <span>{company}</span>
       </div>
       <p className="bodyMd text-text-soft line-clamp-3">{message}</p>
-      <span className="bodySm text-text-soft">{time}</span>
     </div>
   );
 };
@@ -451,7 +448,7 @@ const _DontBelieve = () => {
       <h2 className="heading3xl-marketing md:!heading4xl-marketing xl:!heading5xl-marketing text-text-default text-center">
         Don&apos;t believe? Read for yourself..
       </h2>
-      <Graph className="-mx-10xl" blurSize="md">
+      <Graph className="-mx-10xl">
         <div className="grid grid-cols-1 md:!grid-cols-3 gap-5xl px-10xl">
           {consts.home.messages.map((message) => (
             <GraphItem key={message.title}>
@@ -537,7 +534,7 @@ const IndexRoot = () => {
                 content="Get started for free"
                 to="https://auth.kloudlite.io"
                 toLabel="href"
-                LinkComponent={Link}
+                linkComponent={Link}
                 variant="primary"
               />
             </div>

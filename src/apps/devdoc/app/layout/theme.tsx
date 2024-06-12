@@ -6,6 +6,7 @@ import { useFSRoute } from 'nextra/hooks';
 import { Item, normalizePages } from 'nextra/normalize-pages';
 import { useRouter } from 'next/router';
 import { ArrowUpLg } from '@jengaicons/react';
+import axios from 'axios';
 import Footer from '~/app/components/footer';
 import Container from '~/app/components/container';
 import { NavLinks } from '~/app/components/nav-links';
@@ -13,17 +14,22 @@ import { TOC } from '~/app/components/toc';
 import { Breadcrumb } from '~/app/components/breadcrum';
 import { Sidebar } from '~/app/components/sidebar';
 import HeaderSecondary from '~/app/components/header-secondary';
-import Header from '~/app/components/header';
 import { DEFAULT_LOCALE } from '~/app/utils/constants';
 import { cn } from '~/app/utils/commons';
 import useMenu from '~/app/utils/use-menu';
 import { ActiveAnchorProvider } from '~/app/utils/active-anchor';
-import { ConfigProvider } from '~/app/utils/use-config';
 import config, { basePath } from '~/app/utils/config';
 import { createComponents } from './mdx-components';
 import { BlogHeader, BlogTags } from '../components/blog-utils';
 import { CompanyPanel } from '../components/company-utils';
 import { BackToTop } from '../components/back-to-top';
+import useConfig from '../utils/use-config';
+import ShareMenu from '../components/share-menu';
+import Wrapper from '../components/wrapper';
+import { GraphItem } from '../components/graph';
+import { ExploringItem } from '../components/website/home/keep-exploring';
+import consts from '../utils/const';
+import { Block } from '../components/commons';
 
 function GitTimestamp({ timestamp }: { timestamp: Date }) {
   const { locale = DEFAULT_LOCALE } = useRouter();
@@ -50,8 +56,10 @@ const findPageType = (activePath: Item[], names: string[]) => {
   );
 };
 
+const isDocPage = (route: string) => route.includes('/docs');
+
 const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
-  const { title, frontMatter, pageMap, headings } = pageOpts;
+  const { title, frontMatter, pageMap, headings, route } = pageOpts;
 
   const { state } = useMenu();
 
@@ -82,11 +90,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
     directories,
   } = pageData;
 
-  const tempActiveThemeContext: typeof activeThemeContext & {
-    header?: 'primary' | 'secondary';
-  } = activeThemeContext;
   const showSidebar = activeThemeContext.sidebar;
-  const headerType = tempActiveThemeContext?.header || 'secondary';
   const showToc = activeThemeContext.toc || false;
   const showBreadcrum = activeThemeContext?.breadcrumb;
 
@@ -96,7 +100,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
     pageType = 'blog';
   }
 
-  if (findPageType(activePath, ['docs'])) {
+  if (isDocPage(route)) {
     pageType = 'docs';
   }
 
@@ -105,7 +109,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
   }
 
   return (
-    <div className="wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued wb-min-h-screen wb-antialiased">
+    <div className="wb-bg-surface-basic-subdued wb-min-h-screen wb-antialiased">
       <Head>
         <title>{title === 'Index' ? config.siteTitle : title}</title>
         <meta name="description" content={frontMatter.description} />
@@ -133,16 +137,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
         />
       </Head>
       <ActiveAnchorProvider>
-        {headerType === 'primary' ? (
-          <Header navitems={config?.headerPrimary} activePath={activePath} />
-        ) : (
-          // @ts-ignore
-          <HeaderSecondary
-            {...config?.headerSecondary}
-            activePath={activePath}
-          />
-        )}
-
+        <HeaderSecondary {...config?.headerSecondary} activePath={activePath} />
         <Container
           className={cn(
             'wb-min-h-[calc(100vh-76px)] wb-flex-row',
@@ -190,13 +185,14 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
                   ? 'lg:!wb-pr-8xl xl:!wb-pr-10xl 2xl:!wb-pr-11xl 3xl:!wb-pr-15xl'
                   : '',
                 ['blog'].includes(pageType)
-                  ? 'lg:!wb-pr-8xl xl:!wb-pr-10xl 2xl:!wb-pr-11xl 3xl:!wb-px-14xl'
+                  ? 'md:wb-px-5xl lg:wb-px-8xl xl:!wb-px-11xl 2xl:!wb-px-12xl 3xl:!wb-px-14xl'
                   : ''
               )}
             >
               <MDXProvider
                 components={createComponents({
                   isRawLayout: activeThemeContext.layout === 'raw',
+                  isBlog: pageType === 'blog',
                 })}
               >
                 <div className="wb-flex-1">
@@ -222,15 +218,18 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
                   {children}
                 </div>
 
-                <div className="wb-pt-5xl">
-                  <BlogTags tags={frontMatter.tags || []} />
-                </div>
+                {frontMatter.tags && (
+                  <div className="wb-pt-5xl wb-flex wb-flex-col wb-gap-5xl md:wb-flex-row md:wb-items-center md:wb-justify-between">
+                    <BlogTags tags={frontMatter.tags || []} />
+                    <ShareMenu frontmatter={frontMatter} />
+                  </div>
+                )}
 
                 {!['blog', 'customer-stories'].includes(pageType) &&
                 activeThemeContext.timestamp &&
                 pageOpts.timestamp &&
                 activeThemeContext.layout !== 'raw' ? (
-                  <div className="wb-bodyLg wb-text-text-strong dark:wb-text-text-darktheme-strong wb-pb-xl">
+                  <div className="wb-bodyLg wb-text-text-strong wb-pb-xl">
                     {GitTimestamp({ timestamp: new Date(pageOpts.timestamp) })}
                   </div>
                 ) : null}
@@ -258,17 +257,88 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
             </div>
           )}
         </Container>
+        {['blog'].includes(pageType) && (
+          <Wrapper>
+            <Block
+              title="Read more..."
+              titleClass="md:!wb-heading3xl-marketing lg:!wb-heading3xl-marketing xl:!wb-heading3xl-marketing 2xl:!wb-heading3xl-marketing 3xl:!wb-heading3xl-marketing wb-text-start"
+              titleContainerClass="wb-relative wb-z-[99] md:wb-top-[28px]"
+            >
+              <div className="wb-grid wb-grid-cols-1 md:wb-grid-cols-3 wb-gap-5xl">
+                {consts.homeNew.exploring.map((ti) => {
+                  return (
+                    <GraphItem key={ti.label}>
+                      <ExploringItem {...ti} />
+                    </GraphItem>
+                  );
+                })}
+              </div>
+            </Block>
+          </Wrapper>
+        )}
         <Footer config={config} />
       </ActiveAnchorProvider>
     </div>
   );
 };
 
+export const fetchProviders = async () => {
+  try {
+    const res = await axios({
+      url: `${process.env.AUTH_URL}/api` || 'https://auth.kloudlite.io/api',
+      method: 'post',
+      withCredentials: false,
+      data: {
+        method: 'loginPageInitUrls',
+        args: [{}],
+      },
+    });
+    if (res.data?.data) {
+      return res.data.data;
+    }
+    return null;
+  } catch (e) {
+    return null;
+  }
+};
+
+const getUser = async () => {
+  try {
+    const res = await axios({
+      url: `${process.env.AUTH_URL}/api` || 'https://auth.kloudlite.io/api',
+      method: 'post',
+      withCredentials: true,
+      data: {
+        method: 'whoAmI',
+        args: [{}],
+      },
+    });
+    if (res.data?.data) {
+      return res.data.data;
+    }
+    return null;
+  } catch (e) {
+    return null;
+  }
+};
+
 export default function Layout(props: NextraThemeLayoutProps) {
   const { pageOpts } = props;
-  return (
-    <ConfigProvider pageOpts={pageOpts} config={config}>
-      <Main {...props} />
-    </ConfigProvider>
-  );
+  const { setConfig } = useConfig();
+  useEffect(() => {
+    setConfig((prev) => ({ ...prev, userApiLoading: true }));
+    (async () => {
+      const user = await getUser();
+      setConfig((prev) => ({ ...prev, user, userApiLoading: false }));
+    })();
+
+    (async () => {
+      const prov = await fetchProviders();
+      setConfig((prev) => ({ ...prev, oathProviders: prov }));
+    })();
+
+    setConfig((prev) => ({ ...prev, pageOpts }));
+  }, []);
+
+  return <Main {...props} />;
 }

@@ -27,7 +27,7 @@ export const NavLinks = ({
   return (
     <div
       className={cn(
-        'wb-py-6xl md:wb-px-xl wb-border-t wb-border-border-default dark:wb-border-border-darktheme-default  wb-flex wb-flex-col md:wb-flex-row wb-flex-wrap wb-items-center wb-gap-xl wb-bodyMd wb-text-text-default dark:wb-text-text-darktheme-default',
+        'wb-py-6xl md:wb-px-xl wb-border-t wb-border-border-default wb-flex wb-flex-col md:wb-flex-row wb-flex-wrap wb-items-center wb-gap-xl wb-bodyMd wb-text-text-default print:wb-hidden',
         {
           'justify-between': !!prev,
           'justify-end': !prev,
@@ -37,7 +37,7 @@ export const NavLinks = ({
       <div className="wb-flex-1 md:wb-flex-none wb-self-start">
         {prev && (
           <Button
-            LinkComponent={Link}
+            linkComponent={Link}
             toLabel="href"
             content={prev.title}
             className="self-start"
@@ -50,7 +50,7 @@ export const NavLinks = ({
       <div className="wb-flex-1 md:wb-flex-none wb-self-end">
         {next && (
           <Button
-            LinkComponent={Link}
+            linkComponent={Link}
             toLabel="href"
             content={next.title}
             className="self-end ml-auto"

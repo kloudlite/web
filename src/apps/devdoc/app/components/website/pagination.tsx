@@ -40,7 +40,6 @@ const Pagination = ({
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    console.log('totalpages', totalPages);
     if (currentPage > totalPages) {
       onPageChanged(totalPages);
     }

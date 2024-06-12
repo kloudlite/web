@@ -4,10 +4,10 @@ import {
   ShareNetwork,
   TwitterNewLogoFill,
 } from '@jengaicons/react';
-import { IconButton } from 'kl-design-system/atoms/button';
 import OptionList from 'kl-design-system/atoms/option-list';
 import { useState } from 'react';
 import { toast } from 'kl-design-system/molecule/toast';
+import { Button } from 'kl-design-system/atoms/button';
 import useClipboard from '../utils/use-clipboard';
 
 const openWindow = (url: string) => {
@@ -24,7 +24,18 @@ const ShareMenu = ({ frontmatter }: { frontmatter: Record<string, any> }) => {
   return (
     <OptionList.Root open={open} onOpenChange={setOpen}>
       <OptionList.Trigger>
-        <IconButton icon={<ShareNetwork />} variant="outline" />
+        <Button
+          variant="outline"
+          className="md:!wb-p-lg"
+          content={
+            <div className="wb-flex wb-flex-row wb-items-center wb-gap-lg">
+              <span>
+                <ShareNetwork size={16} />
+              </span>
+              <span className="md:wb-hidden wb-bodyMd-medium">Share</span>
+            </div>
+          }
+        />
       </OptionList.Trigger>
       <OptionList.Content>
         <OptionList.Item

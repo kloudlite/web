@@ -37,6 +37,51 @@
       "header":"secondary"
     }
   },
+  "remote-local-environments":{
+    "title":"What Are Remote Local Environments?",
+    "type":"page",
+    "theme":{
+      "sidebar":false,
+      "toc":true,
+      "header":"secondary"
+    }
+  },
+  "collaborative-development":{
+    "title":"Best Practices for Collaborative Development: Empowering Teams with Unified Remote Environments",
+    "type":"page",
+    "theme":{
+      "sidebar":false,
+      "toc":true,
+      "header":"secondary"
+    }
+  },
+  "development-workflow":{
+    "title":"Optimizing Your Development Workflow with Kloudlite",
+    "type":"page",
+    "theme":{
+      "sidebar":false,
+      "toc":true,
+      "header":"secondary"
+    }
+  },
+  "role-of-open-source-in-modern-software-development":{
+    "title":"The Role of Open Source in Modern Software Development",
+    "type":"page",
+    "theme":{
+      "sidebar":false,
+      "toc":true,
+      "header":"secondary"
+    }
+  },
+  "distributed-environment-as-a-service":{
+    "title":"Distributed Environment as a Service",
+    "type":"page",
+    "theme":{
+      "sidebar":false,
+      "toc":true,
+      "header":"secondary"
+    }
+  },
   "template":{
     "title":"This is sample",
     "type":"page",

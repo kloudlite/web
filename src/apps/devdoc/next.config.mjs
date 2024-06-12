@@ -12,6 +12,11 @@ const withNextra = nextra({
 
 export default withNextra({
   output: 'export',
+  env: {
+    APP_ENV: process.env.APP_ENV,
+    AUTH_URL: process.env.AUTH_URL,
+    CONSOLE_URL: process.env.CONSOLE_URL,
+  },
   images: {
     unoptimized: true,
   },

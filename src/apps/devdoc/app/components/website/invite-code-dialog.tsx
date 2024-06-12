@@ -13,11 +13,11 @@ const InviteCodeDialog = ({
       <Popup.Header>🎉 Congratulations!!!</Popup.Header>
       <Popup.Content>
         <div className="flex flex-col gap-3xl">
-          <div className="bodyMd text-text-default dark:text-text-darktheme-default">
+          <div className="bodyMd text-text-default">
             Your request has been submitted successfully.
           </div>
           <div className="flex flex-col gap-lg">
-            <div className="bodyMd text-text-default dark:text-text-darktheme-default">
+            <div className="bodyMd text-text-default">
               Do you have invite code? Enter the code to get an early access.
             </div>
             <TextInput />

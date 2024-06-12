@@ -1,22 +1,26 @@
 import {supportEmail} from "../app/utils/config.tsx"
+import PrivacyContainer from "../app/components/website/privacy-container"
+
 export const Headings = ({ children, className }) => {
   return <p className={"wb-bodyMd-medium wb-text-text-default dark:wb-text-text-darktheme-default "+className}>{children}</p>;
 };
 
 export const SubList = ({ children }) => {
-  return <ul className="wb-list-[circle] wb-pl-3xl">{children.props.children}</ul>;
+  return <ul className="wb-list-[circle] wb-pl-[16px]">{children.props.children}</ul>;
 };
 
-<div className="wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued">
-    <div className="wb-max-w-[1440px] wb-m-auto wb-px-3xl md:wb-px-8xl lg:wb-px-11xl xl:wb-px-13xl 2xl:wb-px-14xl wb-pb-6xl md:wb-pb-8xl xl:wb-pb-10xl">
-        <h1 className="wb-heading4xl-marketing md:wb-heading5xl-marketing lg:wb-heading6xl-marketing wb-text-text-default dark:wb-text-text-darktheme-default wb-py-6xl md:wb-py-8xl xl:wb-py-10xl">
-          Privacy Policy 
-        </h1>
-        <div>
-          <div className="wb-text-text-soft dark:wb-text-text-darktheme-soft wb-bodyLg">
-            Last updated: <span className="wb-headingMd wb-text-text-default dark:wb-text-text-darktheme-default">12th Dec, 2023</span>
-          </div>
-          <div className="wb-bodyLg wb-text-text-strong dark:wb-text-text-darktheme-strong wb-flex wb-flex-col wb-gap-4xl wb-pt-4xl">
+<PrivacyContainer
+  className="wb-pb-6xl md:wb-pb-8xl xl:wb-pb-[76px] 2xl:wb-pb-[68px]"
+  title="Privacy Policy"
+  subTitle={
+    <div className="wb-text-text-soft dark:wb-text-text-darktheme-soft wb-bodyLg">
+      Last updated:{" "}
+      <span className="wb-headingMd wb-text-text-default dark:wb-text-text-darktheme-default">
+        12th Dec, 2023
+      </span>
+    </div>
+  }
+>
             <Headings>Scope of this Privacy Statement</Headings>
   
               Kloudlite Labs Pvt Ltd (Kloudlite), respects your privacy. This
@@ -303,9 +307,4 @@ export const SubList = ({ children }) => {
 
               
               For a PDF version of the Privacy Statement, please <a className="hover:underline text-text-primary" href="/documents/Kloudlite-Privacy_policy.pdf" download>click here</a>.
-
-      </div>
-        </div>
-    </div>
-
-</div>
+</PrivacyContainer>

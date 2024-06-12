@@ -42,14 +42,14 @@ type FolderProps = {
 
 const classes = {
   link: cn(
-    'wb-flex wb-flex-row wb-items-center wb-rounded wb-py-lg wb-px-2xl wb-transition-all [word-break:break-word]',
-    'wb-cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:wb-border hover:wb-bg-surface-basic-hovered dark:hover:wb-bg-surface-darktheme-basic-hovered'
+    'wb-flex wb-flex-row wb-items-center wb-rounded wb-py-md wb-px-2xl wb-transition-all [word-break:break-word]',
+    'wb-cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:wb-border hover:wb-bg-surface-basic-hovered'
   ),
-  inactive: cn('wb-bodyMd wb-text-text-soft dark:wb-text-text-darktheme-soft'),
+  inactive: cn('wb-bodyMd wb-text-text-soft'),
   active: cn(
-    'wb-bodyMd-medium wb-text-text-primary dark:wb-text-text-darktheme-primary wb-bg-surface-basic-active dark:wb-bg-surface-darktheme-basic-active'
+    'wb-bodyMd-medium wb-text-text-primary wb-bg-surface-basic-active'
   ),
-  list: cn('wb-flex wb-flex-col wb-w-full wb-gap-lg'),
+  list: cn('wb-flex wb-flex-col wb-w-full wb-gap-md'),
 };
 
 function FolderImpl({ item, anchors }: FolderProps): ReactElement {
@@ -159,7 +159,7 @@ function FolderImpl({ item, anchors }: FolderProps): ReactElement {
         className="wb-pl-4xl wb-pt-lg wb-flex wb-flex-row"
         isOpen={open}
       >
-        <div className="wb-border-l wb-border-border-default dark:wb-border-border-darktheme-default" />
+        <div className="wb-border-l wb-border-border-default" />
         <LayoutGroup>
           {Array.isArray(item.children) ? (
             <Menu
@@ -189,14 +189,11 @@ function Separator({ title }: { title: string }): ReactElement {
     <li
       className={cn(
         '[word-break:break-word]',
-        title
-          ? 'wb-headingSm wb-text-text-default dark:wb-text-text-darktheme-default wb-py-lg wb-px-2xl wb-my-md'
-          : ''
+        title ? 'wb-headingSm wb-text-text-default wb-py-md wb-px-2xl' : '',
+        '[&:not(:first-child)]:wb-mt-5xl'
       )}
     >
-      {title || (
-        <hr className="wb-mx-2 wb-border-t wb-border-border-default dark:wb-border-border-darktheme-default" />
-      )}
+      {title || <hr className="wb-mx-2 wb-border-t wb-border-border-default" />}
     </li>
   );
 }
@@ -215,6 +212,13 @@ function File({
   const active = item.route && [route, `${route}/`].includes(`${item.route}/`);
   const { setState: setMenu } = useMenu();
 
+  const { setActiveDocTopic } = useConfig();
+  useEffect(() => {
+    if (active) {
+      setActiveDocTopic(item.title);
+    }
+  }, [active]);
+
   if (item.type === 'separator') {
     return <Separator title={item.title} />;
   }
@@ -228,7 +232,7 @@ function File({
       {!!base && active && (
         <motion.div
           layoutId={`line-${base}`}
-          className="wb-border-l-2 wb-border-border-primary dark:wb-border-border-darktheme-primary wb-rounded wb-h-full wb-absolute -wb-left-[5px]"
+          className="wb-border-l-2 wb-border-border-primary wb-rounded wb-h-full wb-absolute -wb-left-[5px]"
         />
       )}
       <Anchor
@@ -367,9 +371,9 @@ export function Sidebar({
       />
       <aside
         className={cn(
-          'kl-sidebar wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued wb-z-40 kl-sidebar-container wb-flex-col wb-pb-6xl lg:wb-pt-0',
+          'kl-sidebar wb-bg-surface-basic-subdued wb-z-40 kl-sidebar-container wb-flex-col wb-pb-6xl lg:wb-pt-0',
           'lg:wb-top-0 lg:wb-shrink-0 motion-reduce:wb-transform-none',
-          'wb-transform-gpu wb-transition-all wb-ease-in-out',
+          // 'wb-transform-gpu wb-transition-all wb-ease-in-out wb-duration-[3s]',
           'print:wb-hidden',
           showSidebar ? 'lg:wb-w-[244px]' : '',
           asPopover ? 'lg:wb-hidden' : 'wb-flex lg:wb-sticky lg:wb-self-start',

@@ -24,39 +24,15 @@ const getTheme = () => {
 
 const saveTheme = (theme: ITheme) => {
   if (theme === 'dark') {
-    document.documentElement.classList.add('wb-dark', 'dark');
-    document
-      .querySelector('html')
-      ?.classList.remove('wb-bg-surface-basic-subdued');
-    document
-      .querySelector('html')
-      ?.classList.add('wb-bg-surface-darktheme-basic-subdued');
+    document.querySelector('html')?.setAttribute('data-theme', 'dark');
   } else if (theme === 'system') {
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      document.documentElement.classList.add('wb-dark', 'dark');
-      document
-        .querySelector('html')
-        ?.classList.remove('wb-bg-surface-basic-subdued');
-      document
-        .querySelector('html')
-        ?.classList.add('wb-bg-surface-darktheme-basic-subdued');
+      document.querySelector('html')?.setAttribute('data-theme', 'dark');
     } else {
-      document
-        .querySelector('html')
-        ?.classList.add('wb-bg-surface-basic-subdued');
-      document
-        .querySelector('html')
-        ?.classList.remove('wb-bg-surface-darktheme-basic-subdued');
-      document.documentElement.classList.remove('wb-dark', 'dark');
+      document.querySelector('html')?.setAttribute('data-theme', 'light');
     }
   } else {
-    document.documentElement.classList.remove('wb-dark', 'dark');
-    document
-      .querySelector('html')
-      ?.classList.add('wb-bg-surface-basic-subdued');
-    document
-      .querySelector('html')
-      ?.classList.remove('wb-bg-surface-darktheme-basic-subdued');
+    document.querySelector('html')?.setAttribute('data-theme', 'light');
   }
   if (theme === 'system') {
     localStorage.removeItem('theme');

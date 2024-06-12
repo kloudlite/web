@@ -44,7 +44,7 @@ const Header = ({
   }, []);
 
   return (
-    <div className="wb-sticky wb-top-0 md:wb-relative wb-flex wb-flex-row wb-top-0 wb-left-0 wb-right-0 wb-bg-surface-basic-subdued dark:wb-bg-surface-darktheme-basic-subdued wb-border-b wb-border-border-default dark:wb-border-border-darktheme-default wb-min-h-[var(--kl-navbar-height)] wb-z-50">
+    <div className="wb-sticky wb-top-0 md:wb-relative wb-flex wb-flex-row wb-top-0 wb-left-0 wb-right-0 wb-bg-surface-basic-subdued wb-border-b wb-border-border-default wb-min-h-[var(--kl-navbar-height)] wb-z-50">
       <Wrapper className="wb-flex">
         <nav className="wb-flex wb-flex-row wb-items-center wb-gap-6xl wb-w-full">
           {config.logo}

@@ -16,6 +16,4 @@ export default {
   theme: tailwindBase.theme,
   plugins: [typography(), scrollbar()],
   prefix: 'wb-',
-  darkMode: 'selector',
-  // darkMode: 'class',
 };

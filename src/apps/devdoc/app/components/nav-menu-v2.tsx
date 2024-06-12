@@ -20,23 +20,19 @@ export const NavListItem = React.forwardRef<
     <NavigationMenu.Link asChild>
       <a
         className={classNames(
-          'wb-rounded wb-flex wb-flex-row wb-gap-xl wb-items-center wb-px-xl wb-py-lg hover:wb-bg-surface-basic-hovered dark:hover:wb-bg-surface-darktheme-basic-hovered wb-cursor-pointer',
+          'wb-rounded wb-flex wb-flex-row wb-gap-xl wb-items-center wb-px-xl wb-py-lg hover:wb-bg-surface-basic-hovered wb-cursor-pointer',
           className
         )}
         {...props}
         ref={ref}
         href={href}
       >
-        <div className="wb-h-[44px] wb-w-[44px] wb-flex wb-items-center wb-justify-center wb-rounded wb-p-lg wb-bg-icon-primary wb-text-text-on-primary dark:wb-bg-icon-darktheme-primary dark:wb-text-text-darktheme-on-primary">
+        <div className="wb-h-[44px] wb-w-[44px] wb-flex wb-items-center wb-justify-center wb-rounded wb-p-lg wb-bg-icon-primary wb-text-text-on-primary">
           {icon}
         </div>
         <div className="wb-flex wb-flex-col">
-          <div className="wb-bodyMd-semibold wb-text-text-default  dark:wb-text-text-darktheme-default">
-            {title}
-          </div>
-          <p className="wb-bodySm wb-text-text-soft dark:wb-text-text-darktheme-soft">
-            {children}
-          </p>
+          <div className="wb-bodyMd-semibold wb-text-text-default">{title}</div>
+          <p className="wb-bodySm wb-text-text-soft">{children}</p>
         </div>
       </a>
     </NavigationMenu.Link>
@@ -93,10 +89,8 @@ const NavMenuItem = ({
       {type === 'normal' && (
         <NavigationMenu.Link
           className={cn(
-            'wb-bodyLg-medium wb-cursor-pointer wb-px-2xl wb-flex hover:wb-text-text-default dark:hover:wb-text-text-darktheme-default',
-            active
-              ? 'wb-text-text-default dark:wb-text-text-darktheme-default'
-              : 'wb-text-text-soft dark:wb-text-text-darktheme-soft dark:hover:wb-text-text-darktheme-default'
+            'wb-bodyLg-medium wb-cursor-pointer wb-px-2xl wb-flex hover:wb-text-text-default',
+            active ? 'wb-text-text-default' : 'wb-text-text-soft'
           )}
           href={href}
         >
@@ -104,11 +98,7 @@ const NavMenuItem = ({
         </NavigationMenu.Link>
       )}
       {type === 'popup' && (
-        <NavMenuButton
-          className={
-            active ? '!text-text-default dark:text-text-darktheme-default' : ''
-          }
-        >
+        <NavMenuButton className={active ? '!text-text-default' : ''}>
           {href ? (
             <NavigationMenu.Link href={href}>{label}</NavigationMenu.Link>
           ) : (

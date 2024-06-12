@@ -17,10 +17,10 @@ export const BlogHeader = ({
   return (
     <div className="wb-flex wb-flex-col wb-gap-5xl wb-pt-2xl wb-pb-xl">
       <div className="wb-flex wb-flex-col wb-gap-xl">
-        <h1 className="wb-heading4xl wb-text-text-default dark:wb-text-text-darktheme-default">
+        <h1 className="wb-heading4xl wb-text-text-default">
           {frontMatter.title || frontMatter.companyName}
         </h1>
-        <p className="wb-bodyLg wb-text-text-strong dark:wb-text-text-darktheme-strong">
+        <p className="wb-bodyLg wb-text-text-strong">
           {frontMatter.describe || frontMatter.companyDescription}
         </p>
       </div>
@@ -29,16 +29,14 @@ export const BlogHeader = ({
           <Profile
             responsive={false}
             name={
-              <span className="wb-bodyMd">
-                Written by{' '}
-                <span className="wb-bodyMd-semibold">{frontMatter.author}</span>
-              </span>
+              <span className="wb-bodyMd-semibold">{frontMatter.author}</span>
             }
             subtitle={timestamp}
             image={
               <img
                 src={`https://gravatar.com/avatar/${frontMatter.gravatarHash}`}
                 className="wb-rounded-full"
+                alt="avatar"
               />
             }
           />
@@ -55,7 +53,7 @@ export const BlogTags = ({ tags = [] }: { tags: string[] }) => {
   return (
     <div className="wb-flex wb-flex-row wb-flex-wrap wb-items-center wb-gap-lg">
       {tags.map((t) => (
-        <Chip key={t} item={t} label={t} />
+        <Chip key={t} item={t} label={<span className="wb-bodyLg">{t}</span>} />
       ))}
     </div>
   );
