@@ -115,6 +115,7 @@
   --surface-basic-pressed: var(--zinc-200);
   --surface-basic-input: var(--grey-50);
   --surface-basic-active: var(--zinc-100);
+  --surface-basic-overlay-bg: var(--zinc-900);
   /* Primary */
   --surface-primary-default: var(--blue-500);
   --surface-primary-subdued: var(--blue-50);
@@ -195,6 +196,7 @@
   --surface-basic-pressed: var(--zinc-800);
   --surface-basic-input: var(--grey-1100);
   --surface-basic-active: var(--zinc-800);
+  --surface-basic-overlay-bg: var(--zinc-900);
   /* Primary */
   --surface-primary-default: var(--blue-700);
   --surface-primary-subdued: var(--blue-1100);
@@ -1849,6 +1851,10 @@ video {
 
 .bg-surface-basic-input {
   background-color: var(--surface-basic-input);
+}
+
+.bg-surface-basic-overlay-bg {
+  background-color: var(--surface-basic-overlay-bg);
 }
 
 .bg-surface-basic-pressed {

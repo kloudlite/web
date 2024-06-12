@@ -6,6 +6,7 @@
   --surface-basic-pressed: var(--zinc-800);
   --surface-basic-input: var(--grey-1100);
   --surface-basic-active: var(--zinc-800);
+  --surface-basic-overlay-bg: var(--zinc-900);
 
   /* Primary */
   --surface-primary-default: var(--blue-700);

@@ -106,7 +106,7 @@ const PopupRoot = ({
                 transition={{ duration: 0.2, ease: 'anticipate' }}
                 className={cn(
                   'fixed inset-0 z-[9999999]',
-                  backdrop ? 'bg-text-default/60' : ''
+                  backdrop ? 'bg-surface-basic-overlay-bg' : ''
                 )}
               />
             </Dialog.Overlay>

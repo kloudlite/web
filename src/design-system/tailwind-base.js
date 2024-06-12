@@ -219,6 +219,7 @@ const config = {
           pressed: 'var(--surface-basic-pressed)',
           input: 'var(--surface-basic-input)',
           active: 'var(--surface-basic-active)',
+          'overlay-bg': 'var(--surface-basic-overlay-bg)',
         },
         primary: {
           default: 'var(--surface-primary-default)',
