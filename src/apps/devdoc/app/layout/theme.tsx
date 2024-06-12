@@ -24,6 +24,12 @@ import { BlogHeader, BlogTags } from '../components/blog-utils';
 import { CompanyPanel } from '../components/company-utils';
 import { BackToTop } from '../components/back-to-top';
 import useConfig from '../utils/use-config';
+import ShareMenu from '../components/share-menu';
+import Wrapper from '../components/wrapper';
+import { GraphItem } from '../components/graph';
+import { ExploringItem } from '../components/website/home/keep-exploring';
+import consts from '../utils/const';
+import { Block } from '../components/commons';
 
 function GitTimestamp({ timestamp }: { timestamp: Date }) {
   const { locale = DEFAULT_LOCALE } = useRouter();
@@ -50,7 +56,7 @@ const findPageType = (activePath: Item[], names: string[]) => {
   );
 };
 
-const isBlogPage = (route: string) => route.includes('/docs');
+const isDocPage = (route: string) => route.includes('/docs');
 
 const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
   const { title, frontMatter, pageMap, headings, route } = pageOpts;
@@ -94,7 +100,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
     pageType = 'blog';
   }
 
-  if (isBlogPage(route)) {
+  if (isDocPage(route)) {
     pageType = 'docs';
   }
 
@@ -186,6 +192,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
               <MDXProvider
                 components={createComponents({
                   isRawLayout: activeThemeContext.layout === 'raw',
+                  isBlog: pageType === 'blog',
                 })}
               >
                 <div className="wb-flex-1">
@@ -212,8 +219,9 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
                 </div>
 
                 {frontMatter.tags && (
-                  <div className="wb-pt-5xl">
+                  <div className="wb-pt-5xl wb-flex wb-flex-col wb-gap-5xl md:wb-flex-row md:wb-items-center md:wb-justify-between">
                     <BlogTags tags={frontMatter.tags || []} />
+                    <ShareMenu frontmatter={frontMatter} />
                   </div>
                 )}
 
@@ -249,6 +257,25 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
             </div>
           )}
         </Container>
+        {['blog'].includes(pageType) && (
+          <Wrapper>
+            <Block
+              title="Read more..."
+              titleClass="md:!wb-heading3xl-marketing lg:!wb-heading3xl-marketing xl:!wb-heading3xl-marketing 2xl:!wb-heading3xl-marketing 3xl:!wb-heading3xl-marketing wb-text-start"
+              titleContainerClass="wb-relative wb-z-[99] md:wb-top-[28px]"
+            >
+              <div className="wb-grid wb-grid-cols-1 md:wb-grid-cols-3 wb-gap-5xl">
+                {consts.homeNew.exploring.map((ti) => {
+                  return (
+                    <GraphItem key={ti.label}>
+                      <ExploringItem {...ti} />
+                    </GraphItem>
+                  );
+                })}
+              </div>
+            </Block>
+          </Wrapper>
+        )}
         <Footer config={config} />
       </ActiveAnchorProvider>
     </div>

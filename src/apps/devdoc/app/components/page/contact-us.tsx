@@ -201,21 +201,21 @@ const ContactRoot = () => {
             />
           </div>
           <div className="wb-w-full md:wb-w-fit">
-            <Button type="submit" content="Request demo" size="lg" block />
+            <Button type="submit" content="Request demo" size="md" block />
           </div>
         </form>
         <div className="wb-h-xs lg:wb-h-auto lg:wb-w-xs wb-bg-border-default" />
         <div className="wb-flex-1 wb-flex wb-flex-col md:wb-flex-row lg:wb-flex-col wb-gap-7xl md:wb-gap-10xl wb-justify-center md:wb-justify-between lg:wb-max-w-[300px]">
           <div className="wb-flex wb-flex-col wb-p-5xl wb-gap-6xl wb-border wb-border-border-default wb-rounded-lg">
             <div className="wb-text-icon-primary">
-              <SupportIcon height={66} width={66} />
+              <SupportIcon height={64} width={64} />
             </div>
             <div className="wb-flex wb-flex-col wb-gap-xl">
               <div className="wb-flex wb-flex-col wb-gap-lg">
-                <span className="wb-headingXl wb-text-text-default">
+                <span className="wb-headingLg wb-text-text-default">
                   Reach us to
                 </span>
-                <span className="wb-bodyXl wb-text-text-soft">
+                <span className="wb-bodyLg wb-text-text-soft">
                   We’re here to help with any questions you may have.
                 </span>
               </div>

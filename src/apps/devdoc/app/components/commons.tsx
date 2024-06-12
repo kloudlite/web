@@ -59,16 +59,23 @@ export const DetailCard = ({
 export const TitleBlock = ({
   title,
   desc,
+  titleContainerClass,
   titleClass,
   descClass,
 }: {
   title: ReactNode;
   desc?: ReactNode;
   titleClass?: string;
+  titleContainerClass?: string;
   descClass?: string;
 }) => {
   return (
-    <div className="wb-flex wb-flex-col wb-gap-3xl wb-text-center">
+    <div
+      className={cn(
+        'wb-flex wb-flex-col wb-gap-3xl wb-text-center',
+        titleContainerClass
+      )}
+    >
       <div className="flex flex-col gap-md">
         <h3
           className={cn(
@@ -99,6 +106,7 @@ export const Block = ({
   className,
   children,
   titleClass,
+  titleContainerClass,
   descClass,
   hasGraph = true,
   graphClass,
@@ -108,6 +116,7 @@ export const Block = ({
   className?: string;
   children?: ReactNode;
   titleClass?: string;
+  titleContainerClass?: string;
   descClass?: string;
   hasGraph?: boolean;
   graphClass?: string;
@@ -117,6 +126,7 @@ export const Block = ({
       <TitleBlock
         title={title}
         desc={desc}
+        titleContainerClass={titleContainerClass}
         titleClass={titleClass}
         descClass={descClass}
       />

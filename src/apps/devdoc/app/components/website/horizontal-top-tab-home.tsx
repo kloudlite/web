@@ -27,10 +27,10 @@ const HorizontalTopTabItem = ({
   return (
     <div
       className={cn(
-        'wb-min-h-[244px] wb-h-full wb-flex wb-flex-col wb-gap-3xl md:wb-gap-4xl wb-p-2xl xl:wb-p-3xl 2xl:wb-px-3xl 2xl:wb-py-4xl 3xl:wb-p-4xl wb-relative wb-cursor-pointer lg:wb-min-h-[192px] lg:wb-min-h-[400px] lg:wb-max-h-[400px]  xl:wb-min-h-[352px] xl:wb-max-h-[352px] 2xl:wb-min-h-[320px] 2xl:wb-max-h-[320px] 3xl:wb-min-h-[256px] 3xl:wb-max-h-[256px] wb-transition-all',
+        'wb-min-h-[244px] wb-h-full wb-flex wb-flex-col wb-gap-3xl md:wb-gap-4xl wb-p-2xl xl:wb-p-3xl 2xl:wb-px-3xl 2xl:wb-py-4xl 3xl:wb-p-4xl wb-relative wb-cursor-pointer xl:wb-min-h-[320px] xl:wb-max-h-[320px] 2xl:wb-min-h-[288px] 2xl:wb-max-h-[320px] 3xl:wb-min-h-[256px] 3xl:wb-max-h-[256px] wb-transition-all',
         active
-          ? 'wb-bg-surface-basic-default dark:wb-bg-surface-darktheme-basic-default md:wb-bg-surface-primary-subdued md:dark:wb-bg-surface-darktheme-primary-subdued'
-          : 'wb-bg-surface-basic-default dark:wb-bg-surface-darktheme-basic-default',
+          ? 'wb-bg-surface-basic-default md:wb-bg-surface-primary-subdued'
+          : 'wb-bg-surface-basic-default',
         className
       )}
       onClick={onClick}
@@ -39,17 +39,17 @@ const HorizontalTopTabItem = ({
         className={cn(
           'wb-heading2xl-marketing wb-transition-all lg:wb-min-h-[84px] xl:wb-min-h-[auto] 3xl:wb-min-h-[auto] wb-shrink-0',
           {
-            'wb-text-text-primary dark:wb-text-text-darktheme-primary': active,
-            'wb-text-text-default dark:wb-text-text-darktheme-default': !active,
+            'wb-text-text-primary': active,
+            'wb-text-text-default': !active,
           }
         )}
       >
         {label}
       </h5>
       <p
-        className={cn('wb-bodyXl', {
-          'wb-text-text-default dark:wb-text-text-darktheme-default wb-transition-all':
-            true,
+        className={cn('wb-bodyXl wb-transition-all', {
+          'wb-text-text-strong': !active,
+          'wb-text-text-default': active,
         })}
       >
         {desc}
@@ -63,7 +63,7 @@ const HorizontalTopTabItem = ({
           animate={{
             width: '100%',
           }}
-          className="wb-hidden md:wb-block wb-absolute wb-bottom-0 wb-left-0 wb-right-0 wb-h-[3px] wb-bg-border-focus dark:wb-bg-border-darktheme-focus"
+          className="wb-hidden md:wb-block wb-absolute wb-bottom-0 wb-left-0 wb-right-0 wb-h-[3px] wb-bg-border-focus"
         />
       )}
     </div>

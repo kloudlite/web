@@ -120,7 +120,9 @@ const Index = () => {
               id="join-waitlist"
               className="md:wb-w-[610px] wb-flex wb-flex-col wb-gap-xl wb-items-center"
             >
-              <JoinProvidersDialog />
+              <span className="wb-block wb-max-w-[300px] wb-w-full">
+                <JoinProvidersDialog size="lg" />
+              </span>
               <span className="wb-text-text-strong wb-bodyLg">
                 Got an invite code?{' '}
                 <a

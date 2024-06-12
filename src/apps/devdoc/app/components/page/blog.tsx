@@ -5,11 +5,11 @@ import { useEffect, useState } from 'react';
 import { PageMapItem } from 'nextra';
 import { useRouter } from 'next/router';
 import { usePagination } from 'kl-design-system/molecule/pagination';
+import { Avatar } from 'kl-design-system/atoms/avatar';
 import useConfig from '~/app/utils/use-config';
 import { DEFAULT_LOCALE } from '~/app/utils/constants';
 import { cn } from '~/app/utils/commons';
 import consts from '~/app/utils/const';
-import { Avatar } from 'kl-design-system/atoms/avatar';
 import SectionWrapper from '../website/section-wrapper';
 import { GraphExtended, GraphItem } from '../graph';
 import { Block } from '../commons';
@@ -171,7 +171,7 @@ const BlogHome = () => {
           </GraphExtended>
           <Block
             title="Latest blogs"
-            titleClass="md:!wb-heading3xl-marketing lg:!wb-heading3xl-marketing xl:!wb-heading3xl-marketing 2xl:!wb-heading3xl-marketing 3xl:wb-heading3xl-marketing wb-text-start"
+            titleClass="md:!wb-heading3xl-marketing lg:!wb-heading3xl-marketing xl:!wb-heading3xl-marketing 2xl:!wb-heading3xl-marketing 3xl:!wb-heading3xl-marketing wb-text-start"
           >
             <div className="wb-grid wb-grid-cols-1 md:wb-grid-rows-[64px_auto_64px] lg:wb-grid-rows-[64px_auto_64px]">
               <div className="wb-hidden md:wb-block">

@@ -53,8 +53,7 @@ const OpenSource = () => {
               </div>
               <div className="wb-flex wb-flex-col wb-gap-2xl md:wb-flex-row md:wb-items-center">
                 <div className="wb-bodyLg md:wb-flex-1 wb-text-text-strong">
-                  See why Kloudlite is the remote local environments of choice
-                  for modern
+                  Remote Local Environments to build distributed applications.
                 </div>
                 <div className="md:wb-w-10xl wb-text-icon-strong wb-flex wb-flex-row md:wb-justify-end">
                   <GithubLogoFill className="wb-w-[24px] wb-h-[24px] md:wb-w-[40px] md:wb-h-[40px]" />

@@ -3,18 +3,17 @@
 import { Button } from 'kl-design-system/atoms/button';
 import Link from 'next/link';
 import { ReactNode, isValidElement } from 'react';
-import { cn } from '../utils/commons';
 import { IConfig } from '../utils/use-config';
+import Wrapper from './wrapper';
 
 const FooterLink = ({ to, children }: { to: string; children: ReactNode }) => {
   return (
     <Button
-      content={<div>{children}</div>}
+      content={<div className="wb-text-text-strong wb-bodyLg">{children}</div>}
       linkComponent={Link}
       toLabel="href"
       to={to}
       variant="plain"
-      size="lg"
     />
   );
 };
@@ -26,28 +25,141 @@ interface IFooterMenu {
     to: string;
   }[];
 }
-const FooterMenu = ({ className, items }: IFooterMenu) => {
+
+type IFooterItem = {
+  brand?: ReactNode;
+  extra?: ReactNode;
+  menu: IFooterMenu[];
+};
+const FooterMobile = ({ brand, extra, menu }: IFooterItem) => {
   return (
-    <div
-      className={cn(
-        'wb-pb-6xl [&:nth-child(-n+2)]:wb-pt-6xl md:!wb-py-8xl lg:!wb-py-10xl wb-flex md:wb-flex-1 wb-flex-col wb-gap-2xl md:wb-pl-2xl wb-pr-2xl lg:wb-basis-auto wb-justify-between wb-border-border-default odd:wb-border-r md:wb-border-0 md:wb-border-r md:first:wb-border-l',
-        className
-      )}
-    >
-      <ul className="wb-list-none wb-flex wb-flex-col wb-gap-lg">
-        {items?.map((item, index) => {
+    <div className="md:wb-hidden wb-border-x wb-border-border-default wb-flex wb-flex-col wb-pb-6xl">
+      <div className="wb-flex wb-flex-row">
+        <div className="wb-flex wb-flex-col wb-gap-6xl wb-pl-lg wb-basis-1/2 wb-border-r wb-border-border-default">
+          <div className="wb-flex wb-flex-col wb-gap-lg wb-pt-6xl">
+            {menu[0].items.map((item) => (
+              <FooterLink key={item.title} to={item.to}>
+                {item.title}
+              </FooterLink>
+            ))}
+          </div>
+          <div className="wb-flex wb-flex-col wb-gap-lg wb-pb-3xl">
+            {menu[1].items.map((item) => (
+              <FooterLink key={item.title} to={item.to}>
+                {item.title}
+              </FooterLink>
+            ))}
+          </div>
+        </div>
+        <div className="wb-flex wb-flex-col wb-gap-lg wb-basis-1/2 wb-pl-lg wb-pt-6xl">
+          {menu[2].items.map((item) => (
+            <FooterLink key={item.title} to={item.to}>
+              {item.title}
+            </FooterLink>
+          ))}
+        </div>
+      </div>
+      <div className="wb-h-xs bg-border-default wb-w-[calc(100%_+_40px)] wb-relative -wb-left-3xl -wb-right-3xl" />
+      <div className="wb-flex wb-flex-col wb-gap-6xl wb-px-lg wb-py-3xl">
+        {extra}
+        {brand}
+      </div>
+      <div className="wb-h-xs bg-border-default wb-w-[calc(100%_+_40px)] wb-mt-3xl wb-relative -wb-left-3xl -wb-right-3xl" />
+    </div>
+  );
+};
+
+const FooterMd = ({ brand, extra, menu }: IFooterItem) => {
+  return (
+    <div className="wb-hidden md:wb-block lg:wb-hidden wb-flex wb-flex-col wb-border-x wb-border-border-default wb-pb-8xl">
+      <div className="wb-flex wb-flex-row wb-gap-5xl">
+        {menu.map((menu, index) => {
           const i = index;
           return (
-            <li key={item.to + i}>
-              <FooterLink to={item.to}>
-                <span className="wb-bodyLg wb-text-text-strong">
+            <div
+              key={i}
+              className="wb-pl-lg wb-flex wb-flex-col wb-gap-lg wb-py-8xl wb-basis-1/4 wb-border-r wb-border-border-default"
+            >
+              {menu.items.map((item) => (
+                <FooterLink key={item.title} to={item.to}>
                   {item.title}
-                </span>
-              </FooterLink>
-            </li>
+                </FooterLink>
+              ))}
+            </div>
           );
         })}
-      </ul>
+
+        <div className="wb-py-8xl">{extra}</div>
+      </div>
+      <div className="wb-h-xs bg-border-default wb-w-[calc(100%_+_40px)] wb-relative -wb-left-3xl -wb-right-3xl" />
+      <div className="wb-p-2xl">{brand}</div>
+      <div className="wb-h-xs bg-border-default wb-w-[calc(100%_+_40px)] wb-relative -wb-left-3xl -wb-right-3xl" />
+    </div>
+  );
+};
+
+const FooterLg = ({ brand, extra, menu }: IFooterItem) => {
+  return (
+    <div className="wb-hidden lg:wb-flex xl:wb-hidden wb-flex-row wb-gap-5xl wb-border-x wb-border-border-default">
+      <div className="wb-py-10xl wb-w-[238px] wb-pl-4xl wb-box-content">
+        {brand}
+      </div>
+      <div className="wb-py-10xl wb-border-l wb-border-border-default wb-pl-lg wb-w-[188px] wb-flex wb-flex-col wb-gap-6xl">
+        {menu.slice(0, 2).map((m, index) => {
+          const i = index;
+          return (
+            <div key={i} className="wb-flex wb-flex-col wb-gap-lg">
+              {m.items.map((item) => (
+                <FooterLink key={item.title} to={item.to}>
+                  {item.title}
+                </FooterLink>
+              ))}
+            </div>
+          );
+        })}
+      </div>
+      <div className="wb-py-10xl wb-border-l wb-border-border-default wb-pl-lg wb-w-[188px]">
+        <div className="wb-flex wb-flex-col wb-gap-lg">
+          {menu[2].items.map((item) => (
+            <FooterLink key={item.title} to={item.to}>
+              {item.title}
+            </FooterLink>
+          ))}
+        </div>
+      </div>
+      <div className="wb-py-10xl wb-border-l wb-border-border-default wb-pl-5xl">
+        {extra}
+      </div>
+    </div>
+  );
+};
+
+const FooterXlAndUp = ({ brand, extra, menu }: IFooterItem) => {
+  return (
+    <div className="wb-hidden xl:wb-flex wb-flex-row wb-gap-5xl wb-border-x wb-border-border-default">
+      <div className="wb-py-10xl wb-w-[232px] 2xl:wb-w-[296px] 3xl:wb-w-[480px] wb-pl-4xl 3xl:wb-pl-5xl wb-box-content">
+        {brand}
+      </div>
+      <div className="wb-flex wb-flex-row wb-gap-5xl">
+        {menu.map((m, index) => {
+          const i = index;
+          return (
+            <div
+              key={i}
+              className="wb-flex wb-flex-col wb-gap-lg wb-py-10xl wb-w-[160px] 3xl:wb-w-[192px] wb-pl-lg wb-border-l wb-border-border-default"
+            >
+              {m.items.map((item) => (
+                <FooterLink key={item.title} to={item.to}>
+                  {item.title}
+                </FooterLink>
+              ))}
+            </div>
+          );
+        })}
+      </div>
+      <div className="wb-py-10xl wb-border-l wb-border-border-default wb-pl-5xl 2xl:wb-w-[168px] 3xl:wb-w-[192px] 2xl:wb-pr-4xl 3xl:wb-pr-5xl wb-flex wb-justify-end">
+        {extra}
+      </div>
     </div>
   );
 };
@@ -70,29 +182,13 @@ const Footer = ({ config }: { config: IConfig }) => {
     'menu' in config.footer
   )
     return (
-      <footer className="wb-bg-surface-basic-default wb-overflow-hidden print:wb-hidden">
-        <div className="wb-px-3xl md:wb-px-5xl lg:wb-px-8xl xl:wb-px-11xl 2xl:wb-px-12xl 3xl:wb-px-15xl lg:wb-max-w-[896px] xl:wb-max-w-[1024px] 2xl:wb-max-w-[1120px] 3xl:wb-max-w-[1410px] wb-box-content wb-flex wb-flex-col-reverse wb-flex-wrap lg:wb-flex-row lg:wb-gap-x-2xl wb-m-auto">
-          <div className="wb-px-lg md:wb-px-2xl lg:wb-px-5xl wb-py-3xl md:wb-py-2xl lg:wb-py-10xl wb-border-l wb-border-border-default wb-border-r lg:wb-border-r-0 wb-relative wb-flex wb-flex-col wb-box-border">
-            {/* fake element for border */}
-            <div className="wb-absolute wb-h-xs wb-top-0 -wb-left-5xl -wb-right-5xl bg-border-default wb-block lg:wb-hidden" />
-            <div className="md:wb-hidden wb-pb-5xl">{config.footer.extra}</div>
-            {config.footer.brand && config.footer.brand}
-            {/* fake element for border */}
-            <div className="wb-h-5xl wb-relative wb-hidden md:wb-block lg:wb-hidden">
-              <div className="wb-absolute wb-h-xs wb-top-2xl -wb-left-5xl -wb-right-5xl bg-border-default" />
-            </div>
-          </div>
-          <div className="wb-flex wb-flex-row wb-flex-wrap wb-justify-between wb-flex-1 wb-border-x wb-border-border-default md:wb-border-x-0">
-            {config.footer.menu.map((item) => (
-              <FooterMenu key={item.title} {...item} />
-            ))}
-            {config.footer.extra && (
-              <div className="wb-hidden md:wb-flex wb-basis-1/2 md:wb-basis-auto wb-items-start md:wb-items-end wb-py-3xl md:wb-py-8xl lg:wb-py-10xl md:wb-flex-1 wb-flex-col wb-gap-2xl md:wb-pl-2xl wb-pr-2xl lg:wb-basis-auto wb-justify-between wb-border-r wb-border-border-default">
-                {config.footer.extra}
-              </div>
-            )}
-          </div>
-        </div>
+      <footer className="wb-bg-surface-basic-default">
+        <Wrapper>
+          <FooterMobile {...config.footer} />
+          <FooterMd {...config.footer} />
+          <FooterLg {...config.footer} />
+          <FooterXlAndUp {...config.footer} />
+        </Wrapper>
       </footer>
     );
   return null;

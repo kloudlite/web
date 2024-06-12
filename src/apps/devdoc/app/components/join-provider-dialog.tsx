@@ -6,16 +6,23 @@ import {
   GoogleLogoFill,
 } from '@jengaicons/react';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { BrandLogo } from 'kl-design-system/branding/brand-logo';
+import { ReactNode, useEffect, useState } from 'react';
 import { Badge } from 'kl-design-system/atoms/badge';
+import { IButton } from 'kl-design-system/atoms/button';
 import useConfig from '../utils/use-config';
 import useMenu from '../utils/use-menu';
 import Button from './button';
 import { Anchor } from './anchor';
 import { authUrl } from '../utils/config';
+import { cn } from '../utils/commons';
 
-const JoinProvidersDialog = () => {
+const JoinProvidersDialog = ({
+  size,
+  buttonContent,
+}: {
+  size?: IButton['size'];
+  buttonContent?: ReactNode;
+}) => {
   const { config } = useConfig();
   const { oathProviders } = config;
   const signupUrl = `${process.env.AUTH_URL}/signup?mode=email`;
@@ -30,12 +37,19 @@ const JoinProvidersDialog = () => {
     }, 150);
   }, [show]);
 
+  const userApproved = config.user?.verified && !config.user.approved;
+  const hasProvider =
+    oathProviders?.githubLoginUrl ||
+    oathProviders?.gitlabLoginUrl ||
+    oathProviders?.googleLoginUrl;
+
   return (
-    <div>
+    <div className="wb-w-full">
       <Button
-        content="Signup to join waitlist"
+        content={buttonContent || 'Signup to join waitlist'}
         variant="primary"
         block
+        size={size}
         onClick={() => {
           setShow(true);
         }}
@@ -44,8 +58,10 @@ const JoinProvidersDialog = () => {
         <div className="md:wb-hidden">
           <Popup.Header />
         </div>
-        <Popup.Content className="!wb-p-0">
-          {config.user?.verified && !config.user.approved ? (
+        <Popup.Content
+          className={cn('!wb-p-0', !userApproved ? 'md:!wb-max-h-[90vh]' : '')}
+        >
+          {userApproved ? (
             <div className="wb-flex wb-flex-col wb-gap-4xl wb-px-8xl wb-py-5xl wb-text-center wb-h-full wb-items-center">
               <Badge type="neutral">
                 🔥 Amazing curated Open-Source remote local envs
@@ -67,10 +83,7 @@ const JoinProvidersDialog = () => {
             </div>
           ) : (
             <div className="wb-flex wb-flex-col wb-h-full">
-              <div className="wb-flex wb-flex-col wb-gap-5xl wb-py-5xl wb-px-8xl bg-surface-basic-subdued wb-items-center">
-                <div className="wb-p-xl wb-rounded-lg wb-border wb-w-6xl wb-aspect-square wb-box-content wb-bg-surface-basic-default wb-border-border-default wb-flex wb-items-center wb-justify-center">
-                  <BrandLogo size={40} />
-                </div>
+              <div className="wb-flex wb-flex-col wb-gap-5xl wb-p-8xl bg-surface-basic-subdued wb-items-center">
                 <div className="wb-flex wb-flex-col wb-items-center wb-gap-lg">
                   <span className="wb-headingXl wb-text-text-default wb-text-center">
                     Join the waiting list by creating your Kloudlite account
@@ -78,43 +91,45 @@ const JoinProvidersDialog = () => {
                 </div>
               </div>
               <div className="wb-flex wb-flex-col wb-w-full wb-p-8xl wb-gap-5xl wb-flex-1 md:wb-flex-auto">
-                <div className="wb-flex wb-flex-col wb-gap-3xl wb-w-[350px] wb-m-auto">
-                  {oathProviders?.githubLoginUrl && (
-                    <Button
-                      variant="tertiary"
-                      content="Continue with Github"
-                      prefix={<GithubLogoFill />}
-                      linkComponent={Link}
-                      toLabel="href"
-                      to={oathProviders.githubLoginUrl}
-                      className="!wb-w-full md:wb-w-auto"
-                    />
-                  )}
-                  {oathProviders?.gitlabLoginUrl && (
-                    <Button
-                      variant="purple"
-                      content="Continue with Gitlab"
-                      prefix={<GitlabLogoFill />}
-                      linkComponent={Link}
-                      toLabel="href"
-                      to={oathProviders.gitlabLoginUrl}
-                      className="!wb-w-full md:wb-w-auto"
-                    />
-                  )}
-                  {oathProviders?.googleLoginUrl && (
-                    <Button
-                      variant="primary"
-                      content="Continue with Google"
-                      prefix={<GoogleLogoFill />}
-                      linkComponent={Link}
-                      toLabel="href"
-                      to={oathProviders.googleLoginUrl}
-                      className="!wb-w-full md:wb-w-auto"
-                    />
-                  )}
-                  {oathProviders?.githubLoginUrl ||
-                  oathProviders?.gitlabLoginUrl ||
-                  oathProviders?.googleLoginUrl ? (
+                {hasProvider && (
+                  <div className="wb-flex wb-flex-col wb-gap-3xl wb-w-[350px] wb-m-auto">
+                    {oathProviders?.githubLoginUrl && (
+                      <Button
+                        variant="tertiary"
+                        content="Continue with Github"
+                        prefix={<GithubLogoFill />}
+                        linkComponent={Link}
+                        toLabel="href"
+                        to={oathProviders.githubLoginUrl}
+                        className="!wb-w-full md:wb-w-auto"
+                      />
+                    )}
+                    {oathProviders?.gitlabLoginUrl && (
+                      <Button
+                        variant="purple"
+                        content="Continue with Gitlab"
+                        prefix={<GitlabLogoFill />}
+                        linkComponent={Link}
+                        toLabel="href"
+                        to={oathProviders.gitlabLoginUrl}
+                        className="!wb-w-full md:wb-w-auto"
+                      />
+                    )}
+                    {oathProviders?.googleLoginUrl && (
+                      <Button
+                        variant="primary"
+                        content="Continue with Google"
+                        prefix={<GoogleLogoFill />}
+                        linkComponent={Link}
+                        toLabel="href"
+                        to={oathProviders.googleLoginUrl}
+                        className="!wb-w-full md:wb-w-auto"
+                      />
+                    )}
+                  </div>
+                )}
+                <div className="wb-flex wb-flex-col wb-gap-5xl wb-w-[350px] wb-m-auto">
+                  {hasProvider ? (
                     <span className="wb-h-xs wb-bg-border-default" />
                   ) : null}
                   <Button

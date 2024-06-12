@@ -104,9 +104,11 @@ const A = ({ href = '', ...props }) => (
 export const createComponents = ({
   components,
   isRawLayout,
+  isBlog,
 }: {
   components?: any;
   isRawLayout?: boolean;
+  isBlog?: boolean;
 }): Components => {
   if (isRawLayout) {
     return {
@@ -114,7 +116,7 @@ export const createComponents = ({
       ul: (props) => {
         let cs = props.className;
         if (!cs) {
-          cs = 'wb-list-disc wb-pl-xl';
+          cs = 'wb-list-disc wb-pl-[14px]';
         }
 
         return <ul {...props} className={cs} />;
@@ -122,7 +124,7 @@ export const createComponents = ({
       ol: (props) => {
         let cs = props.className;
         if (!cs) {
-          cs = 'wb-list-decimal wb-pl-5xl';
+          cs = 'wb-list-decimal wb-pl-[18px]';
         }
 
         return <ol {...props} className={cs} />;
@@ -152,24 +154,41 @@ export const createComponents = ({
     h6: (props) => <HeadingLink tag="h6" context={context} {...props} />,
     ul: (props) => (
       <ul
-        className="wb-list-disc wb-bodyLg wb-pl-[15px] wb-list-outside wb-text-text-strong"
+        className={cn(
+          'wb-list-disc wb-pl-[18px] wb-list-outside wb-text-text-strong',
+          isBlog ? 'wb-bodyXl' : 'wb-bodyLg'
+        )}
         {...props}
       />
     ),
     ol: (props) => (
       <ol
-        className="wb-bodyLg wb-list-decimal wb-pl-[15px] wb-list-outside wb-text-text-strong"
+        className={cn(
+          'wb-list-decimal wb-pl-[24px] wb-list-outside wb-text-text-strong',
+          isBlog ? 'wb-bodyXl' : 'wb-bodyLg'
+        )}
         {...props}
       />
     ),
     li: (props) => <li className="wb-mt-3xl" {...props} />,
-    blockquote: (props) => <blockquote className="" {...props} />,
+    blockquote: (props) => (
+      <blockquote
+        className={cn(
+          "blockquote wb-mt-3xl wb-rounded-md wb-p-xl wb-bg-surface-primary-selected before:wb-content-[''] before:wb-w-md before:wb-bg-border-primary before:wb-flex before:wb-shrink-0 wb-flex wb-gap-3xl",
+          isBlog ? 'wb-bodyXl' : 'wb-bodyLg'
+        )}
+        {...props}
+      />
+    ),
     hr: (props) => <hr className="" {...props} />,
     a: Link,
     table: (props) => <Table className="" {...props} />,
     p: (props) => (
       <p
-        className="wb-bodyLg wb-mt-3xl rounded-image wb-text-text-strong wb-break-words !wb-leading-[28px]"
+        className={cn(
+          'wb-mt-3xl rounded-image wb-text-text-strong wb-break-words !wb-leading-[28px]',
+          isBlog ? 'wb-bodyXl' : 'wb-bodyLg'
+        )}
         {...props}
       />
     ),

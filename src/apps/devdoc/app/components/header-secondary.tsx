@@ -38,7 +38,14 @@ const HeaderSecondary = ({
               <>
                 <span className="wb-hidden lg:wb-block wb-h-2xl wb-w-xs wb-bg-border-default" />
                 <div className="wb-hidden lg:wb-block">
-                  <JoinProvidersDialog />
+                  <JoinProvidersDialog
+                    size="sm"
+                    buttonContent={
+                      <span className="wb-bodyMd-medium">
+                        Signup to join waitlist
+                      </span>
+                    }
+                  />
                 </div>
               </>
             </div>

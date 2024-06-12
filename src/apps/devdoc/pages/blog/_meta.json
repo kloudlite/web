@@ -73,6 +73,15 @@
       "header":"secondary"
     }
   },
+  "distributed-environment-as-a-service":{
+    "title":"Distributed Environment as a Service",
+    "type":"page",
+    "theme":{
+      "sidebar":false,
+      "toc":true,
+      "header":"secondary"
+    }
+  },
   "template":{
     "title":"This is sample",
     "type":"page",

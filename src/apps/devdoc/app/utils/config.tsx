@@ -49,12 +49,12 @@ const BrandMenu = ({ className }: { className?: string }) => {
   return (
     <div
       className={cn(
-        'wb-flex wb-flex-col wb-gap-7xl md:wb-gap-3xl lg:wb-pr-4xl lg:wb-w-[211px] xl:wb-w-[296px] wb-order-last md:wb-order-first md:wb-justify-between md:wb-h-full',
+        'wb-flex wb-flex-col wb-gap-7xl md:wb-gap-3xl lg:wb-pr-4xl wb-order-last md:wb-order-first md:wb-justify-between md:wb-h-full',
         className
       )}
     >
       <div className="wb-flex wb-flex-row">
-        <div className="wb-flex wb-flex-col wb-gap-3xl wb-flex-1 lg:wb-min-h-[236px] wb-items-start">
+        <div className="wb-flex wb-flex-col wb-gap-3xl wb-flex-1 lg:wb-min-h-[200px] xl:wb-min-h-[236px] wb-items-start">
           <div className="wb-flex wb-flex-col wb-items-start wb-gap-xl wb-max-w-[300px]">
             <a href="/" aria-label="kloudlite">
               <BrandLogo size={brandIconSize} detailed />
@@ -119,29 +119,6 @@ export default {
             to: '/docs',
           },
           {
-            title: 'Blog',
-            to: '/blog',
-          },
-          // {
-          //   title: 'Changelog',
-          //   to: '#',
-          // },
-        ],
-      },
-      {
-        title: 'Resources',
-        className: 'wb-basis-1/2 md:wb-basis-auto wb-flex',
-        showExtra: false,
-        items: [
-          // {
-          //   title: 'Careers',
-          //   to: '#',
-          // },
-          // {
-          //   title: 'Pricing',
-          //   to: '#',
-          // },
-          {
             title: 'Feature Request',
             to: 'https://github.com/kloudlite/kloudlite/issues/new?assignees=&labels=&projects=&template=feature_request.md&title=',
           },
@@ -152,18 +129,25 @@ export default {
         ],
       },
       {
-        title: 'Company',
+        title: 'Resources',
         className: 'wb-basis-1/2 md:wb-basis-auto wb-flex',
-        showExtra: true,
+        showExtra: false,
         items: [
+          {
+            title: 'Blog',
+            to: '/blog',
+          },
           {
             title: 'Contact us',
             to: '/contact-us',
           },
-          // {
-          //   title: 'Help and support',
-          //   to: '/help-and-support',
-          // },
+        ],
+      },
+      {
+        title: 'Company',
+        className: 'wb-basis-1/2 md:wb-basis-auto wb-flex',
+        showExtra: true,
+        items: [
           {
             title: 'Terms of services',
             to: '/terms-of-services',
@@ -205,11 +189,6 @@ export default {
         type: 'normal',
         to: '/blog',
       },
-      // {
-      //   title: 'Changelog',
-      //   type: 'normal',
-      //   to: '#',
-      // },
       {
         title: 'Documentation',
         type: 'normal',

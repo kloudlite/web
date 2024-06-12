@@ -3,6 +3,7 @@ import {
   AWSlogo,
   Agritech,
   AnscerRoboticsLogo,
+  ArrowRight,
   Autoscaling,
   AzurelogoFill,
   BackingServices,
@@ -138,6 +139,8 @@ import TalescaleIcon from '~/images/home/companies/talescale.svg';
 import Collarative from '~/images/homeNew/exploring/collaborative.jpeg';
 import RemoteLocal from '~/images/homeNew/exploring/remote-local.jpeg';
 import Workflow from '~/images/homeNew/exploring/workflow.jpeg';
+import { ArrowLeftLg } from '@jengaicons/react';
+import { Badge } from 'kl-design-system/atoms/badge';
 import AnserSvg from '../icons/AnserRobotics';
 import BoltzmanSvg from '../icons/Boltzman';
 import CrewScaleSvg from '../icons/CrewScale';
@@ -145,6 +148,7 @@ import FibrSvg from '../icons/Fibr';
 import PlaxonicSvg from '../icons/Plaxonic';
 import RedPlutoSvg from '../icons/RedPluto';
 import TalescaleSvg from '../icons/Talescale';
+import Button from '../components/button';
 
 const partners = [
   {
@@ -948,6 +952,87 @@ const consts = {
       },
     ],
     clients: partners,
+  },
+  pricing: {
+    list: [
+      {
+        type: 'Essential',
+        price: 'Free',
+        id: '1',
+        descriptionn: 'For small teams, individual, and personal projects',
+        features: [
+          'Unlimited environments, devices & infrastructure',
+          'Unlimited clusters & members',
+        ],
+        action: (
+          <Button
+            content="Start deploying"
+            variant="basic"
+            suffix={<ArrowRight />}
+            size="lg"
+            block
+          />
+        ),
+      },
+      {
+        type: 'Essential',
+        id: '2',
+        price: (
+          <div className="wb-flex wb-flex-row wb-gap-lg wb-items-baseline">
+            <span className="wb-heading4xl wb-text-text-default">$10</span>
+            <span className="wb-text-text-default wb-bodyLg">/per user</span>
+          </div>
+        ),
+        descriptionn: 'For small teams, individual, and personal projects',
+        features: [
+          'Role based access control',
+          'AI assisted workflows (coming soon...)',
+        ],
+        featurePrecontent: (
+          <div className="wb-flex wb-flex-row wb-items-center wb-gap-xl wb-text-text-default">
+            <span>
+              <ArrowLeftLg size={20} />
+            </span>
+            <span className="wb-headingMd">Everything of Scale, plus...</span>
+          </div>
+        ),
+        action: (
+          <Button
+            content="Upgrade now"
+            variant="primary"
+            suffix={<ArrowRight />}
+            size="lg"
+            block
+          />
+        ),
+        badge: <Badge type="info">Most popular</Badge>,
+        selected: true,
+      },
+      {
+        type: 'Essential',
+        id: '3',
+        price: 'Custom',
+        descriptionn: 'For small teams, individual, and personal projects',
+        features: ['Dedicated support & SLAs', 'SSO/SAML', 'On Premise'],
+        featurePrecontent: (
+          <div className="wb-flex wb-flex-row wb-items-center wb-gap-xl wb-text-text-default">
+            <span>
+              <ArrowLeftLg size={20} />
+            </span>
+            <span className="wb-headingMd">Everything of Scale, plus...</span>
+          </div>
+        ),
+        action: (
+          <Button
+            content="Contact sales"
+            variant="basic"
+            suffix={<ArrowRight />}
+            size="lg"
+            block
+          />
+        ),
+      },
+    ],
   },
 };
 
