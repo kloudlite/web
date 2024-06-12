@@ -72,6 +72,7 @@ interface ITextArea extends IInputRow {
   prefix?: ReactNode;
   prefixIcon?: JSX.Element;
   resize?: boolean;
+  cols?: string;
 }
 
 export interface ITextInputBase extends IInputRow {
@@ -135,7 +136,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
             })}
           >
             <label
-              className="select-none bodyMd-medium pulsable min-w-[33%] text-text-soft dark:text-text-darktheme-soft"
+              className="select-none bodyMd-medium pulsable min-w-[33%] text-text-soft"
               htmlFor={id}
             >
               {label}
@@ -152,11 +153,11 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
         <div
           ref={containerRef}
           className={cn(
-            'transition-all rounded border flex flex-row items-center relative ring-offset-1 dark:ring-offset-0 pulsable ring-border-focus dark:ring-border-darktheme-focus',
+            'transition-all rounded border flex flex-row items-center relative ring-offset-1 group-data-[theme=dark]/html:ring-offset-0',
             {
               'text-text-critical bg-surface-critical-subdued border-border-critical':
                 error,
-              'text-text-default dark:text-text-darktheme-default border-border-default dark:border-border-darktheme-default bg-surface-basic-input dark:bg-surface-darktheme-basic-input':
+              'text-text-default border-border-default bg-surface-basic-input':
                 !error,
               'text-text-disabled border-border-disabled bg-surface-basic-input':
                 disabled,
@@ -197,12 +198,10 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
               'outline-none flex-1 w-full h-full',
               'rounded bg-transparent',
               {
-                'text-text-critical dark:text-text-darktheme-critical placeholder:text-text-critical/70 bgh':
+                'text-text-critical placeholder:text-text-critical/70 bgh':
                   error && !disabled,
-                'text-text-default dark:text-text-darktheme-default dark:placeholder:text-text-darktheme-soft':
-                  !error && !disabled,
-                'text-text-disabled dark:text-text-darktheme-disabled':
-                  disabled,
+                'text-text-default': !error && !disabled,
+                'text-text-disabled': disabled,
               },
               {
                 'py-xl': size === 'lg',
@@ -243,7 +242,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
           {!!suffix && <div className="cursor-default">{suffix}</div>}
           {!!suffixIcon && (
             <div
-              className={cn('pl-lg bodyMd dark:text-text-darktheme-default', {
+              className={cn('pl-lg bodyMd', {
                 'text-text-critical': error,
                 'text-text-strong': !error && !disabled,
                 'text-text-disabled': disabled,
@@ -409,31 +408,35 @@ export const TextInput = forwardRef<HTMLInputElement, ITextInput>(
   }
 );
 
-export const TextArea = ({
-  autoComplete = 'off',
-  onChange = (_) => {},
-  resize = false,
-  rows = '3',
-  ...etc
-}: ITextArea) => {
-  const ref = useRef(null);
-  const id = useId();
-  return (
-    <TextInputBase
-      {...{
-        ...etc,
-        id,
-        autoComplete,
-        onChange,
-        resize,
-        rows,
-        component: 'textarea',
-        ref,
-        type: 'text',
-      }}
-    />
-  );
-};
+export const TextArea = forwardRef<HTMLInputElement, ITextArea>(
+  (
+    {
+      autoComplete = 'off',
+      onChange = (_) => {},
+      resize = false,
+      rows = '3',
+      ...etc
+    },
+    ref
+  ) => {
+    const id = useId();
+    return (
+      <TextInputBase
+        {...{
+          ...etc,
+          id,
+          rows,
+          autoComplete,
+          onChange,
+          resize,
+          component: 'textarea',
+          ref,
+          type: 'text',
+        }}
+      />
+    );
+  }
+);
 
 export const PasswordInput = (props: IInputRow) => {
   const ref = useRef(null);

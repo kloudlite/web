@@ -28,7 +28,6 @@ export interface IButtonGroupIconButton extends IIconButton {
 
 const IconButton = forwardRef<HTMLButtonElement, IButtonGroupIconButton>(
   (props, ref) => {
-    console.log(props);
     return (
       <ButtonGroupPrimitive.Item value={props.value} asChild ref={ref}>
         <ButtonBase
@@ -64,7 +63,7 @@ const Root = ({
 }: IButtonGroup) => {
   return (
     <ButtonGroupPrimitive.Root
-      className="bg-surface-basic-default dark:bg-surface-darktheme-basic-default rounded shadow-button flex flex-row w-fit"
+      className="bg-surface-basic-default rounded shadow-button flex flex-row w-fit"
       onClick={(_e) => {
         // if (onClick) onClick(e);
       }}
