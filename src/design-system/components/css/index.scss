@@ -42,9 +42,9 @@
   --purple-50: #FFFBFF;
   --purple-100: #F3EEFF;
   --purple-200: #E3DFFF;
-  --purple-300: #C4C0FF;
-  --purple-400: #A6A1FD;
-  --purple-500: #8B87E0;
+  --purple-300: #8573CB;
+  --purple-400: #6B4FBB;
+  --purple-500: #5C44A2;
   --purple-600: #726DC4;
   --purple-700: #413B90;
   --purple-800: #292278;
@@ -1853,8 +1853,8 @@ video {
   background-color: var(--surface-basic-input);
 }
 
-.bg-surface-basic-overlay-bg {
-  background-color: var(--surface-basic-overlay-bg);
+.bg-surface-basic-overlay-bg\/60 {
+  background-color: color-mix(in srgb, var(--surface-basic-overlay-bg) calc(100% * 0.6), transparent);
 }
 
 .bg-surface-basic-pressed {

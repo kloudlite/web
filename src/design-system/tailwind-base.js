@@ -219,7 +219,8 @@ const config = {
           pressed: 'var(--surface-basic-pressed)',
           input: 'var(--surface-basic-input)',
           active: 'var(--surface-basic-active)',
-          'overlay-bg': 'var(--surface-basic-overlay-bg)',
+          'overlay-bg':
+            'color-mix(in srgb, var(--surface-basic-overlay-bg) calc(100% * <alpha-value>), transparent)',
         },
         primary: {
           default: 'var(--surface-primary-default)',
