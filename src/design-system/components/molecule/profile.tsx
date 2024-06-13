@@ -1,7 +1,7 @@
-import { ReactNode, forwardRef } from "react";
-import { AvatarBase, IAvatar } from "../atoms/avatar";
-import { BounceIt } from "../bounce-it";
-import { cn } from "../utils";
+import { ReactNode, forwardRef } from 'react';
+import { AvatarBase, IAvatar } from '../atoms/avatar';
+import { BounceIt } from '../bounce-it';
+import { cn } from '../utils';
 
 interface IProfile extends IAvatar {
   name?: ReactNode;
@@ -13,7 +13,7 @@ interface IProfile extends IAvatar {
 const Profile = forwardRef<HTMLButtonElement, IProfile>(
   (
     { name, subtitle, color, responsive = true, size, noImage, ...props },
-    ref,
+    ref
   ) => {
     return (
       <BounceIt className="w-fit">
@@ -21,7 +21,7 @@ const Profile = forwardRef<HTMLButtonElement, IProfile>(
           {...props}
           ref={ref}
           className={cn(
-            "flex py-sm px-md gap-lg items-center ring-offset-1 dark:ring-offset-0 outline-none transition-all rounded focus-visible:ring-2 focus-visible:ring-border-focus dark:focus-visible:ring-border-darktheme-focus",
+            'flex py-sm px-md gap-lg items-center ring-offset-1 dark:ring-offset-0 outline-none transition-all rounded focus-visible:ring-2 focus-visible:ring-border-focus dark:focus-visible:ring-border-darktheme-focus'
           )}
         >
           {!noImage && (
@@ -30,8 +30,8 @@ const Profile = forwardRef<HTMLButtonElement, IProfile>(
           {(name || subtitle) && (
             <div
               className={cn(
-                "flex-col items-start",
-                responsive ? "hidden md:flex" : " flex",
+                'flex-col items-start',
+                responsive ? 'hidden md:flex' : ' flex'
               )}
             >
               {name && (
@@ -50,7 +50,7 @@ const Profile = forwardRef<HTMLButtonElement, IProfile>(
         </button>
       </BounceIt>
     );
-  },
+  }
 );
 
 export default Profile;
