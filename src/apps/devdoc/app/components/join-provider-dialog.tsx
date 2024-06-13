@@ -8,10 +8,10 @@ import {
 import Link from 'next/link';
 import { ReactNode, useEffect, useState } from 'react';
 import { Badge } from 'kl-design-system/atoms/badge';
-import { IButton } from 'kl-design-system/atoms/button';
+import { Button, IButton } from 'kl-design-system/atoms/button';
 import useConfig from '../utils/use-config';
 import useMenu from '../utils/use-menu';
-import Button from './button';
+import ButtonDev from './button';
 import { Anchor } from './anchor';
 import { authUrl } from '../utils/config';
 import { cn } from '../utils/commons';
@@ -45,15 +45,28 @@ const JoinProvidersDialog = ({
 
   return (
     <div className="wb-w-full">
-      <Button
-        content={buttonContent || 'Signup to join waitlist'}
-        variant="primary"
-        block
-        size={size}
-        onClick={() => {
-          setShow(true);
-        }}
-      />
+      {!buttonContent && (
+        <ButtonDev
+          content="Signup to join waitlist"
+          variant="primary"
+          block
+          size={size}
+          onClick={() => {
+            setShow(true);
+          }}
+        />
+      )}
+      {buttonContent && (
+        <Button
+          content={buttonContent}
+          variant="primary"
+          block
+          size={size}
+          onClick={() => {
+            setShow(true);
+          }}
+        />
+      )}
       <Popup.Root show={show} onOpenChange={setShow}>
         <div className="md:wb-hidden">
           <Popup.Header />
@@ -102,6 +115,7 @@ const JoinProvidersDialog = ({
                         toLabel="href"
                         to={oathProviders.githubLoginUrl}
                         className="!wb-w-full md:wb-w-auto"
+                        size="lg"
                       />
                     )}
                     {oathProviders?.gitlabLoginUrl && (
@@ -113,6 +127,7 @@ const JoinProvidersDialog = ({
                         toLabel="href"
                         to={oathProviders.gitlabLoginUrl}
                         className="!wb-w-full md:wb-w-auto"
+                        size="lg"
                       />
                     )}
                     {oathProviders?.googleLoginUrl && (
@@ -124,6 +139,7 @@ const JoinProvidersDialog = ({
                         toLabel="href"
                         to={oathProviders.googleLoginUrl}
                         className="!wb-w-full md:wb-w-auto"
+                        size="lg"
                       />
                     )}
                   </div>
@@ -140,10 +156,11 @@ const JoinProvidersDialog = ({
                     toLabel="href"
                     to={signupUrl}
                     className="!wb-w-full md:wb-w-auto"
+                    size="lg"
                   />
 
                   <div className="wb-bodyLg wb-text-text-soft wb-text-center">
-                    By continuing, you agree Kloudlite’s &nbsp;
+                    By continuing, you agree Kloudlite’s <br />
                     <Anchor
                       className="wb-text-text-strong wb-underline wb-underline-offset-4 hover:wb-cursor-pointer"
                       href="/terms-of-services"

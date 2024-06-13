@@ -27,7 +27,7 @@ const socialIconSize = 18;
 
 const SocialMenu = () => {
   return (
-    <div className="wb-flex wb-flex-row wb-items-center wb-gap-xl wb-text-icon-strong wb-pr-2xl">
+    <div className="wb-flex wb-flex-row wb-items-center wb-gap-xl wb-text-icon-soft wb-pr-2xl">
       <a href={gitUrl} aria-label="kloudlite-github">
         <GithubLogoFill size={socialIconSize} />
       </a>
@@ -59,7 +59,7 @@ const BrandMenu = ({ className }: { className?: string }) => {
             <a href="/" aria-label="kloudlite">
               <BrandLogo size={brandIconSize} detailed />
             </a>
-            <span className="wb-bodySm wb-text-text-soft">
+            <span className="wb-bodyMd wb-text-text-soft">
               Boost your efficiency, speed up deployments, enhance collaboration
             </span>
           </div>

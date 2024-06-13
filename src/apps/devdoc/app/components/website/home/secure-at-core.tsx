@@ -21,7 +21,7 @@ const SecureAtCore = () => {
         title="Secure at the core"
         desc="Built using Kloudlite Global VPN Mesh with wireguard at its core"
       >
-        <div className="wb-relative -wb-top-sm">
+        <div className="wb-relative -wb-top-sm wb-left-[0.5px]">
           <DynamicImage
             light={SecureAtCoreImages.secureAtCoreMobile.src}
             dark={SecureAtCoreImages.secureAtCoreMobileDark.src}

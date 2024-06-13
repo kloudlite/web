@@ -33,13 +33,13 @@ const HeaderSecondary = ({
                 aria-label="kloudlite-github"
                 className="wb-hidden lg:wb-block wb-text-icon-default"
               >
-                <GithubLogoFill size={24} />
+                <GithubLogoFill size={20} />
               </a>
               <>
                 <span className="wb-hidden lg:wb-block wb-h-2xl wb-w-xs wb-bg-border-default" />
                 <div className="wb-hidden lg:wb-block">
                   <JoinProvidersDialog
-                    size="sm"
+                    size="md"
                     buttonContent={
                       <span className="wb-bodyMd-medium">
                         Signup to join waitlist
