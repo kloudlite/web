@@ -56,6 +56,7 @@ export default class Document extends NextDocument {
           />
           <script
             // @ts-ignore
+            // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{
               __html: `
                 try {
