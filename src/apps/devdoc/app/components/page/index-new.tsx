@@ -123,7 +123,7 @@ const Index = () => {
               <span className="wb-block wb-max-w-[300px] wb-w-full">
                 <JoinProvidersDialog size="lg" />
               </span>
-              <span className="wb-text-text-strong wb-bodyLg">
+              <span className="wb-text-text-soft wb-bodyLg">
                 Got an invite code?{' '}
                 <a
                   href={`${authUrl}/signup`}
