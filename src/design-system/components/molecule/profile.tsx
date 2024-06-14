@@ -41,7 +41,7 @@ const Profile = forwardRef<HTMLButtonElement, IProfile>(
               )}
 
               {subtitle && (
-                <div className="bodySm text-text-soft dark:text-text-darktheme-soft pulsable">
+                <div className="text-start bodySm text-text-soft dark:text-text-darktheme-soft pulsable">
                   {subtitle}
                 </div>
               )}
