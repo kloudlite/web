@@ -143,7 +143,7 @@ export const createComponents = ({
   return {
     h1: (props) => (
       <h1
-        className="wb-heading4xl-marketing wb-mt-sm wb-text-text-default"
+        className="wb-heading4xl-marketing wb-mt-sm wb-text-text-default wb-pb-lg"
         {...props}
       />
     ),

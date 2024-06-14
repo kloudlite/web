@@ -125,11 +125,8 @@ const Index = () => {
               </span>
               <span className="wb-text-text-soft wb-bodyLg">
                 Got an invite code?{' '}
-                <a
-                  href={`${authUrl}/signup`}
-                  className="hover:wb-bodyLg-underline wb-underline-offset-4 "
-                >
-                  <span className="!wb-text-text-default wb-cursor-pointer wb-font-medium">
+                <a href={`${authUrl}/signup`}>
+                  <span className="!wb-text-text-default wb-cursor-pointer wb-font-medium hover:wb-bodyLg-underline wb-underline-offset-4">
                     Click here
                   </span>{' '}
                   to access

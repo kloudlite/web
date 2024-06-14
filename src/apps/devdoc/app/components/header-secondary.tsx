@@ -49,7 +49,7 @@ const HeaderSecondary = ({
                 </div>
               </>
             </div>
-            <span className="wb-flex lg:wb-hidden">
+            <span className="wb-flex lg:wb-hidden print:wb-hidden">
               <MenuToggle onClick={() => setState(!state)} toggle={state} />
             </span>
           </div>

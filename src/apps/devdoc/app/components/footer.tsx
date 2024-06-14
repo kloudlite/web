@@ -182,7 +182,7 @@ const Footer = ({ config }: { config: IConfig }) => {
     'menu' in config.footer
   )
     return (
-      <footer className="wb-bg-surface-basic-default">
+      <footer className="wb-bg-surface-basic-default print:wb-hidden">
         <Wrapper>
           <FooterMobile {...config.footer} />
           <FooterMd {...config.footer} />
