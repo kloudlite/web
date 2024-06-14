@@ -184,7 +184,6 @@ export const ButtonBase = React.forwardRef<
             rounded: !sharpLeft && !sharpRight,
           }),
         },
-        'transition-all',
         'disabled:pointer-events-none',
         {
           'border-none': noBorder,
