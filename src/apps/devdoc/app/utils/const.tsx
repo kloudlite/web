@@ -1,4 +1,6 @@
 /** eslint-disable prettier/prettier */
+import { ArrowLeftLg } from '@jengaicons/react';
+import { Badge } from 'kl-design-system/atoms/badge';
 import {
   AWSlogo,
   Agritech,
@@ -17,7 +19,6 @@ import {
   CostMonitoring,
   Cpu,
   CustomEnv,
-  DeBugging,
   DesktopTower,
   Developer,
   DigitalOceanlogoFill,
@@ -48,6 +49,7 @@ import {
   TwitterNewLogoFill,
   Users,
   Vpn,
+  Keyhole,
 } from '~/app/icons/icons';
 
 import providersImage1024 from '~/images/infraops/providers/1024.svg';
@@ -139,8 +141,6 @@ import TalescaleIcon from '~/images/home/companies/talescale.svg';
 import Collarative from '~/images/homeNew/exploring/collaborative.jpeg';
 import RemoteLocal from '~/images/homeNew/exploring/remote-local.jpeg';
 import Workflow from '~/images/homeNew/exploring/workflow.jpeg';
-import { ArrowLeftLg } from '@jengaicons/react';
-import { Badge } from 'kl-design-system/atoms/badge';
 import AnserSvg from '../icons/AnserRobotics';
 import BoltzmanSvg from '../icons/Boltzman';
 import CrewScaleSvg from '../icons/CrewScale';
@@ -297,9 +297,19 @@ const consts = {
     },
     kloudliteDevelopmentData: [
       {
+        label: 'Open source under Apache 2.0 Licences',
+        desc: 'No vendor lock-in, what so ever',
+        icon: Keyhole,
+      },
+      {
         label: 'Instant Setup, Infinite Scale',
         desc: 'Jump right into development with environments that scale as you grow',
         icon: InfinityIcon,
+      },
+      {
+        label: 'No Build No Deploy, Just Code',
+        desc: 'Pre-built environments mean less setup and more coding',
+        icon: Code,
       },
       {
         label: '100% Dev-Prod Parity',
@@ -312,21 +322,10 @@ const consts = {
         desc: 'Team up in real-time, in any environment, with zero hassle',
         icon: Users,
       },
-
       {
         label: 'Cut the Config Clutter',
         desc: 'Manage configs and secrets centrally - keep your code clean and lean',
         icon: SelectionForeground,
-      },
-      {
-        label: 'Develop Faster',
-        desc: 'Pre-built environments mean less setup and more coding',
-        icon: Code,
-      },
-      {
-        label: 'Debug on the Fly',
-        desc: 'Intercept and debug applications without breaking your flow',
-        icon: DeBugging,
       },
       {
         label: 'Secure by Design',
