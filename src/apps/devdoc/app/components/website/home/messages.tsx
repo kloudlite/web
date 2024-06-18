@@ -37,7 +37,7 @@ const MessageCard = ({
             subtitle={<span className="wb-bodyMd">{subtitle}</span>}
             color="dark"
             size="md"
-            noImage
+            noImage={true}
           />
         </span>
       </div>
