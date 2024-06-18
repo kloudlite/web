@@ -6407,6 +6407,20 @@ query authCli_listClusters($pagination: CursorPaginationIn) {
   }
 }
 
+query authCli_listByokClusters($pagination: CursorPaginationIn) {
+  infra_listBYOKClusters(pagination: $pagination) {
+    edges {
+      node {
+        displayName
+        metadata {
+          name
+        }
+        lastOnlineAt
+      }
+    }
+  }
+}
+
 query authCli_listAccounts {
   accounts_listAccounts {
     metadata {

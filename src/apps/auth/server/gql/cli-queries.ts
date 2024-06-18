@@ -610,6 +610,27 @@ export const cliQueries = (executor: IExecutor) => ({
       vars: (_: any) => {},
     }
   ),
+  cli_listByokClusters: executor(
+    gql`
+      query Node($pagination: CursorPaginationIn) {
+        infra_listBYOKClusters(pagination: $pagination) {
+          edges {
+            node {
+              displayName
+              metadata {
+                name
+              }
+              lastOnlineAt
+            }
+          }
+        }
+      }
+    `,
+    {
+      transformer: (data: any) => data.infra_listBYOKClusters,
+      vars: (_: any) => {},
+    }
+  ),
   cli_listAccounts: executor(
     gql`
       query Accounts_listAccounts {

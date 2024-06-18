@@ -7996,6 +7996,22 @@ export type AuthCli_ListClustersQuery = {
   };
 };
 
+export type AuthCli_ListByokClustersQueryVariables = Exact<{
+  pagination?: InputMaybe<CursorPaginationIn>;
+}>;
+
+export type AuthCli_ListByokClustersQuery = {
+  infra_listBYOKClusters?: {
+    edges: Array<{
+      node: {
+        displayName: string;
+        lastOnlineAt?: any;
+        metadata: { name: string };
+      };
+    }>;
+  };
+};
+
 export type AuthCli_ListAccountsQueryVariables = Exact<{
   [key: string]: never;
 }>;
