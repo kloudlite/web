@@ -72,8 +72,11 @@ export const byokClusterQueries = (executor: IExecutor) => ({
   ),
   getBYOKClusterInstructions: executor(
     gql`
-      query Query($name: String!) {
-        infrat_getBYOKClusterSetupInstructions(name: $name)
+      query Infrat_getBYOKClusterSetupInstructions($name: String!) {
+        infrat_getBYOKClusterSetupInstructions(name: $name) {
+          title
+          command
+        }
       }
     `,
     {
@@ -120,7 +123,6 @@ export const byokClusterQueries = (executor: IExecutor) => ({
             syncScheduledAt
           }
           updateTime
-          clusterPublicEndpoint
           clusterSvcCIDR
           globalVPN
         }
@@ -143,7 +145,6 @@ export const byokClusterQueries = (executor: IExecutor) => ({
             cursor
             node {
               accountName
-              clusterPublicEndpoint
               clusterSvcCIDR
               createdBy {
                 userEmail

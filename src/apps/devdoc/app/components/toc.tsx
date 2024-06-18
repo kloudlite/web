@@ -40,7 +40,6 @@ export function TOC({ headings }: TOCProps): ReactElement {
     );
 
     if (anchor) {
-      console.log(activeSlug, anchor);
       setTimeout(() => {
         scrollIntoView(anchor, {
           behavior: 'smooth',
@@ -50,7 +49,6 @@ export function TOC({ headings }: TOCProps): ReactElement {
           boundary: tocRef.current,
         });
       }, 100);
-      // anchor.scrollIntoView({ block: '' });
     }
   }, [activeSlug]);
 
@@ -58,40 +56,47 @@ export function TOC({ headings }: TOCProps): ReactElement {
     <div
       ref={tocRef}
       className={cn(
-        'md:h-[calc(100vh-var(--kl-navbar-height))] overflow-x-hidden overflow-y-auto kl-scrollbar-transparent hover:kl-scrollbar-colored scrollbar-gutter grow pr-md pt-6xl'
+        'md:wb-h-[calc(100vh_-_var(--kl-navbar-height))] wb-overflow-x-hidden wb-overflow-y-auto kl-scrollbar-transparent hover:kl-scrollbar-colored scrollbar-gutter wb-grow wb-pr-md wb-pt-6xl'
       )}
     >
+      {config.activeDocTopic && (
+        <div className="wb-bodyMd wb-text-text-soft wb-px-2xl wb-py-md wb-mb-md">
+          {config.activeDocTopic}
+        </div>
+      )}
       {hasHeadings && (
         <>
           <LayoutGroup>
-            <ul className="flex flex-col">
+            <ul className="wb-flex wb-flex-col">
               {items.map(({ id, value, depth }, index) => {
                 return (
                   <li
-                    className={cn('flex flex-row relative', {
-                      'ml-2xl pl-md border-l border-border-default': depth > 2,
-                      'mb-lg': depth === 2,
-                      'pb-lg': depth > 2 && items?.[index + 1]?.depth > 2,
+                    className={cn('wb-flex wb-flex-row wb-relative', {
+                      'wb-ml-2xl wb-pl-md wb-border-l wb-border-border-default':
+                        depth > 2,
+                      'wb-mb-lg': depth === 2,
+                      'wb-pb-md': depth > 2 && items?.[index + 1]?.depth > 2,
                     })}
                     key={id}
                   >
                     <a
+                      title={value}
                       href={`#${id}`}
                       className={cn(
-                        'flex px-2xl py-lg rounded min-w-0 w-full',
+                        'wb-flex wb-px-2xl wb-py-md wb-rounded wb-min-w-0 wb-w-full hover:wb-bg-surface-basic-hovered',
                         activeAnchor[id]?.isActive
-                          ? 'bg-surface-basic-active bodyMd-medium  text-text-primary relative'
-                          : 'bodyMd text-text-soft'
+                          ? 'wb-bg-surface-basic-active wb-bodyMd-medium  wb-text-text-primary wb-relative'
+                          : 'wb-bodyMd wb-text-text-soft'
                       )}
                     >
                       {depth > 2 && activeAnchor[id]?.isActive && (
                         <motion.div
                           layoutId="toc-line"
-                          className="border-l-2 border-border-primary rounded h-full absolute -left-[5px] top-0"
+                          className="wb-border-l-2 wb-border-border-primary wb-rounded wb-h-full wb-absolute -wb-left-[5px] wb-top-0"
                         />
                       )}
 
-                      <span className="block truncate">{value}</span>
+                      <span className="wb-block wb-truncate">{value}</span>
                     </a>
                   </li>
                 );
@@ -103,17 +108,10 @@ export function TOC({ headings }: TOCProps): ReactElement {
 
       <div
         className={cn(
-          'sticky pb-6xl bottom-0 bg-surface-basic-subdued shadow-[0_-12px_16px_#FAFAFA]'
+          'wb-sticky wb-pb-6xl wb-bottom-0 wb-bg-surface-basic-subdued wb-pt-xl'
         )}
       >
-        {/* {renderComponent(config.editLink.component, {
-            filePath,
-            className: linkClassName,
-            children: renderComponent(config.editLink.text),
-          })}
-
-          {renderComponent(config.toc.extraContent)} */}
-        <hr className="border-border-default mb-5xl" />
+        {hasHeadings && <hr className="wb-border-border-default wb-mb-5xl" />}
         {config.feedback ? (
           <Button
             content={
@@ -124,7 +122,7 @@ export function TOC({ headings }: TOCProps): ReactElement {
               repository: config.gitRepoUrl,
               title: `Feedback for “${config.pageOpts?.title}”`,
             })}
-            LinkComponent={Link}
+            linkComponent={Link}
             toLabel="href"
             variant="plain"
             size="lg"
@@ -136,7 +134,9 @@ export function TOC({ headings }: TOCProps): ReactElement {
           variant="plain"
           size="lg"
         />
-        {config.scrollToTop && <BackToTop className="opacity-0" />}
+        {config.scrollToTop && (
+          <BackToTop className="!wb-hidden" content="Scroll to top" />
+        )}
       </div>
     </div>
   );

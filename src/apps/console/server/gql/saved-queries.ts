@@ -3,6 +3,7 @@ import { IGQLServerProps } from '~/root/lib/types/common';
 import { accessQueries } from './queries/access-queries';
 import { accountQueries } from './queries/account-queries';
 import { appQueries } from './queries/app-queries';
+import { externalAppQueries } from './queries/external-app-queries';
 import { baseQueries } from './queries/base-queries';
 import { buildQueries } from './queries/build-queries';
 import { buildRunQueries } from './queries/build-run-queries';
@@ -29,6 +30,7 @@ import { namespaceQueries } from './queries/namespace-queries';
 import { consoleVpnQueries } from './queries/console-vpn-queries';
 import { imagePullSecretsQueries } from './queries/image-pull-secrets-queries';
 import { globalVpnQueries } from './queries/global-vpn-queries';
+import { commsNotificationQueries } from './queries/comms-queries';
 
 export const GQLServerHandler = ({ headers, cookies }: IGQLServerProps) => {
   const executor = ExecuteQueryWithContext(headers, cookies);
@@ -40,6 +42,7 @@ export const GQLServerHandler = ({ headers, cookies }: IGQLServerProps) => {
     ...nodepoolQueries(executor),
     ...environmentQueries(executor),
     ...appQueries(executor),
+    ...externalAppQueries(executor),
     ...routerQueries(executor),
     ...configQueries(executor),
     ...secretQueries(executor),
@@ -62,6 +65,7 @@ export const GQLServerHandler = ({ headers, cookies }: IGQLServerProps) => {
     ...consoleVpnQueries(executor),
     ...imagePullSecretsQueries(executor),
     ...globalVpnQueries(executor),
+    ...commsNotificationQueries(executor),
   };
 };
 

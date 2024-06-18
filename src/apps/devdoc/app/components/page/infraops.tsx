@@ -1,4 +1,4 @@
-import { ArrowRight, GithubLogoFill } from '@jengaicons/react';
+import { ArrowRight, GithubLogoFill } from '~/app/icons/icons';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import HorizontalTopTab from '~/app/components/website/horizontal-top-tab';

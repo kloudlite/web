@@ -50,7 +50,7 @@ export const Item = ({
       >
         <RadioGroupPrimitive.Item
           className={cn(
-            'w-2xl h-2xl outline-none rounded-full border pulsable pulsable-hidden ring-border-focus ring-offset-1 focus:ring-2 transition-all flex items-center justify-center border-border-default',
+            'w-2xl h-2xl outline-none rounded-full border pulsable pulsable-hidden ring-border-focus focus:ring-2 transition-all flex items-center justify-center border-border-default',
             {
               'hover:bg-surface-basic-hovered': !disabled,
               'data-[state=checked]:border-border-primary': !disabled,

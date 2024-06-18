@@ -1,0 +1,24 @@
+# Inside
+
+## Layer 1: The WireGuard Mesh
+<img src="/layer1.png" alt="dev-hell" className="wb-p-3xl wb-mt-3xl wb-bg-white" />
+
+The core of the Kloudlite network is a WireGuard mesh. Each device in the network is a peer in the mesh, and each peer can communicate with any other peer. This forms the foundation of the network, allowing seamless communication between devices.
+
+The entire infrastructure under an account in Kloudlite is connected with a WireGuard mesh. Because of this, all the services running in the infrastructure can communicate with each other without any additional configuration.
+
+## Layer 2: The Kubernetes Gateways
+<img src="/layer2.png" alt="dev-hell" className="wb-p-3xl wb-mt-3xl wb-bg-white" />
+Each Kubernetes cluster is connected to the WireGuard mesh via a WireGuard Gateway. All the pods running in the environment (Kloudlite-managed namespace) are connected through the Gateway running on the cluster. All the services running in the environment are exposed using a proxy running on the Gateway.
+
+Each pod and service running in the environment is assigned a unique IP address, used for communication between services within the environment.
+
+## Layer 3: Remote Environments
+<img src="/layer3.png" alt="dev-hell" className="wb-p-3xl wb-mt-3xl wb-bg-white" />
+An environment is a collection of services running together. Technically, an environment is a Kloudlite namespace running in a Kubernetes cluster. All the workloads running in an environment can communicate with all the peers in the WireGuard network.
+
+Once the connection is established between the services running in the environment, you can directly use the IP address of the service to communicate with it. To simplify this, the Kloudlite Gateway also runs a DNS service that resolves the service name to the IP address of the service. With search domains configured, you can access the service using just the service name.
+
+## Layer 4: Development Environments
+<img src="/layer4.png" alt="dev-hell" className="wb-p-3xl wb-mt-3xl wb-bg-white" />
+To make it easier for developers to work with the services running in the environment, Kloudlite provides local development containers. These containers are pre-configured with all the tools required to work with the WireGuard connection to the environment. You can sync all the configurations and secrets from the environment to the local development container.

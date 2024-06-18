@@ -1,0 +1,14 @@
+{
+  "ray-clusters":{
+    "title": "Ray Clusters"
+  },
+  "model-storage":{
+    "title": "Model Storage"
+  },
+  "notebooks":{
+    "title":"Notebooks Servers"
+  },
+  "code-servers":{
+    "title":"Remote IDEs"
+  }
+}

@@ -62,14 +62,14 @@ export function Collapse({
   return (
     <div
       ref={containerRef}
-      className="transform-gpu overflow-hidden transition-all ease-in-out motion-reduce:transition-none"
+      className="wb-transform-gpu wb-overflow-hidden wb-transition-all wb-ease-in-out motion-reduce:wb-transition-none"
       style={initialOpen.current || horizontal ? undefined : { height: 0 }}
     >
       <div
         ref={innerRef}
         className={cn(
-          'transition-opacity duration-500 ease-in-out motion-reduce:transition-none',
-          isOpen ? 'opacity-100' : 'opacity-0',
+          'wb-transition-opacity wb-duration-500 wb-ease-in-out motion-reduce:wb-transition-none',
+          isOpen ? 'wb-opacity-100' : 'wb-opacity-0',
           className
         )}
       >

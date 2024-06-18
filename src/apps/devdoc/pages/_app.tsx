@@ -2,27 +2,35 @@ import '../style.css';
 import 'kl-design-system/index.css';
 import type { AppProps } from 'next/app';
 import '../public/arduino-light.min.css';
-import { MenuProvider } from '~/app/utils/use-menu';
+import { Viewport } from 'next';
+import { ToastContainer } from 'kl-design-system/molecule/toast';
+import { ConfigProvider } from '~/app/utils/use-config';
 import { SearchProvider } from '~/app/utils/use-search';
-import { initializeApp } from 'firebase/app';
-import { getAnalytics } from 'firebase/analytics';
-import { useEffect } from 'react';
-import config from '../.firebaseConfig';
+import { MenuProvider } from '~/app/utils/use-menu';
+import ThemeProvider from '~/app/utils/useTheme';
+import FirebaseProvider from '~/app/utils/useFirebase';
+import 'react-toastify/dist/ReactToastify.css';
+import config from '~/app/utils/config';
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+};
 
 export default function MyApp({ Component, pageProps }: AppProps) {
-  const app = initializeApp(config);
-  useEffect(() => {
-    getAnalytics(app);
-  }, []);
   return (
-    <MenuProvider>
-      <div
-        className="loading-overlay"
-        style={{ position: 'absolute', inset: 0, background: 'white' }}
-      />
-      <SearchProvider>
-        <Component {...pageProps} />
-      </SearchProvider>
-    </MenuProvider>
+    <ConfigProvider config={config}>
+      <FirebaseProvider>
+        <ToastContainer position="bottom-left" />
+        <MenuProvider>
+          <SearchProvider>
+            <ThemeProvider>
+              <Component {...pageProps} />
+            </ThemeProvider>
+          </SearchProvider>
+        </MenuProvider>
+      </FirebaseProvider>
+    </ConfigProvider>
   );
 }

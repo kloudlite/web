@@ -24,7 +24,7 @@ const NavigationMenuDemo = ({
             <Button
               variant="plain"
               size="sm"
-              LinkComponent={Link}
+              linkComponent={Link}
               to={to}
               toLabel="href"
               className="!no-underline hover:!text-text-default"

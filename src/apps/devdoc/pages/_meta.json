@@ -1,117 +1,108 @@
 {
-  "index":{
-    "title":"Kloudlite",
-    "type":"page",
-    "display":"hidden",
-    "theme":{
-      "layout":"raw",
+  "index": {
+    "title": "Kloudlite",
+    "type": "page",
+    "display": "hidden",
+    "theme": {
+      "layout": "raw",
       "breadcrumb": false,
       "footer": false,
       "sidebar": false,
       "toc": false,
-      "header":"secondary"
+      "header": "secondary"
     }
   },
-  "infraops":{
-    "title":"InfraOps",
-    "type":"page",
-    "display":"hidden",
-    "theme":{
-      "layout":"raw",
-      "sidebar":false,
-      "toc":false,
-      "header":"secondary"
+  "new-home": {
+    "title": "Kloudlite",
+    "type": "page",
+    "display": "hidden",
+    "theme": {
+      "layout": "raw",
+      "breadcrumb": false,
+      "footer": false,
+      "sidebar": false,
+      "toc": false,
+      "header": "secondary"
     }
   },
-  "devops":{
-    "title":"DevOps",
-    "type":"page",
-    "display":"hidden",
-    "theme":{
-      "layout":"raw",
-      "sidebar":false,
-      "toc":false,
-      "header":"secondary"
+  "change-logs": {
+    "title": "Changelogs",
+    "type": "page",
+    "display": "hidden",
+    "theme": {
+      "layout": "raw",
+      "sidebar": false,
+      "toc": false,
+      "header": "secondary"
     }
   },
-  "distribution":{
-    "title":"Distribution",
-    "type":"page",
-    "display":"hidden",
-    "theme":{
-      "layout":"raw",
-      "sidebar":false,
-      "toc":false,
-      "header":"secondary"
+  "contact-us": {
+    "title": "Contact us",
+    "type": "page",
+    "display": "hidden",
+    "theme": {
+      "layout": "raw",
+      "sidebar": false,
+      "toc": false,
+      "header": "secondary"
     }
   },
-  "product":{
-    "title":"Product",
-    "type":"page",
-    "display":"hidden",
-    "theme":{
-      "layout":"raw",
-      "sidebar":false,
-      "toc":false,
-      "header":"secondary"
+  "privacy-policy": {
+    "title": "Privacy Policy",
+    "type": "page",
+    "display": "hidden",
+    "theme": {
+      "layout": "raw",
+      "sidebar": false,
+      "toc": false,
+      "header": "secondary"
     }
   },
-  "contact-us":{
-    "title":"Contact us",
-    "type":"page",
-    "display":"hidden",
-    "theme":{
-      "layout":"raw",
-      "sidebar":false,
-      "toc":false,
-      "header":"secondary"
+  "terms-of-services": {
+    "title": "Terms of Services",
+    "type": "page",
+    "display": "hidden",
+    "theme": {
+      "layout": "raw",
+      "sidebar": false,
+      "toc": false,
+      "header": "secondary"
     }
   },
-  "privacy-policy":{
-    "title":"Privacy Policy",
-    "type":"page",
-    "display":"hidden",
-    "theme":{
-      "layout":"raw",
-      "sidebar":false,
-      "toc":false,
-      "header":"secondary"
+  "pricing": {
+    "title": "Pricing",
+    "type": "page",
+    "display": "hidden",
+    "theme": {
+      "layout": "raw",
+      "sidebar": false,
+      "toc": false,
+      "header": "secondary"
     }
   },
-  "terms-of-services":{
-    "title":"Terms of Services",
-    "type":"page",
-    "display":"hidden",
-    "theme":{
-      "layout":"raw",
-      "sidebar":false,
-      "toc":false,
-      "header":"secondary"
-    }
+  "docs": {
+    "title": "Docs",
+    "type": "page",
+    "display": "hidden"
   },
-    "docs":{
-        "title":"Docs",
-        "type":"page",
-        "display":"hidden"
-    },
-    "help-and-support":{
-        "title":"Help and Support",
-        "type":"page",
-        "display":"hidden"
-    },
-    "blog":{
-        "title":"Blog",
-        "type":"page",
-        "display":"hidden"
-    },
-    "writer":{
-        "title":"Writer",
-        "type":"page",
-        "display":"hidden"
-    },
-  "customer-stories":{
-    "title":"Customer stories",
-    "type":"page",
-    "display":"hidden"
+  "help-and-support": {
+    "title": "Help and Support",
+    "type": "page",
+    "display": "hidden"
+  },
+  "blog": {
+    "title": "Blog",
+    "type": "page",
+    "display": "hidden"
+  },
+  "writer": {
+    "title": "Writer",
+    "type": "page",
+    "display": "hidden"
+  },
+  "customer-stories": {
+    "title": "Customer stories",
+    "type": "page",
+    "display": "hidden"
   }
 }

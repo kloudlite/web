@@ -1,36 +1,55 @@
-import {
-  MDXEditor,
-  headingsPlugin,
-  UndoRedo,
-  DiffSourceToggleWrapper,
-  diffSourcePlugin,
-  toolbarPlugin,
-} from '@mdxeditor/editor';
+import { UndoRedo, DiffSourceToggleWrapper } from '@mdxeditor/editor';
 import '@mdxeditor/editor/style.css';
+import axios from 'axios';
+import Button from './button';
 
-const ToolbarContent = () => (
+const _ToolbarContent = () => (
   <DiffSourceToggleWrapper>
     <UndoRedo />
   </DiffSourceToggleWrapper>
 );
+
 const Writer = () => {
   return (
-    <MDXEditor
-      markdown="# Hello World"
-      onChange={(e) => {
-        console.log(e);
-      }}
-      plugins={[
-        toolbarPlugin({
-          toolbarContents: ToolbarContent,
-        }),
-        headingsPlugin(),
-        diffSourcePlugin({
-          viewMode: 'rich-text',
-          diffMarkdown: 'boo',
-        }),
-      ]}
-    />
+    // <MDXEditor
+    //   markdown="# Hello World"
+    //   onChange={(e) => {
+    //     console.log(e);
+    //   }}
+    //   plugins={[
+    //     toolbarPlugin({
+    //       toolbarContents: ToolbarContent,
+    //     }),
+    //     headingsPlugin(),
+    //     diffSourcePlugin({
+    //       viewMode: 'rich-text',
+    //       diffMarkdown: 'boo',
+    //     }),
+    //   ]}
+    // />
+
+    <div className="wb-w-full">
+      <Button
+        content="hello"
+        onClick={async () => {
+          try {
+            axios({
+              url: 'https://auth1.dev.kloudlite.io/api',
+              method: 'post',
+              withCredentials: false,
+              data: {
+                method: 'loginPageInitUrls',
+                args: [{}],
+              },
+            }).then((e) => {
+              console.log(e);
+            });
+          } catch (e) {
+            console.log(e);
+          }
+        }}
+      />
+    </div>
   );
 };
 

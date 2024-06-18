@@ -77,11 +77,11 @@ const TabBase = ({
         setHoverd(false);
       }}
       className={cn(
-        'outline-none flex flex-col relative group bodyMd-medium hover:text-text-default active:text-text-default transition-all cursor-pointer',
+        'outline-none flex flex-col relative group bodyMd-medium transition-all cursor-pointer hover:text-text-default active:text-text-default',
         {
           'text-text-default': active,
           'text-text-soft': !active,
-          'hover:bg-surface-basic-hovered active:bg-surface-basic-pressed rounded-lg':
+          'rounded-lg hover:bg-surface-basic-hovered active:bg-surface-basic-pressed':
             variant === 'filled',
           // 'border border-transparent': variant === 'filled' && !active,
         }
@@ -99,12 +99,18 @@ const TabBase = ({
       >
         <Component
           // eslint-disable-next-line no-nested-ternary
-          {...(to ? (Component === 'a' ? { href: to } : { to }) : {})}
+          {...(to
+            ? Component === 'a'
+              ? { href: to }
+              : { to }
+            : {
+                role: 'button',
+              })}
           prefetch="intent"
           onClick={onClick}
           className={cn(
             'relative z-10 tab-item outline-none',
-            'ring-offset-0 focus-visible:ring-2 focus-visible:ring-border-focus',
+            'ring-offset-0 focus-visible:ring-border-focus focus-visible:ring-2',
             // 'focus-visible:shadow-focus',
             {
               ...((!fitted || variant === 'filled') && {
@@ -128,14 +134,14 @@ const TabBase = ({
             <motion.div
               layoutId="underline"
               className={cn(
-                'h-md bg-surface-primary-pressed z-10 absolute left-0 bottom-0 w-full'
+                'h-md z-10 absolute left-0 bottom-0 w-full bg-surface-primary-pressed'
               )}
             />
           )}
           {variant === 'plain' && hoverd && (
             <motion.div
               layoutId="hoverd-underline"
-              className="h-md bg-border-default group-active:bg-border-tertiary bg-none absolute bottom-0 w-full z-0 left-0"
+              className="h-md bg-none absolute bottom-0 w-full z-0 left-0 bg-border-default group-active:bg-border-tertiary"
             />
           )}
           {variant === 'plain' && <div className="h-md bg-none w-full z-0" />}
@@ -145,7 +151,7 @@ const TabBase = ({
         {variant === 'filled' && active && (
           <motion.div
             layoutId={layoutId}
-            className="absolute inset-0 rounded-lg bg-surface-basic-default border border-border-default shadow-button"
+            className="absolute inset-0 rounded-lg shadow-button border border-border-default bg-surface-basic-default"
             transition={{ type: 'spring', bounce: 0.1, duration: 0.3 }}
           />
         )}

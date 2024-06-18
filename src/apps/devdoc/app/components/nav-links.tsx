@@ -27,35 +27,39 @@ export const NavLinks = ({
   return (
     <div
       className={cn(
-        'py-6xl px-xl border-t border-border-default  flex flex-row flex-wrap items-center gap-xl bodyMd text-text-default ',
+        'wb-py-6xl md:wb-px-xl wb-border-t wb-border-border-default wb-flex wb-flex-col md:wb-flex-row wb-flex-wrap wb-items-center wb-gap-xl wb-bodyMd wb-text-text-default print:wb-hidden',
         {
           'justify-between': !!prev,
           'justify-end': !prev,
         }
       )}
     >
-      {prev && (
-        <Button
-          LinkComponent={Link}
-          toLabel="href"
-          content={prev.title}
-          className="self-start"
-          to={prev.route}
-          prefix={<ChevronLeft />}
-          variant="plain"
-        />
-      )}
-      {next && (
-        <Button
-          LinkComponent={Link}
-          toLabel="href"
-          content={next.title}
-          className="self-end ml-auto"
-          to={next.route}
-          suffix={<ChevronRight />}
-          variant="plain"
-        />
-      )}
+      <div className="wb-flex-1 md:wb-flex-none wb-self-start">
+        {prev && (
+          <Button
+            linkComponent={Link}
+            toLabel="href"
+            content={prev.title}
+            className="self-start"
+            to={prev.route}
+            prefix={<ChevronLeft />}
+            variant="plain"
+          />
+        )}
+      </div>
+      <div className="wb-flex-1 md:wb-flex-none wb-self-end">
+        {next && (
+          <Button
+            linkComponent={Link}
+            toLabel="href"
+            content={next.title}
+            className="self-end ml-auto"
+            to={next.route}
+            suffix={<ChevronRight />}
+            variant="plain"
+          />
+        )}
+      </div>
     </div>
   );
 };

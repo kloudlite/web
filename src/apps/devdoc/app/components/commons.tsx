@@ -59,34 +59,43 @@ export const DetailCard = ({
 export const TitleBlock = ({
   title,
   desc,
+  titleContainerClass,
   titleClass,
   descClass,
 }: {
   title: ReactNode;
   desc?: ReactNode;
   titleClass?: string;
+  titleContainerClass?: string;
   descClass?: string;
 }) => {
   return (
-    <div className="flex flex-col gap-3xl text-start md:!text-center">
+    <div
+      className={cn(
+        'wb-flex wb-flex-col wb-gap-3xl wb-text-center',
+        titleContainerClass
+      )}
+    >
       <div className="flex flex-col gap-md">
         <h3
           className={cn(
-            'heading4xl-marketing lg:!heading5xl-marketing text-text-default',
+            'wb-heading3xl-marketing md:wb-heading4xl-marketing lg:wb-heading5xl-marketing wb-text-text-default',
             titleClass
           )}
         >
           {title}
         </h3>
       </div>
-      <p
-        className={cn(
-          'bodyXl lg:!bodyXXl text-text-soft max-w-[784px] m-auto',
-          descClass
-        )}
-      >
-        {desc}
-      </p>
+      {desc && (
+        <p
+          className={cn(
+            'wb-bodyLg md:wb-bodyXl lg:wb-bodyXXl wb-text-text-soft wb-max-w-[784px] wb-m-auto',
+            descClass
+          )}
+        >
+          {desc}
+        </p>
+      )}
     </div>
   );
 };
@@ -97,24 +106,35 @@ export const Block = ({
   className,
   children,
   titleClass,
+  titleContainerClass,
   descClass,
+  hasGraph = true,
+  graphClass,
 }: {
   title: ReactNode;
   desc?: ReactNode;
   className?: string;
   children?: ReactNode;
   titleClass?: string;
+  titleContainerClass?: string;
   descClass?: string;
+  hasGraph?: boolean;
+  graphClass?: string;
 }) => {
   return (
-    <SectionWrapper className={cn('flex-col', className)}>
+    <SectionWrapper className={cn('wb-flex-col', className)}>
       <TitleBlock
         title={title}
         desc={desc}
+        titleContainerClass={titleContainerClass}
         titleClass={titleClass}
         descClass={descClass}
       />
-      <GraphExtended>{children}</GraphExtended>
+      {hasGraph ? (
+        <GraphExtended className={graphClass}>{children}</GraphExtended>
+      ) : (
+        children
+      )}
     </SectionWrapper>
   );
 };

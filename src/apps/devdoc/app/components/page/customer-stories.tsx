@@ -8,7 +8,7 @@ const ClientCard = ({ icon }: { icon: string }) => {
   return (
     <GraphItem>
       <div className="flex items-center justify-center bg-surface-basic-default px-2xl py-3xl h-[128px]">
-        <img src={icon} />
+        <img alt="client-icon" src={icon} />
       </div>
     </GraphItem>
   );

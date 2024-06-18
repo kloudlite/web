@@ -22,7 +22,7 @@ import {
 import { cn } from '../utils';
 import AnimateHide from './animate-hide';
 
-type InputSizes = 'md' | 'lg' | (undefined & NonNullable<unknown>);
+type InputSizes = 'md' | 'lg' | 'xl' | (undefined & NonNullable<unknown>);
 
 export interface IInputRow {
   value?: string | number;
@@ -72,6 +72,7 @@ interface ITextArea extends IInputRow {
   prefix?: ReactNode;
   prefixIcon?: JSX.Element;
   resize?: boolean;
+  cols?: string;
 }
 
 export interface ITextInputBase extends IInputRow {
@@ -135,7 +136,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
             })}
           >
             <label
-              className="select-none bodyMd-medium text-text-default pulsable min-w-[33%]"
+              className="select-none bodyMd-medium pulsable min-w-[33%] text-text-soft"
               htmlFor={id}
             >
               {label}
@@ -152,7 +153,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
         <div
           ref={containerRef}
           className={cn(
-            'transition-all px-lg rounded border flex flex-row items-center relative ring-offset-1 pulsable',
+            'transition-all rounded border flex flex-row items-center relative ring-offset-1 group-data-[theme=dark]/html:ring-offset-0',
             {
               'text-text-critical bg-surface-critical-subdued border-border-critical':
                 error,
@@ -162,6 +163,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
                 disabled,
               'pr-0': component !== 'input',
             },
+            size === 'xl' ? 'h-[60px] !px-2xl' : 'px-lg',
             className
           )}
         >
@@ -193,9 +195,8 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
             id={id}
             tabIndex={tabIndex}
             className={cn(
-              textFieldClassName,
               'outline-none flex-1 w-full h-full',
-              'rounded bodyMd bg-transparent',
+              'rounded bg-transparent',
               {
                 'text-text-critical placeholder:text-text-critical/70 bgh':
                   error && !disabled,
@@ -211,7 +212,9 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
               },
               {
                 'no-spinner': type === 'number',
-              }
+              },
+              size === 'xl' ? '' : 'bodyMd',
+              textFieldClassName
             )}
             value={value}
             onChange={(e: any) => {
@@ -221,10 +224,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
             }}
             onFocus={(e: any) => {
               if (focusRing) {
-                containerRef.current?.classList.add(
-                  'ring-2',
-                  'ring-border-focus'
-                );
+                containerRef.current?.classList.add('ring-2');
               }
               onFocus(e);
             }}
@@ -233,10 +233,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
             onKeyDown={onKeyDown}
             autoComplete={autoComplete}
             onBlur={(e: any) => {
-              containerRef.current?.classList.remove(
-                'ring-2',
-                'ring-border-focus'
-              );
+              containerRef.current?.classList.remove('ring-2');
 
               onBlur(e);
             }}
@@ -411,31 +408,35 @@ export const TextInput = forwardRef<HTMLInputElement, ITextInput>(
   }
 );
 
-export const TextArea = ({
-  autoComplete = 'off',
-  onChange = (_) => {},
-  resize = false,
-  rows = '3',
-  ...etc
-}: ITextArea) => {
-  const ref = useRef(null);
-  const id = useId();
-  return (
-    <TextInputBase
-      {...{
-        ...etc,
-        id,
-        autoComplete,
-        onChange,
-        resize,
-        rows,
-        component: 'textarea',
-        ref,
-        type: 'text',
-      }}
-    />
-  );
-};
+export const TextArea = forwardRef<HTMLInputElement, ITextArea>(
+  (
+    {
+      autoComplete = 'off',
+      onChange = (_) => {},
+      resize = false,
+      rows = '3',
+      ...etc
+    },
+    ref
+  ) => {
+    const id = useId();
+    return (
+      <TextInputBase
+        {...{
+          ...etc,
+          id,
+          rows,
+          autoComplete,
+          onChange,
+          resize,
+          component: 'textarea',
+          ref,
+          type: 'text',
+        }}
+      />
+    );
+  }
+);
 
 export const PasswordInput = (props: IInputRow) => {
   const ref = useRef(null);

@@ -8,6 +8,7 @@ const colors = {
   four: ['fill-icon-critical', 'text-icon-critical'],
   five: ['fill-icon-secondary', 'text-icon-secondary'],
   six: ['fill-icon-primary', 'text-icon-primary'],
+  dark: ['fill-text-soft', 'text-text-soft'],
 };
 
 type AvatarSizes = 'xs' | 'sm' | 'md' | 'lg' | (string & NonNullable<unknown>);
@@ -17,15 +18,22 @@ type AvatarColors =
   | 'three'
   | 'four'
   | 'five'
+  | 'dark'
   | (string & NonNullable<unknown>);
 
 export interface IAvatar {
   size?: AvatarSizes;
   color?: AvatarColors;
   image?: ReactNode;
+  dot?: boolean;
 }
 
-export const AvatarBase = ({ size = 'md', color = 'one', image }: IAvatar) => {
+export const AvatarBase = ({
+  size = 'md',
+  color = 'one',
+  image,
+  dot,
+}: IAvatar) => {
   const isExternal = !Object.keys(colors).includes(color);
 
   return (
@@ -60,6 +68,9 @@ export const AvatarBase = ({ size = 'md', color = 'one', image }: IAvatar) => {
         }
       )}
     >
+      {dot && (
+        <span className="absolute h-lg w-lg bg-icon-critical -top-sm -left-sm rounded-full" />
+      )}
       {image && (
         <span
         // @ts-ignore
@@ -140,6 +151,6 @@ export const AvatarBase = ({ size = 'md', color = 'one', image }: IAvatar) => {
   );
 };
 
-export const Avatar = ({ size, color, image }: IAvatar) => {
-  return <AvatarBase size={size} color={color} image={image} />;
+export const Avatar = ({ size, color, image, dot }: IAvatar) => {
+  return <AvatarBase size={size} color={color} image={image} dot={dot} />;
 };

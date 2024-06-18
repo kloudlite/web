@@ -3,6 +3,10 @@ import NextLink from 'next/link';
 import next from 'next/package.json';
 import type { ComponentProps, ReactElement } from 'react';
 import { forwardRef } from 'react';
+import { cn } from '../utils/commons';
+
+const defaultCss =
+  'wb-ring-offset-0 wb-ring-border-focus wb-outline-none focus-visible:wb-ring-2';
 
 export type AnchorProps = Omit<ComponentProps<'a'>, 'ref'> & {
   newWindow?: boolean;
@@ -24,6 +28,7 @@ export const Anchor = forwardRef<HTMLAnchorElement, AnchorProps>(
           target="_blank"
           rel="noreferrer"
           {...props}
+          className={cn(defaultCss, props.className)}
         >
           {children}
           <span className="nx-sr-only nx-select-none">
@@ -36,7 +41,11 @@ export const Anchor = forwardRef<HTMLAnchorElement, AnchorProps>(
 
     if (!href) {
       return (
-        <a ref={forwardedRef} {...props}>
+        <a
+          ref={forwardedRef}
+          {...props}
+          className={cn(defaultCss, props.className)}
+        >
           {children}
         </a>
       );
@@ -44,7 +53,12 @@ export const Anchor = forwardRef<HTMLAnchorElement, AnchorProps>(
 
     if (nextVersion > 12) {
       return (
-        <NextLink ref={forwardedRef} href={href} {...props}>
+        <NextLink
+          ref={forwardedRef}
+          href={href}
+          {...props}
+          className={cn(defaultCss, props.className)}
+        >
           {children}
         </NextLink>
       );
@@ -52,7 +66,11 @@ export const Anchor = forwardRef<HTMLAnchorElement, AnchorProps>(
 
     return (
       <NextLink href={href} passHref>
-        <a ref={forwardedRef} {...props}>
+        <a
+          ref={forwardedRef}
+          {...props}
+          className={cn(defaultCss, props.className)}
+        >
           {children}
         </a>
       </NextLink>

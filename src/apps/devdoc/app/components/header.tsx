@@ -8,6 +8,7 @@ import SearchBox from './search';
 import useMenu from '../utils/use-menu';
 import useSearch from '../utils/use-search';
 import useConfig, { IConfig } from '../utils/use-config';
+import Wrapper from './wrapper';
 
 const Header = ({
   navitems,
@@ -43,27 +44,29 @@ const Header = ({
   }, []);
 
   return (
-    <div className="flex flex-row sticky top-0 left-0 right-0 p-2 bg-surface-basic-subdued border-b border-border-default min-h-[76px] z-50">
-      <nav className="px-3xl md:!px-5xl lg:!px-8xl xl:!px-11xl 2xl:!px-12xl xl:!max-w-[1024px] 2xl:!max-w-[1120px] box-content flex flex-row items-center gap-6xl lg:m-auto w-full">
-        {config.logo}
-        <ul className="hidden md:flex flex-1 flex-row items-center justify-end gap-4xl list-none">
-          {navitems?.items.map((ni) => (
-            <li key={ni.title} className="list-none">
-              <HeaderLink
-                to={ni.to}
-                active={!!activePath.find((ap) => ap.route === ni.to)}
-              >
-                {ni.title}
-              </HeaderLink>
-            </li>
-          ))}
-        </ul>
-        <SearchBox className="hidden md:flex" />
-        <div className="flex-1 flex md:!hidden items-center justify-end">
-          <MenuButton onClick={() => setState(!state)} toggle={state} />
-        </div>
-      </nav>
-      <Flexsearch />
+    <div className="wb-sticky wb-top-0 md:wb-relative wb-flex wb-flex-row wb-top-0 wb-left-0 wb-right-0 wb-bg-surface-basic-subdued wb-border-b wb-border-border-default wb-min-h-[var(--kl-navbar-height)] wb-z-50">
+      <Wrapper className="wb-flex">
+        <nav className="wb-flex wb-flex-row wb-items-center wb-gap-6xl wb-w-full">
+          {config.logo}
+          <ul className="wb-hidden lg:wb-flex wb-flex-1 wb-flex-row wb-items-center wb-justify-end wb-gap-4xl wb-list-none">
+            {navitems?.items.map((ni) => (
+              <li key={ni.title} className="list-none">
+                <HeaderLink
+                  to={ni.to}
+                  active={!!activePath.find((ap) => ap.route === ni.to)}
+                >
+                  {ni.title}
+                </HeaderLink>
+              </li>
+            ))}
+          </ul>
+          <SearchBox className="wb-hidden lg:wb-flex" />
+          <div className="wb-flex-1 wb-flex lg:wb-hidden wb-items-center wb-justify-end">
+            <MenuButton onClick={() => setState(!state)} toggle={state} />
+          </div>
+        </nav>
+        <Flexsearch />
+      </Wrapper>
     </div>
   );
 };

@@ -37,6 +37,7 @@ export const usePagination = <T extends Array<any>>({
     } else {
       setPageNumber(1);
     }
+    console.log('hereeee');
   }, [listItems]);
 
   useEffect(() => {
@@ -79,6 +80,18 @@ export const usePagination = <T extends Array<any>>({
 
   const onPageChange = () => {};
 
+  const setPageNumberExt = (extpage: number) => {
+    if (extpage <= Math.ceil(listItems.length / itemsPerPage)) {
+      setPage(
+        listItems.slice(
+          (extpage - 1) * itemsPerPage,
+          extpage * itemsPerPage
+        ) as T
+      );
+      setPageNumber(extpage);
+    }
+  };
+
   return {
     page: page || [],
     pageNumber,
@@ -87,7 +100,10 @@ export const usePagination = <T extends Array<any>>({
     onNext,
     onPrev,
     onPageChange,
+    setPageNumber: setPageNumberExt,
     setItems: setListItems,
+    items: listItems,
+    itemsPerPage,
   };
 };
 

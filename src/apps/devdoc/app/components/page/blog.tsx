@@ -1,15 +1,20 @@
 import { Search } from '@jengaicons/react';
 import { TextInput } from 'kl-design-system/atoms/input';
 import Tab from 'kl-design-system/atoms/tabs';
-import { ReactNode, useState } from 'react';
-import consts from '~/app/utils/const';
-import useConfig from '~/app/utils/use-config';
+import { useEffect, useState } from 'react';
 import { PageMapItem } from 'nextra';
-import { DEFAULT_LOCALE } from '~/app/utils/constants';
 import { useRouter } from 'next/router';
-import HoverItem from '../hover-item';
+import { usePagination } from 'kl-design-system/molecule/pagination';
+import { Avatar } from 'kl-design-system/atoms/avatar';
+import useConfig from '~/app/utils/use-config';
+import { DEFAULT_LOCALE } from '~/app/utils/constants';
+import { cn } from '~/app/utils/commons';
+import consts from '~/app/utils/const';
 import SectionWrapper from '../website/section-wrapper';
 import { GraphExtended, GraphItem } from '../graph';
+import { Block } from '../commons';
+import Pagination from '../website/pagination';
+import { ExploringItem } from '../website/home/keep-exploring';
 
 const tabs = [
   {
@@ -27,153 +32,160 @@ const tabs = [
 ];
 
 const tabItems = {
-  overview: [
-    {
-      label: 'Kloudlite',
-      desc: 'Glimpses of our journey, people, culture, and everything.',
-      img: '',
-    },
-    {
-      label: 'Engineering',
-      desc: 'From the principles of coding, to the launch of your advanced apps.',
-      img: '',
-    },
-    {
-      label: 'Community',
-      desc: 'Ask anything and get the right answers from our experts',
-      img: '',
-    },
-  ],
-
-  engineering: [
-    {
-      label: 'Kloudlite',
-      desc: 'Glimpses of our journey, people, culture, and everything.',
-      img: '',
-    },
-    {
-      label: 'Engineering',
-      desc: 'From the principles of coding, to the launch of your advanced apps.',
-      img: '',
-    },
-    {
-      label: 'Community',
-      desc: 'Ask anything and get the right answers from our experts',
-      img: '',
-    },
-  ],
-
-  community: [
-    {
-      label: 'Kloudlite',
-      desc: 'Glimpses of our journey, people, culture, and everything.',
-      img: '',
-    },
-    {
-      label: 'Engineering',
-      desc: 'From the principles of coding, to the launch of your advanced apps.',
-      img: '',
-    },
-    {
-      label: 'Community',
-      desc: 'Ask anything and get the right answers from our experts',
-      img: '',
-    },
-  ],
+  overview: consts.homeNew.exploring,
+  engineering: consts.homeNew.exploring,
+  community: consts.homeNew.exploring,
 };
 
-const TabCard = ({
-  label,
-  desc,
-  img,
-}: {
-  label: ReactNode;
-  desc: ReactNode;
-  img: string;
-}) => {
+const AvatarItem = ({ gravatarHash }: { gravatarHash?: string }) => {
   return (
-    <div className="h-full flex flex-col bg-surface-basic-default 2xl:!min-h-[176px]">
-      <img className="h-[240px]" src={img} />
-      <div className="flex flex-col gap-lg md:!gap-xl p-3xl 2xl:!p-3xl 3xl:!p-4xl">
-        <h3 className="heading3xl-marketing text-text-default">{label}</h3>
-        <p className="bodyXl text-text-strong">{desc}</p>
-      </div>
+    <div>
+      {gravatarHash ? (
+        <Avatar
+          size="sm"
+          image={
+            <img
+              src={`https://gravatar.com/avatar/${gravatarHash}`}
+              className="wb-rounded-full"
+              alt="avatar"
+            />
+          }
+        />
+      ) : (
+        <Avatar size="sm" />
+      )}
     </div>
   );
 };
-
+const ListDetailItem = ({
+  frontMatter,
+}: {
+  frontMatter: Record<string, any> | undefined;
+}) => {
+  const { locale = DEFAULT_LOCALE } = useRouter();
+  return (
+    <>
+      <div className="wb-bodyLg md:wb-w-[180px] wb-capitalize wb-text-text-soft wb-hidden md:wb-block">
+        {frontMatter?.category}
+      </div>
+      <div className="wb-bodyLg wb-w-[200px] wb-text-text-soft wb-hidden md:wb-block">
+        {new Date(frontMatter?.date).toLocaleDateString(locale, {
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric',
+        })}
+      </div>
+      <div className="wb-hidden md:wb-block">
+        <AvatarItem gravatarHash={frontMatter?.gravatarHash} />
+      </div>
+      <div className="wb-flex wb-flex-col wb-gap-md md:wb-hidden">
+        <div className="wb-bodyLg wb-w-[180px] wb-capitalize wb-text-text-soft">
+          {frontMatter?.category}
+        </div>
+        <div className="wb-bodyLg wb-w-[200px] wb-text-text-soft">
+          {new Date(frontMatter?.date).toLocaleDateString(locale, {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+          })}
+        </div>
+        <div className="wb-pt-3xl">
+          <AvatarItem gravatarHash={frontMatter?.gravatarHash} />
+        </div>
+      </div>
+    </>
+  );
+};
 const BlogHome = () => {
   const [tab, setTab] = useState<'overview' | 'engineering' | 'community'>(
     'overview'
   );
 
-  const { locale = DEFAULT_LOCALE } = useRouter();
-
   const config = useConfig();
-  const blogPage = config.config.pageOpts?.pageMap.find(
-    (p) => p.kind === 'Folder' && p.route === '/blog'
-  );
 
-  const blogPosts =
-    blogPage?.kind === 'Folder'
-      ? blogPage.children.filter(
-          (f) => f.kind === 'MdxPage' && f.frontMatter
-        ) || ([] as PageMapItem[])
-      : ([] as PageMapItem[]);
+  const { page, pageNumber, setPageNumber, itemsPerPage, setItems, items } =
+    usePagination({
+      items: [] as any,
+      itemsPerPage: 10,
+    });
+
+  useEffect(() => {
+    const blogPage = config.config.pageOpts?.pageMap.find(
+      (p) => p.kind === 'Folder' && p.route === '/blog'
+    );
+
+    const blogPosts =
+      blogPage?.kind === 'Folder'
+        ? blogPage.children.filter(
+            (f) => f.kind === 'MdxPage' && f.frontMatter && !f.frontMatter.draft
+          ) || ([] as PageMapItem[])
+        : ([] as PageMapItem[]);
+    // @ts-ignore
+    setItems(
+      blogPosts.sort((a: any, b: any) => {
+        // @ts-ignore
+        return new Date(b?.frontMatter?.date) - new Date(a?.frontMatter?.date);
+      })
+    );
+  }, [config]);
 
   return (
-    <div className="flex flex-col">
-      <div className="py-6xl md:!py-8xl lg:!py-10xl flex flex-col">
-        <div className="flex flex-col gap-3xl">
-          <h1 className="heading4xl-marketing lg:!heading5xl-marketing">
+    <div className="wb-flex wb-flex-col">
+      <div className="wb-py-6xl md:wb-py-8xl lg:wb-py-10xl wb-flex wb-flex-col">
+        <div className="wb-flex wb-flex-col wb-gap-3xl">
+          <h1 className="wb-heading4xl-marketing lg:wb-heading5xl-marketing wb-text-text-default">
             Blog
           </h1>
-          <p className="bodyXl lg:!bodyXXl text-text-soft">
+          <p className="wb-bodyXl lg:wb-bodyXXl wb-text-text-soft">
             The one stop shop for latest tech trends, tools, insights, and
             analysis
           </p>
         </div>
-        <div className="flex flex-col gap-3xl md:!gap-0 md:!flex-row md:!items-center justify-between pt-5xl">
-          <div className="-ml-xl md:!ml-0">
-            <Tab.Root value={tab} onChange={setTab}>
+        <div className="wb-flex wb-flex-col wb-gap-3xl md:wb-gap-0 md:wb-flex-row md:wb-items-center wb-justify-between wb-pt-5xl 3xl:wb-pt-8xl">
+          <div className="-wb-ml-xl md:wb-ml-0">
+            <Tab.Root size="sm" value={tab} onChange={setTab}>
               {tabs.map((t) => (
-                <Tab.Tab key={t.value} label={t.label} value={t.value} />
+                <Tab.Tab
+                  key={t.value}
+                  label={<span className="wb-bodyLg-medium">{t.label}</span>}
+                  value={t.value}
+                />
               ))}
             </Tab.Root>
           </div>
-          <div className="w-full md:!w-[330px]">
+          <div className="wb-w-full md:wb-w-[330px]">
             <TextInput placeholder="Search" prefixIcon={<Search />} />
           </div>
         </div>
-        <SectionWrapper className="flex flex-col" noPadding>
+        <SectionWrapper className="wb-flex wb-flex-col" noPadding>
           <GraphExtended>
-            <div className="grid grid-cols-1 md:!grid-cols-3 gap-5xl">
+            <div className="wb-grid wb-grid-cols-1 md:wb-grid-cols-3 wb-gap-5xl">
               {tabItems[tab].map((ti) => {
                 return (
                   <GraphItem key={ti.label}>
-                    <HoverItem to="">
-                      <TabCard
-                        label={ti.label}
-                        desc={ti.desc}
-                        img={consts.blog.images.cover}
-                      />
-                    </HoverItem>
+                    <ExploringItem {...ti} />
                   </GraphItem>
                 );
               })}
             </div>
           </GraphExtended>
-          <GraphExtended>
-            <div className="grid grid-cols-1 grid-rows-[64px_640px_64px]">
-              <GraphItem>
-                <div className="flex flex-row items-center py-xl px-5xl h-8xl bg-surface-basic-active headingLg text-text-default">
-                  <span className="flex-1">Name</span>
-                  <span className="w-[180px]">Category</span>
-                  <span className="w-[200px]">Published date</span>
-                </div>
-              </GraphItem>
-              <GraphItem className="bg-surface-basic-subdued flex flex-col">
-                {blogPosts.map((bp) => {
+          <Block
+            title="Latest blogs"
+            titleClass="md:!wb-heading3xl-marketing lg:!wb-heading3xl-marketing xl:!wb-heading3xl-marketing 2xl:!wb-heading3xl-marketing 3xl:!wb-heading3xl-marketing wb-text-start"
+          >
+            <div className="wb-grid wb-grid-cols-1 md:wb-grid-rows-[64px_auto_64px] lg:wb-grid-rows-[64px_auto_64px]">
+              <div className="wb-hidden md:wb-block">
+                <GraphItem>
+                  <div className="wb-flex wb-flex-row wb-items-center wb-gap-3xl wb-py-xl wb-px-5xl wb-h-8xl wb-headingMd wb-text-text-default wb-bg-surface-basic-active">
+                    <span className="wb-flex-1">Name</span>
+                    <span className="wb-w-[180px]">Category</span>
+                    <span className="wb-w-[200px]">Published date</span>
+                    <span className="wb-w-[30px] wb-flex" />
+                  </div>
+                </GraphItem>
+              </div>
+              <GraphItem className="wb-flex wb-flex-col wb-bg-surface-basic-subdued">
+                {page.map((bp: any, index: any) => {
                   if (bp.kind !== 'MdxPage') {
                     return null;
                   }
@@ -181,31 +193,41 @@ const BlogHome = () => {
                     <a
                       href={bp.route}
                       key={bp.name}
-                      className="py-xl px-5xl flex flex-row items-center h-8xl"
+                      className="flex flex-col wb-gap-3xl hover:wb-bg-surface-basic-hovered"
                     >
-                      <div className="flex-1 text-text-default bodyXl">
-                        {bp.frontMatter?.title}
-                      </div>
-                      <div className="text-text-soft bodyXl w-[180px] capitalize">
-                        {bp.frontMatter?.category}
-                      </div>
-                      <div className="text-text-soft bodyXl w-[200px]">
-                        {new Date(bp.frontMatter?.date).toLocaleDateString(
-                          locale,
-                          {
-                            day: 'numeric',
-                            month: 'long',
-                            year: 'numeric',
-                          }
+                      <div
+                        className={cn(
+                          'flex wb-pt-3xl md:wb-py-xl wb-px-3xl md:wb-px-5xl wb-flex wb-flex-col  wb-gap-3xl md:wb-gap-2xl md:wb-flex-row md:wb-items-center lg:wb-h-8xl md:wb-line-clamp-1 wb-transition-all',
+                          index === page.length - 1 ? 'wb-pb-3xl' : ''
                         )}
+                      >
+                        <div className="wb-flex-1 wb-bodyLg wb-text-text-default lg:wb-line-clamp-1">
+                          {bp.frontMatter?.title}
+                        </div>
+                        <ListDetailItem frontMatter={bp.frontMatter} />
                       </div>
+                      {index < page.length - 1 && (
+                        <div className="md:wb-hidden wb-h-[1.5px] wb-bg-border-dark" />
+                      )}
                     </a>
                   );
                 })}
               </GraphItem>
-              <GraphItem>hello</GraphItem>
+              <GraphItem className="wb-px-5xl wb-py-xl wb-flex wb-flex-row wb-items-center wb-bg-surface-basic-subdued">
+                <div className="wb-bodyLg wb-text-text-strong wb-flex-1">
+                  1-{items.length < 10 ? items.length : 3} of {items.length}
+                </div>
+                <div className="wb-flex wb-flex-row wb-items-center wb-gap-md">
+                  <Pagination
+                    totalItems={items.length}
+                    onPageChanged={setPageNumber}
+                    currentPage={pageNumber}
+                    itemsPerPage={itemsPerPage}
+                  />
+                </div>
+              </GraphItem>
             </div>
-          </GraphExtended>
+          </Block>
         </SectionWrapper>
       </div>
     </div>

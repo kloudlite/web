@@ -20,19 +20,19 @@ export const NavListItem = React.forwardRef<
     <NavigationMenu.Link asChild>
       <a
         className={classNames(
-          'rounded flex flex-row gap-xl items-center px-xl py-lg hover:bg-surface-basic-hovered cursor-pointer',
+          'wb-rounded wb-flex wb-flex-row wb-gap-xl wb-items-center wb-px-xl wb-py-lg hover:wb-bg-surface-basic-hovered wb-cursor-pointer',
           className
         )}
         {...props}
         ref={ref}
         href={href}
       >
-        <div className="h-[44px] w-[44px] flex items-center justify-center rounded p-lg bg-icon-primary text-text-on-primary">
+        <div className="wb-h-[44px] wb-w-[44px] wb-flex wb-items-center wb-justify-center wb-rounded wb-p-lg wb-bg-icon-primary wb-text-text-on-primary">
           {icon}
         </div>
-        <div className="flex flex-col">
-          <div className="bodyMd-semibold text-text-default">{title}</div>
-          <p className="bodySm text-text-soft">{children}</p>
+        <div className="wb-flex wb-flex-col">
+          <div className="wb-bodyMd-semibold wb-text-text-default">{title}</div>
+          <p className="wb-bodySm wb-text-text-soft">{children}</p>
         </div>
       </a>
     </NavigationMenu.Link>
@@ -50,7 +50,7 @@ const NavMenuButton = ({
     <NavigationMenu.Trigger asChild>
       <span
         className={cn(
-          'transition-colors group flex-row gap-lg items-center bodyLg-medium text-text-soft cursor-pointer px-2xl flex hover:!text-text-default  data-[state=open]:text-text-default',
+          'wb-transition-colors wb-group wb-flex-row wb-gap-lg wb-items-center wb-bodyLg-medium wb-text-text-soft wb-cursor-pointer wb-px-2xl wb-flex hover:wb-text-text-default  data-[state=open]:wb-text-text-default',
           className
         )}
       >
@@ -89,8 +89,8 @@ const NavMenuItem = ({
       {type === 'normal' && (
         <NavigationMenu.Link
           className={cn(
-            'bodyLg-medium cursor-pointer px-2xl flex hover:!text-text-default',
-            active ? 'text-text-default' : 'text-text-soft'
+            'wb-bodyLg-medium wb-cursor-pointer wb-px-2xl wb-flex hover:wb-text-text-default',
+            active ? 'wb-text-text-default' : 'wb-text-text-soft'
           )}
           href={href}
         >
@@ -98,7 +98,7 @@ const NavMenuItem = ({
         </NavigationMenu.Link>
       )}
       {type === 'popup' && (
-        <NavMenuButton className={active ? '!text-text-default ' : ''}>
+        <NavMenuButton className={active ? '!text-text-default' : ''}>
           {href ? (
             <NavigationMenu.Link href={href}>{label}</NavigationMenu.Link>
           ) : (
@@ -119,8 +119,8 @@ const NavigationMenuV2 = ({ activePath }: { activePath?: PageItem[] }) => {
     return null;
   }
   return (
-    <NavigationMenu.Root className="relative z-[1] flex w-full justify-end">
-      <NavigationMenu.List className="m-0 flex list-none rounded-[6px] p-1">
+    <NavigationMenu.Root className="wb-relative wb-z-[1] wb-flex wb-w-full wb-justify-center">
+      <NavigationMenu.List className="wb-m-0 wb-flex wb-list-none wb-rounded-[6px] wb-p-1">
         {headerSecondary.items.map((i) => {
           return (
             <NavMenuItem
@@ -134,7 +134,7 @@ const NavigationMenuV2 = ({ activePath }: { activePath?: PageItem[] }) => {
             </NavMenuItem>
           );
         })}
-        <NavigationMenu.Indicator className="data-[state=visible]:animate-fadeIn data-[state=hidden]:animate-fadeOut top-[calc(100%_+_7px)] z-[1] flex h-[16px] items-end justify-center overflow-hidden transition-[width,transform_250ms_ease]">
+        <NavigationMenu.Indicator className="data-[state=visible]:wb-animate-fadeIn data-[state=hidden]:animate-fadeOut wb-top-[calc(100%_+_7px)] wb-z-[1] wb-flex wb-h-[16px] wb-items-end wb-justify-center wb-overflow-hidden wb-transition-[width,transform_250ms_ease]">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="27"
@@ -151,8 +151,8 @@ const NavigationMenuV2 = ({ activePath }: { activePath?: PageItem[] }) => {
         </NavigationMenu.Indicator>
       </NavigationMenu.List>
 
-      <div className="perspective-[2000px] absolute  w-full  top-full transform -translate-x-1/2 left-1/2 flex justify-end">
-        <NavigationMenu.Viewport className="shadow-popover data-[state=open]:animate-scaleIn data-[state=closed]:animate-scaleOut relative mt-[22px] h-[var(--radix-navigation-menu-viewport-height)] origin-[top_center] overflow-hidden rounded bg-surface-basic-default transition-[width,_height] duration-300 sm:w-[var(--radix-navigation-menu-viewport-width)]" />
+      <div className="wb-perspective-[2000px] wb-absolute wb-w-full wb-top-full wb-transform -wb-translate-x-1/2 wb-left-1/2 wb-flex wb-justify-end">
+        <NavigationMenu.Viewport className="wb-shadow-popover data-[state=open]:wb-animate-scaleIn data-[state=closed]:wb-animate-scaleOut wb-relative wb-mt-[22px] wb-h-[var(--radix-navigation-menu-viewport-height)] wb-origin-[top_center] wb-overflow-hidden wb-rounded wb-bg-surface-basic-default wb-transition-[width,_height] wb-duration-300 sm:wb-w-[var(--radix-navigation-menu-viewport-width)]" />
       </div>
     </NavigationMenu.Root>
   );

@@ -36,7 +36,6 @@ function HeadingLink({
     if (!heading) return;
     slugs.set(heading, [id, (context.index += 1)]);
     observer?.observe(heading);
-
     return () => {
       observer?.disconnect();
       slugs.delete(heading);
@@ -49,30 +48,41 @@ function HeadingLink({
   }, [id, context, slugs, observer, setActiveAnchor]);
 
   return (
-    <Tag
-      className={cn(
-        'text-text-default group mt-6xl',
-        {
-          h2: 'heading2xl-marketing',
-          h3: 'headingXl-marketing',
-          h4: 'headingLg-marketing',
-          h5: '',
-          h6: '',
-        }[Tag]
-      )}
-      {...props}
-    >
-      {children}
+    <>
+      <Tag
+        className={cn(
+          'wb-text-text-default wb-group',
+          {
+            h2: 'wb-heading2xl-marketing wb-sticky wb-top-0 wb-bg-surface-basic-subdued  wb-mt-[30px] wb-py-[10px]',
+            h3: 'wb-headingXl-marketing wb-mt-6xl',
+            h4: 'wb-headingLg-marketing wb-mt-6xl',
+            h5: 'wb-mt-6xl',
+            h6: 'wb-mt-6xl',
+          }[Tag]
+        )}
+        {...props}
+      >
+        {children}
+        {/* {id && ( */}
+        {/*   <a */}
+        {/*     href={`#${id}`} */}
+        {/*     id={id} */}
+        {/*     className="subheading-anchor wb-invisible group-hover:wb-visible wb-transition-all" */}
+        {/*     aria-label="Permalink for this section" */}
+        {/*   /> */}
+        {/* )} */}
+      </Tag>
       {id && (
         <a
           href={`#${id}`}
           id={id}
-          className="subheading-anchor invisible group-hover:visible transition-all"
+          className="subheading-anchor wb-invisible group-hover:wb-visible wb-transition-all"
           aria-label="Permalink for this section"
+          aria-hidden
           ref={obRef}
         />
       )}
-    </Tag>
+    </>
   );
 }
 
@@ -94,18 +104,19 @@ const A = ({ href = '', ...props }) => (
 export const createComponents = ({
   components,
   isRawLayout,
+  isBlog,
 }: {
   components?: any;
   isRawLayout?: boolean;
+  isBlog?: boolean;
 }): Components => {
-  console.log("coomponents", components)
   if (isRawLayout) {
     return {
       a: A,
       ul: (props) => {
         let cs = props.className;
         if (!cs) {
-          cs = 'list-disc pl-xl';
+          cs = 'wb-list-disc wb-pl-[14px]';
         }
 
         return <ul {...props} className={cs} />;
@@ -113,7 +124,7 @@ export const createComponents = ({
       ol: (props) => {
         let cs = props.className;
         if (!cs) {
-          cs = 'list-decimal pl-5xl';
+          cs = 'wb-list-decimal wb-pl-[18px]';
         }
 
         return <ol {...props} className={cs} />;
@@ -121,7 +132,7 @@ export const createComponents = ({
       li: (props) => {
         let cs = props.className;
         if (!cs) {
-          cs = 'pb-lg custom-li';
+          cs = 'wb-pb-lg custom-li';
         }
 
         return <li {...props} className={cs} />;
@@ -131,27 +142,67 @@ export const createComponents = ({
   const context = { index: 0 };
   return {
     h1: (props) => (
-      <h1 className="heading4xl-marketing text-text-strong mt-sm" {...props} />
+      <h1
+        className="wb-heading4xl-marketing wb-mt-sm wb-text-text-default"
+        {...props}
+      />
     ),
     h2: (props) => <HeadingLink tag="h2" context={context} {...props} />,
     h3: (props) => <HeadingLink tag="h3" context={context} {...props} />,
     h4: (props) => <HeadingLink tag="h4" context={context} {...props} />,
     h5: (props) => <HeadingLink tag="h5" context={context} {...props} />,
     h6: (props) => <HeadingLink tag="h6" context={context} {...props} />,
-    ul: (props) => <ul className="list-disc bodyLg text-text-strong pl-5xl" {...props} />,
-    ol: (props) => <ol className="bodyLg text-text-strong list-decimal pl-5xl" {...props} />,
-    li: (props) => <li className="mt-3xl" {...props} />,
-    blockquote: (props) => <blockquote className="" {...props} />,
+    ul: (props) => (
+      <ul
+        className={cn(
+          'wb-list-disc wb-pl-[18px] wb-list-outside wb-text-text-strong',
+          isBlog ? 'wb-bodyXl' : 'wb-bodyLg'
+        )}
+        {...props}
+      />
+    ),
+    ol: (props) => (
+      <ol
+        className={cn(
+          'wb-list-decimal wb-pl-[24px] wb-list-outside wb-text-text-strong',
+          isBlog ? 'wb-bodyXl' : 'wb-bodyLg'
+        )}
+        {...props}
+      />
+    ),
+    li: (props) => <li className="wb-mt-3xl" {...props} />,
+    blockquote: (props) => (
+      <blockquote
+        className={cn(
+          "blockquote wb-mt-3xl wb-rounded-md wb-p-xl wb-bg-surface-primary-selected before:wb-content-[''] before:wb-w-md before:wb-bg-border-primary before:wb-flex before:wb-shrink-0 wb-flex wb-gap-3xl",
+          isBlog ? 'wb-bodyXl' : 'wb-bodyLg'
+        )}
+        {...props}
+      />
+    ),
     hr: (props) => <hr className="" {...props} />,
     a: Link,
     table: (props) => <Table className="" {...props} />,
-    p: (props) => <p className="bodyLg text-text-strong mt-3xl rounded-image" {...props} />,
+    p: (props) => (
+      <p
+        className={cn(
+          'wb-mt-3xl rounded-image wb-text-text-strong wb-break-words !wb-leading-[28px]',
+          isBlog ? 'wb-bodyXl' : 'wb-bodyLg'
+        )}
+        {...props}
+      />
+    ),
     tr: Tr,
     th: Th,
     td: Td,
     // details: Details,
     // summary: Summary,
-    pre: (props) => <pre {...props} className="mt-3xl" />,
+    pre: (props) => (
+      <pre
+        {...props}
+        className="wb-mt-3xl wb-bg-surface-basic-input wb-border wb-border-border-default wb-rounded wb-p-xl"
+      />
+    ),
     // code: Code,
     ...components,
   };

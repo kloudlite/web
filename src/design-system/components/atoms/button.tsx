@@ -157,7 +157,7 @@ export const ButtonBase = React.forwardRef<
           bodyMd: variant?.includes('plain'),
         },
         {
-          'pointer-events-none !text-text-disabled !bg-surface-basic-default':
+          'pointer-events-none !text-text-disabled bg-surface-basic-disabled':
             disabled,
           '!border-border-disabled':
             disabled &&
@@ -169,9 +169,9 @@ export const ButtonBase = React.forwardRef<
             ].includes(variant),
         },
         'relative ring-offset-1',
-        'outline-none shadow-button',
+        'outline-none',
         'flex flex-row gap-lg items-center justify-center',
-        'disabled:text-text-disabled',
+        'disabled:text-text-disabled disabled:bg-surface-basic-disabled',
         {
           // noRing
           'focus-visible:ring-2 focus:ring-border-focus focus:z-10': !noRing,
@@ -184,7 +184,6 @@ export const ButtonBase = React.forwardRef<
             rounded: !sharpLeft && !sharpRight,
           }),
         },
-        'transition-all',
         'disabled:pointer-events-none',
         {
           'border-none': noBorder,
@@ -215,46 +214,48 @@ export const ButtonBase = React.forwardRef<
             ),
           }),
         },
-        {
-          'bg-surface-basic-default hover:bg-surface-basic-hovered active:bg-surface-basic-pressed disabled:bg-surface-basic-default':
-            variant === 'basic',
-          'bg-surface-basic-pressed hover:bg-surface-basic-pressed active:bg-surface-basic-pressed disabled:bg-surface-basic-default':
-            variant === 'basic' && selected,
-          'bg-surface-primary-default hover:bg-surface-primary-hovered active:bg-surface-primary-pressed disabled:bg-surface-basic-default':
-            variant === 'primary',
-          'bg-surface-secondary-default hover:bg-surface-secondary-hovered active:bg-surface-secondary-pressed disabled:bg-surface-basic-default':
-            variant === 'secondary',
-          'bg-surface-critical-default hover:bg-surface-critical-hovered active:bg-surface-critical-pressed disabled:bg-surface-basic-default':
-            variant === 'critical',
-          'bg-none hover:bg-surface-critical-subdued active:bg-surface-critical-subdued':
-            variant === 'critical-outline',
-          'bg-none hover:bg-surface-primary-subdued active:bg-surface-primary-subdued':
-            variant === 'primary-outline',
-          'bg-none hover:bg-surface-secondary-subdued active:bg-surface-secondary-subdued':
-            variant === 'secondary-outline',
-          'bg-none hover:bg-surface-basic-hovered active:bg-surface-basic-pressed':
-            variant === 'outline',
-          'bg-surface-basic-pressed shadow-none hover:bg-surface-basic-hovered active:bg-surface-basic-pressed hover:shadow-button active:shadow-button':
-            variant === 'outline' && selected,
-          'bg-none shadow-none':
-            (variant === 'plain' ||
-              variant === 'primary-plain' ||
-              variant === 'secondary-plain' ||
-              variant === 'critical-plain') &&
-            !iconOnly,
-          'bg-surface-basic-pressed shadow-none active:shadow-button':
-            variant === 'plain' && !iconOnly && selected,
-          'bg-none shadow-none hover:bg-surface-basic-hovered active:bg-surface-basic-pressed active:shadow-button':
-            variant === 'plain' && iconOnly,
-          'bg-surface-basic-pressed shadow-none hover:bg-surface-basic-hovered active:bg-surface-basic-pressed active:shadow-button':
-            variant === 'plain' && iconOnly && selected,
-          'bg-surface-purple-default hover:bg-surface-purple-hovered active:bg-surface-purple-pressed':
-            variant === 'purple',
-          'bg-surface-tertiary-default hover:bg-surface-tertiary-hovered active:bg-surface-tertiary-pressed':
-            variant === 'tertiary',
-          'bg-surface-warning-default hover:bg-surface-warning-hovered active:bg-surface-warning-pressed':
-            variant === 'warning',
-        },
+        !disabled
+          ? {
+              'bg-surface-basic-default hover:bg-surface-basic-hovered active:bg-surface-basic-pressed disabled:bg-surface-basic-default':
+                variant === 'basic' && !selected,
+              'bg-surface-basic-pressed hover:bg-surface-basic-pressed active:bg-surface-basic-pressed disabled:bg-surface-basic-default':
+                variant === 'basic' && selected,
+              'bg-surface-primary-default hover:bg-surface-primary-hovered active:bg-surface-primary-pressed disabled:bg-surface-basic-default':
+                variant === 'primary',
+              'bg-surface-secondary-default hover:bg-surface-secondary-hovered active:bg-surface-secondary-pressed disabled:bg-surface-basic-default':
+                variant === 'secondary',
+              'bg-surface-critical-default hover:bg-surface-critical-hovered active:bg-surface-critical-pressed disabled:bg-surface-basic-default':
+                variant === 'critical',
+              'bg-none hover:bg-surface-critical-subdued active:bg-surface-critical-subdued':
+                variant === 'critical-outline',
+              'bg-none hover:bg-surface-primary-subdued active:bg-surface-primary-subdued':
+                variant === 'primary-outline',
+              'bg-none hover:bg-surface-secondary-subdued active:bg-surface-secondary-subdued':
+                variant === 'secondary-outline',
+              'bg-none hover:bg-surface-basic-hovered active:bg-surface-basic-pressed ':
+                variant === 'outline',
+              'bg-surface-basic-pressed shadow-none hover:bg-surface-basic-hovered active:bg-surface-basic-pressed hover:shadow-button':
+                variant === 'outline' && selected,
+              'bg-none shadow-none':
+                (variant === 'plain' ||
+                  variant === 'primary-plain' ||
+                  variant === 'secondary-plain' ||
+                  variant === 'critical-plain') &&
+                !iconOnly,
+              'shadow-none active:shadow-button bg-surface-basic-pressed':
+                variant === 'plain' && !iconOnly && selected,
+              'bg-none shadow-none hover:bg-surface-basic-hovered active:bg-surface-basic-pressed active:shadow-button active:shadow-button':
+                variant === 'plain' && iconOnly,
+              'bg-surface-basic-pressed shadow-none hover:bg-surface-basic-hovered active:bg-surface-basic-pressed active:shadow-button':
+                variant === 'plain' && iconOnly && selected,
+              'bg-surface-purple-default hover:bg-surface-purple-hovered active:bg-surface-purple-pressed':
+                variant === 'purple',
+              'bg-surface-tertiary-default hover:bg-surface-tertiary-hovered active:bg-surface-tertiary-pressed':
+                variant === 'tertiary',
+              'bg-surface-warning-default hover:bg-surface-warning-hovered active:bg-surface-warning-pressed':
+                variant === 'warning',
+            }
+          : {},
         {
           'text-text-default':
             variant === 'basic' || variant === 'plain' || variant === 'outline',
@@ -263,7 +264,6 @@ export const ButtonBase = React.forwardRef<
             variant === 'critical' ||
             variant === 'secondary' ||
             variant === 'secondary-outline' ||
-            variant === 'tertiary' ||
             variant === 'purple' ||
             variant === 'warning',
           'text-text-critical':
@@ -271,6 +271,7 @@ export const ButtonBase = React.forwardRef<
           'text-text-primary':
             variant === 'primary-outline' || variant === 'primary-plain',
           'text-text-secondary': variant === 'secondary-plain',
+          'text-text-on-secondary': variant === 'tertiary',
         },
         {
           'focus:underline': noRing,
@@ -281,9 +282,6 @@ export const ButtonBase = React.forwardRef<
             variant === 'primary-plain' ||
             variant === 'critical-plain' ||
             variant === 'secondary-plain',
-        },
-        {
-          underline: selected && !iconOnly && variant === 'plain',
         },
         {
           // icon

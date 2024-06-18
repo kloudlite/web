@@ -1,14 +1,67 @@
 {
-    "devops":{
-        "title":"DevOps",
-        "type":"page"
+    "--introduction--":{
+        "title":"Introduction",
+        "type":"separator"
     },
-    "infraops":{
-        "title":"InfraOps",
-        "type":"page"
+    "index":{
+        "title":"What is kloudlite?"
     },
-    "distribution":{
-        "title":"Distribution",
-        "type":"page"
+    "why-kloudlite":{
+        "title":"Why kloudlite?"
+    },
+    "how-does-it-work":{
+        "title":"How does it work?"
+    },
+    "getting-started":{
+        "title":"Getting Started"
+    },
+    "--reference--":{
+        "title":"Features",
+        "type":"separator"
+    },
+    "managed-services":{
+        "title":"Managed Services"
+    },
+    "local-devices":{
+        "title":"Local Dev Containers"
+    },
+    "any-wireguard":{
+        "title":"Wireguard devices"
+    },
+    "kubernetes-clusters":{
+        "title":"Kubernetes Clusters"
+    },
+    "work-in-progress":{
+        "title":"Work in progress.."
+    },
+    "---references-":{
+        "title":"Reference",
+        "type":"separator"
+    },
+    "architecture":{
+        "title":"Architecture"
+    },
+    "api":{
+        "title":"API"
+    },
+    "---more-":{
+        "title":"Engage",
+        "type":"separator"
+    },
+    "github":{
+        "title":"Community",
+        "href": "https://github.com/kloudlite/kloudlite/discussions"
+    },
+    "feature-request":{
+        "title":"Feature Request",
+        "href":"https://github.com/kloudlite/kloudlite/issues/new?assignees=&labels=&projects=&template=feature_request.md&title="
+    },
+    "bug-report":{
+        "title":"Bug Report",
+        "href":"https://github.com/kloudlite/kloudlite/issues/new?assignees=&labels=&projects=&template=bug_report.md&title="
+    },
+    "help-n-support":{
+        "title":"Help & Support",
+        "href":"http://localhost:3000/help-and-support"
     }
 }

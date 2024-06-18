@@ -1,6 +1,5 @@
 import { HeadersFunction, LinksFunction } from '@remix-run/node';
 import {
-  Link,
   Links,
   LiveReload,
   Meta,
@@ -16,6 +15,8 @@ import { ReactNode, useEffect } from 'react';
 import skeletonCSS from 'react-loading-skeleton/dist/skeleton.css';
 import styleReactPulsable from 'react-pulsable/index.css';
 import reactToast from 'react-toastify/dist/ReactToastify.css';
+import styleZenerSelect from '@oshq/react-select/index.css';
+import rcss from 'react-highlightjs-logs/dist/index.css';
 import Container from '~/components/atoms/container';
 import ProgressContainer, {
   useProgress,
@@ -24,15 +25,14 @@ import Tooltip from '~/components/atoms/tooltip';
 import { BrandLogo } from '~/components/branding/brand-logo';
 import { ToastContainer } from '~/components/molecule/toast';
 import { TopBar } from '~/components/organisms/top-bar';
-import styleZenerSelect from '@oshq/react-select/index.css';
 import stylesUrl from '~/design-system/index.css';
-import rcss from 'react-highlightjs-logs/dist/index.css';
 import tailwindBase from '~/design-system/tailwind-base.js';
 import { ReloadIndicator } from '~/lib/client/components/reload-indicator';
 import { isDev } from '~/lib/client/helpers/log';
 import { Button } from '~/components/atoms/button';
 import { ChildrenProps } from '~/components/types';
-import { getClientEnv, getServerEnv } from '../configs/base-url.cjs';
+import Page404 from '~/components/organisms/page-404';
+import { getClientEnv, getServerEnv } from '~/root/lib/configs/base-url.cjs';
 import { useDataFromMatches } from '../client/hooks/use-custom-matches';
 
 export const links: LinksFunction = () => [
@@ -130,22 +130,7 @@ export function ErrorBoundary() {
 }
 
 export const _404Main = () => {
-  return (
-    <div className="text-[5vw] flex gap-[1vw] justify-center items-center min-h-screen">
-      <div className="flex flex-col items-center">
-        <span className="text-text-critical text-[10vw]">404</span>
-        <span className="text-text-warning uppercase animate-pulse">
-          page not found
-        </span>
-        <Link
-          to="/"
-          className="text-text-primary text-[1rem] hover:underline hover:text-text-strong transition-all underline"
-        >
-          Home Page
-        </Link>
-      </div>
-    </div>
-  );
+  return <Page404 link="/" />;
 };
 
 export const meta = () => {
@@ -208,6 +193,22 @@ const Root = ({
           gtag('js', new Date());
 
           gtag('config', '${tagId}');
+              `,
+          }}
+        />
+
+        <script
+          // @ts-ignore
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{
+            __html: `
+                try {
+                  if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.querySelector('html').setAttribute('data-theme', 'dark')
+                  } else {
+                    document.querySelector('html').setAttribute('data-theme', 'light')                  
+                  }
+                } catch (_) {}
               `,
           }}
         />

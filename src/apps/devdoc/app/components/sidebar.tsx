@@ -25,7 +25,7 @@ import { Anchor } from './anchor';
 import useMenu from '../utils/use-menu';
 import { cn } from '../utils/commons';
 import useConfig from '../utils/use-config';
-import { MobileMenu } from './header-secondary';
+import HeaderSecondary, { MobileMenu } from './header-secondary';
 
 const TreeState: Record<string, boolean> = Object.create(null);
 
@@ -42,12 +42,14 @@ type FolderProps = {
 
 const classes = {
   link: cn(
-    'flex flex-row items-center rounded py-lg px-2xl transition-all [word-break:break-word]',
-    'cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:border'
+    'wb-flex wb-flex-row wb-items-center wb-rounded wb-py-md wb-px-2xl wb-transition-all [word-break:break-word]',
+    'wb-cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:wb-border hover:wb-bg-surface-basic-hovered'
   ),
-  inactive: cn('bodyMd text-text-soft'),
-  active: cn('bodyMd-medium text-text-primary bg-surface-basic-active'),
-  list: cn('flex flex-col w-full gap-lg'),
+  inactive: cn('wb-bodyMd wb-text-text-soft'),
+  active: cn(
+    'wb-bodyMd-medium wb-text-text-primary wb-bg-surface-basic-active'
+  ),
+  list: cn('wb-flex wb-flex-col wb-w-full wb-gap-md'),
 };
 
 function FolderImpl({ item, anchors }: FolderProps): ReactElement {
@@ -116,8 +118,8 @@ function FolderImpl({ item, anchors }: FolderProps): ReactElement {
       <ComponentToUse
         href={isLink ? item.route : undefined}
         className={cn(
-          'flex-1 flex flex-row items-center justify-between',
-          !isLink ? 'text-left w-full' : '',
+          'wb-flex-1 wb-flex wb-flex-row wb-items-center wb-justify-between',
+          !isLink ? 'wb-text-left wb-w-full' : '',
           classes.link,
           active ? classes.active : classes.inactive
         )}
@@ -147,15 +149,21 @@ function FolderImpl({ item, anchors }: FolderProps): ReactElement {
         {item.title}
         <ChevronRight
           size={16}
-          className={cn('transition-all', open ? 'rotate-90' : 'rotate-0')}
+          className={cn(
+            'wb-transition-all',
+            open ? 'wb-rotate-90' : 'wb-rotate-0'
+          )}
         />
       </ComponentToUse>
-      <Collapse className="pl-4xl pt-lg flex flex-row" isOpen={open}>
-        <div className="border-l border-border-default" />
+      <Collapse
+        className="wb-pl-4xl wb-pt-lg wb-flex wb-flex-row"
+        isOpen={open}
+      >
+        <div className="wb-border-l wb-border-border-default" />
         <LayoutGroup>
           {Array.isArray(item.children) ? (
             <Menu
-              className={cn('pl-md')}
+              className={cn('wb-pl-md')}
               directories={item.children}
               base={item.route}
               anchors={anchors}
@@ -181,10 +189,11 @@ function Separator({ title }: { title: string }): ReactElement {
     <li
       className={cn(
         '[word-break:break-word]',
-        title ? 'headingSm text-text-default py-lg px-2xl my-md' : ''
+        title ? 'wb-headingSm wb-text-text-default wb-py-md wb-px-2xl' : '',
+        '[&:not(:first-child)]:wb-mt-5xl'
       )}
     >
-      {title || <hr className="mx-2 border-t border-border-default" />}
+      {title || <hr className="wb-mx-2 wb-border-t wb-border-border-default" />}
     </li>
   );
 }
@@ -203,20 +212,27 @@ function File({
   const active = item.route && [route, `${route}/`].includes(`${item.route}/`);
   const { setState: setMenu } = useMenu();
 
+  const { setActiveDocTopic } = useConfig();
+  useEffect(() => {
+    if (active) {
+      setActiveDocTopic(item.title);
+    }
+  }, [active]);
+
   if (item.type === 'separator') {
     return <Separator title={item.title} />;
   }
 
   return (
     <li
-      className={cn('flex flex-row relative w-full', {
+      className={cn('wb-flex wb-flex-row wb-relative wb-w-full', {
         active: !!active,
       })}
     >
       {!!base && active && (
         <motion.div
           layoutId={`line-${base}`}
-          className="border-l-2 border-border-primary rounded h-full absolute -left-[5px]"
+          className="wb-border-l-2 wb-border-border-primary wb-rounded wb-h-full wb-absolute -wb-left-[5px]"
         />
       )}
       <Anchor
@@ -225,7 +241,7 @@ function File({
         className={cn(
           classes.link,
           active ? classes.active : classes.inactive,
-          'w-full'
+          'wb-w-full'
         )}
         onClick={() => {
           setMenu(false);
@@ -303,16 +319,19 @@ export function Sidebar({
   const mounted = useMounted();
   useEffect(() => {
     if (menu) {
-      document.body.classList.add('overflow-hidden', 'md:overflow-auto');
+      document.body.classList.add('wb-overflow-hidden', 'lg:wb-overflow-auto');
     } else {
-      document.body.classList.remove('overflow-hidden', 'md:overflow-auto');
+      document.body.classList.remove(
+        'wb-overflow-hidden',
+        'lg:wb-overflow-auto'
+      );
     }
   }, [menu]);
 
   useEffect(() => {
     const activeElement = sidebarRef.current?.querySelector('li.active');
 
-    if (activeElement && (window.innerWidth > 767 || menu)) {
+    if (activeElement && (window.innerWidth > 1023 || menu)) {
       const scroll = () => {
         scrollIntoView(activeElement, {
           block: 'center',
@@ -339,26 +358,28 @@ export function Sidebar({
   return (
     <>
       {includePlaceholder && asPopover ? (
-        <div className="max-xl:hidden h-0 shrink-0" />
+        <div className="max-xl:wb-hidden wb-h-0 w-shrink-0" />
       ) : null}
       <div
         className={cn(
-          'motion-reduce:transition-none [transition:background-color_1.5s_ease]',
-          menu ? 'fixed inset-0 z-10 bg-black/80' : 'bg-transparent'
+          'motion-reduce:wb-transition-none [transition:background-color_1.5s_ease]',
+          menu
+            ? 'wb-fixed wb-inset-0 wb-z-10 wb-bg-black/80'
+            : 'wb-bg-transparent'
         )}
         onClick={() => setMenu(false)}
       />
       <aside
         className={cn(
-          'kl-sidebar bg-surface-basic-subdued z-40 nextra-sidebar-container flex-col pb-6xl md:pt-0',
-          'md:top-[calc(var(--kl-navbar-height))] md:shrink-0 motion-reduce:transform-none',
-          'transform-gpu transition-all ease-in-out',
-          'print:hidden pr-3xl',
-          showSidebar ? 'md:w-[244px]' : '',
-          asPopover ? 'md:hidden' : 'flex md:sticky md:self-start',
+          'kl-sidebar wb-bg-surface-basic-subdued wb-z-40 kl-sidebar-container wb-flex-col wb-pb-6xl lg:wb-pt-0',
+          'lg:wb-top-0 lg:wb-shrink-0 motion-reduce:wb-transform-none',
+          // 'wb-transform-gpu wb-transition-all wb-ease-in-out wb-duration-[3s]',
+          'print:wb-hidden',
+          showSidebar ? 'lg:wb-w-[244px]' : '',
+          asPopover ? 'lg:wb-hidden' : 'wb-flex lg:wb-sticky lg:wb-self-start',
           menu
-            ? 'max-md:[transform:translate3d(0,0,0)]'
-            : 'max-md:[transform:translate3d(0,-100%,0)]'
+            ? 'max-lg:[transform:translate3d(0,0,0)]'
+            : 'max-lg:[transform:translate3d(0,-100%,0)]'
         )}
         ref={containerRef}
       >
@@ -376,14 +397,14 @@ export function Sidebar({
           >
             <div
               className={cn(
-                'overflow-y-hidden overflow-x-hidden hover:overflow-y-auto scrollbar-gutter',
-                'grow md:h-[calc(100vh-var(--kl-navbar-height))]',
+                'wb-overflow-y-auto md:wb-overflow-y-hidden wb-overflow-x-hidden hover:wb-overflow-y-auto scrollbar-gutter lg:wb-pr-3xl',
+                'wb-grow lg:wb-h-[calc(100vh-var(--kl-navbar-height))]',
                 {
                   'no-scrollbar': !showSidebar,
                 },
                 {
-                  'pt-2xl': !!rawLayout,
-                  'pt-6xl': !rawLayout,
+                  'lg:wb-pt-2xl': !!rawLayout,
+                  'lg:wb-pt-6xl': !rawLayout,
                 }
               )}
               ref={sidebarRef}
@@ -392,7 +413,7 @@ export function Sidebar({
               {(!asPopover || !showSidebar) && (
                 <Collapse isOpen={showSidebar} horizontal>
                   <Menu
-                    className="nextra-menu-desktop max-md:hidden"
+                    className="nextra-menu-desktop max-lg:wb-hidden"
                     // The sidebar menu, shows only the docs directories.
                     directories={docsDirectories}
                     // When the viewport size is larger than `md`, hide the anchors in
@@ -403,18 +424,26 @@ export function Sidebar({
                 </Collapse>
               )}
               {mounted &&
-                window.innerWidth < 768 &&
+                window.innerWidth < 1024 &&
                 (rawLayout ? (
                   // @ts-ignore
                   <MobileMenu {...config.headerSecondary} />
                 ) : (
-                  <Menu
-                    className="nextra-menu-mobile md:hidden"
-                    // The mobile dropdown menu, shows all the directories.
-                    directories={fullDirectories}
-                    // Always show the anchor links on mobile (`md`).
-                    anchors={anchors}
-                  />
+                  <div>
+                    <div className="lg:wb-hidden wb-sticky wb-top-0 wb-z-50">
+                      <HeaderSecondary />
+                    </div>
+
+                    <div className="wb-px-xl">
+                      <Menu
+                        className="nextra-menu-mobile lg:wb-hidden"
+                        // The mobile dropdown menu, shows all the directories.
+                        directories={fullDirectories}
+                        // Always show the anchor links on mobile (`md`).
+                        anchors={anchors}
+                      />
+                    </div>
+                  </div>
                 ))}
             </div>
           </OnFocusItemContext.Provider>

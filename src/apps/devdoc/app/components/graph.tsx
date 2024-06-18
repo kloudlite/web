@@ -1,28 +1,72 @@
-import { ReactNode, memo, useEffect, useRef, useState } from 'react';
+import {
+  CSSProperties,
+  ReactNode,
+  memo,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { cn } from '../utils/commons';
 
-const strokeColor = '#D4D4D8';
+const strokeColor = 'wb-bg-border-dark';
+
+type Ifade = {
+  top?: string;
+  bottom?: string;
+  left?: string;
+  right?: string;
+};
 export const Graph = ({
   className,
   children,
-  blurSize = 'md',
+  style,
+  fade = {
+    top: 'wb-h-10xl',
+    bottom: 'wb-h-10xl',
+    left: 'wb-w-10xl',
+    right: 'wb-w-10xl',
+  },
 }: {
   className?: string;
   children: ReactNode;
-  blurSize?: 'md' | 'lg';
+  style?: CSSProperties | undefined;
+  fade?: Ifade;
 }) => {
   return (
     <div
-      className={cn(
-        'graph',
-        'before:hidden xl:before:!flex ',
-        {
-          'before:bg-[100%_6%,100%_6%,3%_100%,3%_100%]': blurSize === 'lg',
-          'before:bg-[100%_6%,100%_6%,11%_100%,11%_100%]': blurSize === 'md',
-        },
-        className
-      )}
+      style={style}
+      className={cn('graph xl:[clip-path:inset(1.5px)] wb-relative', className)}
     >
+      <div className="wb-hidden xl:wb-block wb-absolute wb-inset-0">
+        {/* top */}
+        <div
+          className={cn(
+            'wb-absolute wb-top-0 wb-left-0 wb-right-0 wb-from-transparent wb-to-surface-basic-subdued wb-bg-gradient-to-t',
+            fade?.top || 'wb-h-10xl'
+          )}
+        />
+        {/* bottom */}
+        <div
+          className={cn(
+            'wb-absolute wb-bottom-0 wb-left-0 wb-right-0 wb-from-transparent wb-to-surface-basic-subdued wb-bg-gradient-to-b',
+            fade?.bottom || 'wb-h-10xl'
+          )}
+        />
+        {/* left */}
+        <div
+          className={cn(
+            'wb-absolute wb-bottom-0 wb-left-0 wb-top-0 wb-from-transparent wb-to-surface-basic-subdued wb-bg-gradient-to-l',
+            fade?.left || 'wb-w-10xl'
+          )}
+        />
+        {/* right */}
+        <div
+          className={cn(
+            'wb-absolute wb-bottom-0 wb-right-0 wb-top-0 wb-from-transparent wb-to-surface-basic-subdued wb-bg-gradient-to-r',
+            fade?.right || 'wb-w-10xl'
+          )}
+        />
+      </div>
       {children}
     </div>
   );
@@ -31,18 +75,28 @@ export const Graph = ({
 export const GraphExtended = ({
   children,
   className,
+  innerClass,
+  style,
+  fade,
 }: {
   children?: ReactNode;
   className?: string;
+  innerClass?: string;
+  style?: CSSProperties | undefined;
+  fade?: Ifade;
 }) => {
   return (
     <Graph
       className={cn(
-        'lg:-mx-11xl 3xl:!-mx-12xl py-7xl md:!py-8xl lg:!py-10xl',
+        'lg:-wb-mx-11xl xl:-wb-mx-10xl wb-py-7xl md:wb-py-8xl lg:wb-py-10xl',
         className
       )}
+      style={style}
+      fade={fade}
     >
-      <div className="lg:px-11xl 3xl:!px-12xl">{children}</div>
+      <div className={cn('lg:wb-px-11xl xl:wb-px-10xl', innerClass)}>
+        {children}
+      </div>
     </Graph>
   );
 };
@@ -146,41 +200,68 @@ const _LineVertical = memo(() => {
   );
 });
 
-const Lines = memo(() => {
-  return (
-    <div className="pointer-events-none absolute inset-0 z-[21]">
-      <div className="relative h-full w-full">
-        <div
-          className="absolute left-0 -top-[20px] lg:!-top-[32px] -bottom-[20px] lg:!-bottom-[32px] w-xs  z-[21]"
-          style={{ background: strokeColor }}
-        />
-        <div
-          className="absolute -right-xs -top-[20px] lg:!-top-[32px] -bottom-[20px] lg:!-bottom-[32px] w-xs z-[21]"
-          style={{ background: strokeColor }}
-        />
-        <div
-          className="absolute -top-xs -left-[20px] -right-[20px] lg:!-left-[32px] lg:!-right-[32px] h-xs z-[21]"
-          style={{ background: strokeColor }}
-        />
-        <div
-          className="absolute bottom-0 -left-[20px] -right-[20px] lg:!-left-[32px] lg:!-right-[32px] h-xs z-[21]"
-          style={{ background: strokeColor }}
-        />
+interface ILines {
+  left?: boolean;
+  right?: boolean;
+  top?: boolean;
+  bottom?: boolean;
+}
+
+const Lines = memo(
+  ({ left = true, right = true, top = true, bottom = true }: ILines) => {
+    return (
+      <div className="wb-pointer-events-none wb-absolute wb-inset-0 wb-z-[21]">
+        <div className="wb-relative wb-h-full wb-w-full">
+          {left && (
+            <div
+              className={cn(
+                'wb-absolute wb-left-0 -wb-top-[20px] lg:-wb-top-[32px] -wb-bottom-[20px] lg:-wb-bottom-[32px] wb-w-[1.5px]  wb-z-[21]',
+                strokeColor
+              )}
+            />
+          )}
+          {right && (
+            <div
+              className={cn(
+                'wb-absolute -wb-right-xs -wb-top-[20px] lg:-wb-top-[32px] -wb-bottom-[20px] lg:-wb-bottom-[32px] wb-w-[1.5px] wb-z-[21]',
+                strokeColor
+              )}
+            />
+          )}
+          {top && (
+            <div
+              className={cn(
+                'wb-absolute -wb-top-xs -wb-left-[20px] -wb-right-[20px] lg:-wb-left-[32px] lg:-wb-right-[32px] wb-h-[1.5px] wb-z-[21]',
+                strokeColor
+              )}
+            />
+          )}
+          {bottom && (
+            <div
+              className={cn(
+                'wb-absolute wb-bottom-0 -wb-left-[20px] -wb-right-[20px] lg:-wb-left-[32px] lg:-wb-right-[32px] wb-h-[1.5px] wb-z-[21]',
+                strokeColor
+              )}
+            />
+          )}
+        </div>
       </div>
-    </div>
-  );
-});
+    );
+  }
+);
 
 export const GraphItem = ({
   className,
   children,
+  lines,
 }: {
   className?: string;
   children?: ReactNode;
+  lines?: ILines;
 }) => {
   return (
-    <div className={`relative ${className || ''}`}>
-      <Lines />
+    <div className={`wb-relative ${className || ''}`}>
+      <Lines {...lines} />
       {children}
     </div>
   );

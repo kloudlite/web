@@ -1,4 +1,4 @@
-import { useEffect, useId, useState } from 'react';
+import { useId } from 'react';
 
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
 import { BounceIt } from '../bounce-it';
@@ -18,7 +18,7 @@ interface ICheckbox {
 
 export const Checkbox = ({
   checked,
-  onChange = () => { },
+  onChange = () => {},
   disabled = false,
   error = false,
   indeterminate = false,

@@ -5,6 +5,7 @@ import {
   // Plus,
   // Search,
   File,
+  TreeStructure,
   // Check,
   // ChevronUpDown,
 } from '~/console/components/icons';
@@ -42,21 +43,14 @@ import { IAccountContext } from '../../_layout';
 
 const Environment = () => {
   const rootContext = useOutletContext<IAccountContext>();
-  const {
-    environment,
-    managedTemplates,
-    loginUrls,
-    logins,
-    msvtemplates,
-    cluster,
-  } = useLoaderData();
+  const { environment, managedTemplates, loginUrls, logins, cluster } =
+    useLoaderData();
 
   return (
     <SubNavDataProvider>
       <Outlet
         context={{
           ...rootContext,
-          msvtemplates,
           environment,
           managedTemplates,
           loginUrls,
@@ -78,6 +72,16 @@ const tabs = [
     ),
     to: '/apps',
     value: '/apps',
+  },
+  {
+    label: (
+      <span className="flex flex-row items-center gap-lg">
+        <TreeStructure size={tabIconSize} />
+        External Apps
+      </span>
+    ),
+    to: '/external-apps',
+    value: '/external-apps',
   },
   // {
   //   label: (
@@ -132,7 +136,7 @@ const EnvironmentTabs = () => {
     <CommonTabs
       backButton={{
         to: `/${account}/environments`,
-        label: 'Envs',
+        label: 'Environments',
       }}
       baseurl={`/${account}/env/${environment}`}
       tabs={tabs}
@@ -353,21 +357,12 @@ export const loader = async (ctx: IRemixCtx) => {
       throw dErrors[0];
     }
 
-    const { data: msvTemplates, errors: msvError } = await GQLServerHandler(
-      ctx.request
-    ).listMSvTemplates({});
-
-    if (msvError) {
-      throw msvError[0];
-    }
-
     envData = data;
     return {
       loginUrls,
       logins,
       environment: envData,
       cluster: cData,
-      msvtemplates: msvTemplates || {},
     };
   } catch (err) {
     logger.error(err);

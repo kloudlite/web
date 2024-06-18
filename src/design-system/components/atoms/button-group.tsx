@@ -1,4 +1,4 @@
-import React, { ReactElement, cloneElement, forwardRef, useState } from 'react';
+import React, { ReactElement, cloneElement, forwardRef } from 'react';
 import * as ButtonGroupPrimitive from '@radix-ui/react-toggle-group';
 import { ButtonBase, IButton, IIconButton } from './button';
 import { cn } from '../utils';
@@ -13,7 +13,7 @@ const Button = forwardRef<HTMLButtonElement, IButtonGroupButton>(
       <ButtonGroupPrimitive.Item value={props.value} asChild ref={ref}>
         <ButtonBase
           {...props}
-          variant="basic"
+          variant={props.variant}
           noRounded
           className={cn('-ml-xs first:rounded-l last:rounded-r first:ml-0')}
         />
@@ -33,7 +33,7 @@ const IconButton = forwardRef<HTMLButtonElement, IButtonGroupIconButton>(
         <ButtonBase
           {...props}
           content=""
-          variant="basic"
+          variant={props.variant}
           iconOnly
           prefix={props.icon}
           noRounded
@@ -50,6 +50,7 @@ interface IButtonGroup {
   selectable?: boolean;
   onValueChange?: (value: string) => void;
   onClick?: (value: string) => void;
+  variant?: 'outline' | 'basic';
 }
 
 const Root = ({
@@ -57,27 +58,25 @@ const Root = ({
   value = '',
   selectable = false,
   onValueChange,
+  variant = 'basic',
   onClick,
 }: IButtonGroup) => {
-  const [v, setV] = useState(value);
   return (
     <ButtonGroupPrimitive.Root
       className="bg-surface-basic-default rounded shadow-button flex flex-row w-fit"
       onClick={(_e) => {
-        if (onClick) onClick(v);
+        // if (onClick) onClick(e);
       }}
       onValueChange={(e) => {
-        if (e) setV(e);
         if (onValueChange && e) onValueChange(e);
       }}
-      value={v}
+      value={value}
       type="single"
     >
       {React.Children.map(children, (child) => {
-        console.log(child);
-
         return cloneElement(child, {
-          selected: child.props.value === v && !!selectable,
+          selected: child.props.value === value && !!selectable,
+          variant,
         });
       })}
     </ButtonGroupPrimitive.Root>

@@ -1,63 +1,89 @@
 import Link from 'next/link';
 import { BrandLogo } from 'kl-design-system/branding/brand-logo';
+import ButtonGroup from 'kl-design-system/atoms/button-group';
 import {
-  CloudAgnostics,
-  Container,
   GithubLogoFill,
-  Infinity,
   LinkedinLogoFill,
+  Monitor,
+  Moon,
+  Sun,
   TwitterNewLogoFill,
-} from '@jengaicons/react';
+} from '~/app/icons/icons';
+import OssIcon from '~/images/homeNew/oss.svg';
+import OssIconDark from '~/images/homeNew/oss-dark.svg';
 import { cn } from './commons';
 import { IConfig } from './use-config';
-import Button from '../components/button';
-import { NavListItem } from '../components/nav-menu-v2';
+import { useTheme } from './useTheme';
 
-const gitUrl = 'https://github.com/kloudlite/kloudlite';
+export const basePath = 'https://kloudlite.io';
+export const authUrl = 'https://auth.kloudlite.io';
+export const gitUrl = 'https://github.com/kloudlite/kloudlite';
+export const communityUrl =
+  'https://github.com/kloudlite/kloudlite/discussions';
 const linkedinUrl = 'https://linkedin.com/company/kloudlite-io';
 const xUrl = 'https://x.com/kloudlite';
 export const supportEmail = 'launch@kloudlite.io';
+const socialIconSize = 18;
+
+const SocialMenu = () => {
+  return (
+    <div className="wb-flex wb-flex-row wb-items-center wb-gap-xl wb-text-icon-soft wb-pr-2xl">
+      <a href={gitUrl} aria-label="kloudlite-github">
+        <GithubLogoFill size={socialIconSize} />
+      </a>
+      <a href={xUrl} aria-label="kloudlite-x">
+        <TwitterNewLogoFill size={socialIconSize} />
+      </a>
+      <a href={linkedinUrl} aria-label="kloudlite-linkedin">
+        <LinkedinLogoFill size={socialIconSize} />
+      </a>
+    </div>
+  );
+};
 
 const BrandMenu = ({ className }: { className?: string }) => {
-  const socialIconSize = 24;
   const brandIconSize = 28;
+
+  const { theme, setTheme } = useTheme();
 
   return (
     <div
       className={cn(
-        'flex flex-col gap-3xl pr-4xl lg:w-[296px] order-last md:order-first md:!justify-between md:!h-full',
+        'wb-flex wb-flex-col wb-gap-7xl md:wb-gap-3xl lg:wb-pr-4xl wb-order-last md:wb-order-first md:wb-justify-between md:wb-h-full',
         className
       )}
     >
-      <div className="flex flex-col md:!flex-row lg:!flex-col gap-3xl flex-1 lg:!min-h-[236px] md:!justify-between lg:!justify-start md:!items-center lg:!items-start">
-        <div className="flex flex-col items-start gap-xl max-w-[300px]">
-          <a href="/" aria-label="kloudlite">
-            <BrandLogo size={brandIconSize} detailed />
-          </a>
-          <span className="bodySm text-text-soft">
-            Kloudlite is a NoOps platform engineering system built to increase
-            the productivity of developers & platform engineers.
-          </span>
+      <div className="wb-flex wb-flex-row">
+        <div className="wb-flex wb-flex-col wb-gap-3xl wb-flex-1 lg:wb-min-h-[200px] xl:wb-min-h-[236px] wb-items-start">
+          <div className="wb-flex wb-flex-col wb-items-start wb-gap-xl wb-max-w-[300px]">
+            <a href="/" aria-label="kloudlite">
+              <BrandLogo size={brandIconSize} detailed />
+            </a>
+            <span className="wb-bodyMd wb-text-text-soft">
+              Boost your efficiency, speed up deployments, enhance collaboration
+            </span>
+          </div>
+          <ButtonGroup.Root
+            variant="outline"
+            selectable
+            value={theme}
+            onValueChange={(v: any) => {
+              setTheme(v);
+            }}
+          >
+            <ButtonGroup.IconButton value="light" icon={<Sun />} />
+            <ButtonGroup.IconButton value="dark" icon={<Moon />} />
+            <ButtonGroup.IconButton value="system" icon={<Monitor />} />
+          </ButtonGroup.Root>
         </div>
-        <div className="flex flex-col gap-lg">
-          <div className="flex flex-row items-center justify-start md:!justify-end lg:!justify-start gap-3xl text-text-soft">
-            <a href={gitUrl} aria-label="kloudlite-github">
-              <GithubLogoFill size={socialIconSize} />
-            </a>
-            <a href={xUrl} aria-label="kloudlite-x">
-              <TwitterNewLogoFill size={socialIconSize} />
-            </a>
-            <a href={linkedinUrl} aria-label="kloudlite-linkedin">
-              <LinkedinLogoFill size={socialIconSize} />
-            </a>
-          </div>
-          <div className="bodyMd text-text-soft hidden md:!block lg:!hidden">
-            © {new Date().getFullYear()} Kloudlite Labs Pvt Ltd.
-          </div>
+        <div className="wb-bodyMd wb-text-text-soft wb-hidden md:wb-flex lg:wb-hidden wb-flex-col wb-gap-3xl wb-items-end md:wb-self-end lg:wb-self-auto">
+          <SocialMenu />
+          <div>© {new Date().getFullYear()} Kloudlite Labs Pvt Ltd.</div>
         </div>
       </div>
-      <div className="bodyMd text-text-soft md:hidden lg:!block">
-        © {new Date().getFullYear()} Kloudlite Labs Pvt Ltd.
+      <div className="wb-bodyMd wb-text-text-soft wb-flex md:wb-hidden lg:wb-flex wb-flex-col wb-gap-3xl">
+        <SocialMenu />
+        <div>© {new Date().getFullYear()} Kloudlite Labs Pvt Ltd.</div>
       </div>
     </div>
   );
@@ -71,59 +97,64 @@ export default {
     </Link>
   ),
   footer: {
-    brand: <BrandMenu className="md:order-[-9999]" />,
+    brand: <BrandMenu className="md:wb-order-[-9999]" />,
+    extra: (
+      <div>
+        <img className="dark-hidden" src={OssIcon.src} alt="oss-light" />
+        <img
+          className="wb-hidden dark-block"
+          src={OssIconDark.src}
+          alt="oss-dark"
+        />
+      </div>
+    ),
     menu: [
       {
-        title: 'Products',
-        className: 'w-[47%] md:w-auto',
+        title: 'Developers',
+        className: 'wb-basis-1/2 md:wb-basis-auto wb-flex',
+        showExtra: false,
         items: [
           {
-            title: 'DevOps',
-            to: 'devops',
+            title: 'Documentation',
+            to: '/docs',
           },
           {
-            title: 'InfraOps',
-            to: 'infraops',
+            title: 'Feature Request',
+            to: 'https://github.com/kloudlite/kloudlite/issues/new?assignees=&labels=&projects=&template=feature_request.md&title=',
           },
           {
-            title: 'Distribution',
-            to: 'distribution',
+            title: 'Bug Report',
+            to: 'https://github.com/kloudlite/kloudlite/issues/new?assignees=&labels=&projects=&template=bug_report.md&title=',
           },
         ],
       },
       {
         title: 'Resources',
-        className: 'w-[47%] md:w-auto',
+        className: 'wb-basis-1/2 md:wb-basis-auto wb-flex',
+        showExtra: false,
         items: [
           {
-            title: 'Help & support',
-            to: 'help-and-support',
+            title: 'Blog',
+            to: '/blog',
           },
           {
-            title: 'Terms of services',
-            to: 'terms-of-services',
-          },
-          {
-            title: 'Privacy policy',
-            to: 'privacy-policy',
+            title: 'Contact us',
+            to: '/contact-us',
           },
         ],
       },
       {
         title: 'Company',
-        className: 'w-[47%] md:w-auto',
+        className: 'wb-basis-1/2 md:wb-basis-auto wb-flex',
+        showExtra: true,
         items: [
           {
-            title: 'Contact us',
-            to: 'contact-us',
+            title: 'Terms of services',
+            to: '/terms-of-services',
           },
           {
-            title: 'Documentations',
-            to: 'docs',
-          },
-          {
-            title: 'Blog',
-            to: 'blog',
+            title: 'Privacy policy',
+            to: '/privacy-policy',
           },
         ],
       },
@@ -154,88 +185,21 @@ export default {
   headerSecondary: {
     items: [
       {
-        title: 'Product',
-        to: '/product',
-        type: 'popup',
-        render: () => (
-          <div className="w-[450px] flex flex-row gap-xl p-xl">
-            <a
-              href="/product"
-              className="w-[164px] bg-[linear-gradient(170deg,#3B82F6_6.19%,#1E3A8A_95.65%)] rounded py-4xl px-3xl box-content flex flex-col justify-end gap-2xl"
-            >
-              <div>
-                <BrandLogo size={32} detailed={false} darkBg />
-              </div>
-              <div className="flex flex-col gap-lg">
-                <span className="headingLg-marketing text-text-on-primary">
-                  Code-to-cloud console
-                </span>
-                <span className="bodySm text-text-on-primary">
-                  Boost development with efficient Kloudlite solution.
-                </span>
-              </div>
-            </a>
-            <ul className="flex flex-col">
-              <NavListItem
-                href="/devops"
-                title="DevOps"
-                icon={<Infinity size={28} />}
-              >
-                NoOps in every stage of devlopment
-              </NavListItem>
-              <NavListItem
-                href="/infraops"
-                title="InfraOps"
-                icon={<CloudAgnostics size={28} />}
-              >
-                Cloud-native at the core of infrastructure
-              </NavListItem>
-              <NavListItem
-                href="/distribution"
-                title="Distribution"
-                icon={<Container size={28} />}
-              >
-                Build, deploy and scale at an acceleration
-              </NavListItem>
-            </ul>
-          </div>
-        ),
+        title: 'Blog',
+        type: 'normal',
+        to: '/blog',
       },
       {
-        title: 'Help',
-        to: '/help-and-support',
+        title: 'Documentation',
         type: 'normal',
+        to: '/docs',
+      },
+      {
+        title: 'Community',
+        type: 'normal',
+        to: communityUrl,
       },
     ],
-    extra: (
-      <div className="flex flex-col md:!flex-row gap-2xl md:items-center mt-6xl md:!mt-0 px-2xl md:!px-0">
-        <a
-          href={gitUrl}
-          aria-label="kloudlite-github"
-          className="hidden md:!block"
-        >
-          <GithubLogoFill size={24} />
-        </a>
-        <div className="md:!hidden">
-          <Button
-            prefix={<GithubLogoFill />}
-            content="Github"
-            variant="basic"
-            block
-          />
-        </div>
-        <div>
-          <Button
-            content="Contact us"
-            variant="primary"
-            to="/contact-us"
-            LinkComponent={Link}
-            toLabel="href"
-            block
-          />
-        </div>
-      </div>
-    ),
   },
   urls: {
     auth: 'auth.kloudlite.io',

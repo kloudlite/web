@@ -120,13 +120,13 @@ const Select = <T, U extends boolean | undefined = undefined>(
                     : ''
                 );
                 return {
-                  default: `${c} border-border-default bg-surface-basic-default text-text-default`,
+                  default: `${c} border-border-default bg-surface-basic-input text-text-default`,
                   disabled: `${c} border-border-disabled text-text-disabled`,
-                  focus: `${c} bg-surface-basic-default border-border-default text-text-default ring-offset-1 ring-2 ring-border-focus`,
+                  focus: `${c} bg-surface-basic-default border-border-input text-text-default ring-offset-1 ring-2 ring-border-focus`,
                 };
               }}
               open={open}
-              menuClass="shadow-popover bg-surface-basic-default rounded py-lg"
+              menuClass="shadow-popover bg-surface-basic-default border border-border-default rounded py-lg"
               menuItemRender={menuItemRender}
               value={value}
               options={options}

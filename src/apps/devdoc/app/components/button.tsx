@@ -5,7 +5,7 @@ const Button = (props: IButton) => {
   return (
     <ButtonOrg
       {...props}
-      content={<div className="bodyLg-medium">{content}</div>}
+      content={<div className="wb-bodyLg-medium">{content}</div>}
     />
   );
 };
