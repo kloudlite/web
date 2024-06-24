@@ -1,9 +1,9 @@
-import { ReactNode, forwardRef } from 'react';
+import { ComponentProps, ReactNode, forwardRef } from 'react';
 import { AvatarBase, IAvatar } from '../atoms/avatar';
 import { BounceIt } from '../bounce-it';
 import { cn } from '../utils';
 
-interface IProfile extends IAvatar {
+interface IProfile extends IAvatar, Omit<ComponentProps<'button'>,'color'|'name'> {
   name?: ReactNode;
   subtitle?: ReactNode;
   responsive?: boolean;

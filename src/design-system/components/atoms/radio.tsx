@@ -47,6 +47,7 @@ export const Item = ({
           },
           className
         )}
+        aria-label={value}
       >
         <RadioGroupPrimitive.Item
           className={cn(
@@ -60,6 +61,7 @@ export const Item = ({
           value={value}
           id={id}
           disabled={disabled}
+          aria-label={value}
         >
           <RadioGroupPrimitive.Indicator
             className={cn('block w-lg h-lg rounded-full', {
