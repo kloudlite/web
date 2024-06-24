@@ -110,6 +110,18 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
 
   return (
     <div className="wb-bg-surface-basic-subdued wb-min-h-screen wb-antialiased">
+      <div className="wb-flex wb-flex-col hidden md:block">
+        <div className="wb-p-2xl wb-bg-surface-primary-default wb-text-center text-text-on-primary">
+          Kloudlite is live on Product Hunt! &nbsp;
+          <a
+            target="_blank"
+            href="https://www.producthunt.com/posts/kloudlite"
+            className="hover:wb-bodyLg-underline wb-underline-offset-4"
+          >
+            Check out the launch and share your feedback!
+          </a>
+        </div>
+      </div>
       <Head>
         <title>{title === 'Index' ? config.siteTitle : title}</title>
         <meta name="description" content={frontMatter.description} />

@@ -1164,8 +1164,16 @@ video {
   left: -3px;
 }
 
+.-left-sm {
+  left: -2px;
+}
+
 .-right-4xl {
   right: -24px;
+}
+
+.-top-sm {
+  top: -2px;
 }
 
 .-top-xs {
@@ -1843,6 +1851,10 @@ video {
 
 .bg-border-disabled {
   background-color: var(--border-disabled);
+}
+
+.bg-icon-critical {
+  background-color: var(--icon-critical);
 }
 
 .bg-icon-disabled {
