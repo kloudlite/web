@@ -20,11 +20,11 @@ const HeaderSecondary = ({
   return (
     <div className="lg:wb-relative wb-flex wb-flex-row wb-top-0 wb-left-0 wb-right-0 wb-bg-surface-basic-subdued wb-border-b wb-border-border-default wb-min-h-[var(--kl-navbar-height)] wb-z-50">
       <Wrapper className="wb-flex">
-        <nav className="wb-flex wb-flex-row wb-items-center wb-gap-6xl wb-w-full">
+        <div className="wb-flex wb-flex-row wb-items-center wb-gap-6xl wb-w-full">
           {config.logo}
-          <ul className="wb-hidden lg:wb-flex wb-flex-1 wb-flex-row wb-items-center wb-justify-end wb-gap-4xl wb-list-none">
+          <div className="wb-hidden lg:wb-flex wb-flex-1 wb-flex-row wb-items-center wb-justify-end wb-gap-4xl wb-list-none">
             <NavigationMenuV2 activePath={activePath} />
-          </ul>
+          </div>
 
           <div className="wb-flex-1 lg:wb-flex-none wb-flex wb-flex-row wb-gap-2xl wb-items-center wb-justify-end">
             <div className="wb-flex wb-flex-col lg:wb-flex-row wb-gap-xl lg:wb-items-center">
@@ -53,7 +53,7 @@ const HeaderSecondary = ({
               <MenuToggle onClick={() => setState(!state)} toggle={state} />
             </span>
           </div>
-        </nav>
+        </div>
       </Wrapper>
     </div>
   );

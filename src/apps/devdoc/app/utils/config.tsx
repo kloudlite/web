@@ -15,6 +15,8 @@ import { cn } from './commons';
 import { IConfig } from './use-config';
 import { useTheme } from './useTheme';
 
+export const siteDesc =
+  'Kloudlite is a remote-local development environment platform designed to streamline the workflow for developers working on distributed applications. By integrating both local and remote environments through Kubernetes, Kloudlite ensures a seamless, productive, and more connected development experience.';
 export const basePath = 'https://kloudlite.io';
 export const authUrl = 'https://auth.kloudlite.io';
 export const gitUrl = 'https://github.com/kloudlite/kloudlite';
@@ -71,9 +73,9 @@ const BrandMenu = ({ className }: { className?: string }) => {
               setTheme(v);
             }}
           >
-            <ButtonGroup.IconButton value="light" icon={<Sun />} />
-            <ButtonGroup.IconButton value="dark" icon={<Moon />} />
-            <ButtonGroup.IconButton value="system" icon={<Monitor />} />
+            <ButtonGroup.IconButton value="light" icon={<Sun />} aria-label="light-theme"/>
+            <ButtonGroup.IconButton value="dark" icon={<Moon />} aria-label="dark-theme" />
+            <ButtonGroup.IconButton value="system" icon={<Monitor />} aria-label="system-theme" />
           </ButtonGroup.Root>
         </div>
         <div className="wb-bodyMd wb-text-text-soft wb-hidden md:wb-flex lg:wb-hidden wb-flex-col wb-gap-3xl wb-items-end md:wb-self-end lg:wb-self-auto">
@@ -90,9 +92,9 @@ const BrandMenu = ({ className }: { className?: string }) => {
 };
 
 export default {
-  siteTitle: 'Kloudlite',
+  siteTitle: 'Kloudlite - Development Environment as a Service',
   logo: (
-    <Link href="/">
+    <Link href="/" aria-label="Kloudlite homepage">
       <BrandLogo detailed size={28} />
     </Link>
   ),

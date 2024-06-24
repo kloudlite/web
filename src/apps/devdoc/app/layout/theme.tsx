@@ -18,7 +18,7 @@ import { DEFAULT_LOCALE } from '~/app/utils/constants';
 import { cn } from '~/app/utils/commons';
 import useMenu from '~/app/utils/use-menu';
 import { ActiveAnchorProvider } from '~/app/utils/active-anchor';
-import config, { basePath } from '~/app/utils/config';
+import config, { basePath, siteDesc } from '~/app/utils/config';
 import { createComponents } from './mdx-components';
 import { BlogHeader, BlogTags } from '../components/blog-utils';
 import { CompanyPanel } from '../components/company-utils';
@@ -124,7 +124,10 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
       </div>
       <Head>
         <title>{title === 'Index' ? config.siteTitle : title}</title>
-        <meta name="description" content={frontMatter.description} />
+        <meta
+          name="description"
+          content={frontMatter.description || siteDesc}
+        />
         <meta name="og:image" content={`${basePath}${frontMatter.image}`} />
         <meta property="og:title" content={frontMatter.title || 'Kloudlite'} />
         <meta

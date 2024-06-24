@@ -3,7 +3,8 @@ import { GraphExtended } from '~/app/components/graph';
 import { authUrl } from '~/app/utils/config';
 import hero from '~/images/homeNew/hero';
 import HomeIllustrationMobileDark from '~/images/homeNew/illustration-mobile-dark.svg';
-import HomeIllustrationMobile from '~/images/homeNew/illustration-mobile.svg';
+// import HomeIllustrationMobile from '~/images/homeNew/illustration-mobile.svg';
+import HomeIllustrationMobileWeb from '~/images/homeNew/illustration-mobile.webp';
 import DynamicImage from '../dynamic-image';
 import FaqSection from '../website/home/faq';
 import HowItWorksSection from '../website/home/how-it-works';
@@ -102,7 +103,7 @@ const Illustration = () => {
         <img
           alt="illustration-light"
           className="dark-hidden wb-w-full wb-aspect-square"
-          src={HomeIllustrationMobile.src}
+          src={HomeIllustrationMobileWeb.src}
         />
       </div>
     </Wrapper>

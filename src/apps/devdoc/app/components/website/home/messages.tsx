@@ -28,6 +28,7 @@ const MessageCard = ({
             color="one"
             size="md"
             noImage
+            tabIndex={-1}
           />
         </span>
         <span className="wb-flex-1 wb-hidden dark-block">
@@ -37,6 +38,7 @@ const MessageCard = ({
             subtitle={<span className="wb-bodyMd">{subtitle}</span>}
             color="dark"
             size="md"
+            tabIndex={-1}
             noImage
           />
         </span>
