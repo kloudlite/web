@@ -1,4 +1,4 @@
-import { Plus } from '~/console/components/icons';
+import { FileLock, Plus } from '~/console/components/icons';
 import { defer } from '@remix-run/node';
 import { useLoaderData, useParams } from '@remix-run/react';
 import { useEffect, useState } from 'react';
@@ -55,6 +55,8 @@ const ConfigBody = ({ secret }: { secret: ISecret }) => {
   const [modifiedItems, setModifiedItems] = useState<IModifiedItem>({});
 
   const [configUpdating, setConfigUpdating] = useState(false);
+  const [success, setSuccess] = useState(false);
+
   const { account, environment } = useParams();
   const api = useConsoleApi();
   const reload = useReload();
@@ -65,7 +67,7 @@ const ConfigBody = ({ secret }: { secret: ISecret }) => {
     setOriginalItems(secret.stringData);
   }, [secret.stringData]);
 
-  useEffect(() => {
+  const restoreModifiedItems = () => {
     try {
       setModifiedItems(
         Object.entries(originalItems).reduce((acc, [key, value]) => {
@@ -84,6 +86,10 @@ const ConfigBody = ({ secret }: { secret: ISecret }) => {
     } catch {
       //
     }
+  };
+
+  useEffect(() => {
+    restoreModifiedItems();
   }, [originalItems]);
 
   const changesCount = () => {
@@ -94,6 +100,10 @@ const ConfigBody = ({ secret }: { secret: ISecret }) => {
         (mi.newvalue != null && mi.newvalue !== mi.value)
     ).length;
   };
+
+  useEffect(() => {
+    setSuccess(false);
+  }, [secret]);
 
   return (
     <>
@@ -113,11 +123,18 @@ const ConfigBody = ({ secret }: { secret: ISecret }) => {
                     data: modifiedItems,
                   })
                 }
+                disabled={success}
               />
-              {changesCount() > 0 && (
-                <Button variant="basic" content="Discard" />
+              {changesCount() > 0 && !success && (
+                <Button
+                  variant="basic"
+                  content="Discard"
+                  onClick={() => {
+                    restoreModifiedItems();
+                  }}
+                />
               )}
-              {changesCount() > 0 && (
+              {changesCount() > 0 && !success && (
                 <Button
                   variant="primary"
                   content={`Commit ${changesCount()} changes`}
@@ -147,6 +164,7 @@ const ConfigBody = ({ secret }: { secret: ISecret }) => {
                       reload,
                     });
                     setConfigUpdating(false);
+                    setSuccess(true);
                   }}
                 />
               )}
@@ -154,10 +172,14 @@ const ConfigBody = ({ secret }: { secret: ISecret }) => {
           ),
         }}
         empty={{
+          image: <FileLock size={48} />,
           is: Object.keys(modifiedItems).length === 0,
           title: 'This is where you’ll manage your secrets.',
           content: (
-            <p>You can create a new project and manage the listed project.</p>
+            <p>
+              You can create a new secret entries and manage the listed secret
+              entries.
+            </p>
           ),
           action: {
             content: 'Add new entry',
@@ -226,6 +248,7 @@ const ConfigBody = ({ secret }: { secret: ISecret }) => {
           }));
           setShowHandleConfig(null);
         }}
+        isUpdate={false}
       />
     </>
   );

@@ -1,3 +1,33 @@
 # Local Development Environments
 
+To simplify integration with the network, Kloudlite introduces Local Development Containers. These are Docker containers that run on your local machine, providing a seamless way to access remote environments via the WireGuard network. WireGuard operates at the host level, ensuring secure connectivity, while the features of the remote environment are made available inside the container.
 
+### Detailed Features of Local Development Containers:
+
+1. #### Service Discovery:
+   - DNS Configuration: DNS search domains are configured within the container to enable developers to access services using their simple service names instead of fully qualified domain names. For example, instead of using service.namespace.cluster.local, you can simply use service.
+   - Ease of Access: This configuration simplifies the development process by allowing quick and easy access to services without needing to remember or use complex service names.
+
+2. #### Environment Variable Sync:
+   - Synchronization with Remote Environments: Environment variables, along with configurations and secrets from the remote environment, are synchronized with the local development container. This ensures that the local container has the same settings and credentials as the remote environment.
+   - Consistency Across Environments: By synchronizing these variables, developers can ensure that their local development environment behaves identically to the production environment, reducing the risk of issues caused by discrepancies between environments.
+
+3. #### Configuration and Secret Mounts:
+   - Automatic Mounting: Configurations and secrets are automatically mounted within the local container. This means that any configuration files or secret data required by the application are directly accessible within the container.
+   - Secure and Convenient Access: This feature provides secure access to sensitive data and ensures that the application can be configured correctly without manual intervention. It also streamlines the setup process, making it more efficient for developers to start working.
+
+4. #### Service Intercepts:
+   - Intercepting Remote Services: When a service is intercepted, all traffic intended for that remote service is redirected to the local container running on the developer’s machine. This allows developers to test and debug their changes locally while still interacting with the remote environment.
+   - Enhanced Testing Capabilities: This feature is particularly useful for debugging and testing, as it allows developers to see how their changes will affect the overall system without deploying to a live environment. It provides a realistic testing scenario, ensuring that changes are thoroughly vetted before they are moved to production.
+
+### How It Works:
+
+1. **Setup:** When a developer sets up a local development container, they specify which remote environment the container should be associated with. This configuration determines which services, configurations, and secrets will be accessible within the container.
+   
+2. **Connectivity:** The WireGuard network creates a secure connection between the local machine and the remote environment. This connection allows the local container to communicate with remote services as if they were part of the same local network.
+
+3. **Development:** Developers can use their preferred IDEs and tools to write and test code within the local container. Since the container has access to the same environment variables, configurations, and secrets as the remote environment, developers can be confident that their local tests will reflect production behavior.
+
+4. **Service Interception:** If a developer needs to debug a specific service, they can intercept the service traffic, redirecting it to their local container. This enables them to interact with the service in real-time, making it easier to diagnose and fix issues.
+
+<div className="wb-p-3xl wb-mt-3xl" />

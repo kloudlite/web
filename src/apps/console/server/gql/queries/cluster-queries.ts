@@ -107,8 +107,8 @@ export const clusterQueries = (executor: IExecutor) => ({
             cursor
             node {
               accountName
-              clusterPublicEndpoint
               clusterSvcCIDR
+              lastOnlineAt
               createdBy {
                 userEmail
                 userId
@@ -167,6 +167,7 @@ export const clusterQueries = (executor: IExecutor) => ({
             node {
               id
               displayName
+              lastOnlineAt
               markedForDeletion
               metadata {
                 name
@@ -293,6 +294,7 @@ export const clusterQueries = (executor: IExecutor) => ({
               id
               displayName
               markedForDeletion
+              lastOnlineAt
               metadata {
                 name
                 annotations

@@ -5,17 +5,30 @@ import Steps from "~/app/components/steps";
 <Steps>
 ### Attach Your Cluster
 Attach your cluster to Kloudlite using a Helm chart. First, create a cluster reference in Kloudlite, then follow the steps to attach the cluster.
+<img src="/attach-cluster-1.png" alt="" className="wb-p-3xl wb-mt-3xl wb-bg-white" />
+
+<img src="/attach-cluster-2.png" alt="" className="wb-p-3xl wb-mt-3xl wb-bg-white" />
+Follow the instructions to attach the cluster. Once connected it will be shown online.
+
+Note: You need to have capability to run pods with NetAdmin capililities for this to work.
 
 ### Create an Environment
-Create a new environment in Kloudlite by providing an environment name and the cluster reference. Once your environment is set up, deploy your applications, configure settings, and import resources into the environment.
+Create a new environment in Kloudlite by providing an environment name and the cluster 
+reference. Once your environment is set up, deploy your applications, configure settings, 
+and import resources into the environment.
 
-That's it! Your environment is ready to connect and use.
+<img src="/create-environment.png" alt="" className="wb-p-3xl wb-mt-3xl wb-bg-white" />
+
+Once environment is created you can add configs, secrets, apps to it. You can also import 
+managed resources of managed services.
 
 ### Set Up Your Local Machine
-Set up your local machine to connect to the environment using the Kloudlite CLI.
+Once enviroment is created you can set up your local machine to connect to the environment 
+using the Kloudlite CLI.
 
-First, navigate to your workspace and create a `kl.yaml` file with the following command:
+Setup kloudlite cli. Follow the instructions [here](https://github.com/kloudlite/kl).
 
+Choose your workspace directory and create a `kl.yaml` file with the following command:
 ```bash
 kl init
 ```
@@ -49,7 +62,7 @@ kl add package <package-name>
 
 ### Access & Intercept!
 
-Access the development container with the following command:
+Now we can start the development container using the following command:
 
 ```bash
 kl box ssh
@@ -57,8 +70,27 @@ kl box ssh
 
 This command creates a development container and mounts your codebase to it. The container will include all necessary configs, secrets, resources, and packages. You can now start developing your application.
 
-The container runs an SSH service. You will receive the domain name and port to connect to the container.
+The container runs an SSH service. You can also attach your IDEs like VSCode or IntelliJ to the container and start developing your application.
 
-Attach your IDEs like VSCode or IntelliJ to the container and start developing your application.
+Note: The running container is already connected to the environment using wireguard. DNS is also configured
+to resolve the domains of the services in the environment.
+
+As you are in same network now you can access the apps running in the environment using their name. 
+
+You can also intercept the traffic of the apps running in the environment using the following command:
+
+```bash
+kl intercept start -p <remote-port>:<local-port>
+```
+
+Now all the traffic to the remote application running in the environment will be 
+intercepted and redirected to the local port. You can also use the following command to stop the interception:
+
+```bash
+kl intercept stop
+```
 
 </Steps>
+
+
+<div className="wb-p-3xl wb-mt-3xl" />

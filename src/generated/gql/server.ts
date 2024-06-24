@@ -242,6 +242,9 @@ export type ResType =
   | 'nodepool'
   | 'providersecret';
 
+export type Github__Com___Kloudlite___Api___Apps___Infra___Internal___Entities__ClusterVisibilityMode =
+  'private' | 'public';
+
 export type Github__Com___Kloudlite___Operator___Apis___Clusters___V1__ClusterSpecAvailabilityMode =
   'dev' | 'HA';
 
@@ -395,6 +398,7 @@ export type AccountIn = {
   contactEmail?: InputMaybe<Scalars['String']['input']>;
   displayName: Scalars['String']['input'];
   isActive?: InputMaybe<Scalars['Boolean']['input']>;
+  kloudliteGatewayRegion: Scalars['String']['input'];
   logo?: InputMaybe<Scalars['String']['input']>;
   metadata?: InputMaybe<MetadataIn>;
 };
@@ -949,7 +953,13 @@ export type RepositoryIn = {
 export type ByokClusterIn = {
   displayName: Scalars['String']['input'];
   metadata: MetadataIn;
+  visibility: Github__Com___Kloudlite___Api___Apps___Infra___Internal___Entities__ClusterVisbilityIn;
 };
+
+export type Github__Com___Kloudlite___Api___Apps___Infra___Internal___Entities__ClusterVisbilityIn =
+  {
+    mode: Github__Com___Kloudlite___Api___Apps___Infra___Internal___Entities__ClusterVisibilityMode;
+  };
 
 export type ClusterIn = {
   apiVersion?: InputMaybe<Scalars['String']['input']>;
@@ -1040,6 +1050,7 @@ export type GlobalVpnIn = {
   displayName: Scalars['String']['input'];
   kloudliteDevice: GlobalVpnKloudliteDeviceIn;
   metadata: MetadataIn;
+  nonClusterUseAllowedIPs: Array<Scalars['String']['input']>;
   numAllocatedClusterCIDRs: Scalars['Int']['input'];
   numAllocatedDevices: Scalars['Int']['input'];
   numReservedIPsForNonClusterUse: Scalars['Int']['input'];
@@ -1304,6 +1315,11 @@ export type AccountMembershipIn = {
   accountName: Scalars['String']['input'];
   role: Github__Com___Kloudlite___Api___Apps___Iam___Types__Role;
   userId: Scalars['String']['input'];
+};
+
+export type AvailableKloudliteRegionIn = {
+  displayName: Scalars['String']['input'];
+  id: Scalars['String']['input'];
 };
 
 export type BuildRunIn = {
@@ -1823,6 +1839,17 @@ export type ConsoleCreateAccountMutation = {
   accounts_createAccount: { displayName: string };
 };
 
+export type ConsoleGetAvailableKloudliteRegionsQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type ConsoleGetAvailableKloudliteRegionsQuery = {
+  accounts_availableKloudliteRegions?: Array<{
+    displayName: string;
+    id: string;
+  }>;
+};
+
 export type ConsoleListAccountsQueryVariables = Exact<{ [key: string]: never }>;
 
 export type ConsoleListAccountsQuery = {
@@ -1830,6 +1857,7 @@ export type ConsoleListAccountsQuery = {
     id: string;
     updateTime: any;
     displayName: string;
+    kloudliteGatewayRegion: string;
     metadata?: { name: string; annotations?: any };
   }>;
 };
@@ -1852,6 +1880,7 @@ export type ConsoleGetAccountQuery = {
     updateTime: any;
     contactEmail?: string;
     displayName: string;
+    kloudliteGatewayRegion: string;
     metadata?: { name: string; annotations?: any };
   };
 };
@@ -1909,8 +1938,8 @@ export type ConsoleListAllClustersQuery = {
       cursor: string;
       node: {
         accountName: string;
-        clusterPublicEndpoint: string;
         clusterSvcCIDR: string;
+        lastOnlineAt?: any;
         creationTime: any;
         displayName: string;
         globalVPN: string;
@@ -1959,6 +1988,7 @@ export type ConsoleListAllClustersQuery = {
       node: {
         id: string;
         displayName: string;
+        lastOnlineAt?: any;
         markedForDeletion?: boolean;
         creationTime: any;
         updateTime: any;
@@ -2057,6 +2087,7 @@ export type ConsoleListClustersQuery = {
         id: string;
         displayName: string;
         markedForDeletion?: boolean;
+        lastOnlineAt?: any;
         creationTime: any;
         updateTime: any;
         recordVersion: number;
@@ -2506,6 +2537,7 @@ export type ConsoleGetEnvironmentQuery = {
     creationTime: any;
     displayName: string;
     clusterName: string;
+    isArchived?: boolean;
     markedForDeletion?: boolean;
     updateTime: any;
     createdBy: { userEmail: string; userId: string; userName: string };
@@ -2587,6 +2619,7 @@ export type ConsoleListEnvironmentsQuery = {
         creationTime: any;
         displayName: string;
         clusterName: string;
+        isArchived?: boolean;
         markedForDeletion?: boolean;
         recordVersion: number;
         updateTime: any;
@@ -4782,6 +4815,17 @@ export type ConsoleCreateClusterMSvMutation = {
   infra_createClusterManagedService?: { id: string };
 };
 
+export type ConsoleCloneClusterMSvMutationVariables = Exact<{
+  clusterName: Scalars['String']['input'];
+  sourceMsvcName: Scalars['String']['input'];
+  destinationMsvcName: Scalars['String']['input'];
+  displayName: Scalars['String']['input'];
+}>;
+
+export type ConsoleCloneClusterMSvMutation = {
+  infra_cloneClusterManagedService?: { id: string };
+};
+
 export type ConsoleUpdateClusterMSvMutationVariables = Exact<{
   service: ClusterManagedServiceIn;
 }>;
@@ -4932,7 +4976,6 @@ export type ConsoleGetByokClusterQuery = {
     markedForDeletion?: boolean;
     recordVersion: number;
     updateTime: any;
-    clusterPublicEndpoint: string;
     clusterSvcCIDR: string;
     globalVPN: string;
     createdBy: { userEmail: string; userId: string; userName: string };
@@ -4969,8 +5012,8 @@ export type ConsoleListByokClustersQuery = {
       cursor: string;
       node: {
         accountName: string;
-        clusterPublicEndpoint: string;
         clusterSvcCIDR: string;
+        lastOnlineAt?: any;
         creationTime: any;
         displayName: string;
         globalVPN: string;
@@ -5861,6 +5904,108 @@ export type ConsoleListGlobalVpnDevicesQuery = {
           labels?: any;
           name: string;
           namespace?: string;
+        };
+      };
+    }>;
+    pageInfo: {
+      endCursor?: string;
+      hasNextPage?: boolean;
+      hasPreviousPage?: boolean;
+      startCursor?: string;
+    };
+  };
+};
+
+export type ConsoleUpdateNotificationConfigMutationVariables = Exact<{
+  config: NotificationConfIn;
+}>;
+
+export type ConsoleUpdateNotificationConfigMutation = {
+  comms_updateNotificationConfig?: { id: string };
+};
+
+export type ConsoleUpdateSubscriptionConfigMutationVariables = Exact<{
+  config: SubscriptionIn;
+  commsUpdateSubscriptionConfigId: Scalars['ID']['input'];
+}>;
+
+export type ConsoleUpdateSubscriptionConfigMutation = {
+  comms_updateSubscriptionConfig?: { id: string };
+};
+
+export type ConsoleMarkAllNotificationAsReadMutationVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type ConsoleMarkAllNotificationAsReadMutation = {
+  comms_markAllNotificationAsRead: boolean;
+};
+
+export type ConsoleGetNotificationConfigQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type ConsoleGetNotificationConfigQuery = {
+  comms_getNotificationConfig?: {
+    accountName: string;
+    creationTime: any;
+    id: string;
+    markedForDeletion?: boolean;
+    recordVersion: number;
+    updateTime: any;
+    createdBy: { userEmail: string; userId: string; userName: string };
+    email?: { enabled: boolean; mailAddress: string };
+    lastUpdatedBy: { userEmail: string; userId: string; userName: string };
+    slack?: { enabled: boolean; url: string };
+    telegram?: { chatId: string; enabled: boolean; token: string };
+    webhook?: { enabled: boolean; url: string };
+  };
+};
+
+export type ConsoleGetSubscriptionConfigQueryVariables = Exact<{
+  commsGetSubscriptionConfigId: Scalars['ID']['input'];
+}>;
+
+export type ConsoleGetSubscriptionConfigQuery = {
+  comms_getSubscriptionConfig?: {
+    accountName: string;
+    creationTime: any;
+    enabled: boolean;
+    id: string;
+    mailAddress: string;
+    markedForDeletion?: boolean;
+    recordVersion: number;
+    updateTime: any;
+    createdBy: { userEmail: string; userId: string; userName: string };
+    lastUpdatedBy: { userEmail: string; userId: string; userName: string };
+  };
+};
+
+export type ConsoleListNotificationsQueryVariables = Exact<{
+  pagination?: InputMaybe<CursorPaginationIn>;
+}>;
+
+export type ConsoleListNotificationsQuery = {
+  comms_listNotifications?: {
+    totalCount: number;
+    edges: Array<{
+      cursor: string;
+      node: {
+        accountName: string;
+        creationTime: any;
+        id: string;
+        markedForDeletion?: boolean;
+        notificationType: Github__Com___Kloudlite___Api___Apps___Comms___Types__NotificationType;
+        priority: number;
+        read: boolean;
+        recordVersion: number;
+        updateTime: any;
+        content: {
+          body: string;
+          image: string;
+          link: string;
+          subject: string;
+          title: string;
         };
       };
     }>;

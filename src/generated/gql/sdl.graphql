@@ -11,6 +11,7 @@ type Account {
   displayName: String!
   id: ID!
   isActive: Boolean
+  kloudliteGatewayRegion: String!
   lastUpdatedBy: Github__com___kloudlite___api___common__CreatedOrUpdatedBy!
   logo: String
   markedForDeletion: Boolean
@@ -24,6 +25,7 @@ input AccountIn {
   contactEmail: String
   displayName: String!
   isActive: Boolean
+  kloudliteGatewayRegion: String!
   logo: String
   metadata: MetadataIn
 }
@@ -89,6 +91,16 @@ type AppPaginatedRecords {
   edges: [AppEdge!]!
   pageInfo: PageInfo!
   totalCount: Int!
+}
+
+type AvailableKloudliteRegion {
+  displayName: String!
+  id: String!
+}
+
+input AvailableKloudliteRegionIn {
+  displayName: String!
+  id: String!
 }
 
 type Build {
@@ -165,7 +177,6 @@ type BuildRunPaginatedRecords {
 type BYOKCluster {
   accountName: String!
   clusterDNSSuffix: String!
-  clusterPublicEndpoint: String!
   clusterSvcCIDR: String!
   clusterToken: String!
   createdBy: Github__com___kloudlite___api___common__CreatedOrUpdatedBy!
@@ -173,6 +184,7 @@ type BYOKCluster {
   displayName: String!
   globalVPN: String!
   id: ID!
+  lastOnlineAt: Date
   lastUpdatedBy: Github__com___kloudlite___api___common__CreatedOrUpdatedBy!
   markedForDeletion: Boolean
   messageQueueTopicName: String!
@@ -180,6 +192,7 @@ type BYOKCluster {
   recordVersion: Int!
   syncStatus: Github__com___kloudlite___api___pkg___types__SyncStatus!
   updateTime: Date!
+  visibility: Github__com___kloudlite___api___apps___infra___internal___entities__ClusterVisbility!
 }
 
 type BYOKClusterEdge {
@@ -190,6 +203,7 @@ type BYOKClusterEdge {
 input BYOKClusterIn {
   displayName: String!
   metadata: MetadataIn!
+  visibility: Github__com___kloudlite___api___apps___infra___internal___entities__ClusterVisbilityIn!
 }
 
 type BYOKClusterPaginatedRecords {
@@ -264,6 +278,7 @@ type Cluster {
   globalVPN: String
   id: ID!
   kind: String
+  lastOnlineAt: Date
   lastUpdatedBy: Github__com___kloudlite___api___common__CreatedOrUpdatedBy!
   markedForDeletion: Boolean
   metadata: Metadata!
@@ -597,6 +612,7 @@ type Environment {
   creationTime: Date!
   displayName: String!
   id: ID!
+  isArchived: Boolean
   kind: String
   lastUpdatedBy: Github__com___kloudlite___api___common__CreatedOrUpdatedBy!
   markedForDeletion: Boolean
@@ -870,6 +886,20 @@ input Github__com___kloudlite___api___apps___infra___internal___entities__AWSSec
   assumeRoleParams: Github__com___kloudlite___api___apps___infra___internal___entities__AWSAssumeRoleParamsIn
   authMechanism: Github__com___kloudlite___operator___apis___clusters___v1__AwsAuthMechanism!
   authSecretKeys: Github__com___kloudlite___api___apps___infra___internal___entities__AWSAuthSecretKeysIn
+}
+
+type Github__com___kloudlite___api___apps___infra___internal___entities__ClusterVisbility {
+  mode: Github__com___kloudlite___api___apps___infra___internal___entities__ClusterVisibilityMode!
+  publicEndpoint: String
+}
+
+input Github__com___kloudlite___api___apps___infra___internal___entities__ClusterVisbilityIn {
+  mode: Github__com___kloudlite___api___apps___infra___internal___entities__ClusterVisibilityMode!
+}
+
+enum Github__com___kloudlite___api___apps___infra___internal___entities__ClusterVisibilityMode {
+  private
+  public
 }
 
 type Github__com___kloudlite___api___apps___infra___internal___entities__GCPSecretCredentials {
@@ -2048,6 +2078,7 @@ type GlobalVPN {
   lastUpdatedBy: Github__com___kloudlite___api___common__CreatedOrUpdatedBy!
   markedForDeletion: Boolean
   metadata: Metadata!
+  nonClusterUseAllowedIPs: [String!]!
   numAllocatedClusterCIDRs: Int!
   numAllocatedDevices: Int!
   numReservedIPsForNonClusterUse: Int!
@@ -2105,6 +2136,7 @@ input GlobalVPNIn {
   displayName: String!
   kloudliteDevice: GlobalVPNKloudliteDeviceIn!
   metadata: MetadataIn!
+  nonClusterUseAllowedIPs: [String!]!
   numAllocatedClusterCIDRs: Int!
   numAllocatedDevices: Int!
   numReservedIPsForNonClusterUse: Int!
@@ -3576,6 +3608,7 @@ type Mutation {
   cr_deleteRepo(name: String!): Boolean!
   cr_triggerBuild(id: ID!): Boolean!
   cr_updateBuild(build: BuildIn!, id: ID!): Build
+  infra_cloneClusterManagedService(clusterName: String!, destinationMsvcName: String!, displayName: String!, sourceMsvcName: String!): ClusterManagedService
   infra_createBYOKCluster(cluster: BYOKClusterIn!): BYOKCluster
   infra_createCluster(cluster: ClusterIn!): Cluster
   infra_createClusterManagedService(service: ClusterManagedServiceIn!): ClusterManagedService
@@ -3883,6 +3916,7 @@ input PortIn {
 scalar ProviderDetail
 
 type Query {
+  accounts_availableKloudliteRegions: [AvailableKloudliteRegion!]
   accounts_checkNameAvailability(name: String!): AccountsCheckNameAvailabilityOutput!
   accounts_ensureKloudliteRegistryPullSecrets(accountName: String!): Boolean!
   accounts_getAccount(accountName: String!): Account

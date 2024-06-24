@@ -59,9 +59,5 @@
     "bug-report":{
         "title":"Bug Report",
         "href":"https://github.com/kloudlite/kloudlite/issues/new?assignees=&labels=&projects=&template=bug_report.md&title="
-    },
-    "help-n-support":{
-        "title":"Help & Support",
-        "href":"http://localhost:3000/help-and-support"
     }
 }

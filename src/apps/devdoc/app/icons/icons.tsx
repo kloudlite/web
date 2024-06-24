@@ -65,4 +65,5 @@ export {
   DeBugging,
   LockSimple,
   Lightbulb,
+  Keyhole,
 } from '@jengaicons/react';
