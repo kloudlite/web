@@ -174,6 +174,7 @@
   --icon-critical: var(--red-600);
   --icon-warning: var(--amber-600);
   --icon-success: var(--green-600);
+  --icon-logo: var(--blue-600);
   /* Border */
   --border-default: var(--zinc-200);
   --border-dark: var(--zinc-300);
@@ -198,10 +199,10 @@
   --surface-basic-active: var(--zinc-800);
   --surface-basic-overlay-bg: var(--zinc-900);
   /* Primary */
-  --surface-primary-default: var(--blue-700);
+  --surface-primary-default: var(--blue-800);
   --surface-primary-subdued: var(--blue-1100);
   --surface-primary-hovered: var(--blue-600);
-  --surface-primary-pressed: var(--blue-800);
+  --surface-primary-pressed: var(--blue-900);
   --surface-primary-selected: var(--blue-1100);
   /* Secondary */
   --surface-secondary-default: var(--amber-700);
@@ -251,6 +252,7 @@
   --icon-critical: var(--red-500);
   --icon-warning: var(--amber-500);
   --icon-success: var(--green-500);
+  --icon-logo: var(--zinc-100);
   /* Border */
   --border-default: var(--zinc-800);
   --border-dark: var(--zinc-700);
@@ -1793,6 +1795,10 @@ video {
   border-color: var(--border-critical);
 }
 
+.border-border-dark {
+  border-color: var(--border-dark);
+}
+
 .border-border-default {
   border-color: var(--border-default);
 }
@@ -1894,7 +1900,8 @@ video {
 }
 
 .bg-surface-basic-subdued {
-  background-color: var(--surface-basic-subdued);
+  --tw-bg-opacity: 1;
+  background-color: color-mix(in srgb, var(--surface-basic-subdued) calc(100% * var(--tw-bg-opacity)), transparent);
 }
 
 .bg-surface-critical-default {
@@ -1986,8 +1993,8 @@ video {
 }
 
 .from-surface-basic-subdued {
-  --tw-gradient-from: var(--surface-basic-subdued) var(--tw-gradient-from-position);
-  --tw-gradient-to: rgb(255 255 255 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-from: color-mix(in srgb, var(--surface-basic-subdued) calc(100% * 1), transparent) var(--tw-gradient-from-position);
+  --tw-gradient-to: color-mix(in srgb, var(--surface-basic-subdued) calc(100% * 0), transparent) var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
@@ -2001,6 +2008,10 @@ video {
 
 .fill-icon-disabled {
   fill: var(--icon-disabled);
+}
+
+.fill-icon-logo {
+  fill: var(--icon-logo);
 }
 
 .fill-icon-primary {
