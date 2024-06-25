@@ -212,6 +212,7 @@ const ContactRoot = () => {
               content="Request demo"
               size="md"
               block
+              disabled={loading}
             />
           </div>
         </form>
