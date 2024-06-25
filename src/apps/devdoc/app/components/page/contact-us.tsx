@@ -117,14 +117,6 @@ const ContactRoot = () => {
 
   return (
     <Wrapper className="wb-relative wb-flex wb-flex-col wb-items-center wb-py-6xl md:wb-py-8xl lg:wb-py-10xl wb-gap-6xl md:wb-gap-8xl xl:wb-gap-10xl">
-      <div className="wb-flex wb-flex-col wb-gap-3xl wb-text-center">
-        <h1 className="wb-heading4xl-marketing md:wb-heading5xl-marketing lg:wb-heading6xl-marketing wb-text-text-default">
-          Contact us
-        </h1>
-        <p className="wb-bodyLg-medium md:wb-bodyXl-medium wb-text-text-soft">
-          Get in touch and let us know how we can help.
-        </p>
-      </div>
       <div className="wb-gap-5xl md:wb-gap-8xl xl:wb-gap-10xl wb-flex wb-flex-col lg:wb-flex-row w-full">
         <form
           onSubmit={handleSubmit(async (d) => {
@@ -135,6 +127,14 @@ const ContactRoot = () => {
           })}
           className="wb-flex wb-flex-col wb-gap-5xl wb-flex-1 wb-p-3xl md:wb-p-6xl wb-border wb-border-border-default wb-rounded-lg"
         >
+          <div className="wb-flex wb-flex-col wb-gap-2xl wb-text-left wb-mb-2xl">
+            <h1 className="wb-heading4xl-marketing wb-text-text-default">
+              Contact us
+            </h1>
+            <p className="wb-bodyLg-medium wb-text-text-soft">
+              Get in touch and let us know how we can help.
+            </p>
+          </div>
           <div className="wb-flex wb-flex-col wb-gap-3xl">
             <TextInput
               label="Full name"
