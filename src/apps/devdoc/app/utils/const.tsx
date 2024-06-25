@@ -150,6 +150,7 @@ import PlaxonicSvg from '../icons/Plaxonic';
 import RedPlutoSvg from '../icons/RedPluto';
 import TalescaleSvg from '../icons/Talescale';
 import Button from '../components/button';
+import JoinProvidersDialog from '../components/join-provider-dialog';
 
 const partners = [
   {
@@ -961,20 +962,23 @@ const consts = {
         id: '1',
         descriptionn: 'For small teams, individual, and personal projects',
         features: [
-          'Unlimited environments, devices & infrastructure',
-          'Unlimited clusters & members',
+          'Unlimited environments',
+          'Unlimited devices',
+          'Unlimited clusters',
+          'Unlimited members',
         ],
         action: (
-          <Button
-            content="Start deploying"
-            variant="basic"
-            suffix={<ArrowRight />}
-            size="lg"
-            block
-            linkComponent={Link}
-            toLabel="href"
-            to={`${process.env.AUTH_URL}/signup`}
-          />
+          // <Button
+          //   content="Start deploying"
+          //   variant="basic"
+          //   suffix={<ArrowRight />}
+          //   size="lg"
+          //   block
+          //   linkComponent={Link}
+          //   toLabel="href"
+          //   to={`${process.env.AUTH_URL}/signup`}
+          // />
+          <JoinProvidersDialog />
         ),
       },
       {
