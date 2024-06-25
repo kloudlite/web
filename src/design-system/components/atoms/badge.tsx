@@ -21,7 +21,8 @@ export const Badge = ({
       className={cn(
         'flex gap-md items-center py-md px-2xl w-fit rounded-full bodySm border select-none pulsable',
         {
-          'border-border-default bg-surface-basic-default': type === 'neutral',
+          'border-border-dark bg-surface-basic-subdued text-text-default':
+            type === 'neutral',
           'border-border-primary bg-surface-primary-subdued text-text-primary':
             type === 'info',
           'border-border-success bg-surface-success-subdued text-text-success ':

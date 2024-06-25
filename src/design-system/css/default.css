@@ -75,6 +75,7 @@
 --icon-critical: var(--red-600);
 --icon-warning: var(--amber-600);
 --icon-success: var(--green-600);
+--icon-logo: var(--blue-600);
 
 /* Border */
 --border-default: var(--zinc-200);
