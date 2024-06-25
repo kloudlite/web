@@ -73,9 +73,21 @@ const BrandMenu = ({ className }: { className?: string }) => {
               setTheme(v);
             }}
           >
-            <ButtonGroup.IconButton value="light" icon={<Sun />} aria-label="light-theme"/>
-            <ButtonGroup.IconButton value="dark" icon={<Moon />} aria-label="dark-theme" />
-            <ButtonGroup.IconButton value="system" icon={<Monitor />} aria-label="system-theme" />
+            <ButtonGroup.IconButton
+              value="light"
+              icon={<Sun />}
+              aria-label="light-theme"
+            />
+            <ButtonGroup.IconButton
+              value="dark"
+              icon={<Moon />}
+              aria-label="dark-theme"
+            />
+            <ButtonGroup.IconButton
+              value="system"
+              icon={<Monitor />}
+              aria-label="system-theme"
+            />
           </ButtonGroup.Root>
         </div>
         <div className="wb-bodyMd wb-text-text-soft wb-hidden md:wb-flex lg:wb-hidden wb-flex-col wb-gap-3xl wb-items-end md:wb-self-end lg:wb-self-auto">
@@ -142,6 +154,10 @@ export default {
           {
             title: 'Contact us',
             to: '/contact-us',
+          },
+          {
+            title: 'Pricing',
+            to: '/pricing',
           },
         ],
       },

@@ -13,7 +13,7 @@ const PriceItem = ({
   return (
     <div
       className={cn(
-        'wb-p-3xl lg:wb-p-4xl 2xl:wb-p-5xl wb-flex wb-flex-col wb-gap-5xl wb-h-full relative',
+        'wb-relative wb-p-3xl lg:wb-p-4xl 2xl:wb-p-5xl wb-flex wb-flex-col wb-gap-5xl wb-h-full relative',
         item.selected
           ? 'wb-bg-surface-primary-subdued'
           : 'wb-bg-surface-basic-subdued'
@@ -25,13 +25,28 @@ const PriceItem = ({
         </div>
       )}
       <div className="wb-flex wb-flex-col wb-gap-lg md:wb-h-[140px]">
-        <span className="wb-headingMd md:wb-headingLg wb-text-text-default">
+        <span
+          className={cn(
+            'wb-headingMd md:wb-headingLg',
+            item.fade ? 'wb-text-text-disabled' : 'wb-text-text-default'
+          )}
+        >
           {item.type}
         </span>
-        <span className="wb-heading3xl md:wb-heading4xl wb-text-text-default">
+        <span
+          className={cn(
+            'wb-heading3xl md:wb-heading4xl',
+            item.fade ? 'wb-text-text-disabled' : 'wb-text-text-default'
+          )}
+        >
           {item.price}
         </span>
-        <span className="wb-bodyMd md:wb-bodyLg wb-text-text-soft">
+        <span
+          className={cn(
+            'wb-bodyMd md:wb-bodyLg',
+            item.fade ? 'wb-text-text-disabled' : 'wb-text-text-soft'
+          )}
+        >
           {item.descriptionn}
         </span>
       </div>
@@ -41,10 +56,22 @@ const PriceItem = ({
         {item.features.map((f) => {
           return (
             <div key={f} className="wb-flex wb-flex-row wb-gap-xl">
-              <span className="wb-text-icon-primary wb-pt-md">
+              <span
+                className={cn(
+                  'wb-pt-md',
+                  item.fade ? 'wb-text-icon-disabled' : 'wb-text-icon-primary'
+                )}
+              >
                 <CheckCircleFill size={16} />
               </span>
-              <span className="wb-text-text-default wb-bodyLg">{f}</span>
+              <span
+                className={cn(
+                  'wb-bodyLg',
+                  item.fade ? 'wb-text-text-disabled' : 'wb-text-text-default'
+                )}
+              >
+                {f}
+              </span>
             </div>
           );
         })}

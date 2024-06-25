@@ -26,18 +26,24 @@ export const Graph = ({
     left: 'wb-w-10xl',
     right: 'wb-w-10xl',
   },
+  graph,
 }: {
   className?: string;
   children: ReactNode;
   style?: CSSProperties | undefined;
   fade?: Ifade;
+  graph?: string;
 }) => {
   return (
     <div
       style={style}
-      className={cn('graph xl:[clip-path:inset(1.5px)] wb-relative', className)}
+      className={cn(
+        'xl:[clip-path:inset(1.5px)] wb-relative',
+        className,
+        graph || 'graph'
+      )}
     >
-      <div className="wb-hidden xl:wb-block wb-absolute wb-inset-0">
+      <div className="wb-hidden md:wb-block wb-absolute wb-inset-0">
         {/* top */}
         <div
           className={cn(
@@ -78,15 +84,18 @@ export const GraphExtended = ({
   innerClass,
   style,
   fade,
+  graph,
 }: {
   children?: ReactNode;
   className?: string;
   innerClass?: string;
   style?: CSSProperties | undefined;
   fade?: Ifade;
+  graph?: string;
 }) => {
   return (
     <Graph
+      graph={graph}
       className={cn(
         'lg:-wb-mx-11xl xl:-wb-mx-10xl wb-py-7xl md:wb-py-8xl lg:wb-py-10xl',
         className

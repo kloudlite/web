@@ -1,6 +1,6 @@
 import { TextInput, TextArea } from 'kl-design-system/atoms/input';
 import Link from 'next/link';
-import { ComponentProps } from 'react';
+import { ComponentProps, useState } from 'react';
 import { addDoc, collection, getFirestore } from '@firebase/firestore';
 import { FirebaseApp } from 'firebase/app';
 import { useForm } from 'react-hook-form';
@@ -92,7 +92,7 @@ const addContact = async (
   };
 
   await addDoc(col, contactData);
-  toast.info('Request for demo has be sent successfully.');
+  toast.info('Request for demo has been sent successfully.');
 };
 
 type Inputs = {
@@ -106,11 +106,13 @@ type Inputs = {
 
 const ContactRoot = () => {
   const { firebaseApp } = useFirebase();
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<Inputs>();
 
   return (
@@ -125,8 +127,11 @@ const ContactRoot = () => {
       </div>
       <div className="wb-gap-5xl md:wb-gap-8xl xl:wb-gap-10xl wb-flex wb-flex-col lg:wb-flex-row w-full">
         <form
-          onSubmit={handleSubmit((d) => {
-            addContact(firebaseApp, d);
+          onSubmit={handleSubmit(async (d) => {
+            setLoading(true);
+            await addContact(firebaseApp, d);
+            setLoading(false);
+            reset();
           })}
           className="wb-flex wb-flex-col wb-gap-5xl wb-flex-1 wb-p-3xl md:wb-p-6xl wb-border wb-border-border-default wb-rounded-lg"
         >
@@ -201,7 +206,13 @@ const ContactRoot = () => {
             />
           </div>
           <div className="wb-w-full md:wb-w-fit">
-            <Button type="submit" content="Request demo" size="md" block />
+            <Button
+              loading={loading}
+              type="submit"
+              content="Request demo"
+              size="md"
+              block
+            />
           </div>
         </form>
         <div className="wb-h-xs lg:wb-h-auto lg:wb-w-xs wb-bg-border-default" />

@@ -1,56 +1,5 @@
 /** eslint-disable prettier/prettier */
 import { ArrowLeftLg } from '@jengaicons/react';
-import { Badge } from 'kl-design-system/atoms/badge';
-import {
-  AWSlogo,
-  Agritech,
-  AnscerRoboticsLogo,
-  ArrowRight,
-  Autoscaling,
-  AzurelogoFill,
-  BackingServices,
-  Binoculars,
-  BoltchemLogo,
-  ChartBar,
-  CloudAgnostics,
-  Code,
-  Config,
-  Container,
-  CostMonitoring,
-  Cpu,
-  CustomEnv,
-  DesktopTower,
-  Developer,
-  DigitalOceanlogoFill,
-  Flask,
-  FlexibleNodepool,
-  HelmLogo,
-  HourglassSimpleHigh,
-  Infinity as InfinityIcon,
-  InfraAsCode,
-  Lightbulb,
-  LiquidCompute,
-  LockKey,
-  LockSimple,
-  MultiTenant,
-  NoOps,
-  Nodeless,
-  PlaxonicLogo,
-  PlayPause,
-  Robot,
-  RocketLaunch,
-  Search,
-  SecureConfig,
-  SelectionForeground,
-  ShieldCheck,
-  ShuffleAngular,
-  SpotManagement,
-  TreeStructure,
-  TwitterNewLogoFill,
-  Users,
-  Vpn,
-  Keyhole,
-} from '~/app/icons/icons';
 
 import providersImage1024 from '~/images/infraops/providers/1024.svg';
 import providersImage1280 from '~/images/infraops/providers/1280.svg';
@@ -141,6 +90,58 @@ import TalescaleIcon from '~/images/home/companies/talescale.svg';
 import Collarative from '~/images/homeNew/exploring/collaborative.jpeg';
 import RemoteLocal from '~/images/homeNew/exploring/remote-local.jpeg';
 import Workflow from '~/images/homeNew/exploring/workflow.jpeg';
+import {
+  AWSlogo,
+  Agritech,
+  AnscerRoboticsLogo,
+  ArrowRight,
+  Autoscaling,
+  AzurelogoFill,
+  BackingServices,
+  Binoculars,
+  BoltchemLogo,
+  ChartBar,
+  CloudAgnostics,
+  Code,
+  Config,
+  Container,
+  CostMonitoring,
+  Cpu,
+  CustomEnv,
+  DesktopTower,
+  Developer,
+  DigitalOceanlogoFill,
+  Flask,
+  FlexibleNodepool,
+  HelmLogo,
+  HourglassSimpleHigh,
+  Infinity as InfinityIcon,
+  InfraAsCode,
+  Lightbulb,
+  LiquidCompute,
+  LockKey,
+  LockSimple,
+  MultiTenant,
+  NoOps,
+  Nodeless,
+  PlaxonicLogo,
+  PlayPause,
+  Robot,
+  RocketLaunch,
+  Search,
+  SecureConfig,
+  SelectionForeground,
+  ShieldCheck,
+  ShuffleAngular,
+  SpotManagement,
+  TreeStructure,
+  TwitterNewLogoFill,
+  Users,
+  Vpn,
+  Keyhole,
+} from '~/app/icons/icons';
+import Link from 'next/link';
+import { Badge } from 'kl-design-system/atoms/badge';
 import AnserSvg from '../icons/AnserRobotics';
 import BoltzmanSvg from '../icons/Boltzman';
 import CrewScaleSvg from '../icons/CrewScale';
@@ -970,55 +971,26 @@ const consts = {
             suffix={<ArrowRight />}
             size="lg"
             block
+            linkComponent={Link}
+            toLabel="href"
+            to={`${process.env.AUTH_URL}/signup`}
           />
         ),
       },
       {
-        type: 'Essential',
-        id: '2',
-        price: (
-          <div className="wb-flex wb-flex-row wb-gap-lg wb-items-baseline">
-            <span className="wb-heading4xl wb-text-text-default">$10</span>
-            <span className="wb-text-text-default wb-bodyLg">/per user</span>
-          </div>
-        ),
-        descriptionn: 'For small teams, individual, and personal projects',
-        features: [
-          'Role based access control',
-          'AI assisted workflows (coming soon...)',
-        ],
-        featurePrecontent: (
-          <div className="wb-flex wb-flex-row wb-items-center wb-gap-xl wb-text-text-default">
-            <span>
-              <ArrowLeftLg size={20} />
-            </span>
-            <span className="wb-headingMd">Everything of Scale, plus...</span>
-          </div>
-        ),
-        action: (
-          <Button
-            content="Upgrade now"
-            variant="primary"
-            suffix={<ArrowRight />}
-            size="lg"
-            block
-          />
-        ),
-        badge: <Badge type="info">Most popular</Badge>,
-        selected: true,
-      },
-      {
-        type: 'Essential',
+        type: 'Enterprise',
         id: '3',
         price: 'Custom',
-        descriptionn: 'For small teams, individual, and personal projects',
+        descriptionn: 'For teams with more security and performance needed',
         features: ['Dedicated support & SLAs', 'SSO/SAML', 'On Premise'],
         featurePrecontent: (
           <div className="wb-flex wb-flex-row wb-items-center wb-gap-xl wb-text-text-default">
             <span>
               <ArrowLeftLg size={20} />
             </span>
-            <span className="wb-headingMd">Everything of Scale, plus...</span>
+            <span className="wb-headingMd">
+              Everything of Essential, plus...
+            </span>
           </div>
         ),
         action: (
@@ -1028,8 +1000,49 @@ const consts = {
             suffix={<ArrowRight />}
             size="lg"
             block
+            linkComponent={Link}
+            toLabel="href"
+            to="/contact-us"
           />
         ),
+      },
+      {
+        type: 'Scale',
+        id: '2',
+        price: (
+          <div className="wb-flex wb-flex-row wb-gap-lg wb-items-baseline">
+            <span className="wb-heading4xl">$10</span>
+            <span className="wb-bodyLg">/per user</span>
+          </div>
+        ),
+        descriptionn: 'For growing teams that focused on collaboration',
+        features: [
+          'Role based access control',
+          'AI assisted workflows (coming soon...)',
+        ],
+        featurePrecontent: (
+          <div className="wb-flex wb-flex-row wb-items-center wb-gap-xl wb-text-text-disabled">
+            <span>
+              <ArrowLeftLg size={20} />
+            </span>
+            <span className="wb-headingMd">
+              Everything of Enterprise, plus...
+            </span>
+          </div>
+        ),
+        action: (
+          <Button
+            content="Upgrade now"
+            variant="basic"
+            suffix={<ArrowRight />}
+            size="lg"
+            block
+            disabled
+          />
+        ),
+        selected: false,
+        fade: true,
+        badge: <Badge type="neutral">Coming soon</Badge>,
       },
     ],
   },

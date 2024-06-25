@@ -127,6 +127,12 @@ code {
   }
 }
 
+@media screen and (min-width:768px){
+  .graphIllustration {
+    @apply wb-relative [background-size:32px_32px] wb-bg-[linear-gradient(90deg,_var(--surface-basic-active)_1.5px,_transparent_1.5px),_linear-gradient(0deg,_var(--surface-basic-active)_1.5px,_transparent_1.5px)];
+  }
+}
+
 @media screen and (min-width:1280px) {
   .graph {
     @apply wb-relative [background-size:32px_32px] wb-bg-[linear-gradient(90deg,_var(--surface-basic-active)_1.5px,_transparent_1.5px),_linear-gradient(0deg,_var(--surface-basic-active)_1.5px,_transparent_1.5px)];

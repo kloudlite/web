@@ -105,7 +105,7 @@ const JoinProvidersDialog = ({
               </div>
               <div className="wb-flex wb-flex-col wb-w-full wb-p-8xl wb-gap-5xl wb-flex-1 md:wb-flex-auto">
                 {hasProvider && (
-                  <div className="wb-flex wb-flex-col wb-gap-3xl wb-w-[350px] wb-m-auto">
+                  <div className="wb-flex wb-flex-col wb-gap-3xl md:wb-w-[350px] md:wb-m-auto">
                     {oathProviders?.githubLoginUrl && (
                       <Button
                         variant="tertiary"
@@ -144,7 +144,7 @@ const JoinProvidersDialog = ({
                     )}
                   </div>
                 )}
-                <div className="wb-flex wb-flex-col wb-gap-5xl wb-w-[350px] wb-m-auto">
+                <div className="wb-flex wb-flex-col wb-gap-5xl md:wb-w-[350px] md:wb-m-auto">
                   {hasProvider ? (
                     <span className="wb-h-xs wb-bg-border-default" />
                   ) : null}
@@ -177,7 +177,7 @@ const JoinProvidersDialog = ({
                   </div>
                 </div>
               </div>
-              <div className="wb-flex wb-bg-surface-basic-subdued wb-px-8xl wb-py-5xl wb-bodyLg wb-text-text-soft wb-items-center wb-justify-center">
+              <div className="wb-flex wb-bg-surface-basic-subdued wb-px-5xl md:wb-px-8xl wb-py-5xl wb-bodyLg wb-text-text-soft wb-items-center wb-justify-center">
                 Already have an account?&nbsp;
                 <Anchor
                   className="wb-text-text-strong wb-underline wb-underline-offset-4 hover:wb-cursor-pointer"

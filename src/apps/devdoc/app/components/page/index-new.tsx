@@ -62,6 +62,7 @@ const Illustration = () => {
     <Wrapper className="-wb-mt-5xl">
       <div className="hidden md:block wb-pb-[36px] 2xl:wb-pb-[128px]">
         <GraphExtended
+          // graph="graphIllustration"
           innerClass="md:-wb-mx-[32px] lg:-wb-mx-[160px] -wb-mt-[2px] wb-flex wb-justify-center !wb-pt-[32px] 3xl:-wb-mx-[256px]"
           className="!wb-pb-[32px] xl:[background-position: unset] 2xl:[background-position:top] 3xl:[background-position:unset]"
         >
@@ -114,10 +115,13 @@ const Index = () => {
   return (
     <div>
       <Wrapper className="wb-relative wb-flex wb-justify-center lg:wb-justify-start wb-py-6xl md:wb-pt-8xl lg:wb-pt-10xl">
-        <div className='wb-z-[51]'>
-            <div className='fixed wb-right-[10px] wb-bottom-[10px] wb-z-[1]' dangerouslySetInnerHTML={{
-                    __html:`<a href="https://www.producthunt.com/posts/kloudlite?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-kloudlite" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=462798&theme=neutral" alt="Kloudlite - Distributed&#0032;Development&#0032;Environments&#0032;as&#0032;a&#0032;Service | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>`
-            }} />
+        <div className="wb-z-[51]">
+          <div
+            className="fixed wb-right-[10px] wb-bottom-[10px] wb-z-[1]"
+            dangerouslySetInnerHTML={{
+              __html: `<a href="https://www.producthunt.com/posts/kloudlite?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-kloudlite" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=462798&theme=neutral" alt="Kloudlite - Distributed&#0032;Development&#0032;Environments&#0032;as&#0032;a&#0032;Service | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>`,
+            }}
+          />
         </div>
         <div className="wb-w-full wb-z-[1]">
           <Title />
