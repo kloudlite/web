@@ -3,12 +3,13 @@ import Wrapper from '../wrapper';
 import ReadyToOps from '../website/ready-to-ops';
 import { Block, DetailCard, Head } from '../commons';
 import { GraphItem } from '../graph';
+import { ReactNode } from 'react';
 
-const ClientCard = ({ icon }: { icon: string }) => {
+const ClientCard = ({ icon }: { icon: ReactNode }) => {
   return (
     <GraphItem>
       <div className="flex items-center justify-center bg-surface-basic-default px-2xl py-3xl h-[128px]">
-        <img alt="client-icon" src={icon} />
+        {icon}
       </div>
     </GraphItem>
   );
@@ -66,8 +67,7 @@ const CustomerStories = () => {
           tag="Success stories"
           heading="Clients we have championed"
           desc="Customized, cloud-agnostic, and cost-effective solutions crafted
-                for businesses of all scales & sizes
-"
+                for businesses of all scales & sizes"
         />
       </Wrapper>
       <Wrapper>

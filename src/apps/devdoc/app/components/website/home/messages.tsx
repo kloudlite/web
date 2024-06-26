@@ -54,14 +54,14 @@ const DontBelieve = () => {
     <Block title="Don't believe? Read for yourself..">
       <div className="wb-block md:wb-hidden">
         <Slider autoPlay active={`${active}`} onMove={(e) => setActive(e)}>
-          {consts.home.messages.map((message) => (
+          {consts.homeNew.messages.map((message) => (
             <MessageCard key={message.title} {...message} />
           ))}
         </Slider>
       </div>
 
       <div className="wb-h-full wb-hidden md:wb-grid wb-grid-cols-1 md:wb-grid-cols-3 wb-gap-3xl lg:wb-gap-5xl">
-        {consts.home.messages.map((message) => (
+        {consts.homeNew.messages.map((message) => (
           <GraphItem key={message.title}>
             <MessageCard {...message} />
           </GraphItem>
