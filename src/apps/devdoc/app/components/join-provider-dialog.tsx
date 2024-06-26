@@ -47,7 +47,7 @@ const JoinProvidersDialog = ({
     <div className="wb-w-full">
       {!buttonContent && (
         <ButtonDev
-          content="Signup to join waitlist"
+          content="Signup"
           variant="primary"
           block
           size={size}

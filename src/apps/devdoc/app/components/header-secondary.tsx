@@ -41,9 +41,7 @@ const HeaderSecondary = ({
                   <JoinProvidersDialog
                     size="md"
                     buttonContent={
-                      <span className="wb-bodyMd-medium">
-                        Signup to join waitlist
-                      </span>
+                      <span className="wb-bodyMd-medium">Signup</span>
                     }
                   />
                 </div>
