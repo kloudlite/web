@@ -203,9 +203,6 @@ export const createComponents = ({
         className="wb-mt-3xl wb-bg-surface-basic-input wb-border wb-border-border-default wb-rounded wb-p-xl"
       />
     ),
-    img: (props) => (
-      <img {...props} className="wb-p-3xl wb-mt-3xl wb-bg-white" />
-    ),
     // code: Code,
     ...components,
   };

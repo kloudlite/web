@@ -221,6 +221,12 @@ export default {
         type: 'normal',
         to: communityUrl,
       },
+
+      {
+        title: 'Pricing',
+        type: 'normal',
+        to: '/pricing',
+      },
     ],
   },
   urls: {

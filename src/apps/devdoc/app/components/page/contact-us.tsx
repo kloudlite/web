@@ -78,7 +78,7 @@ const addContact = async (
     mobile: string;
     country: string;
     message: string;
-  }
+  },
 ) => {
   if (!app) {
     return;
@@ -205,7 +205,7 @@ const ContactRoot = () => {
               message={errors.message?.message}
             />
           </div>
-          <div className="wb-w-full md:wb-w-fit">
+          <div className="wb-w-full md:wb-w-fit wb-self-end">
             <Button
               loading={loading}
               type="submit"

@@ -9,6 +9,10 @@ import useMenu from '../utils/use-menu';
 import Wrapper from './wrapper';
 import NavigationMenuV2 from './nav-menu-v2';
 import JoinProvidersDialog from './join-provider-dialog';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import useSearch from '../utils/use-search';
+import SearchBox from './search';
 
 const HeaderSecondary = ({
   activePath,
@@ -17,6 +21,34 @@ const HeaderSecondary = ({
 }) => {
   const { config } = useConfig();
   const { state, setState } = useMenu();
+
+  const { setShow: setShowSearch } = useSearch();
+  const route = useRouter();
+
+  useEffect(() => {
+    setShowSearch(false);
+  }, [route]);
+
+  useEffect(() => {
+    const commandK = (e: KeyboardEvent) => {
+      if (e.key === 'k' && (e.ctrlKey || e.metaKey)) {
+        setShowSearch(true);
+      }
+      if (e.key === 'Escape') {
+        setShowSearch(false);
+      }
+    };
+
+    document.addEventListener('keydown', commandK);
+
+    return () => {
+      document.removeEventListener('keydown', commandK);
+    };
+  }, []);
+
+  const showSearch = () =>
+    route.route.startsWith('/blog') || route.route.startsWith('/docs');
+
   return (
     <div className="lg:wb-relative wb-flex wb-flex-row wb-top-0 wb-left-0 wb-right-0 wb-bg-surface-basic-subdued wb-border-b wb-border-border-default wb-min-h-[var(--kl-navbar-height)] wb-z-50">
       <Wrapper className="wb-flex">
@@ -28,6 +60,7 @@ const HeaderSecondary = ({
 
           <div className="wb-flex-1 lg:wb-flex-none wb-flex wb-flex-row wb-gap-2xl wb-items-center wb-justify-end">
             <div className="wb-flex wb-flex-col lg:wb-flex-row wb-gap-xl lg:wb-items-center">
+              {showSearch() && <SearchBox />}
               <a
                 href={config.gitRepoUrl}
                 aria-label="kloudlite-github"

@@ -30,6 +30,7 @@ import { GraphItem } from '../components/graph';
 import { ExploringItem } from '../components/website/home/keep-exploring';
 import consts from '../utils/const';
 import { Block } from '../components/commons';
+import { Flexsearch } from '../components/flexsearch';
 
 function GitTimestamp({ timestamp }: { timestamp: Date }) {
   const { locale = DEFAULT_LOCALE } = useRouter();
@@ -46,6 +47,23 @@ function GitTimestamp({ timestamp }: { timestamp: Date }) {
     </>
   );
 }
+
+const _ProductHuntStatus = () => {
+  return (
+    <div className="wb-flex wb-flex-col wb-hidden">
+      <div className="wb-p-2xl wb-bg-surface-primary-default wb-text-center text-text-on-primary">
+        Kloudlite is live on Product Hunt! &nbsp;
+        <a
+          target="_blank"
+          href="https://www.producthunt.com/posts/kloudlite"
+          className="hover:wb-bodyLg-underline wb-underline-offset-4"
+        >
+          Check out the launch and share your feedback!
+        </a>
+      </div>
+    </div>
+  );
+};
 
 const findPageType = (activePath: Item[], names: string[]) => {
   return (
@@ -78,7 +96,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
         defaultLocale,
         route: fsPath,
       }),
-    [pageMap, locale, defaultLocale, fsPath]
+    [pageMap, locale, defaultLocale, fsPath],
   );
 
   const {
@@ -110,18 +128,6 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
 
   return (
     <div className="wb-bg-surface-basic-subdued wb-min-h-screen wb-antialiased">
-      <div className="wb-flex wb-flex-col hidden md:block">
-        <div className="wb-p-2xl wb-bg-surface-primary-default wb-text-center text-text-on-primary">
-          Kloudlite is live on Product Hunt! &nbsp;
-          <a
-            target="_blank"
-            href="https://www.producthunt.com/posts/kloudlite"
-            className="hover:wb-bodyLg-underline wb-underline-offset-4"
-          >
-            Check out the launch and share your feedback!
-          </a>
-        </div>
-      </div>
       <Head>
         <title>{title === 'Index' ? config.siteTitle : title}</title>
         <meta
@@ -161,7 +167,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
               : 'wb-max-w-none',
             ['blog', 'customer-stories'].includes(pageType)
               ? 'wb-py-6xl md:!wb-py-8xl'
-              : ''
+              : '',
           )}
         >
           <Sidebar
@@ -185,7 +191,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
           <article
             className={cn(
               'wb-flex-1 wb-w-full',
-              activeThemeContext.layout === 'raw' ? '' : 'lg:wb-pt-xl'
+              activeThemeContext.layout === 'raw' ? '' : 'lg:wb-pt-xl',
             )}
           >
             <main
@@ -201,7 +207,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
                   : '',
                 ['blog'].includes(pageType)
                   ? 'md:wb-px-5xl lg:wb-px-8xl xl:!wb-px-11xl 2xl:!wb-px-12xl 3xl:!wb-px-14xl'
-                  : ''
+                  : '',
               )}
             >
               <MDXProvider
@@ -244,7 +250,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
                 activeThemeContext.timestamp &&
                 pageOpts.timestamp &&
                 activeThemeContext.layout !== 'raw' ? (
-                  <div className="wb-bodyLg wb-text-text-strong wb-pb-xl">
+                  <div className="wb-bodyLg wb-text-text-strong wb-py-xl md:wb-py-6xl">
                     {GitTimestamp({ timestamp: new Date(pageOpts.timestamp) })}
                   </div>
                 ) : null}
@@ -293,6 +299,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
         )}
         <Footer config={config} />
       </ActiveAnchorProvider>
+      <Flexsearch />
     </div>
   );
 };

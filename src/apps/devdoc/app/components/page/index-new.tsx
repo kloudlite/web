@@ -115,7 +115,7 @@ const Index = () => {
   return (
     <div>
       <Wrapper className="wb-relative wb-flex wb-justify-center lg:wb-justify-start wb-py-6xl md:wb-pt-8xl lg:wb-pt-10xl">
-        <div className="wb-z-[51]">
+        <div className="wb-z-[51] wb-hidden">
           <div
             className="fixed wb-right-[10px] wb-bottom-[10px] wb-z-[1]"
             dangerouslySetInnerHTML={{

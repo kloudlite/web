@@ -98,7 +98,7 @@ const ListDetailItem = ({
 };
 const BlogHome = () => {
   const [tab, setTab] = useState<'overview' | 'engineering' | 'community'>(
-    'overview'
+    'overview',
   );
 
   const config = useConfig();
@@ -111,13 +111,14 @@ const BlogHome = () => {
 
   useEffect(() => {
     const blogPage = config.config.pageOpts?.pageMap.find(
-      (p) => p.kind === 'Folder' && p.route === '/blog'
+      (p) => p.kind === 'Folder' && p.route === '/blog',
     );
 
     const blogPosts =
       blogPage?.kind === 'Folder'
         ? blogPage.children.filter(
-            (f) => f.kind === 'MdxPage' && f.frontMatter && !f.frontMatter.draft
+            (f) =>
+              f.kind === 'MdxPage' && f.frontMatter && !f.frontMatter.draft,
           ) || ([] as PageMapItem[])
         : ([] as PageMapItem[]);
     // @ts-ignore
@@ -125,7 +126,7 @@ const BlogHome = () => {
       blogPosts.sort((a: any, b: any) => {
         // @ts-ignore
         return new Date(b?.frontMatter?.date) - new Date(a?.frontMatter?.date);
-      })
+      }),
     );
   }, [config]);
 
@@ -152,9 +153,6 @@ const BlogHome = () => {
                 />
               ))}
             </Tab.Root>
-          </div>
-          <div className="wb-w-full md:wb-w-[330px]">
-            <TextInput placeholder="Search" prefixIcon={<Search />} />
           </div>
         </div>
         <SectionWrapper className="wb-flex wb-flex-col" noPadding>
@@ -198,7 +196,7 @@ const BlogHome = () => {
                       <div
                         className={cn(
                           'wb-py-3xl  wb-px-3xl md:wb-pt-3xl md:wb-py-xl md:wb-px-5xl wb-flex wb-flex-col wb-gap-3xl lg:wb-gap-5xl md:wb-flex-row md:wb-items-center lg:wb-h-8xl wb-transition-all',
-                          index === page.length - 1 ? 'wb-pb-3xl' : ''
+                          index === page.length - 1 ? 'wb-pb-3xl' : '',
                         )}
                       >
                         <div className="wb-flex-1 wb-bodyLg wb-text-text-default lg:wb-line-clamp-1">

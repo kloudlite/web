@@ -20,17 +20,17 @@ export const viewport: Viewport = {
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ConfigProvider config={config}>
-      <FirebaseProvider>
-        <ToastContainer position="bottom-left" />
-        <MenuProvider>
-          <SearchProvider>
+    <SearchProvider>
+      <ConfigProvider config={config}>
+        <FirebaseProvider>
+          <ToastContainer position="bottom-left" />
+          <MenuProvider>
             <ThemeProvider>
               <Component {...pageProps} />
             </ThemeProvider>
-          </SearchProvider>
-        </MenuProvider>
-      </FirebaseProvider>
-    </ConfigProvider>
+          </MenuProvider>
+        </FirebaseProvider>
+      </ConfigProvider>
+    </SearchProvider>
   );
 }
