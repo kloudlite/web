@@ -1,5 +1,3 @@
-import { Search } from '@jengaicons/react';
-import { TextInput } from 'kl-design-system/atoms/input';
 import Tab from 'kl-design-system/atoms/tabs';
 import { useEffect, useState } from 'react';
 import { PageMapItem } from 'nextra';
