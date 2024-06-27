@@ -54,6 +54,7 @@ rules:
   # pritter rules
 
   # ts rules
+  react/no-unescaped-entities: 0
   react/jsx-filename-extension: 0
   react/require-default-props : 0
   "@typescript-eslint/no-unused-vars":
