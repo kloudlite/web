@@ -7,6 +7,8 @@ import profileKarthik from '~/images/about-us/karthik-thirumalasetti.png';
 import profileAditya from '~/images/about-us/aditya-sharma.png';
 import profilePavani from '~/images/about-us/pavani.png';
 import profileSrikanta from '~/images/about-us/s-srikanta.png';
+import profileHarsh from '~/images/about-us/harsh.png';
+import profileShweta from '~/images/about-us/shewta.png';
 
 import collaborate1440 from '~/images/homeNew/collaborate1440.svg';
 import connect1440 from '~/images/homeNew/connect1440.svg';
@@ -537,7 +539,7 @@ const consts = {
       {
         name: 'Shweta Kaushal',
         role: 'Product Designer',
-        image: '',
+        image: profileShweta.src,
         linkedin: '',
         x: '',
         github: '',
@@ -569,7 +571,7 @@ const consts = {
       {
         name: 'Harsh Malviya',
         role: 'Design Intern',
-        image: '',
+        image: profileHarsh.src,
         linkedin: '',
         x: '',
         github: '',

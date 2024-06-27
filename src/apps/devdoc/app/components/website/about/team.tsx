@@ -11,7 +11,8 @@ const AboutTeam = () => {
     <SectionWrapper className="wb-flex wb-flex-col wb-w-full">
       <Block
         title="United, we innovate!"
-        desc="Crafted by a team of 10 tech enthusiasts with a deep love and passion for open-source tech, and led  by a dedicated and visionary leadership focused on pushing the boundaries of innovation."
+        desc="Crafted by a team of 10 tech enthusiasts with a deep love and passion for open-source tech, and led 
+by a dedicated and visionary leadership focused on pushing the boundaries of innovation."
       >
         <div className="wb-grid wb-grid-cols-1 md:wb-grid-cols-3 2xl:wb-grid-cols-4 3xl:wb-grid-cols-5 wb-gap-3xl md:wb-gap-5xl">
           {consts.aboutus.team.map((t) => (

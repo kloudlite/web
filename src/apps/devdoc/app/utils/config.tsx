@@ -52,7 +52,7 @@ const BrandMenu = ({ className }: { className?: string }) => {
     <div
       className={cn(
         'wb-flex wb-flex-col wb-gap-7xl md:wb-gap-3xl lg:wb-pr-4xl wb-order-last md:wb-order-first md:wb-justify-between md:wb-h-full',
-        className
+        className,
       )}
     >
       <div className="wb-flex wb-flex-row">
@@ -148,12 +148,12 @@ export default {
         showExtra: false,
         items: [
           {
-            title: 'Blog',
-            to: '/blog',
+            title: 'About us',
+            to: '/about-us',
           },
           {
-            title: 'Contact us',
-            to: '/contact-us',
+            title: 'Blog',
+            to: '/blog',
           },
           {
             title: 'Pricing',
@@ -166,6 +166,10 @@ export default {
         className: 'wb-basis-1/2 md:wb-basis-auto wb-flex',
         showExtra: true,
         items: [
+          {
+            title: 'Contact us',
+            to: '/contact-us',
+          },
           {
             title: 'Terms of services',
             to: '/terms-of-services',
