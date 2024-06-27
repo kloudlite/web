@@ -97,6 +97,7 @@ const Select = <T, U extends boolean | undefined = undefined>(
     noOptionMessage,
     open,
     disableWhileLoading,
+    createLabel,
   } = props;
 
   return (
@@ -161,6 +162,7 @@ const Select = <T, U extends boolean | undefined = undefined>(
               searchable={searchable}
               noOptionMessage={noOptionMessage}
               disableWhileLoading={disableWhileLoading}
+              createLabel={createLabel}
             />
           </div>
         </div>
