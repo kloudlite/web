@@ -16,15 +16,13 @@
         "title":"Getting Started"
     },
     "--reference--":{
-        "title":"Features",
+        "title":"Remote Env",
         "type":"separator"
     },
-    "managed-services":{
-        "title":"Managed Services"
+    "integrated-services":{
+        "title":"Integrated Services"
     },
-    "local-devices":{
-        "title":"Local Dev Containers"
-    },
+    
     "any-wireguard":{
         "title":"Wireguard devices"
     },
@@ -33,6 +31,13 @@
     },
     "work-in-progress":{
         "title":"Work in progress.."
+    },
+    "--develop-environment--":{
+        "title":"Dev Env",
+        "type":"separator"
+    },
+    "local-devices":{
+        "title":"Dev Containers"
     },
     "---references-":{
         "title":"Reference",

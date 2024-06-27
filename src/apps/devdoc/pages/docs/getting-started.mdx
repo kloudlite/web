@@ -1,10 +1,10 @@
 import Steps from "~/app/components/steps";
 
-## 4 Steps to Get Started
+## 5 Steps to Get Started
 
 <Steps>
 ### Attach Your Cluster
-Attach your cluster to Kloudlite using a Helm chart. First, create a cluster reference in Kloudlite, then follow the steps to attach the cluster.
+First, create a cluster reference in Kloudlite, then follow the steps to attach the cluster.
 <img src="/attach-cluster-1.png" alt="" className="wb-p-3xl wb-mt-3xl wb-bg-white" />
 
 <img src="/attach-cluster-2.png" alt="" className="wb-p-3xl wb-mt-3xl wb-bg-white" />
@@ -22,11 +22,39 @@ and import resources into the environment.
 Once environment is created you can add configs, secrets, apps to it. You can also import 
 managed resources of managed services.
 
+### Setup Kloudlite CLI
+Kloudlite CLI is a command line tool that allows you to interact with Kloudlite. It provides a set of commands to manage clusters, environments, and other resources.
+
+Setup kloudlite cli. Follow the below instructions or click [here](https://github.com/kloudlite/kl).
+```bash
+# Prerequisites:
+docker run
+
+# Install latest with curl
+curl 'https://kl.kloudlite.io/kloudlite/kl!?select=kl' | bash
+
+# Install latest with wget
+wget -qO- 'https://kl.kloudlite.io/kloudlite/kl!?select=kl' | bash
+
+# Install specific version
+curl 'https://kl.kloudlite.io/kloudlite/kl@v1.0.0!?select=kl' | bash
+```
+
+Authentication:
+```bash
+# Login to Kloudlite
+kl auth login
+
+# Logout from Kloudlite
+kl auth logout
+
+# Status of Kloudlite authentication
+kl auth status
+```
+
 ### Set Up Your Local Machine
 Once enviroment is created you can set up your local machine to connect to the environment 
 using the Kloudlite CLI.
-
-Setup kloudlite cli. Follow the instructions [here](https://github.com/kloudlite/kl).
 
 Choose your workspace directory and create a `kl.yaml` file with the following command:
 ```bash
