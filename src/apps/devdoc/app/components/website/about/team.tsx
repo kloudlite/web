@@ -52,6 +52,7 @@ by a dedicated and visionary leadership focused on pushing the boundaries of inn
                         toLabel="href"
                         to={linkedInPrefix + t.linkedin}
                         size="xs"
+                        target="__blank__"
                       />
                     )}
                     {t.x && (
@@ -62,6 +63,7 @@ by a dedicated and visionary leadership focused on pushing the boundaries of inn
                         toLabel="href"
                         to={twitterPrefix + t.x}
                         size="xs"
+                        target="__blank__"
                       />
                     )}
                     {t.github && (
@@ -72,6 +74,7 @@ by a dedicated and visionary leadership focused on pushing the boundaries of inn
                         toLabel="href"
                         to={githubPrefix + t.github}
                         size="xs"
+                        target="__blank__"
                       />
                     )}
                   </div>
