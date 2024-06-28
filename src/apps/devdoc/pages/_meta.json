@@ -80,6 +80,17 @@
       "header": "secondary"
     }
   },
+  "about-us": {
+    "title": "About us",
+    "type": "page",
+    "display": "hidden",
+    "theme": {
+      "layout": "raw",
+      "sidebar": false,
+      "toc": false,
+      "header": "secondary"
+    }
+  },
   "docs": {
     "title": "Docs",
     "type": "page",

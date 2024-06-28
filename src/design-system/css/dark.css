@@ -9,10 +9,10 @@
   --surface-basic-overlay-bg: var(--zinc-900);
 
   /* Primary */
-  --surface-primary-default: var(--blue-700);
+  --surface-primary-default: var(--blue-800);
   --surface-primary-subdued: var(--blue-1100);
   --surface-primary-hovered: var(--blue-600);
-  --surface-primary-pressed: var(--blue-800);
+  --surface-primary-pressed: var(--blue-900);
   --surface-primary-selected: var(--blue-1100);
 
   /* Secondary */
@@ -71,6 +71,7 @@
 --icon-critical: var(--red-500);
 --icon-warning: var(--amber-500);
 --icon-success: var(--green-500);
+--icon-logo: var(--zinc-100);
 
 /* Border */
 --border-default: var(--zinc-800);

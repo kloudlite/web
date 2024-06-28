@@ -214,7 +214,8 @@ const config = {
       surface: {
         basic: {
           default: 'var(--surface-basic-default)',
-          subdued: 'var(--surface-basic-subdued)',
+          subdued:
+            'color-mix(in srgb, var(--surface-basic-subdued) calc(100% * <alpha-value>), transparent)',
           hovered: 'var(--surface-basic-hovered)',
           pressed: 'var(--surface-basic-pressed)',
           input: 'var(--surface-basic-input)',
@@ -290,6 +291,7 @@ const config = {
         critical: 'var(--icon-critical)',
         warning: 'var(--icon-warning)',
         success: 'var(--icon-success)',
+        logo: 'var(--icon-logo)',
       },
       border: {
         default: 'var(--border-default)',

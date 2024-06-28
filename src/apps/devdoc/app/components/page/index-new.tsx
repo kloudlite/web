@@ -3,7 +3,8 @@ import { GraphExtended } from '~/app/components/graph';
 import { authUrl } from '~/app/utils/config';
 import hero from '~/images/homeNew/hero';
 import HomeIllustrationMobileDark from '~/images/homeNew/illustration-mobile-dark.svg';
-import HomeIllustrationMobile from '~/images/homeNew/illustration-mobile.svg';
+// import HomeIllustrationMobile from '~/images/homeNew/illustration-mobile.svg';
+import HomeIllustrationMobileWeb from '~/images/homeNew/illustration-mobile.webp';
 import DynamicImage from '../dynamic-image';
 import FaqSection from '../website/home/faq';
 import HowItWorksSection from '../website/home/how-it-works';
@@ -61,6 +62,7 @@ const Illustration = () => {
     <Wrapper className="-wb-mt-5xl">
       <div className="hidden md:block wb-pb-[36px] 2xl:wb-pb-[128px]">
         <GraphExtended
+          // graph="graphIllustration"
           innerClass="md:-wb-mx-[32px] lg:-wb-mx-[160px] -wb-mt-[2px] wb-flex wb-justify-center !wb-pt-[32px] 3xl:-wb-mx-[256px]"
           className="!wb-pb-[32px] xl:[background-position: unset] 2xl:[background-position:top] 3xl:[background-position:unset]"
         >
@@ -102,7 +104,7 @@ const Illustration = () => {
         <img
           alt="illustration-light"
           className="dark-hidden wb-w-full wb-aspect-square"
-          src={HomeIllustrationMobile.src}
+          src={HomeIllustrationMobileWeb.src}
         />
       </div>
     </Wrapper>
@@ -113,10 +115,13 @@ const Index = () => {
   return (
     <div>
       <Wrapper className="wb-relative wb-flex wb-justify-center lg:wb-justify-start wb-py-6xl md:wb-pt-8xl lg:wb-pt-10xl">
-        <div className='wb-z-[51]'>
-            <div className='fixed wb-right-[10px] wb-bottom-[10px] wb-z-[1]' dangerouslySetInnerHTML={{
-                    __html:`<a href="https://www.producthunt.com/posts/kloudlite?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-kloudlite" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=462798&theme=neutral" alt="Kloudlite - Distributed&#0032;Development&#0032;Environments&#0032;as&#0032;a&#0032;Service | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>`
-            }} />
+        <div className="wb-z-[51] wb-hidden">
+          <div
+            className="fixed wb-right-[10px] wb-bottom-[10px] wb-z-[1]"
+            dangerouslySetInnerHTML={{
+              __html: `<a href="https://www.producthunt.com/posts/kloudlite?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-kloudlite" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=462798&theme=neutral" alt="Kloudlite - Distributed&#0032;Development&#0032;Environments&#0032;as&#0032;a&#0032;Service | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>`,
+            }}
+          />
         </div>
         <div className="wb-w-full wb-z-[1]">
           <Title />
@@ -130,11 +135,8 @@ const Index = () => {
               </span>
               <span className="wb-text-text-soft wb-bodyLg">
                 Got an invite code?{' '}
-                <a
-                  href={`${authUrl}/signup`}
-                  className="hover:wb-bodyLg-underline wb-underline-offset-4 "
-                >
-                  <span className="!wb-text-text-default wb-cursor-pointer wb-font-medium">
+                <a href={`${authUrl}/signup`}>
+                  <span className="!wb-text-text-default wb-cursor-pointer wb-font-medium hover:wb-bodyLg-underline wb-underline-offset-4">
                     Click here
                   </span>{' '}
                   to access

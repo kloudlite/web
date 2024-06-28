@@ -58,7 +58,7 @@ function HeadingLink({
             h4: 'wb-headingLg-marketing wb-mt-6xl',
             h5: 'wb-mt-6xl',
             h6: 'wb-mt-6xl',
-          }[Tag]
+          }[Tag],
         )}
         {...props}
       >
@@ -143,7 +143,7 @@ export const createComponents = ({
   return {
     h1: (props) => (
       <h1
-        className="wb-heading4xl-marketing wb-mt-sm wb-text-text-default"
+        className="wb-heading4xl-marketing wb-mt-sm wb-text-text-default wb-pb-lg"
         {...props}
       />
     ),
@@ -156,7 +156,7 @@ export const createComponents = ({
       <ul
         className={cn(
           'wb-list-disc wb-pl-[18px] wb-list-outside wb-text-text-strong',
-          isBlog ? 'wb-bodyXl' : 'wb-bodyLg'
+          isBlog ? 'wb-bodyXl' : 'wb-bodyLg',
         )}
         {...props}
       />
@@ -165,7 +165,7 @@ export const createComponents = ({
       <ol
         className={cn(
           'wb-list-decimal wb-pl-[24px] wb-list-outside wb-text-text-strong',
-          isBlog ? 'wb-bodyXl' : 'wb-bodyLg'
+          isBlog ? 'wb-bodyXl' : 'wb-bodyLg',
         )}
         {...props}
       />
@@ -175,7 +175,7 @@ export const createComponents = ({
       <blockquote
         className={cn(
           "blockquote wb-mt-3xl wb-rounded-md wb-p-xl wb-bg-surface-primary-selected before:wb-content-[''] before:wb-w-md before:wb-bg-border-primary before:wb-flex before:wb-shrink-0 wb-flex wb-gap-3xl",
-          isBlog ? 'wb-bodyXl' : 'wb-bodyLg'
+          isBlog ? 'wb-bodyXl' : 'wb-bodyLg',
         )}
         {...props}
       />
@@ -187,7 +187,7 @@ export const createComponents = ({
       <p
         className={cn(
           'wb-mt-3xl rounded-image wb-text-text-strong wb-break-words !wb-leading-[28px]',
-          isBlog ? 'wb-bodyXl' : 'wb-bodyLg'
+          isBlog ? 'wb-bodyXl' : 'wb-bodyLg',
         )}
         {...props}
       />

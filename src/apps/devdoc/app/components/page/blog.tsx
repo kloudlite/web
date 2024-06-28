@@ -1,5 +1,3 @@
-import { Search } from '@jengaicons/react';
-import { TextInput } from 'kl-design-system/atoms/input';
 import Tab from 'kl-design-system/atoms/tabs';
 import { useEffect, useState } from 'react';
 import { PageMapItem } from 'nextra';
@@ -65,10 +63,10 @@ const ListDetailItem = ({
   const { locale = DEFAULT_LOCALE } = useRouter();
   return (
     <>
-      <div className="wb-bodyLg md:wb-w-[180px] wb-capitalize wb-text-text-soft wb-hidden md:wb-block">
+      <div className="wb-bodyLg lg:wb-w-[180px] wb-capitalize wb-text-text-soft wb-hidden md:wb-block">
         {frontMatter?.category}
       </div>
-      <div className="wb-bodyLg wb-w-[200px] wb-text-text-soft wb-hidden md:wb-block">
+      <div className="wb-bodyLg lg:wb-w-[200px] wb-text-text-soft wb-hidden md:wb-block">
         {new Date(frontMatter?.date).toLocaleDateString(locale, {
           day: 'numeric',
           month: 'long',
@@ -79,10 +77,10 @@ const ListDetailItem = ({
         <AvatarItem gravatarHash={frontMatter?.gravatarHash} />
       </div>
       <div className="wb-flex wb-flex-col wb-gap-md md:wb-hidden">
-        <div className="wb-bodyLg wb-w-[180px] wb-capitalize wb-text-text-soft">
+        <div className="wb-bodyLg lg:wb-w-[180px] wb-capitalize wb-text-text-soft">
           {frontMatter?.category}
         </div>
-        <div className="wb-bodyLg wb-w-[200px] wb-text-text-soft">
+        <div className="wb-bodyLg lg:wb-w-[200px] wb-text-text-soft">
           {new Date(frontMatter?.date).toLocaleDateString(locale, {
             day: 'numeric',
             month: 'long',
@@ -98,7 +96,7 @@ const ListDetailItem = ({
 };
 const BlogHome = () => {
   const [tab, setTab] = useState<'overview' | 'engineering' | 'community'>(
-    'overview'
+    'overview',
   );
 
   const config = useConfig();
@@ -111,13 +109,14 @@ const BlogHome = () => {
 
   useEffect(() => {
     const blogPage = config.config.pageOpts?.pageMap.find(
-      (p) => p.kind === 'Folder' && p.route === '/blog'
+      (p) => p.kind === 'Folder' && p.route === '/blog',
     );
 
     const blogPosts =
       blogPage?.kind === 'Folder'
         ? blogPage.children.filter(
-            (f) => f.kind === 'MdxPage' && f.frontMatter && !f.frontMatter.draft
+            (f) =>
+              f.kind === 'MdxPage' && f.frontMatter && !f.frontMatter.draft,
           ) || ([] as PageMapItem[])
         : ([] as PageMapItem[]);
     // @ts-ignore
@@ -125,18 +124,18 @@ const BlogHome = () => {
       blogPosts.sort((a: any, b: any) => {
         // @ts-ignore
         return new Date(b?.frontMatter?.date) - new Date(a?.frontMatter?.date);
-      })
+      }),
     );
   }, [config]);
 
   return (
     <div className="wb-flex wb-flex-col">
       <div className="wb-py-6xl md:wb-py-8xl lg:wb-py-10xl wb-flex wb-flex-col">
-        <div className="wb-flex wb-flex-col wb-gap-3xl">
+        <div className="wb-flex wb-flex-col wb-gap-2xl">
           <h1 className="wb-heading4xl-marketing lg:wb-heading5xl-marketing wb-text-text-default">
             Blog
           </h1>
-          <p className="wb-bodyXl lg:wb-bodyXXl wb-text-text-soft">
+          <p className="wb-bodyLg lg:wb-bodyXl wb-text-text-soft">
             The one stop shop for latest tech trends, tools, insights, and
             analysis
           </p>
@@ -152,9 +151,6 @@ const BlogHome = () => {
                 />
               ))}
             </Tab.Root>
-          </div>
-          <div className="wb-w-full md:wb-w-[330px]">
-            <TextInput placeholder="Search" prefixIcon={<Search />} />
           </div>
         </div>
         <SectionWrapper className="wb-flex wb-flex-col" noPadding>
@@ -178,8 +174,8 @@ const BlogHome = () => {
                 <GraphItem>
                   <div className="wb-flex wb-flex-row wb-items-center wb-gap-3xl wb-py-xl wb-px-5xl wb-h-8xl wb-headingMd wb-text-text-default wb-bg-surface-basic-active">
                     <span className="wb-flex-1">Name</span>
-                    <span className="wb-w-[180px]">Category</span>
-                    <span className="wb-w-[200px]">Published date</span>
+                    <span className="lg:wb-w-[180px]">Category</span>
+                    <span className="lg:wb-w-[200px]">Published date</span>
                     <span className="wb-w-[30px] wb-flex" />
                   </div>
                 </GraphItem>
@@ -193,12 +189,12 @@ const BlogHome = () => {
                     <a
                       href={bp.route}
                       key={bp.name}
-                      className="flex flex-col wb-gap-3xl hover:wb-bg-surface-basic-hovered"
+                      className="hover:wb-bg-surface-basic-hovered"
                     >
                       <div
                         className={cn(
-                          'flex wb-pt-3xl md:wb-py-xl wb-px-3xl md:wb-px-5xl wb-flex wb-flex-col  wb-gap-3xl md:wb-gap-2xl md:wb-flex-row md:wb-items-center lg:wb-h-8xl md:wb-line-clamp-1 wb-transition-all',
-                          index === page.length - 1 ? 'wb-pb-3xl' : ''
+                          'wb-py-3xl  wb-px-3xl md:wb-pt-3xl md:wb-py-xl md:wb-px-5xl wb-flex wb-flex-col wb-gap-3xl lg:wb-gap-5xl md:wb-flex-row md:wb-items-center lg:wb-h-8xl wb-transition-all',
+                          index === page.length - 1 ? 'wb-pb-3xl' : '',
                         )}
                       >
                         <div className="wb-flex-1 wb-bodyLg wb-text-text-default lg:wb-line-clamp-1">

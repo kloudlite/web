@@ -65,10 +65,10 @@ const loadIndexesPromises = new Map<string, Promise<void>>();
 
 const loadIndexesImpl = async (
   basePath: string,
-  locale: string
+  locale: string,
 ): Promise<void> => {
   const response = await fetch(
-    `${basePath}/_next/static/chunks/nextra-data-${locale}.json`
+    `${basePath}/_next/static/chunks/nextra-data-${locale}.json`,
   );
   const searchData = (await response.json()) as SearchData;
 
@@ -102,6 +102,8 @@ const loadIndexesImpl = async (
       bidirectional: true,
     },
   });
+
+  console.log('searchData', sectionIndex);
 
   let pageId = 0;
 
@@ -165,6 +167,8 @@ export function Flexsearch(): ReactElement {
   const [results, setResults] = useState<SearchResult[]>([]);
   const [search, setSearch] = useState('');
 
+  const router = useRouter();
+
   const doSearch = (search: string) => {
     if (!search) return;
     const [pageIndex, sectionIndex] = indexes[locale];
@@ -211,7 +215,7 @@ export function Flexsearch(): ReactElement {
           prefix: isFirstItemOfPage && (
             <div
               className={cn(
-                'headingMd mx-xl pb-md mb-md border-b border-border-default'
+                'wb-headingMd wb-mx-xl wb-pb-md wb-mb-md wb-border-b wb-border-border-default',
               )}
             >
               {result.doc.title}
@@ -219,11 +223,11 @@ export function Flexsearch(): ReactElement {
           ),
           children: (
             <>
-              <div className="text-base bodyMd-semibold text-text-default">
+              <div className="wb-text-base wb-bodyMd-semibold wb-text-text-default">
                 <HighlightMatches match={search} value={title} />
               </div>
               {content && (
-                <div className="excerpt bodySm text-text-soft">
+                <div className="wb-excerpt wb-bodySm wb-text-text-soft">
                   <HighlightMatches match={search} value={content} />
                 </div>
               )}
@@ -246,13 +250,20 @@ export function Flexsearch(): ReactElement {
           }
           return a._page_rk - b._page_rk;
         })
+        .filter(
+          (res) =>
+            (res.route.startsWith('/docs') &&
+              router.route.startsWith('/docs')) ||
+            (res.route.startsWith('/blog') && router.route.startsWith('/blog')),
+        )
         .map((res) => ({
           id: `${res._page_rk}_${res._section_rk}`,
           route: res.route,
           prefix: res.prefix,
           children: res.children,
-        }))
+        })),
     );
+    console.log(router);
   };
 
   const preload = useCallback(
@@ -267,7 +278,7 @@ export function Flexsearch(): ReactElement {
         setLoading(false);
       }
     },
-    [locale, basePath]
+    [locale, basePath],
   );
 
   const handleChange = async (value: string) => {
@@ -298,6 +309,7 @@ export function Flexsearch(): ReactElement {
       setSearch('');
     }
   }, [show]);
+
   return (
     <Popup.Root
       show={show}
@@ -305,14 +317,14 @@ export function Flexsearch(): ReactElement {
         setShow(e);
       }}
     >
-      <Popup.Content className="!p-0">
-        <div className="flex flex-col">
-          <div className="flex flex-row items-center sticky top-0 bg-surface-basic-default border-b border-border-default pr-xs">
-            <span className="pl-xl pr-md py-xl">
+      <Popup.Content className="!wb-p-0">
+        <div className="wb-flex wb-flex-col">
+          <div className="wb-flex wb-flex-row wb-items-center wb-sticky wb-top-0 wb-bg-surface-basic-default wb-border-b wb-border-border-default wb-pr-xs">
+            <span className="wb-pl-xl wb-pr-md wb-py-xl wb-text-text-default">
               <Search size={20} />
             </span>
             <input
-              className="flex-1 outline-none p-lg min-h-[32px] box-content bodyLg placeholder:text-text-disabled text-text-default"
+              className="wb-flex-1 wb-outline-none wb-p-lg wb-min-h-[32px] wb-box-content wb-bodyLg placeholder:wb-text-text-disabled wb-text-text-default wb-bg-surface-basic-default"
               placeholder="Search"
               onKeyDown={setKeyEvent}
               value={search}
@@ -323,8 +335,10 @@ export function Flexsearch(): ReactElement {
                 handleChange(target.value);
               }}
             />
-            <span className="pl-lg pr-xl bodyMd text-text-soft">⌘K</span>
-            <div className="border-l border-border-default h-[26px]" />
+            <span className="wb-pl-lg wb-pr-xl wb-bodyMd wb-text-text-soft">
+              ⌘K
+            </span>
+            <div className="wb-border-l wb-border-border-default wb-h-[26px]" />
             <IconButton
               variant="plain"
               size="md"
@@ -336,23 +350,23 @@ export function Flexsearch(): ReactElement {
           </div>
           <div>
             {results.length === 0 && (
-              <div className="bodyMd px-4xl py-8xl text-center text-text-soft">
+              <div className="wb-bodyMd wb-px-4xl wb-py-8xl wb-text-center wb-text-text-soft">
                 No recent results
               </div>
             )}
             {results.length > 0 && (
               <ListNavigate
-                selectedClass="bg-surface-basic-hovered"
+                selectedClass="wb-bg-surface-basic-hovered"
                 keyPressEvent={keyEvent}
-                className="py-xl px-lg flex flex-col space-y-lg"
+                className="wb-py-xl wb-px-lg wb-flex wb-flex-col wb-space-y-lg"
                 childSelectorClass="search-result-item"
               >
                 {results.map((res) => (
-                  <div key={res.id} className="flex flex-col">
-                    <div>{res.prefix}</div>
+                  <div key={res.id} className="wb-flex wb-flex-col">
+                    <div className="text-text-default">{res.prefix}</div>
                     <Link
                       href={res.route}
-                      className="transition-all rounded search-result-item flex flex-col gap-md px-xl py-lg"
+                      className="wb-transition-all wb-rounded search-result-item wb-flex wb-flex-col wb-gap-md wb-px-xl wb-py-lg"
                     >
                       {res.children}
                     </Link>

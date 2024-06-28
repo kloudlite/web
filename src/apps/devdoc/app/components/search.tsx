@@ -4,21 +4,24 @@ import { cn } from '../utils/commons';
 import useSearch from '../utils/use-search';
 
 const SearchBox = ({ className }: { className?: string }) => {
-  const { setShow } = useSearch();
+  const { setShow, show } = useSearch();
   return (
-    <div className={cn('flex flex-row items-center gap-xl', className)}>
+    <div
+      className={cn('wb-flex wb-flex-row wb-items-center wb-gap-xl', className)}
+    >
       <button
         onClick={() => {
           setShow(true);
+          console.log('here', show);
         }}
-        className="flex md:!hidden lg:!flex flex-row items-center rounded border border-border-default bg-surface-basic-default h-[36px] min-w-[200px] w-full"
+        className="wb-hidden xl:wb-flex wb-flex-row wb-items-center wb-rounded wb-border wb-border-border-default wb-bg-surface-basic-default wb-h-[38px] xl:wb-min-w-[200px] wb-w-full wb-box-content"
       >
-        <span className="text-icon-default py-lg pl-lg pr-md">
+        <span className="wb-text-icon-default wb-py-lg wb-pl-lg wb-pr-md">
           <Search size={20} />
         </span>
-        <span className="text-text-disabled bodyMd">Search</span>
+        <span className="wb-text-text-disabled wb-bodyMd">Search</span>
       </button>
-      <div className="hidden md:!flex lg:!hidden">
+      <div className="wb-flex xl:wb-hidden">
         <IconButton
           icon={<Search />}
           variant="plain"

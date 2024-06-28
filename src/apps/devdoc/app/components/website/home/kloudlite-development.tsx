@@ -117,16 +117,16 @@ const KloudliteDevelopment = () => {
         </div>
         <GraphItem
           lines={{ bottom: false }}
-          className="wb-relative wb-bg-surface-basic-subdued wb-p-3xl md:wb-p-5xl wb-sticky wb-top-0 z-50"
+          className="wb-bg-surface-basic-subdued wb-p-3xl md:wb-p-5xl wb-sticky wb-top-0 z-50"
         >
           <div className="wb-absolute wb-inset-0 wb-bg-surface-basic-subdued wb-z-[-1] -wb-mx-3xl md:wb-hidden" />
           <div className="lg:wb-hidden wb-h-xs wb-bg-border-dark wb-absolute wb-bottom-0 -wb-left-3xl -wb-right-3xl wb-z-[1]" />
           <AnimatePresence mode="wait">
             <div className="wb-flex wb-flex-col wb-gap-3xl">
               <div className="wb-flex wb-flex-col wb-gap-xl">
-                <h3 className="wb-heading4xl-1-marketing md:wb-heading4xl-1-marketing lg:wb-heading5xl-1-marketing wb-text-text-default">
+                <h2 className="wb-heading4xl-1-marketing md:wb-heading4xl-1-marketing lg:wb-heading5xl-1-marketing wb-text-text-default">
                   Why Kloudlite?
-                </h3>
+                </h2>
                 <p className="wb-hidden md:wb-block wb-bodyLg md:wb-bodyXl wb-text-text-soft">
                   It is built with the belief that you should develop your
                   application as you run your application

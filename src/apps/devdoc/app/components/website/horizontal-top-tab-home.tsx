@@ -35,7 +35,7 @@ const HorizontalTopTabItem = ({
       )}
       onClick={onClick}
     >
-      <h5
+      <h3
         className={cn(
           'wb-heading2xl-marketing wb-transition-all lg:wb-min-h-[84px] xl:wb-min-h-[auto] 3xl:wb-min-h-[auto] wb-shrink-0',
           {
@@ -45,7 +45,7 @@ const HorizontalTopTabItem = ({
         )}
       >
         {label}
-      </h5>
+      </h3>
       <p
         className={cn('wb-bodyXl wb-transition-all', {
           'wb-text-text-strong': !active,

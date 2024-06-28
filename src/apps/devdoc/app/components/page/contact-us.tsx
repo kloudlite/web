@@ -1,6 +1,6 @@
 import { TextInput, TextArea } from 'kl-design-system/atoms/input';
 import Link from 'next/link';
-import { ComponentProps } from 'react';
+import { ComponentProps, useState } from 'react';
 import { addDoc, collection, getFirestore } from '@firebase/firestore';
 import { FirebaseApp } from 'firebase/app';
 import { useForm } from 'react-hook-form';
@@ -78,7 +78,7 @@ const addContact = async (
     mobile: string;
     country: string;
     message: string;
-  }
+  },
 ) => {
   if (!app) {
     return;
@@ -92,7 +92,7 @@ const addContact = async (
   };
 
   await addDoc(col, contactData);
-  toast.info('Request for demo has be sent successfully.');
+  toast.info('Request for demo has been sent successfully.');
 };
 
 type Inputs = {
@@ -106,30 +106,35 @@ type Inputs = {
 
 const ContactRoot = () => {
   const { firebaseApp } = useFirebase();
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<Inputs>();
 
   return (
     <Wrapper className="wb-relative wb-flex wb-flex-col wb-items-center wb-py-6xl md:wb-py-8xl lg:wb-py-10xl wb-gap-6xl md:wb-gap-8xl xl:wb-gap-10xl">
-      <div className="wb-flex wb-flex-col wb-gap-3xl wb-text-center">
-        <h1 className="wb-heading4xl-marketing md:wb-heading5xl-marketing lg:wb-heading6xl-marketing wb-text-text-default">
-          Contact us
-        </h1>
-        <p className="wb-bodyLg-medium md:wb-bodyXl-medium wb-text-text-soft">
-          Get in touch and let us know how we can help.
-        </p>
-      </div>
       <div className="wb-gap-5xl md:wb-gap-8xl xl:wb-gap-10xl wb-flex wb-flex-col lg:wb-flex-row w-full">
         <form
-          onSubmit={handleSubmit((d) => {
-            addContact(firebaseApp, d);
+          onSubmit={handleSubmit(async (d) => {
+            setLoading(true);
+            await addContact(firebaseApp, d);
+            setLoading(false);
+            reset();
           })}
           className="wb-flex wb-flex-col wb-gap-5xl wb-flex-1 wb-p-3xl md:wb-p-6xl wb-border wb-border-border-default wb-rounded-lg"
         >
+          <div className="wb-flex wb-flex-col wb-gap-2xl wb-text-left wb-mb-2xl">
+            <h1 className="wb-heading4xl-marketing wb-text-text-default">
+              Contact us
+            </h1>
+            <p className="wb-bodyLg-medium wb-text-text-soft">
+              Get in touch and let us know how we can help.
+            </p>
+          </div>
           <div className="wb-flex wb-flex-col wb-gap-3xl">
             <TextInput
               label="Full name"
@@ -200,8 +205,15 @@ const ContactRoot = () => {
               message={errors.message?.message}
             />
           </div>
-          <div className="wb-w-full md:wb-w-fit">
-            <Button type="submit" content="Request demo" size="md" block />
+          <div className="wb-w-full md:wb-w-fit wb-self-end">
+            <Button
+              loading={loading}
+              type="submit"
+              content="Request demo"
+              size="md"
+              block
+              disabled={loading}
+            />
           </div>
         </form>
         <div className="wb-h-xs lg:wb-h-auto lg:wb-w-xs wb-bg-border-default" />

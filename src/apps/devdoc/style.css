@@ -1,5 +1,5 @@
-@import url('./fonts/Inter-var.css');
-@import url('./fonts/Familjen-Grotesk.css');
+@import url("./fonts/Inter-var.css");
+@import url("./fonts/Familjen-Grotesk.css");
 @import "../../design-system/css/primitives.css";
 @import "../../design-system/css/default.css";
 @import "../../design-system/css/dark.css";
@@ -14,14 +14,14 @@
 
 @layer utilities {
   .drop-shadow-indicator {
-    filter: drop-shadow(0px -1px 2px rgba(0, 0, 0, 0.10)) drop-shadow(0px 2px 10px rgba(0, 0, 0, 0.10));
+    filter: drop-shadow(0px -1px 2px rgba(0, 0, 0, 0.1))
+      drop-shadow(0px 2px 10px rgba(0, 0, 0, 0.1));
   }
 }
 
 :root {
   --kl-navbar-height: 72px;
 }
-
 
 html {
   scroll-behavior: auto;
@@ -36,7 +36,7 @@ html {
 }
 
 .scrollbar-gutter-auto {
-  scrollbar-gutter: 'auto';
+  scrollbar-gutter: "auto";
 }
 
 .dark-hidden {
@@ -56,7 +56,7 @@ html {
   @apply wb-pl-[28px] wb-ml-[14px] wb-border-l wb-border-icon-disabled wb-border-dotted;
 }
 
-.kl-steps>h3::before {
+.kl-steps > h3::before {
   counter-increment: steps;
   content: counter(steps);
   width: 28px;
@@ -64,14 +64,13 @@ html {
   @apply -wb-ml-[47px] -wb-mt-[3px] wb-bg-surface-basic-pressed wb-border-surface-basic-subdued wb-rounded-full wb-flex wb-items-center wb-justify-center wb-text-center wb-border-4 wb-box-content wb-headingMd wb-text-text-default wb-absolute;
 }
 
-.kl-steps>h3 {
+.kl-steps > h3 {
   @apply wb-sticky wb-top-[50px] wb-bg-surface-basic-subdued wb-pb-[6px] wb-mt-[6px];
 }
 
-.kl-steps>p {
+.kl-steps > p {
   @apply !wb-mt-[10px] !wb-mb-[10px];
 }
-
 
 .kl-footer {
   order: -99999;
@@ -120,14 +119,22 @@ code {
   }
 }
 
-@media screen and (min-width:1024px) {
+@media screen and (min-width: 1024px) {
   .kl-sidebar {
-    -webkit-mask-image: linear-gradient(transparent, #000 20px), linear-gradient(270deg, #000 10px, transparent 0);
-    mask-image: linear-gradient(transparent, #000 20px), linear-gradient(270deg, #000 10px, transparent 0);
+    -webkit-mask-image: linear-gradient(transparent, #000 20px),
+      linear-gradient(270deg, #000 10px, transparent 0);
+    mask-image: linear-gradient(transparent, #000 20px),
+      linear-gradient(270deg, #000 10px, transparent 0);
   }
 }
 
-@media screen and (min-width:1280px) {
+@media screen and (min-width: 768px) {
+  .graphIllustration {
+    @apply wb-relative [background-size:32px_32px] wb-bg-[linear-gradient(90deg,_var(--surface-basic-active)_1.5px,_transparent_1.5px),_linear-gradient(0deg,_var(--surface-basic-active)_1.5px,_transparent_1.5px)];
+  }
+}
+
+@media screen and (min-width: 1280px) {
   .graph {
     @apply wb-relative [background-size:32px_32px] wb-bg-[linear-gradient(90deg,_var(--surface-basic-active)_1.5px,_transparent_1.5px),_linear-gradient(0deg,_var(--surface-basic-active)_1.5px,_transparent_1.5px)];
   }
@@ -137,30 +144,39 @@ code {
   }
 
   .graph2::before {
-    content: '';
-    background-size: 100% 6%, 100% 6%, 6% 100%, 6% 100%;
+    content: "";
+    background-size:
+      100% 6%,
+      100% 6%,
+      6% 100%,
+      6% 100%;
     background-position: top, bottom, left, right;
     @apply wb-bg-no-repeat wb-top-0 wb-left-0 wb-w-full wb-h-full wb-absolute wb-bg-[linear-gradient(to_top,_transparent_0%,_var(--surface-basic-subdued)_100%),_linear-gradient(to_bottom,_transparent_0%,_var(--surface-basic-subdued)_100%)];
   }
 }
 
 .shadow-filter {
-  filter: drop-shadow(0px 2px 16px rgba(33, 43, 54, 0.08)) drop-shadow(0px 0px 0px rgba(6, 44, 82, 0.10));
+  filter: drop-shadow(0px 2px 16px rgba(33, 43, 54, 0.08))
+    drop-shadow(0px 0px 0px rgba(6, 44, 82, 0.1));
 }
-
 
 .loading-overlay {
   display: none !important;
 }
 
-
-.custom-li>p {
+.custom-li > p {
   padding-bottom: 8px;
 }
 
 .g {
   --deg: 0deg;
-  background: linear-gradient(var(--deg), #FAFAFA 12.07%, #FCD34D 26.16%, #3B82F6 43.46%, #FAFAFA 77.26%);
+  background: linear-gradient(
+    var(--deg),
+    #fafafa 12.07%,
+    #fcd34d 26.16%,
+    #3b82f6 43.46%,
+    #fafafa 77.26%
+  );
   opacity: 0;
   filter: blur(10px);
 }
@@ -173,21 +189,17 @@ canvas {
   image-rendering: crisp-edges;
 }
 
-
 .partners-slide-track ul li {
   width: auto !important;
 }
 
-
-.rounded-image>img {
+.rounded-image > img {
   @apply wb-rounded-lg;
 }
 
-.blockquote>p:first-child {
+.blockquote > p:first-child {
   @apply !wb-mt-0;
 }
-
-
 
 @keyframes move {
   0% {
