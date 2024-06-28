@@ -23,7 +23,7 @@ const AboutMission = () => {
             </div>
           </GraphItem>
           <GraphItem className="wb-bg-surface-basic-subdued wb-p-5xl wb-flex wb-flex-col wb-justify-center">
-            <span className="wb-bodyLg md:wb-bodyXl lg:wb-bodyXXl wb-text-text-soft">
+            <span className="wb-bodyLg md:wb-bodyXl lg:wb-bodyXXl wb-text-text-strong">
               To deliver a seamless development experience that mirrors
               production environments. We are committed to building a strong,
               engaged community of developers, ensuring our platform is

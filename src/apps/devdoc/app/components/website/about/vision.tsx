@@ -23,7 +23,7 @@ const AboutVision = () => {
             </div>
           </GraphItem>
           <GraphItem className="wb-bg-surface-basic-subdued wb-p-5xl wb-flex wb-flex-col wb-justify-center">
-            <span className="wb-bodyLg md:wb-bodyXl lg:wb-bodyXXl wb-text-text-soft">
+            <span className="wb-bodyLg md:wb-bodyXl lg:wb-bodyXXl wb-text-text-strong">
               To empower developers worldwide by providing the ultimate platform
               for building, testing, and deploying distributed applications with
               unparalleled efficiency and ease, fostering a vibrant community

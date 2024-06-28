@@ -4,11 +4,17 @@ import consts, {
   twitterPrefix,
 } from '~/app/utils/const';
 import { IconButton } from 'kl-design-system/atoms/button';
-import { GithubLogo, LinkedinLogo, TwitterNewLogo } from '@jengaicons/react';
+import {
+  GithubLogo,
+  Globe,
+  LinkedinLogo,
+  TwitterNewLogo,
+} from '@jengaicons/react';
 import Link from 'next/link';
 import { Block } from '../../commons';
 import { GraphItem } from '../../graph';
 import SectionWrapper from '../section-wrapper';
+import { cn } from '~/app/utils/commons';
 
 const AboutTeam = () => {
   return (
@@ -30,7 +36,10 @@ by a dedicated and visionary leadership focused on pushing the boundaries of inn
                     <img
                       src={t.image}
                       alt={t.name}
-                      className="wb-h-full wb-w-full wb-object-cover"
+                      className={cn(
+                        'wb-h-full wb-w-full wb-object-cover',
+                        t.imageClassName,
+                      )}
                     />
                   )}
                 </div>
@@ -73,6 +82,17 @@ by a dedicated and visionary leadership focused on pushing the boundaries of inn
                         linkComponent={Link}
                         toLabel="href"
                         to={githubPrefix + t.github}
+                        size="xs"
+                        target="__blank__"
+                      />
+                    )}
+                    {t.web && (
+                      <IconButton
+                        icon={<Globe />}
+                        variant="plain"
+                        linkComponent={Link}
+                        toLabel="href"
+                        to={t.web}
                         size="xs"
                         target="__blank__"
                       />

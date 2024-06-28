@@ -120,7 +120,7 @@ const consts = {
         subtitle: 'Co-founder, Anscer Robotics',
         company: <TwitterNewLogoFill size={24} />,
         message:
-          'Thanks to Kloudlite, AnsCer Robotics streamlined deployment across edge devices, minimized downtime, and enhanced monitoring with Grafana integration. Remote config management simplified operations, boosting efficiency significantly. Kloudlite has been invaluable in optimizing our workflow.',
+          'Thanks to Kloudlite, Anscer Robotics streamlined deployment across edge devices, minimized downtime, and enhanced monitoring with Grafana integration. Remote config management simplified operations, boosting efficiency significantly. Kloudlite has been invaluable in optimizing our workflow.',
       },
       {
         title: 'Sunny Khanna',
@@ -139,19 +139,17 @@ const consts = {
     ],
     exploring: [
       {
-        img: RemoteLocal.src,
-        label: 'Remote local environments',
-        desc: 'Discover how Kloudlite pioneers transformative remote local environments.',
-        to: '/blog/remote-local-environments',
-      },
-
-      {
         img: Collarative.src,
         label: 'Collaborative development',
         desc: 'In a globalized landscape, collaborative development faces challenges but fuels innovation.',
         to: '/blog/collaborative-development',
       },
-
+      {
+        img: RemoteLocal.src,
+        label: 'Remote local environments',
+        desc: 'Discover how Kloudlite pioneers transformative remote local environments.',
+        to: '/blog/remote-local-environments',
+      },
       {
         img: Workflow.src,
         label: 'Development workflow',
@@ -551,6 +549,7 @@ const consts = {
         linkedin: '',
         x: '',
         github: '',
+        web: '',
       },
       {
         name: 'Piyush Kumar',
@@ -578,8 +577,9 @@ const consts = {
       },
       {
         name: 'Harsh Malviya',
-        role: 'Design Intern',
+        role: 'Jr product designer',
         image: profileHarsh.src,
+        imageClassName: '!wb-object-contain',
         linkedin: '',
         x: '',
         github: '',
