@@ -1,4 +1,8 @@
-import consts from '~/app/utils/const';
+import consts, {
+  githubPrefix,
+  linkedInPrefix,
+  twitterPrefix,
+} from '~/app/utils/const';
 import { IconButton } from 'kl-design-system/atoms/button';
 import { GithubLogo, LinkedinLogo, TwitterNewLogo } from '@jengaicons/react';
 import Link from 'next/link';
@@ -40,30 +44,36 @@ by a dedicated and visionary leadership focused on pushing the boundaries of inn
                     </span>
                   </div>
                   <div className="wb-flex wb-flex-row wb-items-center wb-gap-lg">
-                    <IconButton
-                      icon={<LinkedinLogo />}
-                      variant="plain"
-                      linkComponent={Link}
-                      toLabel="href"
-                      to={t.linkedin}
-                      size="xs"
-                    />
-                    <IconButton
-                      icon={<TwitterNewLogo />}
-                      variant="plain"
-                      linkComponent={Link}
-                      toLabel="href"
-                      to={t.x}
-                      size="xs"
-                    />
-                    <IconButton
-                      icon={<GithubLogo />}
-                      variant="plain"
-                      linkComponent={Link}
-                      toLabel="href"
-                      to={t.github}
-                      size="xs"
-                    />
+                    {t.linkedin && (
+                      <IconButton
+                        icon={<LinkedinLogo />}
+                        variant="plain"
+                        linkComponent={Link}
+                        toLabel="href"
+                        to={linkedInPrefix + t.linkedin}
+                        size="xs"
+                      />
+                    )}
+                    {t.x && (
+                      <IconButton
+                        icon={<TwitterNewLogo />}
+                        variant="plain"
+                        linkComponent={Link}
+                        toLabel="href"
+                        to={twitterPrefix + t.x}
+                        size="xs"
+                      />
+                    )}
+                    {t.github && (
+                      <IconButton
+                        icon={<GithubLogo />}
+                        variant="plain"
+                        linkComponent={Link}
+                        toLabel="href"
+                        to={githubPrefix + t.github}
+                        size="xs"
+                      />
+                    )}
                   </div>
                 </div>
               </div>

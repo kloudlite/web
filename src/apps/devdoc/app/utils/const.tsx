@@ -9,6 +9,10 @@ import profilePavani from '~/images/about-us/pavani.png';
 import profileSrikanta from '~/images/about-us/s-srikanta.png';
 import profileHarsh from '~/images/about-us/harsh.png';
 import profileShweta from '~/images/about-us/shewta.png';
+import profilePiyush from '~/images/about-us/piyush.jpg';
+import profileAbdhesh from '~/images/about-us/abdhesh.jpeg';
+import profileAnshuman from '~/images/about-us/ansuman.jpg';
+import profileMohit from '~/images/about-us/mohit.jpg';
 
 import collaborate1440 from '~/images/homeNew/collaborate1440.svg';
 import connect1440 from '~/images/homeNew/connect1440.svg';
@@ -64,6 +68,10 @@ import RedPlutoSvg from '../icons/RedPluto';
 import TalescaleSvg from '../icons/Talescale';
 import Button from '../components/button';
 import JoinProvidersDialog from '../components/join-provider-dialog';
+
+export const linkedInPrefix = 'https://www.linkedin.com/in/';
+export const githubPrefix = 'https://github.com/';
+export const twitterPrefix = 'https://x.com/';
 
 const partnersNew = [
   {
@@ -523,18 +531,18 @@ const consts = {
       {
         name: 'Anshuman Bhaskar',
         role: 'Principal Engineer',
-        image: '',
-        linkedin: '',
+        image: profileAnshuman.src,
+        linkedin: 'nxtcoder17',
         x: '',
-        github: '',
+        github: 'nxtcoder17',
       },
       {
         name: 'Abdhesh Nayak',
         role: 'Principal Engineer',
-        image: '',
-        linkedin: '',
-        x: '',
-        github: '',
+        image: profileAbdhesh.src,
+        linkedin: 'abdheshnayak',
+        x: 'abdhesh_nayak',
+        github: 'abdheshnayak',
       },
       {
         name: 'Shweta Kaushal',
@@ -547,18 +555,18 @@ const consts = {
       {
         name: 'Piyush Kumar',
         role: 'SDE',
-        image: '',
-        linkedin: '',
+        image: profilePiyush.src,
+        linkedin: 'nxtcoder19',
         x: '',
-        github: '',
+        github: 'nxtcoder19',
       },
       {
         name: 'Mohit Kumar',
         role: 'SDE',
-        image: '',
-        linkedin: '',
+        image: profileMohit.src,
+        linkedin: 'mohit-kumar-3912ab17a',
         x: '',
-        github: '',
+        github: 'nxtcoder36',
       },
       {
         name: 'Bikash Ojha',
