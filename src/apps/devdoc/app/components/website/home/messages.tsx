@@ -27,7 +27,6 @@ const MessageCard = ({
             subtitle={<span className="wb-bodyMd">{subtitle}</span>}
             color="one"
             size="md"
-            noImage
             tabIndex={-1}
           />
         </span>
@@ -39,7 +38,6 @@ const MessageCard = ({
             color="dark"
             size="md"
             tabIndex={-1}
-            noImage
           />
         </span>
       </div>
@@ -59,7 +57,6 @@ const DontBelieve = () => {
           ))}
         </Slider>
       </div>
-
       <div className="wb-h-full wb-hidden md:wb-grid wb-grid-cols-1 md:wb-grid-cols-3 wb-gap-3xl lg:wb-gap-5xl">
         {consts.homeNew.messages.map((message) => (
           <GraphItem key={message.title}>
