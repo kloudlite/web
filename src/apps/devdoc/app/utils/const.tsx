@@ -9,6 +9,10 @@ import profilePavani from '~/images/about-us/pavani.png';
 import profileSrikanta from '~/images/about-us/s-srikanta.png';
 import profileHarsh from '~/images/about-us/harsh.png';
 import profileShweta from '~/images/about-us/shewta.png';
+import profilePiyush from '~/images/about-us/piyush.jpg';
+import profileAbdhesh from '~/images/about-us/abdhesh.jpeg';
+import profileAnshuman from '~/images/about-us/ansuman.jpg';
+import profileMohit from '~/images/about-us/mohit.jpg';
 
 import collaborate1440 from '~/images/homeNew/collaborate1440.svg';
 import connect1440 from '~/images/homeNew/connect1440.svg';
@@ -65,6 +69,10 @@ import TalescaleSvg from '../icons/Talescale';
 import Button from '../components/button';
 import JoinProvidersDialog from '../components/join-provider-dialog';
 
+export const linkedInPrefix = 'https://www.linkedin.com/in/';
+export const githubPrefix = 'https://github.com/';
+export const twitterPrefix = 'https://x.com/';
+
 const partnersNew = [
   {
     icon: <PlaxonicSvg />,
@@ -112,7 +120,7 @@ const consts = {
         subtitle: 'Co-founder, Anscer Robotics',
         company: <TwitterNewLogoFill size={24} />,
         message:
-          'Thanks to Kloudlite, AnsCer Robotics streamlined deployment across edge devices, minimized downtime, and enhanced monitoring with Grafana integration. Remote config management simplified operations, boosting efficiency significantly. Kloudlite has been invaluable in optimizing our workflow.',
+          'Thanks to Kloudlite, Anscer Robotics streamlined deployment across edge devices, minimized downtime, and enhanced monitoring with Grafana integration. Remote config management simplified operations, boosting efficiency significantly. Kloudlite has been invaluable in optimizing our workflow.',
       },
       {
         title: 'Sunny Khanna',
@@ -131,19 +139,17 @@ const consts = {
     ],
     exploring: [
       {
-        img: RemoteLocal.src,
-        label: 'Remote local environments',
-        desc: 'Discover how Kloudlite pioneers transformative remote local environments.',
-        to: '/blog/remote-local-environments',
-      },
-
-      {
         img: Collarative.src,
         label: 'Collaborative development',
         desc: 'In a globalized landscape, collaborative development faces challenges but fuels innovation.',
         to: '/blog/collaborative-development',
       },
-
+      {
+        img: RemoteLocal.src,
+        label: 'Remote local environments',
+        desc: 'Discover how Kloudlite pioneers transformative remote local environments.',
+        to: '/blog/remote-local-environments',
+      },
       {
         img: Workflow.src,
         label: 'Development workflow',
@@ -492,15 +498,15 @@ const consts = {
         name: 'Karthik Thirumalasetti',
         role: 'Co-Founder & CEO',
         image: profileKarthik.src,
-        linkedin: '',
+        linkedin: 'karthik1988',
         x: '',
-        github: '',
+        github: 'karthik1729',
       },
       {
         name: 'Aditya Sharma',
         role: 'Co-Founder & COO',
         image: profileAditya.src,
-        linkedin: '',
+        linkedin: 'aditya2311',
         x: '',
         github: '',
       },
@@ -508,7 +514,7 @@ const consts = {
         name: 'Pavani Katuboyina',
         role: 'Co-founder & CMO',
         image: profilePavani.src,
-        linkedin: '',
+        linkedin: 'pavani-k-2a48a7a1',
         x: '',
         github: '',
       },
@@ -523,18 +529,18 @@ const consts = {
       {
         name: 'Anshuman Bhaskar',
         role: 'Principal Engineer',
-        image: '',
-        linkedin: '',
+        image: profileAnshuman.src,
+        linkedin: 'nxtcoder17',
         x: '',
-        github: '',
+        github: 'nxtcoder17',
       },
       {
         name: 'Abdhesh Nayak',
         role: 'Principal Engineer',
-        image: '',
-        linkedin: '',
-        x: '',
-        github: '',
+        image: profileAbdhesh.src,
+        linkedin: 'abdheshnayak',
+        x: 'abdhesh_nayak',
+        github: 'abdheshnayak',
       },
       {
         name: 'Shweta Kaushal',
@@ -543,35 +549,37 @@ const consts = {
         linkedin: '',
         x: '',
         github: '',
+        web: '',
       },
       {
         name: 'Piyush Kumar',
         role: 'SDE',
-        image: '',
-        linkedin: '',
+        image: profilePiyush.src,
+        linkedin: 'nxtcoder19',
         x: '',
-        github: '',
+        github: 'nxtcoder19',
       },
       {
         name: 'Mohit Kumar',
         role: 'SDE',
-        image: '',
-        linkedin: '',
+        image: profileMohit.src,
+        linkedin: 'mohit-kumar-3912ab17a',
         x: '',
-        github: '',
+        github: 'nxtcoder36',
       },
       {
         name: 'Bikash Ojha',
         role: 'Frontend Developer',
         image: '',
-        linkedin: '',
+        linkedin: 'bikash-ojha',
         x: '',
-        github: '',
+        github: 'tulsiojha',
       },
       {
         name: 'Harsh Malviya',
-        role: 'Design Intern',
+        role: 'Jr product designer',
         image: profileHarsh.src,
+        imageClassName: '!wb-object-contain',
         linkedin: '',
         x: '',
         github: '',

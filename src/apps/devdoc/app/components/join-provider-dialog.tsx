@@ -109,7 +109,11 @@ const JoinProvidersDialog = ({
                     {oathProviders?.githubLoginUrl && (
                       <Button
                         variant="tertiary"
-                        content="Continue with Github"
+                        content={
+                          <span className="!wb-bodyLg">
+                            Continue with Github
+                          </span>
+                        }
                         prefix={<GithubLogoFill />}
                         linkComponent={Link}
                         toLabel="href"
@@ -121,7 +125,11 @@ const JoinProvidersDialog = ({
                     {oathProviders?.gitlabLoginUrl && (
                       <Button
                         variant="purple"
-                        content="Continue with Gitlab"
+                        content={
+                          <span className="!wb-bodyLg">
+                            Continue with Gitlab
+                          </span>
+                        }
                         prefix={<GitlabLogoFill />}
                         linkComponent={Link}
                         toLabel="href"
@@ -133,7 +141,11 @@ const JoinProvidersDialog = ({
                     {oathProviders?.googleLoginUrl && (
                       <Button
                         variant="primary"
-                        content="Continue with Google"
+                        content={
+                          <span className="!wb-bodyLg">
+                            Continue with Google
+                          </span>
+                        }
                         prefix={<GoogleLogoFill />}
                         linkComponent={Link}
                         toLabel="href"
@@ -150,7 +162,9 @@ const JoinProvidersDialog = ({
                   ) : null}
                   <Button
                     variant="basic"
-                    content="Continue with email"
+                    content={
+                      <span className="!wb-bodyLg">Continue with email</span>
+                    }
                     prefix={<Envelope />}
                     linkComponent={Link}
                     toLabel="href"

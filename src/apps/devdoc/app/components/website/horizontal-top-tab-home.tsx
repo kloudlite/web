@@ -31,23 +31,23 @@ const HorizontalTopTabItem = ({
         active
           ? 'wb-bg-surface-basic-default md:wb-bg-surface-primary-subdued'
           : 'wb-bg-surface-basic-default',
-        className
+        className,
       )}
       onClick={onClick}
     >
       <h3
         className={cn(
-          'wb-heading2xl-marketing wb-transition-all lg:wb-min-h-[84px] xl:wb-min-h-[auto] 3xl:wb-min-h-[auto] wb-shrink-0',
+          'wb-headingXl-marketing md:wb-heading2xl-marketing wb-transition-all lg:wb-min-h-[84px] xl:wb-min-h-[auto] 3xl:wb-min-h-[auto] wb-shrink-0',
           {
             'wb-text-text-primary': active,
             'wb-text-text-default': !active,
-          }
+          },
         )}
       >
         {label}
       </h3>
       <p
-        className={cn('wb-bodyXl wb-transition-all', {
+        className={cn('wb-bodyLg md:wb-bodyXl wb-transition-all', {
           'wb-text-text-strong': !active,
           'wb-text-text-default': active,
         })}
@@ -75,7 +75,7 @@ interface IHorizontalTopTab {
   activeTab: string;
   tabs: Omit<IHorizontalTopTabItem, 'active' | 'onClick'>[];
   onTabChange: (
-    item: Omit<IHorizontalTopTabItem, 'active' | 'onClick'>
+    item: Omit<IHorizontalTopTabItem, 'active' | 'onClick'>,
   ) => void;
   tabContainerClassName?: string;
   tabContentClassName?: string;
@@ -151,7 +151,7 @@ const HorizontalTopTab = ({
           <div
             className={cn(
               'wb-bg-surface-basic-subdued md:wb-h-[338px] xl:wb-h-[480px] xl:wb-max-h-[480px] wb-w-full',
-              tabContentClassName
+              tabContentClassName,
             )}
           >
             {tab}

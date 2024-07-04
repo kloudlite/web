@@ -1,10 +1,20 @@
-import consts from '~/app/utils/const';
+import consts, {
+  githubPrefix,
+  linkedInPrefix,
+  twitterPrefix,
+} from '~/app/utils/const';
 import { IconButton } from 'kl-design-system/atoms/button';
-import { GithubLogo, LinkedinLogo, TwitterNewLogo } from '@jengaicons/react';
+import {
+  GithubLogo,
+  Globe,
+  LinkedinLogo,
+  TwitterNewLogo,
+} from '@jengaicons/react';
 import Link from 'next/link';
 import { Block } from '../../commons';
 import { GraphItem } from '../../graph';
 import SectionWrapper from '../section-wrapper';
+import { cn } from '~/app/utils/commons';
 
 const AboutTeam = () => {
   return (
@@ -26,7 +36,10 @@ by a dedicated and visionary leadership focused on pushing the boundaries of inn
                     <img
                       src={t.image}
                       alt={t.name}
-                      className="wb-h-full wb-w-full wb-object-cover"
+                      className={cn(
+                        'wb-h-full wb-w-full wb-object-cover',
+                        t.imageClassName,
+                      )}
                     />
                   )}
                 </div>
@@ -40,30 +53,50 @@ by a dedicated and visionary leadership focused on pushing the boundaries of inn
                     </span>
                   </div>
                   <div className="wb-flex wb-flex-row wb-items-center wb-gap-lg">
-                    <IconButton
-                      icon={<LinkedinLogo />}
-                      variant="plain"
-                      linkComponent={Link}
-                      toLabel="href"
-                      to={t.linkedin}
-                      size="xs"
-                    />
-                    <IconButton
-                      icon={<TwitterNewLogo />}
-                      variant="plain"
-                      linkComponent={Link}
-                      toLabel="href"
-                      to={t.x}
-                      size="xs"
-                    />
-                    <IconButton
-                      icon={<GithubLogo />}
-                      variant="plain"
-                      linkComponent={Link}
-                      toLabel="href"
-                      to={t.github}
-                      size="xs"
-                    />
+                    {t.linkedin && (
+                      <IconButton
+                        icon={<LinkedinLogo />}
+                        variant="plain"
+                        linkComponent={Link}
+                        toLabel="href"
+                        to={linkedInPrefix + t.linkedin}
+                        size="xs"
+                        target="__blank__"
+                      />
+                    )}
+                    {t.x && (
+                      <IconButton
+                        icon={<TwitterNewLogo />}
+                        variant="plain"
+                        linkComponent={Link}
+                        toLabel="href"
+                        to={twitterPrefix + t.x}
+                        size="xs"
+                        target="__blank__"
+                      />
+                    )}
+                    {t.github && (
+                      <IconButton
+                        icon={<GithubLogo />}
+                        variant="plain"
+                        linkComponent={Link}
+                        toLabel="href"
+                        to={githubPrefix + t.github}
+                        size="xs"
+                        target="__blank__"
+                      />
+                    )}
+                    {t.web && (
+                      <IconButton
+                        icon={<Globe />}
+                        variant="plain"
+                        linkComponent={Link}
+                        toLabel="href"
+                        to={t.web}
+                        size="xs"
+                        target="__blank__"
+                      />
+                    )}
                   </div>
                 </div>
               </div>

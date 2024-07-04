@@ -129,7 +129,7 @@ export default {
         showExtra: false,
         items: [
           {
-            title: 'Documentation',
+            title: 'Docs',
             to: '/docs',
           },
           {
@@ -212,7 +212,7 @@ export default {
         to: '/blog',
       },
       {
-        title: 'Documentation',
+        title: 'Docs',
         type: 'normal',
         to: '/docs',
       },
