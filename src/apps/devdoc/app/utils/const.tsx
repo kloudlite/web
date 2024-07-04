@@ -1,6 +1,8 @@
 /** eslint-disable prettier/prettier */
 import { ArrowLeftLg, TwitterNewLogoFill } from '@jengaicons/react';
 
+import Link from 'next/link';
+import { Badge } from 'kl-design-system/atoms/badge';
 import BlogCover from '~/public/blog/blog-cover.jpeg';
 
 import profileKarthik from '~/images/about-us/karthik-thirumalasetti.png';
@@ -53,8 +55,6 @@ import {
   Users,
   Keyhole,
 } from '~/app/icons/icons';
-import Link from 'next/link';
-import { Badge } from 'kl-design-system/atoms/badge';
 import AnserSvg from '../icons/AnserRobotics';
 import BoltzmanSvg from '../icons/Boltzman';
 import CrewScaleSvg from '../icons/CrewScale';
