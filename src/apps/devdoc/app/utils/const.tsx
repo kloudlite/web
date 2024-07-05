@@ -15,6 +15,7 @@ import profilePiyush from '~/images/about-us/piyush.jpg';
 import profileAbdhesh from '~/images/about-us/abdhesh.jpeg';
 import profileAnshuman from '~/images/about-us/ansuman.jpg';
 import profileMohit from '~/images/about-us/mohit.jpg';
+import profileBikash from '~/images/about-us/bikash.jpg';
 
 import collaborate1440 from '~/images/homeNew/collaborate1440.svg';
 import connect1440 from '~/images/homeNew/connect1440.svg';
@@ -570,7 +571,7 @@ const consts = {
       {
         name: 'Bikash Ojha',
         role: 'Frontend Developer',
-        image: '',
+        image: profileBikash.src,
         linkedin: 'bikash-ojha',
         x: '',
         github: 'tulsiojha',
