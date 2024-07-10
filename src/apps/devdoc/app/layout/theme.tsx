@@ -314,6 +314,10 @@ export const fetchProviders = async () => {
         method: 'loginPageInitUrls',
         args: [{}],
       },
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        connection: 'keep-alive',
+      },
     });
     if (res.data?.data) {
       return res.data.data;
@@ -333,6 +337,10 @@ const getUser = async () => {
       data: {
         method: 'whoAmI',
         args: [{}],
+      },
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        connection: 'keep-alive',
       },
     });
     if (res.data?.data) {

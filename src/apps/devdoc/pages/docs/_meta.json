@@ -53,6 +53,9 @@
         "title":"Engage",
         "type":"separator"
     },
+    "contributing":{
+        "title":"Contributing"
+    },
     "github":{
         "title":"Community",
         "href": "https://github.com/kloudlite/kloudlite/discussions"

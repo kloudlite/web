@@ -1,6 +1,8 @@
 /** eslint-disable prettier/prettier */
 import { ArrowLeftLg, TwitterNewLogoFill } from '@jengaicons/react';
 
+import Link from 'next/link';
+import { Badge } from 'kl-design-system/atoms/badge';
 import BlogCover from '~/public/blog/blog-cover.jpeg';
 
 import profileKarthik from '~/images/about-us/karthik-thirumalasetti.png';
@@ -13,6 +15,7 @@ import profilePiyush from '~/images/about-us/piyush.jpg';
 import profileAbdhesh from '~/images/about-us/abdhesh.jpeg';
 import profileAnshuman from '~/images/about-us/ansuman.jpg';
 import profileMohit from '~/images/about-us/mohit.jpg';
+import profileBikash from '~/images/about-us/bikash.jpg';
 
 import collaborate1440 from '~/images/homeNew/collaborate1440.svg';
 import connect1440 from '~/images/homeNew/connect1440.svg';
@@ -57,8 +60,6 @@ import {
   Users,
   Keyhole,
 } from '~/app/icons/icons';
-import Link from 'next/link';
-import { Badge } from 'kl-design-system/atoms/badge';
 import AnserSvg from '../icons/AnserRobotics';
 import BoltzmanSvg from '../icons/Boltzman';
 import CrewScaleSvg from '../icons/CrewScale';
@@ -570,7 +571,7 @@ const consts = {
       {
         name: 'Bikash Ojha',
         role: 'Frontend Developer',
-        image: '',
+        image: profileBikash.src,
         linkedin: 'bikash-ojha',
         x: '',
         github: 'tulsiojha',
