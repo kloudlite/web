@@ -65,5 +65,11 @@ We use the [**Remix UI**](https://www.radix-ui.com/) as UI components. It provid
 Each component gets its own folder. Make sure you add a test and Storybook stories for the component as well. By keeping these tidy, the codebase will remain easy to navigate, healthy and maintainable for all contributors.
 
 - ### Accessibility
+We strive to keep our UI accessible.
+
+In general, colors should come from the app theme, but if there is a need to add a custom color, please ensure that the foreground and background have a minimum contrast ratio of 4.5:1 to meet WCAG level AA compliance. WebAIM has a great tool for checking your colors directly, but tools like Dequeue's axe DevTools can also do automated checks in certain situations.
+
+- ### Should I create a new component?
+As with most things in the world, it depends. If you are creating a new component to encapsulate some UI abstraction like UsersTable it is ok but you should always try to use the base components that are provided by the library or from the codebase. It's recommended that you always do a quick search before creating a custom primitive component like dialogs, popovers, buttons, etc.
 
 <div className="wb-p-3xl wb-mt-3xl" />
