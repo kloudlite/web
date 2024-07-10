@@ -186,8 +186,10 @@ export const createComponents = ({
     p: (props) => (
       <p
         className={cn(
-          'wb-mt-3xl rounded-image wb-text-text-strong wb-break-words !wb-leading-[28px]',
-          isBlog ? 'wb-bodyXl' : 'wb-bodyLg',
+          'wb-mt-3xl rounded-image wb-text-text-strong wb-break-words',
+          isBlog
+            ? 'wb-bodyXl !wb-leading-[32px]'
+            : 'wb-bodyLg !wb-leading-[28px]',
         )}
         {...props}
       />
