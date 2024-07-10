@@ -30,13 +30,13 @@ const socialIconSize = 18;
 const SocialMenu = () => {
   return (
     <div className="wb-flex wb-flex-row wb-items-center wb-gap-xl wb-text-icon-soft wb-pr-2xl">
-      <a href={gitUrl} aria-label="kloudlite-github">
+      <a target="_blank" href={gitUrl} aria-label="kloudlite-github">
         <GithubLogoFill size={socialIconSize} />
       </a>
-      <a href={xUrl} aria-label="kloudlite-x">
+      <a target="_blank" href={xUrl} aria-label="kloudlite-x">
         <TwitterNewLogoFill size={socialIconSize} />
       </a>
-      <a href={linkedinUrl} aria-label="kloudlite-linkedin">
+      <a target="_blank" href={linkedinUrl} aria-label="kloudlite-linkedin">
         <LinkedinLogoFill size={socialIconSize} />
       </a>
     </div>
@@ -52,7 +52,7 @@ const BrandMenu = ({ className }: { className?: string }) => {
     <div
       className={cn(
         'wb-flex wb-flex-col wb-gap-7xl md:wb-gap-3xl lg:wb-pr-4xl wb-order-last md:wb-order-first md:wb-justify-between md:wb-h-full',
-        className,
+        className
       )}
     >
       <div className="wb-flex wb-flex-row">

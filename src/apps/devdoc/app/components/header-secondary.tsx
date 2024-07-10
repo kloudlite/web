@@ -2,6 +2,8 @@ import { PageItem } from 'nextra/normalize-pages';
 import Link from 'next/link';
 import { GithubLogoFill } from '@jengaicons/react';
 import { Button } from 'kl-design-system/atoms/button';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import useConfig, { IHeaderSecondary } from '../utils/use-config';
 import { cn } from '../utils/commons';
 import MenuToggle from './menu-button';
@@ -9,8 +11,6 @@ import useMenu from '../utils/use-menu';
 import Wrapper from './wrapper';
 import NavigationMenuV2 from './nav-menu-v2';
 import JoinProvidersDialog from './join-provider-dialog';
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
 import useSearch from '../utils/use-search';
 import SearchBox from './search';
 
@@ -65,6 +65,7 @@ const HeaderSecondary = ({
                 href={config.gitRepoUrl}
                 aria-label="kloudlite-github"
                 className="wb-hidden lg:wb-block wb-text-icon-default"
+                target="_blank"
               >
                 <GithubLogoFill size={20} />
               </a>
