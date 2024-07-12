@@ -5,10 +5,10 @@ This is a guide to help the Kloudlite community and also Kloudlite members contr
 ## Running the UI
 You can run the UI and access the dashboard in two ways:
     
-- Build the UI pointing to an external Coder server: CODER_HOST=https://mycoder.com pnpm dev inside of the site folder. This is helpful when you are building something in the UI and already have the data on your deployed server.
-- Build the entire Coder server + UI locally: ./scripts/develop.sh in the root folder. It is useful when you have to contribute with features that are not deployed yet or when you have to work on both, frontend and backend.
+- Build the UI pointing to an external Kloudlite server: KLOUDLITE_HOST=https://console.kloudlite.io pnpm dev inside of the site folder. This is helpful when you are building something in the UI and already have the data on your deployed server.
+- Build the entire Kloudlite server + UI locally: `task app=console` in the root folder. It is useful when you have to contribute with features that are not deployed yet or when you have to work on both, frontend and backend.
 
-In both cases, you can access the dashboard on http://localhost:8080. If you are running the ./scripts/develop.sh you can log in using the default credentials: admin@coder.com and SomeSecurePassword!
+In both cases, you can access the dashboard on http://localhost:4001. If you are running the `task app=console` you can log in using the default credentials: admin@kloudlite.com and SomeSecurePassword!
 
 ## Tech Stack
 All our dependencies are described in site/package.json but here are the most important ones:
