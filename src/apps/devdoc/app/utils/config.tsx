@@ -44,7 +44,7 @@ const SocialMenu = () => {
 };
 
 const BrandMenu = ({ className }: { className?: string }) => {
-  const brandIconSize = 28;
+  const brandIconSize = 24;
 
   const { theme, setTheme } = useTheme();
 
@@ -52,7 +52,7 @@ const BrandMenu = ({ className }: { className?: string }) => {
     <div
       className={cn(
         'wb-flex wb-flex-col wb-gap-7xl md:wb-gap-3xl lg:wb-pr-4xl wb-order-last md:wb-order-first md:wb-justify-between md:wb-h-full',
-        className
+        className,
       )}
     >
       <div className="wb-flex wb-flex-row">
