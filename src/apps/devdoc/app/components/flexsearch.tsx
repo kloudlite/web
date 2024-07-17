@@ -16,9 +16,11 @@ import { HighlightMatches } from './highlight-matches';
 import { DEFAULT_LOCALE } from '../utils/constants';
 import { cn } from '../utils/commons';
 import useSearch from '../utils/use-search';
+import lodash from 'lodash';
 
 type SearchResult = {
   children: ReactNode;
+  category: ReactNode;
   id: string;
   prefix?: ReactNode;
   route: string;
@@ -52,6 +54,7 @@ type Result = {
   _section_rk: number;
   route: string;
   prefix: ReactNode;
+  category: ReactNode;
   children: ReactNode;
 };
 
@@ -167,8 +170,6 @@ export function Flexsearch(): ReactElement {
   const [results, setResults] = useState<SearchResult[]>([]);
   const [search, setSearch] = useState('');
 
-  const router = useRouter();
-
   const doSearch = (search: string) => {
     if (!search) return;
     const [pageIndex, sectionIndex] = indexes[locale];
@@ -212,6 +213,7 @@ export function Flexsearch(): ReactElement {
           _page_rk: i,
           _section_rk: j,
           route: url,
+          category: null,
           prefix: isFirstItemOfPage && (
             <div
               className={cn(
@@ -238,32 +240,41 @@ export function Flexsearch(): ReactElement {
       }
     }
 
+    const groupedByCategory = lodash.groupBy(results, (item) => {
+      if (item.route.startsWith('/docs')) return 'Docs';
+      if (item.route.startsWith('/blog')) return 'Blogs';
+      return 'all';
+    });
+
+    const sortedGroups = lodash.mapValues(groupedByCategory, (group, cat) => {
+      const sortedGroup = group.sort((a, b) => {
+        if (a._page_rk === b._page_rk) {
+          return a._section_rk - b._section_rk;
+        }
+        if (pageTitleMatches[a._page_rk] !== pageTitleMatches[b._page_rk]) {
+          return pageTitleMatches[b._page_rk] - pageTitleMatches[a._page_rk];
+        }
+        return a._page_rk - b._page_rk;
+      });
+
+      if (sortedGroup.length > 0) {
+        sortedGroup[0].category = cat;
+      }
+      return sortedGroup;
+    });
+
+    const sortedArray = lodash.flatten(lodash.values(sortedGroups));
+    console.log('sorted', sortedArray);
+
     setResults(
-      results
-        .sort((a, b) => {
-          // Sort by number of matches in the title.
-          if (a._page_rk === b._page_rk) {
-            return a._section_rk - b._section_rk;
-          }
-          if (pageTitleMatches[a._page_rk] !== pageTitleMatches[b._page_rk]) {
-            return pageTitleMatches[b._page_rk] - pageTitleMatches[a._page_rk];
-          }
-          return a._page_rk - b._page_rk;
-        })
-        .filter(
-          (res) =>
-            (res.route.startsWith('/docs') &&
-              router.route.startsWith('/docs')) ||
-            (res.route.startsWith('/blog') && router.route.startsWith('/blog')),
-        )
-        .map((res) => ({
-          id: `${res._page_rk}_${res._section_rk}`,
-          route: res.route,
-          prefix: res.prefix,
-          children: res.children,
-        })),
+      sortedArray.map((res) => ({
+        id: `${res._page_rk}_${res._section_rk}`,
+        route: res.route,
+        prefix: res.prefix,
+        category: res.category,
+        children: res.children,
+      })),
     );
-    console.log(router);
   };
 
   const preload = useCallback(
@@ -362,15 +373,22 @@ export function Flexsearch(): ReactElement {
                 childSelectorClass="search-result-item"
               >
                 {results.map((res) => (
-                  <div key={res.id} className="wb-flex wb-flex-col">
-                    <div className="text-text-default">{res.prefix}</div>
-                    <Link
-                      href={res.route}
-                      className="wb-transition-all wb-rounded search-result-item wb-flex wb-flex-col wb-gap-md wb-px-xl wb-py-lg"
-                    >
-                      {res.children}
-                    </Link>
-                  </div>
+                  <>
+                    {res.category ? (
+                      <div className="wb-bg-surface-basic-default wb-backdrop-blur-sm wb-sticky wb-top-[49px] wb-text-text-default wb-p-xl wb-pb-2xl wb-headingXl">
+                        {res.category}
+                      </div>
+                    ) : null}
+                    <div key={res.id} className="wb-flex wb-flex-col">
+                      <div className="text-text-default">{res.prefix}</div>
+                      <Link
+                        href={res.route}
+                        className="wb-transition-all wb-rounded search-result-item wb-flex wb-flex-col wb-gap-md wb-px-xl wb-py-lg"
+                      >
+                        {res.children}
+                      </Link>
+                    </div>
+                  </>
                 ))}
               </ListNavigate>
             )}

@@ -20,10 +20,12 @@ function HeadingLink({
   children,
   id,
   className,
+  isBlog,
   ...props
 }: ComponentProps<'h2'> & {
   tag: `h${2 | 3 | 4 | 5 | 6}`;
   context: { index: number };
+  isBlog?: boolean;
 }): ReactElement {
   const setActiveAnchor = useSetActiveAnchor();
   const slugs = useSlugs();
@@ -53,9 +55,14 @@ function HeadingLink({
         className={cn(
           'wb-text-text-default wb-group',
           {
-            h2: 'wb-heading2xl-marketing wb-sticky wb-top-0 wb-bg-surface-basic-subdued  wb-mt-[30px] wb-py-[10px]',
-            h3: 'wb-headingXl-marketing wb-mt-6xl',
-            h4: 'wb-headingLg-marketing wb-mt-6xl',
+            h2: cn(
+              'wb-headingLg wb-bg-surface-basic-subdued  wb-mt-[30px] wb-py-[10px]',
+              isBlog
+                ? 'md:wb-headingXl'
+                : 'md:wb-heading2xl wb-sticky wb-top-0 ',
+            ),
+            h3: 'wb-headingLg wb-headingXl wb-mt-6xl',
+            h4: 'wb-headingLg wb-mt-6xl',
             h5: 'wb-mt-6xl',
             h6: 'wb-mt-6xl',
           }[Tag],
@@ -143,11 +150,13 @@ export const createComponents = ({
   return {
     h1: (props) => (
       <h1
-        className="wb-heading4xl-marketing wb-mt-sm wb-text-text-default wb-pb-lg"
+        className="heading2xl-marketing md:wb-heading3xl lg:wb-heading4xl wb-mt-sm wb-text-text-default wb-pb-lg"
         {...props}
       />
     ),
-    h2: (props) => <HeadingLink tag="h2" context={context} {...props} />,
+    h2: (props) => (
+      <HeadingLink isBlog={isBlog} tag="h2" context={context} {...props} />
+    ),
     h3: (props) => <HeadingLink tag="h3" context={context} {...props} />,
     h4: (props) => <HeadingLink tag="h4" context={context} {...props} />,
     h5: (props) => <HeadingLink tag="h5" context={context} {...props} />,

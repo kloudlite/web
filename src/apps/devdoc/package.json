@@ -36,6 +36,7 @@
     "highlight.js": "11.9.0",
     "intersection-observer": "^0.12.2",
     "kl-design-system": "file:../../design-system/out/kl-design-system-1.0.1.tgz",
+    "lodash": "^4.17.21",
     "next": "^14.0.4",
     "next-seo": "^6.4.0",
     "next-themes": "^0.2.1",
@@ -54,6 +55,7 @@
   },
   "devDependencies": {
     "@types/flexsearch": "^0.7.6",
+    "@types/lodash": "^4.17.6",
     "@types/node": "20.8.4",
     "@types/react": "^18.2.46",
     "@typescript-eslint/eslint-plugin": "^6.16.0",

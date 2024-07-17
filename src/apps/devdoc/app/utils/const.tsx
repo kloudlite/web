@@ -124,18 +124,18 @@ const consts = {
           'Thanks to Kloudlite, Anscer Robotics streamlined deployment across edge devices, minimized downtime, and enhanced monitoring with Grafana integration. Remote config management simplified operations, boosting efficiency significantly. Kloudlite has been invaluable in optimizing our workflow.',
       },
       {
-        title: 'Sunny Khanna',
-        subtitle: 'VP Engineering, Plaxonic',
-        company: <TwitterNewLogoFill size={24} />,
-        message:
-          'Kloudlite transformed our processes at Plaxonic. It accelerated our development and deployment, minimizing downtime and optimizing efficiency. Highly recommend!',
-      },
-      {
         title: 'Pritam Roy',
         subtitle: 'Co-founder, Fibr',
         company: <TwitterNewLogoFill size={24} />,
         message:
           'Kloudlite has revolutionized Fibr’s development process, cutting launch times and costs significantly. With seamless deployment, real-time monitoring via Grafana, and remote config management, we’ve streamlined workflows and ensured secure, reliable applications.',
+      },
+      {
+        title: 'Sunny Khanna',
+        subtitle: 'VP Engineering, Plaxonic',
+        company: <TwitterNewLogoFill size={24} />,
+        message:
+          'Kloudlite transformed our processes at Plaxonic. It accelerated our development and deployment, minimizing downtime and optimizing efficiency. Highly recommend!',
       },
     ],
     exploring: [
