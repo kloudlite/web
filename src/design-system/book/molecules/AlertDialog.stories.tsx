@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Button } from '~/components/atoms/button';
 import AlertDialog from '~/components/molecule/alert-dialog';
+import logger from '~/root/lib/client/helpers/log';
 
 export default {
   title: 'Molecules/AlertDialog',
@@ -12,7 +13,7 @@ export default {
 const DialogHook = () => {
   const [show, setShow] = useState(false);
   useEffect(() => {
-    console.log(show);
+    logger.log(show);
   }, [show]);
   return (
     <div>
@@ -20,7 +21,6 @@ const DialogHook = () => {
         content="Open dialog"
         onClick={() => {
           setShow(true);
-          console.log(show);
         }}
       />{' '}
       <AlertDialog.Root show={show} onOpenChange={setShow}>

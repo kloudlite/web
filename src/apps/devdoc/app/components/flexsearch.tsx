@@ -65,10 +65,10 @@ const loadIndexesPromises = new Map<string, Promise<void>>();
 
 const loadIndexesImpl = async (
   basePath: string,
-  locale: string,
+  locale: string
 ): Promise<void> => {
   const response = await fetch(
-    `${basePath}/_next/static/chunks/nextra-data-${locale}.json`,
+    `${basePath}/_next/static/chunks/nextra-data-${locale}.json`
   );
   const searchData = (await response.json()) as SearchData;
 
@@ -102,8 +102,6 @@ const loadIndexesImpl = async (
       bidirectional: true,
     },
   });
-
-  console.log('searchData', sectionIndex);
 
   let pageId = 0;
 
@@ -215,7 +213,7 @@ export function Flexsearch(): ReactElement {
           prefix: isFirstItemOfPage && (
             <div
               className={cn(
-                'wb-headingMd wb-mx-xl wb-pb-md wb-mb-md wb-border-b wb-border-border-default',
+                'wb-headingMd wb-mx-xl wb-pb-md wb-mb-md wb-border-b wb-border-border-default'
               )}
             >
               {result.doc.title}
@@ -254,16 +252,15 @@ export function Flexsearch(): ReactElement {
           (res) =>
             (res.route.startsWith('/docs') &&
               router.route.startsWith('/docs')) ||
-            (res.route.startsWith('/blog') && router.route.startsWith('/blog')),
+            (res.route.startsWith('/blog') && router.route.startsWith('/blog'))
         )
         .map((res) => ({
           id: `${res._page_rk}_${res._section_rk}`,
           route: res.route,
           prefix: res.prefix,
           children: res.children,
-        })),
+        }))
     );
-    console.log(router);
   };
 
   const preload = useCallback(
@@ -278,7 +275,7 @@ export function Flexsearch(): ReactElement {
         setLoading(false);
       }
     },
-    [locale, basePath],
+    [locale, basePath]
   );
 
   const handleChange = async (value: string) => {

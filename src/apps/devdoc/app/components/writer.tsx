@@ -14,7 +14,6 @@ const Writer = () => {
     // <MDXEditor
     //   markdown="# Hello World"
     //   onChange={(e) => {
-    //     console.log(e);
     //   }}
     //   plugins={[
     //     toolbarPlugin({

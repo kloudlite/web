@@ -12,7 +12,6 @@ const SearchBox = ({ className }: { className?: string }) => {
       <button
         onClick={() => {
           setShow(true);
-          console.log('here', show);
         }}
         className="wb-hidden xl:wb-flex wb-flex-row wb-items-center wb-rounded wb-border wb-border-border-default wb-bg-surface-basic-default wb-h-[38px] xl:wb-min-w-[200px] wb-w-full wb-box-content"
       >
