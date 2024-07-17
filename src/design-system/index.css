@@ -1,13 +1,13 @@
 /* @import url('https://rsms.me/inter/inter.css'); */
 /* @import url('https://fonts.googleapis.com/css2?family=Familjen+Grotesk:ital,wght@0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap'); */
-@import "./css/primitives.css";
-@import "./css/default.css";
-@import "./css/dark.css";
+@import './css/primitives.css';
+@import './css/default.css';
+@import './css/dark.css';
 @import 'css/slider.css';
 
-html{
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
-  }
+html {
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+}
 
 @tailwind base;
 @tailwind components;
@@ -17,49 +17,49 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+  -webkit-box-shadow: 0 0 0px 1000px white inset !important;
 }
 
-*{
-    scroll-behavior: smooth;
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
-    -webkit-tap-highlight-color: transparent;
+* {
+  scroll-behavior: smooth;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
 }
 
-
-
-select{
-    background-image: url("data:image/svg+xml,%3Csvg width='17' height='16' viewBox='0 0 17 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M13.5 5.5L8.5 10.5L3.5 5.5' stroke='%23111827' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
-    background-position: right 0.5rem center;
-    background-repeat: no-repeat;
-    background-size: 16px 16px;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+select {
+  background-image: url("data:image/svg+xml,%3Csvg width='17' height='16' viewBox='0 0 17 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M13.5 5.5L8.5 10.5L3.5 5.5' stroke='%23111827' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 16px 16px;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
 }
 
-#loadOverlay{display: none!important;}
-
-.pulse-element{
-    @apply !text-transparent !relative !border-0
-}
-.pulse-child-element{
-    @apply opacity-0
+#loadOverlay {
+  display: none !important;
 }
 
-.progressItem::before{
-    content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='18' viewBox='0 0 26 18' fill='none'%3E%3Cpath d='M25 1.00037L9 16.9997L1 9.00037' stroke='%23111827' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+.pulse-element {
+  @apply !text-transparent !relative !border-0;
+}
+.pulse-child-element {
+  @apply opacity-0;
 }
 
-.Toastify{
-    position: relative;
-    z-index: 999999999;
-    pointer-events: all;
+.progressItem::before {
+  content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='18' viewBox='0 0 26 18' fill='none'%3E%3Cpath d='M25 1.00037L9 16.9997L1 9.00037' stroke='%23111827' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+.Toastify {
+  position: relative;
+  z-index: 999999999;
+  pointer-events: all;
 }
 
 @media screen and (min-width: 960px) {
-    body {
-      width: 100vw;
-      margin-inline: 0px !important;
-      overflow-x: hidden;
-    }
+  body {
+    width: 100vw;
+    margin-inline: 0px !important;
+    overflow-x: hidden;
   }
+}
