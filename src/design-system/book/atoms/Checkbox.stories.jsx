@@ -1,3 +1,4 @@
+import logger from '~/root/lib/client/helpers/log';
 import { Checkbox } from '../../components/atoms/checkbox';
 
 export default {
@@ -11,7 +12,7 @@ export const Checked = {
   args: {
     label: 'Checked',
     checked: true,
-    onChange: (e) => console.log(e),
+    onChange: (e) => logger.log(e),
   },
 };
 
