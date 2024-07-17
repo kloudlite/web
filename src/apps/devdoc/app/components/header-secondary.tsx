@@ -57,7 +57,7 @@ const HeaderSecondary = ({
 
           <div className="wb-flex-1 lg:wb-flex-none wb-flex wb-flex-row wb-gap-2xl wb-items-center wb-justify-end">
             <div className="wb-flex wb-flex-col lg:wb-flex-row wb-gap-xl lg:wb-items-center">
-              {<SearchBox />}
+              <SearchBox />
               <a
                 href={config.gitRepoUrl}
                 aria-label="kloudlite-github"

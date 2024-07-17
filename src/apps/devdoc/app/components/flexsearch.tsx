@@ -243,7 +243,7 @@ export function Flexsearch(): ReactElement {
     const groupedByCategory = lodash.groupBy(results, (item) => {
       if (item.route.startsWith('/docs')) return 'Docs';
       if (item.route.startsWith('/blog')) return 'Blogs';
-      return 'all';
+      return 'All';
     });
 
     const sortedGroups = lodash.mapValues(groupedByCategory, (group, cat) => {
@@ -264,16 +264,19 @@ export function Flexsearch(): ReactElement {
     });
 
     const sortedArray = lodash.flatten(lodash.values(sortedGroups));
-    console.log('sorted', sortedArray);
 
     setResults(
-      sortedArray.map((res) => ({
-        id: `${res._page_rk}_${res._section_rk}`,
-        route: res.route,
-        prefix: res.prefix,
-        category: res.category,
-        children: res.children,
-      })),
+      sortedArray
+        .map((res) => ({
+          id: `${res._page_rk}_${res._section_rk}`,
+          route: res.route,
+          prefix: res.prefix,
+          category: res.category,
+          children: res.children,
+        }))
+        .filter(
+          (f) => f.route.startsWith('/docs') || f.route.startsWith('/blog'),
+        ),
     );
   };
 
