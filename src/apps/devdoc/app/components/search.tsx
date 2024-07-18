@@ -4,7 +4,7 @@ import { cn } from '../utils/commons';
 import useSearch from '../utils/use-search';
 
 const SearchBox = ({ className }: { className?: string }) => {
-  const { setShow, show } = useSearch();
+  const { setShow } = useSearch();
   return (
     <div
       className={cn('wb-flex wb-flex-row wb-items-center wb-gap-xl', className)}
