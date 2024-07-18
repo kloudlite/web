@@ -6,7 +6,7 @@ const AboutMission = () => {
   return (
     <SectionWrapper className="wb-flex wb-flex-col wb-w-full">
       <GraphExtended>
-        <div className="wb-grid wb-grid-cols-1 lg:wb-h-[288px] lg:wb-grid-cols-[448px_auto] wb-gap-3xl md:wb-gap-5xl">
+        <div className="wb-grid wb-grid-cols-1 xl:wb-h-[480px] 2xl:wb-h-[416px] lg:wb-grid-cols-[448px_auto] wb-gap-3xl md:wb-gap-5xl">
           <GraphItem className="wb-bg-surface-basic-subdued wb-p-5xl wb-flex wb-flex-col wb-justify-center">
             <div className="wb-flex wb-flex-row wb-items-center lg:wb-items-start lg:wb-flex-col wb-gap-6xl">
               <span className="wb-text-icon-primary">

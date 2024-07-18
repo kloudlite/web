@@ -9,10 +9,10 @@
   --surface-basic-overlay-bg: var(--zinc-900);
 
   /* Primary */
-  --surface-primary-default: var(--blue-500);
+  --surface-primary-default: var(--blue-600);
   --surface-primary-subdued: var(--blue-50);
-  --surface-primary-hovered: var(--blue-600);
-  --surface-primary-pressed: var(--blue-700);
+  --surface-primary-hovered: var(--blue-500);
+  --surface-primary-pressed: var(--blue-800);
   --surface-primary-selected: var(--blue-100);
 
   /* Secondary */
@@ -50,43 +50,42 @@
   --surface-purple-hovered: var(--purple-300);
   --surface-purple-pressed: var(--purple-500);
 
-/* Text */
---text-default: var(--grey-900);
---text-soft: var(--zinc-500);
---text-strong: var(--grey-600);
---text-disabled: var(--grey-400);
---text-primary: var(--blue-600);
---text-on-primary: var(--grey-50);
---text-on-secondary: var(--grey-50);
---text-secondary: var(--amber-600);
---text-critical: var(--red-600);
---text-warning: var(--amber-600);
---text-success: var(--green-600);
+  /* Text */
+  --text-default: var(--grey-900);
+  --text-soft: var(--zinc-500);
+  --text-strong: var(--grey-600);
+  --text-disabled: var(--grey-400);
+  --text-primary: var(--blue-700);
+  --text-on-primary: var(--grey-50);
+  --text-on-secondary: var(--grey-50);
+  --text-secondary: var(--amber-600);
+  --text-critical: var(--red-600);
+  --text-warning: var(--amber-600);
+  --text-success: var(--green-600);
 
+  /* Icon */
+  --icon-default: var(--grey-900);
+  --icon-soft: var(--zinc-500);
+  --icon-strong: var(--grey-600);
+  --icon-disabled: var(--grey-400);
+  --icon-primary: var(--blue-700);
+  --icon-on-primary: var(--grey-50);
+  --icon-secondary: var(--teal-600);
+  --icon-critical: var(--red-600);
+  --icon-warning: var(--amber-600);
+  --icon-success: var(--green-600);
+  --icon-logo: var(--blue-600);
 
-/* Icon */
---icon-default: var(--grey-900);
---icon-soft: var(--zinc-500);
---icon-strong: var(--grey-600);
---icon-disabled: var(--grey-400);
---icon-primary: var(--blue-600);
---icon-on-primary: var(--grey-50);
---icon-secondary: var(--teal-600);
---icon-critical: var(--red-600);
---icon-warning: var(--amber-600);
---icon-success: var(--green-600);
---icon-logo: var(--blue-600);
-
-/* Border */
---border-default: var(--zinc-200);
---border-dark: var(--zinc-300);
---border-disabled: var(--zinc-100);
---border-primary: var(--blue-600);
---border-focus: var(--blue-400);
---border-secondary: var(--amber-600);
---border-tertiary: var(--zinc-600);
---border-critical: var(--red-600);
---border-warning: var(--amber-600);
---border-success: var(--green-600);
---border-purple: var(--purple-500);
+  /* Border */
+  --border-default: var(--zinc-200);
+  --border-dark: var(--zinc-300);
+  --border-disabled: var(--zinc-100);
+  --border-primary: var(--blue-600);
+  --border-focus: var(--blue-400);
+  --border-secondary: var(--amber-600);
+  --border-tertiary: var(--zinc-600);
+  --border-critical: var(--red-600);
+  --border-warning: var(--amber-600);
+  --border-success: var(--green-600);
+  --border-purple: var(--purple-500);
 }

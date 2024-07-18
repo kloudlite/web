@@ -22,7 +22,7 @@ const Partners = () => {
               <GraphItem
                 className={cn(
                   'wb-h-[64px] wb-flex wb-px-2xl wb-items-center wb-justify-center wb-bg-surface-basic-subdued',
-                  p.className
+                  p.className,
                 )}
               >
                 {p.icon}
@@ -38,7 +38,7 @@ const Partners = () => {
 const PartnerSection = () => {
   return (
     <div className="wb-pt-8xl lg:wb-pb-8xl lg:wb-pt-12xl wb-flex wb-flex-col">
-      <p className="wb-bodyLg-medium wb-text-text-strong wb-text-center">
+      <p className="wb-bodyMd-medium md:bodyLg-medium xl:wb-bodyXl-medium wb-text-text-strong wb-text-center">
         Join the cult of our early adopters and discover the power of Kloudlite
       </p>
       <Partners />
