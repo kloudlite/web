@@ -14,9 +14,10 @@ const PriceItem = ({
     <div
       className={cn(
         'wb-relative wb-p-3xl lg:wb-p-4xl 2xl:wb-p-5xl wb-flex wb-flex-col wb-gap-5xl wb-h-full relative',
-        item.selected
-          ? 'wb-bg-surface-primary-subdued'
-          : 'wb-bg-surface-basic-subdued'
+          {
+            'wb-bg-surface-primary-subdued': !!item.selected,
+            'wb-bg-surface-basic-subdued': !item.selected,
+          }
       )}
     >
       {item.badge && (

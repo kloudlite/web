@@ -11,12 +11,12 @@ import Popup from 'kl-design-system/molecule/popup';
 import { Search, X } from '@jengaicons/react';
 import Link from 'next/link';
 import { IconButton } from 'kl-design-system/atoms/button';
+import lodash from 'lodash';
 import ListNavigate from './list-navigate';
 import { HighlightMatches } from './highlight-matches';
 import { DEFAULT_LOCALE } from '../utils/constants';
 import { cn } from '../utils/commons';
 import useSearch from '../utils/use-search';
-import lodash from 'lodash';
 
 type SearchResult = {
   children: ReactNode;
@@ -68,10 +68,10 @@ const loadIndexesPromises = new Map<string, Promise<void>>();
 
 const loadIndexesImpl = async (
   basePath: string,
-  locale: string,
+  locale: string
 ): Promise<void> => {
   const response = await fetch(
-    `${basePath}/_next/static/chunks/nextra-data-${locale}.json`,
+    `${basePath}/_next/static/chunks/nextra-data-${locale}.json`
   );
   const searchData = (await response.json()) as SearchData;
 
@@ -105,8 +105,6 @@ const loadIndexesImpl = async (
       bidirectional: true,
     },
   });
-
-  console.log('searchData', sectionIndex);
 
   let pageId = 0;
 
@@ -217,7 +215,7 @@ export function Flexsearch(): ReactElement {
           prefix: isFirstItemOfPage && (
             <div
               className={cn(
-                'wb-headingMd wb-mx-xl wb-pb-md wb-mb-md wb-border-b wb-border-border-default',
+                'wb-headingMd wb-mx-xl wb-pb-md wb-mb-md wb-border-b wb-border-border-default'
               )}
             >
               {result.doc.title}
@@ -275,8 +273,8 @@ export function Flexsearch(): ReactElement {
           children: res.children,
         }))
         .filter(
-          (f) => f.route.startsWith('/docs') || f.route.startsWith('/blog'),
-        ),
+          (f) => f.route.startsWith('/docs') || f.route.startsWith('/blog')
+        )
     );
   };
 
@@ -292,7 +290,7 @@ export function Flexsearch(): ReactElement {
         setLoading(false);
       }
     },
-    [locale, basePath],
+    [locale, basePath]
   );
 
   const handleChange = async (value: string) => {

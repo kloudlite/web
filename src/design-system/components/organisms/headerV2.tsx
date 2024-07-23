@@ -45,7 +45,6 @@ const ItemAdvance = ({
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [isMouseOver, setIsMouseOver] = useState<boolean>(false);
 
-  console.log('optionsvallll', optionValue);
   return (
     <div className="flex flex-col">
       <span className="bodyXs text-text-disabled px-lg">{path}</span>
@@ -101,8 +100,6 @@ type IRoot = {
 };
 
 const Header = ({ items }: IRoot) => {
-  console.log(items);
-
   const itemAlignEnd = items.find((i) => i.type === 'advance');
   return (
     <div
