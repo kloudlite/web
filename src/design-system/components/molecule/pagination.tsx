@@ -37,7 +37,6 @@ export const usePagination = <T extends Array<any>>({
     } else {
       setPageNumber(1);
     }
-    console.log('hereeee');
   }, [listItems]);
 
   useEffect(() => {

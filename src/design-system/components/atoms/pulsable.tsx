@@ -25,7 +25,7 @@ const Pulsable = ({
             // @ts-ignore
             ch.classList?.add('pulse-child-element');
             // @ts-ignore
-            console.log(ch?.getAttribute('disabled'));
+            logger.log(ch?.getAttribute('disabled'));
 
             // if (ch?.hasAttribute('disabled')) {
             //   ch.classList?.add('pulse-has-disabled-attr');
