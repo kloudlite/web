@@ -47,7 +47,7 @@ export const AvatarBase = ({
       }
       className={cn(
         'pulsable pulsable-circle',
-        'relative flex flex-row items-center justify-center',
+        'relative flex-shrink-0 flex flex-row items-center justify-center',
         'outline-none transition-all',
         'rounded-full',
         'border border-border-default',
@@ -65,7 +65,7 @@ export const AvatarBase = ({
           : '',
         {
           'bg-surface-basic-default': !isExternal,
-        }
+        },
       )}
     >
       {dot && (
