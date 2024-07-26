@@ -5269,6 +5269,7 @@ packages:
     engines: {node: '>=12.0.0'}
     dev: false
 
+<<<<<<< Updated upstream
   /hosted-git-info@7.0.2:
     resolution: {integrity: sha512-puUZAUKT5m8Zzvs72XWy3HtvVbTWljRE66cP60bxJzAqf2DgICo7lYTY2IHUmLnNpjYvw5bvmoHvPc0QO2a62w==}
     engines: {node: ^16.14.0 || >=18.0.0}
@@ -5276,6 +5277,8 @@ packages:
       lru-cache: 10.4.3
     dev: true
 
+=======
+>>>>>>> Stashed changes
   /html-void-elements@3.0.0:
     resolution: {integrity: sha512-bEqo66MRXsUGxWHV5IP0PUiAWwoEjba4VCzg0LjFJBpchPaTfyfCKTG6bc5F8ucKec3q5y6qOdGyYTSBEvhCrg==}
     dev: false
