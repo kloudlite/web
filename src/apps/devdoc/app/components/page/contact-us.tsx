@@ -1,14 +1,17 @@
 import { TextInput, TextArea } from 'kl-design-system/atoms/input';
+import Select from 'kl-design-system/atoms/select';
 import Link from 'next/link';
 import { ComponentProps, useState } from 'react';
 import { addDoc, collection, getFirestore } from '@firebase/firestore';
 import { FirebaseApp } from 'firebase/app';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { useFirebase } from '~/app/utils/useFirebase';
 import { supportEmail } from '~/app/utils/config';
 import { toast } from 'kl-design-system/molecule/toast';
 import Wrapper from '../wrapper';
 import Button from '../button';
+import '@oshq/react-select/index.css';
+import countries from '~/app/utils/countries.json';
 
 const SupportIcon = (props: ComponentProps<'svg'>) => {
   const { height, width } = props;
@@ -104,6 +107,20 @@ type Inputs = {
   companyName: string;
 };
 
+const getContries = () => {
+  return (countries || []).map((c) => ({
+    label: c.name,
+    value: c.name,
+    render: () => (
+      <div className="wb-flex wb-flex-row wb-items-center wb-gap-xl wb-truncate wb-text-text-default">
+        <span>{c.emoji}</span>
+        <span className="wb-truncate">{c.name}</span>
+      </div>
+    ),
+    country: c,
+  }));
+};
+
 const ContactRoot = () => {
   const { firebaseApp } = useFirebase();
   const [loading, setLoading] = useState(false);
@@ -113,6 +130,7 @@ const ContactRoot = () => {
     handleSubmit,
     formState: { errors },
     reset,
+    control,
   } = useForm<Inputs>();
 
   return (
@@ -173,12 +191,32 @@ const ContactRoot = () => {
             </div>
             <div className="wb-flex wb-flex-col md:wb-flex-row wb-gap-3xl">
               <div className="wb-basis-full">
-                <TextInput
-                  label="Country"
-                  size="lg"
-                  {...register('country', { required: 'Country is required' })}
-                  error={!!errors.country}
-                  message={errors.country?.message}
+                <Controller
+                  control={control}
+                  name="country"
+                  defaultValue={undefined}
+                  rules={{
+                    required: 'Country is required.',
+                  }}
+                  render={({ field: { value, onChange } }) => (
+                    <Select
+                      size="lg"
+                      label="Country"
+                      value={value}
+                      onChange={(_, val) => {
+                        onChange(val);
+                      }}
+                      options={async () => getContries()}
+                      valueRender={(value) => (
+                        <div className="wb-flex wb-flex-row wb-items-center wb-gap-xl">
+                          <span>{value.country.emoji}</span>
+                          <span>{value.label}</span>
+                        </div>
+                      )}
+                      error={!!errors.country}
+                      message={errors.country?.message}
+                    />
+                  )}
                 />
               </div>
               <div className="wb-basis-full">
