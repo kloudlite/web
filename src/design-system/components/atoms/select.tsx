@@ -50,7 +50,7 @@ const suffixRender = ({
     <div
       className={cn(
         'px-lg flex flex-row items-center gap-lg',
-        error && !disabled ? 'text-text-critical' : ''
+        error && !disabled ? 'text-text-critical' : '',
       )}
     >
       {loading && (
@@ -75,7 +75,7 @@ const Select = <T, U extends boolean | undefined = undefined>(
     message?: ReactNode;
     loading?: boolean;
     error?: boolean;
-  }
+  },
 ) => {
   const {
     value,
@@ -113,12 +113,12 @@ const Select = <T, U extends boolean | undefined = undefined>(
                 const c = cn(
                   'rounded flex flex-row items-center border bodyMd outline-none cursor-default',
                   {
-                    'py-[10px] px-lg': size === 'lg',
-                    'py-[6px] px-lg': size === 'md',
+                    'py-[10px] px-lg h-[48px]': size === 'lg',
+                    'py-[6px] px-lg h-[36px]': size === 'md',
                   },
                   error && !disabled
                     ? 'bg-surface-critical-subdued border-text-critical text-text-critical'
-                    : ''
+                    : '',
                 );
                 return {
                   default: `${c} border-border-default bg-surface-basic-input text-text-default`,
@@ -136,7 +136,7 @@ const Select = <T, U extends boolean | undefined = undefined>(
                   className={cn(
                     error && !disabled
                       ? 'text-text-critical/70'
-                      : 'text-text-disabled'
+                      : 'text-text-disabled',
                   )}
                 >
                   {placeholder}
@@ -175,7 +175,7 @@ const Select = <T, U extends boolean | undefined = undefined>(
               'text-text-critical': !!error,
               'text-text-default': !error,
             },
-            'pt-md'
+            'pt-md',
           )}
         >
           {message}
