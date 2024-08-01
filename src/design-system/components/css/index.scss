@@ -1332,6 +1332,18 @@ video {
   height: 24px;
 }
 
+.h-\[32px\] {
+  height: 32px;
+}
+
+.h-\[36px\] {
+  height: 36px;
+}
+
+.h-\[48px\] {
+  height: 48px;
+}
+
 .h-\[60px\] {
   height: 60px;
 }
@@ -1884,7 +1896,8 @@ video {
 }
 
 .bg-surface-basic-default {
-  background-color: var(--surface-basic-default);
+  --tw-bg-opacity: 1;
+  background-color: color-mix(in srgb, var(--surface-basic-default) calc(100% * var(--tw-bg-opacity)), transparent);
 }
 
 .bg-surface-basic-hovered {
@@ -2035,7 +2048,7 @@ video {
 }
 
 .fill-surface-basic-default {
-  fill: var(--surface-basic-default);
+  fill: color-mix(in srgb, var(--surface-basic-default) calc(100% * 1), transparent);
 }
 
 .fill-text-soft {
@@ -2698,7 +2711,8 @@ select {
 }
 
 .disabled\:bg-surface-basic-default:disabled {
-  background-color: var(--surface-basic-default);
+  --tw-bg-opacity: 1;
+  background-color: color-mix(in srgb, var(--surface-basic-default) calc(100% * var(--tw-bg-opacity)), transparent);
 }
 
 .disabled\:bg-surface-basic-input:disabled {
@@ -2743,7 +2757,8 @@ select {
 }
 
 .data-\[disabled\]\:bg-surface-basic-default[data-disabled] {
-  background-color: var(--surface-basic-default);
+  --tw-bg-opacity: 1;
+  background-color: color-mix(in srgb, var(--surface-basic-default) calc(100% * var(--tw-bg-opacity)), transparent);
 }
 
 .data-\[state\=checked\]\:bg-surface-primary-default[data-state=checked] {
@@ -2755,7 +2770,8 @@ select {
 }
 
 .data-\[state\=unchecked\]\:bg-surface-basic-default[data-state=unchecked] {
-  background-color: var(--surface-basic-default);
+  --tw-bg-opacity: 1;
+  background-color: color-mix(in srgb, var(--surface-basic-default) calc(100% * var(--tw-bg-opacity)), transparent);
 }
 
 .data-\[disabled\]\:text-text-disabled[data-disabled] {
@@ -2779,7 +2795,8 @@ select {
 }
 
 .group[data-disabled] .group-data-\[disabled\]\:bg-surface-basic-default {
-  background-color: var(--surface-basic-default);
+  --tw-bg-opacity: 1;
+  background-color: color-mix(in srgb, var(--surface-basic-default) calc(100% * var(--tw-bg-opacity)), transparent);
 }
 
 .group[data-state=checked] .group-data-\[state\=checked\]\:bg-surface-primary-default {
@@ -2791,7 +2808,7 @@ select {
 }
 
 .group[data-state=checked] .group-data-\[state\=checked\]\:fill-surface-basic-default {
-  fill: var(--surface-basic-default);
+  fill: color-mix(in srgb, var(--surface-basic-default) calc(100% * 1), transparent);
 }
 
 .group[data-state=unchecked] .group-data-\[state\=unchecked\]\:fill-surface-primary-default {
