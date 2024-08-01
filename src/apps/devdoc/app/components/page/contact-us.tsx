@@ -121,6 +121,12 @@ const getContries = () => {
   }));
 };
 
+const valueRender = (value: any) => (
+  <div className="wb-flex wb-flex-row wb-items-center wb-gap-xl">
+    <span>{value.country.emoji}</span>
+    <span>{value.label}</span>
+  </div>
+);
 const ContactRoot = () => {
   const { firebaseApp } = useFirebase();
   const [loading, setLoading] = useState(false);
@@ -207,12 +213,7 @@ const ContactRoot = () => {
                         onChange(val);
                       }}
                       options={async () => getContries()}
-                      valueRender={(value) => (
-                        <div className="wb-flex wb-flex-row wb-items-center wb-gap-xl">
-                          <span>{value.country.emoji}</span>
-                          <span>{value.label}</span>
-                        </div>
-                      )}
+                      valueRender={valueRender}
                       error={!!errors.country}
                       message={errors.country?.message}
                     />
