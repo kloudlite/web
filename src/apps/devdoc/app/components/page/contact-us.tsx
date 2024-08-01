@@ -107,13 +107,14 @@ type Inputs = {
   companyName: string;
 };
 
-const getContries = () => {
+const getContries = (mode?: 'code' | 'normal') => {
   return (countries || []).map((c) => ({
     label: c.name,
     value: c.name,
     render: () => (
       <div className="wb-flex wb-flex-row wb-items-center wb-gap-xl wb-truncate wb-text-text-default">
         <span>{c.emoji}</span>
+        {mode === 'code' && <span>{c.dial_code}</span>}
         <span className="wb-truncate">{c.name}</span>
       </div>
     ),
@@ -127,9 +128,19 @@ const valueRender = (value: any) => (
     <span>{value.label}</span>
   </div>
 );
+
+const valueRenderCountryCode = (value: any) => (
+  <div className="wb-flex wb-flex-row wb-items-center wb-gap-lg wb-bodyMd">
+    <span>{value?.country?.dial_code}</span>
+  </div>
+);
+
 const ContactRoot = () => {
   const { firebaseApp } = useFirebase();
   const [loading, setLoading] = useState(false);
+  const [selectedCountryCode, setSelectedCountryCode] = useState(
+    getContries('code')[0],
+  );
 
   const {
     register,
@@ -145,8 +156,12 @@ const ContactRoot = () => {
         <form
           onSubmit={handleSubmit(async (d) => {
             setLoading(true);
-            await addContact(firebaseApp, d);
+            await addContact(firebaseApp, {
+              ...d,
+              mobile: selectedCountryCode.country.dial_code + d.mobile,
+            });
             setLoading(false);
+            setSelectedCountryCode(getContries('code')[0]);
             reset();
           })}
           className="wb-flex wb-flex-col wb-gap-5xl wb-flex-1 wb-p-3xl md:wb-p-6xl wb-border wb-border-border-default wb-rounded-lg"
@@ -209,8 +224,8 @@ const ContactRoot = () => {
                       size="lg"
                       label="Country"
                       value={value}
-                      onChange={(_, val) => {
-                        onChange(val);
+                      onChange={(val) => {
+                        onChange(val.label);
                       }}
                       options={async () => getContries()}
                       valueRender={valueRender}
@@ -223,10 +238,26 @@ const ContactRoot = () => {
               <div className="wb-basis-full">
                 <TextInput
                   label="Mobile"
+                  prefix={
+                    <div className="wb-flex wb-flex-row">
+                      <Select
+                        value={selectedCountryCode.value}
+                        options={async () => getContries('code')}
+                        valueRender={valueRenderCountryCode}
+                        onChange={(val) => setSelectedCountryCode(val)}
+                        tabIndex={-1}
+                        searchable={false}
+                        className={
+                          'wb-cursor-pointer !wb-h-[36px] !wb-border-none wb-min-w-[76px] wb-outline-none'
+                        }
+                        portalClass="wb-absolute !wb-min-w-[300px] !wb-max-w-[300px]"
+                      />
+                      <div className="wb-h-[36px] wb-w-xs wb-bg-border-default wb-mr-lg" />
+                    </div>
+                  }
                   size="lg"
                   {...register('mobile', {
                     required: 'Mobile is required',
-
                     pattern: {
                       value: /^[^a-zA-Z]*$/,
                       message: 'Invalid mobile number',
