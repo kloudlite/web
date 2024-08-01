@@ -98,6 +98,9 @@ const Select = <T, U extends boolean | undefined = undefined>(
     open,
     disableWhileLoading,
     createLabel,
+    className,
+    portalClass,
+    tabIndex,
   } = props;
 
   return (
@@ -109,25 +112,30 @@ const Select = <T, U extends boolean | undefined = undefined>(
         <div className="pulsable">
           <div className="pulsable pulsable-hidden">
             <SelectZener
-              className={() => {
-                const c = cn(
-                  'rounded flex flex-row items-center border bodyMd outline-none cursor-default',
-                  {
-                    'py-[10px] px-lg h-[48px]': size === 'lg',
-                    'py-[6px] px-lg h-[36px]': size === 'md',
-                  },
-                  error && !disabled
-                    ? 'bg-surface-critical-subdued border-text-critical text-text-critical'
-                    : '',
-                );
-                return {
-                  default: `${c} border-border-default bg-surface-basic-input text-text-default`,
-                  disabled: `${c} border-border-disabled text-text-disabled`,
-                  focus: `${c} bg-surface-basic-default border-border-input text-text-default ring-offset-1 ring-2 ring-border-focus`,
-                };
-              }}
+              className={
+                className ||
+                (() => {
+                  const c = cn(
+                    'rounded flex flex-row items-center border bodyMd outline-none cursor-default',
+                    {
+                      'py-[10px] px-lg h-[48px]': size === 'lg',
+                      'py-[6px] px-lg h-[36px]': size === 'md',
+                    },
+                    error && !disabled
+                      ? 'bg-surface-critical-subdued border-text-critical text-text-critical'
+                      : '',
+                  );
+                  return {
+                    default: `${c} border-border-default bg-surface-basic-input text-text-default`,
+                    disabled: `${c} border-border-disabled text-text-disabled`,
+                    focus: `${c} bg-surface-basic-default border-border-input text-text-default ring-offset-1 ring-2 ring-border-focus`,
+                  };
+                })
+              }
+              tabIndex={tabIndex}
               open={open}
               menuClass="shadow-popover bg-surface-basic-default border border-border-default rounded py-lg"
+              portalClass={portalClass}
               menuItemRender={menuItemRender}
               value={value}
               options={options}
