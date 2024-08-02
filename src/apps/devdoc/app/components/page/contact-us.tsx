@@ -247,9 +247,7 @@ const ContactRoot = () => {
                         onChange={(val) => setSelectedCountryCode(val)}
                         tabIndex={-1}
                         searchable={false}
-                        className={
-                          'wb-cursor-pointer !wb-h-[36px] !wb-border-none wb-min-w-[76px] wb-outline-none'
-                        }
+                        className="wb-cursor-pointer !wb-h-[36px] !wb-border-none wb-min-w-[76px] wb-outline-none"
                         portalClass="wb-absolute !wb-min-w-[300px] !wb-max-w-[300px]"
                       />
                       <div className="wb-h-[36px] wb-w-xs wb-bg-border-default wb-mr-lg" />
@@ -275,13 +273,19 @@ const ContactRoot = () => {
               message={errors.message?.message}
             />
           </div>
-          <div className="wb-w-full md:wb-w-fit wb-self-end">
+          <div className="wb-flex wb-flex-col md:wb-flex-row wb-items-center wb-gap-3xl wb-w-full md:wb-justify-between">
+            <span className="wb-bodyMd md:wb-bodyLg wb-text-text-soft wb-text-center md:wb-text-start">
+              By submitting this, I confirm that I have read and understood the
+              <Link href="/privacy-policy" className="wb-text-text-default">
+                {' '}
+                Privacy policy.
+              </Link>
+            </span>
             <Button
               loading={loading}
               type="submit"
-              content="Request demo"
+              content="Submit form"
               size="md"
-              block
               disabled={loading}
             />
           </div>
