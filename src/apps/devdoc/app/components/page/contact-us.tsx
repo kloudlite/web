@@ -1,7 +1,7 @@
 import { TextInput, TextArea } from 'kl-design-system/atoms/input';
 import Select from 'kl-design-system/atoms/select';
 import Link from 'next/link';
-import { ComponentProps, useState } from 'react';
+import { ComponentProps, useEffect, useRef, useState } from 'react';
 import { addDoc, collection, getFirestore } from '@firebase/firestore';
 import { FirebaseApp } from 'firebase/app';
 import { Controller, useForm } from 'react-hook-form';
@@ -11,6 +11,12 @@ import { toast } from 'kl-design-system/molecule/toast';
 import Wrapper from '../wrapper';
 import Button from '../button';
 import countries from '~/app/utils/countries.json';
+import { GraphExtended, GraphItem } from '../graph';
+import { CollapseItem, autoSize } from '~/app/utils/commons';
+import consts from '~/app/utils/const';
+import OptionList from 'kl-design-system/atoms/option-list';
+import * as Accordion from '@radix-ui/react-accordion';
+import { Block } from '../commons';
 
 const SupportIcon = (props: ComponentProps<'svg'>) => {
   const { height, width } = props;
@@ -134,6 +140,8 @@ const valueRenderCountryCode = (value: any) => (
   </div>
 );
 
+type IItem = keyof typeof consts.helpandsupport.kloudliteOverviewFaqs;
+
 const ContactRoot = () => {
   const { firebaseApp } = useFirebase();
   const [loading, setLoading] = useState(false);
@@ -149,8 +157,19 @@ const ContactRoot = () => {
     control,
   } = useForm<Inputs>();
 
+  const [selected, setSelected] = useState<IItem>('general');
+
+  const ref = useRef<HTMLDivElement>(null);
+
+  const items = Object.entries(consts.helpandsupport.kloudliteOverviewFaqs);
+
+  useEffect(() => {
+    if (ref.current?.parentElement)
+      autoSize(ref.current?.parentElement, 'animationend');
+  }, [ref.current]);
+
   return (
-    <Wrapper className="wb-relative wb-flex wb-flex-col wb-items-center wb-py-6xl md:wb-py-8xl lg:wb-py-10xl wb-gap-6xl md:wb-gap-8xl xl:wb-gap-10xl">
+    <Wrapper className="wb-relative wb-flex wb-flex-col wb-py-6xl md:wb-py-8xl lg:wb-py-10xl wb-gap-6xl md:wb-gap-8xl xl:wb-gap-10xl">
       <div className="wb-gap-5xl md:wb-gap-8xl xl:wb-gap-10xl wb-flex wb-flex-col lg:wb-flex-row w-full">
         <form
           onSubmit={handleSubmit(async (d) => {
@@ -330,6 +349,54 @@ const ContactRoot = () => {
           {/* </div> */}
         </div>
       </div>
+      <Block title="FAQs">
+        <div className="wb-grid wb-grid-cols-1 md:wb-grid-cols-[288px_auto] wb-gap-5xl">
+          <GraphItem className="wb-flex md:wb-hidden wb-text-text-default wb-bg-surface-basic-subdued wb-flex-col wb-gap-lg">
+            <Select
+              className="wb-px-lg wb-cursor-pointer !wb-h-[36px] !wb-border-none wb-outline-none"
+              value={selected}
+              onChange={(_, v: IItem) => setSelected(v)}
+              searchable={false}
+              options={async () =>
+                items.map(([key, value]) => {
+                  return { label: value.label, value: key };
+                })
+              }
+            />
+          </GraphItem>
+          <GraphItem className="wb-hidden md:wb-flex wb-text-text-default wb-bg-surface-basic-subdued wb-p-2xl wb-flex-col wb-gap-lg">
+            {items.map(([key, val]) => {
+              return (
+                <div key={key} onClick={() => setSelected(key)}>
+                  <OptionList.OptionItemRaw
+                    active={selected === key}
+                    className="wb-rounded-md"
+                  >
+                    {val.label}
+                  </OptionList.OptionItemRaw>
+                </div>
+              );
+            })}
+          </GraphItem>
+          <GraphItem className="wb-text-text-default wb-bg-surface-basic-subdued">
+            <Accordion.Root collapsible type="single" ref={ref}>
+              {consts.helpandsupport.kloudliteOverviewFaqs[selected].items.map(
+                (f, i) => (
+                  <CollapseItem
+                    index={i}
+                    mode="desktop"
+                    key={f.title}
+                    label={f.title}
+                    value={f.title}
+                  >
+                    {f.desc}
+                  </CollapseItem>
+                ),
+              )}
+            </Accordion.Root>
+          </GraphItem>
+        </div>
+      </Block>
     </Wrapper>
   );
 };
