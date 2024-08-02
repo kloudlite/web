@@ -21,7 +21,7 @@ const FaqItem = forwardRef(
       mode: 'mobile' | 'desktop';
       index?: number;
     },
-    forwardRef
+    forwardRef,
   ) => {
     return (
       // @ts-ignore
@@ -29,7 +29,7 @@ const FaqItem = forwardRef(
         <Accordion.Header className="wb-flex">
           <Accordion.Trigger
             className={cn(
-              'wb-group wb-py-2xl wb-px-4xl wb-bodyLg-medium md:wb-bodyXl-medium wb-text-text-default wb-flex wb-flex-row wb-items-center wb-gap-lg wb-w-full wb-cursor-pointer'
+              'wb-group wb-py-2xl wb-px-4xl wb-bodyLg-medium md:wb-bodyXl-medium wb-text-text-default wb-flex wb-flex-row wb-items-center wb-gap-lg wb-w-full wb-cursor-pointer',
             )}
             asChild
           >
@@ -49,14 +49,14 @@ const FaqItem = forwardRef(
             </a>
           </Accordion.Trigger>
         </Accordion.Header>
-        <Accordion.Content className="data-[state=open]:wb-animate-slideDown data-[state=closed]:wb-animate-slideUp wb-overflow-hidden">
+        <Accordion.Content className="collapse-item data-[state=open]:wb-animate-slideDown data-[state=closed]:wb-animate-slideUp wb-overflow-hidden">
           <div className="wb-px-4xl wb-pb-2xl wb-bodyLg md:wb-bodyXl wb-text-text-strong">
             {children}
           </div>
         </Accordion.Content>
       </Accordion.Item>
     );
-  }
+  },
 );
 
 const FaqSection = () => {
@@ -76,7 +76,7 @@ const FaqSection = () => {
             } else {
               setClassName(
                 consts.homeNew.faqData.find((f) => f.title === e)?.classNames ||
-                  'wb-pb-md'
+                  'wb-pb-md',
               );
             }
           }}

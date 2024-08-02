@@ -10,7 +10,6 @@ import { supportEmail } from '~/app/utils/config';
 import { toast } from 'kl-design-system/molecule/toast';
 import Wrapper from '../wrapper';
 import Button from '../button';
-import '@oshq/react-select/index.css';
 import countries from '~/app/utils/countries.json';
 
 const SupportIcon = (props: ComponentProps<'svg'>) => {
