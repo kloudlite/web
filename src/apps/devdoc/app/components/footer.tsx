@@ -20,6 +20,7 @@ const FooterLink = ({ to, children }: { to: string; children: ReactNode }) => {
 
 interface IFooterMenu {
   className?: string;
+  title?: ReactNode;
   items: {
     title: string;
     to: string;
@@ -36,27 +37,43 @@ const FooterMobile = ({ brand, extra, menu }: IFooterItem) => {
     <div className="md:wb-hidden wb-border-x wb-border-border-default wb-flex wb-flex-col wb-pb-6xl">
       <div className="wb-flex wb-flex-row">
         <div className="wb-flex wb-flex-col wb-gap-6xl wb-pl-lg wb-basis-1/2 wb-border-r wb-border-border-default">
-          <div className="wb-flex wb-flex-col wb-gap-lg wb-pt-6xl">
-            {menu[0].items.map((item) => (
-              <FooterLink key={item.title} to={item.to}>
-                {item.title}
-              </FooterLink>
-            ))}
+          <div className="wb-flex wb-flex-col wb-gap-2xl wb-pt-6xl">
+            <div className="wb-text-text-default wb-headingMd wb-pl-md">
+              {menu[0].title}
+            </div>
+            <div className="wb-flex wb-flex-col wb-gap-lg">
+              {menu[0].items.map((item) => (
+                <FooterLink key={item.title} to={item.to}>
+                  {item.title}
+                </FooterLink>
+              ))}
+            </div>
           </div>
-          <div className="wb-flex wb-flex-col wb-gap-lg wb-pb-3xl">
-            {menu[1].items.map((item) => (
-              <FooterLink key={item.title} to={item.to}>
-                {item.title}
-              </FooterLink>
-            ))}
+          <div className="wb-flex wb-flex-col wb-gap-2xl wb-pb-3xl">
+            <div className="wb-text-text-default wb-headingMd wb-pl-md">
+              {menu[1].title}
+            </div>
+            <div className="wb-flex wb-flex-col wb-gap-lg">
+              {menu[1].items.map((item) => (
+                <FooterLink key={item.title} to={item.to}>
+                  {item.title}
+                </FooterLink>
+              ))}
+            </div>
           </div>
         </div>
-        <div className="wb-flex wb-flex-col wb-gap-lg wb-basis-1/2 wb-pl-lg wb-pt-6xl">
-          {menu[2].items.map((item) => (
-            <FooterLink key={item.title} to={item.to}>
-              {item.title}
-            </FooterLink>
-          ))}
+
+        <div className="wb-flex wb-flex-col wb-gap-2xl wb-basis-1/2 wb-pl-lg wb-pt-6xl">
+          <div className="wb-text-text-default wb-headingMd wb-pl-md">
+            {menu[2].title}
+          </div>
+          <div className="wb-flex wb-flex-col wb-gap-lg">
+            {menu[2].items.map((item) => (
+              <FooterLink key={item.title} to={item.to}>
+                {item.title}
+              </FooterLink>
+            ))}
+          </div>
         </div>
       </div>
       <div className="wb-h-xs bg-border-default wb-w-[calc(100%_+_40px)] wb-relative -wb-left-3xl -wb-right-3xl" />
@@ -78,13 +95,18 @@ const FooterMd = ({ brand, extra, menu }: IFooterItem) => {
           return (
             <div
               key={i}
-              className="wb-pl-lg wb-flex wb-flex-col wb-gap-lg wb-py-8xl wb-basis-1/4 wb-border-r wb-border-border-default"
+              className="wb-flex wb-flex-col wb-gap-2xl wb-py-8xl wb-pl-2xl wb-basis-1/4 wb-border-r wb-border-border-default"
             >
-              {menu.items.map((item) => (
-                <FooterLink key={item.title} to={item.to}>
-                  {item.title}
-                </FooterLink>
-              ))}
+              <div className="wb-text-text-default wb-headingMd wb-pl-md">
+                {menu.title}
+              </div>
+              <div className="wb-flex wb-flex-col wb-gap-lg">
+                {menu.items.map((item) => (
+                  <FooterLink key={item.title} to={item.to}>
+                    {item.title}
+                  </FooterLink>
+                ))}
+              </div>
             </div>
           );
         })}
@@ -104,27 +126,37 @@ const FooterLg = ({ brand, extra, menu }: IFooterItem) => {
       <div className="wb-py-10xl wb-w-[238px] wb-pl-4xl wb-box-content">
         {brand}
       </div>
-      <div className="wb-py-10xl wb-border-l wb-border-border-default wb-pl-lg wb-w-[188px] wb-flex wb-flex-col wb-gap-6xl">
+      <div className="wb-py-10xl wb-border-l wb-border-border-default wb-pl-3xl wb-w-[188px] wb-flex wb-flex-col wb-gap-6xl">
         {menu.slice(0, 2).map((m, index) => {
           const i = index;
           return (
-            <div key={i} className="wb-flex wb-flex-col wb-gap-lg">
-              {m.items.map((item) => (
-                <FooterLink key={item.title} to={item.to}>
-                  {item.title}
-                </FooterLink>
-              ))}
+            <div key={i} className="wb-flex wb-flex-col wb-gap-2xl">
+              <div className="wb-text-text-default wb-headingMd wb-pl-md">
+                {m.title}
+              </div>
+              <div className="wb-flex wb-flex-col wb-gap-lg">
+                {m.items.map((item) => (
+                  <FooterLink key={item.title} to={item.to}>
+                    {item.title}
+                  </FooterLink>
+                ))}
+              </div>
             </div>
           );
         })}
       </div>
-      <div className="wb-py-10xl wb-border-l wb-border-border-default wb-pl-lg wb-w-[188px]">
-        <div className="wb-flex wb-flex-col wb-gap-lg">
-          {menu[2].items.map((item) => (
-            <FooterLink key={item.title} to={item.to}>
-              {item.title}
-            </FooterLink>
-          ))}
+      <div className="wb-py-10xl wb-border-l wb-border-border-default wb-pl-3xl wb-w-[188px]">
+        <div className="wb-flex wb-flex-col wb-gap-2xl">
+          <div className="wb-text-text-default wb-headingMd wb-pl-md">
+            {menu[2].title}
+          </div>
+          <div className="wb-flex wb-flex-col wb-gap-lg">
+            {menu[2].items.map((item) => (
+              <FooterLink key={item.title} to={item.to}>
+                {item.title}
+              </FooterLink>
+            ))}
+          </div>
         </div>
       </div>
       <div className="wb-py-10xl wb-border-l wb-border-border-default wb-pl-5xl">
@@ -135,6 +167,7 @@ const FooterLg = ({ brand, extra, menu }: IFooterItem) => {
 };
 
 const FooterXlAndUp = ({ brand, extra, menu }: IFooterItem) => {
+  console.log(menu);
   return (
     <div className="wb-hidden xl:wb-flex wb-flex-row wb-gap-5xl wb-border-x wb-border-border-default">
       <div className="wb-py-10xl wb-w-[232px] 2xl:wb-w-[296px] 3xl:wb-w-[480px] wb-pl-4xl 3xl:wb-pl-5xl wb-box-content">
@@ -146,13 +179,18 @@ const FooterXlAndUp = ({ brand, extra, menu }: IFooterItem) => {
           return (
             <div
               key={i}
-              className="wb-flex wb-flex-col wb-gap-lg wb-py-10xl wb-w-[160px] 3xl:wb-w-[192px] wb-pl-lg wb-border-l wb-border-border-default"
+              className="wb-flex wb-flex-col wb-gap-2xl wb-py-10xl wb-w-[160px] 3xl:wb-w-[192px] wb-pl-5xl wb-border-l wb-border-border-default"
             >
-              {m.items.map((item) => (
-                <FooterLink key={item.title} to={item.to}>
-                  {item.title}
-                </FooterLink>
-              ))}
+              <div className="wb-text-text-default wb-headingMd wb-pl-md">
+                {m.title}
+              </div>
+              <div className="wb-flex wb-flex-col wb-gap-lg ">
+                {m.items.map((item) => (
+                  <FooterLink key={item.title} to={item.to}>
+                    {item.title}
+                  </FooterLink>
+                ))}
+              </div>
             </div>
           );
         })}

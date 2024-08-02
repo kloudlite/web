@@ -124,7 +124,7 @@ export default {
     ),
     menu: [
       {
-        title: 'Developers',
+        title: 'Products',
         className: 'wb-basis-1/2 md:wb-basis-auto wb-flex',
         showExtra: false,
         items: [
