@@ -8,7 +8,8 @@
     "build": "pnpm clean && next build",
     "postbuild": "next-sitemap",
     "start": "pnpm build && npx serve out",
-    "post-process": "pnpm build && firebase deploy",
+    "d": "firebase deploy --token $FIREBASE_TOKEN",
+    "post-process": "pnpm build && pnpm d",
     "clean": "rm -rf .next && rm -rf out",
     "release": "dotenv -- npm run post-process"
   },

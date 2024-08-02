@@ -1,5 +1,13 @@
 /** eslint-disable prettier/prettier */
-import { ArrowLeftLg, TwitterNewLogoFill } from '@jengaicons/react';
+import {
+  ArrowLeftLg,
+  Config,
+  Money,
+  PhoneCall,
+  Question,
+  Star,
+  TwitterNewLogoFill,
+} from '@jengaicons/react';
 
 import Link from 'next/link';
 import { Badge } from 'kl-design-system/atoms/badge';
@@ -593,6 +601,7 @@ const consts = {
     kloudliteOverviewFaqs: {
       general: {
         label: 'General Questions',
+        icon: Question,
         items: [
           {
             title: 'What is Kloudlite?',
@@ -610,6 +619,7 @@ const consts = {
       },
       setupConfiguration: {
         label: 'Setup & Configuration',
+        icon: Config,
         items: [
           {
             title: 'How do I setup Kloudlite?',
@@ -631,6 +641,7 @@ const consts = {
       },
       featureCapabilities: {
         label: 'Feature & Capabilities',
+        icon: Star,
         items: [
           {
             title: 'What are integrated services in Kloudlite?',
@@ -649,6 +660,7 @@ const consts = {
       },
       plansPricing: {
         label: 'Plans & Pricing',
+        icon: Money,
         items: [
           {
             title: 'What plans does Kloudlite offer?',
@@ -662,6 +674,7 @@ const consts = {
       },
       aIMLWorkflows: {
         label: 'AI & ML Workflows',
+        icon: Robot,
         items: [
           {
             title: 'Does Kloudlite support AI and ML workflows?',
@@ -671,6 +684,7 @@ const consts = {
       },
       troubleshootingSupport: {
         label: 'Troubleshooting & Support',
+        icon: PhoneCall,
         items: [
           {
             title: 'Where can I find support for Kloudlite?',

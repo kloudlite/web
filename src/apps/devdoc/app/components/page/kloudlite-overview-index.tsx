@@ -46,7 +46,7 @@ const KOverviewIndex = () => {
           <GraphItem className="wb-hidden md:wb-flex wb-text-text-default wb-bg-surface-basic-subdued wb-p-2xl wb-flex-col wb-gap-lg">
             {items.map(([key, val]) => {
               return (
-                <div key={key} onClick={() => setSelected(key)}>
+                <div key={key} onClick={() => setSelected(key as IItem)}>
                   <OptionList.OptionItemRaw
                     active={selected === key}
                     className="wb-rounded-md"

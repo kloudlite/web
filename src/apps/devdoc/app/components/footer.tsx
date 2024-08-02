@@ -167,7 +167,6 @@ const FooterLg = ({ brand, extra, menu }: IFooterItem) => {
 };
 
 const FooterXlAndUp = ({ brand, extra, menu }: IFooterItem) => {
-  console.log(menu);
   return (
     <div className="wb-hidden xl:wb-flex wb-flex-row wb-gap-5xl wb-border-x wb-border-border-default">
       <div className="wb-py-10xl wb-w-[232px] 2xl:wb-w-[296px] 3xl:wb-w-[480px] wb-pl-4xl 3xl:wb-pl-5xl wb-box-content">

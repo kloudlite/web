@@ -7,7 +7,6 @@ import { FirebaseApp } from 'firebase/app';
 import { Controller, useForm } from 'react-hook-form';
 import { useFirebase } from '~/app/utils/useFirebase';
 import { supportEmail } from '~/app/utils/config';
-import { toast } from 'kl-design-system/molecule/toast';
 import Wrapper from '../wrapper';
 import Button from '../button';
 import countries from '~/app/utils/countries.json';
@@ -139,6 +138,13 @@ const valueRenderCountryCode = (value: any) => (
   </div>
 );
 
+const valueRenderFaq = (value: any) => (
+  <div className="wb-flex wb-flex-row wb-items-center wb-gap-lg">
+    <span>{value?.item?.icon ? <value.item.icon size={16} /> : null}</span>
+    <span className="wb-bodyMd">{value.label}</span>
+  </div>
+);
+
 type IItem = keyof typeof consts.helpandsupport.kloudliteOverviewFaqs;
 
 const FAQSection = () => {
@@ -161,9 +167,22 @@ const FAQSection = () => {
             value={selected}
             onChange={(_, v: IItem) => setSelected(v)}
             searchable={false}
+            valueRender={valueRenderFaq}
             options={async () =>
               items.map(([key, value]) => {
-                return { label: value.label, value: key };
+                return {
+                  label: value.label,
+                  value: key,
+                  item: value,
+                  render: () => (
+                    <div className="wb-flex wb-flex-row wb-items-center wb-gap-lg">
+                      <span>
+                        <value.icon size={16} />
+                      </span>
+                      <span className="wb-bodyMd">{value.label}</span>
+                    </div>
+                  ),
+                };
               })
             }
           />
@@ -171,12 +190,17 @@ const FAQSection = () => {
         <GraphItem className="wb-hidden md:wb-flex wb-text-text-default wb-bg-surface-basic-subdued wb-p-2xl wb-flex-col wb-gap-lg">
           {items.map(([key, val]) => {
             return (
-              <div key={key} onClick={() => setSelected(key)}>
+              <div key={key} onClick={() => setSelected(key as IItem)}>
                 <OptionList.OptionItemRaw
                   active={selected === key}
                   className="wb-rounded-md"
                 >
-                  {val.label}
+                  <div className="wb-flex wb-flex-row wb-items-center wb-gap-lg">
+                    <span>
+                      <val.icon size={16} />
+                    </span>
+                    <span>{val.label}</span>
+                  </div>
                 </OptionList.OptionItemRaw>
               </div>
             );
@@ -242,8 +266,8 @@ const ContactRoot = () => {
               });
               setLoading(false);
               setSelectedCountryCode(getContries('code')[0]);
-              let expiryMinutes = 1;
-              let date = new Date();
+              const expiryMinutes = 5;
+              const date = new Date();
               date.setTime(date.getTime() + expiryMinutes * 60 * 1000);
               setCookie('contact-form-submitted', true, {
                 expires: date,
