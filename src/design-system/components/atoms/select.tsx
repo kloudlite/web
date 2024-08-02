@@ -14,10 +14,13 @@ const menuItemRender = (props: IMenuItemRender) => {
   return (
     <div
       {...innerProps}
-      className={cn('px-xl py-lg cursor-pointer select-none', {
-        'bg-surface-basic-hovered': !!focused && !active,
-        'bg-surface-basic-active': !!active,
-      })}
+      className={cn(
+        'px-xl text-text-default py-lg cursor-pointer select-none',
+        {
+          'bg-surface-basic-hovered': !!focused && !active,
+          'bg-surface-basic-active': !!active,
+        },
+      )}
     >
       {typeof render === 'string'
         ? render
@@ -168,7 +171,13 @@ const Select = <T, U extends boolean | undefined = undefined>(
               multiple={multiple}
               onSearch={onSearch}
               searchable={searchable}
-              noOptionMessage={noOptionMessage}
+              noOptionMessage={
+                noOptionMessage || (
+                  <div className="flex items-center justify-center text-text-default bodyLg p-2xl">
+                    No options
+                  </div>
+                )
+              }
               disableWhileLoading={disableWhileLoading}
               createLabel={createLabel}
             />
