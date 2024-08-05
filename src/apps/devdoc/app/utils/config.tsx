@@ -1,18 +1,15 @@
 import Link from 'next/link';
 import { BrandLogo } from 'kl-design-system/branding/brand-logo';
-import ButtonGroup from 'kl-design-system/atoms/button-group';
 import {
   GithubLogoFill,
   LinkedinLogoFill,
-  Monitor,
-  Moon,
-  Sun,
   TwitterNewLogoFill,
 } from '~/app/icons/icons';
 import OssIcon from '~/images/homeNew/oss.svg';
 import OssIconDark from '~/images/homeNew/oss-dark.svg';
 import { cn } from './commons';
 import { IConfig } from './use-config';
+import ThemeSwitcher from '../components/theme-switcher';
 import { useTheme } from './useTheme';
 
 export const siteDesc =
@@ -46,8 +43,7 @@ const SocialMenu = () => {
 const BrandMenu = ({ className }: { className?: string }) => {
   const brandIconSize = 24;
 
-  const { theme, setTheme } = useTheme();
-
+  const { binaryTheme } = useTheme();
   return (
     <div
       className={cn(
@@ -65,39 +61,27 @@ const BrandMenu = ({ className }: { className?: string }) => {
               Boost your efficiency, speed up deployments, enhance collaboration
             </span>
           </div>
-          <ButtonGroup.Root
-            variant="outline"
-            selectable
-            value={theme}
-            onValueChange={(v: any) => {
-              setTheme(v);
-            }}
-          >
-            <ButtonGroup.IconButton
-              value="light"
-              icon={<Sun />}
-              aria-label="light-theme"
-            />
-            <ButtonGroup.IconButton
-              value="dark"
-              icon={<Moon />}
-              aria-label="dark-theme"
-            />
-            <ButtonGroup.IconButton
-              value="system"
-              icon={<Monitor />}
-              aria-label="system-theme"
-            />
-          </ButtonGroup.Root>
+          <iframe
+            title="kloudlite status"
+            src={`https://status.kloudlite.io/badge?theme=${binaryTheme}`}
+            width="250"
+            height="30"
+          />
         </div>
-        <div className="wb-bodyMd wb-text-text-soft wb-hidden md:wb-flex lg:wb-hidden wb-flex-col wb-gap-3xl wb-items-end md:wb-self-end lg:wb-self-auto">
-          <SocialMenu />
-          <div>© {new Date().getFullYear()} Kloudlite Labs Pvt Ltd.</div>
+        <div className="wb-hidden md:wb-flex lg:wb-hidden wb-flex-col wb-justify-between wb-items-end">
+          <div className="wb-flex wb-bodyMd wb-text-text-soft wb-flex-col wb-gap-3xl wb-items-end lg:wb-self-auto">
+            <SocialMenu />
+            <div>© {new Date().getFullYear()} Kloudlite Labs Pvt Ltd.</div>
+          </div>
+          <ThemeSwitcher />
         </div>
       </div>
       <div className="wb-bodyMd wb-text-text-soft wb-flex md:wb-hidden lg:wb-flex wb-flex-col wb-gap-3xl">
         <SocialMenu />
         <div>© {new Date().getFullYear()} Kloudlite Labs Pvt Ltd.</div>
+        <div className="md:wb-hidden">
+          <ThemeSwitcher />
+        </div>
       </div>
     </div>
   );
@@ -113,13 +97,18 @@ export default {
   footer: {
     brand: <BrandMenu className="md:wb-order-[-9999]" />,
     extra: (
-      <div>
-        <img className="dark-hidden" src={OssIcon.src} alt="oss-light" />
-        <img
-          className="wb-hidden dark-block"
-          src={OssIconDark.src}
-          alt="oss-dark"
-        />
+      <div className="wb-flex wb-flex-col wb-justify-between wb-h-full">
+        <div>
+          <img className="dark-hidden" src={OssIcon.src} alt="oss-light" />
+          <img
+            className="wb-hidden dark-block"
+            src={OssIconDark.src}
+            alt="oss-dark"
+          />
+        </div>
+        <div className="wb-hidden lg:wb-flex">
+          <ThemeSwitcher />
+        </div>
       </div>
     ),
     menu: [
