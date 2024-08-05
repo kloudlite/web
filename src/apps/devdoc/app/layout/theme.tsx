@@ -114,7 +114,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
 
   let pageType = 'normal';
 
-  if (findPageType(activePath, ['blog', 'help-and-support'])) {
+  if (findPageType(activePath, ['blog'])) {
     pageType = 'blog';
   }
 

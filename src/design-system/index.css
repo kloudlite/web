@@ -4,6 +4,7 @@
 @import './css/default.css';
 @import './css/dark.css';
 @import 'css/slider.css';
+@import '../../node_modules/@oshq/react-select/dist/index.css';
 
 html {
   font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';

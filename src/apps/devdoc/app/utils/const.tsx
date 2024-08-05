@@ -1,5 +1,13 @@
 /** eslint-disable prettier/prettier */
-import { ArrowLeftLg, TwitterNewLogoFill } from '@jengaicons/react';
+import {
+  ArrowLeftLg,
+  Config,
+  Money,
+  PhoneCall,
+  Question,
+  Star,
+  TwitterNewLogoFill,
+} from '@jengaicons/react';
 
 import Link from 'next/link';
 import { Badge } from 'kl-design-system/atoms/badge';
@@ -588,6 +596,107 @@ const consts = {
         github: 'malviyaharsh',
       },
     ],
+  },
+  helpandsupport: {
+    kloudliteOverviewFaqs: {
+      general: {
+        label: 'General Questions',
+        icon: Question,
+        items: [
+          {
+            title: 'What is Kloudlite?',
+            desc: 'Kloudlite is a platform that provides seamless and secure development environments for building distributed applications. It connects developer’s workspaces(local/remote) with remote Kubernetes environments using WireGuard, ensuring full development and production parity.',
+          },
+          {
+            title: 'How does Kloudlite help developers?',
+            desc: 'Kloudlite enhances productivity by enabling developers to work in environments that mirror production settings. It provides unified network interface eliminating the need for local setups. It supports collaborative coding and service interception for testing and debugging.',
+          },
+          {
+            title: 'Who can benefit from using Kloudlite?',
+            desc: 'Kloudlite is ideal for developers building distributed applications, teams needing consistent development environments, and organizations looking to streamline their development workflows and improve productivity.',
+          },
+        ],
+      },
+      setupConfiguration: {
+        label: 'Setup & Configuration',
+        icon: Config,
+        items: [
+          {
+            title: 'How do I setup Kloudlite?',
+            desc: 'Setting up Kloudlite involves creating a cluster reference on the Kloudlite dashboard, attaching your cluster, and configuring local development containers to connect to the environment. you can follow these instructions https://kloudlite.io/docs/getting-started.',
+          },
+          {
+            title: 'What are the requirements for using Kloudlite?',
+            desc: 'You need a Kubernetes cluster to run environments and local container runtime to run your workspace. Detailed setup instructions are provided in our documentation (https://kloudlite.io/docs/getting-started).',
+          },
+          {
+            title: 'Does Kloudlite provide us compute?',
+            desc: "No, Kloudlite doesn't yet provide compute.",
+          },
+          {
+            title: 'Does Kloudlite manage Kubernetes clusters?',
+            desc: 'No, Kloudlite does not manage Kubernetes clusters. It runs environments within the clusters connected through WireGuard.',
+          },
+        ],
+      },
+      featureCapabilities: {
+        label: 'Feature & Capabilities',
+        icon: Star,
+        items: [
+          {
+            title: 'What are integrated services in Kloudlite?',
+            desc: 'Integrated services are stateful backing services running on attached clusters. They allow you to create and use resources like databases within your development environments.',
+          },
+          {
+            title: 'Can I collaborate with other developers using Kloudlite?',
+            desc: 'Yes, Kloudlite supports collaborative coding by allowing multiple developers to work in the same environment simultaneously.',
+          },
+          {
+            title:
+              'How does Kloudlite ensure full development and production parity?',
+            desc: 'Kloudlite aligns all external variables, such as network setups and environment configurations, to match production settings exactly. This ensures that your development environment mirrors the production environment.',
+          },
+        ],
+      },
+      plansPricing: {
+        label: 'Plans & Pricing',
+        icon: Money,
+        items: [
+          {
+            title: 'What plans does Kloudlite offer?',
+            desc: 'Kloudlite offers different plans to suit various needs, including a Scale Plan with features like RBAC in User Management, Prioritization in Support, and Audit Logging for Governance.',
+          },
+          {
+            title: 'How much does the Scale Plan cost?',
+            desc: 'The Scale Plan costs $10 per user per month. Partial payment is considered for users added mid-month.',
+          },
+        ],
+      },
+      aIMLWorkflows: {
+        label: 'AI & ML Workflows',
+        icon: Robot,
+        items: [
+          {
+            title: 'Does Kloudlite support AI and ML workflows?',
+            desc: 'Yes, Kloudlite supports AI and ML workflows by allowing developers to attach VMs with GPUs to their development environments. However, AI & ML workflows will not be included in the first release of Kloudlite.',
+          },
+        ],
+      },
+      troubleshootingSupport: {
+        label: 'Troubleshooting & Support',
+        icon: PhoneCall,
+        items: [
+          {
+            title: 'Where can I find support for Kloudlite?',
+            desc: 'You can access support through our dedicated support channels, available to all users. Users on the Scale Plan receive prioritization in support requests.',
+          },
+          {
+            title: 'What should I do if I encounter issues during setup?',
+            desc: 'If you encounter any issues during setup, refer to our detailed documentation or contact our support team for assistance.',
+          },
+        ],
+      },
+    },
   },
 };
 

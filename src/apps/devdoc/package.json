@@ -6,8 +6,10 @@
   "scripts": {
     "dev": "pnpm clean && next dev",
     "build": "pnpm clean && next build",
+    "postbuild": "next-sitemap",
     "start": "pnpm build && npx serve out",
-    "post-process": "pnpm build && firebase deploy --token $FIREBASE_TOKEN",
+    "d": "firebase deploy --token $FIREBASE_TOKEN",
+    "post-process": "pnpm build && pnpm d",
     "clean": "rm -rf .next && rm -rf out",
     "release": "dotenv -- npm run post-process"
   },
@@ -76,6 +78,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "next-sitemap": "^4.2.3",
     "postcss": "^8.4.32",
     "prettier": "^2.8.8",
     "tailwindcss": "^3.4.0",
