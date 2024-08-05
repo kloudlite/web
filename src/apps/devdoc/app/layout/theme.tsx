@@ -179,7 +179,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
             includePlaceholder
           />
           {!['blog', 'customer-stories'].includes(pageType) && showToc && (
-            <nav className="wb-order-last wb-w-[230px] wb-max-w-[230px] wb-min-w-[226px] wb-sticky wb-top-0 wb-self-start wb-hidden lg:wb-block">
+            <nav className="wb-order-last wb-w-[230px] wb-max-w-[230px] wb-min-w-[226px] wb-sticky wb-top-0 wb-self-start wb-hidden xl:wb-block">
               <TOC headings={headings} />
             </nav>
           )}
@@ -200,7 +200,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
                 showSidebar ? 'wb-max-w-[72rem]' : '',
                 activeThemeContext.layout === 'raw' ? '' : 'gap-6xl',
                 pageType === 'docs'
-                  ? 'wb-py-3xl lg:wb-py-6xl xl:wb-px-3xl 3xl:!wb-px-7xl lg:!wb-max-w-[394px] xl:!wb-max-w-[510px] 2xl:!wb-max-w-[650px] 3xl:!wb-max-w-[938px]'
+                  ? 'wb-py-3xl lg:wb-py-6xl xl:wb-px-3xl 3xl:!wb-px-7xl xl:!wb-max-w-[510px] 2xl:!wb-max-w-[650px] 3xl:!wb-max-w-[938px]'
                   : '',
                 ['customer-stories'].includes(pageType)
                   ? 'lg:!wb-pr-8xl xl:!wb-pr-10xl 2xl:!wb-pr-11xl 3xl:!wb-pr-15xl'
