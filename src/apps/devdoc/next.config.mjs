@@ -4,7 +4,7 @@ import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
 import remarkFrontmatter from 'remark-frontmatter';
 
 const withNextra = nextra({
-  theme: './app/layout/theme.tsx',
+  theme: './web/layout/theme.tsx',
   mdxOptions: {
     remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
   },
