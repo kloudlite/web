@@ -77,7 +77,7 @@ const findPageType = (activePath: Item[], names: string[]) => {
 const isDocPage = (route: string) => route.includes('/docs');
 
 const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
-  const { title, frontMatter, pageMap, headings, route } = pageOpts;
+  const { frontMatter, pageMap, headings, route } = pageOpts;
 
   const { state } = useMenu();
 
@@ -129,13 +129,19 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
   return (
     <div className="wb-bg-surface-basic-subdued wb-min-h-screen wb-antialiased">
       <Head>
-        <title>{title === 'Index' ? config.siteTitle : title}</title>
+        <title>{frontMatter.metaTitle || 'Kloudlite'}</title>
         <meta
           name="description"
           content={frontMatter.description || siteDesc}
         />
-        <meta name="og:image" content={`${basePath}${frontMatter.image}`} />
-        <meta property="og:title" content={frontMatter.title || 'Kloudlite'} />
+        <meta
+          name="og:image"
+          content={`${basePath}${frontMatter.image || ''}`}
+        />
+        <meta
+          property="og:title"
+          content={frontMatter.metaTitle || 'Kloudlite'}
+        />
         <meta
           property="og:description"
           content={frontMatter.description || 'Kloudlite'}
@@ -150,7 +156,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
         />
         <meta
           name="twitter:image"
-          content={`${basePath}${frontMatter.image}`}
+          content={`${basePath}${frontMatter.image || ''}`}
         />
         <meta
           name="twitter:description"
