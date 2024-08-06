@@ -41,20 +41,20 @@ const KDElement = ({
       ref={ref}
       className={cn(
         'wb-flex wb-flex-row kd-item',
-        isLastItem ? 'wb-pb-3xl' : 'wb-pb-6xl'
+        isLastItem ? 'wb-pb-3xl' : 'wb-pb-6xl',
       )}
       data-index={index}
     >
       <div
         className={cn(
           'wb-relative wb-w-[40px] wb-shrink-0 wb-flex wb-flex-row wb-justify-center wb-pl-3xl md:wb-pl-4xl wb-box-content',
-          isLastItem ? '-wb-mb-3xl' : '-wb-mb-6xl'
+          isLastItem ? '-wb-mb-3xl' : '-wb-mb-6xl',
         )}
       >
         <div
           className={cn(
             'wb-w-[2px] wb-h-full wb-transition-all',
-            'wb-bg-border-default'
+            'wb-bg-border-default',
           )}
         />
 
@@ -64,7 +64,7 @@ const KDElement = ({
             animate={{ height: '100%' }}
             className={cn(
               'wb-w-[2px] wb-h-full wb-absolute',
-              'wb-bg-gradient-to-b wb-from-border-primary wb-to-border-dark'
+              'wb-bg-gradient-to-b wb-from-border-primary wb-to-border-dark',
             )}
           />
         )}
@@ -73,7 +73,7 @@ const KDElement = ({
             'wb-flex wb-items-center wb-justify-center wb-rounded wb-w-[40px] wb-h-[40px] wb-absolute wb-transition-all',
             isActive
               ? 'wb-text-icon-on-primary wb-bg-surface-primary-default'
-              : 'wb-text-icon-soft wb-bg-surface-basic-active'
+              : 'wb-text-icon-soft wb-bg-surface-basic-active',
           )}
         >
           <Icon size={24} />
@@ -83,21 +83,21 @@ const KDElement = ({
         className={cn('wb-flex wb-flex-col wb-px-3xl md:wb-px-6xl wb-gap-xl')}
         key={kd.label}
       >
-        <span
+        <h2
           className={cn(
             'wb-headingLg md:wb-heading2xl',
-            isActive ? 'wb-text-text-default' : 'wb-text-text-soft'
+            isActive ? 'wb-text-text-default' : 'wb-text-text-soft',
           )}
         >
           {kd.label}
-        </span>
-        <span
+        </h2>
+        <p
           className={cn(
-            'wb-bodyLg md:wb-bodyXl wb-transition-colors wb-text-text-soft'
+            'wb-bodyLg md:wb-bodyXl wb-transition-colors wb-text-text-soft',
           )}
         >
           {kd.desc}
-        </span>
+        </p>
       </div>
     </div>
   );

@@ -231,9 +231,6 @@ const FAQSection = () => {
 const ContactRoot = () => {
   const { firebaseApp } = useFirebase();
   const [loading, setLoading] = useState(false);
-  const [selectedCountryCode, setSelectedCountryCode] = useState(
-    getContries('code')[0],
-  );
 
   const [hasFormSubmitted, setHasFormSubmitted] = useState(false);
 
@@ -260,12 +257,8 @@ const ContactRoot = () => {
           <form
             onSubmit={handleSubmit(async (d) => {
               setLoading(true);
-              await addContact(firebaseApp, {
-                ...d,
-                mobile: selectedCountryCode.country.dial_code + d.mobile,
-              });
+              await addContact(firebaseApp, d);
               setLoading(false);
-              setSelectedCountryCode(getContries('code')[0]);
               const expiryMinutes = 5;
               const date = new Date();
               date.setTime(date.getTime() + expiryMinutes * 60 * 1000);
@@ -350,21 +343,6 @@ const ContactRoot = () => {
                 <div className="wb-basis-full">
                   <TextInput
                     label="Mobile"
-                    prefix={
-                      <div className="wb-flex wb-flex-row">
-                        <Select
-                          value={selectedCountryCode.value}
-                          options={async () => getContries('code')}
-                          valueRender={valueRenderCountryCode}
-                          onChange={(val) => setSelectedCountryCode(val)}
-                          tabIndex={-1}
-                          searchable={false}
-                          className="wb-cursor-pointer !wb-h-[36px] !wb-border-none wb-min-w-[76px] wb-outline-none"
-                          portalClass="wb-absolute !wb-min-w-[300px] !wb-max-w-[300px]"
-                        />
-                        <div className="wb-h-[36px] wb-w-xs wb-bg-border-default wb-mr-lg" />
-                      </div>
-                    }
                     size="lg"
                     {...register('mobile', {
                       required: 'Mobile is required',
@@ -397,7 +375,7 @@ const ContactRoot = () => {
               <Button
                 loading={loading}
                 type="submit"
-                content="Submit form"
+                content="Submit"
                 size="md"
                 disabled={loading}
               />

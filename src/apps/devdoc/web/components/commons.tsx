@@ -27,13 +27,13 @@ export const DetailCard = ({
         <div
           className={cn(
             'flex flex-col bg-surface-basic-default h-full',
-            compact ? 'gap-4xl p-4xl' : 'gap-5xl p-5xl'
+            compact ? 'gap-4xl p-4xl' : 'gap-5xl p-5xl',
           )}
         >
           <div
             className={cn(
               'rounded-full w-fit flex items-center justify-center aspect-square p-2xl bg-icon-primary text-text-on-primary',
-              compact ? 'h-8xl' : 'h-10xl mb-[28px]'
+              compact ? 'h-8xl' : 'h-10xl mb-[28px]',
             )}
           >
             {/* @ts-ignore */}
@@ -43,7 +43,7 @@ export const DetailCard = ({
             <div
               className={cn(
                 'text-text-default',
-                compact ? 'heading2xl-marketing' : 'heading3xl-marketing'
+                compact ? 'heading2xl-marketing' : 'heading3xl-marketing',
               )}
             >
               {title}
@@ -73,24 +73,24 @@ export const TitleBlock = ({
     <div
       className={cn(
         'wb-flex wb-flex-col wb-gap-3xl wb-text-center',
-        titleContainerClass
+        titleContainerClass,
       )}
     >
       <div className="flex flex-col gap-md">
-        <h3
+        <h2
           className={cn(
             'wb-heading3xl-marketing md:wb-heading4xl-marketing lg:wb-heading5xl-marketing wb-text-text-default',
-            titleClass
+            titleClass,
           )}
         >
           {title}
-        </h3>
+        </h2>
       </div>
       {desc && (
         <p
           className={cn(
             'wb-bodyLg md:wb-bodyXl lg:wb-bodyXXl wb-text-text-soft wb-max-w-[784px] wb-m-auto',
-            descClass
+            descClass,
           )}
         >
           {desc}
@@ -176,13 +176,13 @@ export const Head = ({
         align === 'center'
           ? 'lg:!items-center text-center'
           : ' items-center lg:!items-start',
-        className
+        className,
       )}
     >
       <div
         className={cn(
           'flex flex-col gap-3xl items-center',
-          align === 'center' ? '' : 'lg:!items-start'
+          align === 'center' ? '' : 'lg:!items-start',
         )}
       >
         {tag && (
@@ -196,7 +196,7 @@ export const Head = ({
       <div
         className={cn(
           'w-full flex md:!flex-row flex-col gap-4xl md:!items-center justify-center',
-          align === 'center' ? '' : 'lg:!justify-start'
+          align === 'center' ? '' : 'lg:!justify-start',
         )}
       >
         <div>
@@ -238,7 +238,7 @@ export const HeroTwo = ({
     <Wrapper
       className={cn(
         'relative flex justify-center lg:justify-start py-6xl md:!py-8xl lg:!py-10xl',
-        className
+        className,
       )}
     >
       <div className="flex flex-col z-10 w-full">
@@ -254,7 +254,7 @@ export const HeroTwo = ({
           <div
             className={cn(
               'z-10 relative lg:min-w-[400px] xl:min-w-[448px] lg:top-[10%] 2xl:!top-0 pt-6xl md:!pt-6xl lg:!py-0',
-              coverClassName
+              coverClassName,
             )}
           >
             <img src={cover} alt="cover" />
