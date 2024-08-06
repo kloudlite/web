@@ -126,6 +126,9 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
     pageType = 'customer-stories';
   }
 
+  const site = basePath;
+  const canonicalURL = site + useRouter().pathname;
+
   return (
     <div className="wb-bg-surface-basic-subdued wb-min-h-screen wb-antialiased">
       <Head>
@@ -162,6 +165,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
           name="twitter:description"
           content={frontMatter.description || 'Kloudlite'}
         />
+        <link rel="canonical" href={canonicalURL} />
       </Head>
       <ActiveAnchorProvider>
         <HeaderSecondary {...config?.headerSecondary} activePath={activePath} />

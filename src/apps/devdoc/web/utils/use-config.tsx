@@ -94,7 +94,7 @@ export const ConfigProvider = ({
   const [config, setConfig] = useState<IConfig>(
     pageOpts
       ? { ...c, pageOpts, userApiLoading: true }
-      : { ...c, userApiLoading: true }
+      : { ...c, userApiLoading: true },
   );
 
   const setActiveDocTopic = (topic: string) => {
@@ -104,7 +104,7 @@ export const ConfigProvider = ({
     <ConfigContext.Provider
       value={useMemo(
         () => ({ config, setConfig, setActiveDocTopic }),
-        [config, setConfig, setActiveDocTopic]
+        [config, setConfig, setActiveDocTopic],
       )}
     >
       {children}
