@@ -3,6 +3,7 @@ import {
   ArrowLeftLg,
   Config,
   Money,
+  OpenSource,
   PhoneCall,
   Question,
   Star,
@@ -34,6 +35,16 @@ import collaborate1440Dark from '~/images/homeNew/collaborate1440-dark.svg';
 import connect1440Dark from '~/images/homeNew/connect1440-dark.svg';
 import integrate1440Dark from '~/images/homeNew/integrate1440-dark.svg';
 import nocommit1440Dark from '~/images/homeNew/nocommit1440-dark.svg';
+
+import collaborateMd from '~/images/homeNew/collaborateMd.svg';
+import connectMd from '~/images/homeNew/connectMd.svg';
+import integrateMd from '~/images/homeNew/integrateMd.svg';
+import nocommitMd from '~/images/homeNew/nocommitMd.svg';
+
+import collaborateMdDark from '~/images/homeNew/collaborateMd-dark.svg';
+import connectMdDark from '~/images/homeNew/connectMd-dark.svg';
+import integrateMdDark from '~/images/homeNew/integrateMd-dark.svg';
+import nocommitMdDark from '~/images/homeNew/nocommitMd-dark.svg';
 
 import collaborateMobileDark from '~/images/homeNew/collaborateMobile-dark.svg';
 import connectMobileDark from '~/images/homeNew/connectMobile-dark.svg';
@@ -173,22 +184,30 @@ const consts = {
           rmobileDark: collaborateMobileDark.src,
           r1440: collaborate1440.src,
           r1440Dark: collaborate1440Dark.src,
+          r768: collaborateMd.src,
+          r768Dark: collaborateMdDark.src,
         },
         connect: {
           rmobile: connectMobile.src,
           rmobileDark: connectMobileDark.src,
+          r768: connectMd.src,
+          r768Dark: connectMdDark.src,
           r1440: connect1440.src,
           r1440Dark: connect1440Dark.src,
         },
         integrate: {
           rmobile: integrateMobile.src,
           rmobileDark: integrateMobileDark.src,
+          r768: integrateMd.src,
+          r768Dark: integrateMdDark.src,
           r1440: integrate1440.src,
           r1440Dark: integrate1440Dark.src,
         },
         nocommit: {
           rmobile: nocommitMobile.src,
           rmobileDark: nocommitMobileDark.src,
+          r768: nocommitMd.src,
+          r768Dark: nocommitMdDark.src,
           r1440: nocommit1440.src,
           r1440Dark: nocommit1440Dark.src,
         },
@@ -221,7 +240,7 @@ const consts = {
       {
         label: 'Open source under Apache 2.0 Licences',
         desc: 'No vendor lock-in, what so ever',
-        icon: Keyhole,
+        icon: OpenSource,
       },
       {
         label: 'Instant Setup, Infinite Scale',
