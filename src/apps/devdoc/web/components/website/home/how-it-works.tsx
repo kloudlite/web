@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import consts from '~/app/utils/const';
 import HorizontalTopTab from '../horizontal-top-tab-home';
+import ResponsiveImage from '../responsive-image';
 
 const HowItWorksSection = () => {
   const [selectedTab, setSelectedTab] = useState(
-    consts.homeNew.howitworks.items[0].id
+    consts.homeNew.howitworks.items[0].id,
   );
 
   const imgs = consts.homeNew.howitworks.images;
@@ -13,45 +14,60 @@ const HowItWorksSection = () => {
       case 'collaborate':
         return (
           <div className="wb-flex wb-items-center wb-justify-center wb-h-full">
-            <img
-              className="dark-hidden  wb-max-h-full"
-              alt="distribute"
-              src={imgs.collaborate.r1440}
-            />
-            <img
-              className="wb-hidden dark-block  wb-max-h-full"
-              alt="distribute"
-              src={imgs.collaborate.r1440Dark}
+            <ResponsiveImage
+              alt={selectedTab}
+              rmobile={imgs.collaborate.rmobile}
+              rmobileDark={imgs.collaborate.rmobile}
+              r768={imgs.collaborate.r768}
+              r768Dark={imgs.collaborate.r768Dark}
+              r1024={imgs.collaborate.r1440}
+              r1024Dark={imgs.collaborate.r1440Dark}
+              r1280={imgs.collaborate.r1440}
+              r1280Dark={imgs.collaborate.r1440Dark}
+              r1440={imgs.collaborate.r1440}
+              r1440Dark={imgs.collaborate.r1440Dark}
+              r1920={imgs.collaborate.r1440}
+              r1920Dark={imgs.collaborate.r1440Dark}
             />
           </div>
         );
       case 'nocommit':
         return (
           <div className="wb-flex wb-items-center wb-justify-center wb-h-full">
-            <img
-              className="dark-hidden  wb-max-h-full"
-              alt="distribute"
-              src={imgs.nocommit.r1440}
-            />
-            <img
-              className="wb-hidden dark-block  wb-max-h-full"
-              alt="distribute"
-              src={imgs.nocommit.r1440Dark}
+            <ResponsiveImage
+              alt={selectedTab}
+              rmobile={imgs.nocommit.rmobile}
+              rmobileDark={imgs.nocommit.rmobile}
+              r768={imgs.nocommit.r768}
+              r768Dark={imgs.nocommit.r768Dark}
+              r1024={imgs.nocommit.r1440}
+              r1024Dark={imgs.nocommit.r1440Dark}
+              r1280={imgs.nocommit.r1440}
+              r1280Dark={imgs.nocommit.r1440Dark}
+              r1440={imgs.nocommit.r1440}
+              r1440Dark={imgs.nocommit.r1440Dark}
+              r1920={imgs.nocommit.r1440}
+              r1920Dark={imgs.nocommit.r1440Dark}
             />
           </div>
         );
       case 'integrate':
         return (
           <div className="wb-flex wb-items-center wb-justify-center wb-h-full">
-            <img
-              className="dark-hidden  wb-max-h-full"
-              alt="distribute"
-              src={imgs.integrate.r1440}
-            />
-            <img
-              className="wb-hidden dark-block  wb-max-h-full"
-              alt="distribute"
-              src={imgs.integrate.r1440Dark}
+            <ResponsiveImage
+              alt={selectedTab}
+              rmobile={imgs.integrate.rmobile}
+              rmobileDark={imgs.integrate.rmobile}
+              r768={imgs.integrate.r768}
+              r768Dark={imgs.integrate.r768Dark}
+              r1024={imgs.integrate.r1440}
+              r1024Dark={imgs.integrate.r1440Dark}
+              r1280={imgs.integrate.r1440}
+              r1280Dark={imgs.integrate.r1440Dark}
+              r1440={imgs.integrate.r1440}
+              r1440Dark={imgs.integrate.r1440Dark}
+              r1920={imgs.integrate.r1440}
+              r1920Dark={imgs.integrate.r1440Dark}
             />
           </div>
         );
@@ -59,15 +75,20 @@ const HowItWorksSection = () => {
       default:
         return (
           <div className="wb-flex wb-items-center wb-justify-center wb-h-full">
-            <img
-              className="dark-hidden wb-max-h-full"
-              alt="distribute"
-              src={imgs.connect.r1440}
-            />
-            <img
-              className="wb-hidden dark-block wb-max-h-full"
-              alt="distribute"
-              src={imgs.connect.r1440Dark}
+            <ResponsiveImage
+              alt={selectedTab}
+              rmobile={imgs.connect.rmobile}
+              rmobileDark={imgs.connect.rmobile}
+              r768={imgs.connect.r768}
+              r768Dark={imgs.connect.r768Dark}
+              r1024={imgs.connect.r1440}
+              r1024Dark={imgs.connect.r1440Dark}
+              r1280={imgs.connect.r1440}
+              r1280Dark={imgs.connect.r1440Dark}
+              r1440={imgs.connect.r1440}
+              r1440Dark={imgs.connect.r1440Dark}
+              r1920={imgs.connect.r1440}
+              r1920Dark={imgs.connect.r1440Dark}
             />
           </div>
         );
