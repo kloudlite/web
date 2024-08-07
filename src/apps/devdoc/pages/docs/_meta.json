@@ -1,56 +1,68 @@
 {
     "--introduction--":{
-        "title":"Introduction",
+        "title":"INTRODUCTION",
         "type":"separator"
     },
     "index":{
         "title":"What is kloudlite?"
     },
-    "why-kloudlite":{
-        "title":"Why kloudlite?"
-    },
-    "how-does-it-work":{
-        "title":"How does it work?"
+    "basic-concepts":{
+        "title":"Basic Concepts"
     },
     "getting-started":{
         "title":"Getting Started"
     },
-    "--reference--":{
-        "title":"Remote Env",
+    "--corec-omponents--":{
+        "title":"CORE COMPONENTS",
         "type":"separator"
     },
-    "integrated-services":{
-        "title":"Integrated Services"
+    "global-vpn":{
+        "title":"Global VPN"
     },
     
-    "any-wireguard":{
-        "title":"Wireguard devices"
+    "infrastructure":{
+        "title":"Infrastructure"
     },
-    "kubernetes-clusters":{
-        "title":"Kubernetes Clusters"
+    "integrated-services":{
+        "title":"Integrated Services & Resources"
     },
-    "work-in-progress":{
-        "title":"Work in progress.."
+    "environment":{
+        "title":"Environments"
     },
-    "--develop-environment--":{
-        "title":"Dev Env",
+    "--environments--":{
+        "title":"ENVIRONMENTS",
         "type":"separator"
     },
-    "local-devices":{
-        "title":"Dev Containers"
+    "apps":{
+        "title":"Apps"
     },
-    "---references-":{
-        "title":"Reference",
+    "configs-secrets":{
+        "title":"Configs & Secrets"
+    },
+    "integrated-resources":{
+        "title":"Integrated Resources"
+    },
+    "---workspaces-":{
+        "title":"WORKSPACES",
         "type":"separator"
     },
-    "architecture":{
-        "title":"Architecture"
+    "setup-connect":{
+        "title":"Setup & Connect"
     },
-    "api":{
-        "title":"API"
+    "state-management":{
+        "title":"Workspace Management"
     },
-    "---more-":{
-        "title":"Engage",
+    "ide-integrations":{
+        "title":"IDE Integrations"
+    },
+    "app-intercept":{
+        "title":"App Intercepts"
+    },
+    "uninstall":{
+        "title":"Uninstall"
+    },
+    "--PARTICIPATE--":{
+        "title":"PARTICIPATE",
         "type":"separator"
     },
     "contributing":{
