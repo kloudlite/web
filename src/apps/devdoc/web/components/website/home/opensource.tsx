@@ -11,7 +11,7 @@ const OpenSource = () => {
     <div className="2xl:wb-py-8xl">
       <GraphExtended className="xl:[clip-path:inset(24px_1.5px_24px_1.5px)] 3xl:[clip-path:inset(1.5px)]">
         <GraphItem className="lg:wb-h-[288px] wb-flex wb-flex-col md:wb-flex-row wb-bg-surface-primary-subdued">
-          <div className="wb-h-full wb-bg-surface-basic-default wb-flex-1">
+          <div className="wb-h-full wb-bg-surface-basic-default wb-basis-1/2 lg:wb-basis-auto">
             <div className="wb-p-3xl md:wb-p-5xl wb-flex-col wb-flex wb-gap-5xl">
               <div className="wb-flex wb-flex-col wb-gap-3xl">
                 <div className="wb-heading2xl-marketing md:wb-heading4xl-marketing wb-text-text-default">
@@ -34,7 +34,7 @@ const OpenSource = () => {
               </div>
             </div>
           </div>
-          <div className="wb-h-full wb-bg-surface-primary-subdued wb-flex-1 2xl:wb-max-w-[544px] 3xl:wb-max-w-[576px] 3xl:wb-flex-shrink-0">
+          <div className="wb-h-full wb-bg-surface-primary-subdued wb-basis-1/2 lg:wb-basis-auto lg:wb-w-[384px] xl:wb-w-[416px] 2xl:wb-w-[512px] 3xl:wb-w-[576px] wb-flex-shrink-0">
             <Anchor
               href={gitUrl}
               className="wb-p-5xl wb-flex-col wb-flex wb-gap-5xl wb-h-full wb-cursor-pointer "
@@ -47,8 +47,8 @@ const OpenSource = () => {
                   <br className="wb-hidden md:wb-block" />
                   <span>kloudlite</span>
                 </div>
-                <div className="wb-w-8xl wb-h-8xl md:wb-w-10xl md:wb-h-10xl wb-flex wb-items-center wb-justify-center wb-rounded wb-bg-surface-primary-pressed">
-                  <BrandLogo size={48} detailed={false} darkBg />
+                <div className="wb-w-8xl wb-h-8xl md:wb-w-10xl md:wb-h-10xl wb-flex wb-items-center wb-justify-center wb-rounded wb-bg-surface-basic-default">
+                  <BrandLogo size={48} detailed={false} />
                 </div>
               </div>
               <div className="wb-flex wb-flex-col wb-gap-2xl md:wb-flex-row md:wb-items-center">
