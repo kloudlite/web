@@ -1958,6 +1958,10 @@ video {
   aspect-ratio: 1 / 1;
 }
 
+.\!h-\[36px\] {
+  height: 36px !important;
+}
+
 .h-2xl {
   height: 16px;
 }
@@ -2041,6 +2045,10 @@ video {
 
 .min-h-screen {
   min-height: 100vh;
+}
+
+.\!w-\[36px\] {
+  width: 36px !important;
 }
 
 .w-0 {
