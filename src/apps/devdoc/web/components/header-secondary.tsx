@@ -1,7 +1,7 @@
 import { PageItem } from 'nextra/normalize-pages';
 import Link from 'next/link';
 import { GithubLogoFill } from '@jengaicons/react';
-import { Button } from 'kl-design-system/atoms/button';
+import { Button, IconButton } from 'kl-design-system/atoms/button';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import useConfig, { IHeaderSecondary } from '../utils/use-config';
@@ -57,15 +57,20 @@ const HeaderSecondary = ({
 
           <div className="wb-flex-1 lg:wb-flex-none wb-flex wb-flex-row wb-gap-2xl wb-items-center wb-justify-end">
             <div className="wb-flex wb-flex-col lg:wb-flex-row wb-gap-xl lg:wb-items-center">
-              <SearchBox />
-              <a
-                href={config.gitRepoUrl}
-                aria-label="kloudlite-github"
-                className="wb-hidden lg:wb-block wb-text-icon-default"
-                target="_blank"
-              >
-                <GithubLogoFill size={20} />
-              </a>
+              <div className="wb-flex wb-flex-row wb-items-center wb-gap-md">
+                <SearchBox />
+                <div className="wb-hidden lg:wb-block wb-text-icon-default">
+                  <IconButton
+                    variant="plain"
+                    size="lg"
+                    icon={<GithubLogoFill />}
+                    to={config.gitRepoUrl}
+                    toLabel="href"
+                    linkComponent={Link}
+                    target="_blank"
+                  />
+                </div>
+              </div>
               <>
                 <span className="wb-hidden lg:wb-block wb-h-2xl wb-w-xs wb-bg-border-default" />
                 <div className="wb-hidden lg:wb-block">
