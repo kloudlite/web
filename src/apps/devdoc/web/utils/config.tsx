@@ -91,7 +91,7 @@ export default {
   siteTitle: 'Kloudlite - Development Environment as a Service',
   logo: (
     <Link href="/" aria-label="Kloudlite homepage">
-      <BrandLogo detailed size={28} />
+      <BrandLogo detailed size={24} />
     </Link>
   ),
   footer: {
