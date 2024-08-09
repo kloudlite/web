@@ -2,11 +2,15 @@
 import nextra from 'nextra';
 import remarkMdxFrontmatter from 'remark-mdx-frontmatter';
 import remarkFrontmatter from 'remark-frontmatter';
+import { readFileSync } from 'fs';
 
 const withNextra = nextra({
   theme: './web/layout/theme.tsx',
   mdxOptions: {
     remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
+    rehypePrettyCodeOptions: {
+      theme: JSON.parse(readFileSync('./public/code-theme.json', 'utf8')),
+    },
   },
 });
 

@@ -16,7 +16,7 @@ You need to login to connect to your teams.
 
 You can initilise your kloudlite workspace inside your working directory.
 
-```
+```shell
 kl init
 ```
 
@@ -28,7 +28,7 @@ It will create a kl.yml configuration file that contains necessary metadata to s
 
 Once the workspace is initilised you can start the container using following commands
 
-```
+```shell
 kl box start
 ```
 
@@ -36,7 +36,7 @@ This will start the development container that is connected to your remote envir
 
 This container have a ssh server running and your current working directory mounted on `/workspace/`
 
-```
+```shell
 kl box ssh
 ```
 
@@ -44,19 +44,19 @@ This will open an ssh connection to the development container.
 
 > Note: This command will start the development container if not running.
 
-```
+```shell
 kl box stop
 ```
 
 This will stop the development container.
 
-```
+```shell
 kl box restart
 ```
 
 This command will restart the development container with the updated metadata of kl.yml configuration file.
 
-```
+```shell
 kl box info
 ```
 
