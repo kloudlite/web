@@ -25,7 +25,7 @@ When collaboration is needed, developers can switch between environments easily,
 
 Below animation shows the flow of development
 
-![envanim](https://github.com/user-attachments/assets/4fd373b6-63ff-4604-a3bf-23bf739d8e3f)
+![flow-of-development](/docs/core-components/flow-of-development.gif)
 
 **Team Members:**
 - Karthik - Backend Developer

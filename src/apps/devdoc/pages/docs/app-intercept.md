@@ -21,5 +21,5 @@ You can remove intercept from the dashboard or the following command
 kl intercept stop
 ```
 
-![app-intercept](https://github.com/user-attachments/assets/c40ea345-a855-4b06-9383-67d52c25fcdb)
+![app-intercept](/docs/workspace/app-intercept.gif)
 

@@ -36,7 +36,7 @@ A well-optimized development inner loop allows developers to quickly make change
 
 For an in-depth exploration of the development inner loop and its importance, Telepresence has written a very informative article on the subject. You can read it in detail [here](https://www.getambassador.io/docs/telepresence-oss/latest/concepts/devloop).
 
-![dev-loop](https://github.com/user-attachments/assets/9e248070-5beb-495a-ae54-01778a288080)
+![dev-loop](/docs/introduction/dev-loop.png)
 
 
 ## Working with Workspaces & Environments

@@ -13,12 +13,12 @@ set up your workspace to access and intercept services of the environment.
 To create development environments and run your workload you need to attach kubernetes cluster to kloudlite.
 You can add and manage your cluster references from infrastructure section of kloudlite dashboard.
 
-![area2](https://github.com/user-attachments/assets/0364a0ef-a4f0-4352-961d-3071f531b69e)
+![attach-cluster](/docs/introduction/attach-cluster.gif)
 
 
 Once added you can attach your cluster following the instructions provided
 
-![highq](https://github.com/user-attachments/assets/4e3a8d91-d5d1-4ee3-8e60-413459c2c742)
+![attach-cluster-instructions](/docs/introduction/attach-cluster-instructions.gif)
 
 After attaching the cluster it will take some time to come online. Once the cluster is online it is ready for your
 workloads.
@@ -32,15 +32,15 @@ run wireguard and intercept services.
 Create a new environment in Kloudlite by providing an environment name and the cluster 
 reference.
 
-![create-env](https://github.com/user-attachments/assets/046b9ff6-f187-4f57-8009-5d59866fddc6)
+![setup-env](/docs/introduction/setup-env.gif)
 
 
 #### Once environment is created you can 
 Create applications
-![create-app](https://github.com/user-attachments/assets/26e4bba4-2882-435c-a815-73c9f0771aa3)
+![create-app](/docs/introduction/create-app.gif)
 
 Manage Configs and Secrets
-![config-create](https://github.com/user-attachments/assets/549d73d9-c780-4fe3-b695-022d23b53b6c)
+![manage-config](/docs/introduction/manage-config-secrets.gif)
 
 
 
@@ -60,8 +60,7 @@ curl 'https://kl.kloudlite.io/kloudlite/kl!?select=kl' | bash
 kl auth login
 ```
 
-![kl login](https://github.com/user-attachments/assets/4ed36bed-81a1-470b-838b-49f9438a8662)
-
+![kl login](/docs/introduction/setup-kl.gif)
 
 For detailed guide you can refer to [kl repository](https://github.com/kloudlite/kl)
 
@@ -75,7 +74,7 @@ mkdir kl-workspace
 cd kl-workspace
 kl init
 ```
-![kl init](https://github.com/user-attachments/assets/b0c48a28-d2a3-4443-8d2a-5d14274ff37f)
+![kl setup workspace](/docs/introduction/setup-workspace.gif)
 
 You will be prompted to select kloudlite account and the default environment this workspace will connect to. Once selected, a `kl.yml` file with the environment details will be created.
 
@@ -88,7 +87,7 @@ You will be prompted to select kloudlite account and the default environment thi
 kl add config
 ```
 
-![add-config-workspace](https://github.com/user-attachments/assets/f8d14cd1-00b1-4bed-85ba-b35e8e6522db)
+![kl add config](/docs/introduction/setup-workspace-add-config.gif)
 
 
 ```bash
@@ -96,15 +95,14 @@ kl add config
 kl add secret
 ```
 
-![add-secret](https://github.com/user-attachments/assets/dba729b4-7e12-4ec7-8b30-1bb8f897c8db)
+![kl add secret](/docs/introduction/setup-workspace-add-secret.gif)
 
 
 ```bash
 # Add configmount
 kl add config-mount <file-path>
 ```
-![add-config-mount](https://github.com/user-attachments/assets/356750d5-2733-4906-b7ce-0ab763399977)
-
+![kl add config-mount](/docs/introduction/setup-workspace-add-config-mount.gif)
 
 ### Access & Intercept Environment
 
@@ -114,7 +112,7 @@ As we have configured our workspace you can start and connect to your workspace
 ```bash
 kl box ssh
 ```
-![access](https://github.com/user-attachments/assets/50a29d34-8654-4593-8ff4-e33a03971bb2)
+![access-intercept-env](/docs/introduction/access-intercept-env.gif)
 
 
 This command creates a development container and mounts your codebase to it. The container will include all necessary configs, secrets, resources, and packages. You can now start developing your application.
@@ -135,8 +133,7 @@ kl pkg add nvim
 kl box restart
 ```
 
-![add-pkg](https://github.com/user-attachments/assets/d3522fa1-d6ed-40e3-b0f5-a6168f4ab357)
-
+![add-pkg](/docs/introduction/add-packages.gif)
 
 > **Note:** You can search for available packages using `kl pkg search <package-name>` or from [nixhub.io](https://www.nixhub.io/)
 
@@ -146,7 +143,7 @@ kl intercept start -p <remote-port>:<local-port>
 ```
 You will be prompted to select the app you want to intercept.
 
-![intercept-app](https://github.com/user-attachments/assets/b7001f9b-88ae-4512-a4f6-2699345389d5)
+![intercept-app](/docs/introduction/select-app.gif)
 
 
 

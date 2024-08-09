@@ -11,9 +11,9 @@ Once a cluster is attached, Kloudlite agents will run to set up the network and 
 These agents are responsible for creating and updating resources and sending status updates to the
 Kloudlite platform.
 
-![area2](https://github.com/user-attachments/assets/0364a0ef-a4f0-4352-961d-3071f531b69e)
+![attach-cluster](/docs/core-components/attach-cluster.gif)
 
-![highq](https://github.com/user-attachments/assets/4e3a8d91-d5d1-4ee3-8e60-413459c2c742)
+![attach-cluster-instructions](/docs/core-components/attach-cluster-instructions.gif)
 
 ## WireGuard Devices
 Since the Kloudlite network is a WireGuard network, you can attach any device that is compatible with
@@ -22,7 +22,7 @@ Linux-based systems.
 
 Each device connected is discoverable by a unique name and assigned a unique IP address.
 
-![add-wireguard](https://github.com/user-attachments/assets/b50848dc-3267-480d-9d07-9b235aee142c)
+![add-wireguard-device](/docs/core-components/add-wireguard-device.gif)
 
 
 **Note:** You can attach multiple clusters under a team. All these clusters will be part of a WireGuard 

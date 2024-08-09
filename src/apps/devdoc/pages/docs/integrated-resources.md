@@ -11,6 +11,6 @@ Each integrated resource provides access details such as connection strings, cre
 
 Assume you have a postgres integrated service created under your account. You can create a database resource under this service and import it into your environment. Once imported you can configure your apps and workspaces to use this resource. This resource contains all the information needed to connect to that particular database.
 
-![import-resource](https://github.com/user-attachments/assets/67770023-2c1a-4e4d-9733-99c74fab76db)
+![import-resource](/docs/environment/import-resource.gif)
 
 Above gif shows how to import integrated resoruce into your environment.

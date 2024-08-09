@@ -22,16 +22,18 @@ These secrets are injected into your app’s environment, ensuring that sensitiv
 
 **Config Creation**
 
-![config-create](https://github.com/user-attachments/assets/111b316a-7b9f-4f9a-ad3f-8993736876d3)
+![config-create](/docs/environment/create-config.gif)
 
 **Usage**
 
 Config in app
 
-![config-usage-app](https://github.com/user-attachments/assets/b5956d1b-6545-4894-967d-212d9b785b02)
+![use-config-in-app](/docs/environment/use-config-in-app.gif)
 
 
 Config in workspace
-![config-in-workspace](https://github.com/user-attachments/assets/403d0d7c-752b-4a76-9d7a-41ef4b222a54)
+
+![use-config-in-workspace](/docs/environment/use-config-in-workspace.gif)
+
 
 
