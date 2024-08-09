@@ -196,25 +196,19 @@ export default {
   headerSecondary: {
     items: [
       {
-        title: 'Blog',
-        type: 'normal',
-        to: '/blog',
-      },
-      {
         title: 'Docs',
         type: 'normal',
         to: '/docs',
       },
       {
+        title: 'Blog',
+        type: 'normal',
+        to: '/blog',
+      },
+      {
         title: 'Community',
         type: 'normal',
         to: communityUrl,
-      },
-
-      {
-        title: 'Pricing',
-        type: 'normal',
-        to: '/pricing',
       },
     ],
   },
