@@ -4,7 +4,7 @@
 
 A workspace is the collection of tools, configurations, and resources that a developer uses to write, test, and debug code. It includes everything needed to develop an application from the developer's perspective.
 
-#### Some components of workspace:
+#### Components of workspace:
 - **Code Editors/IDEs:** Integrated Development Environments (IDEs) like Visual Studio Code, IntelliJ IDEA, or PyCharm.
 - **Source Code:** The actual codebase of the application being developed.
 - **Build Tools:** Tools and scripts used to compile and build the application.
@@ -19,7 +19,7 @@ The primary purpose of a workspace is to provide a developer with a personalised
 
 An environment, on the other hand, is a set of dependent services and infrastructure that the application needs to run. It includes external systems and services that the application interacts with during its operation.
 
-#### Some example of components running in environment:
+#### Some example components running in environment:
 - **Microservices:** All the applications like frontend, backend, which are dependent or required by current application.
 - **Databases:** Relational or NoSQL databases required for storing application data.
 - **External APIs:** External or internal APIs that the application consumes.
