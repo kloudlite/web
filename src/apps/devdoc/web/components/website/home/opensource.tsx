@@ -14,9 +14,9 @@ const OpenSource = () => {
           <div className="wb-h-full wb-bg-surface-basic-default xl:wb-max-h-[288px]">
             <div className="wb-p-3xl md:wb-p-5xl wb-flex-col wb-flex wb-gap-5xl">
               <div className="wb-flex wb-flex-col wb-gap-3xl">
-                <div className="wb-heading2xl-marketing md:wb-heading4xl-marketing wb-text-text-default">
+                <h2 className="wb-heading2xl-marketing md:wb-heading4xl-marketing wb-text-text-default">
                   Open-source
-                </div>
+                </h2>
 
                 <p className="wb-bodyLg md:wb-bodyXl wb-text-text-soft">
                   Avoid vendor lock-in Kloudlite is an open source project - for
@@ -52,9 +52,9 @@ const OpenSource = () => {
                 </div>
               </div>
               <div className="wb-flex wb-flex-col wb-gap-2xl md:wb-flex-row md:wb-items-center">
-                <div className="wb-bodyLg md:wb-flex-1 wb-text-text-strong">
+                <p className="wb-bodyLg md:wb-flex-1 wb-text-text-strong">
                   Remote Local Environments to build distributed applications.
-                </div>
+                </p>
                 <div className="md:wb-w-[87px] lg:wb-w-10xl wb-text-icon-strong wb-flex wb-flex-row md:wb-justify-end">
                   <GithubLogoFill className="wb-w-[24px] wb-h-[24px] md:wb-w-[40px] md:wb-h-[40px]" />
                 </div>

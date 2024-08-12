@@ -10,13 +10,13 @@ const AboutBackedBy = () => {
         <div className="wb-grid wb-grid-cols-1 md:wb-grid-cols-2 lg:wb-grid-cols-3 2xl:wb-h-[224px] xl:wb-h-[256px]  wb-gap-3xl md:wb-gap-5xl">
           <GraphItem className="md:wb-col-span-2 lg:wb-col-span-1 wb-bg-surface-basic-subdued wb-p-5xl wb-flex wb-flex-col wb-justify-center">
             <div className="wb-flex wb-flex-col wb-gap-3xl">
-              <span className="wb-text-text-default wb-heading3xl-marketing md:wb-heading4xl">
+              <h2 className="wb-text-text-default wb-heading3xl-marketing md:wb-heading4xl">
                 Backed by
-              </span>
-              <span className="wb-bodyXl wb-text-text-soft">
+              </h2>
+              <p className="wb-bodyXl wb-text-text-soft">
                 Our visionary investors empower us to innovate, grow, and lead
                 with confidence.
-              </span>
+              </p>
             </div>
           </GraphItem>
           <GraphItem className="md:wb-col-span-1 wb-bg-surface-basic-subdued wb-p-5xl wb-flex wb-flex-col wb-justify-center">

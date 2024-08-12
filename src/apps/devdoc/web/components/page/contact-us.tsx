@@ -274,9 +274,9 @@ const ContactRoot = () => {
               <h1 className="wb-heading4xl-marketing wb-text-text-default">
                 Contact us
               </h1>
-              <p className="wb-bodyLg-medium wb-text-text-soft">
+              <h2 className="wb-bodyLg-medium wb-text-text-soft">
                 Get in touch and let us know how we can help.
-              </p>
+              </h2>
             </div>
             <div className="wb-flex wb-flex-col wb-gap-3xl">
               <TextInput

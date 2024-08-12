@@ -21,13 +21,13 @@ const AboutMain = () => {
           </GraphItem>
           <div className="wb-grid wb-grid-cols-1 md:wb-grid-cols-[448px_auto] wb-gap-3xl md:wb-gap-5xl xl:wb-h-[544px] 2xl:wb-h-[480px] 3xl:wb-h-[320px]">
             <GraphItem className="wb-bg-surface-basic-subdued wb-p-5xl">
-              <span className="wb-text-text-default wb-headingXl-marketing md:wb-heading2xl-marketing lg:wb-heading3xl-marketing">
+              <p className="wb-text-text-default wb-headingXl-marketing md:wb-heading2xl-marketing lg:wb-heading3xl-marketing">
                 We make development a breeze, saving developers' time with our
                 ultra-efficient platform
-              </span>
+              </p>
             </GraphItem>
             <GraphItem className="wb-bg-surface-basic-subdued wb-p-5xl">
-              <span className="wb-bodyLg md:wb-bodyXl lg:wb-bodyXXl wb-text-text-strong">
+              <p className="wb-bodyLg md:wb-bodyXl lg:wb-bodyXXl wb-text-text-strong">
                 At Kloudlite, we understand the challenges developers face
                 because we've experienced them ourselves. We know how precious
                 your time is, so we created a platform to streamline and
@@ -37,7 +37,7 @@ const AboutMain = () => {
                 whether on the cloud or locally. We're here to make development
                 smoother, faster, and more enjoyable. Join us and let’s build
                 something amazing together.
-              </span>
+              </p>
             </GraphItem>
           </div>
         </div>

@@ -8,9 +8,9 @@ const SuperCharge = () => {
         <GraphItem className="wb-bg-surface-basic-subdued">
           <div className="wb-flex wb-flex-col wb-p-3xl wb-gap-5xl md:wb-px-8xl md:wb-py-7xl md:wb-gap-6xl wb-items-center xl:wb-h-[288px]">
             <div className="wb-flex wb-flex-col wb-gap-2xl">
-              <h4 className="wb-heading2xl-marketing md:wb-heading4xl-marketing wb-text-text-default wb-text-center">
+              <h2 className="wb-heading2xl-marketing md:wb-heading4xl-marketing wb-text-text-default wb-text-center">
                 Supercharge your remote local environments
-              </h4>
+              </h2>
               <p className="wb-bodyLg md:wb-bodyXl wb-text-text-soft wb-text-center">
                 See why Kloudlite is the remote local environments of choice for
                 modern developer teams

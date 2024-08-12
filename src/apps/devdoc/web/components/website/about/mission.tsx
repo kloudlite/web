@@ -17,13 +17,13 @@ const AboutMission = () => {
                 />
                 <RocketLaunch size={40} className="md:wb-hidden" />
               </span>
-              <span className="wb-text-text-default wb-heading2xl-marketing md:heading3xl-marketing lg:wb-heading4xl">
+              <h2 className="wb-text-text-default wb-heading2xl-marketing md:heading3xl-marketing lg:wb-heading4xl">
                 Our mission
-              </span>
+              </h2>
             </div>
           </GraphItem>
           <GraphItem className="wb-bg-surface-basic-subdued wb-p-5xl wb-flex wb-flex-col wb-justify-center">
-            <span className="wb-bodyLg md:wb-bodyXl lg:wb-bodyXXl wb-text-text-strong">
+            <p className="wb-bodyLg md:wb-bodyXl lg:wb-bodyXXl wb-text-text-strong">
               To deliver a seamless development experience that mirrors
               production environments. We are committed to building a strong,
               engaged community of developers, ensuring our platform is
@@ -31,7 +31,7 @@ const AboutMission = () => {
               and strategic partnerships, we strive to drive innovation while
               offering comprehensive educational resources and support to help
               developers unlock their full potential.
-            </span>
+            </p>
           </GraphItem>
         </div>
       </GraphExtended>

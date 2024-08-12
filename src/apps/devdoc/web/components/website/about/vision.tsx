@@ -17,18 +17,18 @@ const AboutVision = () => {
                 />
                 <Target size={40} className="md:wb-hidden wb-block" />
               </span>
-              <span className="wb-text-text-default wb-heading2xl-marketing md:heading3xl-marketing lg:wb-heading4xl">
+              <h2 className="wb-text-text-default wb-heading2xl-marketing md:heading3xl-marketing lg:wb-heading4xl">
                 Our vision
-              </span>
+              </h2>
             </div>
           </GraphItem>
           <GraphItem className="wb-bg-surface-basic-subdued wb-p-5xl wb-flex wb-flex-col wb-justify-center">
-            <span className="wb-bodyLg md:wb-bodyXl lg:wb-bodyXXl wb-text-text-strong">
+            <p className="wb-bodyLg md:wb-bodyXl lg:wb-bodyXXl wb-text-text-strong">
               To empower developers worldwide by providing the ultimate platform
               for building, testing, and deploying distributed applications with
               unparalleled efficiency and ease, fostering a vibrant community
               and driving innovation in the tech ecosystem.
-            </span>
+            </p>
           </GraphItem>
         </div>
       </GraphExtended>
