@@ -31,7 +31,8 @@ To update the environment variables you can also modify the `kl.yml` file and ru
 ## Config Files
 You can create config files from the configs and secrets of the Kloudlite environment using the following command:
 
-```bash
+#### Load config/secret into config file
+```shell
 kl add config-mount <file-path>
 ```
 
