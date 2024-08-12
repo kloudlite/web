@@ -1,0 +1,14 @@
+{
+  "workspaces": {
+    "title": "Workspaces"
+  },
+  "environments": {
+    "title": "Environments"
+  },
+  "development-inner-loop": {
+    "title": "Development Loop"
+  },
+  "working-with-workspaces-environments": {
+    "title": "Remote Local"
+  }
+}

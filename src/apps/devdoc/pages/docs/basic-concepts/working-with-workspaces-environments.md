@@ -1,45 +1,4 @@
-# Basic Concepts
-
-## Workspaces - The Developer's Toolkit
-
-A workspace is the collection of tools, configurations, and resources that a developer uses to write, test, and debug code. It includes everything needed to develop an application from the developer's perspective.
-
-#### Components of workspace:
-- **Code Editors/IDEs:** Integrated Development Environments (IDEs) like Visual Studio Code, IntelliJ IDEA, or PyCharm.
-- **Source Code:** The actual codebase of the application being developed.
-- **Build Tools:** Tools and scripts used to compile and build the application.
-- **Dependencies:** Libraries and packages required by the application.
-- **Configurations:** Settings and preferences for the development tools and the application.
-- **Version Control:** Integration with systems like Git to manage code versions.
-
-The primary purpose of a workspace is to provide a developer with a personalised and optimised setup for writing and testing code. It ensures that the developer has all the necessary tools and configurations at their fingertips, enabling a smooth and efficient coding process.
-
-
-## Environments - The Application's Ecosystem
-
-An environment, on the other hand, is a set of dependent services and infrastructure that the application needs to run. It includes external systems and services that the application interacts with during its operation.
-
-#### Some example components running in environment:
-- **Microservices:** All the applications like frontend, backend, which are dependent or required by current application.
-- **Databases:** Relational or NoSQL databases required for storing application data.
-- **External APIs:** External or internal APIs that the application consumes.
-- **Messaging Services:** Queues or messaging systems like RabbitMQ or Kafka.
-- **External Services:** Third-party services such as authentication providers, payment gateways, or cloud storage.
-- **Network Configurations:** Networking settings and connections required to access these services.
-
-The purpose of an environment is to provide the necessary context and support for the application to run correctly. It stimulates the production setup, ensuring that all dependencies and integrations are available for the application to function as intended.
-
-## Development Inner Loop
-The development inner loop is a critical phase in software development where developers write code, test it, and debug it before it's ready for deployment. This phase involves frequent iterations, rapid feedback, and continuous improvement to ensure the code functions as intended. Efficiently managing the development inner loop is essential for boosting productivity and reducing time-to-market.
-
-A well-optimized development inner loop allows developers to quickly make changes, test them in real-time, and identify issues early. This iterative process helps in refining features, improving code quality, and ensuring that the final product meets user expectations.
-
-For an in-depth exploration of the development inner loop and its importance, Telepresence has written a very informative article on the subject. You can read it in detail [here](https://www.getambassador.io/docs/telepresence-oss/latest/concepts/devloop).
-
-![dev-loop](/docs/introduction/dev-loop.png)
-
-
-## Working with Workspaces & Environments
+## Remote Local
 
 The seamless interaction between workspaces and environments is crucial for efficient and productive workflows. While workspaces provide the tools and configurations developers need, environments offer the dependent services necessary for the application to run. Here’s how they work together and how Kloudlite enhances this integration.
 

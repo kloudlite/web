@@ -1,0 +1,11 @@
+{
+  "ssh-access": {
+    "title": "SSH Access"
+  },
+  "vscode": {
+    "title": "VSCode"
+  },
+  "intellij": {
+    "title": "Intellij"
+  }
+}

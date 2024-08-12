@@ -1,0 +1,29 @@
+import { Button } from 'kl-design-system/atoms/button';
+import Link from 'next/link';
+
+# IDE Integrations
+Users can connect to their workspace using different IDEs. Below are the ways to connect those IDEs with their development container.
+
+<div className="wb-flex wb-flex-col wb-gap-lg wb-py-xl">
+        <Button
+          variant="primary-plain"
+          content="SSH Access"
+          to="/docs/ide-integrations/ssh-access"
+          toLabel="href"
+          linkComponent={Link}
+        />
+        <Button
+          variant="primary-plain"
+          content="VSCode"
+          to="/docs/ide-integrations/vscode"
+          toLabel="href"
+          linkComponent={Link}
+        />
+        <Button
+          variant="primary-plain"
+          content="Intellij"
+          to="/docs/ide-integrations/intellij"
+          toLabel="href"
+          linkComponent={Link}
+        />
+</div>
