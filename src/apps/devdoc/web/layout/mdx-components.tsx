@@ -56,10 +56,10 @@ function HeadingLink({
           'wb-text-text-default wb-group',
           {
             h2: cn(
-              'wb-headingLg wb-bg-surface-basic-subdued  wb-mt-[30px] wb-py-[10px]',
+              'wb-headingLg wb-bg-surface-basic-subdued wb-mt-[30px]',
               isBlog
-                ? 'md:wb-headingXl'
-                : 'md:wb-heading2xl wb-sticky wb-top-0 ',
+                ? 'md:wb-headingXl wb-mt-5xl'
+                : 'md:wb-heading2xl wb-sticky wb-top-0 wb-py-[10px] ',
             ),
             h3: 'wb-headingLg wb-headingXl wb-mt-6xl',
             h4: 'wb-headingLg wb-mt-6xl',
