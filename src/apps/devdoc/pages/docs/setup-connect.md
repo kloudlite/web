@@ -6,8 +6,9 @@
 You need to have docker up and running in your system to use kloudlite workspaces. Kloudlite workspace is easy to setup. 
 You have to download cli using following commands.
 
-```
-# cli installation
+#### Install cli tool
+```shell
+curl 'https://kl.kloudlite.io/kloudlite/kl!?select=kl' | bash
 ```
 
 You need to login to connect to your teams.
