@@ -10,14 +10,16 @@ Your workspace maintains its state based on the following factors:
 ## Environment Variables (Envvars)
 You can load environment variables from the configs and secrets of the Kloudlite environment using the following commands:
 
+#### Load envvar from config
 ```bash
 kl add config
 ```
-
+#### Load envvar from secret
 ```bash
 kl add secret
 ```
 
+#### Load envvar from integrated resource
 ```bash
 kl add res
 ```
