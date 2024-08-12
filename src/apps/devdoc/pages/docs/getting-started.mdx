@@ -1,4 +1,5 @@
 import Steps from "~/app/components/steps";
+import VideoPlayer from "~/app/components/video-player";
 
 # Getting Started
 
@@ -17,12 +18,12 @@ set up your workspace to access and intercept services of the environment.
 To create development environments and run your workload you need to attach kubernetes cluster to kloudlite.
 You can add and manage your cluster references from infrastructure section of kloudlite dashboard.
 
-![attach-cluster](/docs/introduction/attach-cluster.gif)
+<VideoPlayer src="/docs/introduction/attach-cluster.mp4"/>
 
 
 Once added you can attach your cluster following the instructions provided
 
-![attach-cluster-instructions](/docs/introduction/attach-cluster-instructions.gif)
+<VideoPlayer src="/docs/introduction/attach-cluster-instructions.mp4"/>
 
 After attaching the cluster it will take some time to come online. Once the cluster is online it is ready for your
 workloads.
@@ -36,16 +37,15 @@ run wireguard and intercept services.
 Create a new environment in Kloudlite by providing an environment name and the cluster 
 reference.
 
-![setup-env](/docs/introduction/setup-env.gif)
+<VideoPlayer src="/docs/introduction/setup-env.mp4"/>
 
 
 #### Once environment is created you can 
 Create applications
-![create-app](/docs/introduction/create-app.gif)
+<VideoPlayer src="/docs/introduction/create-app.mp4"/>
 
 Manage Configs and Secrets
-![manage-config](/docs/introduction/manage-config-secrets.gif)
-
+<VideoPlayer src="/docs/introduction/manage-config-secrets.mp4"/>
 
 
 ### Install Kloudlite CLI
@@ -64,7 +64,7 @@ curl 'https://kl.kloudlite.io/kloudlite/kl!?select=kl' | bash
 kl auth login
 ```
 
-![kl login](/docs/introduction/setup-kl.gif)
+<VideoPlayer src="/docs/introduction/setup-kl.mp4"/>
 
 For detailed guide you can refer to [kl repository](https://github.com/kloudlite/kl)
 
@@ -78,7 +78,8 @@ mkdir kl-workspace
 cd kl-workspace
 kl init
 ```
-![kl setup workspace](/docs/introduction/setup-workspace.gif)
+
+<VideoPlayer src="/docs/introduction/setup-workspace.mp4"/>
 
 You will be prompted to select kloudlite account and the default environment this workspace will connect to. Once selected, a `kl.yml` file with the environment details will be created.
 
@@ -91,7 +92,7 @@ You will be prompted to select kloudlite account and the default environment thi
 kl add config
 ```
 
-![kl add config](/docs/introduction/setup-workspace-add-config.gif)
+<VideoPlayer src="/docs/introduction/setup-workspace-add-config.mp4"/>
 
 
 ```bash
@@ -99,14 +100,14 @@ kl add config
 kl add secret
 ```
 
-![kl add secret](/docs/introduction/setup-workspace-add-secret.gif)
+<VideoPlayer src="/docs/introduction/setup-workspace-add-secret.mp4"/>
 
 
 ```bash
 # Add configmount
 kl add config-mount <file-path>
 ```
-![kl add config-mount](/docs/introduction/setup-workspace-add-config-mount.gif)
+<VideoPlayer src="/docs/introduction/setup-workspace-add-config-mount.mp4"/>
 
 ### Access & Intercept Environment
 
@@ -116,7 +117,7 @@ As we have configured our workspace you can start and connect to your workspace
 ```bash
 kl box ssh
 ```
-![access-intercept-env](/docs/introduction/access-intercept-env.gif)
+<VideoPlayer src="/docs/introduction/access-intercept-env.mp4"/>
 
 
 This command creates a development container and mounts your codebase to it. The container will include all necessary configs, secrets, resources, and packages. You can now start developing your application.
@@ -137,7 +138,7 @@ kl pkg add nvim
 kl box restart
 ```
 
-![add-pkg](/docs/introduction/add-packages.gif)
+<VideoPlayer src="/docs/introduction/add-packages.mp4"/>
 
 > **Note:** You can search for available packages using `kl pkg search <package-name>` or from [nixhub.io](https://www.nixhub.io/)
 
@@ -147,8 +148,7 @@ kl intercept start -p <remote-port>:<local-port>
 ```
 You will be prompted to select the app you want to intercept.
 
-![intercept-app](/docs/introduction/select-app.gif)
-
+<VideoPlayer src="/docs/introduction/select-app.mp4"/>
 
 
 Now all the traffic to the remote application running in the environment will be 

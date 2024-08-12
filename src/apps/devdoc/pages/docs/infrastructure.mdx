@@ -1,0 +1,33 @@
+import VideoPlayer from "~/app/components/video-player";
+
+# Infrastructure
+
+You can add two kinds of infrastructures in Kloudlite: Clusters and Devices.
+
+## Kubernetes Clusters
+Kloudlite is compatible with all modern Kubernetes distributions, including Amazon's EKS, 
+Google Cloud's GKE, and lightweight options like k3s, k3d, and kind. This flexibility allows 
+developers to easily integrate Kloudlite with any Kubernetes platform.
+
+Once a cluster is attached, Kloudlite agents will run to set up the network and environments. 
+These agents are responsible for creating and updating resources and sending status updates to the
+Kloudlite platform.
+
+<VideoPlayer src="/docs/introduction/attach-cluster.mp4"/>
+
+<VideoPlayer src="/docs/introduction/attach-cluster.mp4"/>
+
+## WireGuard Devices
+Since the Kloudlite network is a WireGuard network, you can attach any device that is compatible with
+WireGuard. This means you can connect a wide variety of devices, including mobiles, laptops, and any 
+Linux-based systems.
+
+Each device connected is discoverable by a unique name and assigned a unique IP address.
+
+<VideoPlayer src="/docs/core-components/add-wireguard-device.mp4"/>
+
+**Note:** You can attach multiple clusters under a team. All these clusters will be part of a WireGuard 
+mesh, allowing any device under the Kloudlite team to access environment apps or integrated services from 
+all clusters.
+
+These infrastructure components of Kloudlite play a crucial role in the creation of Environments and Workspaces.

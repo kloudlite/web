@@ -1,0 +1,21 @@
+import VideoPlayer from "~/app/components/video-player";
+
+# Apps
+
+In Kloudlite, apps are your microservices within environments. Each app represents a distinct service or application you wish to run. You can configure the resource allocation, envvars, configs and network of the application and deploy the app into environment.
+
+<VideoPlayer src="/docs/environment/create-app.mp4"/>
+
+During runtime you can monitor the apps with logs and metrics in the dashboard.
+
+<VideoPlayer src="/docs/environment/app-settings.mp4"/>
+
+
+You can access the apps from any connected kloudlite workspace using domain name that is same as name of the app.
+
+
+## App intercepts
+When connected to an environment from your workspace, you can intercept apps in that environment. When an app is intercepted, the traffic directed to that app will be routed to the workspace. With this you will be able to recieve and debug the apps running in your workspace.
+
+With apps in kloudlite environment, you can efficiently develop, test, and deploy your software with minimal friction and maximum collaboration.
+
