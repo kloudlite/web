@@ -25,7 +25,7 @@ export const ExploringItem = ({
     >
       <img
         alt="explore"
-        className="wb-object-cover wb-h-[156px] lg:wb-h-[136px] xl:wb-h-[160px] 2xl:wb-h-[192px] 3xl:wb-h-[232px] md:group-hover:wb-h-[136px] lg:group-hover:wb-h-[116px] xl:group-hover:wb-h-[140px] 2xl:group-hover:wb-h-[156px] 3xl:group-hover:wb-h-[206px] wb-transition-[height] wb-ease-in-out wb-duration-300 md:group-focus-within:wb-h-[136px] lg:group-focus-within:wb-h-[116px] xl:group-focus-within:wb-h-[140px] 2xl:group-focus-within:wb-h-[156px] 3xl:group-focus-within::wb-h-[206px]"
+        className="wb-object-cover wb-h-[156px] lg:wb-h-[136px] xl:wb-h-[160px] 2xl:wb-h-[192px] 3xl:wb-h-[232px] md:group-hover:wb-h-[136px] lg:group-hover:wb-h-[108px] xl:group-hover:wb-h-[140px] 2xl:group-hover:wb-h-[156px] 3xl:group-hover:wb-h-[206px] wb-transition-[height] wb-ease-in-out wb-duration-300 md:group-focus-within:wb-h-[136px] lg:group-focus-within:wb-h-[108px] xl:group-focus-within:wb-h-[140px] 2xl:group-focus-within:wb-h-[156px] 3xl:group-focus-within::wb-h-[206px]"
         src={img}
       />
       <div className="wb-flex wb-flex-col wb-gap-lg md:wb-gap-xl wb-p-3xl 2xl:wb-p-4xl">
