@@ -10,8 +10,8 @@ const OpenSource = () => {
   return (
     <div className="2xl:wb-py-8xl">
       <GraphExtended className="xl:[clip-path:inset(24px_1.5px_24px_1.5px)] 3xl:[clip-path:inset(1.5px)]">
-        <GraphItem className="lg:wb-h-[288px] wb-flex wb-flex-col md:wb-flex-row wb-bg-surface-primary-subdued">
-          <div className="wb-h-full wb-bg-surface-basic-default wb-basis-1/2 lg:wb-basis-auto">
+        <GraphItem className="wb-grid wb-grid-cols-1 md:wb-grid-cols-2 lg:wb-grid-cols-[auto_384px] xl:wb-grid-cols-[auto_416px] 2xl:wb-grid-cols-[auto_512px] 3xl:wb-grid-cols-[auto_576px] wb-bg-surface-primary-subdued">
+          <div className="wb-h-full wb-bg-surface-basic-default xl:wb-max-h-[288px]">
             <div className="wb-p-3xl md:wb-p-5xl wb-flex-col wb-flex wb-gap-5xl">
               <div className="wb-flex wb-flex-col wb-gap-3xl">
                 <div className="wb-heading2xl-marketing md:wb-heading4xl-marketing wb-text-text-default">
@@ -34,7 +34,7 @@ const OpenSource = () => {
               </div>
             </div>
           </div>
-          <div className="wb-h-full wb-bg-surface-primary-subdued wb-basis-1/2 lg:wb-basis-auto lg:wb-w-[384px] xl:wb-w-[416px] 2xl:wb-w-[512px] 3xl:wb-w-[576px] wb-flex-shrink-0">
+          <div className="wb-h-full wb-bg-surface-primary-subdued">
             <Anchor
               href={gitUrl}
               className="wb-p-5xl wb-flex-col wb-flex wb-gap-5xl wb-h-full wb-cursor-pointer "
@@ -55,7 +55,7 @@ const OpenSource = () => {
                 <div className="wb-bodyLg md:wb-flex-1 wb-text-text-strong">
                   Remote Local Environments to build distributed applications.
                 </div>
-                <div className="md:wb-w-10xl wb-text-icon-strong wb-flex wb-flex-row md:wb-justify-end">
+                <div className="md:wb-w-[87px] lg:wb-w-10xl wb-text-icon-strong wb-flex wb-flex-row md:wb-justify-end">
                   <GithubLogoFill className="wb-w-[24px] wb-h-[24px] md:wb-w-[40px] md:wb-h-[40px]" />
                 </div>
               </div>
