@@ -1,7 +1,7 @@
 # Setup & Connect
 
 
-## Presequisits
+## Prerequisites
 
 You need to have docker up and running in your system to use kloudlite workspaces. Kloudlite workspace is easy to setup. 
 You have to download cli using following commands.
