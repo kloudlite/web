@@ -58,7 +58,7 @@ kl use env
 This command will prompt you to choose the environment and update env-vars, config mounts, and network settings accordingly. Note that this command will not change the `kl.yml` file. It can only be used from inside the development container.
 
 ### State Reload
-Reload the state after changing the `kl.yml` file and check for backend changes with the following command:
+You can make changes to `kl.yml` file and update the state using the following command.
 
 ```bash
 kl box reload
