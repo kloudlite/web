@@ -5,10 +5,10 @@
   "environments": {
     "title": "Environments"
   },
-  "development-inner-loop": {
+  "development-loop": {
     "title": "Development Loop"
   },
-  "working-with-workspaces-environments": {
+  "remote-local": {
     "title": "Remote Local"
   }
 }
