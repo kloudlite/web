@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 /* eslint-disable jsx-a11y/heading-has-content */
 
-import { Table, Td, Th, Tr } from 'nextra/components';
+import { Code, Pre, Table, Td, Th, Tr } from 'nextra/components';
 import type { Components } from 'nextra/mdx';
 import type { ComponentProps, ReactElement } from 'react';
 import { useEffect, useRef } from 'react';
@@ -208,13 +208,14 @@ export const createComponents = ({
     td: Td,
     // details: Details,
     // summary: Summary,
-    pre: (props) => (
-      <pre
-        {...props}
-        className="wb-mt-3xl wb-bg-surface-basic-input wb-border wb-border-border-default wb-rounded wb-p-xl"
-      />
-    ),
-    // code: Code,
+    // pre: (props) => (
+    //   <pre
+    //     {...props}
+    //     className="wb-mt-3xl wb-bg-surface-basic-input wb-border wb-border-border-default wb-rounded wb-p-xl"
+    //   />
+    // ),
+    pre: (props) => <Pre {...props} hasCopyCode />,
+    code: Code,
     ...components,
   };
 };

@@ -76,14 +76,6 @@ html {
   order: -99999;
 }
 
-.nextra-code-block {
-  @apply wb-relative;
-}
-
-.nextra-code-block button {
-  @apply wb-bg-surface-basic-hovered wb-p-lg wb-border wb-border-border-default wb-rounded wb-text-text-default wb-cursor-pointer;
-}
-
 .nx-right-0 {
   @apply wb-right-0;
 }
@@ -98,7 +90,23 @@ html {
 
 pre {
   overflow-x: auto;
-  @apply wb-mt-3xl wb-bg-surface-basic-input wb-border wb-border-border-default wb-rounded wb-p-xl;
+  @apply !wb-mt-3xl wb-bg-surface-basic-input wb-border wb-border-border-default wb-rounded wb-p-xl;
+}
+
+.nextra-code-block {
+  @apply wb-relative;
+}
+
+.nextra-code-block button {
+  @apply wb-bg-surface-basic-hovered wb-p-md wb-border wb-border-border-default wb-rounded wb-text-text-default wb-cursor-pointer wb-mt-md wb-mr-md;
+}
+.nextra-code-block button[title='Toggle word wrap'] {
+  display: none;
+}
+
+.nextra-code-block button svg {
+  height: 16px;
+  width: 16px;
 }
 
 code {
