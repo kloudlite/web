@@ -79,7 +79,7 @@ function HeadingLink({
         {/*   /> */}
         {/* )} */}
       </Tag>
-      {id && (
+      {id && ['h2', 'h3'].includes(Tag) && (
         <a
           href={`#${id}`}
           id={id}

@@ -24,19 +24,19 @@ export function TOC({ headings }: TOCProps): ReactElement {
 
   const items = useMemo(
     () => headings.filter((heading) => heading.depth > 1),
-    [headings]
+    [headings],
   );
 
   const hasHeadings = items.length > 0;
 
   const activeSlug = Object.entries(activeAnchor).find(
-    ([, { isActive }]) => isActive
+    ([, { isActive }]) => isActive,
   )?.[0];
 
   useEffect(() => {
     if (!activeSlug) return;
     const anchor = tocRef.current?.querySelector(
-      `li > a[href="#${activeSlug}"]`
+      `li > a[href="#${activeSlug}"]`,
     );
 
     if (anchor) {
@@ -56,7 +56,7 @@ export function TOC({ headings }: TOCProps): ReactElement {
     <div
       ref={tocRef}
       className={cn(
-        'md:wb-h-[calc(100vh_-_var(--kl-navbar-height))] wb-overflow-x-hidden wb-overflow-y-auto kl-scrollbar-transparent hover:kl-scrollbar-colored scrollbar-gutter wb-grow wb-pr-md wb-pt-6xl'
+        'md:wb-h-[calc(100vh_-_var(--kl-navbar-height))] wb-overflow-x-hidden wb-overflow-y-auto kl-scrollbar-transparent hover:kl-scrollbar-colored scrollbar-gutter wb-grow wb-pr-md wb-pt-6xl',
       )}
     >
       {config.activeDocTopic && (
@@ -68,39 +68,41 @@ export function TOC({ headings }: TOCProps): ReactElement {
         <>
           <LayoutGroup>
             <ul className="wb-flex wb-flex-col">
-              {items.map(({ id, value, depth }, index) => {
-                return (
-                  <li
-                    className={cn('wb-flex wb-flex-row wb-relative', {
-                      'wb-ml-2xl wb-pl-md wb-border-l wb-border-border-default':
-                        depth > 2,
-                      'wb-mb-lg': depth === 2,
-                      'wb-pb-md': depth > 2 && items?.[index + 1]?.depth > 2,
-                    })}
-                    key={id}
-                  >
-                    <a
-                      title={value}
-                      href={`#${id}`}
-                      className={cn(
-                        'wb-flex wb-px-2xl wb-py-md wb-rounded wb-min-w-0 wb-w-full hover:wb-bg-surface-basic-hovered',
-                        activeAnchor[id]?.isActive
-                          ? 'wb-bg-surface-basic-active wb-bodyMd-medium  wb-text-text-primary wb-relative'
-                          : 'wb-bodyMd wb-text-text-soft'
-                      )}
+              {items
+                .filter((f) => f.depth <= 3)
+                .map(({ id, value, depth }, index) => {
+                  return (
+                    <li
+                      className={cn('wb-flex wb-flex-row wb-relative', {
+                        'wb-ml-2xl wb-pl-md wb-border-l wb-border-border-default':
+                          depth > 2,
+                        'wb-mb-lg': depth === 2,
+                        'wb-pb-md': depth > 2 && items?.[index + 1]?.depth > 2,
+                      })}
+                      key={id}
                     >
-                      {depth > 2 && activeAnchor[id]?.isActive && (
-                        <motion.div
-                          layoutId="toc-line"
-                          className="wb-border-l-2 wb-border-border-primary wb-rounded wb-h-full wb-absolute -wb-left-[5px] wb-top-0"
-                        />
-                      )}
+                      <a
+                        title={value}
+                        href={`#${id}`}
+                        className={cn(
+                          'wb-flex wb-px-2xl wb-py-md wb-rounded wb-min-w-0 wb-w-full hover:wb-bg-surface-basic-hovered',
+                          activeAnchor[id]?.isActive
+                            ? 'wb-bg-surface-basic-active wb-bodyMd-medium  wb-text-text-primary wb-relative'
+                            : 'wb-bodyMd wb-text-text-soft',
+                        )}
+                      >
+                        {depth > 2 && activeAnchor[id]?.isActive && (
+                          <motion.div
+                            layoutId="toc-line"
+                            className="wb-border-l-2 wb-border-border-primary wb-rounded wb-h-full wb-absolute -wb-left-[5px] wb-top-0"
+                          />
+                        )}
 
-                      <span className="wb-block wb-truncate">{value}</span>
-                    </a>
-                  </li>
-                );
-              })}
+                        <span className="wb-block wb-truncate">{value}</span>
+                      </a>
+                    </li>
+                  );
+                })}
             </ul>
           </LayoutGroup>
         </>
@@ -108,7 +110,7 @@ export function TOC({ headings }: TOCProps): ReactElement {
 
       <div
         className={cn(
-          'wb-sticky wb-pb-6xl wb-bottom-0 wb-bg-surface-basic-subdued wb-pt-xl'
+          'wb-sticky wb-pb-6xl wb-bottom-0 wb-bg-surface-basic-subdued wb-pt-xl',
         )}
       >
         {hasHeadings && <hr className="wb-border-border-default wb-mb-5xl" />}
