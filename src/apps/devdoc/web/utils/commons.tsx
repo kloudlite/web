@@ -47,7 +47,7 @@ export const CollapseItem = forwardRef(
         <Accordion.Header className="wb-flex">
           <Accordion.Trigger
             className={cn(
-              'wb-group wb-py-2xl wb-px-4xl wb-bodyLg-medium md:wb-bodyXl-medium wb-text-text-default wb-flex wb-flex-row wb-items-center wb-gap-lg wb-w-full wb-cursor-pointer',
+              'data-[state=open]:wb-bg-surface-basic-container-bg wb-group wb-py-3xl wb-px-4xl wb-bodyLg-medium wb-text-text-default wb-flex wb-flex-row wb-items-center wb-gap-lg wb-w-full wb-cursor-pointer',
             )}
             asChild
           >
@@ -67,8 +67,8 @@ export const CollapseItem = forwardRef(
             </a>
           </Accordion.Trigger>
         </Accordion.Header>
-        <Accordion.Content className="data-[state=open]:wb-animate-slideDown data-[state=closed]:wb-animate-slideUp wb-overflow-hidden">
-          <div className="wb-px-4xl wb-pb-2xl wb-bodyLg md:wb-bodyXl wb-text-text-strong">
+        <Accordion.Content className="data-[state=open]:wb-bg-surface-basic-container-bg data-[state=open]:wb-animate-slideDown data-[state=closed]:wb-animate-slideUp wb-overflow-hidden">
+          <div className="wb-px-4xl wb-pb-4xl wb-bodyLg wb-text-text-strong">
             {children}
           </div>
         </Accordion.Content>

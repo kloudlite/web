@@ -642,11 +642,46 @@ const consts = {
         items: [
           {
             title: 'How do I setup Kloudlite?',
-            desc: 'Setting up Kloudlite involves creating a cluster reference on the Kloudlite dashboard, attaching your cluster, and configuring local development containers to connect to the environment. you can follow these instructions https://kloudlite.io/docs/getting-started.',
+            desc: (
+              <div className="wb-inline-block">
+                <span>
+                  Setting up Kloudlite involves creating a cluster reference on
+                  the Kloudlite dashboard, attaching your cluster, and
+                  configuring local development containers to connect to the
+                  environment. you can follow these instructions
+                </span>
+                <Button
+                  content={'https://kloudlite.io/docs/getting-started.'}
+                  to="https://kloudlite.io/docs/getting-started"
+                  toLabel="href"
+                  linkComponent={Link}
+                  variant="primary-plain"
+                  size="sm"
+                  className="wb-align-middle !wb-inline"
+                />
+              </div>
+            ),
           },
           {
             title: 'What are the requirements for using Kloudlite?',
-            desc: 'You need a Kubernetes cluster to run environments and local container runtime to run your workspace. Detailed setup instructions are provided in our documentation (https://kloudlite.io/docs/getting-started).',
+            desc: (
+              <div className="wb-inline-block">
+                <span>
+                  You need a Kubernetes cluster to run environments and local
+                  container runtime to run your workspace. Detailed setup
+                  instructions are provided in our documentation
+                </span>
+                <Button
+                  content={'https://kloudlite.io/docs/getting-started.'}
+                  to="https://kloudlite.io/docs/getting-started"
+                  toLabel="href"
+                  linkComponent={Link}
+                  variant="primary-plain"
+                  size="sm"
+                  className="wb-align-middle !wb-inline"
+                />
+              </div>
+            ),
           },
           {
             title: 'Does Kloudlite provide us compute?',

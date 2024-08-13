@@ -149,18 +149,21 @@ type IItem = keyof typeof consts.helpandsupport.kloudliteOverviewFaqs;
 
 const FAQSection = () => {
   const [selected, setSelected] = useState<IItem>('general');
+  const [defaultOpen, setDefaultOpen] = useState(
+    consts.helpandsupport.kloudliteOverviewFaqs.general.items[0].title,
+  );
 
   const ref = useRef<HTMLDivElement>(null);
 
   const items = Object.entries(consts.helpandsupport.kloudliteOverviewFaqs);
 
   useEffect(() => {
-    if (ref.current?.parentElement)
+    if (ref.current?.parentElement && window.innerWidth >= 768)
       autoSize(ref.current?.parentElement, 'animationend');
   }, [ref.current]);
   return (
-    <Block title="FAQs">
-      <div className="wb-grid wb-grid-cols-1 md:wb-grid-cols-[288px_auto] wb-gap-5xl">
+    <Block title="Frequently Asked Questions">
+      <div className="wb-grid wb-grid-cols-1 lg:wb-grid-cols-[270px_auto] lg:wb-grid-cols-[288px_auto] 3xl:wb-grid-cols-[352px_auto] wb-gap-5xl">
         <GraphItem className="wb-flex md:wb-hidden wb-text-text-default wb-bg-surface-basic-subdued wb-flex-col wb-gap-lg">
           <Select
             className="wb-px-lg wb-cursor-pointer !wb-h-[36px] !wb-border-none wb-outline-none"
@@ -187,15 +190,21 @@ const FAQSection = () => {
             }
           />
         </GraphItem>
-        <GraphItem className="wb-hidden md:wb-flex wb-text-text-default wb-bg-surface-basic-subdued wb-p-2xl wb-flex-col wb-gap-lg">
+        <GraphItem className="wb-hidden md:wb-flex wb-text-text-default wb-bg-surface-basic-subdued wb-flex-col">
           {items.map(([key, val]) => {
             return (
-              <div key={key} onClick={() => setSelected(key as IItem)}>
+              <div
+                key={key}
+                onClick={() => {
+                  setSelected(key as IItem);
+                  setDefaultOpen(val.items[0].title);
+                }}
+              >
                 <OptionList.OptionItemRaw
                   active={selected === key}
-                  className="wb-rounded-md"
+                  className="!wb-p-3xl"
                 >
-                  <div className="wb-flex wb-flex-row wb-items-center wb-gap-lg">
+                  <div className="wb-flex wb-flex-row wb-items-center wb-gap-xl !wb-bodyLg">
                     <span>
                       <val.icon size={16} />
                     </span>
@@ -207,7 +216,15 @@ const FAQSection = () => {
           })}
         </GraphItem>
         <GraphItem className="wb-text-text-default wb-bg-surface-basic-subdued">
-          <Accordion.Root collapsible type="single" ref={ref}>
+          <Accordion.Root
+            value={defaultOpen}
+            collapsible
+            type="single"
+            ref={ref}
+            onValueChange={(e) => {
+              setDefaultOpen(e);
+            }}
+          >
             {consts.helpandsupport.kloudliteOverviewFaqs[selected].items.map(
               (f, i) => (
                 <CollapseItem
@@ -228,7 +245,7 @@ const FAQSection = () => {
   );
 };
 
-const ContactRoot = () => {
+const FormSection = () => {
   const { firebaseApp } = useFirebase();
   const [loading, setLoading] = useState(false);
 
@@ -247,167 +264,180 @@ const ContactRoot = () => {
   }, []);
 
   return (
-    <Wrapper className="wb-relative wb-flex wb-flex-col wb-py-6xl md:wb-py-8xl lg:wb-py-10xl wb-gap-6xl md:wb-gap-8xl xl:wb-gap-10xl">
+    <div>
       {hasFormSubmitted ? (
         <div className="wb-flex wb-flex-col wb-items-center wb-justify-center wb-heading2xl-marketing md:wb-heading4xl-marketing wb-text-text-default wb-text-center">
           Thanks for sending message we will contact you soon.
         </div>
       ) : (
-        <div className="wb-gap-5xl md:wb-gap-8xl xl:wb-gap-10xl wb-flex wb-flex-col lg:wb-flex-row w-full">
-          <form
-            onSubmit={handleSubmit(async (d) => {
-              setLoading(true);
-              await addContact(firebaseApp, d);
-              setLoading(false);
-              const expiryMinutes = 5;
-              const date = new Date();
-              date.setTime(date.getTime() + expiryMinutes * 60 * 1000);
-              setCookie('contact-form-submitted', true, {
-                expires: date,
-              });
-              setHasFormSubmitted(true);
-              reset();
-            })}
-            className="wb-flex wb-flex-col wb-gap-5xl wb-flex-1 wb-p-3xl md:wb-p-6xl wb-border wb-border-border-default wb-rounded-lg"
-          >
-            <div className="wb-flex wb-flex-col wb-gap-2xl wb-text-left wb-mb-2xl">
-              <h1 className="wb-heading4xl-marketing wb-text-text-default">
-                Contact us
-              </h1>
-              <h2 className="wb-bodyLg-medium wb-text-text-soft">
-                Get in touch and let us know how we can help.
-              </h2>
-            </div>
-            <div className="wb-flex wb-flex-col wb-gap-3xl">
-              <TextInput
-                label="Full name"
-                size="lg"
-                {...register('fullname', { required: 'Full name is required' })}
-                error={!!errors.fullname}
-                message={errors.fullname?.message}
-              />
-              <div className="wb-flex wb-flex-col md:wb-flex-row wb-gap-3xl">
-                <div className="wb-basis-full">
+        <Block
+          title="Contact us"
+          desc="Get in touch and let us know how we can help."
+        >
+          <div className="wb-grid wb-grid-cols-1 md:wb-grid-cols-[auto_236px] lg:wb-grid-cols-[auto_288px] 2xl:wb-grid-cols-[auto_352px] 3xl:wb-grid-cols-[auto_415px] wb-gap-3xl md:wb-gap-5xl">
+            <GraphItem className="wb-bg-surface-basic-subdued">
+              <form
+                onSubmit={handleSubmit(async (d) => {
+                  setLoading(true);
+                  await addContact(firebaseApp, d);
+                  setLoading(false);
+                  const expiryMinutes = 5;
+                  const date = new Date();
+                  date.setTime(date.getTime() + expiryMinutes * 60 * 1000);
+                  setCookie('contact-form-submitted', true, {
+                    expires: date,
+                  });
+                  setHasFormSubmitted(true);
+                  reset();
+                })}
+                className="wb-flex wb-flex-col wb-gap-5xl wb-flex-1 wb-p-3xl md:wb-p-6xl"
+              >
+                <div className="wb-flex wb-flex-col wb-gap-3xl">
                   <TextInput
-                    label="Company name"
+                    label="Full name"
                     size="lg"
-                    {...register('companyName', {
-                      required: 'Company name is required',
+                    {...register('fullname', {
+                      required: 'Full name is required',
                     })}
-                    error={!!errors.companyName}
-                    message={errors.companyName?.message}
+                    error={!!errors.fullname}
+                    message={errors.fullname?.message}
                   />
-                </div>
-                <div className="wb-basis-full">
-                  <TextInput
-                    label="Email"
-                    size="lg"
-                    {...register('email', {
-                      required: 'Email is required',
-                      pattern: {
-                        value:
-                          /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                        message: 'Invalid email address',
-                      },
-                    })}
-                    error={!!errors.email}
-                    message={errors.email?.message}
-                  />
-                </div>
-              </div>
-              <div className="wb-flex wb-flex-col md:wb-flex-row wb-gap-3xl">
-                <div className="wb-basis-full">
-                  <Controller
-                    control={control}
-                    name="country"
-                    defaultValue={undefined}
-                    rules={{
-                      required: 'Country is required.',
-                    }}
-                    render={({ field: { value, onChange } }) => (
-                      <Select
+                  <div className="wb-flex wb-flex-col md:wb-flex-row wb-gap-3xl">
+                    <div className="wb-basis-full">
+                      <TextInput
+                        label="Company name"
                         size="lg"
-                        label="Country"
-                        value={value}
-                        onChange={(val) => {
-                          onChange(val.label);
-                        }}
-                        options={async () => getContries()}
-                        valueRender={valueRender}
-                        error={!!errors.country}
-                        message={errors.country?.message}
+                        {...register('companyName', {
+                          required: 'Company name is required',
+                        })}
+                        error={!!errors.companyName}
+                        message={errors.companyName?.message}
                       />
-                    )}
-                  />
-                </div>
-                <div className="wb-basis-full">
-                  <TextInput
-                    label="Mobile"
-                    size="lg"
-                    {...register('mobile', {
-                      required: 'Mobile is required',
-                      pattern: {
-                        value: /^[^a-zA-Z]*$/,
-                        message: 'Invalid mobile number',
-                      },
+                    </div>
+                    <div className="wb-basis-full">
+                      <TextInput
+                        label="Email"
+                        size="lg"
+                        {...register('email', {
+                          required: 'Email is required',
+                          pattern: {
+                            value:
+                              /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                            message: 'Invalid email address',
+                          },
+                        })}
+                        error={!!errors.email}
+                        message={errors.email?.message}
+                      />
+                    </div>
+                  </div>
+                  <div className="wb-flex wb-flex-col md:wb-flex-row wb-gap-3xl">
+                    <div className="wb-basis-full">
+                      <Controller
+                        control={control}
+                        name="country"
+                        defaultValue={undefined}
+                        rules={{
+                          required: 'Country is required.',
+                        }}
+                        render={({ field: { value, onChange } }) => (
+                          <Select
+                            size="lg"
+                            label="Country"
+                            value={value}
+                            onChange={(val) => {
+                              onChange(val.label);
+                            }}
+                            options={async () => getContries()}
+                            valueRender={valueRender}
+                            error={!!errors.country}
+                            message={errors.country?.message}
+                          />
+                        )}
+                      />
+                    </div>
+                    <div className="wb-basis-full">
+                      <TextInput
+                        label="Mobile"
+                        size="lg"
+                        {...register('mobile', {
+                          required: 'Mobile is required',
+                          pattern: {
+                            value: /^[^a-zA-Z]*$/,
+                            message: 'Invalid mobile number',
+                          },
+                        })}
+                        error={!!errors.mobile}
+                        message={errors.mobile?.message}
+                      />
+                    </div>
+                  </div>
+                  <TextArea
+                    label="Message"
+                    {...register('message', {
+                      required: 'Message is required',
                     })}
-                    error={!!errors.mobile}
-                    message={errors.mobile?.message}
+                    error={!!errors.message}
+                    message={errors.message?.message}
+                  />
+                </div>
+                <div className="wb-flex wb-flex-col md:wb-flex-row wb-items-center wb-gap-3xl wb-w-full md:wb-justify-between">
+                  <span className="wb-bodyMd md:wb-bodyLg wb-text-text-soft wb-text-center md:wb-text-start">
+                    By submitting this, I confirm that I have read and
+                    understood the
+                    <Link
+                      href="/privacy-policy"
+                      className="wb-text-text-default"
+                    >
+                      {' '}
+                      Privacy policy.
+                    </Link>
+                  </span>
+                  <Button
+                    loading={loading}
+                    type="submit"
+                    content="Submit"
+                    size="md"
+                    disabled={loading}
+                  />
+                </div>
+              </form>
+            </GraphItem>
+            <GraphItem className="wb-bg-surface-basic-subdued">
+              <div className="wb-flex wb-flex-col wb-p-5xl wb-gap-6xl">
+                <div className="wb-text-icon-primary">
+                  <SupportIcon height={64} width={64} />
+                </div>
+                <div className="wb-flex wb-flex-col wb-gap-xl">
+                  <div className="wb-flex wb-flex-col wb-gap-lg">
+                    <span className="wb-headingLg wb-text-text-default">
+                      Reach us to
+                    </span>
+                    <span className="wb-bodyLg wb-text-text-soft">
+                      We’re here to help with any questions you may have.
+                    </span>
+                  </div>
+                  <Button
+                    variant="plain"
+                    content={supportEmail}
+                    linkComponent={Link}
+                    to={`mailto:${supportEmail}`}
+                    toLabel="href"
                   />
                 </div>
               </div>
-              <TextArea
-                label="Message"
-                {...register('message', { required: 'Message is required' })}
-                error={!!errors.message}
-                message={errors.message?.message}
-              />
-            </div>
-            <div className="wb-flex wb-flex-col md:wb-flex-row wb-items-center wb-gap-3xl wb-w-full md:wb-justify-between">
-              <span className="wb-bodyMd md:wb-bodyLg wb-text-text-soft wb-text-center md:wb-text-start">
-                By submitting this, I confirm that I have read and understood
-                the
-                <Link href="/privacy-policy" className="wb-text-text-default">
-                  {' '}
-                  Privacy policy.
-                </Link>
-              </span>
-              <Button
-                loading={loading}
-                type="submit"
-                content="Submit"
-                size="md"
-                disabled={loading}
-              />
-            </div>
-          </form>
-          <div className="wb-h-xs lg:wb-h-auto lg:wb-w-xs wb-bg-border-default" />
-          <div className="wb-flex-1 wb-flex wb-flex-col md:wb-flex-row lg:wb-flex-col wb-gap-7xl md:wb-gap-10xl wb-justify-center md:wb-justify-between lg:wb-max-w-[300px]">
-            <div className="wb-flex wb-flex-col wb-p-5xl wb-gap-6xl wb-border wb-border-border-default wb-rounded-lg">
-              <div className="wb-text-icon-primary">
-                <SupportIcon height={64} width={64} />
-              </div>
-              <div className="wb-flex wb-flex-col wb-gap-xl">
-                <div className="wb-flex wb-flex-col wb-gap-lg">
-                  <span className="wb-headingLg wb-text-text-default">
-                    Reach us to
-                  </span>
-                  <span className="wb-bodyLg wb-text-text-soft">
-                    We’re here to help with any questions you may have.
-                  </span>
-                </div>
-                <Button
-                  variant="plain"
-                  content={supportEmail}
-                  linkComponent={Link}
-                  to={`mailto:${supportEmail}`}
-                  toLabel="href"
-                />
-              </div>
-            </div>
+            </GraphItem>
           </div>
-        </div>
+        </Block>
       )}
+    </div>
+  );
+};
+
+const ContactRoot = () => {
+  return (
+    <Wrapper>
+      <FormSection />
       <FAQSection />
     </Wrapper>
   );
