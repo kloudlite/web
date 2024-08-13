@@ -56,7 +56,7 @@ function HeadingLink({
           'wb-text-text-default wb-group',
           {
             h2: cn(
-              'wb-headingLg wb-bg-surface-basic-subdued wb-mt-[30px]',
+              'wb-headingLg wb-bg-surface-basic-subdued wb-mt-[30px] wb-z-[1]',
               isBlog
                 ? 'md:wb-headingXl wb-mt-5xl'
                 : 'md:wb-heading2xl wb-sticky wb-top-0 wb-py-[10px] ',
