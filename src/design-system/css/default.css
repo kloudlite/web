@@ -7,6 +7,7 @@
   --surface-basic-input: var(--grey-50);
   --surface-basic-active: var(--zinc-100);
   --surface-basic-overlay-bg: var(--zinc-900);
+  --surface-basic-container-bg: var(--grey-100);
 
   /* Primary */
   --surface-primary-default: var(--blue-600);
