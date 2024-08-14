@@ -61,10 +61,10 @@ const Illustration = () => {
       <div className="hidden md:block wb-pb-[36px] 2xl:wb-pb-[128px]">
         <GraphExtended
           // graph="graphIllustration"
-          innerClass="md:-wb-mx-[32px] lg:-wb-mx-[160px] -wb-mt-[2px] wb-flex wb-justify-center !wb-pt-[32px] 3xl:-wb-mx-[256px]"
+          innerClass="-wb-mt-[2px] wb-flex wb-justify-center !wb-pt-[32px] 3xl:-wb-mx-[256px]"
           className="!wb-pb-[32px] xl:[background-position: unset] 2xl:[background-position:top] 3xl:[background-position:unset]"
         >
-          <div className="wb-relative">
+          <div className="wb-relative xl:-wb-mx-[128px] 2xl:-wb-mx-[160px]">
             <DynamicImage
               light={hero.hero1920.src}
               dark={hero.hero1920Dark.src}

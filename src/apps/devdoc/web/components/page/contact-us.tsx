@@ -17,6 +17,7 @@ import OptionList from 'kl-design-system/atoms/option-list';
 import * as Accordion from '@radix-ui/react-accordion';
 import { getCookie, setCookie } from 'cookies-next';
 import { Block } from '../commons';
+import ResponsiveContainer from '../responsive-container';
 
 const SupportIcon = (props: ComponentProps<'svg'>) => {
   const { height, width } = props;
@@ -274,7 +275,7 @@ const FormSection = () => {
           title="Contact us"
           desc="Get in touch and let us know how we can help."
         >
-          <div className="wb-grid wb-grid-cols-1 md:wb-grid-cols-[auto_236px] lg:wb-grid-cols-[auto_288px] 2xl:wb-grid-cols-[auto_352px] 3xl:wb-grid-cols-[auto_415px] wb-gap-3xl md:wb-gap-5xl">
+          <ResponsiveContainer className="wb-grid-cols-1 md:wb-grid-cols-[auto_236px] lg:wb-grid-cols-[auto_288px] 2xl:wb-grid-cols-[auto_352px] 3xl:wb-grid-cols-[auto_415px]">
             <GraphItem className="wb-bg-surface-basic-subdued">
               <form
                 onSubmit={handleSubmit(async (d) => {
@@ -427,7 +428,7 @@ const FormSection = () => {
                 </div>
               </div>
             </GraphItem>
-          </div>
+          </ResponsiveContainer>
         </Block>
       )}
     </div>

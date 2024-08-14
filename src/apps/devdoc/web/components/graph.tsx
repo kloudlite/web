@@ -40,7 +40,7 @@ export const Graph = ({
       className={cn(
         'xl:[clip-path:inset(1.5px)] wb-relative',
         className,
-        graph || 'graph'
+        graph || 'graph',
       )}
     >
       <div className="wb-hidden md:wb-block wb-absolute wb-inset-0">
@@ -48,28 +48,28 @@ export const Graph = ({
         <div
           className={cn(
             'wb-absolute wb-top-0 wb-left-0 wb-right-0 wb-from-transparent wb-to-surface-basic-subdued wb-bg-gradient-to-t',
-            fade?.top || 'wb-h-10xl'
+            fade?.top || 'wb-h-10xl',
           )}
         />
         {/* bottom */}
         <div
           className={cn(
             'wb-absolute wb-bottom-0 wb-left-0 wb-right-0 wb-from-transparent wb-to-surface-basic-subdued wb-bg-gradient-to-b',
-            fade?.bottom || 'wb-h-10xl'
+            fade?.bottom || 'wb-h-10xl',
           )}
         />
         {/* left */}
         <div
           className={cn(
             'wb-absolute wb-bottom-0 wb-left-0 wb-top-0 wb-from-transparent wb-to-surface-basic-subdued wb-bg-gradient-to-l',
-            fade?.left || 'wb-w-10xl'
+            fade?.left || 'wb-w-10xl',
           )}
         />
         {/* right */}
         <div
           className={cn(
             'wb-absolute wb-bottom-0 wb-right-0 wb-top-0 wb-from-transparent wb-to-surface-basic-subdued wb-bg-gradient-to-r',
-            fade?.right || 'wb-w-10xl'
+            fade?.right || 'wb-w-10xl',
           )}
         />
       </div>
@@ -97,15 +97,13 @@ export const GraphExtended = ({
     <Graph
       graph={graph}
       className={cn(
-        'lg:-wb-mx-11xl xl:-wb-mx-10xl wb-py-7xl md:wb-py-8xl lg:wb-py-10xl',
-        className
+        'xl:-wb-mx-10xl wb-py-7xl md:wb-py-8xl lg:wb-py-10xl',
+        className,
       )}
       style={style}
       fade={fade}
     >
-      <div className={cn('lg:wb-px-11xl xl:wb-px-10xl', innerClass)}>
-        {children}
-      </div>
+      <div className={cn('xl:wb-px-10xl', innerClass)}>{children}</div>
     </Graph>
   );
 };
@@ -173,17 +171,17 @@ const _LineVertical = memo(() => {
     ctx.moveTo(r.width - width - offset + offsetGraphVerticalRight, 0);
     ctx.lineTo(
       r.width - width - offset + offsetGraphVerticalRight,
-      r.height + offset * 2
+      r.height + offset * 2,
     );
 
     // top
     ctx.moveTo(
       0 - offsetGraphHorizontal,
-      width + offset - offsetGraphHorizontal
+      width + offset - offsetGraphHorizontal,
     );
     ctx.lineTo(
       r.width + offset * 2 - offsetGraphHorizontal,
-      width + offset - offsetGraphHorizontal
+      width + offset - offsetGraphHorizontal,
     );
 
     // botom
@@ -225,7 +223,7 @@ const Lines = memo(
             <div
               className={cn(
                 'wb-absolute wb-left-0 -wb-top-[20px] lg:-wb-top-[32px] -wb-bottom-[20px] lg:-wb-bottom-[32px] wb-w-[1.5px]  wb-z-[21]',
-                strokeColor
+                strokeColor,
               )}
             />
           )}
@@ -233,7 +231,7 @@ const Lines = memo(
             <div
               className={cn(
                 'wb-absolute -wb-right-xs -wb-top-[20px] lg:-wb-top-[32px] -wb-bottom-[20px] lg:-wb-bottom-[32px] wb-w-[1.5px] wb-z-[21]',
-                strokeColor
+                strokeColor,
               )}
             />
           )}
@@ -241,7 +239,7 @@ const Lines = memo(
             <div
               className={cn(
                 'wb-absolute -wb-top-xs -wb-left-[20px] -wb-right-[20px] lg:-wb-left-[32px] lg:-wb-right-[32px] wb-h-[1.5px] wb-z-[21]',
-                strokeColor
+                strokeColor,
               )}
             />
           )}
@@ -249,14 +247,14 @@ const Lines = memo(
             <div
               className={cn(
                 'wb-absolute wb-bottom-0 -wb-left-[20px] -wb-right-[20px] lg:-wb-left-[32px] lg:-wb-right-[32px] wb-h-[1.5px] wb-z-[21]',
-                strokeColor
+                strokeColor,
               )}
             />
           )}
         </div>
       </div>
     );
-  }
+  },
 );
 
 export const GraphItem = ({

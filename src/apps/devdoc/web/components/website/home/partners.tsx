@@ -2,6 +2,9 @@ import Marquee from 'react-fast-marquee';
 import consts from '~/app/utils/const';
 import { cn } from '~/app/utils/commons';
 import { GraphExtended, GraphItem } from '../../graph';
+import '@splidejs/react-splide/css/core';
+import { AutoScroll } from '@splidejs/splide-extension-auto-scroll';
+import { Splide, SplideSlide } from '@splidejs/react-splide';
 
 const Partners = () => {
   return (
@@ -32,33 +35,6 @@ const Partners = () => {
         })}
       </Marquee>
     </div>
-  );
-};
-
-const PartnersTest = () => {
-  return (
-    <Marquee autoFill speed={25}>
-      <div>
-        <GraphExtended>
-          <div className="wb-flex wb-flex-row">
-            {consts.homeNew.partners.map((p, i) => {
-              const ii = i;
-              return (
-                <GraphItem
-                  key={ii}
-                  className={cn(
-                    'wb-h-[64px] wb-flex wb-px-2xl wb-items-center wb-justify-center wb-bg-surface-basic-subdued',
-                    p.className,
-                  )}
-                >
-                  {p.icon}
-                </GraphItem>
-              );
-            })}
-          </div>
-        </GraphExtended>
-      </div>
-    </Marquee>
   );
 };
 
