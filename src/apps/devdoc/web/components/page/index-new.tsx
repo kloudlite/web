@@ -1,6 +1,5 @@
 import { Badge } from 'kl-design-system/atoms/badge';
 import { GraphExtended } from '~/app/components/graph';
-import { authUrl } from '~/app/utils/config';
 import hero from '~/images/homeNew/hero';
 import HomeIllustrationMobileDark from '~/images/homeNew/illustration-mobile-dark.svg';
 import HomeIllustrationMobileWeb from '~/images/homeNew/illustration-mobile.webp';
