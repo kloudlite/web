@@ -213,7 +213,7 @@ export default {
         to: communityUrl,
       },
       {
-        title: 'Change Log',
+        title: 'Changelog',
         type: 'normal',
         to: changeLogUrl,
       },
