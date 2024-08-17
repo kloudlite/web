@@ -62,7 +62,7 @@ const Illustration = () => {
         <GraphExtended
           // graph="graphIllustration"
           innerClass="-wb-mt-[2px] wb-flex wb-justify-center !wb-pt-[32px] 3xl:-wb-mx-[256px]"
-          className="!wb-pb-[32px] xl:[background-position: unset] 2xl:[background-position:top] 3xl:[background-position:unset]"
+          className="!wb-pb-[32px] xl:[background-position: unset] 2xl:[background-position:top] 3xl:[background-position:unset] wb-overflow-hidden"
         >
           <div className="wb-relative xl:-wb-mx-[128px] 2xl:-wb-mx-[160px]">
             <DynamicImage
