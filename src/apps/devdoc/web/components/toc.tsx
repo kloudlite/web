@@ -60,8 +60,8 @@ export function TOC({ headings }: TOCProps): ReactElement {
       )}
     >
       {config.activeDocTopic && (
-        <div className="wb-bodyMd wb-text-text-soft wb-px-2xl wb-py-md wb-mb-md">
-          {config.activeDocTopic}
+        <div className="wb-bodyMd wb-text-text-soft wb-px-2xl wb-py-md wb-mb-md wb-font-semibold">
+          On this page
         </div>
       )}
       {hasHeadings && (
