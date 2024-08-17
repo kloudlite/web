@@ -1,3 +1,9 @@
+---
+title: "Contributing to Kloudlite's Frontend: Developer Guide"
+metaTitle: "Kloudlite Frontend Contribution Guide: Setup and Best Practices"
+description: "Learn how to contribute to Kloudlite's frontend development. This guide provides detailed instructions on setting up your environment, coding standards, and best practices for contributing to Kloudlite's frontend projects."
+---
+
 # Frontend
 This is a guide to help the Kloudlite community and also Kloudlite members contribute to our UI. It is ongoing work but we hope it provides some useful information to get started. If you have any questions or need help, please send us a message on our Discord server (opens in a new tab). We'll be happy to help you.
 

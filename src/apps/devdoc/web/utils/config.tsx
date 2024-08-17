@@ -19,6 +19,8 @@ export const authUrl = 'https://auth.kloudlite.io';
 export const gitUrl = 'https://github.com/kloudlite/kloudlite';
 export const communityUrl =
   'https://github.com/kloudlite/kloudlite/discussions';
+export const changeLogUrl =
+  'https://github.com/kloudlite/kloudlite/releases';
 const linkedinUrl = 'https://linkedin.com/company/kloudlite-io';
 const xUrl = 'https://x.com/kloudlite';
 export const supportEmail = 'launch@kloudlite.io';
@@ -209,6 +211,11 @@ export default {
         title: 'Community',
         type: 'normal',
         to: communityUrl,
+      },
+      {
+        title: 'Changelog',
+        type: 'normal',
+        to: changeLogUrl,
       },
     ],
   },

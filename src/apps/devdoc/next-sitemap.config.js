@@ -28,6 +28,9 @@ const ignorePaths = [
   '/customer-stories',
   '/customer-stories/anscer-robotics',
   '/new-home',
+  '/help-and-support',
+  '/help-and-support/kloudlite-overview',
+  '/help-and-support/kloudlite-overview/what-is-kloudlite'
 ];
 
 //@ts-ignore

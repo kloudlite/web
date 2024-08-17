@@ -1,3 +1,9 @@
+---
+title: "Contributing to Kloudlite Documentation: Best Practices Guide"
+metaTitle: "Kloudlite Documentation Contribution Guide: Writing Standards and Practices"
+description: "Contribute to Kloudlite's documentation with this comprehensive guide. Learn the standards, tools, and best practices for writing and improving Kloudlite's documentation to ensure clarity and consistency"
+---
+
 # Documentation
 This style guide is primarily for use with authoring documentation.
 

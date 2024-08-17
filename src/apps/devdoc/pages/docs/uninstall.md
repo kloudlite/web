@@ -1,3 +1,9 @@
+---
+title: "Uninstalling Kloudlite: Step-by-Step Guide"
+metaTitle: "Kloudlite Uninstallation Guide: Complete Removal Instructions"
+description: "Learn how to properly uninstall Kloudlite from your system. This guide provides clear, step-by-step instructions to ensure a complete and clean removal of Kloudlite components"
+---
+
 # Uninstall 
 
 Follow below steps to uninstall kl:

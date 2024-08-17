@@ -4,39 +4,60 @@ metaTitle: "Working with Workspaces and Environments in Kloudlite | Documentatio
 description: "Master the use of Workspaces and Environments in Kloudlite. Learn how to set up, manage, and optimize your development workflow for maximum efficiency"
 ---
 
-## Remote Local
-
-The seamless interaction between workspaces and environments is crucial for efficient and productive workflows. While workspaces provide the tools and configurations developers need, environments offer the dependent services necessary for the application to run. Here’s how they work together and how Kloudlite enhances this integration.
+## Remote Local - Integrating Workspaces and Environments
+The seamless interaction between workspaces and environments is crucial for efficient and productive workflows. 
+While workspaces provide the tools and configurations developers need, environments offer the dependent services 
+necessary for the application to run. Here's how they work together and how Kloudlite enhances this integration.
 
 ### The Interplay Between Workspaces and Environments
-
-**Seamless Integration**
-Workspaces need to connect to environments to access essential services like databases, APIs, and external systems. This connection ensures that developers can interact with all necessary dependencies directly from their local setup.
+**Seamless Connectivity**
+Workspaces need to connect to environments to access essential services like databases, APIs, and external systems. 
+This connection ensures that developers can interact with all necessary dependencies directly from their local setup.
 
 **Synchronisation**
-Changes made in the workspace, such as code updates or configuration changes, need to be reflected immediately in the environment. This synchronisation ensures that both the workspace and the environment remain consistent, reducing discrepancies and integration issues when applications are deployed.
+Changes made in the workspace, such as code updates or configuration changes, need to be reflected immediately in the 
+environment. This synchronisation ensures that both the workspace and the environment remain consistent, reducing 
+discrepancies and integration issues when applications are deployed.
 
 **Efficient Testing and Debugging**
-Testing and debugging require environments that closely mimic production setups. Developers write and run tests within their workspaces, interacting with services in the environment to ensure the application functions correctly. Integrated tools help trace issues and provide insights into how the code interacts with its dependencies.
+Testing and debugging require environments that closely mimic production setups. Developers write and run tests within 
+their workspaces, interacting with services in the environment to ensure the application functions correctly. Integrated 
+tools help trace issues and provide insights into how the code interacts with its dependencies.
 
 
 ### How Kloudlite Facilitates Integration?
-
-Kloudlite is designed to bridge the gap between workspaces and environments, providing a unified and efficient development experience. Here’s how Kloudlite helps:
+Kloudlite is designed to bridge the gap between workspaces and environments, providing a unified and efficient 
+development experience. Here's how Kloudlite helps:
 
 **Seamless Connectivity**
-Kloudlite creates a secure WireGuard network connecting local development containers (KL boxes) with remote Kubernetes clusters. This setup ensures that developers can access all necessary services within the environment directly from their local workspace, without any complex configurations.
+Kloudlite creates a secure WireGuard network connecting local development containers (KL boxes) with remote 
+Kubernetes clusters. This setup ensures that developers can access all necessary services within the environment 
+directly from their local workspace, without any complex configurations.
 
 **Environment Syncing**
-In Kloudlite, configurations and secrets of an environment are synced to the developer's workspace, ensuring full parity with the environment it is connected to. This synchronisation eliminates the need for separate configuration management, making it easier to maintain consistency across different stages of development.
+In Kloudlite, configurations and secrets of an environment are synced to the developer's workspace, ensuring full 
+parity with the environment it is connected to. This synchronisation eliminates the need for separate configuration 
+management, making it easier to maintain consistency across different stages of development.
 
 **Simplified Development Workflow**
-With Kloudlite, developers don’t need to build and deploy code separately to test the application. The development workspace is already connected to the environment, allowing for instant updates and testing. This setup removes the overhead of managing build and deployments from the development loop.
+With Kloudlite, developers don't need to build and deploy code separately to test the application. The development 
+workspace is already connected to the environment, allowing for instant updates and testing. This setup removes the 
+overhead of managing build and deployments from the development loop.
 
 **Shift Testing and Debugging Left**
-With Kloudlite we can  intercept applications running inside the environment for testing and debugging. This capability and seamless connectivity, ensures that developers can quickly identify and resolve issues, improving the overall quality of the application in the early stage of development.
+With Kloudlite we can intercept applications running inside the environment for testing and debugging. This capability 
+and seamless connectivity, ensures that developers can quickly identify and resolve issues, improving the overall quality 
+of the application in the early stage of development.
 
 **Isolated & Collaborative Development**
-Kloudlite supports multiple developers working on the same environment, facilitating collaboration on features across different services. We can also run our own isolated environments, ensuring that changes don’t interfere with others' work while maintaining a unified development experience.
+Kloudlite supports multiple developers working on the same environment, facilitating collaboration on features across 
+different services. We can also run our own isolated environments, ensuring that changes don't interfere with others' 
+work while maintaining a unified development experience.
 
-The synergy between workspaces and environments is essential for productive and efficient software development. Kloudlite enhances this integration by providing seamless connectivity, real-time synchronisation, and robust testing and debugging capabilities. By leveraging Kloudlite, development teams can ensure that their workflows are streamlined, consistent, and conducive to high-quality software production.
+The synergy between workspaces and environments is essential for productive and efficient software development. Kloudlite 
+enhances this integration by providing seamless connectivity, real-time synchronisation, and robust testing and debugging 
+capabilities. By leveraging Kloudlite, development teams can ensure that their workflows are streamlined, consistent, and 
+conducive to high-quality software production.
+
+
+![workspace-env](/docs/workspace/workspace-env.png)

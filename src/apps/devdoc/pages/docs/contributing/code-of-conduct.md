@@ -1,3 +1,9 @@
+---
+title: "Kloudlite Community Code of Conduct"
+metaTitle: "Kloudlite Code of Conduct: Contribution Guidelines"
+description: "Review Kloudlite's Code of Conduct to understand the expected standards of behavior within the community. This document outlines the guidelines for contributing to Kloudlite projects in a respectful and inclusive manner."
+---
+
 # Contributor Covenant Code of Conduct
 
 ## Our Pledge
