@@ -99,8 +99,11 @@ const JoinProvidersDialog = ({
               <div className="wb-flex wb-flex-col wb-gap-5xl wb-p-8xl bg-surface-basic-subdued wb-items-center">
                 <div className="wb-flex wb-flex-col wb-items-center wb-gap-lg">
                   <span className="wb-headingXl wb-text-text-default wb-text-center">
-                    Join the waiting list by creating your Kloudlite account
+                    Create your Kloudlite.io account
                   </span>
+                  <div className="wb-bodyLg wb-text-text-soft wb-text-center">
+                    Get started for free. No credit card required.
+                  </div>
                 </div>
               </div>
               <div className="wb-flex wb-flex-col wb-w-full wb-p-8xl wb-gap-5xl wb-flex-1 md:wb-flex-auto">
@@ -174,7 +177,7 @@ const JoinProvidersDialog = ({
                   />
 
                   <div className="wb-bodyLg wb-text-text-soft wb-text-center">
-                    By continuing, you agree Kloudlite’s <br />
+                    By continuing, you agree Kloudlite's <br />
                     <Anchor
                       className="wb-text-text-strong wb-underline wb-underline-offset-4 hover:wb-cursor-pointer"
                       href="/terms-of-services"
