@@ -43,9 +43,9 @@ type FolderProps = {
 const classes = {
   link: cn(
     'wb-flex wb-flex-row wb-items-center wb-rounded wb-py-md wb-px-2xl wb-transition-all [word-break:break-word]',
-    'wb-cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:wb-border hover:wb-bg-surface-basic-hovered hover:wb-text-text-default',
+    'wb-cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:wb-border hover:wb-bg-surface-basic-hovered',
   ),
-  inactive: cn('wb-bodyMd wb-text-text-soft'),
+  inactive: cn('wb-bodyMd wb-text-text-soft hover:wb-text-text-default'),
   active: cn(
     'wb-bodyMd-medium wb-text-text-primary wb-bg-surface-basic-active',
   ),
