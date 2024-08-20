@@ -164,9 +164,9 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
               'pr-0': component !== 'input',
             },
             {
+              'h-[38px]': size === 'md' && component === 'input',
               'h-[48px]': size === 'lg' && component === 'input',
               'h-[60px]': size === 'xl' && component === 'input',
-              'h-[32px]': size === 'md' && component === 'input',
             },
             size === 'xl' ? '!px-2xl' : 'px-lg',
             className,
