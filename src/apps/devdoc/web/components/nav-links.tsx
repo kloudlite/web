@@ -27,11 +27,11 @@ export const NavLinks = ({
   return (
     <div
       className={cn(
-        'wb-py-6xl md:wb-px-xl wb-border-t wb-border-border-default wb-flex wb-flex-col md:wb-flex-row wb-flex-wrap wb-items-center wb-gap-xl wb-bodyMd wb-text-text-default print:wb-hidden',
+        'wb-py-6xl wb-border-t wb-border-border-default wb-flex wb-flex-col md:wb-flex-row wb-flex-wrap wb-items-center wb-gap-xl wb-bodyMd wb-text-text-default print:wb-hidden',
         {
-          'justify-between': !!prev,
-          'justify-end': !prev,
-        }
+          'wb-justify-between': !!prev,
+          'wb-justify-end': !prev,
+        },
       )}
     >
       <div className="wb-flex-1 md:wb-flex-none wb-self-start">
@@ -40,7 +40,7 @@ export const NavLinks = ({
             linkComponent={Link}
             toLabel="href"
             content={prev.title}
-            className="self-start"
+            className="wb-self-start !wb-pl-0"
             to={prev.route}
             prefix={<ChevronLeft />}
             variant="plain"
@@ -53,7 +53,7 @@ export const NavLinks = ({
             linkComponent={Link}
             toLabel="href"
             content={next.title}
-            className="self-end ml-auto"
+            className="wb-self-end wb-ml-auto !wb-pr-0"
             to={next.route}
             suffix={<ChevronRight />}
             variant="plain"

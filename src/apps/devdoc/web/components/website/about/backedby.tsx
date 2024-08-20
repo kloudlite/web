@@ -5,7 +5,7 @@ import SectionWrapper from '../section-wrapper';
 
 const AboutBackedBy = () => {
   return (
-    <SectionWrapper className="wb-flex wb-flex-col wb-w-full">
+    <SectionWrapper className="wb-flex wb-flex-col wb-w-full 2xl:!wb-py-8xl">
       <GraphExtended>
         <div className="wb-grid wb-grid-cols-1 md:wb-grid-cols-2 lg:wb-grid-cols-3 2xl:wb-h-[224px] xl:wb-h-[256px]  wb-gap-3xl md:wb-gap-5xl">
           <GraphItem className="md:wb-col-span-2 lg:wb-col-span-1 wb-bg-surface-basic-subdued wb-p-5xl wb-flex wb-flex-col wb-justify-center">
