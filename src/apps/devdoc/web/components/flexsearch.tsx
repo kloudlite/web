@@ -68,10 +68,10 @@ const loadIndexesPromises = new Map<string, Promise<void>>();
 
 const loadIndexesImpl = async (
   basePath: string,
-  locale: string
+  locale: string,
 ): Promise<void> => {
   const response = await fetch(
-    `${basePath}/_next/static/chunks/nextra-data-${locale}.json`
+    `${basePath}/_next/static/chunks/nextra-data-${locale}.json`,
   );
   const searchData = (await response.json()) as SearchData;
 
@@ -215,7 +215,7 @@ export function Flexsearch(): ReactElement {
           prefix: isFirstItemOfPage && (
             <div
               className={cn(
-                'wb-headingMd wb-mx-xl wb-pb-md wb-mb-md wb-border-b wb-border-border-default'
+                'wb-headingMd wb-mx-xl wb-pb-md wb-mb-md wb-border-b wb-border-border-default',
               )}
             >
               {result.doc.title}
@@ -261,7 +261,12 @@ export function Flexsearch(): ReactElement {
       return sortedGroup;
     });
 
-    const sortedArray = lodash.flatten(lodash.values(sortedGroups));
+    const temp = {
+      Docs: sortedGroups['Docs'] || [],
+      Blogs: sortedGroups['Blogs'] || [],
+    };
+
+    const sortedArray = lodash.flatten(lodash.values(temp));
 
     setResults(
       sortedArray
@@ -273,8 +278,8 @@ export function Flexsearch(): ReactElement {
           children: res.children,
         }))
         .filter(
-          (f) => f.route.startsWith('/docs') || f.route.startsWith('/blog')
-        )
+          (f) => f.route.startsWith('/docs') || f.route.startsWith('/blog'),
+        ),
     );
   };
 
@@ -290,7 +295,7 @@ export function Flexsearch(): ReactElement {
         setLoading(false);
       }
     },
-    [locale, basePath]
+    [locale, basePath],
   );
 
   const handleChange = async (value: string) => {

@@ -113,10 +113,5 @@
     "title": "Writer",
     "type": "page",
     "display": "hidden"
-  },
-  "customer-stories": {
-    "title": "Customer stories",
-    "type": "page",
-    "display": "hidden"
   }
 }
