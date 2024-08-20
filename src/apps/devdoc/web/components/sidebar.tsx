@@ -43,7 +43,7 @@ type FolderProps = {
 const classes = {
   link: cn(
     'wb-flex wb-flex-row wb-items-center wb-rounded wb-py-md wb-px-2xl wb-transition-all [word-break:break-word]',
-    'wb-cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:wb-border hover:wb-bg-surface-basic-hovered',
+    'wb-cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:wb-border hover:wb-bg-surface-basic-hovered hover:wb-text-text-default',
   ),
   inactive: cn('wb-bodyMd wb-text-text-soft'),
   active: cn(
@@ -232,7 +232,7 @@ function File({
       {!!base && active && (
         <motion.div
           layoutId={`line-${base}`}
-          className="wb-border-l-2 wb-border-border-primary wb-rounded wb-h-full wb-absolute -wb-left-[5px]"
+          className="wb-border-l-2 wb-border-icon-primary wb-rounded wb-h-full wb-absolute -wb-left-[5px]"
         />
       )}
       <Anchor
@@ -460,6 +460,7 @@ function Menu({
   className,
   onlyCurrentDocs,
 }: MenuProps): ReactElement {
+  console.log(directories);
   return (
     <ul className={cn(classes.list, className)}>
       {directories.map((item) =>
@@ -468,9 +469,9 @@ function Menu({
           (item.children && (item.children.length || !item.withIndexPage)) ? (
             <Folder key={item.name} item={item} anchors={anchors} />
           ) : //@ts-ignore
-          item?.frontMatter && !item.frontMatter.draft ? (
+          item.frontMatter && item.frontMatter.draft === true ? null : (
             <File key={item.name} item={item} base={base} />
-          ) : null
+          )
         ) : null,
       )}
     </ul>
