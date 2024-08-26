@@ -1,4 +1,4 @@
-import { forwardRef, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { cn } from '../utils/commons';
 import Fullscreen from './fullscreen';
 
@@ -31,10 +31,10 @@ const VideoPlayer = ({ src }: IVideo) => {
               autoPlay={true}
               loop
               muted
-              className={cn('wb-rounded-md wb-w-full wb-h-full wb-max-h-full')}
+              className={cn('wb-rounded-lg wb-w-full wb-h-full wb-max-h-full')}
             />
             <div className="wb-absolute wb-inset-0 wb-invisible group-hover:wb-visible opacity-0 group-hover:wb-opacity-100 wb-transition-all wb-duration-300 ">
-              <div className="wb-absolute wb-bottom-0 wb-left-0 wb-right-0 wb-h-7xl wb-bg-gradient-to-t wb-from-black wb-to-transparent wb-px-3xl wb-rounded-b-md">
+              <div className="wb-absolute wb-bottom-0 wb-left-0 wb-right-0 wb-h-7xl wb-bg-gradient-to-t wb-from-black wb-to-transparent wb-px-3xl wb-rounded-b-lg">
                 <div className="wb-relative wb-flex wb-h-full wb-items-center">
                   <div
                     className="wb-h-md wb-bg-white wb-rounded-full wb-absolute wb-z-[10]"

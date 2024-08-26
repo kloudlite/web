@@ -1,7 +1,8 @@
-import { ReactNode, RefObject, useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { cn } from '../utils/commons';
 import { IconButton } from 'kl-design-system/atoms/button';
 import { XFill } from '@jengaicons/react';
+import { motion } from 'framer-motion';
 
 const useFullscreen = () => {
   const [fullscreen, setFullscreen] = useState(false);
@@ -30,13 +31,13 @@ const Fullscreen = ({
     <div
       className={cn(
         fullscreen
-          ? 'wb-fixed inset-0 wb-z-[99999999999] wb-flex wb-flex-col wb-items-center wb-justify-center wb-bg-surface-basic-overlay-bg wb-p-3xl wb-gap-2xl'
+          ? 'wb-fixed wb-inset-0 wb-z-[99999999999] wb-flex wb-flex-col wb-items-center wb-justify-center wb-bg-surface-basic-overlay-bg wb-p-3xl wb-gap-2xl'
           : '',
       )}
       onClick={toggleFullscreen}
     >
       {fullscreen && (
-        <div className="wb-self-end">
+        <div className="wb-self-end wb-z-[99999999]">
           <IconButton icon={<XFill />} variant="plain" />
         </div>
       )}

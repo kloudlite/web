@@ -352,7 +352,7 @@ export function Sidebar({
   // Always close mobile nav when route was changed (e.g. logo click)
   useEffect(() => {
     setMenu(false);
-  }, [router.asPath, setMenu]);
+  }, [router.asPath]);
 
   const { config } = useConfig();
   return (
@@ -379,7 +379,7 @@ export function Sidebar({
           asPopover ? 'lg:wb-hidden' : 'wb-flex lg:wb-sticky lg:wb-self-start',
           menu
             ? 'max-lg:[transform:translate3d(0,0,0)]'
-            : 'max-lg:[transform:translate3d(0,-100%,0)]',
+            : 'max-lg:[transform:translate3d(0,-150%,0)]',
         )}
         ref={containerRef}
       >
@@ -434,7 +434,7 @@ export function Sidebar({
                       <HeaderSecondary />
                     </div>
 
-                    <div className="wb-px-xl">
+                    <div className="wb-px-xl wb-pt-xl">
                       <Menu
                         className="nextra-menu-mobile lg:wb-hidden"
                         // The mobile dropdown menu, shows all the directories.

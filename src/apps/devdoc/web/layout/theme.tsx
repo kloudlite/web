@@ -31,6 +31,7 @@ import { ExploringItem } from '../components/website/home/keep-exploring';
 import consts from '../utils/const';
 import { Block } from '../components/commons';
 import { Flexsearch } from '../components/flexsearch';
+import SectionWrapper from '../components/website/section-wrapper';
 
 function GitTimestamp({ timestamp }: { timestamp: Date }) {
   const { locale = DEFAULT_LOCALE } = useRouter();
@@ -280,7 +281,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
               <BackToTop
                 className="wb-shadow-darktheme-popover !wb-hidden"
                 variant="basic"
-                content="Back to top"
+                content="Scroll to top"
                 prefix={<ArrowUpLg />}
                 suffix={<div />}
                 size="md"
@@ -291,6 +292,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
         {['blog'].includes(pageType) && (
           <Wrapper>
             <Block
+              className="2xl:!wb-pb-8xl"
               title="Read more..."
               titleClass="md:!wb-heading3xl-marketing lg:!wb-heading3xl-marketing xl:!wb-heading3xl-marketing 2xl:!wb-heading3xl-marketing 3xl:!wb-heading3xl-marketing wb-text-start"
               titleContainerClass="wb-relative wb-z-[99] md:wb-top-[28px]"

@@ -148,7 +148,6 @@ export const createComponents = ({
   }
   const context = { index: 0 };
 
-  console.log('here1111');
   return {
     h1: (props) => (
       <h1
