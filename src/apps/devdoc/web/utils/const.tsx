@@ -752,6 +752,13 @@ const consts = {
       },
     },
   },
+  searchSuggestions: [
+    {
+      title: 'Getting started',
+      desc: 'Documentation',
+      link: '/docs/getting-started',
+    },
+  ],
 };
 
 export default consts;
