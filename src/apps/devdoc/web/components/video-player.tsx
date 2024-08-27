@@ -11,15 +11,10 @@ const VideoPlayer = ({ src }: IVideo) => {
 
   return (
     <Fullscreen>
-      {({ fullscreen }) => {
+      {() => {
         return (
           <div
-            className={cn(
-              'wb-relative wb-overflow-hidden wb-group',
-              fullscreen
-                ? 'wb-cursor-zoom-out wb-h-full'
-                : 'wb-my-3xl wb-cursor-zoom-in',
-            )}
+            className={cn('wb-relative wb-overflow-hidden wb-group wb-h-full')}
           >
             <video
               onTimeUpdate={(e) => {
