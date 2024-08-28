@@ -174,7 +174,7 @@ const SuggestionItem = ({
 }) => {
   return (
     <Link href={link}>
-      <OptionList.OptionItemRaw className="wb-rounded wb-bg-surface-basic-default">
+      <OptionList.OptionItemRaw className="wb-rounded">
         <div className="wb-flex wb-flex-col wb-gap-md">
           <span className="wb-bodySm wb-text-text-default">{title}</span>
           <span className="wb-bodySm wb-text-text-soft">{desc}</span>
@@ -388,7 +388,7 @@ export function Flexsearch(): ReactElement {
               }}
             />
           </div>
-          <div className="wb-bg-surface-basic-input">
+          <div className="wb-bg-surface-basic-default">
             {results.length === 0 && !!search && (
               <div className="wb-bodyMd wb-px-4xl wb-py-8xl wb-text-center wb-text-text-soft">
                 No recent results
@@ -414,7 +414,7 @@ export function Flexsearch(): ReactElement {
                 {results.map((res) => (
                   <>
                     {res.category ? (
-                      <div className="wb-bg-surface-basic-input wb-sticky wb-top-[49px] wb-text-text-default wb-p-xl wb-pb-2xl wb-headingXl">
+                      <div className="wb-bg-surface-basic-default wb-sticky wb-top-[49px] wb-text-text-default wb-p-xl wb-pb-2xl wb-headingXl">
                         {res.category}
                       </div>
                     ) : null}
