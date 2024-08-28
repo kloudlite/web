@@ -1,5 +1,5 @@
-import Error404Icon from '~/components/organisms/error-404';
 import { Button } from '~/components/atoms/button';
+import { Error404Icon, Error404IconDark } from './error-404';
 
 interface IPage404 {
   heading?: string;
@@ -14,10 +14,15 @@ const Page404 = ({
 }: IPage404) => {
   return (
     <div className="flex flex-col items-center justify-center h-screen gap-8xl">
-      <Error404Icon />
+      <div className="dark-hidden">
+        <Error404Icon />
+      </div>
+      <div className="hidden dark-block">
+        <Error404IconDark />
+      </div>
       <div className="flex flex-col items-center justify-center gap-5xl max-w-md text-center">
         <div className="flex flex-col gap-3xl">
-          <div className="heading3xl">{heading}</div>
+          <div className="text-text-default heading3xl">{heading}</div>
           <div className="bodyMd text-text-soft md:w-[544px]">{content}</div>
         </div>
         <Button variant="basic" size="md" content="Go to homepage" to={link} />
