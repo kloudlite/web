@@ -163,7 +163,7 @@ const FAQSection = () => {
       autoSize(ref.current?.parentElement, 'animationend');
   }, [ref.current]);
   return (
-    <Block title="Frequently Asked Questions">
+    <Block title="Frequently Asked Questions" className="2xl:!wb-pb-8xl">
       <div className="wb-grid wb-grid-cols-1 lg:wb-grid-cols-[270px_auto] lg:wb-grid-cols-[288px_auto] 3xl:wb-grid-cols-[352px_auto] wb-gap-5xl">
         <GraphItem className="wb-flex md:wb-hidden wb-text-text-default wb-bg-surface-basic-subdued wb-flex-col wb-gap-lg">
           <Select
