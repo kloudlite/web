@@ -3,6 +3,14 @@
     "public": "out",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "cleanUrls": true,
-    "trailingSlash": false
+    "trailingSlash": false,
+
+    "redirects": [
+      {
+        "source": "/demo-link",
+        "destination": "https://youtu.be/OkMLPnygIm8",
+        "type": 301
+      }
+    ]
   }
 }
