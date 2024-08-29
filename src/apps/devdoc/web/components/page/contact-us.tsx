@@ -310,6 +310,24 @@ const FormSection = () => {
                     to={`mailto:${supportEmail}`}
                     toLabel="href"
                   />
+
+                  <div className="wb-flex wb-flex-col wb-gap-lg wb-mt-xl">
+                    <span className="wb-headingLg wb-text-text-default">
+                      Address
+                    </span>
+                    <span className="wb-bodyLg wb-text-text-soft">
+                      415, Floor 4, Shaft-1, Tower-B, VRR FORTUNA, Carmelaram,
+                      Janatha Colony, Bangalore, Karnataka, India - 560035
+                    </span>
+                  </div>
+                  <div className="wb-flex wb-flex-col wb-gap-lg wb-mt-xl">
+                    <span className="wb-headingLg wb-text-text-default">
+                      Contact No
+                    </span>
+                    <span className="wb-bodyLg wb-text-text-soft">
+                      +91 99015 09003
+                    </span>
+                  </div>
                 </div>
               </div>
             </GraphItem>
