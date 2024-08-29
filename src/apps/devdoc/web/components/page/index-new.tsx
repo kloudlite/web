@@ -14,6 +14,7 @@ import SecureAtCore from '../website/home/secure-at-core';
 import SuperCharge from '../website/home/supercharge';
 import Wrapper from '../wrapper';
 import JoinProvidersDialog from '../join-provider-dialog';
+import FaqSection from '../website/home/faq';
 
 const Title = () => {
   return (
@@ -141,6 +142,7 @@ const Index = () => {
         <PartnerSection />
         <HowItWorksSection />
         <DontBelieve />
+        <FaqSection />
         <KeepExploring />
         <OpenSource />
         <SuperCharge />

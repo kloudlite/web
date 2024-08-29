@@ -2,6 +2,8 @@
 import {
   ArrowLeftLg,
   Config,
+  Gear,
+  GearSix,
   Money,
   OpenSource,
   PhoneCall,
@@ -77,7 +79,6 @@ import {
   Robot,
   SelectionForeground,
   Users,
-  Keyhole,
 } from '~/app/icons/icons';
 import AnserSvg from '../icons/AnserRobotics';
 import BoltzmanSvg from '../icons/Boltzman';
@@ -759,6 +760,32 @@ const consts = {
       link: '/docs/getting-started',
     },
   ],
+  docs: {
+    basicConcepts: {
+      gridLinks: [
+        {
+          title: 'Workspaces',
+          icon: GearSix,
+          to: '/docs/basic-concepts/workspaces',
+        },
+        {
+          title: 'Environments',
+          icon: GearSix,
+          to: '/docs/basic-concepts/environments',
+        },
+        {
+          title: 'Development Loop',
+          icon: GearSix,
+          to: '/docs/basic-concepts/development-loop',
+        },
+        {
+          title: 'Remote Local',
+          icon: GearSix,
+          to: '/docs/basic-concepts/remote-local',
+        },
+      ],
+    },
+  },
 };
 
 export default consts;

@@ -1,7 +1,7 @@
 import { TextInput, TextArea } from 'kl-design-system/atoms/input';
 import Select from 'kl-design-system/atoms/select';
 import Link from 'next/link';
-import { ComponentProps, useEffect, useRef, useState } from 'react';
+import { ComponentProps, useEffect, useState } from 'react';
 import { addDoc, collection, getFirestore } from '@firebase/firestore';
 import { FirebaseApp } from 'firebase/app';
 import { Controller, useForm } from 'react-hook-form';
@@ -11,13 +11,11 @@ import Wrapper from '../wrapper';
 import Button from '../button';
 import countries from '~/app/utils/countries.json';
 import { GraphItem } from '../graph';
-import { CollapseItem, autoSize } from '~/app/utils/commons';
 import consts from '~/app/utils/const';
-import OptionList from 'kl-design-system/atoms/option-list';
-import * as Accordion from '@radix-ui/react-accordion';
 import { getCookie, setCookie } from 'cookies-next';
 import { Block } from '../commons';
 import ResponsiveContainer from '../responsive-container';
+import FAQSection from '../faq';
 
 const SupportIcon = (props: ComponentProps<'svg'>) => {
   const { height, width } = props;
@@ -132,119 +130,6 @@ const valueRender = (value: any) => (
     <span>{value.label}</span>
   </div>
 );
-
-const valueRenderCountryCode = (value: any) => (
-  <div className="wb-flex wb-flex-row wb-items-center wb-gap-lg wb-bodyMd">
-    <span>{value?.country?.dial_code}</span>
-  </div>
-);
-
-const valueRenderFaq = (value: any) => (
-  <div className="wb-flex wb-flex-row wb-items-center wb-gap-lg">
-    <span>{value?.item?.icon ? <value.item.icon size={16} /> : null}</span>
-    <span className="wb-bodyMd">{value.label}</span>
-  </div>
-);
-
-type IItem = keyof typeof consts.helpandsupport.kloudliteOverviewFaqs;
-
-const FAQSection = () => {
-  const [selected, setSelected] = useState<IItem>('general');
-  const [defaultOpen, setDefaultOpen] = useState(
-    consts.helpandsupport.kloudliteOverviewFaqs.general.items[0].title,
-  );
-
-  const ref = useRef<HTMLDivElement>(null);
-
-  const items = Object.entries(consts.helpandsupport.kloudliteOverviewFaqs);
-
-  useEffect(() => {
-    if (ref.current?.parentElement && window.innerWidth >= 768)
-      autoSize(ref.current?.parentElement, 'animationend');
-  }, [ref.current]);
-  return (
-    <Block title="Frequently Asked Questions" className="2xl:!wb-pb-8xl">
-      <div className="wb-grid wb-grid-cols-1 lg:wb-grid-cols-[270px_auto] lg:wb-grid-cols-[288px_auto] 3xl:wb-grid-cols-[352px_auto] wb-gap-5xl">
-        <GraphItem className="wb-flex md:wb-hidden wb-text-text-default wb-bg-surface-basic-subdued wb-flex-col wb-gap-lg">
-          <Select
-            className="wb-px-lg wb-cursor-pointer !wb-h-[36px] !wb-border-none wb-outline-none"
-            value={selected}
-            onChange={(_, v: IItem) => setSelected(v)}
-            searchable={false}
-            valueRender={valueRenderFaq}
-            options={async () =>
-              items.map(([key, value]) => {
-                return {
-                  label: value.label,
-                  value: key,
-                  item: value,
-                  render: () => (
-                    <div className="wb-flex wb-flex-row wb-items-center wb-gap-lg">
-                      <span>
-                        <value.icon size={16} />
-                      </span>
-                      <span className="wb-bodyMd">{value.label}</span>
-                    </div>
-                  ),
-                };
-              })
-            }
-          />
-        </GraphItem>
-        <GraphItem className="wb-hidden md:wb-flex wb-text-text-default wb-bg-surface-basic-subdued wb-flex-col">
-          {items.map(([key, val]) => {
-            return (
-              <div
-                key={key}
-                onClick={() => {
-                  setSelected(key as IItem);
-                  setDefaultOpen(val.items[0].title);
-                }}
-              >
-                <OptionList.OptionItemRaw
-                  active={selected === key}
-                  className="!wb-p-3xl"
-                >
-                  <div className="wb-flex wb-flex-row wb-items-center wb-gap-xl !wb-bodyLg">
-                    <span>
-                      <val.icon size={16} />
-                    </span>
-                    <span>{val.label}</span>
-                  </div>
-                </OptionList.OptionItemRaw>
-              </div>
-            );
-          })}
-        </GraphItem>
-        <GraphItem className="wb-text-text-default wb-bg-surface-basic-subdued">
-          <Accordion.Root
-            value={defaultOpen}
-            collapsible
-            type="single"
-            ref={ref}
-            onValueChange={(e) => {
-              setDefaultOpen(e);
-            }}
-          >
-            {consts.helpandsupport.kloudliteOverviewFaqs[selected].items.map(
-              (f, i) => (
-                <CollapseItem
-                  index={i}
-                  mode="desktop"
-                  key={f.title}
-                  label={f.title}
-                  value={f.title}
-                >
-                  {f.desc}
-                </CollapseItem>
-              ),
-            )}
-          </Accordion.Root>
-        </GraphItem>
-      </div>
-    </Block>
-  );
-};
 
 const FormSection = () => {
   const { firebaseApp } = useFirebase();
@@ -439,7 +324,11 @@ const ContactRoot = () => {
   return (
     <Wrapper>
       <FormSection />
-      <FAQSection />
+      <FAQSection
+        className="2xl:!wb-pb-8xl"
+        items={consts.helpandsupport.kloudliteOverviewFaqs}
+        def="general"
+      />
     </Wrapper>
   );
 };
