@@ -29,7 +29,12 @@ const DocItem = ({ icon: Icon, title, desc, to }: IDocItem) => {
 
 const DocItemGrid = ({ items = [], className }: IDocItemGrid) => {
   return (
-    <div className={cn('wb-grid wb-grid-cols-2 wb-gap-3xl', className)}>
+    <div
+      className={cn(
+        'wb-grid wb-grid-cols-1 md:wb-grid-cols-2 wb-gap-3xl wb-mb-3xl',
+        className,
+      )}
+    >
       {items.map((item) => {
         return (
           <DocItem

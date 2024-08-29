@@ -1,0 +1,20 @@
+{
+  "general-questions": {
+    "title": "General Questions"
+  },
+  "setup-configuration": {
+    "title": "Setup & Configuration"
+  },
+  "feature-capabilities": {
+    "title": "Feature & Capabilities"
+  },
+  "plans-pricing": {
+    "title": "Plans & Pricing"
+  },
+  "ai-ml-workflows": {
+    "title": "AI & ML Workflows"
+  },
+  "troubleshooting-support": {
+    "title": "Troubleshooting & Support"
+  }
+}

@@ -622,6 +622,7 @@ const consts = {
       general: {
         label: 'General Questions',
         icon: Question,
+        to: '/docs/faq/general-questions',
         items: [
           {
             title: 'What is Kloudlite?',
@@ -640,6 +641,7 @@ const consts = {
       setupConfiguration: {
         label: 'Setup & Configuration',
         icon: Config,
+        to: '/docs/faq/setup-configuration',
         items: [
           {
             title: 'How do I setup Kloudlite?',
@@ -697,6 +699,7 @@ const consts = {
       featureCapabilities: {
         label: 'Feature & Capabilities',
         icon: Star,
+        to: '/docs/faq/feature-capabilities',
         items: [
           {
             title: 'What are integrated services in Kloudlite?',
@@ -716,6 +719,7 @@ const consts = {
       plansPricing: {
         label: 'Plans & Pricing',
         icon: Money,
+        to: '/docs/faq/plans-pricing',
         items: [
           {
             title: 'What plans does Kloudlite offer?',
@@ -730,6 +734,7 @@ const consts = {
       aIMLWorkflows: {
         label: 'AI & ML Workflows',
         icon: Robot,
+        to: '/docs/faq/ai-ml-workflows',
         items: [
           {
             title: 'Does Kloudlite support AI and ML workflows?',
@@ -740,6 +745,7 @@ const consts = {
       troubleshootingSupport: {
         label: 'Troubleshooting & Support',
         icon: PhoneCall,
+        to: '/docs/faq/troubleshooting-support',
         items: [
           {
             title: 'Where can I find support for Kloudlite?',

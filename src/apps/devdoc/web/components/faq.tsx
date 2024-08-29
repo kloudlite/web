@@ -3,8 +3,60 @@ import { Block } from './commons';
 import { GraphItem } from './graph';
 import OptionList from 'kl-design-system/atoms/option-list';
 import * as Accordion from '@radix-ui/react-accordion';
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import { ReactNode, forwardRef, useEffect, useRef, useState } from 'react';
 import Select from 'kl-design-system/atoms/select';
+import { ChevronRight } from '@jengaicons/react';
+import consts from '../utils/const';
+
+const FaqDocItem = forwardRef(
+  (
+    {
+      children,
+      label,
+      value,
+    }: {
+      children: ReactNode;
+      label: string;
+      value: string;
+    },
+    ref,
+  ) => {
+    return (
+      <Accordion.Item
+        value={value}
+        //@ts-ignore
+        ref={ref}
+        className="wb-rounded-lg wb-border wb-border-border-default wb-overflow-hidden wb-mb-3xl"
+      >
+        <Accordion.Header asChild>
+          <Accordion.Trigger className="wb-group wb-bg-surface-basic-subdued wb-text-text-default wb-flex wb-flex-row wb-items-center wb-justify-between wb-w-full wb-p-2xl md:wb-px-4xl md:wb-py-3xl">
+            <span className="wb-flex-1 wb-text-start">{label}</span>
+            <span className="wb-transition-transform wb-duration-300 group-data-[state=open]:wb-rotate-90">
+              <ChevronRight size={16} />
+            </span>
+          </Accordion.Trigger>
+        </Accordion.Header>
+        <Accordion.Content className="wb-bg-surface-basic-container-bg data-[state=open]:wb-animate-slideDown data-[state=closed]:wb-animate-slideUp wb-overflow-hidden wb-text-text-strong">
+          <div className="wb-p-2xl md:wb-px-4xl md:wb-py-3xl">{children}</div>
+        </Accordion.Content>
+      </Accordion.Item>
+    );
+  },
+);
+
+export const FaqDocList = ({ items = [] }: { items: IItemQuestions }) => {
+  return (
+    <Accordion.Root type="multiple" className="wb-mt-5xl">
+      {items.map((i) => {
+        return (
+          <FaqDocItem label={i.title} value={i.title}>
+            {i.desc}
+          </FaqDocItem>
+        );
+      })}
+    </Accordion.Root>
+  );
+};
 
 const valueRenderFaq = (value: any) => (
   <div className="wb-flex wb-flex-row wb-items-center wb-gap-lg">
@@ -13,14 +65,15 @@ const valueRenderFaq = (value: any) => (
   </div>
 );
 
+type IItemQuestions = {
+  title: string;
+  desc: ReactNode;
+}[];
 interface IItem {
   [key: string]: {
     label: string;
     icon: any;
-    items: {
-      title: string;
-      desc: ReactNode;
-    }[];
+    items: IItemQuestions;
   };
 }
 
