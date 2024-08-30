@@ -107,7 +107,7 @@ const PopupRoot = ({
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.2, ease: 'anticipate' }}
+                transition={{ duration: 0.4, ease: 'anticipate' }}
                 className={cn(
                   'wb-fixed wb-inset-0 wb-z-[9999999]',
                   backdrop ? 'wb-bg-surface-basic-overlay-bg/60' : '',
@@ -116,10 +116,10 @@ const PopupRoot = ({
             </Dialog.Overlay>
             <Dialog.Content asChild forceMount>
               <motion.div
-                initial={{ x: '-50%', y: '3%', opacity: 0 }}
+                initial={{ x: '-50%', y: '10%', opacity: 0 }}
                 animate={{ x: '-50%', y: '0%', opacity: 1 }}
-                exit={{ x: '-50%', y: '3%', opacity: 0 }}
-                transition={{ duration: 0.3, ease: 'anticipate' }}
+                exit={{ x: '-50%', y: '10%', opacity: 0 }}
+                transition={{ duration: 0.4, ease: 'anticipate' }}
                 className={cn(
                   'wb-flex wb-flex-col wb-rounded-t',
                   'wb-z-[99999999] wb-outline-none wb-transform wb-overflow-hidden md:wb-rounded wb-bg-surface-basic-default wb-shadow-modal',

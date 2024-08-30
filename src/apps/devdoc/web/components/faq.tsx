@@ -3,7 +3,14 @@ import { Block } from './commons';
 import { GraphItem } from './graph';
 import OptionList from 'kl-design-system/atoms/option-list';
 import * as Accordion from '@radix-ui/react-accordion';
-import { ReactNode, forwardRef, useEffect, useRef, useState } from 'react';
+import {
+  ReactNode,
+  forwardRef,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import { ChevronDown, ChevronRight } from '@jengaicons/react';
 import PopupDevDoc from './popup';
 
@@ -68,7 +75,7 @@ const FaqMobilePopup = ({
 }) => {
   const [show, setShow] = useState(false);
 
-  const getButton = () => {
+  const getButton = useCallback(() => {
     const item = items.find((f) => f[0] === value)?.[1];
     const Icon = item?.icon;
     const label = item?.label;
@@ -84,7 +91,7 @@ const FaqMobilePopup = ({
         </span>
       </button>
     );
-  };
+  }, [value]);
   return (
     <div className="wb-w-full">
       {getButton()}
