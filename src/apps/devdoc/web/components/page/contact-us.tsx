@@ -268,17 +268,25 @@ const FormSection = () => {
                   />
                 </div>
                 <div className="wb-flex wb-flex-col md:wb-flex-row wb-items-center wb-gap-3xl wb-w-full md:wb-justify-between">
-                  <span className="wb-bodyMd md:wb-bodyLg wb-text-text-soft wb-text-center md:wb-text-start">
-                    By submitting this, I confirm that I have read and
-                    understood the
-                    <Link
-                      href="/privacy-policy"
-                      className="wb-text-text-default"
-                    >
-                      {' '}
-                      Privacy policy.
-                    </Link>
-                  </span>
+                  <div className="wb-flex wb-flex-col wb-gap-xl wb-bodyMd md:wb-bodyLg wb-text-text-soft wb-text-center md:wb-text-start">
+                    <span className="wb-bodyMd md:wb-bodyLg wb-text-text-soft wb-text-center md:wb-text-start">
+                      By submitting this, I confirm that I have read and
+                      understood the
+                      <Link
+                        href="/privacy-policy"
+                        className="wb-text-text-default"
+                      >
+                        {' '}
+                        Privacy policy.
+                      </Link>
+                    </span>
+
+                    <div className="wb-text-text-soft">
+                      Rest assured, we value your privacy and promise not to
+                      spam you. Your contact details are safe with us, and we'll
+                      only reach out with relevant and important information.
+                    </div>
+                  </div>
                   <Button
                     loading={loading}
                     type="submit"
