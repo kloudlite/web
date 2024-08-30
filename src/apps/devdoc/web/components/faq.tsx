@@ -4,9 +4,8 @@ import { GraphItem } from './graph';
 import OptionList from 'kl-design-system/atoms/option-list';
 import * as Accordion from '@radix-ui/react-accordion';
 import { ReactNode, forwardRef, useEffect, useRef, useState } from 'react';
-import Select from 'kl-design-system/atoms/select';
-import { ChevronRight } from '@jengaicons/react';
-import consts from '../utils/const';
+import { ChevronDown, ChevronRight } from '@jengaicons/react';
+import PopupDevDoc from './popup';
 
 const FaqDocItem = forwardRef(
   (
@@ -58,17 +57,71 @@ export const FaqDocList = ({ items = [] }: { items: IItemQuestions }) => {
   );
 };
 
-const valueRenderFaq = (value: any) => (
-  <div className="wb-flex wb-flex-row wb-items-center wb-gap-lg">
-    <span>{value?.item?.icon ? <value.item.icon size={16} /> : null}</span>
-    <span className="wb-bodyMd">{value.label}</span>
-  </div>
-);
+const FaqMobilePopup = ({
+  items,
+  onChange,
+  value,
+}: {
+  items: [string, IItem['']][];
+  onChange: (value: string) => void;
+  value: string;
+}) => {
+  const [show, setShow] = useState(false);
+
+  const getButton = () => {
+    const item = items.find((f) => f[0] === value)?.[1];
+    const Icon = item?.icon;
+    const label = item?.label;
+    return (
+      <button
+        className="wb-p-2xl wb-flex wb-flex-row wb-items-center wb-gap-xl wb-w-full wb-text-start wb-h-full"
+        onClick={() => setShow(true)}
+      >
+        <Icon size={16} />
+        <span>{label}</span>
+        <span className="wb-ml-auto">
+          <ChevronDown size={16} />{' '}
+        </span>
+      </button>
+    );
+  };
+  return (
+    <div className="wb-w-full">
+      {getButton()}
+      <PopupDevDoc.Root show={show} onOpenChange={(e) => setShow(e)}>
+        <PopupDevDoc.Content className="text-text-default !wb-p-0">
+          {items.map(([key, val]) => {
+            return (
+              <div
+                key={key}
+                onClick={() => {
+                  onChange(key);
+                  setShow(false);
+                }}
+              >
+                <OptionList.OptionItemRaw
+                  className="!wb-p-3xl"
+                  active={value === key}
+                >
+                  <div className="wb-flex wb-flex-row wb-items-center wb-gap-lg">
+                    <val.icon size={16} />
+                    <span>{val.label}</span>
+                  </div>
+                </OptionList.OptionItemRaw>
+              </div>
+            );
+          })}
+        </PopupDevDoc.Content>
+      </PopupDevDoc.Root>
+    </div>
+  );
+};
 
 type IItemQuestions = {
   title: string;
   desc: ReactNode;
 }[];
+
 interface IItem {
   [key: string]: {
     label: string;
@@ -102,29 +155,12 @@ const FAQSection = ({ items, def, className }: IFAQSection) => {
     <Block title="Frequently Asked Questions" className={className}>
       <div className="wb-grid wb-grid-cols-1 md:wb-grid-cols-[270px_auto] lg:wb-grid-cols-[288px_auto] 3xl:wb-grid-cols-[352px_auto] wb-gap-5xl">
         <GraphItem className="wb-flex md:wb-hidden wb-text-text-default wb-bg-surface-basic-subdued wb-flex-col wb-gap-lg">
-          <Select
-            className="wb-px-lg wb-cursor-pointer !wb-h-[36px] !wb-border-none wb-outline-none"
+          <FaqMobilePopup
+            items={itemsTemp}
+            onChange={(v) => {
+              setSelected(v);
+            }}
             value={selected}
-            onChange={(_, v) => setSelected(v)}
-            searchable={false}
-            valueRender={valueRenderFaq}
-            options={async () =>
-              itemsTemp.map(([key, value]) => {
-                return {
-                  label: value.label,
-                  value: key,
-                  item: value,
-                  render: () => (
-                    <div className="wb-flex wb-flex-row wb-items-center wb-gap-lg">
-                      <span>
-                        <value.icon size={16} />
-                      </span>
-                      <span className="wb-bodyMd">{value.label}</span>
-                    </div>
-                  ),
-                };
-              })
-            }
           />
         </GraphItem>
         <GraphItem className="wb-hidden md:wb-flex wb-text-text-default wb-bg-surface-basic-subdued wb-flex-col">
