@@ -12,12 +12,16 @@ const ResponsiveContainer = ({
 
   useEffect(() => {
     const resize = () => {
-      if (ref.current && window.innerWidth >= 1280) {
-        ref.current.style.height = '';
-        const bounds = ref.current?.getBoundingClientRect();
-        if (bounds) {
-          const newHeight = Math.ceil(bounds.height / 32) * 32;
-          ref.current.style.height = newHeight + 'px';
+      if (ref.current) {
+        if (window.innerWidth >= 1280) {
+          ref.current.style.height = '';
+          const bounds = ref.current?.getBoundingClientRect();
+          if (bounds) {
+            const newHeight = Math.ceil(bounds.height / 32) * 32;
+            ref.current.style.height = newHeight + 'px';
+          }
+        } else {
+          ref.current.style.height = '';
         }
       }
     };

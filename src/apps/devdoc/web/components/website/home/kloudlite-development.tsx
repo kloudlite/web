@@ -3,6 +3,7 @@ import { AnimatePresence, motion, useScroll } from 'framer-motion';
 import consts from '~/app/utils/const';
 import { cn } from '~/app/utils/commons';
 import { GraphExtended, GraphItem } from '../../graph';
+import ResponsiveContainer from '../../responsive-container';
 
 const KDElement = ({
   item,
@@ -135,26 +136,32 @@ const KloudliteDevelopment = () => {
             </div>
           </AnimatePresence>
         </GraphItem>
-        <GraphItem className="wb-bg-surface-basic-subdued wb-flex wb-flex-row xl:wb-pb-3xl 2xl:wb-pb-xl 3xl:wb-pb-[24px]">
-          <div ref={ref} className="wb-pt-3xl md:wb-pt-6xl wb-flex wb-flex-col">
-            {consts.homeNew.kloudliteDevelopmentData.map((kd, index) => {
-              return (
-                <KDElement
-                  key={kd.label}
-                  onAppear={() => {
-                    setActiveMessage(index);
-                  }}
-                  active={activeMessage}
-                  index={index}
-                  item={kd}
-                  isLastItem={
-                    index - 1 === consts.homeNew.kloudliteDevelopmentData.length
-                  }
-                />
-              );
-            })}
-          </div>
-        </GraphItem>
+        <ResponsiveContainer>
+          <GraphItem className="wb-bg-surface-basic-subdued wb-flex wb-flex-row">
+            <div
+              ref={ref}
+              className="wb-pt-3xl md:wb-pt-6xl wb-flex wb-flex-col"
+            >
+              {consts.homeNew.kloudliteDevelopmentData.map((kd, index) => {
+                return (
+                  <KDElement
+                    key={kd.label}
+                    onAppear={() => {
+                      setActiveMessage(index);
+                    }}
+                    active={activeMessage}
+                    index={index}
+                    item={kd}
+                    isLastItem={
+                      index - 1 ===
+                      consts.homeNew.kloudliteDevelopmentData.length
+                    }
+                  />
+                );
+              })}
+            </div>
+          </GraphItem>
+        </ResponsiveContainer>
       </div>
 
       <GraphItem className="md:wb-hidden">
