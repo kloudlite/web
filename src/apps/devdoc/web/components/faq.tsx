@@ -91,7 +91,7 @@ const FaqMobilePopup = ({
         </span>
       </button>
     );
-  }, [value]);
+  }, [value, items]);
   return (
     <div className="wb-w-full">
       {getButton()}
