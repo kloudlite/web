@@ -267,8 +267,13 @@ const FormSection = () => {
                     message={errors.message?.message}
                   />
                 </div>
-                <div className="wb-flex wb-flex-col md:wb-flex-row wb-items-center wb-gap-3xl wb-w-full md:wb-justify-between">
-                  <div className="wb-flex wb-flex-col wb-gap-xl wb-bodyMd md:wb-bodyLg wb-text-text-soft wb-text-center md:wb-text-start">
+                <div className="wb-flex wb-flex-col gap-xl">
+                  <div className="wb-bodyMd md:wb-bodyLg wb-text-text-soft wb-text-center md:wb-text-start">
+                    We value your privacy and promise not to spam you. Your
+                    contact details are safe with us, and we'll only reach out
+                    with relevant and important information.
+                  </div>
+                  <div className="wb-flex wb-flex-col md:wb-flex-row wb-items-center wb-gap-3xl wb-w-full md:wb-justify-between">
                     <span className="wb-bodyMd md:wb-bodyLg wb-text-text-soft wb-text-center md:wb-text-start">
                       By submitting this, I confirm that I have read and
                       understood the
@@ -280,20 +285,14 @@ const FormSection = () => {
                         Privacy policy.
                       </Link>
                     </span>
-
-                    <div className="wb-text-text-soft">
-                      Rest assured, we value your privacy and promise not to
-                      spam you. Your contact details are safe with us, and we'll
-                      only reach out with relevant and important information.
-                    </div>
+                    <Button
+                      loading={loading}
+                      type="submit"
+                      content="Submit"
+                      size="md"
+                      disabled={loading}
+                    />
                   </div>
-                  <Button
-                    loading={loading}
-                    type="submit"
-                    content="Submit"
-                    size="md"
-                    disabled={loading}
-                  />
                 </div>
               </form>
             </GraphItem>

@@ -55,7 +55,7 @@ export const FaqDocList = ({ items = [] }: { items: IItemQuestions }) => {
     <Accordion.Root type="multiple" className="wb-mt-5xl">
       {items.map((i) => {
         return (
-          <FaqDocItem label={i.title} value={i.title}>
+          <FaqDocItem label={i.title} value={i.title} key={i.title}>
             {i.desc}
           </FaqDocItem>
         );

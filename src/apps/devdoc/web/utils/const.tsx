@@ -697,7 +697,7 @@ const consts = {
         ],
       },
       featureCapabilities: {
-        label: 'Feature & Capabilities',
+        label: 'Features & Capabilities',
         icon: Star,
         to: '/docs/faq/feature-capabilities',
         items: [

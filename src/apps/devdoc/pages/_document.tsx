@@ -55,6 +55,18 @@ export default class Document extends NextDocument {
             src="//js.hs-scripts.com/22566314.js"
           />
           <script
+            async
+            defer
+            src="https://scripts.simpleanalyticscdn.com/latest.js"
+          />
+          <noscript>
+            <img
+              src="https://queue.simpleanalyticscdn.com/noscript.gif"
+              alt=""
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </noscript>
+          <script
             // @ts-ignore
             // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{
