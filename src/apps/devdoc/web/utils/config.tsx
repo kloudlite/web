@@ -50,6 +50,7 @@ const BrandMenu = ({ className }: { className?: string }) => {
   const brandIconSize = 24;
 
   const { binaryTheme } = useTheme();
+
   return (
     <div
       className={cn(

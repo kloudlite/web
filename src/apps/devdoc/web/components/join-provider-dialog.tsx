@@ -6,7 +6,7 @@ import {
   GoogleLogoFill,
 } from '@jengaicons/react';
 import Link from 'next/link';
-import { ReactNode, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Badge } from 'kl-design-system/atoms/badge';
 import { Button, IButton } from 'kl-design-system/atoms/button';
 import useConfig from '../utils/use-config';
@@ -18,10 +18,12 @@ import { cn } from '../utils/commons';
 
 const JoinProvidersDialog = ({
   size,
-  buttonContent,
+  hasSignIn,
+  isInHeader,
 }: {
   size?: IButton['size'];
-  buttonContent?: ReactNode;
+  hasSignIn?: boolean;
+  isInHeader?: boolean;
 }) => {
   const { config } = useConfig();
   const { oathProviders } = config;
@@ -29,12 +31,16 @@ const JoinProvidersDialog = ({
 
   const { setState } = useMenu();
 
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState('');
 
   useEffect(() => {
-    setTimeout(() => {
+    const time = setTimeout(() => {
       setState(false);
     }, 150);
+
+    return () => {
+      clearInterval(time);
+    };
   }, [show]);
 
   const userApproved = config.user?.verified && !config.user.approved;
@@ -45,29 +51,48 @@ const JoinProvidersDialog = ({
 
   return (
     <div className="wb-w-full">
-      {!buttonContent && (
+      <div className="wb-flex wb-flex-row wb-items-center wb-gap-lg">
+        {hasSignIn && (
+          <ButtonDev
+            content={
+              isInHeader ? (
+                <span className="wb-bodyMd-medium">Sign in</span>
+              ) : (
+                'Sign in'
+              )
+            }
+            variant="outline"
+            block
+            size={size}
+            onClick={() => {
+              setShow('signin');
+            }}
+          />
+        )}
         <ButtonDev
-          content="Signup"
+          content={
+            isInHeader ? (
+              <span className="wb-bodyMd-medium">Sign up</span>
+            ) : (
+              'Sign up'
+            )
+          }
           variant="primary"
           block
           size={size}
           onClick={() => {
-            setShow(true);
+            setShow('signup');
           }}
         />
-      )}
-      {buttonContent && (
-        <Button
-          content={buttonContent}
-          variant="primary"
-          block
-          size={size}
-          onClick={() => {
-            setShow(true);
-          }}
-        />
-      )}
-      <Popup.Root show={show} onOpenChange={setShow}>
+      </div>
+      <Popup.Root
+        show={!!show}
+        onOpenChange={(e) => {
+          if (!e) {
+            setShow('');
+          }
+        }}
+      >
         <div className="md:wb-hidden">
           <Popup.Header />
         </div>
@@ -99,10 +124,14 @@ const JoinProvidersDialog = ({
               <div className="wb-flex wb-flex-col wb-gap-5xl wb-p-8xl bg-surface-basic-subdued wb-items-center">
                 <div className="wb-flex wb-flex-col wb-items-center wb-gap-lg">
                   <span className="wb-headingXl wb-text-text-default wb-text-center">
-                    Create your Kloudlite.io account
+                    {show === 'signup'
+                      ? 'Create your Kloudlite.io account'
+                      : 'Sign in to Kloudlite.io'}
                   </span>
                   <div className="wb-bodyLg wb-text-text-soft wb-text-center">
-                    Get started for free. No credit card required.
+                    {show === 'signup'
+                      ? 'Get started for free. No credit card required.'
+                      : 'Start integrating local coding with remote power'}
                   </div>
                 </div>
               </div>
@@ -195,12 +224,18 @@ const JoinProvidersDialog = ({
                 </div>
               </div>
               <div className="wb-flex wb-bg-surface-basic-subdued wb-px-5xl md:wb-px-8xl wb-py-5xl wb-bodyLg wb-text-text-soft wb-items-center wb-justify-center">
-                Already have an account?&nbsp;
+                {show === 'signup' ? (
+                  <>Already have an account?&nbsp;</>
+                ) : (
+                  <>New to Kloudlite?&nbsp;</>
+                )}
                 <Anchor
                   className="wb-text-text-strong wb-underline wb-underline-offset-4 hover:wb-cursor-pointer"
-                  href={`${authUrl}/login`}
+                  href={
+                    show === 'signup' ? `${authUrl}/login` : `${authUrl}/signup`
+                  }
                 >
-                  Sign in
+                  {show === 'signup' ? 'Sign in' : 'Sign up'}
                 </Anchor>
               </div>
             </div>
