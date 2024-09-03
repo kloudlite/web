@@ -3,15 +3,15 @@ import type { ReactElement } from 'react';
 import { useEffect, useMemo, useRef } from 'react';
 import scrollIntoView from 'scroll-into-view-if-needed';
 
-import { Button } from 'kl-design-system/atoms/button';
 import { ArrowSquareOut } from '@jengaicons/react';
-import Link from 'next/link';
 import { LayoutGroup, motion } from 'framer-motion';
-import { BackToTop } from './back-to-top';
-import useConfig from '../utils/use-config';
+import { Button } from 'kl-design-system/atoms/button';
+import Link from 'next/link';
 import { useActiveAnchor } from '../utils/active-anchor';
 import { cn } from '../utils/commons';
 import getGitIssueUrl from '../utils/get-git-issue-url';
+import useConfig from '../utils/use-config';
+import { BackToTop } from './back-to-top';
 
 export type TOCProps = {
   headings: Heading[];
