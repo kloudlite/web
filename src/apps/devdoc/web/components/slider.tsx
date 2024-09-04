@@ -1,5 +1,4 @@
 import React, { ReactNode, useEffect, useRef } from 'react';
-import '@splidejs/react-splide/css/core';
 import Radio from 'kl-design-system/atoms/radio';
 import SlickSlider from 'react-slick';
 import { GraphItem } from './graph';
