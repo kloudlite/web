@@ -279,7 +279,7 @@ const FormSection = () => {
                       understood the
                       <Link
                         href="/privacy-policy"
-                        className="wb-text-text-default"
+                        className="wb-text-text-default hover:wb-underline"
                       >
                         {' '}
                         Privacy policy.

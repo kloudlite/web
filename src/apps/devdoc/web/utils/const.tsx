@@ -2,7 +2,6 @@
 import {
   ArrowLeftLg,
   Config,
-  Gear,
   GearSix,
   Money,
   OpenSource,
@@ -791,6 +790,10 @@ const consts = {
         },
       ],
     },
+  },
+  eventBanner: {
+    message:
+      'Next-Gen Workflows Streamline Development with Workspaces & Environments',
   },
 };
 

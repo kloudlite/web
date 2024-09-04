@@ -31,7 +31,7 @@ import { ExploringItem } from '../components/website/home/keep-exploring';
 import consts from '../utils/const';
 import { Block } from '../components/commons';
 import { Flexsearch } from '../components/flexsearch';
-import SectionWrapper from '../components/website/section-wrapper';
+import Banner from '../components/website/event/banner';
 
 function GitTimestamp({ timestamp }: { timestamp: Date }) {
   const { locale = DEFAULT_LOCALE } = useRouter();
