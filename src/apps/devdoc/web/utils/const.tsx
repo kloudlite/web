@@ -770,23 +770,59 @@ const consts = {
       gridLinks: [
         {
           title: 'Workspaces',
-          icon: GearSix,
           to: '/docs/basic-concepts/workspaces',
         },
         {
           title: 'Environments',
-          icon: GearSix,
           to: '/docs/basic-concepts/environments',
         },
         {
           title: 'Development Loop',
-          icon: GearSix,
           to: '/docs/basic-concepts/development-loop',
         },
         {
           title: 'Remote Local',
-          icon: GearSix,
           to: '/docs/basic-concepts/remote-local',
+        },
+      ],
+    },
+    ideIntegrate: {
+      gridLinks: [
+        {
+          title: 'SSH Access',
+          to: '/docs/ide-integrations/ssh-access',
+        },
+        {
+          title: 'VSCode',
+          to: '/docs/ide-integrations/vscode',
+        },
+        {
+          title: 'Intellij',
+          to: '/docs/ide-integrations/intellij',
+        },
+      ],
+    },
+    contribute: {
+      gridLinks: [
+        {
+          title: 'Code of Conduct',
+          to: '/docs/contributing/code-of-conduct',
+        },
+        {
+          title: 'Feature Stages',
+          to: '/docs/contributing/feature-stages',
+        },
+        {
+          title: 'Documentation',
+          to: '/docs/contributing/documentation',
+        },
+        {
+          title: 'Security',
+          to: '/docs/contributing/security',
+        },
+        {
+          title: 'Frontend',
+          to: '/docs/contributing/frontend',
         },
       ],
     },

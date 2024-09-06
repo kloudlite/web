@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { cn } from '../utils/commons';
 
 type IDocItem = {
-  icon: any;
+  icon?: any;
   title: string;
   desc?: string;
   to: string;
