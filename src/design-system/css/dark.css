@@ -66,6 +66,7 @@
   --icon-disabled: var(--zinc-600);
   --icon-primary: var(--blue-400);
   --icon-on-primary: var(--zinc-100);
+  --icon-on-secondary: var(--grey-900);
   --icon-secondary: var(--amber-500);
   --icon-critical: var(--red-500);
   --icon-warning: var(--amber-500);
