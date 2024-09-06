@@ -795,6 +795,12 @@ const consts = {
     message:
       'Next-Gen Workflows Streamline Development with Workspaces & Environments',
   },
+  contactUs: {
+    cookies: {
+      submitCookie: 'contact-form-submitted',
+      cookieTime: 5,
+    },
+  },
 };
 
 export default consts;

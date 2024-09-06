@@ -1,7 +1,7 @@
 import { TextInput, TextArea } from 'kl-design-system/atoms/input';
 import Select from 'kl-design-system/atoms/select';
 import Link from 'next/link';
-import { ComponentProps, ReactNode, useEffect, useState } from 'react';
+import { ComponentProps, ReactNode, useEffect, useMemo, useState } from 'react';
 import { addDoc, collection, getFirestore } from '@firebase/firestore';
 import { FirebaseApp } from 'firebase/app';
 import { Controller, useForm } from 'react-hook-form';
@@ -16,7 +16,7 @@ import { getCookie, setCookie } from 'cookies-next';
 import { Block } from '../commons';
 import ResponsiveContainer from '../responsive-container';
 import FAQSection from '../faq';
-import { JengaIconCommonProps } from '@jengaicons/react';
+import { CircleNotch, JengaIconCommonProps } from '@jengaicons/react';
 
 const SupportIcon = (props: ComponentProps<'svg'>) => {
   const { height, width } = props;
@@ -167,13 +167,18 @@ const ThankYouResource = ({
   icon: Icon,
   title,
   desc,
+  link,
 }: {
   icon: (props: JengaIconCommonProps) => JSX.Element;
   title: ReactNode;
   desc: ReactNode;
+  link: string;
 }) => {
   return (
-    <div className="wb-flex wb-flex-col wb-gap-5xl wb-p-5xl wb-rounded wb-border wb-border-border-default wb-bg-surface-basic-subdued">
+    <Link
+      href={link}
+      className="wb-flex wb-flex-col wb-gap-5xl wb-p-5xl wb-rounded wb-border wb-border-border-default wb-bg-surface-basic-subdued"
+    >
       <span className="wb-h-[88px] wb-w-[88px] wb-rounded-full wb-bg-surface-tertiary-default wb-flex wb-items-center wb-justify-center wb-text-icon-on-secondary">
         <Icon size={48} />
       </span>
@@ -181,7 +186,7 @@ const ThankYouResource = ({
         <h4 className="wb-headingXl wb-text-text-default">{title}</h4>
         <p className="wb-bodyMd wb-text-text-strong">{desc}</p>
       </div>
-    </div>
+    </Link>
   );
 };
 
@@ -190,11 +195,13 @@ const thankYouRes = [
     title: 'Join our upcoming events',
     desc: 'Discover and join upcoming events and webinars tailored to your interests',
     icon: Event,
+    link: '/',
   },
   {
     title: 'View our documentation',
     desc: 'Explore our documentation for detailed guides and helpful resources',
     icon: Docs,
+    link: '/docs',
   },
 ];
 
@@ -212,7 +219,7 @@ const ThankYouMessage = () => {
         <p className="wb-bodyXl wb-text-text-default">
           In the meantime, check out the following resources:
         </p>
-        <div className="wb-flex wb-flex-row wb-gap-5xl">
+        <div className="wb-grid wb-grid-cols-1 lg:wb-grid-cols-2 wb-gap-5xl">
           {thankYouRes.map((ty) => (
             <ThankYouResource key={ty.title} {...ty} />
           ))}
@@ -225,6 +232,7 @@ const ThankYouMessage = () => {
 const FormSection = () => {
   const { firebaseApp } = useFirebase();
   const [loading, setLoading] = useState(false);
+  const [pageLoading, setPageLoading] = useState(true);
 
   const [hasFormSubmitted, setHasFormSubmitted] = useState(false);
 
@@ -238,7 +246,167 @@ const FormSection = () => {
 
   useEffect(() => {
     setHasFormSubmitted(!!getCookie('contact-form-submitted'));
+
+    const timeOut = setTimeout(() => {
+      setPageLoading(false);
+    }, 50);
+
+    return () => {
+      clearTimeout(timeOut);
+    };
   }, []);
+
+  const onFormSubmit = handleSubmit(async (d) => {
+    setLoading(true);
+    await addContact(firebaseApp, d);
+    setLoading(false);
+    const expiryMinutes = consts.contactUs.cookies.cookieTime || 5;
+    const date = new Date();
+    date.setTime(date.getTime() + expiryMinutes * 60 * 1000);
+    setCookie(consts.contactUs.cookies.submitCookie, true, {
+      expires: date,
+    });
+    setHasFormSubmitted(true);
+    reset();
+  });
+
+  const getFormComponent = () => {
+    if (pageLoading) {
+      return (
+        <div className="wb-bodyXXl wb-text-text-default wb-flex wb-items-center wb-justify-center wb-transition-all wb-min-h-[500px]">
+          <span className="wb-animate-spin">
+            <CircleNotch size={24} />
+          </span>
+        </div>
+      );
+    }
+
+    if (hasFormSubmitted) {
+      return <ThankYouMessage />;
+    }
+
+    return (
+      <form
+        onSubmit={onFormSubmit}
+        className="wb-flex wb-flex-col wb-gap-5xl wb-flex-1 wb-p-3xl md:wb-p-6xl"
+      >
+        <div className="wb-flex wb-flex-col wb-gap-3xl">
+          <TextInput
+            label="Full name"
+            size="lg"
+            {...register('fullname', {
+              required: 'Full name is required',
+            })}
+            error={!!errors.fullname}
+            message={errors.fullname?.message}
+          />
+          <div className="wb-flex wb-flex-col md:wb-flex-row wb-gap-3xl">
+            <div className="wb-basis-full">
+              <TextInput
+                label="Company name"
+                size="lg"
+                {...register('companyName', {
+                  required: 'Company name is required',
+                })}
+                error={!!errors.companyName}
+                message={errors.companyName?.message}
+              />
+            </div>
+            <div className="wb-basis-full">
+              <TextInput
+                label="Email"
+                size="lg"
+                {...register('email', {
+                  required: 'Email is required',
+                  pattern: {
+                    value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                    message: 'Invalid email address',
+                  },
+                })}
+                error={!!errors.email}
+                message={errors.email?.message}
+              />
+            </div>
+          </div>
+          <div className="wb-flex wb-flex-col md:wb-flex-row wb-gap-3xl">
+            <div className="wb-basis-full">
+              <Controller
+                control={control}
+                name="country"
+                defaultValue={undefined}
+                rules={{
+                  required: 'Country is required.',
+                }}
+                render={({ field: { value, onChange } }) => (
+                  <Select
+                    size="lg"
+                    label="Country"
+                    value={value}
+                    onChange={(val) => {
+                      onChange(val.label);
+                    }}
+                    options={async () => getContries()}
+                    valueRender={valueRender}
+                    error={!!errors.country}
+                    message={errors.country?.message}
+                  />
+                )}
+              />
+            </div>
+            <div className="wb-basis-full">
+              <TextInput
+                label="Mobile"
+                size="lg"
+                {...register('mobile', {
+                  required: 'Mobile is required',
+                  pattern: {
+                    value: /^[^a-zA-Z]*$/,
+                    message: 'Invalid mobile number',
+                  },
+                })}
+                error={!!errors.mobile}
+                message={errors.mobile?.message}
+              />
+            </div>
+          </div>
+          <TextArea
+            label="Message"
+            {...register('message', {
+              required: 'Message is required',
+            })}
+            error={!!errors.message}
+            message={errors.message?.message}
+          />
+        </div>
+        <div className="wb-flex wb-flex-col gap-xl">
+          <div className="wb-bodyMd md:wb-bodyLg wb-text-text-soft wb-text-center md:wb-text-start">
+            We value your privacy and promise not to spam you. Your contact
+            details are safe with us, and we'll only reach out with relevant and
+            important information.
+          </div>
+          <div className="wb-flex wb-flex-col md:wb-flex-row wb-items-center wb-gap-3xl wb-w-full md:wb-justify-between">
+            <span className="wb-bodyMd md:wb-bodyLg wb-text-text-soft wb-text-center md:wb-text-start">
+              By submitting this, I confirm that I have read and understood the
+              <Link
+                href="/privacy-policy"
+                className="wb-text-text-default hover:wb-underline"
+              >
+                {' '}
+                Privacy policy.
+              </Link>
+            </span>
+            <Button
+              loading={loading}
+              type="submit"
+              content="Submit"
+              size="md"
+              disabled={loading}
+            />
+          </div>
+        </div>
+      </form>
+    );
+  };
 
   return (
     <div>
@@ -248,143 +416,7 @@ const FormSection = () => {
       >
         <ResponsiveContainer className="wb-grid-cols-1 md:wb-grid-cols-[auto_236px] lg:wb-grid-cols-[auto_288px] 2xl:wb-grid-cols-[auto_352px] 3xl:wb-grid-cols-[auto_415px]">
           <GraphItem className="wb-bg-surface-basic-subdued">
-            {hasFormSubmitted ? (
-              <ThankYouMessage />
-            ) : (
-              <form
-                onSubmit={handleSubmit(async (d) => {
-                  setLoading(true);
-                  await addContact(firebaseApp, d);
-                  setLoading(false);
-                  const expiryMinutes = 5;
-                  const date = new Date();
-                  date.setTime(date.getTime() + expiryMinutes * 60 * 1000);
-                  setCookie('contact-form-submitted', true, {
-                    expires: date,
-                  });
-                  setHasFormSubmitted(true);
-                  reset();
-                })}
-                className="wb-flex wb-flex-col wb-gap-5xl wb-flex-1 wb-p-3xl md:wb-p-6xl"
-              >
-                <div className="wb-flex wb-flex-col wb-gap-3xl">
-                  <TextInput
-                    label="Full name"
-                    size="lg"
-                    {...register('fullname', {
-                      required: 'Full name is required',
-                    })}
-                    error={!!errors.fullname}
-                    message={errors.fullname?.message}
-                  />
-                  <div className="wb-flex wb-flex-col md:wb-flex-row wb-gap-3xl">
-                    <div className="wb-basis-full">
-                      <TextInput
-                        label="Company name"
-                        size="lg"
-                        {...register('companyName', {
-                          required: 'Company name is required',
-                        })}
-                        error={!!errors.companyName}
-                        message={errors.companyName?.message}
-                      />
-                    </div>
-                    <div className="wb-basis-full">
-                      <TextInput
-                        label="Email"
-                        size="lg"
-                        {...register('email', {
-                          required: 'Email is required',
-                          pattern: {
-                            value:
-                              /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-                            message: 'Invalid email address',
-                          },
-                        })}
-                        error={!!errors.email}
-                        message={errors.email?.message}
-                      />
-                    </div>
-                  </div>
-                  <div className="wb-flex wb-flex-col md:wb-flex-row wb-gap-3xl">
-                    <div className="wb-basis-full">
-                      <Controller
-                        control={control}
-                        name="country"
-                        defaultValue={undefined}
-                        rules={{
-                          required: 'Country is required.',
-                        }}
-                        render={({ field: { value, onChange } }) => (
-                          <Select
-                            size="lg"
-                            label="Country"
-                            value={value}
-                            onChange={(val) => {
-                              onChange(val.label);
-                            }}
-                            options={async () => getContries()}
-                            valueRender={valueRender}
-                            error={!!errors.country}
-                            message={errors.country?.message}
-                          />
-                        )}
-                      />
-                    </div>
-                    <div className="wb-basis-full">
-                      <TextInput
-                        label="Mobile"
-                        size="lg"
-                        {...register('mobile', {
-                          required: 'Mobile is required',
-                          pattern: {
-                            value: /^[^a-zA-Z]*$/,
-                            message: 'Invalid mobile number',
-                          },
-                        })}
-                        error={!!errors.mobile}
-                        message={errors.mobile?.message}
-                      />
-                    </div>
-                  </div>
-                  <TextArea
-                    label="Message"
-                    {...register('message', {
-                      required: 'Message is required',
-                    })}
-                    error={!!errors.message}
-                    message={errors.message?.message}
-                  />
-                </div>
-                <div className="wb-flex wb-flex-col gap-xl">
-                  <div className="wb-bodyMd md:wb-bodyLg wb-text-text-soft wb-text-center md:wb-text-start">
-                    We value your privacy and promise not to spam you. Your
-                    contact details are safe with us, and we'll only reach out
-                    with relevant and important information.
-                  </div>
-                  <div className="wb-flex wb-flex-col md:wb-flex-row wb-items-center wb-gap-3xl wb-w-full md:wb-justify-between">
-                    <span className="wb-bodyMd md:wb-bodyLg wb-text-text-soft wb-text-center md:wb-text-start">
-                      By submitting this, I confirm that I have read and
-                      understood the
-                      <Link
-                        href="/privacy-policy"
-                        className="wb-text-text-default hover:wb-underline"
-                      >
-                        {' '}
-                        Privacy policy.
-                      </Link>
-                    </span>
-                    <Button
-                      loading={loading}
-                      type="submit"
-                      content="Submit"
-                      size="md"
-                      disabled={loading}
-                    />
-                  </div>
-                </div>
-              </form>
-            )}{' '}
+            {getFormComponent()}
           </GraphItem>
           <GraphItem className="wb-bg-surface-basic-subdued">
             <div className="wb-flex wb-flex-col wb-p-5xl wb-gap-6xl">

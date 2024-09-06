@@ -31,7 +31,7 @@ import { ExploringItem } from '../components/website/home/keep-exploring';
 import consts from '../utils/const';
 import { Block } from '../components/commons';
 import { Flexsearch } from '../components/flexsearch';
-import Banner from '../components/website/event/banner';
+import { deleteCookie } from 'cookies-next';
 
 function GitTimestamp({ timestamp }: { timestamp: Date }) {
   const { locale = DEFAULT_LOCALE } = useRouter();
@@ -80,13 +80,21 @@ const isDocPage = (route: string) => route.includes('/docs');
 const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
   const { frontMatter, pageMap, headings, route } = pageOpts;
 
+  const { locale = DEFAULT_LOCALE, defaultLocale, asPath } = useRouter();
+
   const { state } = useMenu();
 
   useEffect(() => {
     document.body.style.overflow = state ? 'hidden' : '';
   }, [state]);
 
-  const { locale = DEFAULT_LOCALE, defaultLocale } = useRouter();
+  useEffect(() => {
+    console.log(asPath === '/contact-us', asPath);
+    if (!asPath.startsWith('/contact-us')) {
+      deleteCookie(consts.contactUs.cookies.submitCookie);
+    }
+  }, [asPath]);
+
   const fsPath = useFSRoute();
 
   const pageData = useMemo(
