@@ -145,7 +145,6 @@ const Index = () => {
         <DontBelieve />
         <FaqSection />
         <KeepExploring />
-        <Events />
         <OpenSource />
         <SuperCharge />
       </Wrapper>
