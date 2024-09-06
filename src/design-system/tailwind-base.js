@@ -290,6 +290,7 @@ const config = {
         disabled: 'var(--icon-disabled)',
         primary: 'var(--icon-primary)',
         'on-primary': 'var(--icon-on-primary)',
+        'on-secondary': 'var(--icon-on-secondary)',
         secondary: 'var(--icon-secondary)',
         critical: 'var(--icon-critical)',
         warning: 'var(--icon-warning)',
