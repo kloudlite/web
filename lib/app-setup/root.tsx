@@ -15,7 +15,6 @@ import { ReactNode, useEffect } from 'react';
 import skeletonCSS from 'react-loading-skeleton/dist/skeleton.css';
 import styleReactPulsable from 'react-pulsable/index.css';
 import reactToast from 'react-toastify/dist/ReactToastify.css';
-import styleZenerSelect from '@oshq/react-select/index.css';
 import rcss from 'react-highlightjs-logs/dist/index.css';
 import Container from '~/components/atoms/container';
 import ProgressContainer, {
@@ -34,6 +33,7 @@ import { ChildrenProps } from '~/components/types';
 import Page404 from '~/components/organisms/page-404';
 import { getClientEnv, getServerEnv } from '~/root/lib/configs/base-url.cjs';
 import { useDataFromMatches } from '../client/hooks/use-custom-matches';
+import { TooltipContainer } from '~/components/atoms/tooltipV2';
 
 export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: stylesUrl },
@@ -41,7 +41,6 @@ export const links: LinksFunction = () => [
   { rel: 'stylesheet', href: skeletonCSS },
   { rel: 'stylesheet', href: rcSlide },
   { rel: 'stylesheet', href: styleReactPulsable },
-  { rel: 'stylesheet', href: styleZenerSelect },
   { rel: 'stylesheet', href: rcss },
   {
     rel: 'stylesheet',
@@ -119,8 +118,8 @@ export function ErrorBoundary() {
               ? error.stack
               : JSON.stringify(error.stack, null, 2)
             : typeof error.stack === 'string'
-            ? error.stack
-            : JSON.stringify(error.stack, null, 2)}
+              ? error.stack
+              : JSON.stringify(error.stack, null, 2)}
         </code>
       </ErrorWrapper>
     );
@@ -261,6 +260,7 @@ const Root = ({
               </Tooltip.Provider>
             </Wrapper>
           )}
+          <TooltipContainer />
         </ProgressContainer>
         <Scripts />
       </body>

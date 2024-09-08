@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import logger from '~/root/lib/client/helpers/log';
+// import logger from '~/root/lib/client/helpers/log';
 import p from './package.json' with { type: 'json' };
 
 const {
@@ -31,7 +31,7 @@ function readDirectoryRecursively(directoryPath, p) {
         ...result,
         ...readDirectoryRecursively(
           path.join(directoryPath, file),
-          `${p}/${file}`
+          `${p}/${file}`,
         ),
       };
     } else if (
@@ -91,10 +91,10 @@ const setup = () => {
   try {
     fs.writeFileSync(`${outPath}/package.json`, packageJson);
   } catch (e) {
-    logger.log('e', e);
+    // logger.log('e', e);
   }
 
-  logger.log('Done!');
+  // logger.log('Done!');
 };
 
 setup();

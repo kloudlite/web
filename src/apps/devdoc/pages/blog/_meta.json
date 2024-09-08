@@ -64,6 +64,15 @@
       "header":"secondary"
     }
   },
+  "environments-workspaces":{
+    "title":"The Difference Between Developer's Workspace and Development Environment",
+    "type":"page",
+    "theme":{
+      "sidebar":false,
+      "toc":true,
+      "header":"secondary"
+    }
+  },
   "role-of-open-source-in-modern-software-development":{
     "title":"The Role of Open Source in Modern Software Development",
     "type":"page",

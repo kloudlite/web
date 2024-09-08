@@ -1,37 +1,39 @@
-import { useNavigate, useOutletContext } from '@remix-run/react';
-import Select from '~/components/atoms/select';
-import { NameIdView } from '~/console/components/name-id-view';
-import { useConsoleApi } from '~/console/server/gql/api-provider';
-import useForm, { dummyEvent } from '~/root/lib/client/hooks/use-form';
-import Yup from '~/root/lib/server/helpers/yup';
+import { useNavigate, useOutletContext, useParams } from '@remix-run/react';
 import {
   FormEventHandler,
   ReactNode,
+  useCallback,
   useEffect,
   useRef,
   useState,
 } from 'react';
-import {
-  IMSvTemplate,
-  IMSvTemplates,
-} from '~/console/server/gql/queries/managed-templates-queries';
-import { Switch } from '~/components/atoms/switch';
+import { toast } from 'react-toastify';
 import { NumberInput, TextInput } from '~/components/atoms/input';
-import { handleError } from '~/root/lib/utils/common';
-import { titleCase, useAppend, useMapper } from '~/components/utils';
-import { flatMapValidations, flatM } from '~/console/utils/commons';
-import MultiStepProgress, {
-  useMultiStepProgress,
-} from '~/console/components/multi-step-progress';
-import MultiStepProgressWrapper from '~/console/components/multi-step-progress-wrapper';
+import Select from '~/components/atoms/select';
+import { Switch } from '~/components/atoms/switch';
+import { titleCase } from '~/components/utils';
 import {
   BottomNavigation,
   ReviewComponent,
 } from '~/console/components/commons';
+import MultiStepProgress, {
+  useMultiStepProgress,
+} from '~/console/components/multi-step-progress';
+import MultiStepProgressWrapper from '~/console/components/multi-step-progress-wrapper';
+import { NameIdView } from '~/console/components/name-id-view';
+import { findClusterStatus } from '~/console/hooks/use-cluster-status';
+import { useConsoleApi } from '~/console/server/gql/api-provider';
+import {
+  IMSvTemplate,
+  IMSvTemplates,
+} from '~/console/server/gql/queries/managed-templates-queries';
 import { parseName, parseNodes } from '~/console/server/r-utils/common';
-import useCustomSwr from '~/lib/client/hooks/use-custom-swr';
 import { keyconstants } from '~/console/server/r-utils/key-constants';
-import { toast } from 'react-toastify';
+import { ensureAccountClientSide } from '~/console/server/utils/auth-utils';
+import { flatM, flatMapValidations } from '~/console/utils/commons';
+import useForm, { dummyEvent } from '~/root/lib/client/hooks/use-form';
+import Yup from '~/root/lib/server/helpers/yup';
+import { handleError } from '~/root/lib/utils/common';
 import { IAccountContext } from '../_layout';
 
 const valueRender = ({ label, icon }: { label: string; icon: string }) => {
@@ -69,6 +71,7 @@ const RenderField = ({
         label={`${field.label}${field.required ? ' *' : ''}`}
         placeholder={field.label}
         value={parseFloat(value) / (field.multiplier || 1) || ''}
+        size="lg"
         onChange={({ target }) => {
           onChange(`res.${field.name}`)(
             dummyEvent(
@@ -92,6 +95,7 @@ const RenderField = ({
         suffix={field.displayUnit}
         error={!!errors[fieldKey]}
         message={errors[fieldKey]}
+        size="lg"
       />
     );
   }
@@ -105,6 +109,7 @@ const RenderField = ({
           <div className="flex flex-row gap-xl items-end flex-1 ">
             <div className="flex-1">
               <NumberInput
+                size="lg"
                 error={!!errors[`${fieldKey}.min`]}
                 message={errors[`${fieldKey}.min`]}
                 placeholder={qos ? field.label : `${field.label} min`}
@@ -133,6 +138,7 @@ const RenderField = ({
             {!qos && (
               <div className="flex-1">
                 <NumberInput
+                  size="lg"
                   error={!!errors[`${fieldKey}.max`]}
                   message={errors[`${fieldKey}.max`]}
                   placeholder={`${field.label} max`}
@@ -193,11 +199,9 @@ const TemplateView = ({
 }) => {
   return (
     <form className="flex flex-col gap-3xl" onSubmit={handleSubmit}>
-      <div className="bodyMd text-text-soft">
-        Create your integrated services.
-      </div>
+      <div className="bodyMd text-text-soft">Create your managed services.</div>
       <Select
-        label="Template"
+        label="Managed service templates"
         size="lg"
         placeholder="Select templates"
         value={values.selectedTemplate?.template.name}
@@ -302,7 +306,6 @@ const FieldView = ({
         label="Select Cluster"
         size="lg"
         value={values.clusterName}
-        // disabled={cIsLoading}
         placeholder="Select a Cluster"
         options={async () => [
           ...((clusters &&
@@ -539,6 +542,31 @@ const ManagedServiceLayout = () => {
     totalSteps: 3,
   });
 
+  const [clusterList, setClusterList] = useState<any[]>([]);
+  const params = useParams();
+
+  const getClusters = useCallback(async () => {
+    ensureAccountClientSide(params);
+    try {
+      const byokClusters = await api.listByokClusters({});
+      const data = parseNodes(byokClusters.data).map((c) => ({
+        label: c.displayName,
+        value: parseName(c),
+        ready: findClusterStatus(c),
+        render: () => (
+          <ClusterSelectItem label={c.displayName} value={parseName(c)} />
+        ),
+      }));
+      setClusterList(data);
+    } catch (err) {
+      handleError(err);
+    }
+  }, []);
+
+  useEffect(() => {
+    getClusters();
+  }, []);
+
   const { values, errors, handleSubmit, handleChange, isLoading, setValues } =
     useForm({
       initialValues: {
@@ -634,7 +662,7 @@ const ManagedServiceLayout = () => {
             if (e) {
               throw e[0];
             }
-            toast.success('Integrated service created successfully');
+            toast.success('Managed service created successfully');
             navigate(rootUrl);
           } catch (err) {
             handleError(err);
@@ -657,63 +685,6 @@ const ManagedServiceLayout = () => {
       },
     });
 
-  // const { data: nodepoolData } = useCustomSwr('/nodepools', async () => {
-  //   return api.listNodePools({ clusterName: parseName(cluster) });
-  // });
-
-  const { data: clustersData } = useCustomSwr(
-    'clusters',
-    async () => api.listClusters({}),
-    true
-  );
-
-  const { data: byokClustersData } = useCustomSwr(
-    'byokclusters',
-    async () => api.listByokClusters({}),
-    true
-  );
-
-  const cData = useMapper(parseNodes(clustersData), (item) => {
-    return {
-      label: item.displayName,
-      value: parseName(item),
-      ready: item.status?.isReady,
-      render: () => (
-        <ClusterSelectItem label={item.displayName} value={parseName(item)} />
-      ),
-    };
-  });
-
-  const bCData = useMapper(parseNodes(byokClustersData), (item) => {
-    return {
-      label: item.displayName,
-      value: parseName(item),
-      ready: true,
-      render: () => (
-        <ClusterSelectItem label={item.displayName} value={parseName(item)} />
-      ),
-    };
-  });
-
-  const clusterList = useAppend(cData, bCData);
-
-  // const { data: nodepoolData, isLoading: nodepoolIsLoading } = useCustomSwr(
-  //   () => `/nodepools${values.clusterName}`,
-  //   async () => {
-  //     return api.listNodePools({ clusterName: values.clusterName });
-  //   }
-  // );
-
-  // const statefulNodepools = useMapper(parseNodes(nodepoolData), (val) => ({
-  //   label: val.metadata?.name || '',
-  //   value: val.metadata?.name || '',
-  //   nodepoolStateType: val.spec.nodeLabels[keyconstants.nodepoolStateType],
-  // }));
-
-  // const statefulNodepools = nodepools.filter(
-  //   (np) => np.nodepoolStateType === 'stateful'
-  // );
-
   useEffect(() => {
     const selectedTemplate =
       values.selectedTemplate as unknown as ISelectedTemplate;
@@ -731,17 +702,27 @@ const ManagedServiceLayout = () => {
     }
   }, [values.selectedTemplate]);
 
+  useEffect(() => {
+    setValues((v) => ({
+      ...v,
+      clusterName:
+        clusterList.length > 0
+          ? clusterList.find((c) => c.ready)?.value || ''
+          : '',
+    }));
+  }, [clusterList]);
+
   return (
     <MultiStepProgressWrapper
-      title="Let’s create new integrated service."
+      title="Let’s create new managed service."
       subTitle="Simplify Collaboration and Enhance Productivity with Kloudlite teams"
       backButton={{
-        content: 'Back to integrated services',
+        content: 'Back to Managed services',
         to: rootUrl,
       }}
     >
       <MultiStepProgress.Root currentStep={currentStep} jumpStep={jumpStep}>
-        <MultiStepProgress.Step label="Select template" step={1}>
+        <MultiStepProgress.Step label="Select Managed Service" step={1}>
           <TemplateView
             isLoading={isLoading}
             templates={msvtemplates}

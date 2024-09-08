@@ -1,0 +1,35 @@
+---
+title: "Kloudlite App Intercept: Real-Time Debugging and Testing Guide"
+metaTitle: "Kloudlite App Intercept: A Guide to Real-Time Application Debugging"
+description: "Discover how to use Kloudlite's App Intercept feature for debugging and testing applications in real-time. This guide explains how to intercept app traffic, inspect requests, and troubleshoot issues efficiently"
+---
+
+import VideoPlayer from "~/app/components/video-player";
+
+# App Intercepts
+
+Kloudlite provide a unique way for developers to shorten the development cycles. We can now intercept 
+any running app in the environmnet with the workspace that is connected.
+
+All the traffic to the application will be directed to the workspace.
+
+With this feature we can now avoid building and deploying the applications into environments to test. 
+You can intercept any application using following commands and start debugging and testing.
+
+```shell
+kl intercept start -p <remote-port>:<local-port>
+```
+
+This command will prompt to choose the application from the list of available applications in the environment.
+
+> Note: All apps in the environment & workspaces connected to the environment will route to the intercepting 
+workspace when attempting to access the intercepted application.
+
+You can remove intercept from the dashboard or the following command
+
+```shell
+kl intercept stop
+```
+
+<VideoPlayer src="/docs/workspace/app-intercept.mp4"/>
+

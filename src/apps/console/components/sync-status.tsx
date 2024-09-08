@@ -7,13 +7,13 @@ import {
   CircleFill,
   WarningCircleFill,
 } from '~/console/components/icons';
-import Tooltip from '~/components/atoms/tooltip';
 import {
   Github__Com___Kloudlite___Api___Pkg___Types__SyncState as ISyncState,
   Github__Com___Kloudlite___Api___Pkg___Types__SyncAction as ISyncAction,
   Github__Com___Kloudlite___Operator___Pkg___Operator__CheckMetaIn as ICheckList,
 } from '~/root/src/generated/gql/server';
 import { Badge } from '~/components/atoms/badge';
+import TooltipV2 from '~/components/atoms/tooltipV2';
 
 interface IStatusMetaV2 {
   recordVersion: number;
@@ -285,82 +285,84 @@ export const SyncStatusV2 = ({
       return [];
     }
 
-    const items = checkList?.reduce(
-      (acc, curr) => {
-        const k = checks[curr.name];
-        if (acc.progress === 'done') {
-          acc.items.push({
-            ...curr,
-            result: 'idle',
-            message: '',
-          });
-          return acc;
-        }
-
-        const res = ((): {
-          value: OverallStates;
-          progress: string;
-          message: string;
-        } => {
-          if (k) {
-            if (acc.value === 'idle' && k.state === 'yet-to-be-reconciled') {
-              return {
-                value: 'idle',
-                message: k.message,
-                progress: 'done',
-              };
-            }
-
-            if (k.state === 'under-reconcilation') {
-              return {
-                value: 'in-progress',
-
-                message: k.message,
-                progress: 'done',
-              };
-            }
-
-            if (k.state === 'errored-during-reconcilation') {
-              return {
-                value: 'error',
-                message: k.message,
-                progress: 'done',
-              };
-            }
-
-            if (k.state === 'finished-reconcilation') {
-              return {
-                value: 'ready',
-                message: k.message,
-                progress: 'init',
-              };
-            }
+    const items = checkList
+      ?.filter((cl) => !cl.hide)
+      .reduce(
+        (acc, curr) => {
+          const k = checks[curr.name];
+          if (acc.progress === 'done') {
+            acc.items.push({
+              ...curr,
+              result: 'idle',
+              message: '',
+            });
+            return acc;
           }
 
+          const res = ((): {
+            value: OverallStates;
+            progress: string;
+            message: string;
+          } => {
+            if (k) {
+              if (acc.value === 'idle' && k.state === 'yet-to-be-reconciled') {
+                return {
+                  value: 'idle',
+                  message: k.message,
+                  progress: 'done',
+                };
+              }
+
+              if (k.state === 'under-reconcilation') {
+                return {
+                  value: 'in-progress',
+
+                  message: k.message,
+                  progress: 'done',
+                };
+              }
+
+              if (k.state === 'errored-during-reconcilation') {
+                return {
+                  value: 'error',
+                  message: k.message,
+                  progress: 'done',
+                };
+              }
+
+              if (k.state === 'finished-reconcilation') {
+                return {
+                  value: 'ready',
+                  message: k.message,
+                  progress: 'init',
+                };
+              }
+            }
+
+            return acc;
+          })();
+
+          acc.items.push({
+            ...curr,
+            result: res?.value,
+            message: res.message,
+          });
+
+          acc.value = res.value;
+          acc.progress = res.progress;
+
           return acc;
-        })();
-
-        acc.items.push({
-          ...curr,
-          result: res?.value,
-          message: res.message,
-        });
-
-        acc.value = res.value;
-        acc.progress = res.progress;
-
-        return acc;
-      },
-      {
-        value: 'idle' as OverallStates,
-        items: [] as ({
-          result: OverallStates;
-          message: string;
-        } & ICheckList)[],
-        message: '',
-        progress: 'init',
-      }
-    );
+        },
+        {
+          value: 'idle' as OverallStates,
+          items: [] as ({
+            result: OverallStates;
+            message: string;
+          } & ICheckList)[],
+          message: '',
+          progress: 'init',
+        }
+      );
 
     return items?.items;
   };
@@ -396,9 +398,10 @@ export const SyncStatusV2 = ({
 
   return (
     <div>
-      <Tooltip.Root
-        align="center"
-        className="!max-w-[300px]"
+      <TooltipV2
+        className="max-w-[300px]"
+        place="right"
+        offset={5}
         content={
           isByok ? (
             <div className="p-md flex flex-col gap-lg">
@@ -448,7 +451,7 @@ export const SyncStatusV2 = ({
             }).component
           }
         </div>
-      </Tooltip.Root>
+      </TooltipV2>
     </div>
   );
 };

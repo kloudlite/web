@@ -9,11 +9,7 @@
   ],
   "compilerOptions": {
     "skipLibCheck": true,
-    "lib": [
-      "DOM",
-      "DOM.Iterable",
-      "ESNext"
-    ],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "isolatedModules": true,
     "esModuleInterop": true,
     "jsx": "preserve",
@@ -28,21 +24,11 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "~/public/*": [
-        "./public/*"
-      ],
-      "~/images/*": [
-        "./images/*"
-      ],
-      "~/app/*": [
-        "./app/*"
-      ],
-      "~/services/*": [
-        "./services/*"
-      ],
-      "flexsearch": [
-        "./node_modules/@types/flexsearch"
-      ]
+      "~/public/*": ["./public/*"],
+      "~/images/*": ["./images/*"],
+      "~/app/*": ["./web/*"],
+      "~/services/*": ["./services/*"],
+      "flexsearch": ["./node_modules/@types/flexsearch"]
     },
     "noEmit": true,
     "incremental": true,
@@ -54,20 +40,7 @@
     ]
   },
   "mdx": {
-    "plugins": [
-      [
-        "remark-frontmatter",
-        [
-          "toml",
-          "yaml"
-        ]
-      ],
-      "remark-gfm"
-    ]
+    "plugins": [["remark-frontmatter", ["toml", "yaml"]], "remark-gfm"]
   },
-  "exclude": [
-    "node_modules/**/*",
-    ".next",
-    "out"
-  ]
+  "exclude": ["node_modules/**/*", ".next", "out"]
 }

@@ -1,9 +1,12 @@
 /* eslint-disable react/destructuring-assignment */
+import { useCallback, useEffect, useState } from 'react';
+import Select from '~/components/atoms/select';
 import Popup from '~/components/molecule/popup';
 import { toast } from '~/components/molecule/toast';
 import CommonPopupHandle from '~/console/components/common-popup-handle';
 import { NameIdView } from '~/console/components/name-id-view';
 import { IDialogBase } from '~/console/components/types.d';
+import { findClusterStatus } from '~/console/hooks/use-cluster-status';
 import { useConsoleApi } from '~/console/server/gql/api-provider';
 import { IEnvironments } from '~/console/server/gql/queries/environment-queries';
 import {
@@ -15,9 +18,6 @@ import { useReload } from '~/root/lib/client/helpers/reloader';
 import useForm, { dummyEvent } from '~/root/lib/client/hooks/use-form';
 import Yup from '~/root/lib/server/helpers/yup';
 import { handleError } from '~/root/lib/utils/common';
-import useCustomSwr from '~/root/lib/client/hooks/use-custom-swr';
-import Select from '~/components/atoms/select';
-import { useAppend, useMapper } from '~/components/utils';
 
 type IDialog = IDialogBase<ExtractNodeType<IEnvironments>>;
 
@@ -43,97 +43,85 @@ const Root = (props: IDialog) => {
   const api = useConsoleApi();
   const reloadPage = useReload();
 
-  // const { data: clustersData, isLoading: cIsLoading } = useCustomSwr(
-  //   'clusters',
-  //   async () => api.listClusters({}),
-  //   true
-  // );
+  const [clusterList, setClusterList] = useState<any[]>([]);
 
-  const { data: clustersData, isLoading: cIsLoading } = useCustomSwr(
-    'clusters',
-    async () =>
-      api.listClusters({
-        pagination: {
-          first: 100,
-        },
-      }),
-    true
-  );
+  const getClusters = useCallback(async () => {
+    try {
+      const byokClusters = await api.listByokClusters({});
+      const data = parseNodes(byokClusters.data).map((c) => ({
+        label: c.displayName,
+        value: parseName(c),
+        ready: findClusterStatus(c),
+        render: () => (
+          <ClusterSelectItem label={c.displayName} value={parseName(c)} />
+        ),
+      }));
+      setClusterList(data);
+    } catch (err) {
+      handleError(err);
+    }
+  }, []);
 
-  const { data: byokClustersData, isLoading: byokCIsLoading } = useCustomSwr(
-    'byokclusters',
-    async () =>
-      api.listByokClusters({
-        pagination: {
-          first: 100,
-        },
-      }),
-    true
-  );
+  useEffect(() => {
+    getClusters();
+  }, []);
 
-  const cData = useMapper(parseNodes(clustersData), (item) => {
-    return {
-      label: item.displayName,
-      value: parseName(item),
-      ready: item.status?.isReady,
-      render: () => (
-        <ClusterSelectItem label={item.displayName} value={parseName(item)} />
-      ),
-    };
-  });
-
-  const bCData = useMapper(parseNodes(byokClustersData), (item) => {
-    return {
-      label: item.displayName,
-      value: parseName(item),
-      ready: true,
-      render: () => (
-        <ClusterSelectItem label={item.displayName} value={parseName(item)} />
-      ),
-    };
-  });
-
-  const clusterList = useAppend(cData, bCData);
-
-  const { values, errors, handleChange, handleSubmit, resetValues, isLoading } =
-    useForm({
-      initialValues: {
-        name: '',
-        displayName: '',
-        environmentRoutingMode: false,
-        isNameError: false,
-        clusterName: '',
-      },
-      validationSchema: Yup.object({
-        name: Yup.string().required('Name is required.'),
-        displayName: Yup.string().required(),
-        clusterName: Yup.string().required(),
-      }),
-      onSubmit: async (val) => {
-        if (isUpdate) {
-          try {
-            const { errors: e } = await api.cloneEnvironment({
-              displayName: val.displayName,
-              environmentRoutingMode: val.environmentRoutingMode
-                ? 'public'
-                : 'private',
-              destinationEnvName: val.name,
-              clusterName: val.clusterName,
-              sourceEnvName: parseName(props.data),
-            });
-            if (e) {
-              throw e[0];
-            }
-            resetValues();
-            toast.success('Environment cloned successfully');
-            setVisible(false);
-            reloadPage();
-          } catch (err) {
-            handleError(err);
+  const {
+    values,
+    errors,
+    handleChange,
+    handleSubmit,
+    resetValues,
+    setValues,
+    isLoading,
+  } = useForm({
+    initialValues: {
+      name: '',
+      displayName: '',
+      environmentRoutingMode: false,
+      isNameError: false,
+      clusterName: '',
+    },
+    validationSchema: Yup.object({
+      name: Yup.string().required('Name is required.'),
+      displayName: Yup.string().required(),
+      clusterName: Yup.string().required(),
+    }),
+    onSubmit: async (val) => {
+      if (isUpdate) {
+        try {
+          const { errors: e } = await api.cloneEnvironment({
+            displayName: val.displayName,
+            environmentRoutingMode: val.environmentRoutingMode
+              ? 'public'
+              : 'private',
+            destinationEnvName: val.name,
+            clusterName: val.clusterName,
+            sourceEnvName: parseName(props.data),
+          });
+          if (e) {
+            throw e[0];
           }
+          resetValues();
+          toast.success('Environment cloned successfully');
+          setVisible(false);
+          reloadPage();
+        } catch (err) {
+          handleError(err);
         }
-      },
-    });
+      }
+    },
+  });
+
+  useEffect(() => {
+    if (clusterList.length > 0) {
+      setValues((v) => ({
+        ...v,
+        clusterName: clusterList.find((c) => c.ready)?.value || '',
+      }));
+    }
+  }, [clusterList]);
+
   return (
     <Popup.Form
       onSubmit={(e) => {
@@ -161,7 +149,6 @@ const Root = (props: IDialog) => {
             label="Select Cluster"
             size="lg"
             value={values.clusterName}
-            disabled={cIsLoading}
             placeholder="Select a Cluster"
             options={async () => [
               ...((clusterList &&
@@ -175,7 +162,6 @@ const Root = (props: IDialog) => {
             }}
             error={!!errors.clusterName}
             message={errors.clusterName}
-            loading={cIsLoading || byokCIsLoading}
           />
 
           {/* <Checkbox */}

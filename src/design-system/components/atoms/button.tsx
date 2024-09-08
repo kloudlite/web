@@ -30,7 +30,12 @@ type IconButtonVariants =
   | 'plain'
   | (undefined & NonNullable<unknown>);
 
-type IconButtonSizes = 'xs' | 'sm' | 'md' | (undefined & NonNullable<unknown>);
+type IconButtonSizes =
+  | 'xs'
+  | 'sm'
+  | 'md'
+  | 'lg'
+  | (undefined & NonNullable<unknown>);
 
 type ButtonSizes =
   | 'md'
@@ -311,11 +316,12 @@ export const ButtonBase = React.forwardRef<
             }),
         },
         {
-          'p-lg': iconOnly && size === 'md',
+          'p-lg !h-[36px] !w-[36px]':
+            iconOnly && (size === 'md' || size === 'lg'),
           'p-md': iconOnly && size === 'sm',
           'p-sm': iconOnly && size === 'xs',
         },
-        className
+        className,
       )}
     >
       <AnimatePresence>
@@ -334,7 +340,7 @@ export const ButtonBase = React.forwardRef<
       </AnimatePresence>
       {!!prefix &&
         React.cloneElement(prefix, {
-          size: 16,
+          size: iconOnly && size === 'lg' ? 20 : 16,
           color: 'currentColor',
         })}
       {!iconOnly && <span className="block truncate">{content}</span>}
@@ -360,12 +366,12 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IIconButton>(
         block={!!block}
       />
     );
-  }
+  },
 );
 
 export const Button = React.forwardRef<HTMLButtonElement, IButton>(
   (props: any, ref) => {
     const { block } = props;
     return <ButtonBase {...props} iconOnly={false} ref={ref} block={!!block} />;
-  }
+  },
 );

@@ -3,14 +3,13 @@ import { defer } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import { Button } from '~/components/atoms/button.jsx';
 import Wrapper from '~/console/components/wrapper';
-import { ExtractNodeType, parseNodes } from '~/console/server/r-utils/common';
+import { parseNodes } from '~/console/server/r-utils/common';
 import { getPagination, getSearch } from '~/console/server/utils/common';
 import { IRemixCtx } from '~/root/lib/types/common';
 import { LoadingComp, pWrapper } from '~/console/components/loading-component';
 import { ensureAccountSet } from '~/console/server/utils/auth-utils';
 import { GQLServerHandler } from '~/console/server/gql/saved-queries';
 import { useState } from 'react';
-import { IClusters } from '~/console/server/gql/queries/cluster-queries';
 import { IByocClusters } from '~/console/server/gql/queries/byok-cluster-queries';
 import fake from '~/root/fake-data-generator/fake';
 import { EmptyClusterImage } from '~/console/components/empty-resource-images';
@@ -31,24 +30,8 @@ export const loader = async (ctx: IRemixCtx) => {
     if (errors) {
       throw errors[0];
     }
-
-    if (!data.clusters?.totalCount) {
-      const { data: secrets, errors: sErrors } = await GQLServerHandler(
-        ctx.request
-      ).listProviderSecrets({});
-
-      if (sErrors) {
-        throw sErrors[0];
-      }
-
-      return {
-        clustersData: data || {},
-        secretsCount: secrets.edges.length,
-      };
-    }
     return {
       clustersData: data,
-      secretsCount: -1,
     };
   });
 
@@ -80,30 +63,19 @@ const CreateClusterButton = () => {
 };
 
 const ClusterComponent = ({
-  clusters,
-  byokClusters,
-  secretsCount,
-}: // pageInfo,
-// totalCount,
-{
-  clusters: ExtractNodeType<IClusters>[];
-  byokClusters: ExtractNodeType<IByocClusters>[];
-  secretsCount: number;
-  // pageInfo: IClusters['pageInfo'];
-  // totalCount: IClusters['totalCount'];
+  clustersData,
+}: {
+  clustersData: IByocClusters;
 }) => {
   const [clusterType, setClusterType] = useState('All');
+  const byokClusters = parseNodes(clustersData);
 
   const getEmptyState = ({
-    clustersCount,
     byokClustersCount,
-    cloudProviderSecretsCount,
   }: {
-    clustersCount: number;
     byokClustersCount: number;
-    cloudProviderSecretsCount: number;
   }) => {
-    if (byokClustersCount > 0 || clustersCount > 0) {
+    if (byokClustersCount > 0) {
       return {
         is: false,
         title: '',
@@ -112,23 +84,7 @@ const ClusterComponent = ({
       };
     }
 
-    if (cloudProviderSecretsCount === 0) {
-      return {
-        image: <EmptyClusterImage />,
-        is: true,
-        title:
-          'please setup your cloud provider first or attach your own cluster',
-        content: (
-          <p>
-            you need to setup your add at least one cloud provider first or
-            attch your own cluster, before starting working with clusters
-          </p>
-        ),
-        action: <CreateClusterButton />,
-      };
-    }
-
-    if (clustersCount === 0 && byokClustersCount === 0) {
+    if (byokClustersCount === 0) {
       return {
         image: <EmptyClusterImage />,
         is: true,
@@ -150,22 +106,17 @@ const ClusterComponent = ({
     };
   };
 
-  if (!clusters || !byokClusters) {
+  if (!byokClusters) {
     return null;
   }
-
   return (
     <Wrapper
       secondaryHeader={{
         title: 'Clusters',
-        action: (clusters.length > 0 || byokClusters.length > 0) && (
-          <CreateClusterButton />
-        ),
+        action: byokClusters.length > 0 && <CreateClusterButton />,
       }}
       empty={getEmptyState({
-        clustersCount: clusters.length,
         byokClustersCount: byokClusters.length,
-        cloudProviderSecretsCount: secretsCount,
       })}
       tools={
         <Tools
@@ -175,9 +126,9 @@ const ClusterComponent = ({
           value={clusterType}
         />
       }
+      pagination={clustersData}
     >
       <ClusterResourcesV2
-        items={clusterType !== 'Byok' ? clusters : []}
         byokItems={clusterType !== 'Normal' ? byokClusters : []}
       />
     </Wrapper>
@@ -191,22 +142,11 @@ const Clusters = () => {
     <LoadingComp
       data={promise}
       skeletonData={{
-        clustersData: fake.ConsoleListAllClustersQuery as any,
-        secretsCount: 1,
+        clustersData: fake.ConsoleListAllClustersQuery.byok_clusters as any,
       }}
     >
-      {({ clustersData, secretsCount }) => {
-        const clusters = parseNodes(clustersData.clusters);
-
-        const byokClusters = parseNodes(clustersData.byok_clusters);
-
-        return (
-          <ClusterComponent
-            clusters={clusters}
-            byokClusters={byokClusters}
-            secretsCount={secretsCount}
-          />
-        );
+      {({ clustersData }) => {
+        return <ClusterComponent clustersData={clustersData} />;
       }}
     </LoadingComp>
   );
