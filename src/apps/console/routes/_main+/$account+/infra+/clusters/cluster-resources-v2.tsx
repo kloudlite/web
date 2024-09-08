@@ -1,26 +1,26 @@
+import { Link, useOutletContext, useParams } from '@remix-run/react';
+import { generateKey, titleCase, useMapper } from '~/components/utils';
+import { listRender } from '~/console/components/commons';
+import ConsoleAvatar from '~/console/components/console-avatar';
+import {
+  ListBody,
+  ListItem,
+  ListItemV2,
+  ListTitle,
+  ListTitleV2,
+  listClass,
+} from '~/console/components/console-list-components';
+import Grid from '~/console/components/grid';
 import {
   GearSix,
   ListDashes,
   PencilLine,
   Trash,
 } from '~/console/components/icons';
-import { Link, useOutletContext, useParams } from '@remix-run/react';
-import {
-  generateKey,
-  titleCase,
-  useAppend,
-  useMapper,
-} from '~/components/utils';
-import { listRender } from '~/console/components/commons';
-import ConsoleAvatar from '~/console/components/console-avatar';
-import {
-  ListBody,
-  ListItem,
-  ListTitle,
-} from '~/console/components/console-list-components';
-import Grid from '~/console/components/grid';
 import ListGridView from '~/console/components/list-grid-view';
+import ListV2 from '~/console/components/listV2';
 import ResourceExtraAction from '~/console/components/resource-extra-action';
+import { IAccountContext } from '~/console/routes/_main+/$account+/_layout';
 import { IClusters } from '~/console/server/gql/queries/cluster-queries';
 import {
   ExtractNodeType,
@@ -29,29 +29,28 @@ import {
   parseUpdateOrCreatedOn,
 } from '~/console/server/r-utils/common';
 import { renderCloudProvider } from '~/console/utils/commons';
-import logger from '~/root/lib/client/helpers/log';
-import { IAccountContext } from '~/console/routes/_main+/$account+/_layout';
 import { useWatchReload } from '~/lib/client/helpers/socket/useWatch';
-import ListV2 from '~/console/components/listV2';
+import logger from '~/root/lib/client/helpers/log';
 
 import { useState } from 'react';
 // import { SyncStatusV2 } from '~/console/components/sync-status';
-import { Button } from '~/components/atoms/button';
-import { IByocClusters } from '~/console/server/gql/queries/byok-cluster-queries';
-import DeleteDialog from '~/console/components/delete-dialog';
-import { useConsoleApi } from '~/console/server/gql/api-provider';
-import { useReload } from '~/root/lib/client/helpers/reloader';
-import { toast } from '~/components/molecule/toast';
-import { handleError } from '~/root/lib/utils/common';
-import Popup from '~/components/molecule/popup';
-import CodeView from '~/console/components/code-view';
-import useCustomSwr from '~/root/lib/client/hooks/use-custom-swr';
-import { LoadingPlaceHolder } from '~/console/components/loading';
 import { Badge } from '~/components/atoms/badge';
+import { Button } from '~/components/atoms/button';
+import Popup from '~/components/molecule/popup';
+import { toast } from '~/components/molecule/toast';
+import CodeView from '~/console/components/code-view';
+import DeleteDialog from '~/console/components/delete-dialog';
+import { LoadingPlaceHolder } from '~/console/components/loading';
+import { useConsoleApi } from '~/console/server/gql/api-provider';
+import { IByocClusters } from '~/console/server/gql/queries/byok-cluster-queries';
+import { useReload } from '~/root/lib/client/helpers/reloader';
+import useCustomSwr from '~/root/lib/client/hooks/use-custom-swr';
+import { handleError } from '~/root/lib/utils/common';
 // import { Github__Com___Kloudlite___Api___Pkg___Types__SyncState as SyncStatusState } from '~/root/src/generated/gql/server';
+import TooltipV2 from '~/components/atoms/tooltipV2';
 import { ViewClusterLogs } from '~/console/components/cluster-logs-popop';
+import { useClusterStatusV2 } from '~/console/hooks/use-cluster-status-v2';
 import { ensureAccountClientSide } from '~/console/server/utils/auth-utils';
-import Tooltip from '~/components/atoms/tooltip';
 import HandleByokCluster from '../byok-cluster/handle-byok-cluster';
 
 type BaseType = ExtractNodeType<IClusters> & { type: 'normal' };
@@ -221,13 +220,9 @@ const GetByokClusterMessage = ({
   switch (true) {
     case timeDifference <= 2:
       return (
-        <ListItem
-          data={
-            <div className="flex flex-row gap-sm">
-              <span>Attached Cluster</span>
-            </div>
-          }
-        />
+        <div className="flex flex-row gap-sm bodyMd-medium text-text-strong pulsable">
+          <span>Attached Cluster</span>
+        </div>
       );
     default:
       return <ByokButton item={item} />;
@@ -235,7 +230,8 @@ const GetByokClusterMessage = ({
 };
 
 const GetSyncStatus = ({ lastOnlineAt }: { lastOnlineAt: string }) => {
-  if (lastOnlineAt === null) {
+  const tooltipOffset = 5;
+  if (lastOnlineAt === null || typeof lastOnlineAt === 'object') {
     return <Badge type="warning">Offline</Badge>;
   }
 
@@ -248,9 +244,10 @@ const GetSyncStatus = ({ lastOnlineAt }: { lastOnlineAt: string }) => {
   switch (true) {
     case timeDifference <= 2:
       return (
-        <Tooltip.Root
+        <TooltipV2
           className="!w-fit !max-w-[500px]"
-          side="top"
+          place="top"
+          offset={tooltipOffset}
           content={
             <div className="flex-1 bodySm text-text-strong pulsable whitespace-normal">
               Last seen ({Math.floor(timeDifference * 60)}s ago)
@@ -260,13 +257,14 @@ const GetSyncStatus = ({ lastOnlineAt }: { lastOnlineAt: string }) => {
           <div>
             <Badge type="info">Online</Badge>
           </div>
-        </Tooltip.Root>
+        </TooltipV2>
       );
     case timeDifference > 2:
       return (
-        <Tooltip.Root
+        <TooltipV2
           className="!w-fit !max-w-[500px]"
-          side="top"
+          place="top"
+          offset={tooltipOffset}
           content={
             <div className="flex-1 bodySm text-text-strong pulsable whitespace-normal">
               Last seen ({Math.floor(timeDifference * 60)}s ago)
@@ -276,13 +274,14 @@ const GetSyncStatus = ({ lastOnlineAt }: { lastOnlineAt: string }) => {
           <div>
             <Badge type="warning">Offline</Badge>
           </div>
-        </Tooltip.Root>
+        </TooltipV2>
       );
     default:
       return (
-        <Tooltip.Root
+        <TooltipV2
           className="!w-fit !max-w-[500px]"
-          side="top"
+          place="top"
+          offset={tooltipOffset}
           content={
             <div className="flex-1 bodyMd-medium text-text-strong pulsable whitespace-normal">
               {lastOnlineAt}
@@ -292,7 +291,7 @@ const GetSyncStatus = ({ lastOnlineAt }: { lastOnlineAt: string }) => {
           <div>
             <Badge type="warning">Offline</Badge>
           </div>
-        </Tooltip.Root>
+        </TooltipV2>
       );
   }
 };
@@ -417,6 +416,7 @@ const GridView = ({ items = [], onEdit, onDelete, onShowLogs }: IResource) => {
 };
 const ListView = ({ items = [], onEdit, onDelete, onShowLogs }: IResource) => {
   const { account } = useParams();
+  const { clusters } = useClusterStatusV2();
   return (
     <ListV2.Root
       linkComponent={Link}
@@ -430,28 +430,28 @@ const ListView = ({ items = [], onEdit, onDelete, onShowLogs }: IResource) => {
               </div>
             ),
             name: 'name',
-            className: 'w-[280px]',
+            className: listClass.title,
           },
           {
             render: () => '',
             name: 'provider',
-            className: 'flex flex-1 ',
+            className: listClass.flex,
           },
           {
             render: () => 'Status',
             name: 'status',
-            className: 'min-w-[150px] max-w-[150px]',
+            className: listClass.status,
           },
 
           {
             render: () => 'Updated',
             name: 'updated',
-            className: 'w-[180px]',
+            className: listClass.updated,
           },
           {
             render: () => '',
             name: 'action',
-            className: 'w-[24px]',
+            className: listClass.action,
           },
         ],
         rows: items.map((i) => {
@@ -465,7 +465,7 @@ const ListView = ({ items = [], onEdit, onDelete, onShowLogs }: IResource) => {
             columns: {
               name: {
                 render: () => (
-                  <ListTitle
+                  <ListTitleV2
                     title={name}
                     subtitle={id}
                     avatar={<ConsoleAvatar name={id} />}
@@ -475,14 +475,10 @@ const ListView = ({ items = [], onEdit, onDelete, onShowLogs }: IResource) => {
               provider: {
                 render: () =>
                   i.type === 'normal' ? (
-                    <ListItem
-                      data={
-                        <span>
-                          <span className="pr-lg">Managed by kloudlite on</span>{' '}
-                          {provider}
-                        </span>
-                      }
-                    />
+                    <span className="bodyMd-medium text-text-strong pulsable">
+                      <span className="pr-lg">Managed by kloudlite on</span>{' '}
+                      {provider}
+                    </span>
                   ) : (
                     <GetByokClusterMessage
                       lastOnlineAt={i.lastOnlineAt}
@@ -491,11 +487,13 @@ const ListView = ({ items = [], onEdit, onDelete, onShowLogs }: IResource) => {
                   ),
               },
               status: {
-                render: () => <GetSyncStatus lastOnlineAt={i.lastOnlineAt} />,
+                render: () => (
+                  <GetSyncStatus lastOnlineAt={clusters[id]?.lastOnlineAt} />
+                ),
               },
               updated: {
                 render: () => (
-                  <ListItem
+                  <ListItemV2
                     data={`${updateInfo.author}`}
                     subtitle={updateInfo.time}
                   />
@@ -523,25 +521,18 @@ const ListView = ({ items = [], onEdit, onDelete, onShowLogs }: IResource) => {
 };
 
 const ClusterResourcesV2 = ({
-  items,
   byokItems,
 }: {
-  items: Omit<BaseType, 'type'>[];
   byokItems: Omit<ByokBaseType, 'type'>[];
 }) => {
   const { account } = useOutletContext<IAccountContext>();
-  const normalItems = useMapper(items, (i) => {
-    return { ...i, type: 'normal' as BaseType['type'] };
-  });
 
   const bItems = useMapper(byokItems, (i) => {
     return { ...i, type: 'byok' as ByokBaseType['type'] };
   });
 
-  const finalItems = useAppend(normalItems, bItems);
-
   useWatchReload(
-    finalItems.map((i) => {
+    bItems.map((i) => {
       return `account:${parseName(account)}.cluster:${parseName(i)}`;
     })
   );
@@ -557,7 +548,7 @@ const ClusterResourcesV2 = ({
   const reloadPage = useReload();
 
   const props: IResource = {
-    items: finalItems,
+    items: bItems,
     onDelete: (item) => {
       setShowDeleteDialog(item);
     },

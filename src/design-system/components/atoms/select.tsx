@@ -14,10 +14,13 @@ const menuItemRender = (props: IMenuItemRender) => {
   return (
     <div
       {...innerProps}
-      className={cn('px-xl py-lg cursor-pointer select-none', {
-        'bg-surface-basic-hovered': !!focused && !active,
-        'bg-surface-basic-active': !!active,
-      })}
+      className={cn(
+        'px-xl text-text-default py-lg cursor-pointer select-none',
+        {
+          'bg-surface-basic-hovered': !!focused && !active,
+          'bg-surface-basic-active': !!active,
+        },
+      )}
     >
       {typeof render === 'string'
         ? render
@@ -50,7 +53,7 @@ const suffixRender = ({
     <div
       className={cn(
         'px-lg flex flex-row items-center gap-lg',
-        error && !disabled ? 'text-text-critical' : ''
+        error && !disabled ? 'text-text-critical' : '',
       )}
     >
       {loading && (
@@ -75,7 +78,7 @@ const Select = <T, U extends boolean | undefined = undefined>(
     message?: ReactNode;
     loading?: boolean;
     error?: boolean;
-  }
+  },
 ) => {
   const {
     value,
@@ -98,6 +101,9 @@ const Select = <T, U extends boolean | undefined = undefined>(
     open,
     disableWhileLoading,
     createLabel,
+    className,
+    portalClass,
+    tabIndex,
   } = props;
 
   return (
@@ -109,25 +115,30 @@ const Select = <T, U extends boolean | undefined = undefined>(
         <div className="pulsable">
           <div className="pulsable pulsable-hidden">
             <SelectZener
-              className={() => {
-                const c = cn(
-                  'rounded flex flex-row items-center border bodyMd outline-none cursor-default',
-                  {
-                    'py-[10px] px-lg': size === 'lg',
-                    'py-[6px] px-lg': size === 'md',
-                  },
-                  error && !disabled
-                    ? 'bg-surface-critical-subdued border-text-critical text-text-critical'
-                    : ''
-                );
-                return {
-                  default: `${c} border-border-default bg-surface-basic-input text-text-default`,
-                  disabled: `${c} border-border-disabled text-text-disabled`,
-                  focus: `${c} bg-surface-basic-default border-border-input text-text-default ring-offset-1 ring-2 ring-border-focus`,
-                };
-              }}
+              className={
+                className ||
+                (() => {
+                  const c = cn(
+                    'rounded flex flex-row items-center border bodyMd outline-none cursor-default',
+                    {
+                      'py-[10px] px-lg h-[48px]': size === 'lg',
+                      'py-[6px] px-lg h-[36px]': size === 'md',
+                    },
+                    error && !disabled
+                      ? 'bg-surface-critical-subdued border-text-critical text-text-critical'
+                      : '',
+                  );
+                  return {
+                    default: `${c} border-border-default bg-surface-basic-input text-text-default`,
+                    disabled: `${c} border-border-disabled text-text-disabled`,
+                    focus: `${c} bg-surface-basic-default border-border-input text-text-default ring-offset-1 ring-2 ring-border-focus`,
+                  };
+                })
+              }
+              tabIndex={tabIndex}
               open={open}
               menuClass="shadow-popover bg-surface-basic-default border border-border-default rounded py-lg"
+              portalClass={portalClass}
               menuItemRender={menuItemRender}
               value={value}
               options={options}
@@ -136,7 +147,7 @@ const Select = <T, U extends boolean | undefined = undefined>(
                   className={cn(
                     error && !disabled
                       ? 'text-text-critical/70'
-                      : 'text-text-disabled'
+                      : 'text-text-disabled',
                   )}
                 >
                   {placeholder}
@@ -160,7 +171,13 @@ const Select = <T, U extends boolean | undefined = undefined>(
               multiple={multiple}
               onSearch={onSearch}
               searchable={searchable}
-              noOptionMessage={noOptionMessage}
+              noOptionMessage={
+                noOptionMessage || (
+                  <div className="flex items-center justify-center text-text-default bodyLg p-2xl">
+                    No options
+                  </div>
+                )
+              }
               disableWhileLoading={disableWhileLoading}
               createLabel={createLabel}
             />
@@ -175,7 +192,7 @@ const Select = <T, U extends boolean | undefined = undefined>(
               'text-text-critical': !!error,
               'text-text-default': !error,
             },
-            'pt-md'
+            'pt-md',
           )}
         >
           {message}

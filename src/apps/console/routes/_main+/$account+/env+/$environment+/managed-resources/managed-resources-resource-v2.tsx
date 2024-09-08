@@ -1,37 +1,40 @@
-import { LockSimple, Trash } from '~/console/components/icons';
+import { useOutletContext, useParams } from '@remix-run/react';
+import { useEffect, useState } from 'react';
+import { Badge } from '~/components/atoms/badge';
+import { toast } from '~/components/molecule/toast';
 import { generateKey, titleCase } from '~/components/utils';
 import {
   ListItem,
+  ListItemV2,
   ListTitle,
+  ListTitleV2,
+  listClass,
 } from '~/console/components/console-list-components';
+import DeleteDialog from '~/console/components/delete-dialog';
 import Grid from '~/console/components/grid';
+import { LockSimple, Trash } from '~/console/components/icons';
 import ListGridView from '~/console/components/list-grid-view';
+import ListV2 from '~/console/components/listV2';
+import ResourceExtraAction from '~/console/components/resource-extra-action';
+import { findClusterStatus } from '~/console/hooks/use-cluster-status';
+import { useClusterStatusV2 } from '~/console/hooks/use-cluster-status-v2';
+import { useConsoleApi } from '~/console/server/gql/api-provider';
+import { IImportedManagedResources } from '~/console/server/gql/queries/imported-managed-resource-queries';
+import { IMSvTemplates } from '~/console/server/gql/queries/managed-templates-queries';
 import {
   ExtractNodeType,
+  parseName,
   parseUpdateOrCreatedBy,
   parseUpdateOrCreatedOn,
 } from '~/console/server/r-utils/common';
-import DeleteDialog from '~/console/components/delete-dialog';
-import ResourceExtraAction from '~/console/components/resource-extra-action';
-import { useConsoleApi } from '~/console/server/gql/api-provider';
+import { getManagedTemplateLogo } from '~/console/utils/commons';
 import { useReload } from '~/lib/client/helpers/reloader';
-import { useState } from 'react';
-import { handleError } from '~/lib/utils/common';
-import { toast } from '~/components/molecule/toast';
-import { useOutletContext, useParams } from '@remix-run/react';
 import { useWatchReload } from '~/lib/client/helpers/socket/useWatch';
-import ListV2 from '~/console/components/listV2';
-import { IMSvTemplates } from '~/console/server/gql/queries/managed-templates-queries';
-import {
-  getClusterStatus,
-  getManagedTemplateLogo,
-} from '~/console/utils/commons';
-import { IImportedManagedResources } from '~/console/server/gql/queries/imported-managed-resource-queries';
-import { Badge } from '~/components/atoms/badge';
-import { ViewSecret } from './handle-managed-resource-v2';
+import { handleError } from '~/lib/utils/common';
 import { IEnvironmentContext } from '../_layout';
+import { ViewSecret } from './handle-managed-resource-v2';
 
-const RESOURCE_NAME = 'integrated resource';
+const RESOURCE_NAME = 'managed resource';
 type BaseType = ExtractNodeType<IImportedManagedResources>;
 
 const parseItem = (item: BaseType, templates: IMSvTemplates) => {
@@ -67,13 +70,6 @@ const ExtraButton = ({ onAction, item }: IExtraButton) => {
   return (
     <ResourceExtraAction
       options={[
-        // {
-        //   label: 'Edit',
-        //   icon: <PencilSimple size={16} />,
-        //   type: 'item',
-        //   onClick: () => onAction({ action: 'edit', item }),
-        //   key: 'edit',
-        // },
         {
           label: 'View Secret',
           icon: <LockSimple size={16} />,
@@ -139,6 +135,19 @@ const GridView = ({ items = [], onAction, templates }: IResource) => {
 
 const ListView = ({ items = [], onAction, templates }: IResource) => {
   const { cluster } = useOutletContext<IEnvironmentContext>();
+  const { clusters } = useClusterStatusV2();
+
+  const [clusterOnlineStatus, setClusterOnlineStatus] = useState<
+    Record<string, boolean>
+  >({});
+  useEffect(() => {
+    const states: Record<string, boolean> = {};
+    Object.entries(clusters).forEach(([key, value]) => {
+      states[key] = findClusterStatus(value);
+    });
+    setClusterOnlineStatus(states);
+  }, [clusters]);
+
   return (
     <ListV2.Root
       data={{
@@ -146,84 +155,75 @@ const ListView = ({ items = [], onAction, templates }: IResource) => {
           {
             render: () => 'Resource Name',
             name: 'name',
-            className: 'flex flex-1 w-[120px]',
+            className: listClass.title,
           },
           {
             render: () => 'Resource Type',
             name: 'resource',
-            className: 'w-[140px]',
+            className: listClass.item,
           },
           {
             render: () => '',
             name: 'flex-pre',
-            className: 'flex-1',
+            className: listClass.flex,
           },
           {
             render: () => 'Integrated Service',
             name: 'service',
-            className: 'w-[200px]',
+            className: 'w-[175px]',
           },
           {
             render: () => '',
             name: 'flex-post',
-            className: 'flex-1',
+            className: listClass.flex,
           },
           {
             render: () => 'Status',
             name: 'status',
-            className: 'flex-1 min-w-[30px]',
+            className: listClass.status,
           },
           {
             render: () => 'Updated',
             name: 'updated',
-            className: 'w-[180px]',
+            className: listClass.updated,
           },
           {
             render: () => '',
             name: 'action',
-            className: 'w-[24px]',
+            className: listClass.action,
           },
         ],
         rows: items.map((i) => {
-          const isClusterOnline = getClusterStatus(cluster);
           const { name, id, logo, updateInfo } = parseItem(i, templates);
+          const isClusterOnline = clusterOnlineStatus[parseName(cluster)];
+
           return {
             columns: {
               name: {
-                render: () => (
-                  <ListTitle
-                    title={name}
-                    subtitle={id}
-                    // avatar={
-                    //   <div className="pulsable pulsable-circle aspect-square">
-                    //     <img src={i.} alt={name} className="w-4xl h-4xl" />
-                    //   </div>
-                    // }
-                    // avatar={<ConsoleAvatar name={id} />}
-                  />
-                ),
+                render: () => <ListTitleV2 title={name} subtitle={id} />,
               },
               resource: {
                 render: () => (
-                  <ListItem
+                  <ListItemV2
                     data={`${i.managedResource?.spec?.resourceTemplate?.kind}`}
                   />
                 ),
               },
               service: {
                 render: () => (
-                  <ListItem
-                    data={
-                      <div className="flex flex-row gap-xl">
-                        <span>
-                          <img
-                            src={logo}
-                            alt={`${i.managedResource?.spec?.resourceTemplate?.msvcRef?.name}`}
-                            className="w-4xl h-4xl"
-                          />
-                        </span>
-                        <span>{`${i.managedResource?.spec?.resourceTemplate?.msvcRef?.name}`}</span>
+                  <ListItemV2
+                    pre={
+                      <div className="pulsable">
+                        <img
+                          src={logo}
+                          alt={`${i.managedResource?.spec?.resourceTemplate?.msvcRef?.name}`}
+                          className="w-4xl h-4xl"
+                        />
                       </div>
+                    }
+                    data={
+                      i.managedResource?.spec?.resourceTemplate?.msvcRef
+                        ?.name || ''
                     }
                   />
                 ),
@@ -243,7 +243,7 @@ const ListView = ({ items = [], onAction, templates }: IResource) => {
               },
               updated: {
                 render: () => (
-                  <ListItem
+                  <ListItemV2
                     data={`${updateInfo.author}`}
                     subtitle={updateInfo.time}
                   />

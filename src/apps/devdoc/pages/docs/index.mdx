@@ -1,36 +1,34 @@
-# Kloudlite - Development Environment As A Service (DEaaS)
+---
+title: "What is kloudlite?"  
+metaTitle: "Kloudlite Documentation | Comprehensive Guides & Resources"  
+description: "Explore Kloudlite's documentation for detailed guides, tutorials, and resources to maximize your use of our development environment platform"
+---
 
-Kloudlite is a Development Environment as a Service (DEaaS) platform designed to enable developers to create and manage distributed environments efficiently.
+# What is kloudlite?
 
-By integrating remote and local development setups, Kloudlite optimizes the development workflow. It reduces the need for lengthy build and deployment cycles, allowing developers to focus on coding and innovation, thereby improving productivity and efficiency.
+Kloudlite is a Development Environment As a Service (DEaaS) platform that provides seamless integration between developer's 
+workspaces and remote development environments running in Kubernetes clusters.
 
-**Key Terminologies**
+### Why use kloudlite?
+Modern applications have become increasingly distributed. This complexity has made development more challenging, with longer 
+development loops and greater difficulty in managing these applications. 
 
-### Environment
+Kloudlite reduces the need for lengthy build and deployment cycles, allowing developers to focus on coding and innovation, 
+thereby improving productivity and efficiency.
 
-A Kloudlite environment encapsulates a set of stateless containerized applications and their configurations, including environment variables, secrets, and database connection strings. Technically, it is a Kubernetes namespace where applications are deployed. This setup ensures synchronization of configurations, secrets, config mounts, network settings, and DNS with the local development environment. Because the environment is stateless, you can easily create and discard environments as needed, ensuring that you always have a clean and consistent environment for development.
+### Key Features
+- **No Build Or Deploy in Development Cycle:** Development workspaces are connected to running environments over the network, 
+there is no need for building and deploying the application to start testing
+- **Easy to switch environments:** Development workspaces can switch easily between connected environments. There is no need 
+to change configs or any connection parameters
+- **Ephemeral Environments:** Environments are stateless & ephemeral, allowing for easy cloning and independent work on features. 
+Multiple developers can run their own environments simultaneously.
+- **Integrated Services:** Supports creating stateful backing services on attached clusters. Allows importing these resources, 
+like databases, into environments for use.
+- **Dev Containers:** Containers with SSH servers run locally, enabling IDE attachment for development. Dependencies are managed 
+using the Nix package manager.
+- **Collaboration and Debugging:** Supports collaborative coding with multiple developers working on features across multiple 
+services. Developers can intercept apps running inside the environment for testing and debugging.
 
-**Service Intercepts**
-
-Kloudlite's service intercepts feature enables the tunneling of traffic directed to a service within the Kloudlite environment to local development containers. This capability facilitates early testing and debugging, streamlining the development process.
-
-### Box - Development Container
-
-A Kloudlite Box is a local development container where the developer's code is mounted and executed. It manages the following aspects:
-- Development dependencies via Devbox
-- Environment variables from configurations and secrets within the Kloudlite environment
-- Configuration and secret mounts from the Kloudlite environment
-- Network and DNS resolution aligned with the Kloudlite environment
-- Service intercepts
-
-For detailed instructions on utilizing Kloudlite Box, refer to the Kloudlite CLI (kl) documentation.
-
-### Managed Services & Resources
-
-Kloudlite manages connection parameters and variables for various backing services like database servers, caching servers, and message brokers under Managed Services. 
-
-Developers can add existing services or create new Managed Services, which are managed by Kloudlite operators on Kubernetes clusters. All sub-resource variables, such as databases and message topics, are managed under Managed Resources. These services and resources can be easily imported into your environment for use in your applications.
-
-### Service Operators (Experimental)
-
-Kloudlite provides operators to manage backing services like databases, caches, and message brokers. These operators create and manage these services on Kubernetes clusters, working with custom resources to manage these services and their respective resources.
+Kloudlite is designed to optimise development workflows, enhance productivity, and provide a seamless, integrated development 
+environment.

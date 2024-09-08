@@ -213,7 +213,8 @@ const config = {
     colors: {
       surface: {
         basic: {
-          default: 'var(--surface-basic-default)',
+          default:
+            'color-mix(in srgb, var(--surface-basic-default) calc(100% * <alpha-value>), transparent)',
           subdued:
             'color-mix(in srgb, var(--surface-basic-subdued) calc(100% * <alpha-value>), transparent)',
           hovered: 'var(--surface-basic-hovered)',
@@ -222,6 +223,8 @@ const config = {
           active: 'var(--surface-basic-active)',
           'overlay-bg':
             'color-mix(in srgb, var(--surface-basic-overlay-bg) calc(100% * <alpha-value>), transparent)',
+          'container-bg':
+            'color-mix(in srgb, var(--surface-basic-container-bg) calc(100% * <alpha-value>), transparent)',
         },
         primary: {
           default: 'var(--surface-primary-default)',

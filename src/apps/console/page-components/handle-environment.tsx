@@ -1,19 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import Select from '~/components/atoms/select';
 import Popup from '~/components/molecule/popup';
 import { toast } from '~/components/molecule/toast';
 import { useReload } from '~/root/lib/client/helpers/reloader';
 import useForm, { dummyEvent } from '~/root/lib/client/hooks/use-form';
 import Yup from '~/root/lib/server/helpers/yup';
 import { handleError } from '~/root/lib/utils/common';
-import useCustomSwr from '~/root/lib/client/hooks/use-custom-swr';
-import Select from '~/components/atoms/select';
-import { useAppend, useMapper } from '~/components/utils';
-import { IDialog } from '../components/types.d';
-import { useConsoleApi } from '../server/gql/api-provider';
-import { DIALOG_TYPE } from '../utils/commons';
-import { IEnvironment } from '../server/gql/queries/environment-queries';
 import { NameIdView } from '../components/name-id-view';
+import { IDialog } from '../components/types.d';
+import { findClusterStatus } from '../hooks/use-cluster-status';
+import { useConsoleApi } from '../server/gql/api-provider';
+import { IEnvironment } from '../server/gql/queries/environment-queries';
 import { parseName, parseNodes } from '../server/r-utils/common';
+import { DIALOG_TYPE } from '../utils/commons';
 
 const ClusterSelectItem = ({
   label,
@@ -36,53 +35,30 @@ const HandleEnvironment = ({ show, setShow }: IDialog<IEnvironment | null>) => {
   const api = useConsoleApi();
   const reloadPage = useReload();
 
-  const { data: clustersData, isLoading: cIsLoading } = useCustomSwr(
-    'clusters',
-    async () =>
-      api.listClusters({
-        pagination: {
-          first: 100,
-        },
-      }),
-    true
-  );
+  const [clusterList, setClusterList] = useState<any[]>([]);
 
-  const { data: byokClustersData, isLoading: byokCIsLoading } = useCustomSwr(
-    'byokclusters',
-    async () =>
-      api.listByokClusters({
-        pagination: {
-          first: 100,
-        },
-      }),
-    true
-  );
+  const getClusters = useCallback(async () => {
+    try {
+      const byokClusters = await api.listByokClusters({});
+      const data = parseNodes(byokClusters.data).map((c) => ({
+        label: c.displayName,
+        value: parseName(c),
+        ready: findClusterStatus(c),
+        render: () => (
+          <ClusterSelectItem label={c.displayName} value={parseName(c)} />
+        ),
+      }));
+      setClusterList(data);
+    } catch (err) {
+      handleError(err);
+    }
+  }, []);
 
-  const cData = useMapper(parseNodes(clustersData), (item) => {
-    return {
-      label: item.displayName,
-      value: parseName(item),
-      ready: item.status?.isReady,
-      render: () => (
-        <ClusterSelectItem label={item.displayName} value={parseName(item)} />
-      ),
-    };
-  });
+  useEffect(() => {
+    getClusters();
+  }, [show]);
 
-  const bCData = useMapper(parseNodes(byokClustersData), (item) => {
-    return {
-      label: item.displayName,
-      value: parseName(item),
-      ready: true,
-      render: () => (
-        <ClusterSelectItem label={item.displayName} value={parseName(item)} />
-      ),
-    };
-  });
-
-  const clusterList = useAppend(cData, bCData);
-
-  const [validationSchema, setValidationSchema] = useState<any>(
+  const [validationSchema] = useState<any>(
     Yup.object({
       displayName: Yup.string().required(),
       name: Yup.string().required(),
@@ -152,20 +128,15 @@ const HandleEnvironment = ({ show, setShow }: IDialog<IEnvironment | null>) => {
       }
     },
   });
-
   useEffect(() => {
-    if (show && show.type === DIALOG_TYPE.EDIT) {
-      setValues((v) => ({
-        ...v,
-        displayName: show.data?.displayName || '',
-      }));
-      setValidationSchema(
-        Yup.object({
-          displayName: Yup.string().trim().required(),
-        })
-      );
-    }
-  }, [show]);
+    setValues((v) => ({
+      ...v,
+      clusterName:
+        clusterList.length > 0
+          ? clusterList.find((c) => c.ready)?.value || ''
+          : '',
+    }));
+  }, [clusterList, show]);
 
   return (
     <Popup.Root
@@ -208,7 +179,6 @@ const HandleEnvironment = ({ show, setShow }: IDialog<IEnvironment | null>) => {
               label="Select Cluster"
               size="lg"
               value={values.clusterName}
-              disabled={cIsLoading}
               placeholder="Select a Cluster"
               options={async () => [
                 ...((clusterList &&
@@ -222,7 +192,6 @@ const HandleEnvironment = ({ show, setShow }: IDialog<IEnvironment | null>) => {
               }}
               error={!!errors.clusterName}
               message={errors.clusterName}
-              loading={cIsLoading || byokCIsLoading}
             />
 
             {/* <Checkbox */}

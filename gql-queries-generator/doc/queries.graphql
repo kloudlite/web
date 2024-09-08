@@ -181,117 +181,6 @@ query consoleListAllClusters($search: SearchCluster, $pagination: CursorPaginati
     }
     totalCount
   }
-  clusters: infra_listClusters(search: $search, pagination: $pagination) {
-    totalCount
-    pageInfo {
-      startCursor
-      hasPrevPage
-      hasNextPage
-      endCursor
-    }
-    edges {
-      cursor
-      node {
-        id
-        displayName
-        lastOnlineAt
-        markedForDeletion
-        metadata {
-          name
-          annotations
-          generation
-        }
-        creationTime
-        lastUpdatedBy {
-          userId
-          userName
-          userEmail
-        }
-        createdBy {
-          userEmail
-          userId
-          userName
-        }
-        updateTime
-        status {
-          checks
-          checkList {
-            description
-            debug
-            name
-            title
-          }
-          isReady
-          lastReadyGeneration
-          lastReconcileTime
-          message {
-            RawMessage
-          }
-          resources {
-            apiVersion
-            kind
-            name
-            namespace
-          }
-        }
-        syncStatus {
-          action
-          error
-          lastSyncedAt
-          recordVersion
-          state
-          syncScheduledAt
-        }
-        recordVersion
-        spec {
-          messageQueueTopicName
-          kloudliteRelease
-          clusterTokenRef {
-            key
-            name
-            namespace
-          }
-          accountId
-          accountName
-          availabilityMode
-          aws {
-            k3sMasters {
-              iamInstanceProfileRole
-              instanceType
-              nodes
-              nvidiaGpuEnabled
-              rootVolumeSize
-              rootVolumeType
-            }
-            nodePools
-            region
-            spotNodePools
-          }
-          gcp {
-            credentialsRef {
-              name
-              namespace
-            }
-            gcpProjectID
-            region
-          }
-          cloudProvider
-          backupToS3Enabled
-          cloudflareEnabled
-          clusterInternalDnsHost
-          clusterServiceCIDR
-          output {
-            keyK3sAgentJoinToken
-            keyK3sServerJoinToken
-            keyKubeconfig
-            secretName
-          }
-          publicDNSHost
-          taintMasterNodes
-        }
-      }
-    }
-  }
 }
 
 query consoleListClusters($search: SearchCluster, $pagination: CursorPaginationIn) {
@@ -850,6 +739,7 @@ query consoleGetEnvironment($name: String!) {
         privateIngressClass
         publicIngressClass
       }
+      suspend
       targetNamespace
     }
     status {
@@ -925,6 +815,7 @@ query consoleListEnvironments($search: SearchEnvironments, $pq: CursorPagination
             privateIngressClass
             publicIngressClass
           }
+          suspend
           targetNamespace
         }
         status {
@@ -4101,6 +3992,51 @@ mutation consoleDeleteImagePullSecrets($name: String!) {
   core_deleteImagePullSecret(name: $name)
 }
 
+query consoleGetImagePullSecret($name: String!) {
+  core_getImagePullSecret(name: $name) {
+    accountName
+    createdBy {
+      userEmail
+      userId
+      userName
+    }
+    creationTime
+    displayName
+    dockerConfigJson
+    environments
+    format
+    id
+    lastUpdatedBy {
+      userEmail
+      userId
+      userName
+    }
+    markedForDeletion
+    metadata {
+      annotations
+      creationTimestamp
+      deletionTimestamp
+      generation
+      labels
+      name
+      namespace
+    }
+    recordVersion
+    registryPassword
+    registryURL
+    registryUsername
+    syncStatus {
+      action
+      error
+      lastSyncedAt
+      recordVersion
+      state
+      syncScheduledAt
+    }
+    updateTime
+  }
+}
+
 query consoleListImagePullSecrets($search: SearchImagePullSecrets, $pq: CursorPaginationIn) {
   core_listImagePullSecrets(search: $search, pq: $pq) {
     edges {
@@ -6241,6 +6177,33 @@ query authCli_getEnvironment($name: String!) {
   }
 }
 
+mutation authCli_cloneEnvironment($clusterName: String!, $sourceEnvName: String!, $destinationEnvName: String!, $displayName: String!, $environmentRoutingMode: Github__com___kloudlite___operator___apis___crds___v1__EnvironmentRoutingMode!) {
+  core_cloneEnvironment(
+    clusterName: $clusterName
+    sourceEnvName: $sourceEnvName
+    destinationEnvName: $destinationEnvName
+    displayName: $displayName
+    environmentRoutingMode: $environmentRoutingMode
+  ) {
+    id
+    displayName
+    clusterName
+    metadata {
+      name
+      namespace
+    }
+    status {
+      isReady
+      message {
+        RawMessage
+      }
+    }
+    spec {
+      targetNamespace
+    }
+  }
+}
+
 query authCli_getSecret($envName: String!, $name: String!) {
   core_getSecret(envName: $envName, name: $name) {
     displayName
@@ -6263,8 +6226,8 @@ query authCli_getConfig($envName: String!, $name: String!) {
   }
 }
 
-query authCli_listApps($envName: String!) {
-  apps: core_listExternalApps(envName: $envName) {
+query authCli_listApps($pq: CursorPaginationIn, $envName: String!) {
+  apps: core_listExternalApps(pq: $pq, envName: $envName) {
     edges {
       node {
         spec {
@@ -6295,7 +6258,7 @@ query authCli_listApps($envName: String!) {
       }
     }
   }
-  mapps: core_listApps(envName: $envName) {
+  mapps: core_listApps(pq: $pq, envName: $envName) {
     edges {
       node {
         displayName
@@ -6332,8 +6295,8 @@ query authCli_listApps($envName: String!) {
   }
 }
 
-query authCli_listConfigs($envName: String!) {
-  core_listConfigs(envName: $envName) {
+query authCli_listConfigs($pq: CursorPaginationIn, $envName: String!) {
+  core_listConfigs(pq: $pq, envName: $envName) {
     totalCount
     edges {
       node {
@@ -6592,6 +6555,24 @@ query authCli_listImportedManagedResources($envName: String!, $search: SearchImp
       hasNextPage
       hasPrevPage
       startCursor
+    }
+    totalCount
+  }
+}
+
+query authCli_listByokClusters($search: SearchCluster, $pagination: CursorPaginationIn) {
+  infra_listBYOKClusters(search: $search, pagination: $pagination) {
+    edges {
+      cursor
+      node {
+        displayName
+        id
+        metadata {
+          name
+          namespace
+        }
+        updateTime
+      }
     }
     totalCount
   }
