@@ -36,7 +36,7 @@ const PBar = ({ duration }: { duration: number }) => {
         }}
       >
         <motion.div
-          className="bg-surface-primary-default h-md animate-pulse"
+          className="bg-surface-primary-default h-sm animate-pulse"
           initial={{
             width: '12vw',
           }}

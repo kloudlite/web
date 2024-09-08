@@ -9,7 +9,7 @@ import scrollbar from './css-plugins/scrollbar';
 
 export default {
   content: [
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './web/**/*.{js,ts,jsx,tsx,mdx}',
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './images/**/*.{js,ts,jsx,tsx,mdx}',
   ],

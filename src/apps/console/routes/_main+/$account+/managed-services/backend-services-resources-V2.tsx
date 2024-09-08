@@ -1,32 +1,37 @@
-import { GearSix, Trash } from '~/console/components/icons';
+import { Link, useOutletContext, useParams } from '@remix-run/react';
+import { useEffect, useState } from 'react';
+import { Badge } from '~/components/atoms/badge';
+import { toast } from '~/components/molecule/toast';
 import { generateKey, titleCase } from '~/components/utils';
 import {
   ListItem,
+  ListItemV2,
   ListTitle,
+  ListTitleV2,
+  listClass,
 } from '~/console/components/console-list-components';
+import DeleteDialog from '~/console/components/delete-dialog';
 import Grid from '~/console/components/grid';
+import { GearSix, Trash } from '~/console/components/icons';
 import ListGridView from '~/console/components/list-grid-view';
+import ListV2 from '~/console/components/listV2';
+import ResourceExtraAction from '~/console/components/resource-extra-action';
+import { SyncStatusV2 } from '~/console/components/sync-status';
+import { findClusterStatus } from '~/console/hooks/use-cluster-status';
+import { useClusterStatusV2 } from '~/console/hooks/use-cluster-status-v2';
+import { useConsoleApi } from '~/console/server/gql/api-provider';
+import { IClusterMSvs } from '~/console/server/gql/queries/cluster-managed-services-queries';
+import { IMSvTemplates } from '~/console/server/gql/queries/managed-templates-queries';
 import {
   ExtractNodeType,
   parseName,
   parseUpdateOrCreatedBy,
   parseUpdateOrCreatedOn,
 } from '~/console/server/r-utils/common';
-import { IMSvTemplates } from '~/console/server/gql/queries/managed-templates-queries';
-import { getClusterStatus, getManagedTemplate } from '~/console/utils/commons';
-import ResourceExtraAction from '~/console/components/resource-extra-action';
-import { Link, useOutletContext, useParams } from '@remix-run/react';
-import { SyncStatusV2 } from '~/console/components/sync-status';
-import ListV2 from '~/console/components/listV2';
-import { IClusterMSvs } from '~/console/server/gql/queries/cluster-managed-services-queries';
-import { useWatchReload } from '~/root/lib/client/helpers/socket/useWatch';
-import { useState } from 'react';
-import DeleteDialog from '~/console/components/delete-dialog';
-import { useConsoleApi } from '~/console/server/gql/api-provider';
+import { getManagedTemplate } from '~/console/utils/commons';
 import { useReload } from '~/root/lib/client/helpers/reloader';
-import { toast } from '~/components/molecule/toast';
+import { useWatchReload } from '~/root/lib/client/helpers/socket/useWatch';
 import { handleError } from '~/root/lib/utils/common';
-import { Badge } from '~/components/atoms/badge';
 import { IAccountContext } from '../_layout';
 import { IClusterContext } from '../infra+/$cluster+/_layout';
 import CloneManagedService from './clone-managed-service';
@@ -157,7 +162,20 @@ const GridView = ({ items, templates, onAction }: IResource) => {
 };
 
 const ListView = ({ items, templates, onAction }: IResource) => {
-  const { account, clustersMap } = useOutletContext<IAccountContext>();
+  const { account } = useOutletContext<IAccountContext>();
+  const { clusters } = useClusterStatusV2();
+
+  // const [clusterOnlineStatus, setClusterOnlineStatus] = useState<
+  //   Record<string, boolean>
+  // >({});
+  // useEffect(() => {
+  //   const states: Record<string, boolean> = {};
+  //   Object.entries(clusters).forEach(([key, value]) => {
+  //     states[key] = findClusterStatus(value);
+  //   });
+  //   setClusterOnlineStatus(states);
+  // }, [clusters]);
+
   return (
     <ListV2.Root
       linkComponent={Link}
@@ -166,42 +184,42 @@ const ListView = ({ items, templates, onAction }: IResource) => {
           {
             render: () => 'Resource Name',
             name: 'name',
-            className: 'flex flex-1 w-[80px]',
+            className: listClass.title,
           },
           {
             render: () => 'Cluster',
             name: 'cluster',
-            className: 'w-[120px]',
+            className: listClass.item,
           },
           {
             render: () => '',
             name: 'flex-post',
-            className: 'flex-1',
+            className: listClass.flex,
           },
           {
             render: () => 'Status',
             name: 'status',
-            className: 'flex-1 min-w-[30px]',
+            className: listClass.status,
           },
           {
             render: () => 'Updated',
             name: 'updated',
-            className: 'w-[180px]',
+            className: listClass.updated,
           },
           {
             render: () => '',
             name: 'action',
-            className: 'w-[24px]',
+            className: listClass.action,
           },
         ],
         rows: items.map((i) => {
-          const isClusterOnline = getClusterStatus(clustersMap[i.clusterName]);
+          const isClusterOnline = findClusterStatus(clusters[i.clusterName]);
           const { name, id, logo, updateInfo } = parseItem(i, templates);
           return {
             columns: {
               name: {
                 render: () => (
-                  <ListTitle
+                  <ListTitleV2
                     title={name}
                     subtitle={id}
                     avatar={
@@ -214,7 +232,7 @@ const ListView = ({ items, templates, onAction }: IResource) => {
               },
               cluster: {
                 render: () => (
-                  <ListItem data={i.isArchived ? '' : i.clusterName} />
+                  <ListItemV2 data={i.isArchived ? '' : i.clusterName} />
                 ),
               },
               status: {
@@ -231,7 +249,7 @@ const ListView = ({ items, templates, onAction }: IResource) => {
               },
               updated: {
                 render: () => (
-                  <ListItem
+                  <ListItemV2
                     data={`${updateInfo.author}`}
                     subtitle={updateInfo.time}
                   />
@@ -241,7 +259,6 @@ const ListView = ({ items, templates, onAction }: IResource) => {
                 render: () => <ExtraButton item={i} onAction={onAction} />,
               },
             },
-            // to: `/${parseName(account)}/msvc/${id}/managed-resources`,
             ...(i.isArchived
               ? {}
               : { to: `/${parseName(account)}/msvc/${id}/managed-resources` }),
@@ -265,11 +282,11 @@ const BackendServicesResourcesV2 = ({
       return `account:${parseName(account)}.cluster:${
         i.clusterName
       }.cluster_managed_service:${parseName(i)}`;
-    })
+    }),
   );
 
   const [showDeleteDialog, setShowDeleteDialog] = useState<BaseType | null>(
-    null
+    null,
   );
   const [visible, setVisible] = useState<BaseType | null>(null);
   const api = useConsoleApi();
