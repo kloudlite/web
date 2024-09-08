@@ -716,6 +716,7 @@ export type EnvironmentIn = {
 export type Github__Com___Kloudlite___Operator___Apis___Crds___V1__EnvironmentSpecIn =
   {
     routing?: InputMaybe<Github__Com___Kloudlite___Operator___Apis___Crds___V1__EnvironmentRoutingIn>;
+    suspend?: InputMaybe<Scalars['Boolean']['input']>;
     targetNamespace?: InputMaybe<Scalars['String']['input']>;
   };
 
@@ -1982,96 +1983,6 @@ export type ConsoleListAllClustersQuery = {
       startCursor?: string;
     };
   };
-  clusters?: {
-    totalCount: number;
-    pageInfo: {
-      startCursor?: string;
-      hasPrevPage?: boolean;
-      hasNextPage?: boolean;
-      endCursor?: string;
-    };
-    edges: Array<{
-      cursor: string;
-      node: {
-        id: string;
-        displayName: string;
-        lastOnlineAt?: any;
-        markedForDeletion?: boolean;
-        creationTime: any;
-        updateTime: any;
-        recordVersion: number;
-        metadata: { name: string; annotations?: any; generation: number };
-        lastUpdatedBy: { userId: string; userName: string; userEmail: string };
-        createdBy: { userEmail: string; userId: string; userName: string };
-        status?: {
-          checks?: any;
-          isReady: boolean;
-          lastReadyGeneration?: number;
-          lastReconcileTime?: any;
-          checkList?: Array<{
-            description?: string;
-            debug?: boolean;
-            name: string;
-            title: string;
-          }>;
-          message?: { RawMessage?: any };
-          resources?: Array<{
-            apiVersion: string;
-            kind: string;
-            name: string;
-            namespace: string;
-          }>;
-        };
-        syncStatus: {
-          action: Github__Com___Kloudlite___Api___Pkg___Types__SyncAction;
-          error?: string;
-          lastSyncedAt?: any;
-          recordVersion: number;
-          state: Github__Com___Kloudlite___Api___Pkg___Types__SyncState;
-          syncScheduledAt?: any;
-        };
-        spec: {
-          messageQueueTopicName: string;
-          kloudliteRelease: string;
-          accountId: string;
-          accountName: string;
-          availabilityMode: Github__Com___Kloudlite___Operator___Apis___Clusters___V1__ClusterSpecAvailabilityMode;
-          cloudProvider: Github__Com___Kloudlite___Operator___Apis___Common____Types__CloudProvider;
-          backupToS3Enabled: boolean;
-          cloudflareEnabled?: boolean;
-          clusterInternalDnsHost?: string;
-          clusterServiceCIDR?: string;
-          publicDNSHost: string;
-          taintMasterNodes: boolean;
-          clusterTokenRef?: { key: string; name: string; namespace?: string };
-          aws?: {
-            nodePools?: any;
-            region: string;
-            spotNodePools?: any;
-            k3sMasters?: {
-              iamInstanceProfileRole?: string;
-              instanceType: string;
-              nodes?: any;
-              nvidiaGpuEnabled: boolean;
-              rootVolumeSize: number;
-              rootVolumeType: string;
-            };
-          };
-          gcp?: {
-            gcpProjectID: string;
-            region: string;
-            credentialsRef: { name: string; namespace?: string };
-          };
-          output?: {
-            keyK3sAgentJoinToken: string;
-            keyK3sServerJoinToken: string;
-            keyKubeconfig: string;
-            secretName: string;
-          };
-        };
-      };
-    }>;
-  };
 };
 
 export type ConsoleListClustersQueryVariables = Exact<{
@@ -2560,6 +2471,7 @@ export type ConsoleGetEnvironmentQuery = {
       namespace?: string;
     };
     spec?: {
+      suspend?: boolean;
       targetNamespace?: string;
       routing?: {
         mode?: Github__Com___Kloudlite___Operator___Apis___Crds___V1__EnvironmentRoutingMode;
@@ -2635,6 +2547,7 @@ export type ConsoleListEnvironmentsQuery = {
         lastUpdatedBy: { userEmail: string; userId: string; userName: string };
         metadata?: { generation: number; name: string; namespace?: string };
         spec?: {
+          suspend?: boolean;
           targetNamespace?: string;
           routing?: {
             mode?: Github__Com___Kloudlite___Operator___Apis___Crds___V1__EnvironmentRoutingMode;
@@ -5710,6 +5623,47 @@ export type ConsoleDeleteImagePullSecretsMutation = {
   core_deleteImagePullSecret: boolean;
 };
 
+export type ConsoleGetImagePullSecretQueryVariables = Exact<{
+  name: Scalars['String']['input'];
+}>;
+
+export type ConsoleGetImagePullSecretQuery = {
+  core_getImagePullSecret?: {
+    accountName: string;
+    creationTime: any;
+    displayName: string;
+    dockerConfigJson?: string;
+    environments?: Array<string>;
+    format: Github__Com___Kloudlite___Api___Apps___Console___Internal___Entities__PullSecretFormat;
+    id: string;
+    markedForDeletion?: boolean;
+    recordVersion: number;
+    registryPassword?: string;
+    registryURL?: string;
+    registryUsername?: string;
+    updateTime: any;
+    createdBy: { userEmail: string; userId: string; userName: string };
+    lastUpdatedBy: { userEmail: string; userId: string; userName: string };
+    metadata: {
+      annotations?: any;
+      creationTimestamp: any;
+      deletionTimestamp?: any;
+      generation: number;
+      labels?: any;
+      name: string;
+      namespace?: string;
+    };
+    syncStatus: {
+      action: Github__Com___Kloudlite___Api___Pkg___Types__SyncAction;
+      error?: string;
+      lastSyncedAt?: any;
+      recordVersion: number;
+      state: Github__Com___Kloudlite___Api___Pkg___Types__SyncState;
+      syncScheduledAt?: any;
+    };
+  };
+};
+
 export type ConsoleListImagePullSecretsQueryVariables = Exact<{
   search?: InputMaybe<SearchImagePullSecrets>;
   pq?: InputMaybe<CursorPaginationIn>;
@@ -7855,6 +7809,25 @@ export type AuthCli_GetEnvironmentQuery = {
   };
 };
 
+export type AuthCli_CloneEnvironmentMutationVariables = Exact<{
+  clusterName: Scalars['String']['input'];
+  sourceEnvName: Scalars['String']['input'];
+  destinationEnvName: Scalars['String']['input'];
+  displayName: Scalars['String']['input'];
+  environmentRoutingMode: Github__Com___Kloudlite___Operator___Apis___Crds___V1__EnvironmentRoutingMode;
+}>;
+
+export type AuthCli_CloneEnvironmentMutation = {
+  core_cloneEnvironment?: {
+    id: string;
+    displayName: string;
+    clusterName: string;
+    metadata?: { name: string; namespace?: string };
+    status?: { isReady: boolean; message?: { RawMessage?: any } };
+    spec?: { targetNamespace?: string };
+  };
+};
+
 export type AuthCli_GetSecretQueryVariables = Exact<{
   envName: Scalars['String']['input'];
   name: Scalars['String']['input'];
@@ -7882,6 +7855,7 @@ export type AuthCli_GetConfigQuery = {
 };
 
 export type AuthCli_ListAppsQueryVariables = Exact<{
+  pq?: InputMaybe<CursorPaginationIn>;
   envName: Scalars['String']['input'];
 }>;
 
@@ -7935,6 +7909,7 @@ export type AuthCli_ListAppsQuery = {
 };
 
 export type AuthCli_ListConfigsQueryVariables = Exact<{
+  pq?: InputMaybe<CursorPaginationIn>;
   envName: Scalars['String']['input'];
 }>;
 
@@ -8196,6 +8171,26 @@ export type AuthCli_ListImportedManagedResourcesQuery = {
       hasPrevPage?: boolean;
       startCursor?: string;
     };
+  };
+};
+
+export type AuthCli_ListByokClustersQueryVariables = Exact<{
+  search?: InputMaybe<SearchCluster>;
+  pagination?: InputMaybe<CursorPaginationIn>;
+}>;
+
+export type AuthCli_ListByokClustersQuery = {
+  infra_listBYOKClusters?: {
+    totalCount: number;
+    edges: Array<{
+      cursor: string;
+      node: {
+        displayName: string;
+        id: string;
+        updateTime: any;
+        metadata: { name: string; namespace?: string };
+      };
+    }>;
   };
 };
 

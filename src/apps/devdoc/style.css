@@ -1,9 +1,9 @@
-@import url("./fonts/Inter-var.css");
-@import url("./fonts/Familjen-Grotesk.css");
-@import "../../design-system/css/primitives.css";
-@import "../../design-system/css/default.css";
-@import "../../design-system/css/dark.css";
-@import "./css/shiki.css";
+@import url('./fonts/Inter-var.css');
+@import url('./fonts/Familjen-Grotesk.css');
+@import '../../design-system/css/primitives.css';
+@import '../../design-system/css/default.css';
+@import '../../design-system/css/dark.css';
+@import './css/shiki.css';
 
 /* @import url('./fonts/Sriracha.css'); */
 /* @import url('https://fonts.googleapis.com/css2?family=Sriracha&display=swap'); */
@@ -28,7 +28,7 @@ html {
   -webkit-tap-highlight-color: transparent;
   /* scrollbar-gutter: stable; */
   @apply wb-scroll-pt-[50px] wb-bg-surface-basic-subdued;
-  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
 }
 
 .scrollbar-gutter {
@@ -36,7 +36,7 @@ html {
 }
 
 .scrollbar-gutter-auto {
-  scrollbar-gutter: "auto";
+  scrollbar-gutter: 'auto';
 }
 
 .dark-hidden {
@@ -65,7 +65,7 @@ html {
 }
 
 .kl-steps > h3 {
-  @apply wb-sticky wb-top-[50px] wb-bg-surface-basic-subdued wb-pb-[6px] wb-mt-[6px];
+  @apply wb-sticky wb-top-[50px] wb-bg-surface-basic-subdued wb-pb-[6px] wb-mt-[40px];
 }
 
 .kl-steps > p {
@@ -74,14 +74,6 @@ html {
 
 .kl-footer {
   order: -99999;
-}
-
-.nextra-code-block {
-  @apply wb-relative;
-}
-
-.nextra-code-block button {
-  @apply wb-bg-surface-basic-hovered wb-p-lg wb-border wb-border-border-default wb-rounded wb-text-text-default wb-cursor-pointer;
 }
 
 .nx-right-0 {
@@ -98,7 +90,23 @@ html {
 
 pre {
   overflow-x: auto;
-  @apply wb-mt-3xl wb-bg-surface-basic-input wb-border wb-border-border-default wb-rounded wb-p-xl;
+  @apply !wb-mt-3xl wb-bg-surface-basic-input wb-border wb-border-border-default wb-rounded wb-p-xl;
+}
+
+.nextra-code-block {
+  @apply wb-relative;
+}
+
+.nextra-code-block button {
+  @apply wb-bg-surface-basic-hovered wb-p-md wb-border wb-border-border-default wb-rounded wb-text-text-default wb-cursor-pointer wb-mt-md wb-mr-md;
+}
+.nextra-code-block button[title='Toggle word wrap'] {
+  display: none;
+}
+
+.nextra-code-block button svg {
+  height: 16px;
+  width: 16px;
 }
 
 code {
@@ -144,7 +152,7 @@ code {
   }
 
   .graph2::before {
-    content: "";
+    content: '';
     background-size:
       100% 6%,
       100% 6%,

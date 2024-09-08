@@ -178,7 +178,6 @@ interface IResource {
 const AppServiceView = ({ service }: { service: string }) => {
   return (
     <CopyContentToClipboard
-      toolTip
       content={service}
       toastMessage="App service url copied successfully."
     />

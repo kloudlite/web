@@ -1,0 +1,22 @@
+---
+title: "Global VPN"  
+metaTitle: "Global VPN Setup in Kloudlite | Documentation"  
+description: "Learn how to set up and configure Global VPN in Kloudlite. Securely connect your development environments across multiple locations with our step-by-step guide"
+---
+
+# Global VPN
+For each team created in Kloudlite, an associated WireGuard network is set up. This network allows all workloads within 
+it to communicate seamlessly.
+
+Any cluster or device connected to the Kloudlite team can access Kloudlite services (apps and integrated services) running 
+on the clusters, regardless of cloud provider, region, or NAT configuration.
+
+Services created under environments and integrated services are assigned unique IP addresses and can be discovered using 
+unique domain names.
+
+Each device connected to the Kloudlite team is also given a unique IP address and a discoverable name.
+
+This seamless networking enables Kloudlite to create robust development environments that can operate anywhere and share 
+workloads effectively.
+
+![global-vpn](/docs/vpn/global.png)

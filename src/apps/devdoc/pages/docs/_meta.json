@@ -1,71 +1,83 @@
 {
-    "--introduction--":{
-        "title":"Introduction",
-        "type":"separator"
-    },
-    "index":{
-        "title":"What is kloudlite?"
-    },
-    "why-kloudlite":{
-        "title":"Why kloudlite?"
-    },
-    "how-does-it-work":{
-        "title":"How does it work?"
-    },
-    "getting-started":{
-        "title":"Getting Started"
-    },
-    "--reference--":{
-        "title":"Remote Env",
-        "type":"separator"
-    },
-    "integrated-services":{
-        "title":"Integrated Services"
-    },
-    
-    "any-wireguard":{
-        "title":"Wireguard devices"
-    },
-    "kubernetes-clusters":{
-        "title":"Kubernetes Clusters"
-    },
-    "work-in-progress":{
-        "title":"Work in progress.."
-    },
-    "--develop-environment--":{
-        "title":"Dev Env",
-        "type":"separator"
-    },
-    "local-devices":{
-        "title":"Dev Containers"
-    },
-    "---references-":{
-        "title":"Reference",
-        "type":"separator"
-    },
-    "architecture":{
-        "title":"Architecture"
-    },
-    "api":{
-        "title":"API"
-    },
-    "---more-":{
-        "title":"Engage",
-        "type":"separator"
-    },
-    "contributing":{
-        "title":"Contributing"
-    },
-    "github":{
-        "title":"Community",
-        "href": "https://github.com/kloudlite/kloudlite/discussions"
-    },
-    "feature-request":{
-        "title":"Feature Request",
-        "href":"https://github.com/kloudlite/kloudlite/issues/new?assignees=&labels=&projects=&template=feature_request.md&title="
-    },
-    "bug-report":{
-        "title":"Bug Report",
-        "href":"https://github.com/kloudlite/kloudlite/issues/new?assignees=&labels=&projects=&template=bug_report.md&title="
-    }
+  "--introduction--": {
+    "title": "INTRODUCTION",
+    "type": "separator"
+  },
+  "index": {
+    "title": "What is kloudlite?"
+  },
+  "basic-concepts": {
+    "title": "Basic Concepts"
+  },
+  "getting-started": {
+    "title": "Getting Started"
+  },
+  "--corec-omponents--": {
+    "title": "CORE COMPONENTS",
+    "type": "separator"
+  },
+  "global-vpn": {
+    "title": "Global VPN"
+  },
+
+  "infrastructure": {
+    "title": "Infrastructure"
+  },
+  "integrated-services": {
+    "title": "Services & Resources"
+  },
+  "environments": {
+    "title": "Environments"
+  },
+  "--environments--": {
+    "title": "ENVIRONMENTS",
+    "type": "separator"
+  },
+  "apps": {
+    "title": "Apps"
+  },
+  "configs-secrets": {
+    "title": "Configs & Secrets"
+  },
+  "integrated-resources": {
+    "title": "Integrated Resources"
+  },
+  "---workspaces-": {
+    "title": "WORKSPACES",
+    "type": "separator"
+  },
+  "setup-connect": {
+    "title": "Setup & Connect"
+  },
+  "workspace-management": {
+    "title": "Workspace Management"
+  },
+  "ide-integrations": {
+    "title": "IDE Integrations"
+  },
+  "app-intercept": {
+    "title": "App Intercepts"
+  },
+  "uninstall": {
+    "title": "Uninstall"
+  },
+  "--PARTICIPATE--": {
+    "title": "PARTICIPATE",
+    "type": "separator"
+  },
+  "contributing": {
+    "title": "Contributing"
+  },
+  "github": {
+    "title": "Community",
+    "href": "https://github.com/kloudlite/kloudlite/discussions"
+  },
+  "feature-request": {
+    "title": "Feature Request",
+    "href": "https://github.com/kloudlite/kloudlite/issues/new?assignees=&labels=&projects=&template=feature_request.md&title="
+  },
+  "bug-report": {
+    "title": "Bug Report",
+    "href": "https://github.com/kloudlite/kloudlite/issues/new?assignees=&labels=&projects=&template=bug_report.md&title="
+  }
 }

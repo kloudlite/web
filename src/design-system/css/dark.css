@@ -1,4 +1,4 @@
-[data-theme="dark"] {
+[data-theme='dark'] {
   /* Basic */
   --surface-basic-default: var(--zinc-900);
   --surface-basic-subdued: var(--zinc-1000);
@@ -7,6 +7,7 @@
   --surface-basic-input: var(--grey-1100);
   --surface-basic-active: var(--zinc-800);
   --surface-basic-overlay-bg: var(--zinc-900);
+  --surface-basic-container-bg: var(--zinc-900);
 
   /* Primary */
   --surface-primary-default: var(--blue-800);
@@ -45,44 +46,41 @@
   --surface-success-hovered: var(--green-600);
   --surface-success-pressed: var(--green-900);
 
-
   /* Text */
---text-default: var(--zinc-100);
---text-soft: var(--zinc-400);
---text-strong: var(--grey-300);
---text-disabled: var(--zinc-600);
---text-primary: var(--blue-400);
---text-on-primary: var(--zinc-100);
---text-on-secondary: var(--grey-900);
---text-secondary: var(--amber-500);
---text-critical: var(--red-500);
---text-warning: var(--amber-500);
---text-success: var(--green-500);
+  --text-default: var(--zinc-100);
+  --text-soft: var(--zinc-400);
+  --text-strong: var(--grey-300);
+  --text-disabled: var(--zinc-600);
+  --text-primary: var(--blue-400);
+  --text-on-primary: var(--zinc-100);
+  --text-on-secondary: var(--grey-900);
+  --text-secondary: var(--amber-500);
+  --text-critical: var(--red-500);
+  --text-warning: var(--amber-500);
+  --text-success: var(--green-500);
 
+  /* Icon */
+  --icon-default: var(--zinc-100);
+  --icon-soft: var(--zinc-400);
+  --icon-strong: var(--zinc-300);
+  --icon-disabled: var(--zinc-600);
+  --icon-primary: var(--blue-400);
+  --icon-on-primary: var(--zinc-100);
+  --icon-secondary: var(--amber-500);
+  --icon-critical: var(--red-500);
+  --icon-warning: var(--amber-500);
+  --icon-success: var(--green-500);
+  --icon-logo: var(--zinc-100);
 
-/* Icon */
---icon-default: var(--zinc-100);
---icon-soft: var(--zinc-400);
---icon-strong: var(--zinc-300);
---icon-disabled: var(--zinc-600);
---icon-primary: var(--blue-400);
---icon-on-primary: var(--zinc-100);
---icon-secondary: var(--amber-500);
---icon-critical: var(--red-500);
---icon-warning: var(--amber-500);
---icon-success: var(--green-500);
---icon-logo: var(--zinc-100);
-
-/* Border */
---border-default: var(--zinc-800);
---border-dark: var(--zinc-700);
---border-disabled: var(--zinc-900);
---border-primary: var(--blue-800);
---border-focus: var(--blue-500);
---border-secondary: var(--amber-800);
---border-tertiary: var(--zinc-200);
---border-critical: var(--red-800);
---border-warning: var(--amber-800);
---border-success: var(--green-800);
-
+  /* Border */
+  --border-default: var(--zinc-800);
+  --border-dark: var(--zinc-700);
+  --border-disabled: var(--zinc-900);
+  --border-primary: var(--blue-800);
+  --border-focus: var(--blue-500);
+  --border-secondary: var(--amber-800);
+  --border-tertiary: var(--zinc-200);
+  --border-critical: var(--red-800);
+  --border-warning: var(--amber-800);
+  --border-success: var(--green-800);
 }

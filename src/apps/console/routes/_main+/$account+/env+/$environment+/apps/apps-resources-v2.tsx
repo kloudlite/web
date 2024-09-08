@@ -1,43 +1,47 @@
+import { Link, useOutletContext, useParams } from '@remix-run/react';
+import { useEffect, useState } from 'react';
+import { Badge } from '~/components/atoms/badge';
+import TooltipV2 from '~/components/atoms/tooltipV2';
+import { toast } from '~/components/molecule/toast';
+import { generateKey, titleCase } from '~/components/utils';
+import { CopyContentToClipboard } from '~/console/components/common-console-components';
+import {
+  ListItem,
+  ListItemV2,
+  ListTitle,
+  ListTitleV2,
+  listClass,
+} from '~/console/components/console-list-components';
+import Grid from '~/console/components/grid';
 import {
   GearSix,
   LinkBreak,
   Link as LinkIcon,
   Repeat,
 } from '~/console/components/icons';
-import { Link, useOutletContext, useParams } from '@remix-run/react';
-import { generateKey, titleCase } from '~/components/utils';
-import {
-  ListItem,
-  ListTitle,
-} from '~/console/components/console-list-components';
-import Grid from '~/console/components/grid';
 import ListGridView from '~/console/components/list-grid-view';
+import ListV2 from '~/console/components/listV2';
 import ResourceExtraAction, {
   IResourceExtraItem,
 } from '~/console/components/resource-extra-action';
+import { SyncStatusV2 } from '~/console/components/sync-status';
+import { findClusterStatus } from '~/console/hooks/use-cluster-status';
+import { useClusterStatusV2 } from '~/console/hooks/use-cluster-status-v2';
 import { useConsoleApi } from '~/console/server/gql/api-provider';
 import { IApps } from '~/console/server/gql/queries/app-queries';
 import {
   ExtractNodeType,
   parseName,
-  parseName as pn,
   parseUpdateOrCreatedBy,
   parseUpdateOrCreatedOn,
+  parseName as pn,
 } from '~/console/server/r-utils/common';
-import { handleError } from '~/lib/utils/common';
-import { toast } from '~/components/molecule/toast';
 import { useReload } from '~/lib/client/helpers/reloader';
-import { SyncStatusV2 } from '~/console/components/sync-status';
 import { useWatchReload } from '~/lib/client/helpers/socket/useWatch';
-import ListV2 from '~/console/components/listV2';
-import { useState } from 'react';
-import { Badge } from '~/components/atoms/badge';
-import { CopyContentToClipboard } from '~/console/components/common-console-components';
-import Tooltip from '~/components/atoms/tooltip';
+import { handleError } from '~/lib/utils/common';
 import { NN } from '~/root/lib/types/common';
-import { getClusterStatus } from '~/console/utils/commons';
-import HandleIntercept from './handle-intercept';
 import { IEnvironmentContext } from '../_layout';
+import HandleIntercept from './handle-intercept';
 
 const RESOURCE_NAME = 'app';
 type BaseType = ExtractNodeType<IApps>;
@@ -75,16 +79,12 @@ const InterceptPortView = ({
   devName: string;
 }) => {
   return (
-    <div className="flex flex-row items-center gap-md">
-      <Tooltip.Root
-        align="start"
-        side="top"
-        className="!max-w-fit "
+    <div className="flex flex-row items-center gap-md pulsable">
+      <TooltipV2
         content={
           <div>
             <span className="bodyMd-medium text-text-soft">
-              {' '}
-              intercepted to{' '}
+              Intercepted to{' '}
               <span className="bodyMd-medium text-text-strong">{devName}</span>
             </span>
             <div className="flex flex-row gap-md py-md">
@@ -115,7 +115,7 @@ const InterceptPortView = ({
             </span>
           </span>
         </div>
-      </Tooltip.Root>
+      </TooltipV2>
     </div>
   );
 };
@@ -181,7 +181,6 @@ interface IResource {
 const AppServiceView = ({ service }: { service: string }) => {
   return (
     <CopyContentToClipboard
-      toolTip
       content={service}
       toastMessage="App service url copied successfully."
     />
@@ -242,6 +241,18 @@ const GridView = ({ items = [], onAction: _ }: IResource) => {
 const ListView = ({ items = [], onAction }: IResource) => {
   const { environment, account, cluster } =
     useOutletContext<IEnvironmentContext>();
+  const { clusters } = useClusterStatusV2();
+
+  const [clusterOnlineStatus, setClusterOnlineStatus] = useState<
+    Record<string, boolean>
+  >({});
+  useEffect(() => {
+    const states: Record<string, boolean> = {};
+    Object.entries(clusters).forEach(([key, value]) => {
+      states[key] = findClusterStatus(value);
+    });
+    setClusterOnlineStatus(states);
+  }, [clusters]);
 
   return (
     <ListV2.Root
@@ -251,7 +262,7 @@ const ListView = ({ items = [], onAction }: IResource) => {
           {
             render: () => 'Name',
             name: 'name',
-            className: 'w-[180px]',
+            className: listClass.title,
           },
           {
             render: () => '',
@@ -261,7 +272,7 @@ const ListView = ({ items = [], onAction }: IResource) => {
           {
             render: () => '',
             name: 'flex-pre',
-            className: 'flex-1',
+            className: listClass.flex,
           },
           {
             render: () => 'Service',
@@ -271,32 +282,37 @@ const ListView = ({ items = [], onAction }: IResource) => {
           {
             render: () => '',
             name: 'flex-post',
-            className: 'flex-1',
+            className: listClass.flex,
           },
           {
             render: () => 'Status',
             name: 'status',
-            className: 'w-[180px] ',
+            className: 'min-w-[120px]',
+          },
+          {
+            render: () => '',
+            name: 'flex-post',
+            className: listClass.flex,
           },
           {
             render: () => 'Updated',
             name: 'updated',
-            className: 'w-[180px]',
+            className: listClass.updated,
           },
           {
             render: () => '',
             name: 'action',
-            className: 'w-[24px]',
+            className: listClass.action,
           },
         ],
         rows: items.map((i) => {
-          const isClusterOnline = getClusterStatus(cluster);
+          const isClusterOnline = clusterOnlineStatus[parseName(cluster)];
 
           const { name, id, updateInfo } = parseItem(i);
           return {
             columns: {
               name: {
-                render: () => <ListTitle title={name} subtitle={id} />,
+                render: () => <ListTitleV2 title={name} subtitle={id} />,
               },
               intercept: {
                 render: () =>
@@ -310,26 +326,24 @@ const ListView = ({ items = [], onAction }: IResource) => {
                   ) : null,
               },
               service: {
-                render: () => (
-                  <div className="flex w-fit truncate">
-                    <AppServiceView service={i.serviceHost || ''} />
-                  </div>
-                ),
+                render: () => <AppServiceView service={i.serviceHost || ''} />,
               },
               status: {
-                render: () => (
-                  <div className="inline-block">
-                    {isClusterOnline ? (
-                      <SyncStatusV2 item={i} />
-                    ) : (
-                      <Badge type="warning">Cluster Offline</Badge>
-                    )}
-                  </div>
-                ),
+                render: () => {
+                  if (environment.spec?.suspend) {
+                    return null;
+                  }
+
+                  if (!isClusterOnline) {
+                    return <Badge type="warning">Cluster Offline</Badge>;
+                  }
+
+                  return <SyncStatusV2 item={i} />;
+                },
               },
               updated: {
                 render: () => (
-                  <ListItem
+                  <ListItemV2
                     data={`${updateInfo.author}`}
                     subtitle={updateInfo.time}
                   />
