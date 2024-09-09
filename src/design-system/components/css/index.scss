@@ -1988,12 +1988,12 @@ video {
   height: 24px;
 }
 
-.h-\[32px\] {
-  height: 32px;
-}
-
 .h-\[36px\] {
   height: 36px;
+}
+
+.h-\[38px\] {
+  height: 38px;
 }
 
 .h-\[48px\] {
@@ -2023,6 +2023,10 @@ video {
 
 .h-screen {
   height: 100vh;
+}
+
+.h-sm {
+  height: 2px;
 }
 
 .h-xs {
