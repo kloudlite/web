@@ -27,14 +27,16 @@ interface ITabBase extends IBase {
   onClick?: (e: KeyboardEvent<HTMLSpanElement>) => void;
   prefix?: JSX.Element;
   layoutId: string;
+  toLabel?: string;
 }
 
-interface ITabs<T = string> extends IBase {
+interface ITabs<T = string> extends Omit<IBase, 'to'> {
   onChange?: (item: T) => void;
   value: T;
   className?: string;
   basePath?: string;
   children: ReactNode;
+  toLabel?: string;
 }
 
 export interface ITab<T = string> {
@@ -55,15 +57,24 @@ const TabBase = ({
   size = 'md',
   prefix,
   layoutId,
+  toLabel = 'to',
 }: ITabBase) => {
-  let Component: any = LinkComponent || 'div';
+  let Component: any = LinkComponent;
 
+  let tempToLabel = toLabel;
+
+  let extraProps = {} as any;
   if (to) {
     if (LinkComponent === 'div') {
-      Component = 'a';
+      Component = motion.a;
+      tempToLabel = 'href';
     } else {
       Component = LinkComponent;
     }
+  } else {
+    extraProps = {
+      role: 'button',
+    };
   }
 
   const [hoverd, setHoverd] = useState(false);
@@ -99,14 +110,8 @@ const TabBase = ({
       >
         <Component
           // eslint-disable-next-line no-nested-ternary
-          {...(to
-            ? Component === 'a'
-              ? { href: to }
-              : { to }
-            : {
-                role: 'button',
-              })}
-          prefetch="intent"
+          {...{ [tempToLabel]: to }}
+          {...extraProps}
           onClick={onClick}
           className={cn(
             'relative z-10 tab-item outline-none',
@@ -176,6 +181,7 @@ const Root = forwardRef<HTMLDivElement, ITabs<any>>(
       className = '',
       basePath = '',
       children,
+      toLabel,
     },
     ref,
   ) => {
@@ -224,6 +230,7 @@ const Root = forwardRef<HTMLDivElement, ITabs<any>>(
                     LinkComponent={LinkComponent}
                     variant={variant}
                     size={size}
+                    toLabel={toLabel}
                   />
                 </div>
               );
