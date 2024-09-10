@@ -449,7 +449,45 @@ const consts = {
           'Unlimited clusters',
           'Unlimited members',
         ],
-        action: <JoinProvidersDialog />,
+        action: <JoinProvidersDialog size="lg" />,
+      },
+      {
+        type: 'Scale',
+        id: '2',
+        price: (
+          <div className="wb-flex wb-flex-row wb-gap-lg wb-items-baseline">
+            <span className="wb-heading4xl">$20</span>
+            <span className="wb-bodyLg !wb-font-medium">/ user / month</span>
+          </div>
+        ),
+        descriptionn: 'For growing teams that focused on collaboration',
+        features: [
+          'Role based access control',
+          'AI assisted workflows (coming soon...)',
+        ],
+        featurePrecontent: (
+          <div className="wb-flex wb-flex-row wb-items-center wb-gap-xl wb-text-text-default">
+            <span>
+              <ArrowLeftLg size={20} />
+            </span>
+            <span className="wb-headingMd">Everything of Free, plus...</span>
+          </div>
+        ),
+        action: (
+          <Button
+            content="Contact sales"
+            variant="basic"
+            suffix={<ArrowRight />}
+            block
+            size="lg"
+            linkComponent={Link}
+            toLabel="href"
+            to="/contact-us"
+          />
+        ),
+        selected: false,
+        fade: false,
+        badge: false,
       },
       {
         type: 'Enterprise',
@@ -462,9 +500,7 @@ const consts = {
             <span>
               <ArrowLeftLg size={20} />
             </span>
-            <span className="wb-headingMd">
-              Everything of Essential, plus...
-            </span>
+            <span className="wb-headingMd">Everything of Scale, plus...</span>
           </div>
         ),
         action: (
@@ -472,51 +508,13 @@ const consts = {
             content="Contact sales"
             variant="basic"
             suffix={<ArrowRight />}
-            size="lg"
             block
+            size="lg"
             linkComponent={Link}
             toLabel="href"
             to="/contact-us"
           />
         ),
-      },
-      {
-        type: 'Scale',
-        id: '2',
-        price: (
-          <div className="wb-flex wb-flex-row wb-gap-lg wb-items-baseline">
-            <span className="wb-heading4xl">$10</span>
-            <span className="wb-bodyLg">/per user</span>
-          </div>
-        ),
-        descriptionn: 'For growing teams that focused on collaboration',
-        features: [
-          'Role based access control',
-          'AI assisted workflows (coming soon...)',
-        ],
-        featurePrecontent: (
-          <div className="wb-flex wb-flex-row wb-items-center wb-gap-xl wb-text-text-disabled">
-            <span>
-              <ArrowLeftLg size={20} />
-            </span>
-            <span className="wb-headingMd">
-              Everything of Enterprise, plus...
-            </span>
-          </div>
-        ),
-        action: (
-          <Button
-            content="Upgrade now"
-            variant="basic"
-            suffix={<ArrowRight />}
-            size="lg"
-            block
-            disabled
-          />
-        ),
-        selected: false,
-        fade: true,
-        badge: <Badge type="neutral">Coming soon</Badge>,
       },
     ],
   },

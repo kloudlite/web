@@ -168,11 +168,11 @@ export default {
           },
           {
             title: 'Terms of services',
-            to: '/terms-of-services',
+            to: '/legal/terms-of-services',
           },
           {
             title: 'Privacy policy',
-            to: '/privacy-policy',
+            to: '/legal/privacy-policy',
           },
         ],
       },

@@ -61,17 +61,6 @@
       "header": "secondary"
     }
   },
-  "privacy-policy-2": {
-    "title": "Privacy Policy 2",
-    "type": "page",
-    "display": "hidden",
-    "theme": {
-      "layout": "raw",
-      "sidebar": false,
-      "toc": false,
-      "header": "secondary"
-    }
-  },
   "terms-of-services": {
     "title": "Terms of Services",
     "type": "page",

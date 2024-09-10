@@ -17,7 +17,7 @@ export const InnerContent = ({
   return (
     <div
       className={cn(
-        'wb-bg-surface-basic-subdued wb-h-full wb-px-6xl',
+        'wb-bg-surface-basic-subdued wb-h-full wb-px-3xl md:wb-px-6xl',
         className,
       )}
     >

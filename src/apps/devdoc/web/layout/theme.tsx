@@ -89,7 +89,6 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
   }, [state]);
 
   useEffect(() => {
-    console.log(asPath === '/contact-us', asPath);
     if (!asPath.startsWith('/contact-us')) {
       deleteCookie(consts.contactUs.cookies.submitCookie);
     }

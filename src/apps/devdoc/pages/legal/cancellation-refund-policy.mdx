@@ -1,0 +1,17 @@
+import { InnerContent } from '~/app/components/website/privacy-container';
+import { Headings } from '~/app/components/website/privacy/components';
+import Layout from '~/app/components/website/legal-layout';
+import CancellationRefund from '~/app/components/website/privacy/cancellation-refund.mdx';
+
+export const { subtitle, label } = {
+    label: 'Cancellation & Refund Policy',
+    subtitle: <Headings>Effective Date: july 01, 2024</Headings>,
+  };
+
+export const className = 'wb-pb-6xl';
+
+<Layout>
+  <InnerContent className={className} title={label} subTitle={subtitle}>
+    <CancellationRefund />
+  </InnerContent>
+</Layout>
