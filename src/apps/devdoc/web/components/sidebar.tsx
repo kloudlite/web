@@ -19,13 +19,16 @@ import {
   useState,
 } from 'react';
 import scrollIntoView from 'scroll-into-view-if-needed';
-import { ChevronRight } from '@jengaicons/react';
+import { ChevronRight, GithubLogoFill } from '@jengaicons/react';
 import { Collapse } from './collapse';
 import { Anchor } from './anchor';
 import useMenu from '../utils/use-menu';
 import { cn } from '../utils/commons';
 import useConfig from '../utils/use-config';
 import HeaderSecondary, { MobileMenu } from './header-secondary';
+import JoinProvidersDialog from './join-provider-dialog';
+import Link from 'next/link';
+import Button from './button';
 
 const TreeState: Record<string, boolean> = Object.create(null);
 
@@ -109,7 +112,8 @@ function FolderImpl({ item, anchors }: FolderProps): ReactElement {
     });
   }
 
-  const isLink = 'withIndexPage' in item && item.withIndexPage;
+  //make every page isLink
+  const isLink = ('withIndexPage' in item && item.withIndexPage) || true;
   // use button when link don't have href because it impacts on SEO
   const ComponentToUse = isLink ? Anchor : 'button';
 
@@ -442,6 +446,35 @@ export function Sidebar({
                         // Always show the anchor links on mobile (`md`).
                         anchors={anchors}
                       />
+
+                      <div className={cn('wb-flex wb-flex-col')}>
+                        {config.headerSecondary?.items
+                          .filter(
+                            (f) =>
+                              !fullDirectories.find((ff) => ff.route === f.to),
+                          )
+                          ?.map((item) => (
+                            <Link
+                              href={item.to}
+                              key={item.to}
+                              className="wb-px-2xl wb-py-lg wb-text-text-soft wb-bodyMd hover:wb-text-text-default"
+                            >
+                              {item.title}
+                            </Link>
+                          ))}
+                        <div className="lg:wb-hidden wb-flex wb-flex-col wb-gap-xl wb-pt-2xl">
+                          <Button
+                            prefix={<GithubLogoFill />}
+                            content="Github"
+                            variant="basic"
+                            block
+                            linkComponent={Link}
+                            toLabel="href"
+                            to={config.gitRepoUrl}
+                          />
+                          <JoinProvidersDialog />
+                        </div>
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -462,17 +495,20 @@ function Menu({
 }: MenuProps): ReactElement {
   return (
     <ul className={cn(classes.list, className)}>
-      {directories.map((item) =>
-        !onlyCurrentDocs || item.isUnderCurrentDocsTree ? (
-          item.type === 'menu' ||
-          (item.children && (item.children.length || !item.withIndexPage)) ? (
-            <Folder key={item.name} item={item} anchors={anchors} />
-          ) : //@ts-ignore
-          item.frontMatter && item.frontMatter.draft === true ? null : (
-            <File key={item.name} item={item} base={base} />
-          )
-        ) : null,
-      )}
+      {directories
+        // @ts-ignore
+        .filter((d) => d?.showinmenu !== false)
+        .map((item) =>
+          !onlyCurrentDocs || item.isUnderCurrentDocsTree ? (
+            item.type === 'menu' ||
+            (item.children && (item.children.length || !item.withIndexPage)) ? (
+              <Folder key={item.name} item={item} anchors={anchors} />
+            ) : //@ts-ignore
+            item.frontMatter && item.frontMatter.draft === true ? null : (
+              <File key={item.name} item={item} base={base} />
+            )
+          ) : null,
+        )}
     </ul>
   );
 }

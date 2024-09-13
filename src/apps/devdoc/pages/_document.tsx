@@ -85,7 +85,6 @@ export default class Document extends NextDocument {
         <body>
           <Main />
           <NextScript />
-          <script> </script>
         </body>
       </Html>
     );

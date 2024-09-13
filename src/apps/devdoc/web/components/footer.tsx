@@ -3,7 +3,7 @@
 import { Button } from 'kl-design-system/atoms/button';
 import Link from 'next/link';
 import { ReactNode, isValidElement } from 'react';
-import { IConfig } from '../utils/use-config';
+import useConfig from '../utils/use-config';
 import Wrapper from './wrapper';
 
 const FooterLink = ({ to, children }: { to: string; children: ReactNode }) => {
@@ -201,7 +201,8 @@ const FooterXlAndUp = ({ brand, extra, menu }: IFooterItem) => {
   );
 };
 
-const Footer = ({ config }: { config: IConfig }) => {
+const Footer = () => {
+  const { config } = useConfig();
   if (!config || !config.footer) {
     return null;
   }

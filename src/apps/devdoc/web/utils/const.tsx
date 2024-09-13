@@ -2,7 +2,6 @@
 import {
   ArrowLeftLg,
   Config,
-  GearSix,
   Money,
   OpenSource,
   PhoneCall,
@@ -12,7 +11,6 @@ import {
 } from '@jengaicons/react';
 
 import Link from 'next/link';
-import { Badge } from 'kl-design-system/atoms/badge';
 import BlogCover from '~/public/blog/blog-cover.jpeg';
 
 import profileKarthik from '~/images/about-us/karthik-thirumalasetti.png';
@@ -88,6 +86,7 @@ import RedPlutoSvg from '../icons/RedPluto';
 import TalescaleSvg from '../icons/Talescale';
 import Button from '../components/button';
 import JoinProvidersDialog from '../components/join-provider-dialog';
+import { authUrl } from './config';
 
 export const linkedInPrefix = 'https://www.linkedin.com/in/';
 export const githubPrefix = 'https://github.com/';
@@ -826,8 +825,22 @@ const consts = {
     },
   },
   eventBanner: {
-    message:
-      'Next-Gen Workflows Streamline Development with Workspaces & Environments',
+    message: (
+      <>
+        <div className="xl:wb-block wb-hidden">
+          Code Unbound: No Builds,No Deploys. The New Era of Development
+        </div>
+        <div className="xl:wb-hidden">
+          Code Unbound:{' '}
+          <span className="wb-block md:wb-inline">No Builds,No Deploys.</span>
+        </div>
+      </>
+    ),
+    time: '12:00-1:00 pm',
+    date: 'Sep 14, 2024',
+    enabled: false,
+    linkContent: 'Register today',
+    link: authUrl + '/signup',
   },
   contactUs: {
     cookies: {

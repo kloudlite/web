@@ -211,7 +211,7 @@ const ThankYouMessage = () => {
       <div className="wb-flex wb-flex-col wb-gap-3xl">
         <h3 className="wb-heading4xl wb-text-text-default">Thank you!</h3>
         <p className="wb-bodyXl wb-text-text-default">
-          Thank you for contact Kloudlite. We’ll get back to you as soon as
+          Thank you for contacting Kloudlite. We'll get back to you as soon as
           possible.
         </p>
       </div>
