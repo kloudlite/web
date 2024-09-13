@@ -1,9 +1,4 @@
-import { useNavigate, useOutletContext } from '@remix-run/react';
-import Select from '~/components/atoms/select';
-import { NameIdView } from '~/console/components/name-id-view';
-import { useConsoleApi } from '~/console/server/gql/api-provider';
-import useForm, { dummyEvent } from '~/root/lib/client/hooks/use-form';
-import Yup from '~/root/lib/server/helpers/yup';
+import { useNavigate, useOutletContext, useParams } from '@remix-run/react';
 import {
   FormEventHandler,
   ReactNode,
@@ -12,26 +7,33 @@ import {
   useRef,
   useState,
 } from 'react';
-import {
-  IMSvTemplate,
-  IMSvTemplates,
-} from '~/console/server/gql/queries/managed-templates-queries';
-import { Switch } from '~/components/atoms/switch';
+import { toast } from 'react-toastify';
 import { NumberInput, TextInput } from '~/components/atoms/input';
-import { handleError } from '~/root/lib/utils/common';
+import Select from '~/components/atoms/select';
+import { Switch } from '~/components/atoms/switch';
 import { titleCase } from '~/components/utils';
-import { flatMapValidations, flatM } from '~/console/utils/commons';
-import MultiStepProgress, {
-  useMultiStepProgress,
-} from '~/console/components/multi-step-progress';
-import MultiStepProgressWrapper from '~/console/components/multi-step-progress-wrapper';
 import {
   BottomNavigation,
   ReviewComponent,
 } from '~/console/components/commons';
+import MultiStepProgress, {
+  useMultiStepProgress,
+} from '~/console/components/multi-step-progress';
+import MultiStepProgressWrapper from '~/console/components/multi-step-progress-wrapper';
+import { NameIdView } from '~/console/components/name-id-view';
+import { findClusterStatus } from '~/console/hooks/use-cluster-status';
+import { useConsoleApi } from '~/console/server/gql/api-provider';
+import {
+  IMSvTemplate,
+  IMSvTemplates,
+} from '~/console/server/gql/queries/managed-templates-queries';
 import { parseName, parseNodes } from '~/console/server/r-utils/common';
 import { keyconstants } from '~/console/server/r-utils/key-constants';
-import { toast } from 'react-toastify';
+import { ensureAccountClientSide } from '~/console/server/utils/auth-utils';
+import { flatM, flatMapValidations } from '~/console/utils/commons';
+import useForm, { dummyEvent } from '~/root/lib/client/hooks/use-form';
+import Yup from '~/root/lib/server/helpers/yup';
+import { handleError } from '~/root/lib/utils/common';
 import { IAccountContext } from '../_layout';
 
 const valueRender = ({ label, icon }: { label: string; icon: string }) => {
@@ -73,10 +75,9 @@ const RenderField = ({
         onChange={({ target }) => {
           onChange(`res.${field.name}`)(
             dummyEvent(
-              `${parseFloat(target.value) * (field.multiplier || 1)}${
-                field.unit
-              }`,
-            ),
+              `${parseFloat(target.value) * (field.multiplier || 1)}${field.unit
+              }`
+            )
           );
         }}
         suffix={field.displayUnit}
@@ -100,9 +101,8 @@ const RenderField = ({
   if (field.inputType === 'Resource') {
     return (
       <div className="flex flex-col gap-md">
-        <div className="bodyMd-medium text-text-default">{`${field.label}${
-          field.required ? ' *' : ''
-        }`}</div>
+        <div className="bodyMd-medium text-text-default">{`${field.label}${field.required ? ' *' : ''
+          }`}</div>
         <div className="flex flex-row gap-xl items-center">
           <div className="flex flex-row gap-xl items-end flex-1 ">
             <div className="flex-1">
@@ -115,18 +115,16 @@ const RenderField = ({
                 onChange={({ target }) => {
                   onChange(`res.${field.name}.min`)(
                     dummyEvent(
-                      `${parseFloat(target.value) * (field.multiplier || 1)}${
-                        field.unit
-                      }`,
-                    ),
+                      `${parseFloat(target.value) * (field.multiplier || 1)}${field.unit
+                      }`
+                    )
                   );
                   if (qos) {
                     onChange(`res.${field.name}.max`)(
                       dummyEvent(
-                        `${parseFloat(target.value) * (field.multiplier || 1)}${
-                          field.unit
-                        }`,
-                      ),
+                        `${parseFloat(target.value) * (field.multiplier || 1)}${field.unit
+                        }`
+                      )
                     );
                   }
                 }}
@@ -144,10 +142,9 @@ const RenderField = ({
                   onChange={({ target }) => {
                     onChange(`res.${field.name}.max`)(
                       dummyEvent(
-                        `${parseFloat(target.value) * (field.multiplier || 1)}${
-                          field.unit
-                        }`,
-                      ),
+                        `${parseFloat(target.value) * (field.multiplier || 1)}${field.unit
+                        }`
+                      )
                     );
                   }}
                   suffix={field.displayUnit}
@@ -197,11 +194,9 @@ const TemplateView = ({
 }) => {
   return (
     <form className="flex flex-col gap-3xl" onSubmit={handleSubmit}>
-      <div className="bodyMd text-text-soft">
-        Create your integrated services.
-      </div>
+      <div className="bodyMd text-text-soft">Create your managed services.</div>
       <Select
-        label="Template"
+        label="Managed service templates"
         size="lg"
         placeholder="Select templates"
         value={values.selectedTemplate?.template.name}
@@ -321,7 +316,7 @@ const FieldView = ({
         showclear
         error={!!errors.clusterName}
         message={errors.clusterName}
-        // loading={cIsLoading || byokCIsLoading}
+      // loading={cIsLoading || byokCIsLoading}
       />
 
       {/* <Select
@@ -387,7 +382,7 @@ const ReviewView = ({
 }) => {
   const renderFieldView = () => {
     const fields = Object.entries(values.res).filter(
-      ([k, _v]) => !['resources'].includes(k),
+      ([k, _v]) => !['resources'].includes(k)
     );
     if (fields.length > 0) {
       return (
@@ -543,14 +538,16 @@ const ManagedServiceLayout = () => {
   });
 
   const [clusterList, setClusterList] = useState<any[]>([]);
+  const params = useParams();
 
   const getClusters = useCallback(async () => {
+    ensureAccountClientSide(params);
     try {
       const byokClusters = await api.listByokClusters({});
       const data = parseNodes(byokClusters.data).map((c) => ({
         label: c.displayName,
         value: parseName(c),
-        ready: true,
+        ready: findClusterStatus(c),
         render: () => (
           <ClusterSelectItem label={c.displayName} value={parseName(c)} />
         ),
@@ -588,7 +585,7 @@ const ManagedServiceLayout = () => {
           'Cluster name is required',
           (v) => {
             return !(currentStep === 2 && !v);
-          },
+          }
         ),
         selectedTemplate: Yup.object({}).required('Template is required.'),
         // @ts-ignore
@@ -608,9 +605,9 @@ const ManagedServiceLayout = () => {
                     (acc: any, curr: any) => {
                       return { ...acc, [curr.name]: curr };
                     },
-                    {},
-                  ),
-                ),
+                    {}
+                  )
+                )
               );
             }
 
@@ -660,7 +657,7 @@ const ManagedServiceLayout = () => {
             if (e) {
               throw e[0];
             }
-            toast.success('Integrated service created successfully');
+            toast.success('Managed service created successfully');
             navigate(rootUrl);
           } catch (err) {
             handleError(err);
@@ -693,7 +690,7 @@ const ManagedServiceLayout = () => {
           ...flatM(
             selectedTemplate?.template?.fields.reduce((acc, curr) => {
               return { ...acc, [curr.name]: curr };
-            }, {}),
+            }, {})
           ),
         },
       }));
@@ -701,25 +698,26 @@ const ManagedServiceLayout = () => {
   }, [values.selectedTemplate]);
 
   useEffect(() => {
-    if (clusterList.length > 0) {
-      setValues((v) => ({
-        ...v,
-        clusterName: clusterList.find((c) => c.ready)?.value || '',
-      }));
-    }
+    setValues((v) => ({
+      ...v,
+      clusterName:
+        clusterList.length > 0
+          ? clusterList.find((c) => c.ready)?.value || ''
+          : '',
+    }));
   }, [clusterList]);
 
   return (
     <MultiStepProgressWrapper
-      title="Let’s create new integrated service."
+      title="Let’s create new managed service."
       subTitle="Simplify Collaboration and Enhance Productivity with Kloudlite teams"
       backButton={{
-        content: 'Back to integrated services',
+        content: 'Back to Managed services',
         to: rootUrl,
       }}
     >
       <MultiStepProgress.Root currentStep={currentStep} jumpStep={jumpStep}>
-        <MultiStepProgress.Step label="Select template" step={1}>
+        <MultiStepProgress.Step label="Select Managed Service" step={1}>
           <TemplateView
             isLoading={isLoading}
             templates={msvtemplates}

@@ -2,18 +2,18 @@ import gql from 'graphql-tag';
 import { IExecutor } from '~/root/lib/server/helpers/execute-query-with-context';
 import { NN } from '~/root/lib/types/common';
 import {
+  ConsoleCloneEnvironmentMutation,
+  ConsoleCloneEnvironmentMutationVariables,
   ConsoleCreateEnvironmentMutation,
   ConsoleCreateEnvironmentMutationVariables,
+  ConsoleDeleteEnvironmentMutation,
+  ConsoleDeleteEnvironmentMutationVariables,
   ConsoleGetEnvironmentQuery,
   ConsoleGetEnvironmentQueryVariables,
   ConsoleListEnvironmentsQuery,
   ConsoleListEnvironmentsQueryVariables,
   ConsoleUpdateEnvironmentMutation,
   ConsoleUpdateEnvironmentMutationVariables,
-  ConsoleDeleteEnvironmentMutation,
-  ConsoleDeleteEnvironmentMutationVariables,
-  ConsoleCloneEnvironmentMutation,
-  ConsoleCloneEnvironmentMutationVariables,
 } from '~/root/src/generated/gql/server';
 
 export type IEnvironment = NN<
@@ -60,6 +60,7 @@ export const environmentQueries = (executor: IExecutor) => ({
               privateIngressClass
               publicIngressClass
             }
+            suspend
             targetNamespace
           }
           status {
@@ -172,6 +173,7 @@ export const environmentQueries = (executor: IExecutor) => ({
                   privateIngressClass
                   publicIngressClass
                 }
+                suspend
                 targetNamespace
               }
               status {

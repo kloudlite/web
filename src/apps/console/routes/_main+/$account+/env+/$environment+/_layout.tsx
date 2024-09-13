@@ -1,11 +1,4 @@
 import {
-  BackingServices,
-  CirclesFour,
-  GearSix,
-  File,
-  // TreeStructure,
-} from '~/console/components/icons';
-import {
   Link,
   Outlet,
   useLoaderData,
@@ -13,26 +6,36 @@ import {
   useParams,
 } from '@remix-run/react';
 import { useState } from 'react';
+import Breadcrum from '~/console/components/breadcrum';
 import { CommonTabs } from '~/console/components/common-navbar-tabs';
+import {
+  BackingServices,
+  CirclesFour,
+  File,
+  GearSix,
+} from '~/console/components/icons';
 import HandleScope from '~/console/page-components/handle-environment';
+import { IEnvironment } from '~/console/server/gql/queries/environment-queries';
+import { ILoginUrls, ILogins } from '~/console/server/gql/queries/git-queries';
 import { GQLServerHandler } from '~/console/server/gql/saved-queries';
 import { parseName } from '~/console/server/r-utils/common';
 import { ensureAccountSet } from '~/console/server/utils/auth-utils';
+import { BreadcrumSlash, tabIconSize } from '~/console/utils/commons';
 import { SubNavDataProvider } from '~/lib/client/hooks/use-create-subnav-action';
 import { IRemixCtx, LoaderResult } from '~/lib/types/common';
-import { BreadcrumSlash, tabIconSize } from '~/console/utils/commons';
-import { IEnvironment } from '~/console/server/gql/queries/environment-queries';
-import { ILoginUrls, ILogins } from '~/console/server/gql/queries/git-queries';
 import logger from '~/root/lib/client/helpers/log';
-import Breadcrum from '~/console/components/breadcrum';
 import { handleError } from '~/root/lib/utils/common';
-import { ICluster } from '~/console/server/gql/queries/cluster-queries';
 import { IAccountContext } from '../../_layout';
 
 const Environment = () => {
   const rootContext = useOutletContext<IAccountContext>();
-  const { environment, managedTemplates, loginUrls, logins, cluster } =
-    useLoaderData();
+  const {
+    environment,
+    managedTemplates,
+    loginUrls,
+    logins,
+    // cluster
+  } = useLoaderData();
 
   return (
     <SubNavDataProvider>
@@ -43,7 +46,7 @@ const Environment = () => {
           managedTemplates,
           loginUrls,
           logins,
-          cluster,
+          // cluster,
         }}
       />
     </SubNavDataProvider>
@@ -65,7 +68,7 @@ const tabs = [
     label: (
       <span className="flex flex-row items-center gap-lg">
         <BackingServices size={tabIconSize} />
-        Integrated Resources
+        Imported Managed Resources
       </span>
     ),
     to: '/managed-resources',
@@ -309,15 +312,15 @@ export const loader = async (ctx: IRemixCtx) => {
       throw errors[0];
     }
 
-    const { data: cData, errors: cErrors } = await GQLServerHandler(
-      ctx.request
-    ).getCluster({
-      name: data.clusterName,
-    });
+    // const { data: cData, errors: cErrors } = await GQLServerHandler(
+    //   ctx.request
+    // ).getCluster({
+    //   name: data.clusterName,
+    // });
 
-    if (cErrors) {
-      throw cErrors[0];
-    }
+    // if (cErrors) {
+    //   throw cErrors[0];
+    // }
 
     const { data: logins, errors: loginErrors } = await GQLServerHandler(
       ctx.request
@@ -340,7 +343,7 @@ export const loader = async (ctx: IRemixCtx) => {
       loginUrls,
       logins,
       environment: envData,
-      cluster: cData,
+      // cluster: cData,
     };
   } catch (err) {
     logger.error(err);
@@ -348,7 +351,7 @@ export const loader = async (ctx: IRemixCtx) => {
       logins: ILogins;
       loginUrls: ILoginUrls;
       environment: IEnvironment;
-      cluster: ICluster;
+      // cluster: ICluster;
     };
   }
 };
@@ -357,7 +360,7 @@ export interface IEnvironmentContext extends IAccountContext {
   logins: LoaderResult<typeof loader>['logins'];
   loginUrls: LoaderResult<typeof loader>['loginUrls'];
   environment: LoaderResult<typeof loader>['environment'];
-  cluster: LoaderResult<typeof loader>['cluster'];
+  // cluster: LoaderResult<typeof loader>['cluster'];
 }
 
 export default Environment;

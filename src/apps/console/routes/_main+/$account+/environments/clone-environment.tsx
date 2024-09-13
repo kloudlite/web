@@ -1,9 +1,12 @@
 /* eslint-disable react/destructuring-assignment */
+import { useCallback, useEffect, useState } from 'react';
+import Select from '~/components/atoms/select';
 import Popup from '~/components/molecule/popup';
 import { toast } from '~/components/molecule/toast';
 import CommonPopupHandle from '~/console/components/common-popup-handle';
 import { NameIdView } from '~/console/components/name-id-view';
 import { IDialogBase } from '~/console/components/types.d';
+import { findClusterStatus } from '~/console/hooks/use-cluster-status';
 import { useConsoleApi } from '~/console/server/gql/api-provider';
 import { IEnvironments } from '~/console/server/gql/queries/environment-queries';
 import {
@@ -15,8 +18,6 @@ import { useReload } from '~/root/lib/client/helpers/reloader';
 import useForm, { dummyEvent } from '~/root/lib/client/hooks/use-form';
 import Yup from '~/root/lib/server/helpers/yup';
 import { handleError } from '~/root/lib/utils/common';
-import Select from '~/components/atoms/select';
-import { useCallback, useEffect, useState } from 'react';
 
 type IDialog = IDialogBase<ExtractNodeType<IEnvironments>>;
 
@@ -50,7 +51,7 @@ const Root = (props: IDialog) => {
       const data = parseNodes(byokClusters.data).map((c) => ({
         label: c.displayName,
         value: parseName(c),
-        ready: true,
+        ready: findClusterStatus(c),
         render: () => (
           <ClusterSelectItem label={c.displayName} value={parseName(c)} />
         ),

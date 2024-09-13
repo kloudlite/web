@@ -394,6 +394,19 @@ query consoleGetCluster($name: String!) {
   }
 }
 
+query consoleListClusterStatus($pagination: CursorPaginationIn) {
+  infra_listBYOKClusters(pagination: $pagination) {
+    edges {
+      node {
+        lastOnlineAt
+        metadata {
+          name
+        }
+      }
+    }
+  }
+}
+
 query consoleGetKubeConfig($name: String!) {
   infra_getCluster(name: $name) {
     adminKubeconfig {
@@ -739,6 +752,7 @@ query consoleGetEnvironment($name: String!) {
         privateIngressClass
         publicIngressClass
       }
+      suspend
       targetNamespace
     }
     status {
@@ -814,6 +828,7 @@ query consoleListEnvironments($search: SearchEnvironments, $pq: CursorPagination
             privateIngressClass
             publicIngressClass
           }
+          suspend
           targetNamespace
         }
         status {
@@ -3990,6 +4005,51 @@ mutation consoleDeleteImagePullSecrets($name: String!) {
   core_deleteImagePullSecret(name: $name)
 }
 
+query consoleGetImagePullSecret($name: String!) {
+  core_getImagePullSecret(name: $name) {
+    accountName
+    createdBy {
+      userEmail
+      userId
+      userName
+    }
+    creationTime
+    displayName
+    dockerConfigJson
+    environments
+    format
+    id
+    lastUpdatedBy {
+      userEmail
+      userId
+      userName
+    }
+    markedForDeletion
+    metadata {
+      annotations
+      creationTimestamp
+      deletionTimestamp
+      generation
+      labels
+      name
+      namespace
+    }
+    recordVersion
+    registryPassword
+    registryURL
+    registryUsername
+    syncStatus {
+      action
+      error
+      lastSyncedAt
+      recordVersion
+      state
+      syncScheduledAt
+    }
+    updateTime
+  }
+}
+
 query consoleListImagePullSecrets($search: SearchImagePullSecrets, $pq: CursorPaginationIn) {
   core_listImagePullSecrets(search: $search, pq: $pq) {
     edges {
@@ -4392,6 +4452,57 @@ query consoleListImportedManagedResources($envName: String!, $search: SearchImpo
           }
           updateTime
         }
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+      hasPrevPage
+      startCursor
+    }
+    totalCount
+  }
+}
+
+mutation consoleDeleteRegistryImage($image: String!) {
+  core_deleteRegistryImage(image: $image)
+}
+
+query consoleGetRegistryImage($image: String!) {
+  core_getRegistryImage(image: $image) {
+    accountName
+    creationTime
+    id
+    imageName
+    imageTag
+    markedForDeletion
+    meta
+    recordVersion
+    updateTime
+  }
+}
+
+query consoleGetRegistryImageUrl($image: String!, $meta: Map!) {
+  core_getRegistryImageURL(image: $image, meta: $meta) {
+    scriptUrl
+    url
+  }
+}
+
+query consoleListRegistryImages($pq: CursorPaginationIn) {
+  core_listRegistryImages(pq: $pq) {
+    edges {
+      cursor
+      node {
+        accountName
+        creationTime
+        id
+        imageName
+        imageTag
+        markedForDeletion
+        meta
+        recordVersion
+        updateTime
       }
     }
     pageInfo {
@@ -6130,6 +6241,33 @@ query authCli_getEnvironment($name: String!) {
   }
 }
 
+mutation authCli_cloneEnvironment($clusterName: String!, $sourceEnvName: String!, $destinationEnvName: String!, $displayName: String!, $environmentRoutingMode: Github__com___kloudlite___operator___apis___crds___v1__EnvironmentRoutingMode!) {
+  core_cloneEnvironment(
+    clusterName: $clusterName
+    sourceEnvName: $sourceEnvName
+    destinationEnvName: $destinationEnvName
+    displayName: $displayName
+    environmentRoutingMode: $environmentRoutingMode
+  ) {
+    id
+    displayName
+    clusterName
+    metadata {
+      name
+      namespace
+    }
+    status {
+      isReady
+      message {
+        RawMessage
+      }
+    }
+    spec {
+      targetNamespace
+    }
+  }
+}
+
 query authCli_getSecret($envName: String!, $name: String!) {
   core_getSecret(envName: $envName, name: $name) {
     displayName
@@ -6347,6 +6485,7 @@ query authCli_getRemoteLogin($loginId: String!, $secret: String!) {
 mutation authCli_createClusterReference($cluster: BYOKClusterIn!) {
   infra_createBYOKCluster(cluster: $cluster) {
     id
+    clusterToken
     metadata {
       name
     }
@@ -6481,6 +6620,24 @@ query authCli_listImportedManagedResources($envName: String!, $search: SearchImp
       hasNextPage
       hasPrevPage
       startCursor
+    }
+    totalCount
+  }
+}
+
+query authCli_listByokClusters($search: SearchCluster, $pagination: CursorPaginationIn) {
+  infra_listBYOKClusters(search: $search, pagination: $pagination) {
+    edges {
+      cursor
+      node {
+        displayName
+        id
+        metadata {
+          name
+          namespace
+        }
+        updateTime
+      }
     }
     totalCount
   }

@@ -1,19 +1,21 @@
-import { useNavigate, useLoaderData } from '@remix-run/react';
-import getQueries from '~/root/lib/server/helpers/get-queries';
+import { useLoaderData, useNavigate } from '@remix-run/react';
+import { useAuthApi } from '~/auth/server/gql/api-provider';
 import { BrandLogo } from '~/components/branding/brand-logo';
 import { toast } from '~/components/molecule/toast';
-import { handleError } from '~/root/lib/utils/common';
-import { IRemixCtx } from '~/root/lib/types/common';
+import { getCookie } from '~/root/lib/app-setup/cookies';
 import useDebounce from '~/root/lib/client/hooks/use-debounce';
-import { useAuthApi } from '~/auth/server/gql/api-provider';
+import getQueries from '~/root/lib/server/helpers/get-queries';
+import { IRemixCtx } from '~/root/lib/types/common';
+import { handleError } from '~/root/lib/utils/common';
 
 export const decodeState = (str: string) =>
   Buffer.from(str, 'base64url').toString('utf8');
 
 const CallBack = () => {
-  const { query, state, provider, setupAction } = useLoaderData();
+  const { query, state, provider, setupAction, callbackUrl } = useLoaderData();
   const api = useAuthApi();
   const navigate = useNavigate();
+
   useDebounce(
     () => {
       (async () => {
@@ -68,7 +70,12 @@ const CallBack = () => {
             toast.error(errors[0].message);
             navigate('/');
           } else {
-            toast.success('Login Successful');
+            toast.success('Login Successfull');
+            if (callbackUrl) {
+              getCookie().remove('callback_url');
+              window.location.href = callbackUrl;
+              return;
+            }
             navigate('/');
           }
         } catch (err) {
@@ -91,6 +98,8 @@ const CallBack = () => {
 
 export const loader = async (ctx: IRemixCtx) => {
   const { provider } = ctx.params;
+  const callbackUrl = getCookie(ctx).get('callback_url');
+
   const queries = getQueries(ctx);
   const {
     state,
@@ -108,6 +117,7 @@ export const loader = async (ctx: IRemixCtx) => {
     query: queries,
     state: queryData?.state || state,
     provider,
+    callbackUrl,
   };
 };
 

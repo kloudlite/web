@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 // import logger from '~/root/lib/client/helpers/log';
-import p from './package.json' with { type: 'json' };
+import p from './package.json' assert { type: 'json' };
 
 const {
   externalDependencies,
@@ -31,7 +31,7 @@ function readDirectoryRecursively(directoryPath, p) {
         ...result,
         ...readDirectoryRecursively(
           path.join(directoryPath, file),
-          `${p}/${file}`,
+          `${p}/${file}`
         ),
       };
     } else if (
