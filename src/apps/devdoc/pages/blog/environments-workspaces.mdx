@@ -23,9 +23,9 @@ It's a personalized space equipped with all the necessary tools and software a d
 to be productive. 
 
 This includes:
-- **IDEs:** Tools like Visual Studio Code, IntelliJ, or PyCharm.
-- **Dependent Software:** Libraries, frameworks, and other dependencies required for development.
-- **Developer Tools:** Debuggers, profilers, linters, and other utilities that aid in writing and maintaining code.
+- IDEs: Tools like Visual Studio Code, IntelliJ, or PyCharm.
+- Dependent Software: Libraries, frameworks, and other dependencies required for development.
+- Developer Tools: Debuggers, profilers, linters, and other utilities that aid in writing and maintaining code.
 
 ## What is a Development Environment?
 
@@ -34,9 +34,9 @@ a project run. It's a replica of the production environment, where all the appli
 and secrets come together to simulate the real-world scenario as closely as possible. 
 
 This includes:
-- **Applications:** All the microservices or monolithic applications that make up the project.
-- **Configurations:** Environment-specific settings that ensure the applications run correctly.
-- **Secrets:** Secure credentials and sensitive information required by the applications.
+- Applications: All the microservices or monolithic applications that make up the project.
+- Configurations: Environment-specific settings that ensure the applications run correctly.
+- Secrets: Secure credentials and sensitive information required by the applications.
 
 ## Traditional Development Setup
 
@@ -57,24 +57,24 @@ By integrating these two aspects, we aim to streamline the development process a
 cycle significantly. 
 
 Here's how:
-1. **Seamless Integration:** By hosting workspaces within the same environment where the services run, developers can instantly test and debug their code in a production-like setting.
-2. **Real-time Synchronization:** Changes made in the workspace are immediately reflected in the environment, ensuring that developers are always working with the latest configurations and secrets.
-3. **No Build or Deploy Needed:** Developers can test their applications instantly without the need for a build or deploy process, making the inner loop cycle faster and more efficient.
-4. **Consistent Tooling:** Developers have access to all their familiar tools and IDEs while being directly connected to the environment, reducing context switching and enhancing productivity.
-5. **Stateless and Lightweight Environments:** These environments are completely stateless and lightweight, allowing for easy cloning and creation of new environments. This flexibility enables developers to work on multiple features or experiments simultaneously without overhead.
+1. Seamless Integration: By hosting workspaces within the same environment where the services run, developers can instantly test and debug their code in a production-like setting.
+2. Real-time Synchronization: Changes made in the workspace are immediately reflected in the environment, ensuring that developers are always working with the latest configurations and secrets.
+3. No Build or Deploy Needed: Developers can test their applications instantly without the need for a build or deploy process, making the inner loop cycle faster and more efficient.
+4. Consistent Tooling: Developers have access to all their familiar tools and IDEs while being directly connected to the environment, reducing context switching and enhancing productivity.
+5. Stateless and Lightweight Environments: These environments are completely stateless and lightweight, allowing for easy cloning and creation of new environments. This flexibility enables developers to work on multiple features or experiments simultaneously without overhead.
 
 ## How Kloudlite Achieves This Integration
 
 Kloudlite's unique architecture is what enables this seamless integration. Here's a high-level overview 
 of how we do it:
 
-1. **WireGuard Network:** Kloudlite forms a secure WireGuard network that connects local development machines (developer workspaces) with remote Kubernetes clusters (development environments). This network ensures that all devices and services can communicate seamlessly.
-2. **Kubernetes Clusters:** Within the WireGuard network, users can add multiple Kubernetes clusters. Each cluster hosts the development environments, which are isolated namespaces containing the necessary services, configurations, and secrets.
-3. **Local Development Containers:** Developers create local development containers (Developer's workspace) on their machines. These containers are part of the same environment as the remote services, thanks to the WireGuard network.
-4. **DNS Configuration:** Kloudlite configures DNS records to ensure that all services can be accessed using their qualified names, making the local containers behave as if they were running inside the Kubernetes namespace.
-5. **Syncing Configurations and Secrets:** Configurations and secrets from the environment are synchronized with the local development containers, ensuring full parity with the production setup.
-6. **Workspace Folder Mounting:** The workspace folders are mounted directly into the local containers, allowing developers to edit code locally while it runs in the integrated environment.
-7. **Stateless and Lightweight:** The environments are designed to be stateless and lightweight, making them easy to clone and create new instances as needed. This ensures that developers can quickly spin up new environments for different features or experiments without significant overhead.
+1. WireGuard Network: Kloudlite forms a secure WireGuard network that connects local development machines (developer workspaces) with remote Kubernetes clusters (development environments). This network ensures that all devices and services can communicate seamlessly.
+2. Kubernetes Clusters: Within the WireGuard network, users can add multiple Kubernetes clusters. Each cluster hosts the development environments, which are isolated namespaces containing the necessary services, configurations, and secrets.
+3. Local Development Containers: Developers create local development containers (Developer's workspace) on their machines. These containers are part of the same environment as the remote services, thanks to the WireGuard network.
+4. DNS Configuration: Kloudlite configures DNS records to ensure that all services can be accessed using their qualified names, making the local containers behave as if they were running inside the Kubernetes namespace.
+5. Syncing Configurations and Secrets: Configurations and secrets from the environment are synchronized with the local development containers, ensuring full parity with the production setup.
+6. Workspace Folder Mounting: The workspace folders are mounted directly into the local containers, allowing developers to edit code locally while it runs in the integrated environment.
+7. Stateless and Lightweight: The environments are designed to be stateless and lightweight, making them easy to clone and create new instances as needed. This ensures that developers can quickly spin up new environments for different features or experiments without significant overhead.
 
 ## Architecture Diagram
 
@@ -84,11 +84,11 @@ Here is an illustration of Kloudlite's architecture that demonstrates how worksp
 
 ## Benefits of Using Kloudlite
 
-- **Reduced Inner Loop Cycle:** Faster feedback loops mean developers can write, test, and debug code more efficiently.
-- **Improved Consistency:** Ensuring that workspaces and environments are always in sync reduces the chances of discrepancies and bugs.
-- **Enhanced Collaboration:** Multiple developers can work in the same environment, making it easier to collaborate on features and troubleshoot issues together.
-- **Production Parity:** By mirroring the production environment closely, developers can catch and fix issues early in the development process.
-- **Easy Cloning and Flexibility:** The stateless and lightweight nature of the environments allows for easy cloning and creation of new instances, providing flexibility and enabling rapid experimentation.
+- Reduced Inner Loop Cycle: Faster feedback loops mean developers can write, test, and debug code more efficiently.
+- Improved Consistency: Ensuring that workspaces and environments are always in sync reduces the chances of discrepancies and bugs.
+- Enhanced Collaboration: Multiple developers can work in the same environment, making it easier to collaborate on features and troubleshoot issues together.
+- Production Parity: By mirroring the production environment closely, developers can catch and fix issues early in the development process.
+- Easy Cloning and Flexibility: The stateless and lightweight nature of the environments allows for easy cloning and creation of new instances, providing flexibility and enabling rapid experimentation.
 
 ## Conclusion
 

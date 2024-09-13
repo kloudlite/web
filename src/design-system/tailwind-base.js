@@ -178,6 +178,7 @@ const config = {
     },
     screens: {
       sm: '490px',
+      smMd: '640px',
       md: '768px',
       lg: '1024px',
       xl: '1280px',
@@ -290,6 +291,7 @@ const config = {
         disabled: 'var(--icon-disabled)',
         primary: 'var(--icon-primary)',
         'on-primary': 'var(--icon-on-primary)',
+        'on-secondary': 'var(--icon-on-secondary)',
         secondary: 'var(--icon-secondary)',
         critical: 'var(--icon-critical)',
         warning: 'var(--icon-warning)',

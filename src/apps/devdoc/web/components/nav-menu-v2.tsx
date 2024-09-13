@@ -5,6 +5,7 @@ import { PageItem } from 'nextra/normalize-pages';
 import { ChevronDown } from '@jengaicons/react';
 import useConfig from '../utils/use-config';
 import { cn } from '../utils/commons';
+import { usePathname } from 'next/navigation';
 
 export const NavListItem = React.forwardRef<
   HTMLAnchorElement,
@@ -21,7 +22,7 @@ export const NavListItem = React.forwardRef<
       <a
         className={classNames(
           'wb-rounded wb-flex wb-flex-row wb-gap-xl wb-items-center wb-px-xl wb-py-lg hover:wb-bg-surface-basic-hovered wb-cursor-pointer',
-          className
+          className,
         )}
         {...props}
         ref={ref}
@@ -51,7 +52,7 @@ const NavMenuButton = ({
       <span
         className={cn(
           'wb-transition-colors wb-group wb-flex-row wb-gap-lg wb-items-center wb-bodyLg-medium wb-text-text-soft wb-cursor-pointer wb-px-2xl wb-flex hover:wb-text-text-default  data-[state=open]:wb-text-text-default',
-          className
+          className,
         )}
       >
         {children}
@@ -90,7 +91,7 @@ const NavMenuItem = ({
         <NavigationMenu.Link
           className={cn(
             'wb-bodyLg-medium wb-cursor-pointer wb-px-2xl wb-flex hover:wb-text-text-default',
-            active ? 'wb-text-text-default' : 'wb-text-text-soft'
+            active ? 'wb-text-text-default' : 'wb-text-text-soft',
           )}
           href={href}
         >
@@ -111,8 +112,9 @@ const NavMenuItem = ({
   );
 };
 
-const NavigationMenuV2 = ({ activePath }: { activePath?: PageItem[] }) => {
+const NavigationMenuV2 = () => {
   const { config } = useConfig();
+  const path = usePathname();
 
   const { headerSecondary } = config;
   if (!headerSecondary) {
@@ -128,7 +130,7 @@ const NavigationMenuV2 = ({ activePath }: { activePath?: PageItem[] }) => {
               label={i.title}
               href={i.to}
               type={i.type}
-              active={!!activePath?.find((ap) => ap.route === i.to)}
+              active={i.to === path}
             >
               {i?.render?.()}
             </NavMenuItem>

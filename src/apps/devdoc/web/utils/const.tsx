@@ -11,7 +11,6 @@ import {
 } from '@jengaicons/react';
 
 import Link from 'next/link';
-import { Badge } from 'kl-design-system/atoms/badge';
 import BlogCover from '~/public/blog/blog-cover.jpeg';
 
 import profileKarthik from '~/images/about-us/karthik-thirumalasetti.png';
@@ -77,7 +76,6 @@ import {
   Robot,
   SelectionForeground,
   Users,
-  Keyhole,
 } from '~/app/icons/icons';
 import AnserSvg from '../icons/AnserRobotics';
 import BoltzmanSvg from '../icons/Boltzman';
@@ -88,6 +86,7 @@ import RedPlutoSvg from '../icons/RedPluto';
 import TalescaleSvg from '../icons/Talescale';
 import Button from '../components/button';
 import JoinProvidersDialog from '../components/join-provider-dialog';
+import { authUrl } from './config';
 
 export const linkedInPrefix = 'https://www.linkedin.com/in/';
 export const githubPrefix = 'https://github.com/';
@@ -449,7 +448,45 @@ const consts = {
           'Unlimited clusters',
           'Unlimited members',
         ],
-        action: <JoinProvidersDialog />,
+        action: <JoinProvidersDialog size="lg" />,
+      },
+      {
+        type: 'Scale',
+        id: '2',
+        price: (
+          <div className="wb-flex wb-flex-row wb-gap-lg wb-items-baseline">
+            <span className="wb-heading4xl">$20</span>
+            <span className="wb-bodyLg !wb-font-medium">/ user / month</span>
+          </div>
+        ),
+        descriptionn: 'For growing teams that focused on collaboration',
+        features: [
+          'Role based access control',
+          'AI assisted workflows (coming soon...)',
+        ],
+        featurePrecontent: (
+          <div className="wb-flex wb-flex-row wb-items-center wb-gap-xl wb-text-text-default">
+            <span>
+              <ArrowLeftLg size={20} />
+            </span>
+            <span className="wb-headingMd">Everything of Free, plus...</span>
+          </div>
+        ),
+        action: (
+          <Button
+            content="Contact sales"
+            variant="basic"
+            suffix={<ArrowRight />}
+            block
+            size="lg"
+            linkComponent={Link}
+            toLabel="href"
+            to="/contact-us"
+          />
+        ),
+        selected: false,
+        fade: false,
+        badge: false,
       },
       {
         type: 'Enterprise',
@@ -462,9 +499,7 @@ const consts = {
             <span>
               <ArrowLeftLg size={20} />
             </span>
-            <span className="wb-headingMd">
-              Everything of Essential, plus...
-            </span>
+            <span className="wb-headingMd">Everything of Scale, plus...</span>
           </div>
         ),
         action: (
@@ -472,51 +507,13 @@ const consts = {
             content="Contact sales"
             variant="basic"
             suffix={<ArrowRight />}
-            size="lg"
             block
+            size="lg"
             linkComponent={Link}
             toLabel="href"
             to="/contact-us"
           />
         ),
-      },
-      {
-        type: 'Scale',
-        id: '2',
-        price: (
-          <div className="wb-flex wb-flex-row wb-gap-lg wb-items-baseline">
-            <span className="wb-heading4xl">$10</span>
-            <span className="wb-bodyLg">/per user</span>
-          </div>
-        ),
-        descriptionn: 'For growing teams that focused on collaboration',
-        features: [
-          'Role based access control',
-          'AI assisted workflows (coming soon...)',
-        ],
-        featurePrecontent: (
-          <div className="wb-flex wb-flex-row wb-items-center wb-gap-xl wb-text-text-disabled">
-            <span>
-              <ArrowLeftLg size={20} />
-            </span>
-            <span className="wb-headingMd">
-              Everything of Enterprise, plus...
-            </span>
-          </div>
-        ),
-        action: (
-          <Button
-            content="Upgrade now"
-            variant="basic"
-            suffix={<ArrowRight />}
-            size="lg"
-            block
-            disabled
-          />
-        ),
-        selected: false,
-        fade: true,
-        badge: <Badge type="neutral">Coming soon</Badge>,
       },
     ],
   },
@@ -621,6 +618,7 @@ const consts = {
       general: {
         label: 'General Questions',
         icon: Question,
+        to: '/docs/faq/general-questions',
         items: [
           {
             title: 'What is Kloudlite?',
@@ -639,6 +637,7 @@ const consts = {
       setupConfiguration: {
         label: 'Setup & Configuration',
         icon: Config,
+        to: '/docs/faq/setup-configuration',
         items: [
           {
             title: 'How do I setup Kloudlite?',
@@ -694,8 +693,9 @@ const consts = {
         ],
       },
       featureCapabilities: {
-        label: 'Feature & Capabilities',
+        label: 'Features & Capabilities',
         icon: Star,
+        to: '/docs/faq/feature-capabilities',
         items: [
           {
             title: 'What are integrated services in Kloudlite?',
@@ -715,6 +715,7 @@ const consts = {
       plansPricing: {
         label: 'Plans & Pricing',
         icon: Money,
+        to: '/docs/faq/plans-pricing',
         items: [
           {
             title: 'What plans does Kloudlite offer?',
@@ -729,6 +730,7 @@ const consts = {
       aIMLWorkflows: {
         label: 'AI & ML Workflows',
         icon: Robot,
+        to: '/docs/faq/ai-ml-workflows',
         items: [
           {
             title: 'Does Kloudlite support AI and ML workflows?',
@@ -739,6 +741,7 @@ const consts = {
       troubleshootingSupport: {
         label: 'Troubleshooting & Support',
         icon: PhoneCall,
+        to: '/docs/faq/troubleshooting-support',
         items: [
           {
             title: 'Where can I find support for Kloudlite?',
@@ -750,6 +753,99 @@ const consts = {
           },
         ],
       },
+    },
+  },
+  searchSuggestions: [
+    {
+      title: 'Getting started',
+      desc: 'Documentation',
+      link: '/docs/getting-started',
+    },
+  ],
+  docs: {
+    basicConcepts: {
+      gridLinks: [
+        {
+          title: 'Workspaces',
+          to: '/docs/basic-concepts/workspaces',
+        },
+        {
+          title: 'Environments',
+          to: '/docs/basic-concepts/environments',
+        },
+        {
+          title: 'Development Loop',
+          to: '/docs/basic-concepts/development-loop',
+        },
+        {
+          title: 'Remote Local',
+          to: '/docs/basic-concepts/remote-local',
+        },
+      ],
+    },
+    ideIntegrate: {
+      gridLinks: [
+        {
+          title: 'SSH Access',
+          to: '/docs/ide-integrations/ssh-access',
+        },
+        {
+          title: 'VSCode',
+          to: '/docs/ide-integrations/vscode',
+        },
+        {
+          title: 'Intellij',
+          to: '/docs/ide-integrations/intellij',
+        },
+      ],
+    },
+    contribute: {
+      gridLinks: [
+        {
+          title: 'Code of Conduct',
+          to: '/docs/contributing/code-of-conduct',
+        },
+        {
+          title: 'Feature Stages',
+          to: '/docs/contributing/feature-stages',
+        },
+        {
+          title: 'Documentation',
+          to: '/docs/contributing/documentation',
+        },
+        {
+          title: 'Security',
+          to: '/docs/contributing/security',
+        },
+        {
+          title: 'Frontend',
+          to: '/docs/contributing/frontend',
+        },
+      ],
+    },
+  },
+  eventBanner: {
+    message: (
+      <>
+        <div className="xl:wb-block wb-hidden">
+          Code Unbound: No Builds,No Deploys. The New Era of Development
+        </div>
+        <div className="xl:wb-hidden">
+          Code Unbound:{' '}
+          <span className="wb-block md:wb-inline">No Builds,No Deploys.</span>
+        </div>
+      </>
+    ),
+    time: '12:00-1:00 pm',
+    date: 'Sep 14, 2024',
+    enabled: false,
+    linkContent: 'Register today',
+    link: authUrl + '/signup',
+  },
+  contactUs: {
+    cookies: {
+      submitCookie: 'contact-form-submitted',
+      cookieTime: 5,
     },
   },
 };

@@ -17,6 +17,8 @@ import { HighlightMatches } from './highlight-matches';
 import { DEFAULT_LOCALE } from '../utils/constants';
 import { cn } from '../utils/commons';
 import useSearch from '../utils/use-search';
+import OptionList from 'kl-design-system/atoms/option-list';
+import consts from '../utils/const';
 
 type SearchResult = {
   children: ReactNode;
@@ -68,10 +70,10 @@ const loadIndexesPromises = new Map<string, Promise<void>>();
 
 const loadIndexesImpl = async (
   basePath: string,
-  locale: string
+  locale: string,
 ): Promise<void> => {
   const response = await fetch(
-    `${basePath}/_next/static/chunks/nextra-data-${locale}.json`
+    `${basePath}/_next/static/chunks/nextra-data-${locale}.json`,
   );
   const searchData = (await response.json()) as SearchData;
 
@@ -161,6 +163,27 @@ const loadIndexes = (basePath: string, locale: string): Promise<void> => {
   return promise;
 };
 
+const SuggestionItem = ({
+  title,
+  desc,
+  link,
+}: {
+  title: string;
+  desc: string;
+  link: string;
+}) => {
+  return (
+    <Link href={link}>
+      <OptionList.OptionItemRaw className="wb-rounded">
+        <div className="wb-flex wb-flex-col wb-gap-md">
+          <span className="wb-bodySm wb-text-text-default">{title}</span>
+          <span className="wb-bodySm wb-text-text-soft">{desc}</span>
+        </div>
+      </OptionList.OptionItemRaw>
+    </Link>
+  );
+};
+
 export function Flexsearch(): ReactElement {
   const { locale = DEFAULT_LOCALE, basePath } = useRouter();
   const [loading, setLoading] = useState(false);
@@ -215,7 +238,7 @@ export function Flexsearch(): ReactElement {
           prefix: isFirstItemOfPage && (
             <div
               className={cn(
-                'wb-headingMd wb-mx-xl wb-pb-md wb-mb-md wb-border-b wb-border-border-default'
+                'wb-headingMd wb-mx-xl wb-pb-md wb-mb-md wb-border-b wb-border-border-default',
               )}
             >
               {result.doc.title}
@@ -261,7 +284,12 @@ export function Flexsearch(): ReactElement {
       return sortedGroup;
     });
 
-    const sortedArray = lodash.flatten(lodash.values(sortedGroups));
+    const temp = {
+      Docs: sortedGroups['Docs'] || [],
+      Blogs: sortedGroups['Blogs'] || [],
+    };
+
+    const sortedArray = lodash.flatten(lodash.values(temp));
 
     setResults(
       sortedArray
@@ -273,8 +301,8 @@ export function Flexsearch(): ReactElement {
           children: res.children,
         }))
         .filter(
-          (f) => f.route.startsWith('/docs') || f.route.startsWith('/blog')
-        )
+          (f) => f.route.startsWith('/docs') || f.route.startsWith('/blog'),
+        ),
     );
   };
 
@@ -290,7 +318,7 @@ export function Flexsearch(): ReactElement {
         setLoading(false);
       }
     },
-    [locale, basePath]
+    [locale, basePath],
   );
 
   const handleChange = async (value: string) => {
@@ -331,12 +359,12 @@ export function Flexsearch(): ReactElement {
     >
       <Popup.Content className="!wb-p-0">
         <div className="wb-flex wb-flex-col">
-          <div className="wb-flex wb-flex-row wb-items-center wb-sticky wb-top-0 wb-bg-surface-basic-default wb-border-b wb-border-border-default wb-pr-xs">
+          <div className="wb-flex wb-flex-row wb-items-center wb-sticky wb-top-0 wb-bg-surface-basic-input wb-border-b wb-border-border-default wb-pr-xs">
             <span className="wb-pl-xl wb-pr-md wb-py-xl wb-text-text-default">
               <Search size={20} />
             </span>
             <input
-              className="wb-flex-1 wb-outline-none wb-p-lg wb-min-h-[32px] wb-box-content wb-bodyLg placeholder:wb-text-text-disabled wb-text-text-default wb-bg-surface-basic-default"
+              className="wb-flex-1 wb-outline-none wb-p-lg wb-min-h-[32px] wb-box-content wb-bodyLg placeholder:wb-text-text-disabled wb-text-text-default wb-bg-surface-basic-input"
               placeholder="Search"
               onKeyDown={setKeyEvent}
               value={search}
@@ -360,10 +388,20 @@ export function Flexsearch(): ReactElement {
               }}
             />
           </div>
-          <div>
-            {results.length === 0 && (
+          <div className="wb-bg-surface-basic-default">
+            {results.length === 0 && !!search && (
               <div className="wb-bodyMd wb-px-4xl wb-py-8xl wb-text-center wb-text-text-soft">
                 No recent results
+              </div>
+            )}
+            {results.length === 0 && !search && (
+              <div className="wb-bodySm wb-p-xl wb-text-text-soft wb-min-h-[250px]">
+                <div className="wb-px-xl wb-py-lg">Suggestions</div>
+                <div className="wb-flex wb-flex-col wb-gap-md">
+                  {consts.searchSuggestions.map((ss) => (
+                    <SuggestionItem key={ss.title} {...ss} />
+                  ))}
+                </div>
               </div>
             )}
             {results.length > 0 && (
@@ -376,7 +414,7 @@ export function Flexsearch(): ReactElement {
                 {results.map((res) => (
                   <>
                     {res.category ? (
-                      <div className="wb-bg-surface-basic-default wb-backdrop-blur-sm wb-sticky wb-top-[49px] wb-text-text-default wb-p-xl wb-pb-2xl wb-headingXl">
+                      <div className="wb-bg-surface-basic-default wb-sticky wb-top-[49px] wb-text-text-default wb-p-xl wb-pb-2xl wb-headingXl">
                         {res.category}
                       </div>
                     ) : null}

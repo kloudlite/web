@@ -39,6 +39,7 @@ export const ExploringItem = ({
           content={<span className="wb-bodyLg">Read more</span>}
           suffix={<ArrowRight />}
           variant="primary-plain"
+          className="!wb-pl-0"
         />
       </div>
     </Anchor>

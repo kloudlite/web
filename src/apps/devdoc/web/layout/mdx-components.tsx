@@ -147,10 +147,11 @@ export const createComponents = ({
     };
   }
   const context = { index: 0 };
+
   return {
     h1: (props) => (
       <h1
-        className="heading2xl-marketing md:wb-heading3xl lg:wb-heading4xl wb-mt-sm wb-text-text-default wb-pb-lg"
+        className="wb-heading2xl-marketing md:wb-heading3xl lg:wb-heading4xl wb-mt-sm wb-text-text-default wb-pb-lg"
         {...props}
       />
     ),

@@ -3,6 +3,7 @@ import { AnimatePresence, motion, useScroll } from 'framer-motion';
 import consts from '~/app/utils/const';
 import { cn } from '~/app/utils/commons';
 import { GraphExtended, GraphItem } from '../../graph';
+import ResponsiveContainer from '../../responsive-container';
 
 const KDElement = ({
   item,
@@ -109,15 +110,21 @@ const KloudliteDevelopment = () => {
 
   return (
     <GraphExtended>
-      <div className="relative wb-grid wb-grid-cols-1 lg:wb-grid-cols-[384px_auto] 2xl:wb-grid-cols-[448px_auto] 3xl:wb-grid-cols-[512px_auto] wb-items-start">
-        <div className="wb-hidden lg:wb-block wb-absolute lg:wb-w-[384px] 2xl:wb-w-[448px] 3xl:wb-w-[512px] wb-top-0 wb-right-0 wb-left-0 wb-bottom-0 wb-bg-surface-basic-subdued">
+      <div className="wb-relative wb-grid wb-grid-cols-1 lg:wb-grid-cols-[384px_auto] 2xl:wb-grid-cols-[448px_auto] 3xl:wb-grid-cols-[512px_auto] wb-items-start">
+        <div className="wb-hidden lg:wb-block wb-absolute wb-top-0 wb-right-0 wb-left-0 wb-bottom-0 wb-bg-surface-basic-subdued">
           <div className="wb-h-[1.5px] wb-bg-border-dark wb-absolute wb-bottom-0 -wb-left-5xl wb-right-0 wb-z-[51]" />
           <div className="wb-w-[1.5px] wb-bg-border-dark wb-absolute wb-left-0 wb-top-0 -wb-bottom-5xl wb-z-[51]" />
           <div className="wb-w-[1.5px] wb-bg-border-dark wb-absolute -wb-right-xs -wb-bottom-5xl wb-top-0 wb-z-[51]" />
         </div>
         <GraphItem
           lines={{ bottom: false }}
-          className="wb-bg-surface-basic-subdued wb-p-3xl md:wb-p-5xl wb-sticky wb-top-0 z-50"
+          className={cn(
+            'wb-bg-surface-basic-subdued wb-p-3xl md:wb-p-5xl wb-sticky wb-z-50',
+            {
+              'wb-top-[68px]': consts.eventBanner.enabled,
+              'wb-top-0': !consts.eventBanner.enabled,
+            },
+          )}
         >
           <div className="wb-absolute wb-inset-0 wb-bg-surface-basic-subdued wb-z-[-1] -wb-mx-3xl md:wb-hidden" />
           <div className="lg:wb-hidden wb-h-xs wb-bg-border-dark wb-absolute wb-bottom-0 -wb-left-3xl -wb-right-3xl wb-z-[1]" />
@@ -135,26 +142,32 @@ const KloudliteDevelopment = () => {
             </div>
           </AnimatePresence>
         </GraphItem>
-        <GraphItem className="wb-bg-surface-basic-subdued wb-flex wb-flex-row xl:wb-pb-3xl 2xl:wb-pb-xl 3xl:wb-pb-[24px]">
-          <div ref={ref} className="wb-pt-3xl md:wb-pt-6xl wb-flex wb-flex-col">
-            {consts.homeNew.kloudliteDevelopmentData.map((kd, index) => {
-              return (
-                <KDElement
-                  key={kd.label}
-                  onAppear={() => {
-                    setActiveMessage(index);
-                  }}
-                  active={activeMessage}
-                  index={index}
-                  item={kd}
-                  isLastItem={
-                    index - 1 === consts.homeNew.kloudliteDevelopmentData.length
-                  }
-                />
-              );
-            })}
-          </div>
-        </GraphItem>
+        <ResponsiveContainer>
+          <GraphItem className="wb-bg-surface-basic-subdued wb-flex wb-flex-row">
+            <div
+              ref={ref}
+              className="wb-pt-3xl md:wb-pt-6xl wb-flex wb-flex-col"
+            >
+              {consts.homeNew.kloudliteDevelopmentData.map((kd, index) => {
+                return (
+                  <KDElement
+                    key={kd.label}
+                    onAppear={() => {
+                      setActiveMessage(index);
+                    }}
+                    active={activeMessage}
+                    index={index}
+                    item={kd}
+                    isLastItem={
+                      index - 1 ===
+                      consts.homeNew.kloudliteDevelopmentData.length
+                    }
+                  />
+                );
+              })}
+            </div>
+          </GraphItem>
+        </ResponsiveContainer>
       </div>
 
       <GraphItem className="md:wb-hidden">

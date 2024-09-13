@@ -10,6 +10,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import useConfig from '../utils/use-config';
 import Button from './button';
+import { authUrl } from '../utils/config';
 
 const JoinProviders = () => {
   const [open, setOpen] = useState(false);
@@ -42,7 +43,7 @@ const JoinProviders = () => {
                   Do you have an invite code?
                   <br />
                   <Link
-                    href={`${process.env.AUTH_URL}/signup`}
+                    href={`${authUrl}/signup`}
                     className="wb-text-text-default hover:wb-underline wb-underline-offset-4"
                   >
                     Click here
@@ -86,7 +87,7 @@ const JoinProviders = () => {
                   />
                 )}
                 <Button
-                  to={`${process.env.AUTH_URL}/signup?mode=email`}
+                  to={`${authUrl}/signup?mode=email`}
                   toLabel="href"
                   linkComponent={Link}
                   content="Continue with Email"

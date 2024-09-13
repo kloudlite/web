@@ -3,17 +3,19 @@ import { GraphExtended } from '~/app/components/graph';
 import hero from '~/images/homeNew/hero';
 import HomeIllustrationMobileDark from '~/images/homeNew/illustration-mobile-dark.svg';
 import HomeIllustrationMobileWeb from '~/images/homeNew/illustration-mobile.webp';
-import DynamicImage from '../dynamic-image';
-import HowItWorksSection from '../website/home/how-it-works';
-import KeepExploring from '../website/home/keep-exploring';
-import KloudliteDevelopment from '../website/home/kloudlite-development';
-import DontBelieve from '../website/home/messages';
-import OpenSource from '../website/home/opensource';
-import PartnerSection from '../website/home/partners';
-import SecureAtCore from '../website/home/secure-at-core';
-import SuperCharge from '../website/home/supercharge';
-import Wrapper from '../wrapper';
-import JoinProvidersDialog from '../join-provider-dialog';
+import DynamicImage from '~/app/components/dynamic-image';
+import HowItWorksSection from '~/app/components/website/home/how-it-works';
+import KeepExploring from '~/app/components/website/home/keep-exploring';
+import KloudliteDevelopment from '~/app/components/website/home/kloudlite-development';
+import DontBelieve from '~/app/components/website/home/messages';
+import OpenSource from '~/app/components/website/home/opensource';
+import PartnerSection from '~/app/components/website/home/partners';
+import SecureAtCore from '~/app/components/website/home/secure-at-core';
+import SuperCharge from '~/app/components/website/home/supercharge';
+import Wrapper from '~/app/components/wrapper';
+import JoinProvidersDialog from '~/app/components/join-provider-dialog';
+import FaqSection from '~/app/components/website/home/faq';
+import Events from '../website/home/events';
 
 const Title = () => {
   return (
@@ -141,6 +143,7 @@ const Index = () => {
         <PartnerSection />
         <HowItWorksSection />
         <DontBelieve />
+        <FaqSection />
         <KeepExploring />
         <OpenSource />
         <SuperCharge />

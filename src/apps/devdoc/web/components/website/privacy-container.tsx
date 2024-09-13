@@ -3,7 +3,7 @@ import { cn } from '~/app/utils/commons';
 import { GraphExtended, GraphItem } from '../graph';
 import Wrapper from '../wrapper';
 
-const InnerContent = ({
+export const InnerContent = ({
   children,
   className,
   title,
@@ -17,11 +17,11 @@ const InnerContent = ({
   return (
     <div
       className={cn(
-        'wb-bg-surface-basic-subdued md:wb-px-5xl xl:wb-px-10xl 3xl:wb-px-14xl',
-        className
+        'wb-bg-surface-basic-subdued wb-h-full wb-px-3xl md:wb-px-6xl',
+        className,
       )}
     >
-      <h1 className="wb-heading4xl-marketing md:wb-heading5xl-marketing lg:wb-heading6xl-marketing wb-text-text-default wb-pt-6xl wb-pb-4xl md:wb-py-8xl xl:wb-pt-10xl xl:wb-pb-9xl">
+      <h1 className="wb-heading4xl-marketing  wb-text-text-default wb-pt-6xl wb-pb-5xl">
         {title}
       </h1>
       <div>
