@@ -5,17 +5,19 @@ import {
   GitlabLogoFill,
   GoogleLogo,
 } from '@jengaicons/react';
-import { useSearchParams, Link, useOutletContext } from '@remix-run/react';
+import { Link, useOutletContext, useSearchParams } from '@remix-run/react';
+import { useEffect } from 'react';
+import { useAuthApi } from '~/auth/server/gql/api-provider';
+import { Button } from '~/components/atoms/button';
 import { PasswordInput, TextInput } from '~/components/atoms/input';
+import { ArrowLeft, ArrowRight } from '~/components/icons';
+import { toast } from '~/components/molecule/toast';
+import { cn } from '~/components/utils';
+import { getCookie } from '~/root/lib/app-setup/cookies';
+import { useReload } from '~/root/lib/client/helpers/reloader';
 import useForm from '~/root/lib/client/hooks/use-form';
 import Yup from '~/root/lib/server/helpers/yup';
-import { useReload } from '~/root/lib/client/helpers/reloader';
 import { handleError } from '~/root/lib/utils/common';
-import { toast } from '~/components/molecule/toast';
-import { Button } from '~/components/atoms/button';
-import { cn } from '~/components/utils';
-import { useAuthApi } from '~/auth/server/gql/api-provider';
-import { ArrowLeft, ArrowRight } from '~/components/icons';
 import Container from '../../components/container';
 import { IProviderContext } from './_layout';
 
@@ -25,6 +27,7 @@ const CustomGoogleIcon = (props: any) => {
 
 const LoginWithEmail = () => {
   const api = useAuthApi();
+  const [searchParams, _setSearchParams] = useSearchParams();
 
   const reloadPage = useReload();
   const { values, errors, handleChange, handleSubmit, isLoading } = useForm({
@@ -46,6 +49,12 @@ const LoginWithEmail = () => {
           throw _errors[0];
         }
         toast.success('logged in success fully');
+
+        const callback = searchParams.get('callback');
+        if (callback) {
+          window.location.href = callback;
+          return;
+        }
         reloadPage();
       } catch (err) {
         handleError(err);
@@ -104,6 +113,19 @@ const Login = () => {
   const { githubLoginUrl, gitlabLoginUrl, googleLoginUrl } =
     useOutletContext<IProviderContext>();
   const [searchParams, _setSearchParams] = useSearchParams();
+  const callback = searchParams.get('callback');
+
+  const loginUrl = callback
+    ? `/login?mode=email&callback=${callback}`
+    : `/login?mode=email`;
+
+  useEffect(() => {
+    if (callback) {
+      getCookie().set('callback_url', callback, {
+        expires: new Date(Date.now() + 1000 * 60),
+      });
+    }
+  }, [callback]);
 
   return (
     <Container
@@ -187,7 +209,8 @@ const Login = () => {
             variant="outline"
             content={<span className="bodyLg-medium">Continue with email</span>}
             prefix={<Envelope />}
-            to="/login/?mode=email"
+            // to="/login/?mode=email"
+            to={loginUrl}
             block
             linkComponent={Link}
           />
