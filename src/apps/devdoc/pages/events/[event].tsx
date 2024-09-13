@@ -71,7 +71,7 @@ const TimeSeparator = () => (
 );
 
 export default function Event({ event }: { event: IEvent }) {
-  const { content, event: id, frontMatter } = event;
+  const { content, frontMatter } = event;
 
   const { banner, date, endtime, organizer, starttime, title, type } =
     frontMatter;

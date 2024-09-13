@@ -65,7 +65,6 @@ const UserComponent = ({
   setShow: any;
   size?: IButton['size'];
 }) => {
-  const w = 'wb-w-[172px]';
   const user = config.user;
   if (config.userApiLoading) {
     return (
@@ -73,8 +72,8 @@ const UserComponent = ({
         className={cn(
           'wb-flex wb-flex-row wb-items-center wb-justify-center wb-text-text-default',
           {
-            [w]: !isInHeader,
-            'wb-h-[46px]': !isInHeader,
+            'wb-w-[172px]': isInHeader,
+            'wb-h-[50px]': !isInHeader,
           },
         )}
       >
@@ -93,7 +92,7 @@ const UserComponent = ({
   if (user) {
     return (
       <div className="wb-flex wb-items-center wb-justify-center">
-        <Button
+        <ButtonDev
           content="Go to console"
           variant="basic"
           block
@@ -108,7 +107,7 @@ const UserComponent = ({
   return (
     <div
       className={cn('wb-flex wb-flex-row wb-items-center wb-gap-lg', {
-        [w]: isInHeader,
+        'wb-w-[172px]': isInHeader,
       })}
     >
       {hasSignIn && (
