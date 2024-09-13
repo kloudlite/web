@@ -1,5 +1,6 @@
 import Popup from 'kl-design-system/molecule/popup';
 import {
+  CircleNotch,
   Envelope,
   GithubLogoFill,
   GitlabLogoFill,
@@ -9,12 +10,142 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { Badge } from 'kl-design-system/atoms/badge';
 import { Button, IButton } from 'kl-design-system/atoms/button';
-import useConfig from '../utils/use-config';
+import useConfig, { IConfig } from '../utils/use-config';
 import useMenu from '../utils/use-menu';
 import ButtonDev from './button';
 import { Anchor } from './anchor';
-import { authUrl } from '../utils/config';
+import { authUrl, consoleUrl } from '../utils/config';
 import { cn } from '../utils/commons';
+import OptionList from 'kl-design-system/atoms/option-list';
+import Profile from 'kl-design-system/molecule/profile';
+
+const ProfileMenu = ({ user }: { user: IConfig['user'] }) => {
+  if (!user) {
+    return null;
+  }
+  return (
+    <OptionList.Root>
+      <OptionList.Trigger>
+        <div>
+          <div className="wb-hidden md:wb-flex">
+            <Profile name={user.name} size="xs" />
+          </div>
+          <div className="wb-flex md:wb-hidden">
+            <Profile size="xs" />
+          </div>
+        </div>
+      </OptionList.Trigger>
+      <OptionList.Content className="wb-w-[200px]">
+        <OptionList.Item>
+          <div className="wb-flex wb-flex-col">
+            <span className="wb-bodyMd-medium wb-text-text-default">
+              {user.name}
+            </span>
+            <span className="wb-bodySm wb-text-text-soft">{user.email}</span>
+          </div>
+        </OptionList.Item>
+        <OptionList.Link LinkComponent={Link} to={consoleUrl} toLabel="href">
+          Go to console
+        </OptionList.Link>
+      </OptionList.Content>
+    </OptionList.Root>
+  );
+};
+
+const UserComponent = ({
+  config,
+  hasSignIn,
+  isInHeader,
+  setShow,
+  size,
+}: {
+  config: IConfig;
+  hasSignIn: boolean;
+  isInHeader: boolean;
+  setShow: any;
+  size?: IButton['size'];
+}) => {
+  const w = 'wb-w-[172px]';
+  const user = config.user;
+  if (config.userApiLoading) {
+    return (
+      <div
+        className={cn(
+          'wb-flex wb-flex-row wb-items-center wb-justify-center wb-text-text-default',
+          {
+            [w]: !isInHeader,
+            'wb-h-[46px]': !isInHeader,
+          },
+        )}
+      >
+        <CircleNotch size={16} className="wb-animate-spin" />
+      </div>
+    );
+  }
+  if (isInHeader && user) {
+    return (
+      <div className={cn('wb-text-text-default')}>
+        <ProfileMenu user={user} />
+      </div>
+    );
+  }
+
+  if (user) {
+    return (
+      <div className="wb-flex wb-items-center wb-justify-center">
+        <Button
+          content="Go to console"
+          variant="basic"
+          block
+          size={size}
+          linkComponent={Link}
+          toLabel="href"
+          to={consoleUrl}
+        />
+      </div>
+    );
+  }
+  return (
+    <div
+      className={cn('wb-flex wb-flex-row wb-items-center wb-gap-lg', {
+        [w]: isInHeader,
+      })}
+    >
+      {hasSignIn && (
+        <ButtonDev
+          content={
+            isInHeader ? (
+              <span className="wb-bodyMd-medium">Sign in</span>
+            ) : (
+              'Sign in'
+            )
+          }
+          variant="outline"
+          block
+          size={size}
+          onClick={() => {
+            setShow('signin');
+          }}
+        />
+      )}
+      <ButtonDev
+        content={
+          isInHeader ? (
+            <span className="wb-bodyMd-medium">Sign up</span>
+          ) : (
+            'Sign up'
+          )
+        }
+        variant="primary"
+        block
+        size={size}
+        onClick={() => {
+          setShow('signup');
+        }}
+      />
+    </div>
+  );
+};
 
 const JoinProvidersDialog = ({
   size,
@@ -27,7 +158,7 @@ const JoinProvidersDialog = ({
 }) => {
   const { config } = useConfig();
   const { oathProviders } = config;
-  const signupUrl = `${process.env.AUTH_URL}/signup?mode=email`;
+  const signupUrl = `${authUrl}/signup?mode=email`;
 
   const { setState } = useMenu();
 
@@ -43,7 +174,7 @@ const JoinProvidersDialog = ({
     };
   }, [show]);
 
-  const userApproved = config.user?.verified && !config.user.approved;
+  const userApproved = config.user?.verified && config.user.approved;
   const hasProvider =
     oathProviders?.githubLoginUrl ||
     oathProviders?.gitlabLoginUrl ||
@@ -51,40 +182,13 @@ const JoinProvidersDialog = ({
 
   return (
     <div className="wb-w-full">
-      <div className="wb-flex wb-flex-row wb-items-center wb-gap-lg">
-        {hasSignIn && (
-          <ButtonDev
-            content={
-              isInHeader ? (
-                <span className="wb-bodyMd-medium">Sign in</span>
-              ) : (
-                'Sign in'
-              )
-            }
-            variant="outline"
-            block
-            size={size}
-            onClick={() => {
-              setShow('signin');
-            }}
-          />
-        )}
-        <ButtonDev
-          content={
-            isInHeader ? (
-              <span className="wb-bodyMd-medium">Sign up</span>
-            ) : (
-              'Sign up'
-            )
-          }
-          variant="primary"
-          block
-          size={size}
-          onClick={() => {
-            setShow('signup');
-          }}
-        />
-      </div>
+      <UserComponent
+        config={config}
+        hasSignIn={!!hasSignIn}
+        isInHeader={!!isInHeader}
+        setShow={setShow}
+        size={size}
+      />
       <Popup.Root
         show={!!show}
         onOpenChange={(e) => {
@@ -111,7 +215,7 @@ const JoinProvidersDialog = ({
                 Do you have an invite code?
                 <br />
                 <Link
-                  href={`${process.env.AUTH_URL}/signup`}
+                  href={`${authUrl}/signup`}
                   className="wb-text-text-default hover:wb-underline wb-underline-offset-4"
                 >
                   Click here

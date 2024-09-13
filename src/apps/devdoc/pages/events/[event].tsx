@@ -93,8 +93,8 @@ export default function Event({ event }: { event: IEvent }) {
                 <ResponsiveImage
                   alt={title}
                   rmobile={`/events/${banner}-mobile.jpg`}
-                  rmobileDark={`/events/${id}-mobile.jpg`}
-                  r768={`/events/${id}-768.jpg`}
+                  rmobileDark={`/events/${banner}-mobile.jpg`}
+                  r768={`/events/${banner}-768.jpg`}
                   r768Dark={`/events/${banner}-768.jpg`}
                   r1024={`/events/${banner}-1024.jpg`}
                   r1024Dark={`/events/${banner}-1024.jpg`}

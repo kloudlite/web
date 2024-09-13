@@ -30,6 +30,7 @@ import { Block } from '../components/commons';
 import { deleteCookie } from 'cookies-next';
 import Banner from '../components/website/event/banner';
 import ExternalLayout from './alternate-layout';
+import { authUrl } from '../utils/config';
 
 function GitTimestamp({ timestamp }: { timestamp: Date }) {
   const { locale = DEFAULT_LOCALE } = useRouter();
@@ -287,7 +288,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
 export const fetchProviders = async () => {
   try {
     const res = await axios({
-      url: `${process.env.AUTH_URL}/api` || 'https://auth.kloudlite.io/api',
+      url: `${authUrl}/api`,
       method: 'post',
       withCredentials: false,
       data: {
@@ -311,7 +312,7 @@ export const fetchProviders = async () => {
 const getUser = async () => {
   try {
     const res = await axios({
-      url: `${process.env.AUTH_URL}/api` || 'https://auth.kloudlite.io/api',
+      url: `${authUrl}/api`,
       method: 'post',
       withCredentials: true,
       data: {

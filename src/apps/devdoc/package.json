@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "pnpm clean && next dev",
+    "dev": "pnpm clean && next dev -p 4001",
     "build": "pnpm clean && next build",
     "postbuild": "next-sitemap",
     "start": "pnpm build && npx serve out",

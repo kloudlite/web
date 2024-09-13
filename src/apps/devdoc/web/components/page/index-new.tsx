@@ -15,6 +15,7 @@ import SuperCharge from '~/app/components/website/home/supercharge';
 import Wrapper from '~/app/components/wrapper';
 import JoinProvidersDialog from '~/app/components/join-provider-dialog';
 import FaqSection from '~/app/components/website/home/faq';
+import Events from '../website/home/events';
 
 const Title = () => {
   return (

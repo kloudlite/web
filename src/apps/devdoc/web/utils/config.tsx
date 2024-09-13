@@ -16,7 +16,9 @@ import { YoutubeLogoFill } from '@jengaicons/react';
 export const siteDesc =
   'Kloudlite is a remote-local development environment platform designed to streamline the workflow for developers working on distributed applications. By integrating both local and remote environments through Kubernetes, Kloudlite ensures a seamless, productive, and more connected development experience.';
 export const basePath = 'https://kloudlite.io';
-export const authUrl = 'https://auth.kloudlite.io';
+export const authUrl = `${process.env.AUTH_URL}` || 'https://auth.kloudlite.io';
+export const consoleUrl =
+  `${process.env.CONSOLE_URL}` || 'https://console.kloudlite.io';
 export const gitUrl = 'https://github.com/kloudlite/kloudlite';
 export const communityUrl =
   'https://github.com/kloudlite/kloudlite/discussions';
