@@ -4,6 +4,7 @@ import { Fragment } from 'react';
 import { ChevronRight } from '@jengaicons/react';
 import { Anchor } from './anchor';
 import { cn } from '../utils/commons';
+import { Button } from 'kl-design-system/atoms/button';
 
 export function Breadcrumb({
   activePath,
@@ -34,12 +35,18 @@ export function Breadcrumb({
                       !isActive,
                     'hover:wb-text-text-strong hover:wb-underline wb-underline-offset-4':
                       !!isLink,
-                  }
+                  },
                 )}
                 title={item.title}
               >
                 {isLink && !isActive ? (
-                  <Anchor href={item.route}>{item.title}</Anchor>
+                  <Button
+                    to={item.route}
+                    content={item.title}
+                    variant="plain"
+                    size="sm"
+                    className="!wb-inline !wb-no-underline"
+                  />
                 ) : (
                   item.title
                 )}

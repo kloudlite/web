@@ -109,13 +109,20 @@
     "type": "page",
     "display": "hidden"
   },
+  "events": {
+    "title": "Events",
+    "type": "page",
+    "display": "hidden",
+    "showinmenu": false
+  },
+  "legal": {
+    "title": "Legal",
+    "type": "page",
+    "display": "hidden",
+    "showinmenu": false
+  },
   "writer": {
     "title": "Writer",
-    "type": "page",
-    "display": "hidden"
-  },
-  "customer-stories": {
-    "title": "Customer stories",
     "type": "page",
     "display": "hidden"
   }

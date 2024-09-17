@@ -67,7 +67,7 @@ const MessageCard = ({
   message: ReactNode;
 }) => {
   return (
-    <div className=" wb-flex wb-flex-col wb-gap-3xl wb-p-3xl wb-h-full wb-bg-surface-basic-default">
+    <div className=" wb-flex wb-flex-col wb-gap-3xl wb-p-3xl wb-h-full wb-bg-surface-basic-default wb-min-h-[257px] smMd:wb-min-h-[233px]">
       <div className="wb-flex md:wb-hidden xl:wb-flex wb-flex-row wb-items-center wb-gap-3xl">
         <ProfileItem subtitle={subtitle} title={title} />
       </div>

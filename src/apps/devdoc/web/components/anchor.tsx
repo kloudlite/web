@@ -6,7 +6,7 @@ import { forwardRef } from 'react';
 import { cn } from '../utils/commons';
 
 const defaultCss =
-  'wb-ring-offset-0 wb-ring-border-focus wb-outline-none focus-visible:wb-ring-2';
+  'wb-ring-offset-0 wb-ring-border-focus wb-outline-none focus-visible:wb-ring-2 wb-text-text-primary';
 
 export type AnchorProps = Omit<ComponentProps<'a'>, 'ref'> & {
   newWindow?: boolean;
@@ -18,7 +18,7 @@ export const Anchor = forwardRef<HTMLAnchorElement, AnchorProps>(
   (
     { href = '', children, newWindow, ...props },
     // ref is used in <NavbarMenu />
-    forwardedRef
+    forwardedRef,
   ): ReactElement => {
     if (newWindow) {
       return (
@@ -31,10 +31,6 @@ export const Anchor = forwardRef<HTMLAnchorElement, AnchorProps>(
           className={cn(defaultCss, props.className)}
         >
           {children}
-          <span className="nx-sr-only nx-select-none">
-            {' '}
-            (opens in a new tab)
-          </span>
         </a>
       );
     }
@@ -75,7 +71,7 @@ export const Anchor = forwardRef<HTMLAnchorElement, AnchorProps>(
         </a>
       </NextLink>
     );
-  }
+  },
 );
 
 Anchor.displayName = 'Anchor';

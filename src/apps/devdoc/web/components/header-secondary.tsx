@@ -1,4 +1,3 @@
-import { PageItem } from 'nextra/normalize-pages';
 import Link from 'next/link';
 import { GithubLogoFill } from '@jengaicons/react';
 import { Button, IconButton } from 'kl-design-system/atoms/button';
@@ -14,11 +13,7 @@ import JoinProvidersDialog from './join-provider-dialog';
 import useSearch from '../utils/use-search';
 import SearchBox from './search';
 
-const HeaderSecondary = ({
-  activePath,
-}: Omit<IHeaderSecondary, 'items'> & {
-  activePath?: PageItem[];
-}) => {
+const HeaderSecondary = () => {
   const { config } = useConfig();
   const { state, setState } = useMenu();
 
@@ -52,7 +47,7 @@ const HeaderSecondary = ({
         <div className="wb-flex wb-flex-row wb-items-center wb-gap-6xl wb-w-full">
           {config.logo}
           <div className="wb-hidden lg:wb-flex wb-flex-1 wb-flex-row wb-items-center wb-justify-end wb-gap-4xl wb-list-none">
-            <NavigationMenuV2 activePath={activePath} />
+            <NavigationMenuV2 />
           </div>
 
           <div className="wb-flex-1 lg:wb-flex-none wb-flex wb-flex-row wb-gap-2xl wb-items-center wb-justify-end">
@@ -74,12 +69,7 @@ const HeaderSecondary = ({
               <>
                 <span className="wb-hidden lg:wb-block wb-h-2xl wb-w-xs wb-bg-border-default" />
                 <div className="wb-hidden lg:wb-block">
-                  <JoinProvidersDialog
-                    size="md"
-                    buttonContent={
-                      <span className="wb-bodyMd-medium">Signup</span>
-                    }
-                  />
+                  <JoinProvidersDialog size="md" hasSignIn isInHeader />
                 </div>
               </>
             </div>

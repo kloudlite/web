@@ -12,7 +12,7 @@
   "getting-started": {
     "title": "Getting Started"
   },
-  "--corec-omponents--": {
+  "--core-components--": {
     "title": "CORE COMPONENTS",
     "type": "separator"
   },
@@ -79,5 +79,8 @@
   "bug-report": {
     "title": "Bug Report",
     "href": "https://github.com/kloudlite/kloudlite/issues/new?assignees=&labels=&projects=&template=bug_report.md&title="
+  },
+  "faq": {
+    "title": "FAQ"
   }
 }

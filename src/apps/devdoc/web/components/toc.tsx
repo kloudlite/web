@@ -88,13 +88,13 @@ export function TOC({ headings }: TOCProps): ReactElement {
                           'wb-flex wb-px-2xl wb-py-md wb-rounded wb-min-w-0 wb-w-full hover:wb-bg-surface-basic-hovered',
                           activeAnchor[id]?.isActive
                             ? 'wb-bg-surface-basic-active wb-bodyMd-medium  wb-text-text-primary wb-relative'
-                            : 'wb-bodyMd wb-text-text-soft',
+                            : 'wb-bodyMd wb-text-text-soft hover:wb-text-text-default',
                         )}
                       >
                         {depth > 2 && activeAnchor[id]?.isActive && (
                           <motion.div
                             layoutId="toc-line"
-                            className="wb-border-l-2 wb-border-border-primary wb-rounded wb-h-full wb-absolute -wb-left-[5px] wb-top-0"
+                            className="wb-border-l-2 wb-border-icon-primary wb-rounded wb-h-full wb-absolute -wb-left-[5px] wb-top-0"
                           />
                         )}
 
@@ -114,31 +114,38 @@ export function TOC({ headings }: TOCProps): ReactElement {
         )}
       >
         {hasHeadings && <hr className="wb-border-border-default wb-mb-5xl" />}
-        {config.feedback ? (
+        <div className="wb-flex wb-flex-col wb-gap-lg">
+          {config.feedback ? (
+            <Button
+              content={
+                config.feedback.linkTitle || 'Question? Give us feedback →'
+              }
+              to={getGitIssueUrl({
+                labels: config.feedback.feedbackLabels || '',
+                repository: config.gitRepoUrl,
+                title: `Feedback for “${config.pageOpts?.title}”`,
+              })}
+              linkComponent={Link}
+              toLabel="href"
+              variant="plain"
+              size="lg"
+              className="!wb-text-text-soft"
+            />
+          ) : null}
           <Button
-            content={
-              config.feedback.linkTitle || 'Question? Give us feedback →'
-            }
-            to={getGitIssueUrl({
-              labels: config.feedback.feedbackLabels || '',
-              repository: config.gitRepoUrl,
-              title: `Feedback for “${config.pageOpts?.title}”`,
-            })}
-            linkComponent={Link}
-            toLabel="href"
+            content="Kloudlite.io"
+            suffix={<ArrowSquareOut />}
             variant="plain"
             size="lg"
+            className="!wb-text-text-soft"
           />
-        ) : null}
-        <Button
-          content="Kloudlite.io"
-          suffix={<ArrowSquareOut />}
-          variant="plain"
-          size="lg"
-        />
-        {config.scrollToTop && (
-          <BackToTop className="!wb-hidden" content="Scroll to top" />
-        )}
+          {config.scrollToTop && (
+            <BackToTop
+              className="!wb-hidden !wb-text-text-soft"
+              content="Scroll to top"
+            />
+          )}
+        </div>
       </div>
     </div>
   );

@@ -19,19 +19,22 @@ import {
   useState,
 } from 'react';
 import scrollIntoView from 'scroll-into-view-if-needed';
-import { ChevronRight } from '@jengaicons/react';
+import { ChevronRight, GithubLogoFill } from '@jengaicons/react';
 import { Collapse } from './collapse';
 import { Anchor } from './anchor';
 import useMenu from '../utils/use-menu';
 import { cn } from '../utils/commons';
 import useConfig from '../utils/use-config';
 import HeaderSecondary, { MobileMenu } from './header-secondary';
+import JoinProvidersDialog from './join-provider-dialog';
+import Link from 'next/link';
+import Button from './button';
 
 const TreeState: Record<string, boolean> = Object.create(null);
 
 const FocusedItemContext = createContext<null | string>(null);
 const OnFocusItemContext = createContext<null | ((item: string | null) => any)>(
-  null
+  null,
 );
 const FolderLevelContext = createContext(0);
 
@@ -43,11 +46,11 @@ type FolderProps = {
 const classes = {
   link: cn(
     'wb-flex wb-flex-row wb-items-center wb-rounded wb-py-md wb-px-2xl wb-transition-all [word-break:break-word]',
-    'wb-cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:wb-border hover:wb-bg-surface-basic-hovered'
+    'wb-cursor-pointer [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] contrast-more:wb-border hover:wb-bg-surface-basic-hovered',
   ),
-  inactive: cn('wb-bodyMd wb-text-text-soft'),
+  inactive: cn('wb-bodyMd wb-text-text-soft hover:wb-text-text-default'),
   active: cn(
-    'wb-bodyMd-medium wb-text-text-primary wb-bg-surface-basic-active'
+    'wb-bodyMd-medium wb-text-text-primary wb-bg-surface-basic-active',
   ),
   list: cn('wb-flex wb-flex-col wb-w-full wb-gap-md'),
 };
@@ -94,7 +97,7 @@ function FolderImpl({ item, anchors }: FolderProps): ReactElement {
   if (item.type === 'menu') {
     const menu = item as MenuItem;
     const routes = Object.fromEntries(
-      (menu.children || []).map((route) => [route.name, route])
+      (menu.children || []).map((route) => [route.name, route]),
     );
     item.children = Object.entries(menu.items || {}).map(([key, item]) => {
       const route = routes[key] || {
@@ -109,7 +112,8 @@ function FolderImpl({ item, anchors }: FolderProps): ReactElement {
     });
   }
 
-  const isLink = 'withIndexPage' in item && item.withIndexPage;
+  //make every page isLink
+  const isLink = ('withIndexPage' in item && item.withIndexPage) || true;
   // use button when link don't have href because it impacts on SEO
   const ComponentToUse = isLink ? Anchor : 'button';
 
@@ -121,11 +125,11 @@ function FolderImpl({ item, anchors }: FolderProps): ReactElement {
           'wb-flex-1 wb-flex wb-flex-row wb-items-center wb-justify-between',
           !isLink ? 'wb-text-left wb-w-full' : '',
           classes.link,
-          active ? classes.active : classes.inactive
+          active ? classes.active : classes.inactive,
         )}
         onClick={(e) => {
           const clickedToggleIcon = ['svg', 'path'].includes(
-            (e.target as HTMLElement).tagName.toLowerCase()
+            (e.target as HTMLElement).tagName.toLowerCase(),
           );
           if (clickedToggleIcon) {
             e.preventDefault();
@@ -151,7 +155,7 @@ function FolderImpl({ item, anchors }: FolderProps): ReactElement {
           size={16}
           className={cn(
             'wb-transition-all',
-            open ? 'wb-rotate-90' : 'wb-rotate-0'
+            open ? 'wb-rotate-90' : 'wb-rotate-0',
           )}
         />
       </ComponentToUse>
@@ -190,7 +194,7 @@ function Separator({ title }: { title: string }): ReactElement {
       className={cn(
         '[word-break:break-word]',
         title ? 'wb-headingSm wb-text-text-default wb-py-md wb-px-2xl' : '',
-        '[&:not(:first-child)]:wb-mt-5xl'
+        '[&:not(:first-child)]:wb-mt-5xl',
       )}
     >
       {title || <hr className="wb-mx-2 wb-border-t wb-border-border-default" />}
@@ -232,7 +236,7 @@ function File({
       {!!base && active && (
         <motion.div
           layoutId={`line-${base}`}
-          className="wb-border-l-2 wb-border-border-primary wb-rounded wb-h-full wb-absolute -wb-left-[5px]"
+          className="wb-border-l-2 wb-border-icon-primary wb-rounded wb-h-full wb-absolute -wb-left-[5px]"
         />
       )}
       <Anchor
@@ -241,7 +245,7 @@ function File({
         className={cn(
           classes.link,
           active ? classes.active : classes.inactive,
-          'wb-w-full'
+          'wb-w-full',
         )}
         onClick={() => {
           setMenu(false);
@@ -312,7 +316,7 @@ export function Sidebar({
 
   const anchors = useMemo(
     () => headings.filter((v) => v.depth === 2),
-    [headings]
+    [headings],
   );
   const sidebarRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -323,7 +327,7 @@ export function Sidebar({
     } else {
       document.body.classList.remove(
         'wb-overflow-hidden',
-        'lg:wb-overflow-auto'
+        'lg:wb-overflow-auto',
       );
     }
   }, [menu]);
@@ -352,7 +356,7 @@ export function Sidebar({
   // Always close mobile nav when route was changed (e.g. logo click)
   useEffect(() => {
     setMenu(false);
-  }, [router.asPath, setMenu]);
+  }, [router.asPath]);
 
   const { config } = useConfig();
   return (
@@ -365,7 +369,7 @@ export function Sidebar({
           'motion-reduce:wb-transition-none [transition:background-color_1.5s_ease]',
           menu
             ? 'wb-fixed wb-inset-0 wb-z-10 wb-bg-black/80'
-            : 'wb-bg-transparent'
+            : 'wb-bg-transparent',
         )}
         onClick={() => setMenu(false)}
       />
@@ -379,7 +383,7 @@ export function Sidebar({
           asPopover ? 'lg:wb-hidden' : 'wb-flex lg:wb-sticky lg:wb-self-start',
           menu
             ? 'max-lg:[transform:translate3d(0,0,0)]'
-            : 'max-lg:[transform:translate3d(0,-100%,0)]'
+            : 'max-lg:[transform:translate3d(0,-150%,0)]',
         )}
         ref={containerRef}
       >
@@ -398,14 +402,14 @@ export function Sidebar({
             <div
               className={cn(
                 'wb-overflow-y-auto md:wb-overflow-y-hidden wb-overflow-x-hidden hover:wb-overflow-y-auto scrollbar-gutter lg:wb-pr-3xl',
-                'wb-grow lg:wb-h-[calc(100vh-var(--kl-navbar-height))]',
+                'wb-grow wb-h-screen lg:wb-h-[calc(100vh-var(--kl-navbar-height))]',
                 {
                   'no-scrollbar': !showSidebar,
                 },
                 {
                   'lg:wb-pt-2xl': !!rawLayout,
                   'lg:wb-pt-6xl': !rawLayout,
-                }
+                },
               )}
               ref={sidebarRef}
             >
@@ -434,7 +438,7 @@ export function Sidebar({
                       <HeaderSecondary />
                     </div>
 
-                    <div className="wb-px-xl">
+                    <div className="wb-px-xl wb-pt-xl">
                       <Menu
                         className="nextra-menu-mobile lg:wb-hidden"
                         // The mobile dropdown menu, shows all the directories.
@@ -442,6 +446,35 @@ export function Sidebar({
                         // Always show the anchor links on mobile (`md`).
                         anchors={anchors}
                       />
+
+                      <div className={cn('wb-flex wb-flex-col')}>
+                        {config.headerSecondary?.items
+                          .filter(
+                            (f) =>
+                              !fullDirectories.find((ff) => ff.route === f.to),
+                          )
+                          ?.map((item) => (
+                            <Link
+                              href={item.to}
+                              key={item.to}
+                              className="wb-px-2xl wb-py-lg wb-text-text-soft wb-bodyMd hover:wb-text-text-default"
+                            >
+                              {item.title}
+                            </Link>
+                          ))}
+                        <div className="lg:wb-hidden wb-flex wb-flex-col wb-gap-xl wb-pt-2xl">
+                          <Button
+                            prefix={<GithubLogoFill />}
+                            content="Github"
+                            variant="basic"
+                            block
+                            linkComponent={Link}
+                            toLabel="href"
+                            to={config.gitRepoUrl}
+                          />
+                          <JoinProvidersDialog />
+                        </div>
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -462,16 +495,20 @@ function Menu({
 }: MenuProps): ReactElement {
   return (
     <ul className={cn(classes.list, className)}>
-      {directories.map((item) =>
-        !onlyCurrentDocs || item.isUnderCurrentDocsTree ? (
-          item.type === 'menu' ||
-          (item.children && (item.children.length || !item.withIndexPage)) ? (
-            <Folder key={item.name} item={item} anchors={anchors} />
-          ) : (
-            <File key={item.name} item={item} base={base} />
-          )
-        ) : null
-      )}
+      {directories
+        // @ts-ignore
+        .filter((d) => d?.showinmenu !== false)
+        .map((item) =>
+          !onlyCurrentDocs || item.isUnderCurrentDocsTree ? (
+            item.type === 'menu' ||
+            (item.children && (item.children.length || !item.withIndexPage)) ? (
+              <Folder key={item.name} item={item} anchors={anchors} />
+            ) : //@ts-ignore
+            item.frontMatter && item.frontMatter.draft === true ? null : (
+              <File key={item.name} item={item} base={base} />
+            )
+          ) : null,
+        )}
     </ul>
   );
 }

@@ -1,6 +1,4 @@
-import React from 'react';
-
-function Error500Icon() {
+export function Error500Icon() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -68,4 +66,75 @@ function Error500Icon() {
   );
 }
 
-export default Error500Icon;
+export const Error500IconDark = () => (
+  <svg
+    height="129"
+    width="122"
+    fill="none"
+    viewBox="0 0 122 129"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M36.9061 40L85.9061 89"
+      stroke="#EF4444"
+      strokeDasharray="6 6"
+      strokeLinecap="round"
+      strokeWidth="2"
+    />
+    <path
+      d="M36.9061 89L85.9061 40"
+      stroke="#EF4444"
+      strokeDasharray="6 6"
+      strokeLinecap="round"
+      strokeWidth="2"
+    />
+    <path
+      d="M93.9061 7.89231L107.933 -1.71529e-05L121.922 7.70313L107.826 15.5297L93.9061 7.89231Z"
+      fill="#EDEEF1"
+    />
+    <path
+      d="M93.911 7.88904V23.9684L107.815 31.9987V15.5173L93.911 7.88904Z"
+      fill="#9CA3AF"
+    />
+    <path
+      d="M107.815 15.5187L121.928 7.69159V23.8513L107.815 32V15.5187Z"
+      fill="#D1D5DB"
+    />
+    <path
+      d="M0.906128 7.89231L14.9327 -1.71529e-05L28.9225 7.70313L14.8261 15.5297L0.906128 7.89231Z"
+      fill="#EDEEF1"
+    />
+    <path
+      d="M0.911011 7.88904L0.911011 23.9684L14.815 31.9987V15.5173L0.911011 7.88904Z"
+      fill="#9CA3AF"
+    />
+    <path
+      d="M14.815 15.5187L28.9282 7.69159V23.8513L14.815 32V15.5187Z"
+      fill="#D1D5DB"
+    />
+    <path
+      d="M0.906128 104.892L14.9327 97L28.9225 104.703L14.8261 112.53L0.906128 104.892Z"
+      fill="#EDEEF1"
+    />
+    <path
+      d="M0.911011 104.889L0.911011 120.968L14.815 128.999V112.517L0.911011 104.889Z"
+      fill="#9CA3AF"
+    />
+    <path
+      d="M14.815 112.519L28.9282 104.692V120.851L14.815 129V112.519Z"
+      fill="#D1D5DB"
+    />
+    <path
+      d="M93.9061 104.892L107.933 97L121.922 104.703L107.826 112.53L93.9061 104.892Z"
+      fill="#EDEEF1"
+    />
+    <path
+      d="M93.911 104.889V120.968L107.815 128.999V112.517L93.911 104.889Z"
+      fill="#9CA3AF"
+    />
+    <path
+      d="M107.815 112.519L121.928 104.692V120.851L107.815 129V112.519Z"
+      fill="#D1D5DB"
+    />
+  </svg>
+);

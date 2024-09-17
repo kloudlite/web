@@ -1,43 +1,179 @@
 import Popup from 'kl-design-system/molecule/popup';
 import {
+  CircleNotch,
   Envelope,
   GithubLogoFill,
   GitlabLogoFill,
   GoogleLogoFill,
 } from '@jengaicons/react';
 import Link from 'next/link';
-import { ReactNode, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Badge } from 'kl-design-system/atoms/badge';
 import { Button, IButton } from 'kl-design-system/atoms/button';
-import useConfig from '../utils/use-config';
+import useConfig, { IConfig } from '../utils/use-config';
 import useMenu from '../utils/use-menu';
 import ButtonDev from './button';
 import { Anchor } from './anchor';
-import { authUrl } from '../utils/config';
+import { authUrl, consoleUrl } from '../utils/config';
 import { cn } from '../utils/commons';
+import OptionList from 'kl-design-system/atoms/option-list';
+import Profile from 'kl-design-system/molecule/profile';
+
+const ProfileMenu = ({ user }: { user: IConfig['user'] }) => {
+  if (!user) {
+    return null;
+  }
+  return (
+    <OptionList.Root>
+      <OptionList.Trigger>
+        <div>
+          <div className="wb-hidden md:wb-flex">
+            <Profile name={user.name} size="xs" />
+          </div>
+          <div className="wb-flex md:wb-hidden">
+            <Profile size="xs" />
+          </div>
+        </div>
+      </OptionList.Trigger>
+      <OptionList.Content className="wb-w-[200px]">
+        <OptionList.Item>
+          <div className="wb-flex wb-flex-col">
+            <span className="wb-bodyMd-medium wb-text-text-default">
+              {user.name}
+            </span>
+            <span className="wb-bodySm wb-text-text-soft">{user.email}</span>
+          </div>
+        </OptionList.Item>
+        <OptionList.Link LinkComponent={Link} to={consoleUrl} toLabel="href">
+          Go to console
+        </OptionList.Link>
+      </OptionList.Content>
+    </OptionList.Root>
+  );
+};
+
+const UserComponent = ({
+  config,
+  hasSignIn,
+  isInHeader,
+  setShow,
+  size,
+}: {
+  config: IConfig;
+  hasSignIn: boolean;
+  isInHeader: boolean;
+  setShow: any;
+  size?: IButton['size'];
+}) => {
+  const user = config.user;
+  if (config.userApiLoading) {
+    return (
+      <div
+        className={cn(
+          'wb-flex wb-flex-row wb-items-center wb-justify-center wb-text-text-default',
+          {
+            'wb-w-[172px]': isInHeader,
+            'wb-h-[50px]': !isInHeader,
+          },
+        )}
+      >
+        <CircleNotch size={16} className="wb-animate-spin" />
+      </div>
+    );
+  }
+  if (isInHeader && user) {
+    return (
+      <div className={cn('wb-text-text-default')}>
+        <ProfileMenu user={user} />
+      </div>
+    );
+  }
+
+  if (user) {
+    return (
+      <div className="wb-flex wb-items-center wb-justify-center">
+        <ButtonDev
+          content="Go to console"
+          variant="basic"
+          block
+          size={size}
+          linkComponent={Link}
+          toLabel="href"
+          to={consoleUrl}
+        />
+      </div>
+    );
+  }
+  return (
+    <div
+      className={cn('wb-flex wb-flex-row wb-items-center wb-gap-lg', {
+        'wb-w-[172px]': isInHeader,
+      })}
+    >
+      {hasSignIn && (
+        <ButtonDev
+          content={
+            isInHeader ? (
+              <span className="wb-bodyMd-medium">Sign in</span>
+            ) : (
+              'Sign in'
+            )
+          }
+          variant="outline"
+          block
+          size={size}
+          onClick={() => {
+            setShow('signin');
+          }}
+        />
+      )}
+      <ButtonDev
+        content={
+          isInHeader ? (
+            <span className="wb-bodyMd-medium">Sign up</span>
+          ) : (
+            'Sign up'
+          )
+        }
+        variant="primary"
+        block
+        size={size}
+        onClick={() => {
+          setShow('signup');
+        }}
+      />
+    </div>
+  );
+};
 
 const JoinProvidersDialog = ({
   size,
-  buttonContent,
+  hasSignIn,
+  isInHeader,
 }: {
   size?: IButton['size'];
-  buttonContent?: ReactNode;
+  hasSignIn?: boolean;
+  isInHeader?: boolean;
 }) => {
   const { config } = useConfig();
   const { oathProviders } = config;
-  const signupUrl = `${process.env.AUTH_URL}/signup?mode=email`;
+  const signupUrl = `${authUrl}/signup?mode=email`;
 
   const { setState } = useMenu();
 
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState('');
 
   useEffect(() => {
-    setTimeout(() => {
+    const time = setTimeout(() => {
       setState(false);
     }, 150);
+
+    return () => {
+      clearInterval(time);
+    };
   }, [show]);
 
-  const userApproved = config.user?.verified && !config.user.approved;
+  const userApproved = config.user?.verified && config.user.approved;
   const hasProvider =
     oathProviders?.githubLoginUrl ||
     oathProviders?.gitlabLoginUrl ||
@@ -45,29 +181,21 @@ const JoinProvidersDialog = ({
 
   return (
     <div className="wb-w-full">
-      {!buttonContent && (
-        <ButtonDev
-          content="Signup"
-          variant="primary"
-          block
-          size={size}
-          onClick={() => {
-            setShow(true);
-          }}
-        />
-      )}
-      {buttonContent && (
-        <Button
-          content={buttonContent}
-          variant="primary"
-          block
-          size={size}
-          onClick={() => {
-            setShow(true);
-          }}
-        />
-      )}
-      <Popup.Root show={show} onOpenChange={setShow}>
+      <UserComponent
+        config={config}
+        hasSignIn={!!hasSignIn}
+        isInHeader={!!isInHeader}
+        setShow={setShow}
+        size={size}
+      />
+      <Popup.Root
+        show={!!show}
+        onOpenChange={(e) => {
+          if (!e) {
+            setShow('');
+          }
+        }}
+      >
         <div className="md:wb-hidden">
           <Popup.Header />
         </div>
@@ -86,7 +214,7 @@ const JoinProvidersDialog = ({
                 Do you have an invite code?
                 <br />
                 <Link
-                  href={`${process.env.AUTH_URL}/signup`}
+                  href={`${authUrl}/signup`}
                   className="wb-text-text-default hover:wb-underline wb-underline-offset-4"
                 >
                   Click here
@@ -99,10 +227,14 @@ const JoinProvidersDialog = ({
               <div className="wb-flex wb-flex-col wb-gap-5xl wb-p-8xl bg-surface-basic-subdued wb-items-center">
                 <div className="wb-flex wb-flex-col wb-items-center wb-gap-lg">
                   <span className="wb-headingXl wb-text-text-default wb-text-center">
-                    Create your Kloudlite.io account
+                    {show === 'signup'
+                      ? 'Create your Kloudlite.io account'
+                      : 'Sign in to Kloudlite.io'}
                   </span>
                   <div className="wb-bodyLg wb-text-text-soft wb-text-center">
-                    Get started for free. No credit card required.
+                    {show === 'signup'
+                      ? 'Get started for free. No credit card required.'
+                      : 'Start integrating local coding with remote power'}
                   </div>
                 </div>
               </div>
@@ -195,12 +327,18 @@ const JoinProvidersDialog = ({
                 </div>
               </div>
               <div className="wb-flex wb-bg-surface-basic-subdued wb-px-5xl md:wb-px-8xl wb-py-5xl wb-bodyLg wb-text-text-soft wb-items-center wb-justify-center">
-                Already have an account?&nbsp;
+                {show === 'signup' ? (
+                  <>Already have an account?&nbsp;</>
+                ) : (
+                  <>New to Kloudlite?&nbsp;</>
+                )}
                 <Anchor
                   className="wb-text-text-strong wb-underline wb-underline-offset-4 hover:wb-cursor-pointer"
-                  href={`${authUrl}/login`}
+                  href={
+                    show === 'signup' ? `${authUrl}/login` : `${authUrl}/signup`
+                  }
                 >
-                  Sign in
+                  {show === 'signup' ? 'Sign in' : 'Sign up'}
                 </Anchor>
               </div>
             </div>

@@ -25,7 +25,7 @@ const FirebaseProvider = ({ children }: { children?: ReactNode }) => {
         () => ({
           firebaseApp: app,
         }),
-        [app]
+        [app],
       )}
     >
       {children}

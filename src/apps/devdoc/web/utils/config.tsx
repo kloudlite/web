@@ -11,17 +11,20 @@ import { cn } from './commons';
 import { IConfig } from './use-config';
 import ThemeSwitcher from '../components/theme-switcher';
 import { useTheme } from './useTheme';
+import { YoutubeLogoFill } from '@jengaicons/react';
 
 export const siteDesc =
   'Kloudlite is a remote-local development environment platform designed to streamline the workflow for developers working on distributed applications. By integrating both local and remote environments through Kubernetes, Kloudlite ensures a seamless, productive, and more connected development experience.';
 export const basePath = 'https://kloudlite.io';
-export const authUrl = 'https://auth.kloudlite.io';
+export const authUrl = `${process.env.AUTH_URL}` || 'https://auth.kloudlite.io';
+export const consoleUrl =
+  `${process.env.CONSOLE_URL}` || 'https://console.kloudlite.io';
 export const gitUrl = 'https://github.com/kloudlite/kloudlite';
 export const communityUrl =
   'https://github.com/kloudlite/kloudlite/discussions';
-export const changeLogUrl =
-  'https://github.com/kloudlite/kloudlite/releases';
+export const changeLogUrl = 'https://github.com/kloudlite/kloudlite/releases';
 const linkedinUrl = 'https://linkedin.com/company/kloudlite-io';
+const youtubeUrl = 'https://youtube.com/@kloudliteofficial';
 const xUrl = 'https://x.com/kloudlite';
 export const supportEmail = 'launch@kloudlite.io';
 const socialIconSize = 18;
@@ -38,6 +41,9 @@ const SocialMenu = () => {
       <a target="_blank" href={linkedinUrl} aria-label="kloudlite-linkedin">
         <LinkedinLogoFill size={socialIconSize} />
       </a>
+      <a target="_blank" href={youtubeUrl} aria-label="kloudlite-youtube">
+        <YoutubeLogoFill size={socialIconSize} />
+      </a>
     </div>
   );
 };
@@ -46,6 +52,7 @@ const BrandMenu = ({ className }: { className?: string }) => {
   const brandIconSize = 24;
 
   const { binaryTheme } = useTheme();
+
   return (
     <div
       className={cn(
@@ -163,11 +170,11 @@ export default {
           },
           {
             title: 'Terms of services',
-            to: '/terms-of-services',
+            to: '/legal/terms-of-services',
           },
           {
             title: 'Privacy policy',
-            to: '/privacy-policy',
+            to: '/legal/privacy-policy',
           },
         ],
       },

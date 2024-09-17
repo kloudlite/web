@@ -1,27 +1,33 @@
-import { ReactNode, useEffect, useRef } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import { cn } from '../utils/commons';
 
 const ResponsiveContainer = ({
   children,
   className,
+  extResize,
 }: {
   children?: ReactNode;
   className?: string;
+  extResize?: any;
 }) => {
   const ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const resize = () => {
-      if (ref.current && window.innerWidth >= 1280) {
+  const resize = () => {
+    if (ref.current) {
+      if (window.innerWidth >= 1280) {
         ref.current.style.height = '';
         const bounds = ref.current?.getBoundingClientRect();
         if (bounds) {
           const newHeight = Math.ceil(bounds.height / 32) * 32;
           ref.current.style.height = newHeight + 'px';
         }
+      } else {
+        ref.current.style.height = '';
       }
-    };
+    }
+  };
 
+  useEffect(() => {
     resize();
 
     window.addEventListener('resize', resize);
@@ -30,6 +36,10 @@ const ResponsiveContainer = ({
       window.removeEventListener('resize', resize);
     };
   }, [ref.current]);
+
+  useEffect(() => {
+    resize();
+  }, [extResize]);
 
   return (
     <div
