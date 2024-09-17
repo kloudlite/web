@@ -34,6 +34,7 @@
     "crypto-js": "^4.2.0",
     "escape-string-regexp": "^5.0.0",
     "firebase": "^10.8.0",
+    "firebase-functions": "^6.0.1",
     "flexsearch": "^0.7.31",
     "framer-motion": "^10.16.16",
     "git-url-parse": "^13.1.1",
@@ -48,6 +49,7 @@
     "next-themes": "^0.2.1",
     "nextra": "^2.13.2",
     "nextra-theme-docs": "^2.13.2",
+    "postcss": "^8.4.47",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-fast-marquee": "^1.6.4",
@@ -86,7 +88,6 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "next-sitemap": "^4.2.3",
-    "postcss": "12.1.5",
     "prettier": "^2.8.8",
     "tailwindcss": "^3.4.0",
     "typescript": "5.2.2"
