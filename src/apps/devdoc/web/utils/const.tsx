@@ -13,17 +13,17 @@ import {
 import Link from 'next/link';
 import BlogCover from '~/public/blog/blog-cover.jpeg';
 
-import profileKarthik from '~/images/about-us/karthik-thirumalasetti.png';
-import profileAditya from '~/images/about-us/aditya-sharma.png';
-import profilePavani from '~/images/about-us/pavani.png';
-import profileSrikanta from '~/images/about-us/s-srikanta.png';
-import profileHarsh from '~/images/about-us/harsh.png';
-import profileShweta from '~/images/about-us/shewta.png';
-import profilePiyush from '~/images/about-us/piyush.jpg';
 import profileAbdhesh from '~/images/about-us/abdhesh.jpeg';
+import profileAditya from '~/images/about-us/aditya-sharma.png';
 import profileAnshuman from '~/images/about-us/ansuman.jpg';
-import profileMohit from '~/images/about-us/mohit.jpg';
 import profileBikash from '~/images/about-us/bikash.jpg';
+import profileHarsh from '~/images/about-us/harsh.png';
+import profileKarthik from '~/images/about-us/karthik-thirumalasetti.png';
+import profileMohit from '~/images/about-us/mohit.jpg';
+import profilePavani from '~/images/about-us/pavani.png';
+import profilePiyush from '~/images/about-us/piyush.jpg';
+import profileSrikanta from '~/images/about-us/s-srikanta.png';
+import profileShweta from '~/images/about-us/shewta.png';
 
 import collaborate1440 from '~/images/homeNew/collaborate1440.svg';
 import connect1440 from '~/images/homeNew/connect1440.svg';
@@ -57,9 +57,6 @@ import nocommitMobile from '~/images/homeNew/nocommitMobile.svg';
 
 import explore from '~/images/explore.jpeg';
 
-import Collarative from '~/images/homeNew/exploring/collaborative.jpeg';
-import RemoteLocal from '~/images/homeNew/exploring/remote-local.jpeg';
-import Workflow from '~/images/homeNew/exploring/workflow.jpeg';
 import {
   Agritech,
   AnscerRoboticsLogo,
@@ -74,9 +71,15 @@ import {
   LockSimple,
   PlaxonicLogo,
   Robot,
+  RocketLaunch,
   SelectionForeground,
   Users,
 } from '~/app/icons/icons';
+import Collarative from '~/images/homeNew/exploring/collaborative.jpeg';
+import RemoteLocal from '~/images/homeNew/exploring/remote-local.jpeg';
+import Workflow from '~/images/homeNew/exploring/workflow.jpeg';
+import Button from '../components/button';
+import JoinProvidersDialog from '../components/join-provider-dialog';
 import AnserSvg from '../icons/AnserRobotics';
 import BoltzmanSvg from '../icons/Boltzman';
 import CrewScaleSvg from '../icons/CrewScale';
@@ -84,8 +87,6 @@ import FibrSvg from '../icons/Fibr';
 import PlaxonicSvg from '../icons/Plaxonic';
 import RedPlutoSvg from '../icons/RedPluto';
 import TalescaleSvg from '../icons/Talescale';
-import Button from '../components/button';
-import JoinProvidersDialog from '../components/join-provider-dialog';
 import { authUrl } from './config';
 
 export const linkedInPrefix = 'https://www.linkedin.com/in/';
@@ -237,18 +238,18 @@ const consts = {
     },
     kloudliteDevelopmentData: [
       {
-        label: 'Open source under Apache 2.0 Licences',
+        label: 'Open source',
         desc: 'No vendor lock-in, what so ever',
         icon: OpenSource,
       },
       {
-        label: 'Instant Setup, Infinite Scale',
-        desc: 'Jump right into development with environments that scale as you grow',
+        label: 'Integrated workspaces',
+        desc: 'Develop in workspaces that are already connected to your application environments',
         icon: InfinityIcon,
       },
       {
         label: 'No Build No Deploy, Just Code',
-        desc: 'Pre-built environments mean less setup and more coding',
+        desc: 'Intercept the service to swap remote application with your workspace',
         icon: Code,
       },
       {
@@ -258,13 +259,13 @@ const consts = {
       },
 
       {
-        label: 'Seamless Collaboration Anywhere',
-        desc: 'Team up in real-time, in any environment, with zero hassle',
+        label: 'Seamless Collaboration',
+        desc: 'Switch into common environment to start collaboration',
         icon: Users,
       },
       {
         label: 'Cut the Config Clutter',
-        desc: 'Manage configs and secrets centrally - keep your code clean and lean',
+        desc: 'No more configs in your code',
         icon: SelectionForeground,
       },
       {
@@ -273,7 +274,7 @@ const consts = {
         icon: LockSimple,
       },
       {
-        label: 'Empower Innovation',
+        label: 'More time to code',
         desc: 'Free your focus for creativity with streamlined workflows',
         icon: Lightbulb,
       },
@@ -650,7 +651,7 @@ const consts = {
                   environment. you can follow these instructions
                 </span>
                 <Button
-                  content={'https://kloudlite.io/docs/getting-started.'}
+                  content="https://kloudlite.io/docs/getting-started."
                   to="https://kloudlite.io/docs/getting-started"
                   toLabel="href"
                   linkComponent={Link}
@@ -671,7 +672,7 @@ const consts = {
                   instructions are provided in our documentation
                 </span>
                 <Button
-                  content={'https://kloudlite.io/docs/getting-started.'}
+                  content="https://kloudlite.io/docs/getting-started."
                   to="https://kloudlite.io/docs/getting-started"
                   toLabel="href"
                   linkComponent={Link}
@@ -698,8 +699,8 @@ const consts = {
         to: '/docs/faq/feature-capabilities',
         items: [
           {
-            title: 'What are integrated services in Kloudlite?',
-            desc: 'Integrated services are stateful backing services running on attached clusters. They allow you to create and use resources like databases within your development environments.',
+            title: 'What are managed services in Kloudlite?',
+            desc: 'Managed services are stateful backing services running on attached clusters. They allow you to create and use resources like databases within your development environments.',
           },
           {
             title: 'Can I collaborate with other developers using Kloudlite?',
@@ -718,23 +719,50 @@ const consts = {
         to: '/docs/faq/plans-pricing',
         items: [
           {
-            title: 'What plans does Kloudlite offer?',
-            desc: 'Kloudlite offers different plans to suit various needs, including a Scale Plan with features like RBAC in User Management, Prioritization in Support, and Audit Logging for Governance.',
+            title: 'For Developers',
+            desc: 'Kloudlite Free Plan is available to any developer, offering access to core features suitable for individuals or teams.',
           },
           {
-            title: 'How much does the Scale Plan cost?',
-            desc: 'The Scale Plan costs $10 per user per month. Partial payment is considered for users added mid-month.',
+            title: 'For Organizations',
+            desc: 'The Scale Plan, is geared towards enterprise teams where governance and compliance are critical. This plan includes features like Role-Based Access Control (RBAC), audit logging, and prioritization in support, and is priced at $20 per user per month.',
           },
         ],
       },
-      aIMLWorkflows: {
-        label: 'AI & ML Workflows',
-        icon: Robot,
+      onboarding: {
+        label: 'Onboarding',
+        icon: RocketLaunch,
         to: '/docs/faq/ai-ml-workflows',
         items: [
           {
-            title: 'Does Kloudlite support AI and ML workflows?',
-            desc: 'Yes, Kloudlite supports AI and ML workflows by allowing developers to attach VMs with GPUs to their development environments. However, AI & ML workflows will not be included in the first release of Kloudlite.',
+            title: 'How do i start using Kloudlite?',
+            desc: 'You can sign up for a free Kloudlite account and start using the platform right away. Follow the Getting Started guide to begin your journey with Kloudlite.',
+          },
+          {
+            title: 'Where will my environments run?',
+            desc: 'kloudlite creates environments in your kubernetes cluster. You can choose to run your environments on a public or private cloud.',
+          },
+          {
+            title: 'Can I host entire kloudlite platform?',
+            desc: (
+              <div className="wb-inline-block">
+                <span>
+                  You can host kloudlite on your own infrastructure, giving you
+                  full control over the platform. Follow the setup instructions
+                  from
+                </span>
+                <Button
+                  content="this repo"
+                  to="https://github.com/kloudlite/helm-charts"
+                  toLabel="href"
+                  linkComponent={Link}
+                  variant="primary-plain"
+                  size="sm"
+                  className="wb-align-middle !wb-inline"
+                />
+                <span>to get started.</span>
+              </div>
+            ),
+            // desc: 'You can host kloudlite on your own infrastructure, giving you full control over the platform. Follow the setup instructions from this repo to get started.',
           },
         ],
       },
@@ -840,7 +868,7 @@ const consts = {
     date: 'Sep 14, 2024',
     enabled: false,
     linkContent: 'Register today',
-    link: authUrl + '/signup',
+    link: `${authUrl}/signup`,
   },
   contactUs: {
     cookies: {

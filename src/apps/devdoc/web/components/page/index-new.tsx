@@ -1,9 +1,7 @@
-import { Badge } from 'kl-design-system/atoms/badge';
-import { GraphExtended } from '~/app/components/graph';
-import hero from '~/images/homeNew/hero';
-import HomeIllustrationMobileDark from '~/images/homeNew/illustration-mobile-dark.svg';
-import HomeIllustrationMobileWeb from '~/images/homeNew/illustration-mobile.webp';
 import DynamicImage from '~/app/components/dynamic-image';
+import { GraphExtended } from '~/app/components/graph';
+import JoinProvidersDialog from '~/app/components/join-provider-dialog';
+import FaqSection from '~/app/components/website/home/faq';
 import HowItWorksSection from '~/app/components/website/home/how-it-works';
 import KeepExploring from '~/app/components/website/home/keep-exploring';
 import KloudliteDevelopment from '~/app/components/website/home/kloudlite-development';
@@ -13,20 +11,14 @@ import PartnerSection from '~/app/components/website/home/partners';
 import SecureAtCore from '~/app/components/website/home/secure-at-core';
 import SuperCharge from '~/app/components/website/home/supercharge';
 import Wrapper from '~/app/components/wrapper';
-import JoinProvidersDialog from '~/app/components/join-provider-dialog';
-import FaqSection from '~/app/components/website/home/faq';
-import Events from '../website/home/events';
+import hero from '~/images/homeNew/hero';
+import HomeIllustrationMobileDark from '~/images/homeNew/illustration-mobile-dark.svg';
+import HomeIllustrationMobileWeb from '~/images/homeNew/illustration-mobile.webp';
 
 const Title = () => {
   return (
     <div className="wb-flex wb-flex-col wb-gap-3xl wb-text-center wb-items-center">
-      <div>
-        <Badge type="info">
-          <span className="wb-bodyMd md:wb-bodyLg">
-            Open-Source (Apache 2.0)
-          </span>
-        </Badge>
-      </div>
+      {' '}
       <h1 className="wb-heading4xl-marketing md:wb-heading6xl-marketing lg:wb-heading7xl-marketing wb-text-text-default wb-text-center lg:wb-w-[896px] xl:wb-w-[1024px] 2xl:wb-w-[1060px]">
         <div className="wb-hidden md:wb-block">
           Building distributed applications
