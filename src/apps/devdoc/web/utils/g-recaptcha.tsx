@@ -8,7 +8,7 @@ declare global {
           action: {
             action: string;
           },
-        ) => void;
+        ) => Promise<string>;
       };
     };
   }
@@ -27,7 +27,7 @@ export const onReady = (callback: Promise<void>) => {
   ready(callback);
 };
 
-export const execute = (
+export const execute = async (
   sitekey: string,
   action: {
     action: string;
@@ -42,7 +42,7 @@ export const execute = (
     return;
   }
   const exec = window.grecaptcha.enterprise.execute;
-  exec(sitekey, action);
+  return exec(sitekey, action);
 };
 
 const grecaptcha = {

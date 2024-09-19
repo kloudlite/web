@@ -8,7 +8,6 @@ import {
 } from '@jengaicons/react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { Badge } from 'kl-design-system/atoms/badge';
 import { Button, IButton } from 'kl-design-system/atoms/button';
 import useConfig, { IConfig } from '../utils/use-config';
 import useMenu from '../utils/use-menu';

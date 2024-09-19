@@ -1,4 +1,11 @@
-import { ReactNode, useEffect, useId, useState } from 'react';
+import React, {
+  ReactNode,
+  cloneElement,
+  isValidElement,
+  useEffect,
+  useId,
+  useState,
+} from 'react';
 import { cn } from '../utils/commons';
 import { IconButton } from 'kl-design-system/atoms/button';
 import { XFill } from '@jengaicons/react';
@@ -32,17 +39,6 @@ const Fullscreen = ({
 
   return (
     <>
-      {fullscreen && (
-        <div
-          className={cn({
-            'wb-z-50': true,
-          })}
-        >
-          <div className="wb-max-h-[90vh] wb-h-[min-content] wb-mt-3xl">
-            {children?.({ fullscreen: true })}
-          </div>
-        </div>
-      )}
       <AnimatePresence>
         <div
           className={cn({

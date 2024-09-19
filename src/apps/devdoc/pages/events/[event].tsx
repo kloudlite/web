@@ -2,8 +2,6 @@ import { CalendarBlank, Clock, Globe } from '@jengaicons/react';
 import fs from 'fs';
 import graymatter from 'gray-matter';
 import { Avatar } from 'kl-design-system/atoms/avatar';
-import { Button } from 'kl-design-system/atoms/button';
-import { Metadata } from 'next';
 import { MDXRemote } from 'next-mdx-remote';
 import { serialize } from 'next-mdx-remote/serialize';
 import Link from 'next/link';
@@ -13,10 +11,10 @@ import Container from '~/app/components/container';
 import { GraphItem } from '~/app/components/graph';
 import ResponsiveContainer from '~/app/components/responsive-container';
 import ResponsiveImage from '~/app/components/website/responsive-image';
+import { Button } from 'kl-design-system/atoms/button';
+import useCountdown from '~/app/utils/use-countdown';
 import ExternalLayout from '~/app/layout/alternate-layout';
 import { createComponents } from '~/app/layout/mdx-components';
-import { cn } from '~/app/utils/commons';
-import useCountdown from '~/app/utils/use-countdown';
 
 type IEvent = {
   event: string;
@@ -33,10 +31,6 @@ type IEvent = {
       title: string;
     };
   };
-};
-
-export const metadata: Metadata = {
-  title: 'acme',
 };
 
 function convertTo12Hour(time24: string, hasPeriod?: true) {
@@ -117,11 +111,14 @@ export default function Event({ event }: { event: IEvent }) {
                     <TimeSeparator />
                     <TimeItem value={`${countdown.seconds}`} unit="sec" />
                   </div>
-                  <Link
-                    href={`https://webinar.kloudlite.io/${event.hash}/join`}
-                  >
-                    <Button block content="Register now" variant="primary" />
-                  </Link>
+                  <Button
+                    block
+                    content="Register now"
+                    variant="primary"
+                    linkComponent={Link}
+                    toLabel="href"
+                    to={`https://webinar.kloudlite.io/${event.hash}/join`}
+                  />
                 </div>
               </GraphItem>
               <GraphItem

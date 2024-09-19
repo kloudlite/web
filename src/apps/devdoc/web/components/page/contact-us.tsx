@@ -1,12 +1,9 @@
 import { TextInput, TextArea } from 'kl-design-system/atoms/input';
 import Select from 'kl-design-system/atoms/select';
 import Link from 'next/link';
-import { ComponentProps, ReactNode, useEffect, useMemo, useState } from 'react';
-import { addDoc, collection, getFirestore } from '@firebase/firestore';
-import { FirebaseApp } from 'firebase/app';
+import { ComponentProps, ReactNode, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { useFirebase } from '~/app/utils/useFirebase';
-import { supportEmail } from '~/app/utils/config';
+import { contactUrl, supportEmail } from '~/app/utils/config';
 import Wrapper from '../wrapper';
 import Button from '../button';
 import countries from '~/app/utils/countries.json';
@@ -17,6 +14,9 @@ import { Block } from '../commons';
 import ResponsiveContainer from '../responsive-container';
 import FAQSection from '../faq';
 import { CircleNotch, JengaIconCommonProps } from '@jengaicons/react';
+import axios from 'axios';
+import { toast } from 'kl-design-system/molecule/toast';
+import grecaptcha from '~/app/utils/g-recaptcha';
 
 const SupportIcon = (props: ComponentProps<'svg'>) => {
   const { height, width } = props;
@@ -77,28 +77,19 @@ const SupportIcon = (props: ComponentProps<'svg'>) => {
   );
 };
 
-const addContact = async (
-  app: FirebaseApp | null,
-  data: {
-    email: string;
-    fullname: string;
-    companyName: string;
-    mobile: string;
-    country: string;
-    message: string;
-  },
-) => {
-  if (!app) {
-    return;
-  }
-  const firestore = getFirestore(app);
-  const col = collection(firestore, 'web-contact-form');
-  const contactData = {
-    ...data,
-    createdAt: new Date(),
-  };
-
-  await addDoc(col, contactData);
+const addContact = async (data: {
+  email: string;
+  fullname: string;
+  companyName: string;
+  mobile: string;
+  country: string;
+  message: string;
+  token: string;
+}) => {
+  return axios(contactUrl, {
+    method: 'post',
+    data,
+  });
 };
 
 type Inputs = {
@@ -230,7 +221,6 @@ const ThankYouMessage = () => {
 };
 
 const FormSection = () => {
-  const { firebaseApp } = useFirebase();
   const [loading, setLoading] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
 
@@ -258,16 +248,33 @@ const FormSection = () => {
 
   const onFormSubmit = handleSubmit(async (d) => {
     setLoading(true);
-    await addContact(firebaseApp, d);
-    setLoading(false);
-    const expiryMinutes = consts.contactUs.cookies.cookieTime || 5;
-    const date = new Date();
-    date.setTime(date.getTime() + expiryMinutes * 60 * 1000);
-    setCookie(consts.contactUs.cookies.submitCookie, true, {
-      expires: date,
-    });
-    setHasFormSubmitted(true);
-    reset();
+    const token = await grecaptcha.execute(
+      '6LcxXUIqAAAAABtRW-S7Bov6z9PgUHhbNWjTLhND',
+      {
+        action: 'login',
+      },
+    );
+    if (!token) {
+      toast.error('Something went wrong.');
+      return;
+    }
+
+    try {
+      await addContact({ ...d, token });
+      setLoading(false);
+      const expiryMinutes = consts.contactUs.cookies.cookieTime || 5;
+      const date = new Date();
+      date.setTime(date.getTime() + expiryMinutes * 60 * 1000);
+      setCookie(consts.contactUs.cookies.submitCookie, true, {
+        expires: date,
+      });
+      setHasFormSubmitted(true);
+      reset();
+    } catch {
+      setHasFormSubmitted(false);
+      setLoading(false);
+      toast.error('Error submitting contact detail.');
+    }
   });
 
   const getFormComponent = () => {
@@ -290,6 +297,12 @@ const FormSection = () => {
         onSubmit={onFormSubmit}
         className="wb-flex wb-flex-col wb-gap-5xl wb-flex-1 wb-p-3xl md:wb-p-6xl"
       >
+        <div
+          id="recaptcha"
+          className="g-recaptcha hidden"
+          data-sitekey="_your_site_key_"
+          data-size="invisible"
+        ></div>
         <div className="wb-flex wb-flex-col wb-gap-3xl">
           <TextInput
             label="Full name"
@@ -395,13 +408,15 @@ const FormSection = () => {
                 Privacy policy.
               </Link>
             </span>
-            <Button
-              loading={loading}
-              type="submit"
-              content="Submit"
-              size="md"
-              disabled={loading}
-            />
+            <div className="md:wb-min-w-[132px] wb-flex wb-justify-end">
+              <Button
+                loading={loading}
+                type="submit"
+                content="Submit"
+                size="md"
+                disabled={loading}
+              />
+            </div>
           </div>
         </div>
       </form>
