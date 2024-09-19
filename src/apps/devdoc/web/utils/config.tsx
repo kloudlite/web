@@ -17,6 +17,7 @@ export const siteDesc =
   'Kloudlite is a remote-local development environment platform designed to streamline the workflow for developers working on distributed applications. By integrating both local and remote environments through Kubernetes, Kloudlite ensures a seamless, productive, and more connected development experience.';
 export const basePath = 'https://kloudlite.io';
 export const authUrl = `${process.env.AUTH_URL}` || 'https://auth.kloudlite.io';
+export const webinarUrl = 'https://webinar.kloudlite.io';
 export const contactUrl = `${process.env.CONTACT_URL}`;
 export const consoleUrl =
   `${process.env.CONSOLE_URL}` || 'https://console.kloudlite.io';
@@ -62,7 +63,7 @@ const BrandMenu = ({ className }: { className?: string }) => {
     <div
       className={cn(
         'wb-flex wb-flex-col wb-gap-7xl md:wb-gap-3xl lg:wb-pr-4xl wb-order-last md:wb-order-first md:wb-justify-between md:wb-h-full',
-        className
+        className,
       )}
     >
       <div className="wb-flex wb-flex-row">

@@ -87,7 +87,7 @@ import FibrSvg from '../icons/Fibr';
 import PlaxonicSvg from '../icons/Plaxonic';
 import RedPlutoSvg from '../icons/RedPluto';
 import TalescaleSvg from '../icons/Talescale';
-import { authUrl } from './config';
+import { authUrl, webinarUrl } from './config';
 
 export const linkedInPrefix = 'https://www.linkedin.com/in/';
 export const githubPrefix = 'https://github.com/';
@@ -864,11 +864,11 @@ const consts = {
         </div>
       </>
     ),
-    time: '12:00-1:00 pm',
-    date: 'Sep 14, 2024',
+    time: '12:15-1:15 pm',
+    date: 'Sep 21, 2024',
     enabled: false,
     linkContent: 'Register today',
-    link: `${authUrl}/signup`,
+    link: `${webinarUrl}/code-unbound-new-age-development-environments/join`,
   },
   contactUs: {
     cookies: {
