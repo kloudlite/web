@@ -1,21 +1,22 @@
-import fs from 'fs';
-import path from 'path';
-import graymatter from 'gray-matter';
 import { CalendarBlank, Clock, Globe } from '@jengaicons/react';
+import fs from 'fs';
+import graymatter from 'gray-matter';
 import { Avatar } from 'kl-design-system/atoms/avatar';
+import { Button } from 'kl-design-system/atoms/button';
+import { Metadata } from 'next';
+import { MDXRemote } from 'next-mdx-remote';
+import { serialize } from 'next-mdx-remote/serialize';
+import Link from 'next/link';
+import path from 'path';
 import { Block } from '~/app/components/commons';
 import Container from '~/app/components/container';
 import { GraphItem } from '~/app/components/graph';
 import ResponsiveContainer from '~/app/components/responsive-container';
-import { cn } from '~/app/utils/commons';
-import { MDXRemote } from 'next-mdx-remote';
-import { serialize } from 'next-mdx-remote/serialize';
-import { createComponents } from '~/app/layout/mdx-components';
 import ResponsiveImage from '~/app/components/website/responsive-image';
-import { Button } from 'kl-design-system/atoms/button';
-import useCountdown from '~/app/utils/use-countdown';
-import { Metadata } from 'next';
 import ExternalLayout from '~/app/layout/alternate-layout';
+import { createComponents } from '~/app/layout/mdx-components';
+import { cn } from '~/app/utils/commons';
+import useCountdown from '~/app/utils/use-countdown';
 
 type IEvent = {
   event: string;
@@ -83,7 +84,7 @@ export default function Event({ event }: { event: IEvent }) {
       <Container
         className={cn(
           'wb-min-h-[calc(100vh-76px)] wb-flex-row',
-          'lg:wb-m-auto lg:!wb-max-w-[896px] wb-w-full wb-px-3xl md:!wb-px-5xl lg:!wb-px-8xl xl:!wb-px-11xl 2xl:!wb-px-12xl xl:!wb-max-w-[1024px] 2xl:!wb-max-w-[1120px] 3xl:!wb-min-w-[1408px] lg:!wb-box-content',
+          'lg:wb-m-auto lg:!wb-max-w-[896px] wb-w-full wb-px-3xl md:!wb-px-5xl lg:!wb-px-8xl xl:!wb-px-11xl 2xl:!wb-px-12xl xl:!wb-max-w-[1024px] 2xl:!wb-max-w-[1120px] 3xl:!wb-min-w-[1408px] lg:!wb-box-content'
         )}
       >
         <Block title={title}>
@@ -116,7 +117,11 @@ export default function Event({ event }: { event: IEvent }) {
                     <TimeSeparator />
                     <TimeItem value={`${countdown.seconds}`} unit="sec" />
                   </div>
-                  <Button block content="Register now" variant="primary" />
+                  <Link
+                    href={`https://webinar.kloudlite.io/${event.hash}/join`}
+                  >
+                    <Button block content="Register now" variant="primary" />
+                  </Link>
                 </div>
               </GraphItem>
               <GraphItem
@@ -200,7 +205,7 @@ export async function getStaticProps({ params }: any) {
     'pages',
     'events',
     '_md',
-    `${params.event}.md`,
+    `${params.event}.md`
   );
 
   const fileContents = fs.readFileSync(filePath, 'utf8');
