@@ -15,12 +15,16 @@ import { Button } from 'kl-design-system/atoms/button';
 import useCountdown from '~/app/utils/use-countdown';
 import ExternalLayout from '~/app/layout/alternate-layout';
 import { createComponents } from '~/app/layout/mdx-components';
+import { cn } from '~/app/utils/commons';
+import events from '../../../../../lib/shared-statics/events.json';
+import { useCallback, useMemo } from 'react';
+import { webinarUrl } from '~/app/utils/config';
 
 type IEvent = {
   event: string;
   content: any;
   frontMatter: {
-    title: string;
+    name: string;
     date: string;
     starttime: string;
     endtime: string;
@@ -68,25 +72,50 @@ const TimeSeparator = () => (
 export default function Event({ event }: { event: IEvent }) {
   const { content, frontMatter } = event;
 
-  const { banner, date, endtime, organizer, starttime, title, type } =
+  const { banner, date, endtime, organizer, starttime, name, type } =
     frontMatter;
 
   const countdown = useCountdown(new Date(`${date}T${starttime}`));
+
+  const countDownComponent = useMemo(() => {
+    return (
+      <div className="wb-grid wb-grid-cols-[36px_6px_36px_6px_36px_6px_36px] wb-gap-lg wb-justify-center">
+        <TimeItem value={`${countdown.days}`} unit="days" />
+        <TimeSeparator />
+        <TimeItem value={`${countdown.hours}`} unit="hours" />
+        <TimeSeparator />
+        <TimeItem value={`${countdown.minutes}`} unit="mins" />
+        <TimeSeparator />
+        <TimeItem value={`${countdown.seconds}`} unit="sec" />
+      </div>
+    );
+  }, [countdown]);
+
+  const components = useCallback(() => createComponents({}), []);
+
+  const isNow = useCallback(() => {
+    return (
+      countdown.days === 0 &&
+      countdown.hours === 0 &&
+      countdown.minutes === 0 &&
+      countdown.seconds === 0
+    );
+  }, [countdown]);
 
   return (
     <ExternalLayout frontMatter={frontMatter}>
       <Container
         className={cn(
           'wb-min-h-[calc(100vh-76px)] wb-flex-row',
-          'lg:wb-m-auto lg:!wb-max-w-[896px] wb-w-full wb-px-3xl md:!wb-px-5xl lg:!wb-px-8xl xl:!wb-px-11xl 2xl:!wb-px-12xl xl:!wb-max-w-[1024px] 2xl:!wb-max-w-[1120px] 3xl:!wb-min-w-[1408px] lg:!wb-box-content'
+          'lg:wb-m-auto lg:!wb-max-w-[896px] wb-w-full wb-px-3xl md:!wb-px-5xl lg:!wb-px-8xl xl:!wb-px-11xl 2xl:!wb-px-12xl xl:!wb-max-w-[1024px] 2xl:!wb-max-w-[1120px] 3xl:!wb-min-w-[1408px] lg:!wb-box-content',
         )}
       >
-        <Block title={title}>
+        <Block title={name}>
           <ResponsiveContainer className="wb-grid-rows-1">
-            <div className="wb-grid wb-grid-rows-[auto_auto] md:wb-grid-rows-[380px_64px_auto] lg:wb-grid-rows-[480px_auto] wb-gap-3xl md:wb-gap-0 lg:wb-gap-5xl wb-relative">
+            <div className="wb-grid wb-grid-rows-[auto_auto] md:wb-grid-rows-[380px_auto] lg:wb-grid-rows-[480px_auto] wb-gap-3xl md:wb-gap-5xl wb-relative">
               <GraphItem>
                 <ResponsiveImage
-                  alt={title}
+                  alt={name}
                   rmobile={`/events/${banner}-mobile.jpg`}
                   rmobileDark={`/events/${banner}-mobile.jpg`}
                   r768={`/events/${banner}-768.jpg`}
@@ -102,35 +131,20 @@ export default function Event({ event }: { event: IEvent }) {
                   className="wb-w-full md:wb-h-full"
                 />
                 <div className="wb-p-3xl wb-flex wb-flex-col md:wb-flex-row wb-gap-5xl md:wb-absolute wb-bg-surface-basic-default md:wb-z-50 md:wb-bottom-0 md:wb-left-1/2 md:-wb-translate-x-1/2 md:wb-translate-y-5xl md:wb-rounded md:wb-border md:wb-border-border-dark">
-                  <div className="wb-grid wb-grid-cols-[36px_6px_36px_6px_36px_6px_36px] wb-gap-lg wb-justify-center">
-                    <TimeItem value={`${countdown.days}`} unit="days" />
-                    <TimeSeparator />
-                    <TimeItem value={`${countdown.hours}`} unit="hours" />
-                    <TimeSeparator />
-                    <TimeItem value={`${countdown.minutes}`} unit="mins" />
-                    <TimeSeparator />
-                    <TimeItem value={`${countdown.seconds}`} unit="sec" />
-                  </div>
+                  {countDownComponent}
                   <Button
                     block
-                    content="Register now"
+                    content={isNow() ? 'Join now' : 'Register now'}
                     variant="primary"
                     linkComponent={Link}
                     toLabel="href"
-                    to={`https://webinar.kloudlite.io/${event.hash}/join`}
+                    to={`${webinarUrl}/${event.event}/join`}
                   />
                 </div>
               </GraphItem>
-              <GraphItem
-                lines={{
-                  bottom: false,
-                  top: false,
-                }}
-                className="wb-hidden md:wb-block lg:wb-hidden"
-              />
               <GraphItem className="wb-grid wb-grid-cols-1 md:wb-grid-cols-[auto_288px] wb-gap-3xl md:wb-gap-5xl">
                 <div className="wb-border wb-border-r-[1.5px] wb-border-border-dark wb-bg-surface-basic-subdued wb-p-5xl">
-                  <MDXRemote {...content} components={createComponents({})} />
+                  <MDXRemote {...content} components={components} />
                 </div>
                 <div className="wb-border wb-border-l-[1.5px] wb-border-border-dark wb-bg-surface-basic-subdued wb-p-5xl wb-flex wb-flex-col wb-gap-5xl">
                   <div className="wb-flex wb-flex-col wb-gap-2xl wb-pb-5xl wb-border-b wb-border-border-default">
@@ -179,15 +193,9 @@ export default function Event({ event }: { event: IEvent }) {
 
 // Generates `/posts/1` and `/posts/2`
 export async function getStaticPaths() {
-  const filePath = path.join(process.cwd(), 'pages', 'events', '_md');
-
-  const files = fs.readdirSync(filePath, 'utf8');
-
-  const paths = files
-    .filter((f) => f.endsWith('.md'))
-    .map((f) => {
-      return { params: { event: f.replace(/\.md$/, '') } };
-    });
+  const paths = Object.keys(events).map((event) => {
+    return { params: { event } };
+  });
 
   return {
     paths,
@@ -202,7 +210,7 @@ export async function getStaticProps({ params }: any) {
     'pages',
     'events',
     '_md',
-    `${params.event}.md`
+    `${params.event}.mdx`,
   );
 
   const fileContents = fs.readFileSync(filePath, 'utf8');
@@ -217,7 +225,8 @@ export async function getStaticProps({ params }: any) {
   const event = {
     event: params.event,
     content: contentHtml,
-    frontMatter: data,
+    // @ts-ignore
+    frontMatter: { ...data, ...events[params.event] },
   };
 
   return {
