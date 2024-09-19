@@ -26,6 +26,7 @@ export default withNextra({
     APP_ENV: process.env.APP_ENV,
     AUTH_URL: process.env.AUTH_URL,
     CONSOLE_URL: process.env.CONSOLE_URL,
+    CONTACT_URL: process.env.CONTACT_URL,
   },
   images: {
     unoptimized: true,
