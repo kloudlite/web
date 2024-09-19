@@ -14,8 +14,8 @@ import { createComponents } from '~/app/layout/mdx-components';
 import ResponsiveImage from '~/app/components/website/responsive-image';
 import { Button } from 'kl-design-system/atoms/button';
 import useCountdown from '~/app/utils/use-countdown';
-import { Metadata } from 'next';
 import ExternalLayout from '~/app/layout/alternate-layout';
+import Link from 'next/link';
 
 type IEvent = {
   event: string;
@@ -32,10 +32,6 @@ type IEvent = {
       title: string;
     };
   };
-};
-
-export const metadata: Metadata = {
-  title: 'acme',
 };
 
 function convertTo12Hour(time24: string, hasPeriod?: true) {
@@ -116,7 +112,14 @@ export default function Event({ event }: { event: IEvent }) {
                     <TimeSeparator />
                     <TimeItem value={`${countdown.seconds}`} unit="sec" />
                   </div>
-                  <Button block content="Register now" variant="primary" />
+                  <Button
+                    block
+                    content="Register now"
+                    variant="primary"
+                    linkComponent={Link}
+                    toLabel="href"
+                    to=""
+                  />
                 </div>
               </GraphItem>
               <GraphItem

@@ -218,3 +218,7 @@ canvas {
     transform: translateX(-400%);
   }
 }
+
+.grecaptcha-badge {
+  visibility: hidden;
+}
