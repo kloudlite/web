@@ -10,8 +10,9 @@ import { MenuProvider } from '~/app/utils/use-menu';
 import ThemeProvider from '~/app/utils/useTheme';
 import FirebaseProvider from '~/app/utils/useFirebase';
 import 'react-toastify/dist/ReactToastify.css';
-import config from '~/app/utils/config';
+import config, { authUrl } from '~/app/utils/config';
 import { useEffect } from 'react';
+import axios from 'axios';
 
 export const viewport: Viewport = {
   width: 'device-width',

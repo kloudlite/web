@@ -81,7 +81,11 @@ export default class Document extends NextDocument {
               `,
             }}
           />
-          <script src="https://www.google.com/recaptcha/enterprise.js?render=6LcxXUIqAAAAABtRW-S7Bov6z9PgUHhbNWjTLhND" />
+          <script
+            async
+            defer
+            src="https://www.google.com/recaptcha/enterprise.js?render=6LcxXUIqAAAAABtRW-S7Bov6z9PgUHhbNWjTLhND"
+          />
         </Head>
         <body>
           <Main />

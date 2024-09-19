@@ -16,9 +16,9 @@ import useCountdown from '~/app/utils/use-countdown';
 import ExternalLayout from '~/app/layout/alternate-layout';
 import { createComponents } from '~/app/layout/mdx-components';
 import { cn } from '~/app/utils/commons';
-import events from '../../../../../lib/shared-statics/events.json';
 import { useCallback, useMemo } from 'react';
 import { webinarUrl } from '~/app/utils/config';
+import events from '../../../../../lib/shared-statics/events.json';
 
 type IEvent = {
   event: string;

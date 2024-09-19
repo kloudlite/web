@@ -86,6 +86,7 @@ rules:
 
   import/extensions: 0
   import/prefer-default-export: off
+  import/no-relative-packages: 0
 
   react/jsx-uses-react: 0
   react/jsx-uses-vars: 1
