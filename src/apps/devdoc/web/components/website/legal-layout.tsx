@@ -73,7 +73,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
               variant="filled"
               size="sm"
               LinkComponent={Link}
-            // toLabel="href"
+              toLabel="href"
             >
               {tabs.map((t) => (
                 <Tabs.Tab
