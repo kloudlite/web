@@ -29,18 +29,6 @@ const events = [
     eventAuthorDetail: 'Founder & CEO, Kloudlite',
     eventImage: eventImage.src,
   },
-
-  {
-    eventTitle:
-      'Next-Gen Workflows Streamline Development with Workspaces & Environments 2',
-    eventId: '2',
-    eventType: 'Online',
-    eventDate: 'Aug 31, 2024',
-    eventTime: '11:00 to 12:00 pm',
-    eventAuthorName: 'Karthik Thriumalasetti',
-    eventAuthorDetail: 'Founder & CEO, Kloudlite',
-    eventImage: eventImage2.src,
-  },
 ];
 
 const Events = () => {
@@ -106,30 +94,30 @@ const Events = () => {
                       r1440Dark={`/events/${banner}-1440.jpg`}
                       r1920={`/events/${banner}-1440.jpg`}
                       r1920Dark={`/events/${banner}-1440.jpg`}
-                      className="wb-w-full wb-h-full wb-object-cover 2xl:wb-max-h-[448px]"
+                      className="wb-w-full wb-h-full wb-object-cover 2xl:wb-max-h-[416px]"
                     />
-                    <div className="wb-bg-surface-basic-default wb-p-4xl xl:wb-p-5xl wb-flex wb-flex-col wb-gap-4xl xl:wb-gap-5xl">
-                      <div className="wb-flex wb-flex-row wb-items-center lg:wb-justify-between wb-gap-x-3xl wb-gap-y-lg wb-bodyLg 2xl:wb-bodyXl wb-text-text-soft wb-flex-wrap">
-                        <div className="wb-flex wb-flex-row wb-items-center wb-gap-lg">
+                    <div className="wb-bg-surface-basic-default wb-p-4xl xl:wb-p-5xl wb-flex wb-flex-col wb-gap-4xl xl:wb-gap-4xl">
+                      <div className="wb-flex wb-flex-row wb-items-center lg:wb-justify-between wb-gap-lg xl:wb-gap-x-3xl wb-gap-y-lg wb-bodyLg 2xl:wb-bodyXl wb-text-text-soft wb-flex-wrap">
+                        <div className="wb-flex wb-flex-row wb-items-center wb-gap-lg wb-h-5xl">
                           <span>
                             <CalendarBlank size={20} />
                           </span>
                           <span>{es.eventDate}</span>
                         </div>
-                        <div className="wb-flex wb-flex-row wb-items-center wb-gap-lg">
+                        <div className="wb-flex wb-flex-row wb-items-center wb-gap-lg wb-h-5xl">
                           <span>
                             <Clock size={20} />
                           </span>
                           <span>{es.eventTime}</span>
                         </div>
-                        <div className="wb-flex wb-flex-row wb-items-center wb-gap-lg">
+                        <div className="wb-flex wb-flex-row wb-items-center wb-gap-lg wb-h-5xl">
                           <span>
                             <GlobeSimple size={20} />
                           </span>
                           <span>{es.eventType}</span>
                         </div>
                       </div>
-                      <div className="wb-heading2xl xl:wb-heading3xl-marketing wb-text-text-default">
+                      <div className="wb-heading2xl xl:wb-heading3xl wb-text-text-default wb-min-h-[129px] wb-flex wb-items-center wb-line-clamp-3">
                         {es.eventTitle}
                       </div>
                       <div>
