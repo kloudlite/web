@@ -249,7 +249,7 @@ const FormSection = () => {
   const onFormSubmit = handleSubmit(async (d) => {
     setLoading(true);
     const token = await grecaptcha.execute(
-      '6LcxXUIqAAAAABtRW-S7Bov6z9PgUHhbNWjTLhND',
+      process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || '',
       {
         action: 'login',
       },

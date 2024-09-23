@@ -138,7 +138,7 @@ export default function Event({ event }: { event: IEvent }) {
                     variant="primary"
                     linkComponent={Link}
                     toLabel="href"
-                    to={`${webinarUrl}/${event.event}/join`}
+                    to={`${webinarUrl}/${event.event}/join?eventHashUrl=${webinarUrl}/${event.event}/join`}
                   />
                 </div>
               </GraphItem>
