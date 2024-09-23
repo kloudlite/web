@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import type { NextraThemeLayoutProps } from 'nextra';
 import { MDXProvider } from 'nextra/mdx';
 import { useEffect, useMemo } from 'react';
@@ -6,7 +5,6 @@ import { useFSRoute } from 'nextra/hooks';
 import { Item, normalizePages } from 'nextra/normalize-pages';
 import { useRouter } from 'next/router';
 import { ArrowUpLg } from '@jengaicons/react';
-import axios from 'axios';
 import Container from '~/app/components/container';
 import { NavLinks } from '~/app/components/nav-links';
 import { TOC } from '~/app/components/toc';
@@ -30,7 +28,6 @@ import { Block } from '../components/commons';
 import { deleteCookie } from 'cookies-next';
 import Banner from '../components/website/event/banner';
 import ExternalLayout from './alternate-layout';
-import { authUrl } from '../utils/config';
 
 function GitTimestamp({ timestamp }: { timestamp: Date }) {
   const { locale = DEFAULT_LOCALE } = useRouter();
@@ -285,71 +282,12 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
   );
 };
 
-export const fetchProviders = async () => {
-  try {
-    const res = await axios({
-      url: `${authUrl}/api`,
-      method: 'post',
-      withCredentials: false,
-      data: {
-        method: 'loginPageInitUrls',
-        args: [{}],
-      },
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-        connection: 'keep-alive',
-      },
-    });
-    if (res.data?.data) {
-      return res.data.data;
-    }
-    return null;
-  } catch (e) {
-    return null;
-  }
-};
-
-const getUser = async () => {
-  try {
-    const res = await axios({
-      url: `${authUrl}/api`,
-      method: 'post',
-      withCredentials: true,
-      data: {
-        method: 'whoAmI',
-        args: [{}],
-      },
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-        connection: 'keep-alive',
-      },
-    });
-    if (res.data?.data) {
-      return res.data.data;
-    }
-    return null;
-  } catch (e) {
-    return null;
-  }
-};
-
 export default function Layout(props: NextraThemeLayoutProps) {
   const { pageOpts } = props;
+
   const { setConfig } = useConfig();
   useEffect(() => {
-    setConfig((prev) => ({ ...prev, userApiLoading: true }));
-    (async () => {
-      const user = await getUser();
-      setConfig((prev) => ({ ...prev, user, userApiLoading: false }));
-    })();
-
-    (async () => {
-      const prov = await fetchProviders();
-      setConfig((prev) => ({ ...prev, oathProviders: prov }));
-    })();
-
     setConfig((prev) => ({ ...prev, pageOpts }));
   }, []);
-
   return <Main {...props} />;
 }

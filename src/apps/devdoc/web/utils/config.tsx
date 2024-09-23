@@ -1,22 +1,24 @@
-import Link from 'next/link';
+import { DiscordLogo, YoutubeLogoFill } from '@jengaicons/react';
 import { BrandLogo } from 'kl-design-system/branding/brand-logo';
+import Link from 'next/link';
 import {
   GithubLogoFill,
   LinkedinLogoFill,
   TwitterNewLogoFill,
 } from '~/app/icons/icons';
-import OssIcon from '~/images/homeNew/oss.svg';
 import OssIconDark from '~/images/homeNew/oss-dark.svg';
+import OssIcon from '~/images/homeNew/oss.svg';
+import ThemeSwitcher from '../components/theme-switcher';
 import { cn } from './commons';
 import { IConfig } from './use-config';
-import ThemeSwitcher from '../components/theme-switcher';
 import { useTheme } from './useTheme';
-import { YoutubeLogoFill } from '@jengaicons/react';
 
 export const siteDesc =
   'Kloudlite is a remote-local development environment platform designed to streamline the workflow for developers working on distributed applications. By integrating both local and remote environments through Kubernetes, Kloudlite ensures a seamless, productive, and more connected development experience.';
 export const basePath = 'https://kloudlite.io';
 export const authUrl = `${process.env.AUTH_URL}` || 'https://auth.kloudlite.io';
+export const webinarUrl = 'https://webinar.kloudlite.io';
+export const contactUrl = `${process.env.CONTACT_URL}`;
 export const consoleUrl =
   `${process.env.CONSOLE_URL}` || 'https://console.kloudlite.io';
 export const gitUrl = 'https://github.com/kloudlite/kloudlite';
@@ -25,6 +27,7 @@ export const communityUrl =
 export const changeLogUrl = 'https://github.com/kloudlite/kloudlite/releases';
 const linkedinUrl = 'https://linkedin.com/company/kloudlite-io';
 const youtubeUrl = 'https://youtube.com/@kloudliteofficial';
+const discordUrl = 'https://discord.gg/4Y7VHccg';
 const xUrl = 'https://x.com/kloudlite';
 export const supportEmail = 'launch@kloudlite.io';
 const socialIconSize = 18;
@@ -37,6 +40,9 @@ const SocialMenu = () => {
       </a>
       <a target="_blank" href={xUrl} aria-label="kloudlite-x">
         <TwitterNewLogoFill size={socialIconSize} />
+      </a>
+      <a target="_blank" href={discordUrl} aria-label="kloudlite-discord">
+        <DiscordLogo size={socialIconSize} />
       </a>
       <a target="_blank" href={linkedinUrl} aria-label="kloudlite-linkedin">
         <LinkedinLogoFill size={socialIconSize} />
