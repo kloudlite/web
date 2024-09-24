@@ -142,11 +142,12 @@ export default function Event({ event }: { event: IEvent }) {
                   />
                 </div>
               </GraphItem>
-              <GraphItem className="wb-grid wb-grid-cols-1 md:wb-grid-cols-[auto_288px] wb-gap-3xl md:wb-gap-5xl">
-                <div className="wb-border wb-border-r-[1.5px] wb-border-border-dark wb-bg-surface-basic-subdued wb-p-5xl">
+              <GraphItem className="wb-relative wb-grid wb-grid-cols-1 md:wb-grid-cols-[auto_288px] wb-gap-3xl md:wb-gap-5xl wb-items-start">
+                <div className="wb-border wb-border-r-[1.5px] wb-border-border-dark wb-bg-surface-basic-subdued wb-p-5xl wb-h-full">
                   <MDXRemote {...content} components={components} />
                 </div>
-                <div className="wb-border wb-border-l-[1.5px] wb-border-border-dark wb-bg-surface-basic-subdued wb-p-5xl wb-flex wb-flex-col wb-gap-5xl">
+                <div className="wb-hidden md:wb-block wb-absolute wb-w-[288px] wb-right-0 wb-bg-surface-basic-subdued wb-border wb-border-l-[1.5px] wb-border-border-dark wb-h-full wb-bottom-0 wb-top-0" />
+                <div className="wb-sticky wb-top-0 wb-p-5xl wb-flex wb-flex-col wb-gap-5xl">
                   <div className="wb-flex wb-flex-col wb-gap-2xl wb-pb-5xl wb-border-b wb-border-border-default">
                     <div className="wb-flex wb-flex-row wb-gap-lg wb-items-center wb-bodyXl wb-text-text-soft">
                       <span>
