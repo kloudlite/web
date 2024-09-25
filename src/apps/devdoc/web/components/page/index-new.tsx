@@ -1,6 +1,5 @@
 import DynamicImage from '~/app/components/dynamic-image';
 import { GraphExtended } from '~/app/components/graph';
-import JoinProvidersDialog from '~/app/components/join-provider-dialog';
 import FaqSection from '~/app/components/website/home/faq';
 import HowItWorksSection from '~/app/components/website/home/how-it-works';
 import KeepExploring from '~/app/components/website/home/keep-exploring';
@@ -14,11 +13,18 @@ import Wrapper from '~/app/components/wrapper';
 import hero from '~/images/homeNew/hero';
 import HomeIllustrationMobileDark from '~/images/homeNew/illustration-mobile-dark.svg';
 import HomeIllustrationMobileWeb from '~/images/homeNew/illustration-mobile.webp';
+import Button from '../button';
+import { PlayCircle } from '@jengaicons/react';
+import { ArrowRight } from '~/app/icons/icons';
+import Link from 'next/link';
+import { authUrl } from '~/app/utils/config';
+import PopupVideo from '../popup-video';
+import { useState } from 'react';
+import VideoSection from '../website/home/video-section';
 
 const Title = () => {
   return (
     <div className="wb-flex wb-flex-col wb-gap-3xl wb-text-center wb-items-center">
-      {' '}
       <h1 className="wb-heading4xl-marketing md:wb-heading6xl-marketing lg:wb-heading7xl-marketing wb-text-text-default wb-text-center lg:wb-w-[896px] xl:wb-w-[1024px] 2xl:wb-w-[1060px]">
         <div className="wb-hidden md:wb-block">
           Building distributed applications
@@ -103,6 +109,7 @@ const Illustration = () => {
 };
 
 const Index = () => {
+  const [showVideo, setShowVideo] = useState(false);
   return (
     <div>
       <Wrapper className="wb-relative wb-flex wb-justify-center lg:wb-justify-start wb-py-6xl md:wb-pt-8xl lg:wb-pt-10xl">
@@ -121,8 +128,27 @@ const Index = () => {
               id="join-waitlist"
               className="md:wb-w-[610px] wb-flex wb-flex-col wb-gap-xl wb-items-center"
             >
-              <span className="wb-block wb-max-w-[300px] wb-w-full">
-                <JoinProvidersDialog size="lg" />
+              <span className="wb-flex wb-flex-col wb-flex-col-reverse md:wb-flex-row wb-items-center wb-gap-xl wb-max-w-[432px] wb-w-full">
+                <Button
+                  content="Discover Kloudlite"
+                  variant="tertiary"
+                  size="lg"
+                  prefix={<PlayCircle />}
+                  block
+                  onClick={() => {
+                    setShowVideo(true);
+                  }}
+                />
+                <Button
+                  content="Get started"
+                  variant="primary"
+                  size="lg"
+                  suffix={<ArrowRight />}
+                  block
+                  linkComponent={Link}
+                  to={`${authUrl}/login`}
+                  toLabel="href"
+                />
               </span>
             </div>
           </div>
@@ -135,11 +161,13 @@ const Index = () => {
         <PartnerSection />
         <HowItWorksSection />
         <DontBelieve />
+        <VideoSection />
         <FaqSection />
         <KeepExploring />
         <OpenSource />
         <SuperCharge />
       </Wrapper>
+      <PopupVideo show={showVideo} onClose={() => setShowVideo(false)} />
     </div>
   );
 };

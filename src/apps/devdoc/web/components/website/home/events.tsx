@@ -5,7 +5,6 @@ import ResponsiveContainer from '~/app/components/responsive-container';
 import Profile from 'kl-design-system/molecule/profile';
 import Button from '~/app/components/button';
 import eventImage from '~/images/homeNew/events/events.jpg';
-import eventImage2 from '~/images/homeNew/exploring/collaborative.jpeg';
 import { useEffect, useRef, useState } from 'react';
 import '@splidejs/react-splide/css/core';
 import { Splide, SplideSlide, SplideTrack } from '@splidejs/react-splide';

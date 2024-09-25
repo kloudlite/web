@@ -97,7 +97,7 @@ const UserComponent = ({
               'Access console'
             )
           }
-          variant="outline"
+          variant="basic"
           suffix={<ArrowRight />}
           block
           size={size}
