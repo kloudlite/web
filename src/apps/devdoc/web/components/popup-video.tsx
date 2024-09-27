@@ -1,14 +1,65 @@
-import {
-  CircleNotch,
-  PauseCircleFill,
-  PlayCircleFill,
-  XFill,
-} from '@jengaicons/react';
+import { CircleNotch, XFill } from '@jengaicons/react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
+import videojs from 'video.js';
+import 'video.js/dist/video-js.css';
 import Button from './button';
-import consts from '../utils/const';
 import { cn } from '../utils/commons';
+import Player from 'video.js/dist/types/player';
+
+export const VideoJS = (props: {
+  options: any;
+  onReady?: (player: Player) => void;
+}) => {
+  const videoRef = useRef<HTMLDivElement>(null);
+  const playerRef = useRef<Player | null>();
+  const { options, onReady } = props;
+
+  useEffect(() => {
+    // Make sure Video.js player is only initialized once
+    if (!playerRef.current) {
+      // The Video.js player needs to be _inside_ the component el for React 18 Strict Mode.
+      const videoElement = document.createElement('video-js');
+
+      videoElement.classList.add('vjs-big-play-centered');
+      videoRef.current?.appendChild(videoElement);
+
+      const player = (playerRef.current = videojs(videoElement, options, () => {
+        onReady && onReady(player);
+      }));
+
+      player.on('playing', () => {
+        //@ts-ignore
+        videoRef.current?.classList.remove('vjs-waiting');
+      });
+      // You could update an existing player in the `else` block here
+      // on prop change, for example:
+    } else {
+      const player = playerRef.current;
+
+      player.autoplay(options.autoplay);
+      player.src(options.sources);
+    }
+  }, [options, videoRef]);
+
+  // Dispose the Video.js player when the functional component unmounts
+  useEffect(() => {
+    const player = playerRef.current;
+
+    return () => {
+      if (player && !player.isDisposed()) {
+        player.dispose();
+        playerRef.current = null;
+      }
+    };
+  }, [playerRef]);
+
+  return (
+    <div data-vjs-player className="wb-w-full wb-rounded wb-overflow-hidden">
+      <div ref={videoRef} className="wb-w-full vjs-waiting" />
+    </div>
+  );
+};
 
 const PopupVideo = ({
   show,
@@ -17,28 +68,45 @@ const PopupVideo = ({
   show?: boolean;
   onClose?: () => void;
 }) => {
-  const ref = useRef<HTMLVideoElement>(null);
-  const [progress, setProgress] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
-
   useEffect(() => {
+    console.log('show', show);
     if (show) {
-      ref.current?.play();
       document.body.style.overflowY = 'hidden';
     } else {
       document.body.style.overflowY = 'auto';
-      if (ref.current) {
-        ref.current?.pause();
-        ref.current.currentTime = 0;
-      }
     }
     return () => {
       document.body.style.overflowY = 'auto';
     };
   }, [show]);
+
+  const videoJsOptions = {
+    autoplay: true,
+    controls: true,
+    controlBar: {
+      fullscreenToggle: false,
+      pictureInPictureToggle: false,
+    },
+    loadingSpinner: true,
+    bigPlayButton: false,
+    responsive: true,
+    fluid: true,
+    preload: 'auto',
+    sources: [
+      {
+        src: 'intro.webm',
+        type: 'video/webm',
+      },
+      {
+        src: 'intro.mp4',
+        type: 'video/mp4',
+      },
+    ],
+  };
+
   return (
     <AnimatePresence>
-      {
+      {show ? (
         <motion.div
           initial={{ opacity: 0, top: -20 }} // Initial state
           animate={{ opacity: 1, top: 0 }} // Animate to visible
@@ -48,9 +116,6 @@ const PopupVideo = ({
           }}
           className={cn(
             'wb-flex wb-items-center wb-justify-center wb-z-[99999] wb-bg-surface-basic-overlay-bg/60 wb-fixed wb-inset-0',
-            {
-              'wb-hidden': !show,
-            },
           )}
           onClick={onClose}
         >
@@ -70,65 +135,12 @@ const PopupVideo = ({
           </div>
           <div
             onClick={(e) => e.stopPropagation()}
-            className="wb-group wb-relative wb-m-2xl md:wb-max-h-[90vh] wb-overflow-hidden wb-rounded"
+            className="wb-relative wb-m-2xl md:wb-max-h-[90vh] wb-overflow-hidden wb-rounded wb-h-[90vh] wb-aspect-video wb-flex wb-items-center"
           >
-            <video
-              preload="metadata"
-              autoPlay
-              loop
-              ref={ref}
-              className="wb-max-h-[90vh] wb-h-full wb-w-full"
-              onTimeUpdate={(e) => {
-                const x = e.target as HTMLVideoElement;
-                setProgress(Math.ceil((x.currentTime * 100) / x.duration));
-              }}
-              onPlay={() => {
-                setIsPlaying(true);
-              }}
-              onPause={() => {
-                setIsPlaying(false);
-              }}
-            >
-              <source
-                src={`${consts.homeNew.introVideo}.webm`}
-                type="video/webm"
-              />
-              <source
-                src={`${consts.homeNew.introVideo}.mp4`}
-                type="video/mp4"
-              />
-            </video>
-            <div className="wb-bg-gradient-to-t wb-from-black wb-to-transparent wb-absolute wb-inset-0 wb-invisible group-hover:wb-visible opacity-0 group-hover:wb-opacity-100 wb-transition-all wb-duration-300 ">
-              <button
-                aria-label="play-pause"
-                onClick={() => {
-                  if (isPlaying) {
-                    ref.current?.pause();
-                  } else {
-                    ref.current?.play();
-                  }
-                }}
-                className="wb-text-text-on-primary wb-absolute wb-left-1/2 wb-top-1/2 -wb-translate-x-1/2 -wb-translate-y-1/2"
-              >
-                {isPlaying ? (
-                  <PauseCircleFill size={64} />
-                ) : (
-                  <PlayCircleFill size={64} />
-                )}
-              </button>
-              <div className="wb-absolute wb-bottom-0 wb-left-0 wb-right-0 wb-h-9xl wb-px-3xl wb-rounded-b-lg">
-                <div className="wb-relative wb-flex wb-h-full wb-items-center">
-                  <div
-                    className="wb-h-md wb-bg-white wb-rounded-full wb-absolute wb-z-[10]"
-                    style={{ width: progress + '%' }}
-                  />
-                  <div className="wb-h-md wb-bg-[#A9A9A9] wb-rounded-full wb-w-full wb-absolute " />
-                </div>
-              </div>
-            </div>
+            <VideoJS options={videoJsOptions} />
           </div>
         </motion.div>
-      }
+      ) : null}
     </AnimatePresence>
   );
 };
