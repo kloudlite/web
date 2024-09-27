@@ -133,7 +133,16 @@ const partnersNew = [
 
 const consts = {
   homeNew: {
-    introVideo: '/intro',
+    introVideo: [
+      {
+        src: '/intro.webm',
+        type: 'video/webm',
+      },
+      {
+        src: '/intro.mp4',
+        type: 'video/mp4',
+      },
+    ],
     partners: partnersNew,
     messages: [
       {

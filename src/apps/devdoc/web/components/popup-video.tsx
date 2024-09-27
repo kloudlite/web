@@ -6,6 +6,7 @@ import 'video.js/dist/video-js.css';
 import Button from './button';
 import { cn } from '../utils/commons';
 import Player from 'video.js/dist/types/player';
+import consts from '../utils/const';
 
 export const VideoJS = (props: {
   options: any;
@@ -55,7 +56,11 @@ export const VideoJS = (props: {
   }, [playerRef]);
 
   return (
-    <div data-vjs-player className="wb-w-full wb-rounded wb-overflow-hidden">
+    <div
+      onClick={(e) => e.stopPropagation()}
+      data-vjs-player
+      className="wb-w-full wb-rounded-xl wb-overflow-hidden"
+    >
       <div ref={videoRef} className="wb-w-full vjs-waiting" />
     </div>
   );
@@ -69,7 +74,6 @@ const PopupVideo = ({
   onClose?: () => void;
 }) => {
   useEffect(() => {
-    console.log('show', show);
     if (show) {
       document.body.style.overflowY = 'hidden';
     } else {
@@ -92,16 +96,7 @@ const PopupVideo = ({
     responsive: true,
     fluid: true,
     preload: 'auto',
-    sources: [
-      {
-        src: 'intro.webm',
-        type: 'video/webm',
-      },
-      {
-        src: 'intro.mp4',
-        type: 'video/mp4',
-      },
-    ],
+    sources: consts.homeNew.introVideo,
   };
 
   return (
@@ -119,10 +114,7 @@ const PopupVideo = ({
           )}
           onClick={onClose}
         >
-          <div className="wb-text-text-on-primary wb-absolute wb-left-1/2 wb-top-1/2 -wb-translate-x-1/2 -wb-translate-y-1/2">
-            <CircleNotch size={64} className="wb-animate-spin" />
-          </div>
-          <div className="wb-absolute wb-top-[20px] wb-right-[20px]">
+          <div className="wb-z-[99999] wb-absolute wb-top-[20px] wb-right-[20px]">
             <Button
               variant="plain"
               content={
@@ -133,10 +125,7 @@ const PopupVideo = ({
               }
             />
           </div>
-          <div
-            onClick={(e) => e.stopPropagation()}
-            className="wb-relative wb-m-2xl md:wb-max-h-[90vh] wb-overflow-hidden wb-rounded wb-h-[90vh] wb-aspect-video wb-flex wb-items-center"
-          >
+          <div className="wb-relative wb-m-2xl wb-max-h-[90vh] md:wb-max-h-[80vh] wb-overflow-hidden wb-rounded wb-h-[90vh] md:wb-h-[80vh] wb-max-w-[90vw] md:wb-max-w-[80vw] wb-aspect-video wb-flex wb-items-center">
             <VideoJS options={videoJsOptions} />
           </div>
         </motion.div>
