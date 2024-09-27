@@ -1,22 +1,22 @@
-import { TextInput, TextArea } from 'kl-design-system/atoms/input';
+import { CircleNotch, JengaIconCommonProps } from '@jengaicons/react';
+import axios from 'axios';
+import { getCookie, setCookie } from 'cookies-next';
+import { TextArea, TextInput } from 'kl-design-system/atoms/input';
 import Select from 'kl-design-system/atoms/select';
+import { toast } from 'kl-design-system/molecule/toast';
 import Link from 'next/link';
 import { ComponentProps, ReactNode, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { contactUrl, supportEmail } from '~/app/utils/config';
-import Wrapper from '../wrapper';
-import Button from '../button';
-import countries from '~/app/utils/countries.json';
-import { GraphItem } from '../graph';
 import consts from '~/app/utils/const';
-import { getCookie, setCookie } from 'cookies-next';
-import { Block } from '../commons';
-import ResponsiveContainer from '../responsive-container';
-import FAQSection from '../faq';
-import { CircleNotch, JengaIconCommonProps } from '@jengaicons/react';
-import axios from 'axios';
-import { toast } from 'kl-design-system/molecule/toast';
+import countries from '~/app/utils/countries.json';
 import grecaptcha from '~/app/utils/g-recaptcha';
+import Button from '../button';
+import { Block } from '../commons';
+import FAQSection from '../faq';
+import { GraphItem } from '../graph';
+import ResponsiveContainer from '../responsive-container';
+import Wrapper from '../wrapper';
 
 const SupportIcon = (props: ComponentProps<'svg'>) => {
   const { height, width } = props;
@@ -244,7 +244,7 @@ const FormSection = () => {
       process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || '',
       {
         action: 'login',
-      },
+      }
     );
     if (!token) {
       toast.error('Something went wrong.');
@@ -294,7 +294,7 @@ const FormSection = () => {
           className="g-recaptcha hidden"
           data-sitekey="_your_site_key_"
           data-size="invisible"
-        ></div>
+        />
         <div className="wb-flex wb-flex-col wb-gap-3xl">
           <TextInput
             label="Full name"
