@@ -1,5 +1,5 @@
-import { Circle, RecordFill } from '@jengaicons/react';
 import { ReactNode } from 'react';
+import { Circle, RecordFill } from '~/components/icons';
 import { cn } from '../utils';
 import { ChildrenProps } from '../types';
 

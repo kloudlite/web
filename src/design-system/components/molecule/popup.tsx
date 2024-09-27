@@ -1,7 +1,7 @@
-import { X } from '@jengaicons/react';
 import * as Dialog from '@radix-ui/react-dialog';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ComponentProps, ReactNode } from 'react';
+import { X } from '~/components/icons';
 import { IButton, IconButton, Button as NativeButton } from '../atoms/button';
 import { ChildrenProps } from '../types';
 import { cn } from '../utils';
@@ -104,9 +104,10 @@ const PopupRoot = ({
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2, ease: 'anticipate' }}
-                className={cn('fixed inset-0 z-[9999999]', {
-                  'bg-text-default/60': backdrop,
-                })}
+                className={cn(
+                  'fixed inset-0 z-[9999999]',
+                  backdrop ? 'bg-surface-basic-overlay-bg/60' : ''
+                )}
               />
             </Dialog.Overlay>
             <Dialog.Content asChild forceMount>

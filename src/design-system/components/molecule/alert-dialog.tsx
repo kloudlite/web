@@ -1,7 +1,7 @@
-import { X } from '@jengaicons/react';
 import * as PrimitiveAlertDialog from '@radix-ui/react-alert-dialog';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ReactNode } from 'react';
+import { X } from '~/components/icons';
 import { IButton, IconButton, Button as NativeButton } from '../atoms/button';
 import { cn } from '../utils';
 

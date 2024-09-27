@@ -1,4 +1,4 @@
-import { CalendarCheckFill } from '@jengaicons/react';
+import { CalendarCheckFill } from '~/components/icons';
 import { IconButton } from '../../components/atoms/button';
 
 export default {

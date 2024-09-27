@@ -1,6 +1,6 @@
-import { ChevronLeft, ChevronRight } from '@jengaicons/react';
 import * as RovingFocusGroup from '@radix-ui/react-roving-focus';
 import { useEffect, useId, useRef, useState } from 'react';
+import { ChevronLeft, ChevronRight } from '~/components/icons';
 import { Button } from '../atoms/button';
 import { cn } from '../utils';
 
@@ -79,6 +79,18 @@ export const usePagination = <T extends Array<any>>({
 
   const onPageChange = () => {};
 
+  const setPageNumberExt = (extpage: number) => {
+    if (extpage <= Math.ceil(listItems.length / itemsPerPage)) {
+      setPage(
+        listItems.slice(
+          (extpage - 1) * itemsPerPage,
+          extpage * itemsPerPage
+        ) as T
+      );
+      setPageNumber(extpage);
+    }
+  };
+
   return {
     page: page || [],
     pageNumber,
@@ -87,7 +99,10 @@ export const usePagination = <T extends Array<any>>({
     onNext,
     onPrev,
     onPageChange,
+    setPageNumber: setPageNumberExt,
     setItems: setListItems,
+    items: listItems,
+    itemsPerPage,
   };
 };
 

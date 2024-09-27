@@ -1,12 +1,5 @@
 /* eslint-disable react/no-unused-prop-types */
 import {
-  CaretDownFill,
-  CaretUpFill,
-  Eye,
-  EyeSlash,
-  XCircleFill,
-} from '@jengaicons/react';
-import {
   ChangeEventHandler,
   FocusEventHandler,
   KeyboardEventHandler,
@@ -19,10 +12,17 @@ import {
   useRef,
   useState,
 } from 'react';
+import {
+  CaretDownFill,
+  CaretUpFill,
+  Eye,
+  EyeSlash,
+  X,
+} from '~/components/icons';
 import { cn } from '../utils';
 import AnimateHide from './animate-hide';
 
-type InputSizes = 'md' | 'lg' | (undefined & NonNullable<unknown>);
+type InputSizes = 'md' | 'lg' | 'xl' | (undefined & NonNullable<unknown>);
 
 export interface IInputRow {
   value?: string | number;
@@ -72,6 +72,7 @@ interface ITextArea extends IInputRow {
   prefix?: ReactNode;
   prefixIcon?: JSX.Element;
   resize?: boolean;
+  cols?: string;
 }
 
 export interface ITextInputBase extends IInputRow {
@@ -135,7 +136,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
             })}
           >
             <label
-              className="select-none bodyMd-medium text-text-default pulsable min-w-[33%]"
+              className="select-none bodyMd-medium pulsable min-w-[33%] text-text-soft"
               htmlFor={id}
             >
               {label}
@@ -152,7 +153,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
         <div
           ref={containerRef}
           className={cn(
-            'transition-all px-lg rounded border flex flex-row items-center relative ring-offset-1 pulsable',
+            'transition-all rounded border flex flex-row items-center relative ring-offset-1 group-data-[theme=dark]/html:ring-offset-0',
             {
               'text-text-critical bg-surface-critical-subdued border-border-critical':
                 error,
@@ -162,7 +163,13 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
                 disabled,
               'pr-0': component !== 'input',
             },
-            className
+            {
+              'h-[38px]': size === 'md' && component === 'input',
+              'h-[48px]': size === 'lg' && component === 'input',
+              'h-[60px]': size === 'xl' && component === 'input',
+            },
+            size === 'xl' ? '!px-2xl' : 'px-lg',
+            className,
           )}
         >
           {!!prefixIcon && (
@@ -193,9 +200,8 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
             id={id}
             tabIndex={tabIndex}
             className={cn(
-              textFieldClassName,
               'outline-none flex-1 w-full h-full',
-              'rounded bodyMd bg-transparent',
+              'rounded bg-transparent',
               {
                 'text-text-critical placeholder:text-text-critical/70 bgh':
                   error && !disabled,
@@ -211,7 +217,9 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
               },
               {
                 'no-spinner': type === 'number',
-              }
+              },
+              size === 'xl' ? '' : 'bodyMd',
+              textFieldClassName,
             )}
             value={value}
             onChange={(e: any) => {
@@ -221,10 +229,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
             }}
             onFocus={(e: any) => {
               if (focusRing) {
-                containerRef.current?.classList.add(
-                  'ring-2',
-                  'ring-border-focus'
-                );
+                containerRef.current?.classList.add('ring-2');
               }
               onFocus(e);
             }}
@@ -233,10 +238,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
             onKeyDown={onKeyDown}
             autoComplete={autoComplete}
             onBlur={(e: any) => {
-              containerRef.current?.classList.remove(
-                'ring-2',
-                'ring-border-focus'
-              );
+              containerRef.current?.classList.remove('ring-2');
 
               onBlur(e);
             }}
@@ -269,10 +271,10 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
                 'outline-none flex items-center rounded justify-center',
                 {
                   'cursor-default': disabled,
-                }
+                },
               )}
             >
-              <XCircleFill size={16} color="currentColor" />
+              <X size={16} color="currentColor" />
             </button>
           )}
           {type === 'password' && !disabled && (
@@ -286,7 +288,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
                 'outline-none flex items-center rounded justify-center',
                 {
                   'cursor-default': disabled,
-                }
+                },
               )}
             >
               {t === 'password' ? (
@@ -306,7 +308,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
                 'text-text-critical': error,
                 'text-text-default': !error,
               },
-              'pt-md'
+              'pt-md',
             )}
           >
             {message}
@@ -314,7 +316,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
         </AnimateHide>
       </div>
     );
-  }
+  },
 );
 
 export const NumberInput = ({
@@ -368,7 +370,7 @@ export const NumberInput = ({
                   ref?.current?.focus();
                 }}
                 className={cn(
-                  'flex-1 p-sm disabled:text-icon-disabled hover:bg-surface-basic-hovered active:bg-surface-basic-pressed'
+                  'flex-1 p-sm disabled:text-icon-disabled hover:bg-surface-basic-hovered active:bg-surface-basic-pressed',
                 )}
               >
                 <CaretUpFill size={12} color="currentColor" />
@@ -386,7 +388,7 @@ export const NumberInput = ({
                   ref?.current?.focus();
                 }}
                 className={cn(
-                  'flex-1 p-sm disabled:text-icon-disabled hover:bg-surface-basic-hovered active:bg-surface-basic-pressed'
+                  'flex-1 p-sm disabled:text-icon-disabled hover:bg-surface-basic-hovered active:bg-surface-basic-pressed',
                 )}
               >
                 <CaretDownFill size={12} color="currentColor" />
@@ -408,34 +410,38 @@ export const TextInput = forwardRef<HTMLInputElement, ITextInput>(
         {...{ ...props, id, component: 'input', type: 'text', ref }}
       />
     );
-  }
+  },
 );
 
-export const TextArea = ({
-  autoComplete = 'off',
-  onChange = (_) => {},
-  resize = false,
-  rows = '3',
-  ...etc
-}: ITextArea) => {
-  const ref = useRef(null);
-  const id = useId();
-  return (
-    <TextInputBase
-      {...{
-        ...etc,
-        id,
-        autoComplete,
-        onChange,
-        resize,
-        rows,
-        component: 'textarea',
-        ref,
-        type: 'text',
-      }}
-    />
-  );
-};
+export const TextArea = forwardRef<HTMLInputElement, ITextArea>(
+  (
+    {
+      autoComplete = 'off',
+      onChange = (_) => {},
+      resize = false,
+      rows = '3',
+      ...etc
+    },
+    ref,
+  ) => {
+    const id = useId();
+    return (
+      <TextInputBase
+        {...{
+          ...etc,
+          id,
+          rows,
+          autoComplete,
+          onChange,
+          resize,
+          component: 'textarea',
+          ref,
+          type: 'text',
+        }}
+      />
+    );
+  },
+);
 
 export const PasswordInput = (props: IInputRow) => {
   const ref = useRef(null);

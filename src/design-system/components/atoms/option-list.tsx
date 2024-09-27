@@ -48,6 +48,7 @@ interface IOptionMenuLink extends IBase {
   to: string;
   target?: string;
   rel?: string;
+  toLabel?: string;
 }
 
 interface IOptionMenuTextInput
@@ -66,7 +67,7 @@ interface IOptionMenuRadio extends IBase {
   value: string;
 }
 
-interface IOptionMenuSeparator extends Omit<IBase, 'onClick' | 'children'> { }
+interface IOptionMenuSeparator extends Omit<IBase, 'onClick' | 'children'> {}
 
 interface IOptionMenuTabs extends IBase {
   onChange?: (v: string) => void;
@@ -146,10 +147,10 @@ const OptionMenuContent = forwardRef<
             onClick={(e) => e.stopPropagation()}
           >
             <motion.div
-              initial={{ opacity: 0, scale: 0.85 }}
+              initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.85 }}
-              transition={{ duration: 0.3, ease: 'anticipate' }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.2, ease: 'anticipate' }}
               className={cn(
                 'z-50 border border-border-default shadow-popover bg-surface-basic-default rounded min-w-[160px] overflow-hidden origin-top py-lg',
                 className
@@ -165,22 +166,57 @@ const OptionMenuContent = forwardRef<
 );
 OptionMenuContent.displayName = OptionMenuPrimitive.Content.displayName;
 
+const OptionItemRaw = forwardRef(
+  (
+    {
+      children,
+      active,
+      className,
+    }: {
+      children?: ReactNode;
+      active?: boolean;
+      className?: string;
+    },
+    ref
+  ) => {
+    return (
+      <div
+        // @ts-ignore
+        ref={ref}
+        className={cn(
+          'group relative flex flex-row gap-xl items-center bodyMd gap cursor-pointer select-none py-lg px-xl text-text-default outline-none transition-colors focus:bg-surface-basic-hovered hover:bg-surface-basic-hovered data-[disabled]:pointer-events-none data-[disabled]:text-text-disabled',
+          {
+            'bg-surface-basic-active': !!active,
+          },
+          className
+        )}
+      >
+        {children}
+      </div>
+    );
+  }
+);
+
 const OptionMenuItem = forwardRef<HTMLDivElement, IOptionMenuItem>(
   ({ className, ...props }, ref) => {
     return (
       <OptionMenuPrimitive.Item
         ref={ref}
         {...preventDefaultEvents}
-        className={cn(
-          'group relative flex flex-row gap-xl items-center bodyMd gap cursor-pointer select-none py-lg px-xl text-text-default outline-none transition-colors focus:bg-surface-basic-hovered hover:bg-surface-basic-hovered data-[disabled]:pointer-events-none data-[disabled]:text-text-disabled',
-          {
-            'bg-surface-basic-active': !!props.active,
-          },
-          className
-        )}
         onSelect={props.onClick}
+        asChild
       >
-        {props.children}
+        <div
+          className={cn(
+            'group relative flex flex-row gap-xl items-center bodyMd gap cursor-pointer select-none py-lg px-xl text-text-default outline-none transition-colors focus:bg-surface-basic-hovered hover:bg-surface-basic-hovered data-[disabled]:pointer-events-none data-[disabled]:text-text-disabled',
+            {
+              'bg-surface-basic-active': !!props.active,
+            },
+            className
+          )}
+        >
+          {props.children}
+        </div>
       </OptionMenuPrimitive.Item>
     );
   }
@@ -188,12 +224,25 @@ const OptionMenuItem = forwardRef<HTMLDivElement, IOptionMenuItem>(
 OptionMenuItem.displayName = OptionMenuPrimitive.Item.displayName;
 
 const OptionMenuLink = forwardRef<HTMLDivElement, IOptionMenuLink>(
-  ({ className, LinkComponent = 'a', to = '', target, rel, children }, ref) => {
+  (
+    {
+      className,
+      LinkComponent = 'a',
+      to = '',
+      toLabel = 'to',
+      target,
+      rel,
+      children,
+    },
+    ref
+  ) => {
+    let tempToLabel = toLabel;
     let Component: any = LinkComponent;
 
     if (to) {
       if (LinkComponent === motion.button) {
         Component = 'a';
+        tempToLabel = 'href';
       } else {
         Component = LinkComponent;
       }
@@ -209,11 +258,7 @@ const OptionMenuLink = forwardRef<HTMLDivElement, IOptionMenuLink>(
         {...preventDefaultEvents}
         asChild
       >
-        <Component
-          {...(Component === 'a' ? { href: to } : { to })}
-          target={target}
-          rel={rel}
-        >
+        <Component {...{ [tempToLabel]: to }} target={target} rel={rel}>
           {children}
         </Component>
       </OptionMenuPrimitive.Item>
@@ -306,7 +351,7 @@ const OptionMenuCheckboxItem = forwardRef<HTMLDivElement, IOptionMenuCheckbox>(
       className={cn(
         'group relative flex flex-row gap-xl items-center bodyMd gap cursor-pointer select-none py-lg px-xl text-text-default outline-none transition-colors focus:bg-surface-basic-hovered hover:bg-surface-basic-hovered data-[disabled]:pointer-events-none data-[disabled]:text-text-disabled',
         {
-          'data-[state=checked]:bg-surface-primary-subdued data-[state=checked]:text-text-primary':
+          'data-[state=checked]:bg-surface-primary-subdued data-[state=checked]:text-text-primary data-[state=checked]:text-text-darktheme-primary':
             !showIndicator,
         },
         className
@@ -317,7 +362,7 @@ const OptionMenuCheckboxItem = forwardRef<HTMLDivElement, IOptionMenuCheckbox>(
       onSelect={props.onClick}
     >
       {showIndicator && (
-        <span className="w-2xl h-2xl rounded border transition-all flex items-center justify-center border-border-default group-data-[state=checked]:border-border-primary group-data-[state=checked]:bg-surface-primary-default group-data-[disabled]:border-border-disabled group-data-[disabled]:bg-surface-basic-default ">
+        <span className="w-2xl h-2xl rounded border transition-all flex items-center justify-center border-border-default group-data-[state=checked]:border-border-primary group-data-[state=checked]:bg-surface-primary-default group-data-[disabled]:border-border-disabled group-data-[disabled]:bg-surface-basic-default">
           <OptionMenuPrimitive.ItemIndicator>
             <svg
               width="14"
@@ -370,7 +415,7 @@ const OptionMenuRadioItem = forwardRef<HTMLDivElement, IOptionMenuRadio>(
           <OptionMenuPrimitive.ItemIndicator>
             <div
               className={cn(
-                'block w-lg h-lg rounded-full bg-surface-primary-default group-data-[disabled]:bg-icon-disabled'
+                'block w-lg h-lg rounded-full bg-surface-primary-default group-data-[disabled]:bg-icon-disabled group-data-[disabled]:bg-icon-darktheme-disabled'
               )}
             />
           </OptionMenuPrimitive.ItemIndicator>
@@ -563,6 +608,7 @@ const OptionList = {
     Tab: Tabs.Tab,
   },
   Link: OptionMenuLink,
+  OptionItemRaw,
 };
 
 export default OptionList;

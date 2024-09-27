@@ -1,15 +1,15 @@
 import {
+  ToastContainer as Container,
+  ToastPosition,
+  toast as t,
+} from 'react-toastify';
+import {
   CheckCircle,
   Info,
   Warning,
   WarningCircle,
   X,
-} from '@jengaicons/react';
-import {
-  ToastContainer as Container,
-  ToastPosition,
-  toast as t,
-} from 'react-toastify';
+} from '~/components/icons';
 
 export const toast = {
   info: t.info,
@@ -21,15 +21,15 @@ export const toast = {
 };
 
 const classes = {
-  info: 'bg-surface-basic-default text-text-default bodyMd border-border-disabled',
+  info: 'bg-surface-basic-default dark:bg-surface-darktheme-basic-default text-text-default dark:text-text-darktheme-default bodyMd border-border-disabled dark:border-border-darktheme-disabled',
   error:
-    'bg-surface-basic-default text-text-default bodyMd border-border-disabled',
+    'bg-surface-basic-default dark:bg-surface-darktheme-basic-default text-text-default dark:text-text-darktheme-default bodyMd border-border-disabled  dark:border-border-darktheme-disabled',
   success:
-    'bg-surface-basic-default text-text-default bodyMd border-border-disabled',
+    'bg-surface-basic-default dark:bg-surface-darktheme-basic-default text-text-default dark:text-text-darktheme-default bodyMd border-border-disabled dark:border-border-darktheme-disabled',
   warning:
-    'bg-surface-basic-default text-text-default bodyMd border-border-disabled',
+    'bg-surface-basic-default dark:bg-surface-darktheme-basic-default text-text-default dark:text-text-darktheme-default bodyMd border-border-disabled dark:border-border-darktheme-disabled',
   default:
-    'bg-surface-basic-default text-text-default bodyMd border-border-disabled',
+    'bg-surface-basic-default dark:bg-surface-darktheme-basic-default text-text-default dark:text-text-darktheme-default bodyMd border-border-disabled dark:border-border-darktheme-disabled',
 };
 
 const icons = {
@@ -41,7 +41,7 @@ const icons = {
 };
 
 const CloseButton = () => (
-  <span className="text-text-default hover:text-text-default/50 h-[24px] flex items-center">
+  <span className="text-text-default dark:text-text-darktheme-default hover:text-text-default/50 dark:hover:text-text-darktheme-default/50 h-[24px] flex items-center">
     <X color="currentColor" size={12} />
   </span>
 );
@@ -58,7 +58,7 @@ export const ToastContainer = ({ autoClose, position }: IToastContainer) => {
         ${classes[(type || 'default') as keyof typeof classes]}`
       }
       bodyClassName={() =>
-        'text-text-default py-sm bodyMd-medium flex flex-row items-center [&>*]:!w-auto [&>*]:break-all [&>*]:whitespace-break-spaces'
+        'text-text-default dark:text-text-darktheme-default py-sm bodyMd-medium flex flex-row items-center [&>*]:!w-auto [&>*]:break-all [&>*]:whitespace-break-spaces'
       }
       hideProgressBar
       icon={({ type }) => icons[type]}

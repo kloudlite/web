@@ -8,8 +8,8 @@ interface IContainer {
 
 const Container = ({ children, className = '' }: IContainer) => {
   return (
-    <div className={cn('flex flex-1 justify-center px-3xl', className)}>
-      <div className="flex-1 w-full max-w-8xl min-w-[320px]">{children}</div>
+    <div className={cn('flex flex-1 justify-center px-8xl', className)}>
+      <div className="flex-1 w-full max-w-8xl  min-w-[320px]">{children}</div>
     </div>
   );
 };

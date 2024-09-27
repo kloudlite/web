@@ -1,3 +1,4 @@
+import logger from '~/root/lib/client/helpers/log';
 import { Switch } from '../../components/atoms/switch';
 
 export default {
@@ -16,7 +17,7 @@ export const On = {
 export const Off = {
   args: {
     checked: false,
-    onChange: (e) => console.log(e),
+    onChange: (e) => logger.log(e),
   },
 };
 

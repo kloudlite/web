@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeftFill } from '@jengaicons/react';
+import { ArrowLeftFill } from '~/components/icons';
 import { IconButton } from '../atoms/button';
 
 interface ISubHeader {
@@ -24,7 +24,7 @@ export const SubHeader = ({
             variant="basic"
             icon={<ArrowLeftFill />}
             to={backUrl}
-            LinkComponent={LinkComponent}
+            linkComponent={LinkComponent}
           />
         )}
         <motion.div className="text-text-strong heading2xl">{title}</motion.div>
