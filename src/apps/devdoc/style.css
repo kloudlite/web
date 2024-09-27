@@ -221,6 +221,7 @@ canvas {
 
 .grecaptcha-badge {
   z-index: 99;
+  visibility: hidden;
 }
 
 .vjs-control-bar {
