@@ -1,0 +1,29 @@
+{
+  "privacy-policy": {
+    "title": "Privacy policy",
+    "theme": {
+      "layout": "raw",
+      "sidebar": false,
+      "toc": false,
+      "header": "secondary"
+    }
+  },
+  "terms-of-services": {
+    "title": "Terms of services",
+    "theme": {
+      "layout": "raw",
+      "sidebar": false,
+      "toc": false,
+      "header": "secondary"
+    }
+  },
+  "cancellation-refund-policy": {
+    "title": "Cancellation and refund policy",
+    "theme": {
+      "layout": "raw",
+      "sidebar": false,
+      "toc": false,
+      "header": "secondary"
+    }
+  }
+}

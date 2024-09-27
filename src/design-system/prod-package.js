@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
+// import logger from '~/root/lib/client/helpers/log';
 import p from './package.json' assert { type: 'json' };
 
 const {
@@ -90,10 +91,10 @@ const setup = () => {
   try {
     fs.writeFileSync(`${outPath}/package.json`, packageJson);
   } catch (e) {
-    console.log('e', e);
+    // logger.log('e', e);
   }
 
-  console.log('Done!');
+  // logger.log('Done!');
 };
 
 setup();

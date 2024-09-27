@@ -7,6 +7,8 @@ const colors = {
   three: ['fill-icon-success', 'text-icon-success'],
   four: ['fill-icon-critical', 'text-icon-critical'],
   five: ['fill-icon-secondary', 'text-icon-secondary'],
+  six: ['fill-icon-primary', 'text-icon-primary'],
+  dark: ['fill-text-soft', 'text-text-soft'],
 };
 
 type AvatarSizes = 'xs' | 'sm' | 'md' | 'lg' | (string & NonNullable<unknown>);
@@ -16,15 +18,22 @@ type AvatarColors =
   | 'three'
   | 'four'
   | 'five'
+  | 'dark'
   | (string & NonNullable<unknown>);
 
 export interface IAvatar {
   size?: AvatarSizes;
   color?: AvatarColors;
   image?: ReactNode;
+  dot?: boolean;
 }
 
-export const AvatarBase = ({ size = 'md', color = 'one', image }: IAvatar) => {
+export const AvatarBase = ({
+  size = 'md',
+  color = 'one',
+  image,
+  dot,
+}: IAvatar) => {
   const isExternal = !Object.keys(colors).includes(color);
 
   return (
@@ -32,27 +41,36 @@ export const AvatarBase = ({ size = 'md', color = 'one', image }: IAvatar) => {
       style={
         isExternal
           ? {
-            background: color,
-          }
+              background: color,
+            }
           : {}
       }
       className={cn(
         'pulsable pulsable-circle',
-        'relative flex flex-row items-center justify-center',
+        'relative flex-shrink-0 flex flex-row items-center justify-center',
         'outline-none transition-all',
         'rounded-full',
         'border border-border-default',
         {
-          'w-8xl h-8xl p-lg': size === 'lg',
-          'w-6xl h-6xl p-md': size === 'md',
-          'w-5xl h-5xl p-md': size === 'sm',
-          'w-4xl h-4xl p-md': size === 'xs',
+          'w-8xl h-8xl': size === 'lg',
+          'w-6xl h-6xl': size === 'md',
+          'w-5xl h-5xl': size === 'sm',
+          'w-4xl h-4xl': size === 'xs',
         },
+        !image
+          ? {
+              ' p-lg': size === 'lg',
+              ' p-md': size === 'md' || size === 'xs' || size === 'sm',
+            }
+          : '',
         {
           'bg-surface-basic-default': !isExternal,
-        }
+        },
       )}
     >
+      {dot && (
+        <span className="absolute h-lg w-lg bg-icon-critical -top-sm -left-sm rounded-full" />
+      )}
       {image && (
         <span
         // @ts-ignore
@@ -133,6 +151,6 @@ export const AvatarBase = ({ size = 'md', color = 'one', image }: IAvatar) => {
   );
 };
 
-export const Avatar = ({ size, color, image }: IAvatar) => {
-  return <AvatarBase size={size} color={color} image={image} />;
+export const Avatar = ({ size, color, image, dot }: IAvatar) => {
+  return <AvatarBase size={size} color={color} image={image} dot={dot} />;
 };

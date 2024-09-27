@@ -1,0 +1,103 @@
+{
+  "index":{
+    "title":"Blog",
+    "type":"page",
+    "theme":{
+      "sidebar":false,
+      "toc":false,
+      "header":"secondary",
+      "breadcrumb":false,
+      "timestamp":false
+    }
+  },
+  "containerisation-reviving-legacy-apps-for-developers":{
+    "title":"Containerisation: Reviving Legacy Apps for Developers",
+    "type":"page",
+    "theme":{
+      "sidebar":false,
+      "toc":true,
+      "header":"secondary"
+    }
+  },
+  "demystifying-7-common-misconceptions-about-containers":{
+    "title":"Demystifying 7 Common Misconceptions About Containers",
+    "type":"page",
+    "theme":{
+      "sidebar":false,
+      "toc":true,
+      "header":"secondary"
+    }
+  },
+  "the-evolution-of-development-workflows-an-introduction-to-deaas":{
+    "title":"The Evolution of Development Workflows: An Introduction to DEaaS",
+    "type":"page",
+    "theme":{
+      "sidebar":false,
+      "toc":true,
+      "header":"secondary"
+    }
+  },
+  "remote-local-environments":{
+    "title":"What Are Remote Local Environments?",
+    "type":"page",
+    "theme":{
+      "sidebar":false,
+      "toc":true,
+      "header":"secondary"
+    }
+  },
+  "collaborative-development":{
+    "title":"Best Practices for Collaborative Development: Empowering Teams with Unified Remote Environments",
+    "type":"page",
+    "theme":{
+      "sidebar":false,
+      "toc":true,
+      "header":"secondary"
+    }
+  },
+  "development-workflow":{
+    "title":"Optimizing Your Development Workflow with Kloudlite",
+    "type":"page",
+    "theme":{
+      "sidebar":false,
+      "toc":true,
+      "header":"secondary"
+    }
+  },
+  "environments-workspaces":{
+    "title":"The Difference Between Developer's Workspace and Development Environment",
+    "type":"page",
+    "theme":{
+      "sidebar":false,
+      "toc":true,
+      "header":"secondary"
+    }
+  },
+  "role-of-open-source-in-modern-software-development":{
+    "title":"The Role of Open Source in Modern Software Development",
+    "type":"page",
+    "theme":{
+      "sidebar":false,
+      "toc":true,
+      "header":"secondary"
+    }
+  },
+  "distributed-environment-as-a-service":{
+    "title":"Distributed Environment as a Service",
+    "type":"page",
+    "theme":{
+      "sidebar":false,
+      "toc":true,
+      "header":"secondary"
+    }
+  },
+  "template":{
+    "title":"This is sample",
+    "type":"page",
+    "theme":{
+      "sidebar":false,
+      "toc":true,
+      "header":"secondary"
+    }
+  }
+}

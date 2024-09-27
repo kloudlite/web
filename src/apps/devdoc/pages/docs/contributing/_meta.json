@@ -1,0 +1,17 @@
+{
+    "code-of-conduct":{
+        "title": "Code of Conduct"
+    },
+    "feature-stages":{
+        "title": "Feature Stages"
+    },
+    "documentation":{
+        "title": "Documentation"
+    },
+    "security":{
+        "title": "Security"
+    },
+    "frontend":{
+        "title": "Frontend"
+    }
+}

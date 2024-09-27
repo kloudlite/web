@@ -1,0 +1,20 @@
+{
+  "index":{
+    "title":"Kloudlite Overview",
+    "theme":{
+      "sidebar":false,
+      "toc":false,
+      "header":"secondary",
+      "timestamp":false
+    }
+  },
+  "what-is-kloudlite":{
+    "title":"What is Kloudlite?",
+    "type":"page",
+    "theme":{
+      "sidebar":false,
+      "toc":true,
+      "header":"secondary"
+    }
+  }
+}

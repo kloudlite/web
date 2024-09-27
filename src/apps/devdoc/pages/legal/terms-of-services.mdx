@@ -1,0 +1,25 @@
+import PolicyGuidlines from '~/app/components/website/privacy/policy-and-guidlines.mdx';
+import { InnerContent } from '~/app/components/website/privacy-container';
+import { Headings } from '~/app/components/website/privacy/components';
+import Layout from '~/app/components/website/legal-layout';
+
+export const { subtitle, label } = {
+    label: 'Terms of Services',
+    subtitle: (
+      <div className="wb-flex wb-flex-col wb-gap-lg">
+        <Headings>TERMS OF USE</Headings>
+        <span className="wb-text-text-soft dark:wb-text-text-darktheme-soft wb-bodySm">
+          Updated: 12th Dec 2023 (Giving this date, considering the website
+          go-live date)
+        </span>
+      </div>
+    ),
+  };
+
+export const className = 'wb-pb-6xl';
+
+<Layout>
+  <InnerContent className={className} title={label} subTitle={subtitle}>
+    <PolicyGuidlines />
+  </InnerContent>
+</Layout>

@@ -1,13 +1,11 @@
 import * as RovingFocusGroup from '@radix-ui/react-roving-focus';
-import { LayoutGroup, motion } from 'framer-motion';
+import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
 import React, {
   KeyboardEvent,
   ReactElement,
   ReactNode,
   forwardRef,
-  useEffect,
   useId,
-  useMemo,
   useState,
 } from 'react';
 import { cn } from '../utils';
@@ -28,14 +26,17 @@ interface ITabBase extends IBase {
   active?: boolean;
   onClick?: (e: KeyboardEvent<HTMLSpanElement>) => void;
   prefix?: JSX.Element;
+  layoutId: string;
+  toLabel?: string;
 }
 
-interface ITabs<T = string> extends IBase {
+interface ITabs<T = string> extends Omit<IBase, 'to'> {
   onChange?: (item: T) => void;
   value: T;
   className?: string;
   basePath?: string;
   children: ReactNode;
+  toLabel?: string;
 }
 
 export interface ITab<T = string> {
@@ -55,15 +56,25 @@ const TabBase = ({
   variant = 'plain',
   size = 'md',
   prefix,
+  layoutId,
+  toLabel = 'to',
 }: ITabBase) => {
-  let Component: any = LinkComponent || 'div';
+  let Component: any = LinkComponent;
 
+  let tempToLabel = toLabel;
+
+  let extraProps = {} as any;
   if (to) {
     if (LinkComponent === 'div') {
-      Component = 'a';
+      Component = motion.a;
+      tempToLabel = 'href';
     } else {
       Component = LinkComponent;
     }
+  } else {
+    extraProps = {
+      role: 'button',
+    };
   }
 
   const [hoverd, setHoverd] = useState(false);
@@ -77,14 +88,14 @@ const TabBase = ({
         setHoverd(false);
       }}
       className={cn(
-        'outline-none flex flex-col relative group bodyMd-medium hover:text-text-default active:text-text-default transition-all cursor-pointer',
+        'outline-none flex flex-col relative group bodyMd-medium transition-all cursor-pointer hover:text-text-default active:text-text-default',
         {
           'text-text-default': active,
           'text-text-soft': !active,
-          'hover:bg-surface-basic-hovered active:bg-surface-basic-pressed rounded-lg':
+          'rounded-lg hover:bg-surface-basic-hovered active:bg-surface-basic-pressed':
             variant === 'filled',
           // 'border border-transparent': variant === 'filled' && !active,
-        }
+        },
       )}
     >
       <RovingFocusGroup.Item
@@ -99,12 +110,12 @@ const TabBase = ({
       >
         <Component
           // eslint-disable-next-line no-nested-ternary
-          {...(to ? (Component === 'a' ? { href: to } : { to }) : {})}
-          prefetch="intent"
+          {...{ [tempToLabel]: to }}
+          {...extraProps}
           onClick={onClick}
           className={cn(
             'relative z-10 tab-item outline-none',
-            'ring-offset-0 focus-visible:ring-2 focus-visible:ring-border-focus',
+            'ring-offset-0 focus-visible:ring-border-focus focus-visible:ring-2',
             // 'focus-visible:shadow-focus',
             {
               ...((!fitted || variant === 'filled') && {
@@ -115,7 +126,7 @@ const TabBase = ({
               ...(fitted && {
                 'py-md': variant !== 'filled',
               }),
-            }
+            },
           )}
         >
           {variant === 'plain' && <div className="h-md bg-none w-full z-0" />}
@@ -128,32 +139,34 @@ const TabBase = ({
             <motion.div
               layoutId="underline"
               className={cn(
-                'h-md bg-surface-primary-pressed z-10 absolute bottom-0 w-full'
+                'h-md z-10 absolute left-0 bottom-0 w-full bg-border-primary',
               )}
             />
           )}
           {variant === 'plain' && hoverd && (
             <motion.div
               layoutId="hoverd-underline"
-              className="h-md bg-border-default group-active:bg-border-tertiary bg-none absolute bottom-0 w-full z-0"
+              className="h-md bg-none absolute bottom-0 w-full z-0 left-0 bg-border-default group-active:bg-border-tertiary"
             />
           )}
           {variant === 'plain' && <div className="h-md bg-none w-full z-0" />}
         </Component>
       </RovingFocusGroup.Item>
-      {variant === 'filled' && active && (
-        <motion.span
-          layoutId="bubble"
-          className="absolute inset-0 rounded-lg bg-surface-basic-default border border-border-default shadow-button"
-          transition={{ type: 'spring', bounce: 0.1, duration: 0.3 }}
-        />
-      )}
+      <AnimatePresence>
+        {variant === 'filled' && active && (
+          <motion.div
+            layoutId={layoutId}
+            className="absolute inset-0 rounded-lg shadow-button border border-border-default bg-surface-basic-default"
+            transition={{ type: 'spring', bounce: 0.1, duration: 0.3 }}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 };
 
 const Tab = <T,>({ to, label, prefix, value: _ }: ITab<T>) => (
-  <TabBase to={to} label={label} prefix={prefix} />
+  <TabBase to={to} label={label} prefix={prefix} layoutId="" />
 );
 
 const Root = forwardRef<HTMLDivElement, ITabs<any>>(
@@ -168,17 +181,12 @@ const Root = forwardRef<HTMLDivElement, ITabs<any>>(
       className = '',
       basePath = '',
       children,
+      toLabel,
     },
-    ref
+    ref,
   ) => {
-    const [active, setActive] = useState(value);
-    let id = useId();
-    id = useMemo(() => id, [children, value, basePath, size, variant]);
-    useEffect(() => {
-      if (onChange) {
-        onChange(active);
-      }
-    }, [active]);
+    const id = useId();
+    // id = useMemo(() => id, [children, value, basePath, size, variant]);
     return (
       <RovingFocusGroup.Root
         orientation="horizontal"
@@ -190,7 +198,7 @@ const Root = forwardRef<HTMLDivElement, ITabs<any>>(
             'md:gap-4xl': size === 'md' && variant !== 'filled',
             'gap-lg': size === 'sm' || variant === 'filled',
           },
-          className
+          className,
         )}
         ref={ref}
         asChild
@@ -205,7 +213,7 @@ const Root = forwardRef<HTMLDivElement, ITabs<any>>(
               const tabChildProps: ITab = tabChild.props;
 
               return (
-                <motion.div
+                <div
                   className={cn('snap-start', {
                     'px-xl md:px-0': variant === 'plain',
                   })}
@@ -213,23 +221,25 @@ const Root = forwardRef<HTMLDivElement, ITabs<any>>(
                   <TabBase
                     {...tabChildProps}
                     onClick={() => {
-                      setActive(tabChildProps.value);
+                      onChange?.(tabChildProps.value);
                     }}
+                    layoutId={id}
                     fitted={fitted}
                     to={basePath + (tabChildProps.to || '')}
                     active={value === tabChildProps.value}
                     LinkComponent={LinkComponent}
                     variant={variant}
                     size={size}
+                    toLabel={toLabel}
                   />
-                </motion.div>
+                </div>
               );
             })}
           </LayoutGroup>
         </motion.div>
       </RovingFocusGroup.Root>
     );
-  }
+  },
 );
 
 const Tabs = {

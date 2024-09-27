@@ -55,6 +55,7 @@ rules:
   # pritter rules
 
   # ts rules
+  react/no-unescaped-entities: 0
   react/jsx-no-useless-fragment: 0
   react/jsx-filename-extension: 0
   react/require-default-props : 0
@@ -67,6 +68,7 @@ rules:
   "@typescript-eslint/no-explicit-any": 0
   "@typescript-eslint/ban-ts-comment": 0
   no-shadow: 0
+  "@next/next/no-img-element": 0
 
 
   # js rules
@@ -84,6 +86,7 @@ rules:
 
   import/extensions: 0
   import/prefer-default-export: off
+  import/no-relative-packages: 0
 
   react/jsx-uses-react: 0
   react/jsx-uses-vars: 1

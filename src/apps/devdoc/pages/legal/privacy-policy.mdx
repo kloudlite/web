@@ -1,0 +1,23 @@
+import Layout from '~/app/components/website/legal-layout';
+import { InnerContent } from '~/app/components/website/privacy-container';
+import PrivacyPolicy from '~/app/components/website/privacy/privacy-policy.mdx';
+
+export const { subtitle, label } = {
+  label: 'Privacy Policy',
+  subtitle: (
+    <div className="wb-text-text-soft dark:wb-text-text-darktheme-soft wb-bodyLg">
+      Last updated:{' '}
+      <span className="wb-headingMd wb-text-text-default dark:wb-text-text-darktheme-default">
+        12th Dec, 2023
+      </span>
+    </div>
+  ),
+};
+
+export const className = 'wb-pb-6xl';
+
+<Layout>
+  <InnerContent className={className} title={label} subTitle={subtitle}>
+    <PrivacyPolicy />
+  </InnerContent>
+</Layout>

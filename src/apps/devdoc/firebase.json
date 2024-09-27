@@ -2,24 +2,14 @@
   "hosting": {
     "public": "out",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "cleanUrls": true,
+    "trailingSlash": false,
     "redirects": [
       {
-        "source": "/docs",
-        "destination": "/docs/devops",
-        "type": 301
-      },
-      {
-        "source": "/docs/devops",
-        "destination": "/docs/devops/what-is-devops",
-        "type": 301
-      },
-      {
-        "source": "/docs/infraops",
-        "destination": "/docs/infraops/what-is-infraops",
+        "source": "/demo-link",
+        "destination": "https://youtu.be/OkMLPnygIm8",
         "type": 301
       }
-    ],
-    "cleanUrls": true,
-    "trailingSlash": false
+    ]
   }
 }

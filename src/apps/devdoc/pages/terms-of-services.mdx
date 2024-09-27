@@ -1,43 +1,69 @@
+---
+title: "Terms of Service | Kloudlite"  
+metaTitle: "Terms of Service | Kloudlite"  
+description: "Review Kloudlite's terms of service to understand the rules and guidelines for using our open-source development environment."
+---
+
+import PrivacyContainer from '~/app/components/website/privacy-container';
+
 export const Headings = ({ children }) => {
-  return <p className="bodyMd-semibold">{children}</p>;
+  return (
+    <h2 className="wb-bodyMd-medium wb-text-text-default dark:wb-text-text-darktheme-default">
+      {children}
+    </h2>
+  );
 };
 
 export const SubList = ({ children }) => {
-  return <ul className="list-[circle] pl-5xl">{children.props.children}</ul>;
+  return <ul className="wb-list-[circle] pl-xl">{children.props.children}</ul>;
 };
 
 export const ListRoman = ({ children }) => {
-  return <ol type="a" className="list-[lower-alpha] pl-5xl flex flex-col gap-md marker:!font-normal">{children.props.children}</ol>;
+  return (
+    <ol
+      type="a"
+      className="wb-list-[lower-alpha] wb-pl-[18px] wb-flex wb-flex-col wb-gap-md marker:!wb-font-normal"
+    >
+      {children.props.children}
+    </ol>
+  );
 };
 
 export const ListDecimalBold = ({ children }) => {
-  return <ol type="1" className="list-[decimal] pl-5xl flex flex-col gap-md marker:font-bold">{children.props.children}</ol>;
+  return (
+    <ol
+      type="1"
+      className="wb-list-[decimal] wb-pl-[18px] wb-flex wb-flex-col wb-gap-md marker:wb-font-bold"
+    >
+      {children.props.children}
+    </ol>
+  );
 };
 
-<div className="bg-surface-basic-subdued">
-  <div className="max-w-[1440px] m-auto px-3xl md:!px-8xl lg:!px-11xl xl:!px-13xl 2xl:!px-14xl pb-6xl md:!pb-8xl xl:!pb-10xl">
-    <h1 className="heading4xl-marketing md:!heading5xl-marketing lg:!heading6xl-marketing text-text-strong py-6xl md:!py-8xl xl:!py-10xl">
-      POLICIES & GUIDELINES
-    </h1>
-    <div>
-      <div className="flex flex-col gap-lg">
+<PrivacyContainer
+  className="wb-pb-6xl md:wb-pb-8xl xl:wb-pb-[60px] 2xl:wb-pb-[108px]"
+  title="Policies & Guidlines"
+  subTitle={
+      <div className="wb-flex wb-flex-col wb-gap-lg">
         <Headings>TERMS OF USE</Headings>
-        <span className="text-text-soft bodySm">
+        <span className="wb-text-text-soft dark:wb-text-text-darktheme-soft wb-bodySm">
           Updated: 12th Dec 2023 (Giving this date, considering the website
           go-live date)
         </span>
       </div>
-      <div className="bodyLg text-text-strong flex flex-col gap-4xl pt-4xl">
+  }
+>
+
         Kloudlite Labs Pvt Ltd. operate this website ("Site"). This Site may
         provide you with access to a variety of web pages, documents, software,
         services, images, graphics, audio, video, forums, discussion groups,
-        blogs, and other content ("Content"). 
-        
+        blogs, and other content ("Content").
+
         By accessing or logging into the Site, you agree to these terms. Kloudlite may revise these terms at any
         time. Your continued use of the Site after any such revisions have been
         published constitutes your agreement to the revised terms. If you do not
-        agree to these terms, do not use the Site. 
-        
+        agree to these terms, do not use the Site.
+
         Personal data collected when you access and use the Site will be processed by Kloudlite in accordance
         with the Kloudlite Privacy Statement. For more information on the types
         of personal data collected on the Site, how Kloudlite handles your
@@ -46,24 +72,24 @@ export const ListDecimalBold = ({ children }) => {
 
         <ListDecimalBold>
         1. **Kloudlite and Third Party Content**
-            <br></br>When using the Site, you may be able to access or download certain Content provided by Kloudlite ("Content"), or Content provided by third parties ("Third Party Content").  Content is governed by the license that accompanies it.  By using or downloading any Content, you agree to the applicable license.  It is your responsibility to ensure you have proper permission for your use of any Content. If you are unclear as to what license applies to any Content, it is recommended that you ask the author.
-    
+            <br />When using the Site, you may be able to access or download certain Content provided by Kloudlite ("Content"), or Content provided by third parties ("Third Party Content").  Content is governed by the license that accompanies it.  By using or downloading any Content, you agree to the applicable license.  It is your responsibility to ensure you have proper permission for your use of any Content. If you are unclear as to what license applies to any Content, it is recommended that you ask the author.
+
             The Site, including the design, layout, look and feel, and Kloudlite Content, is copyrighted by Kloudlite and its licensors.  To the extent the Site, portions of the Site, or Kloudlite Content does not designate a license, Kloudlite hereby grants you a copyright license to copy such material for your own personal or internal business purposes.  
-        
+
         2. **Your Content**
-            <br></br>Where applicable, you may be able upload or otherwise provide certain Content, such as software (source code, binary code, configuration files, etc.), documents, images, videos, or other material to the Site via your Account ("Your Content").  Except if specifically stated otherwise, Your Content is not confidential and may be made publicly available. You are responsible for keeping your own backups of Your Content. You represent that you have the right to provide Your Content to Kloudlite and its users.
-            
+            <br />Where applicable, you may be able upload or otherwise provide certain Content, such as software (source code, binary code, configuration files, etc.), documents, images, videos, or other material to the Site via your Account ("Your Content").  Except if specifically stated otherwise, Your Content is not confidential and may be made publicly available. You are responsible for keeping your own backups of Your Content. You represent that you have the right to provide Your Content to Kloudlite and its users.
+
             It's your responsibility to make clear the license under which you are providing Your Content. You retain ownership of Your Content. By posting Your Content to the Site, you hereby grant to Kloudlite a non-exclusive, irrevocable, worldwide, royalty-free license to use, reproduce, distribute, sublicense, adapt, modify, and publish Your Content, provided this license to Kloudlite does not supersede the terms of any open source license you may explicitly apply to Your Content.
-            
+
             If you close your Account, Your Content may remain accessible on the Site. 
-        
+
         3. **Account**
-            <br></br>Where applicable, you may register for an account on the Site (an "Account").  You must provide current, complete, and accurate information as required by the applicable account registration form.  You must be over 16 years old to create an Account on the Site.  Each Account is personal in nature and may only be used by you.  Any activity completed through your Account will be deemed to have been completed by you. Where applicable, you may choose to create an Account by authenticating via an existing account you have with a third party, in which case the third party terms may apply to such action. 
-        
+            <br />Where applicable, you may register for an account on the Site (an "Account").  You must provide current, complete, and accurate information as required by the applicable account registration form.  You must be over 16 years old to create an Account on the Site.  Each Account is personal in nature and may only be used by you.  Any activity completed through your Account will be deemed to have been completed by you. Where applicable, you may choose to create an Account by authenticating via an existing account you have with a third party, in which case the third party terms may apply to such action. 
+
             You are responsible for the security of your Account, and you agree not to share your password or access to the Site with another person. Kloudlite is not liable for any loss or damage arising from your failure to keep your Account secure. You will notify Kloudlite immediately if your Account information is lost, stolen, or otherwise compromised. Kloudlite may suspend or deactivate your Account if Kloudlite determines that this step is needed (such as if your Account has been compromised or you have violated these terms).
 
         4. **Your Use of the Site**
-            <br></br>You will not use the Site in a way that violates any laws or these terms, infringes anyone's rights (including but not limited to intellectual property rights), is offensive, or interferes with the Site or its features. For example, you will not use the Site in a way or provide Content to the Site that: 
+            <br />You will not use the Site in a way that violates any laws or these terms, infringes anyone's rights (including but not limited to intellectual property rights), is offensive, or interferes with the Site or its features. For example, you will not use the Site in a way or provide Content to the Site that: 
             <ListRoman>
                 1. infringes, misappropriates, or violates any third party or Kloudlite intellectual property rights;
                 2. is defamatory, libelous, threatening, harassing, harmful to minors, or pornographic;
@@ -84,63 +110,101 @@ export const ListDecimalBold = ({ children }) => {
             Kloudlite has the right, but not the obligation, to monitor the use of the Site, any Content, and any activity on the Site.
 
         5. **Feedback**
-            <br></br>You may provide ideas, suggestions, proposals, or other feedback to Kloudlite via the Site ("Feedback").<br></br>
+            <br />You may provide ideas, suggestions, proposals, or other feedback to Kloudlite via the Site ("Feedback").<br />
             Kloudlite may use such Feedback for any purpose, including incorporating the Feedback into or using the Feedback to develop and improve Kloudlite products and other Kloudlite offerings without attribution or compensation to you. You grant Kloudlite a perpetual and irrevocable license to use all Feedback for any purpose. You agree to provide Feedback to Kloudlite only in compliance with applicable laws. You represent that you have the authority to provide the Feedback and that Feedback will not include confidential information. 
         6. **Links and References to services**
-            <br></br>The Site may provide links to third party websites, products or services, which you may access or use at your own risk subject to any applicable third-party terms. Kloudlite is not responsible for and has not endorsed such third-party websites, products, or services.  <br></br>
-            
+            <br />The Site may provide links to third party websites, products or services, which you may access or use at your own risk subject to any applicable third-party terms. Kloudlite is not responsible for and has not endorsed such third-party websites, products, or services.  <br />
+
             The Site may refer to Kloudlite products or services that might not be available in your location. Please contact your local Kloudlite representative for more information.
         7. **Disclaimer of Warranties**
-            <br></br>EXCEPT AS EXPRESSLY AGREED OTHERWISE IN A SIGNED AGREEMENT BETWEEN YOU AND KLOUDLITE: 
-        
+            <br />EXCEPT AS EXPRESSLY AGREED OTHERWISE IN A SIGNED AGREEMENT BETWEEN YOU AND KLOUDLITE: 
+
             THE SITE, ANY CONTENT ON THE SITE, AND ANY SOFTWARE OR SERVICES PROVIDED ON THE SITE ARE PROVIDED "AS IS" AND KLOUDLITE PROVIDES NO WARRANTIES EXPRESS, IMPLIED OR STATUTORY, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF MERCHANTABILITY, SATISFACTORY QUALITY, NON-INFRINGEMENT OR FITNESS FOR A PARTICULAR PURPOSE. KLOUDLITE MAKES NO WARRANTIES THAT THE SITE WILL BE SECURE OR THAT ACCESS AND USE OF THE SITE WILL BE  ERROR-FREE WITHOUT INTERRUPTIONS, CRASHES, OR DOWNTIME.
-            
+
             Kloudlite may change or discontinue part or all of the Site or any Content at any time. 
         8. **Limitation of Liability & Indemnity**
-            <br></br>EXCEPT AS EXPRESSLY PROVIDED OTHERWISE IN A SIGNED AGREEMENT BETWEEN YOU AND KLOUDLITE:
-            
+            <br />EXCEPT AS EXPRESSLY PROVIDED OTHERWISE IN A SIGNED AGREEMENT BETWEEN YOU AND KLOUDLITE:
+
             IN NO EVENT WILL KLOUDLITE BE LIABLE FOR ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES WHETHER SUCH DAMAGES ARE ALLEGED AS A RESULT OF TORTIOUS CONDUCT OR BREACH OF CONTRACT OR OTHERWISE, EVEN IF KLOUDLITE HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES UNDER OR IN CONNECTION WITH THESE TERMS, INCLUDING BUT NOT LIMITED TO THE SITE, YOUR ACCESS TO OR USE OF (OR YOUR FAILURE TO GAIN ACCESS TO OR USE OF) THE SITE, ANY CONTENT PROVIDED ON THE SITE, OR ANY SERVICES PROVIDED ON THE SITE.
-            
+
             THIS STATEMENT DOES NOT AFFECT ANY LIABILITY WHICH CANNOT BE EXCLUDED OR LIMITED UNDER APPLICABLE LAW.
-            
+
             You will defend and indemnify Kloudlite from and against any and all damages, costs, losses and expenses (including reasonable attorney fees) incurred as a result of any claim, suit or proceeding brought against Kloudlite in relation to Your Content or as a result of any use or misuse of the Site by you.
         9. **Trademarks**
-            <br></br>The trademarks, logos, trade dress and service marks displayed on the Site are the property of Kloudlite or other third parties.  Your use of any Kloudlite trademark must be in accordance with the applicable Kloudlite Trademark Guidelines and Policies or other applicable trademark guidelines. 
+            <br />The trademarks, logos, trade dress and service marks displayed on the Site are the property of Kloudlite or other third parties.  Your use of any Kloudlite trademark must be in accordance with the applicable Kloudlite Trademark Guidelines and Policies or other applicable trademark guidelines. 
         10. **Waiver, Severability, and Precedence**
-            <br></br>The failure of Kloudlite to exercise or enforce any right or provision of these terms does not constitute a waiver of such right or provision.  If any provision of these terms is held to be unenforceable, that provision will be modified so as to be enforceable, or if such modification is not possible, will be removed and the remaining provisions will remain in full force.<br></br>
-            
+            <br />The failure of Kloudlite to exercise or enforce any right or provision of these terms does not constitute a waiver of such right or provision.  If any provision of these terms is held to be unenforceable, that provision will be modified so as to be enforceable, or if such modification is not possible, will be removed and the remaining provisions will remain in full force.<br />
+
             Some services or Kloudlite Content offered via the Site may be subject to additional or separate terms. If there is a conflict between these terms and such additional or separate terms, the latter will have precedence with respect to your access and use of that service or Kloudlite Content. Nothing in these terms is intended to limit your rights under an open source license.
         11. **Jurisdiction**
-            <br></br>These terms, and any claim, controversy, or dispute arising out of or related to these terms, are governed by and construed in accordance with the laws of the State of Karnataka without giving effect to any conflicts of laws provision.<br></br>
-            
+            <br />These terms, and any claim, controversy, or dispute arising out of or related to these terms, are governed by and construed in accordance with the laws of the State of Karnataka without giving effect to any conflicts of laws provision.<br />
+
             If one or more of the provisions contained in these terms are held invalid, illegal, or unenforceable in any respect by any court of competent jurisdiction, such holding will not impair the validity, legality, or enforceability of the remaining provisions.
 
         12. **Copyright Notice and Takedown Process**
-            <br></br>Kloudlite and its affiliates respect the intellectual property of others. If you believe that content on the Site infringes your copyright, please provide the following information to the Kloudlite-designated copyright agent listed below:
+            <br />Kloudlite and its affiliates respect the intellectual property of others. If you believe that content on the Site infringes your copyright, please provide the following information to the Kloudlite-designated copyright agent listed below:
             1. A description of the copyrighted content that you claim has been infringed and description of the infringing activity, including where the content is located, such as an URL.
             2. Your name, address, telephone number, and email address.
             3. The following statement: "I have a good faith belief that use of the copyrighted materials described above as allegedly infringing is not authorized by the copyright owner, its agent, or the law."
             4. The following statement: "I swear, under penalty of perjury, that the information in the notification is accurate and that I am the copyright owner or am authorized to act on behalf of the owner of an exclusive right that is allegedly infringed."
             5. Your electronic or physical signature.
-            
+
             If you believe that content on the Site was removed in error, please provide a counter notification to the Kloudlite-designated copyright agent listed below:
             1. A description of the material that Kloudlite has removed or to which Kloudlite has disabled access.
             2. Your name, address, telephone number, email address, and a statement that you consent to the jurisdiction of the Federal District Court for the judicial district in which your address is located (or Wake County, North Carolina if your address is outside of the United States), and that you will accept service of process from the person who provided notification of infringement or an agent of such person.
             3. The following statement: "I swear, under penalty of perjury, that I have a good faith belief that the material identified above was removed or disabled as a result of a mistake or misidentification of the material to be removed or disabled."
-            4. Your electronic or physical signature. 
+            4. Your electronic or physical signature.
         </ListDecimalBold>
         Please send notifications of infringement and counter notifications to the Kloudlite-designated copyright agent at: launch@kloudlite.io
-        
-        Kloudlite Labs Pvt Ltd<br></br>
-        415, 4th floor, Shaft-1, Tower- B<br></br>
-        VRR Fortuna<br></br>
-        Carmelaram, Janatha Colony, Bangalore<br></br>
-        Karnataka,<br></br>
-        India, 560035<br></br>
 
-        For a PDF version of the Terms of Services, please <a className="hover:underline text-text-primary" href="/documents/Kloudlite-Terms_of_use.pdf" download>click here</a>.
-        
-      </div>
-    </div>
-  </div>
-</div>
+        <div className="print:wb-hidden">For a PDF version of the Terms of Services, please <a className="hover:underline text-text-primary" href="/documents/Kloudlite-Terms_of_use.pdf" download>click here</a>.</div>
+
+        <h1 className="wb-heading4xl-marketing md:wb-heading5xl-marketing lg:wb-heading6xl-marketing wb-text-text-default wb-pt-6xl wb-pb-4xl md:wb-py-8xl xl:wb-pt-10xl xl:wb-pb-9xl">
+        Cancellation and Refund Policy
+        </h1>
+        <div className='wb-font-bold'>Effective Date: july 01, 2024</div>
+        <p>Welcome to Kloudlite Labs Private Limited ("Kloudlite"). This Cancellation and Refund Policy outlines
+            the terms and conditions under which refunds and cancellations will be provided for services purchased through our website.</p>
+
+        <ListDecimalBold>
+        1. **General Information**
+            <br />Kloudlite Labs Private Limited is committed to ensuring your satisfaction with our services. This policy applies to all purchases made through our website.
+
+        2. **Cancellation Policy**
+            <ListRoman>
+                **a. Subscription Services:** You may cancel your subscription at any time by logging into your account and following the cancellation procedures. Your subscription will continue until the end of the current billing cycle, and no further charges will be applied after the cancellation.
+                **b. One-Time Purchases:** One-Time Purchases: For one-time services or products, cancellations are not allowed once the purchase has been completed.
+            </ListRoman>
+
+        3. **Refund Policy**
+            <ListRoman>
+                **a. Subscription Services:** Refunds for subscription services are not provided for partial months. If you cancel your subscription, you will not be eligible for a refund for any unused portion of the subscription period.
+                **b. One-Time Purchases:** Once a one-time purchase is completed, it is non-refundable.
+                **c. Promotional Offers:** Refunds are not provided for services purchased under promotional offers or discounts.
+            </ListRoman>
+
+        4. **Exceptions**
+            <ListRoman>
+                **a. Service Disruptions:** In the event of a significant service disruption caused by Kloudlite, we may provide a refund at our sole discretion. You must notify us within 30 days of the disruption to be eligible for consideration.
+                **b. Billing Errors:** If there has been a billing error, please contact us immediately. We will investigate and, if a mistake is found, a refund will be issued accordingly.
+            </ListRoman>
+
+        5. **Process for Requesting Refunds**
+            <br />To request a refund, please contact our support team at support@kloudlite.com with your order details, the reason for the request, and any supporting documentation. We will review your request and notify you of the status within 10 business days.
+
+        6. **Changes to This Policy**
+            <br />Kloudlite Labs Private Limited reserves the right to modify or update this policy at any time. Changes will be posted on this page, and the effective date will be updated accordingly. It is your responsibility to review this policy periodically.
+
+        7. **Contact Information**
+            <br />If you have any questions or concerns about this Cancellation and Refund Policy, please contact us at:
+        </ListDecimalBold>
+        Kloudlite Labs Pvt Ltd<br />
+        415, 4th Floor, Shaft 1, Tower B, VRR Fortuna,<br />
+        Janatha Colony, Carmelaram, Sarjapur Road,<br />
+        Bengaluru, Karnataka, 560035<br />
+        India, 560035<br />
+        support@kloudlite.com
+
+        Thank you for choosing Kloudlite. We value your business and strive to ensure your satisfaction with our services.
+
+</PrivacyContainer>

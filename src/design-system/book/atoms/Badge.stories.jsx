@@ -1,4 +1,4 @@
-import { Info as InfoIcon } from '@jengaicons/react';
+import { Info as InfoIcon } from '~/components/icons';
 import { Badge } from '../../components/atoms/badge';
 
 export default {

@@ -1,23 +1,33 @@
-import {supportEmail} from "../app/utils/config.tsx"
-export const Headings = ({ children }) => {
-  return <p className="bodyMd-semibold">{children}</p>;
+---
+title: "Privacy Policy | Kloudlite"  
+metaTitle: "Privacy Policy | Kloudlite"  
+description: "Read Kloudlite's privacy policy to understand how we protect your data and ensure your privacy while using our open-source development environment."
+---
+
+import {supportEmail} from "~/app/utils/config.tsx"
+import PrivacyContainer from "~/app/components/website/privacy-container"
+
+export const Headings = ({ children, className }) => {
+  return <h2 className={"wb-bodyMd-medium wb-text-text-default dark:wb-text-text-darktheme-default "+className}>{children}</h2>;
 };
 
 export const SubList = ({ children }) => {
-  return <ul className="list-[circle] pl-5xl">{children.props.children}</ul>;
+  return <ul className="wb-list-[circle] wb-pl-[16px]">{children.props.children}</ul>;
 };
 
-<div className="bg-surface-basic-subdued">
-    <div className="max-w-[1440px] m-auto px-3xl md:!px-8xl lg:!px-11xl xl:!px-13xl 2xl:!px-14xl pb-6xl md:!pb-8xl xl:!pb-10xl">
-        <h1 className="heading4xl-marketing md:!heading5xl-marketing lg:!heading6xl-marketing text-text-strong py-6xl md:!py-8xl xl:!py-10xl">
-          KLOUDLITE PRIVACY STATEMENT
-        </h1>
-        <div>
-          <div className="text-text-soft bodyLg">
-            Last updated: <span className="headingMd">12th Dec, 2023</span>
-          </div>
-          <div className="bodyLg text-text-strong flex flex-col gap-4xl pt-4xl">
-            <Headings>SCOPE OF THIS PRIVACY STATEMENT</Headings>
+<PrivacyContainer
+  className="wb-pb-6xl md:wb-pb-8xl xl:wb-pb-[76px] 2xl:wb-pb-[100px]"
+  title="Privacy Policy"
+  subTitle={
+    <div className="wb-text-text-soft dark:wb-text-text-darktheme-soft wb-bodyLg">
+      Last updated:{" "}
+      <span className="wb-headingMd wb-text-text-default dark:wb-text-text-darktheme-default">
+        12th Dec, 2023
+      </span>
+    </div>
+  }
+>
+            <Headings>Scope of this Privacy Statement</Headings>
   
               Kloudlite Labs Pvt Ltd (Kloudlite), respects your privacy. This
               Privacy Statement applies to personal data collected by Kloudlite
@@ -48,7 +58,7 @@ export const SubList = ({ children }) => {
               factors specific to the physical, physiological, genetic, mental,
               economic, cultural or social identity of that natural person.
 
-              <Headings>THE CATEGORIES OF PERSONAL DATA WE COLLECT</Headings>
+              <Headings className="capitalize">The categories of personal data we collect</Headings>
 
               To the extent permitted by applicable law, the categories and
               types of personal data collected directly from you may include,
@@ -95,7 +105,7 @@ export const SubList = ({ children }) => {
               collection of such personal data as may be required under
               applicable law.
 
-              <Headings>HOW WE COLLECT PERSONAL DATA (SOURCES OF DATA)</Headings>
+              <Headings>How we collect personal data (sources of data)</Headings>
 
               Kloudlite collects personal data directly from you and from other
               categories of sources as described in more detail below. The
@@ -152,7 +162,7 @@ export const SubList = ({ children }) => {
               the third party and that we have the right to obtain it from them
               and use it.
 
-              <Headings>HOW WE USE (PROCESS) YOUR PERSONAL DATA</Headings>
+              <Headings>How we use (process) your personal data</Headings>
 
               Kloudlite may use personal data we collect about you to:
 
@@ -196,7 +206,7 @@ export const SubList = ({ children }) => {
 
               Kloudlite will retain your personal data for only as long as is required to fulfill the purposes for which the information is processed or for other valid reasons to retain your personal information (for example to comply with our legal and regulatory obligations, resolve disputes, enforce our agreements and for the establishment, exercise or defense of legal claims).
 
-              <Headings>HOW WE DISCLOSE YOUR PERSONAL DATA</Headings>
+              <Headings>How we disclose your personal data</Headings>
 
               Kloudlite discloses personal data for the following business purposes:
 
@@ -215,7 +225,7 @@ export const SubList = ({ children }) => {
 
               We do not sell personal data as the term sell is commonly understood. Under certain Data Protection Laws, a “sale” is defined to include disclosures of personal data to a third party for monetary or valuable consideration. When you use Kloudlite website/ portals, Kloudlite’s authorized partners, such as advertising networks, data analytics providers, social networks, and advertising partners, may collect cookies and similar technology and use this data (such as your Internet or other similar network activity) for their own purposes, such as improving their own services. This activity may qualify as a “sale” under certain applicable Data Protection Laws. You can make choices to allow or prevent such uses (see the Cookies and Other Technology section below on how to manage your cookie preferences).
 
-              <Headings>COOKIES AND OTHER TECHNOLOGY</Headings>
+              <Headings>Cookies and other technology</Headings>
 
               * When you visit our website, we may automatically collect information such as your IP address, browsing history, information on your interaction with the website, browser type and language, operating system, location, date and time (i.e., the category above referred to as Internet or other similar network activity). We may also use cookies to collect information as you navigate our websites. A cookie is a small amount of data that is sent to your browser from a web server and stored on your device. The cookie may be placed by Kloudlite or by an authorized third party. We use both session-based and persistent cookies on our websites. Session-based cookies exist during a single session and disappear when you close your browser or turn off your device. Persistent cookies remain on your device even after you close your browser or turn off your device.
 
@@ -231,7 +241,7 @@ export const SubList = ({ children }) => {
 
               Kloudlite also uses web beacons alone or in conjunction with cookies to compile information about usage of our websites and interaction with emails from Kloudlite (e.g., open rates, click through rates). Web beacons are clear electronic images that can recognize certain types of information on your device, such as cookies, when you viewed a particular website tied to the web beacon, and a description of a website tied to the web beacon. For example, Kloudlite may place web beacons in marketing emails that notify Kloudlite when you click on a link in the email that directs you to one of our digital properties. Kloudlite uses web beacons to operate and improve our website, portal and email communications.
 
-              <Headings>YOUR RIGHTS AND CHOICES</Headings>
+              <Headings>Your rights and choices</Headings>
 
               In accordance with the laws of certain countries, you may have certain rights and choices regarding the personal data we collect and maintain about you, and how we communicate with you.
 
@@ -255,17 +265,17 @@ export const SubList = ({ children }) => {
 
               When you exercise your privacy rights, such as those conferred by the applicable Data Protection Laws, you have a right not to receive discriminatory treatment by Kloudlite for the exercise of such privacy rights.
 
-              <Headings>VERIFICATION</Headings>
+              <Headings>Verification</Headings>
 
               Before responding to a request for information about your personal data, we must verify the request. Verification is important to protect your information and to help confirm that we are responding to a valid request and providing the response to the correct individual. To verify the request, we initially ask for at least two (2) or three (3) identifiers, such as name, email address and location. If we have a need to request additional identifiers to reasonably verify your identity, we will contact you and request additional verification. The information we ask to verify your identity may depend on your relationship with us.
 
               When you exercise your privacy rights under the applicable Data Protection Laws, you can designate an authorized agent or representative to make a request on your behalf by providing the authorized agent with written permission to do so and verifying your identity with us as part of the request, or by providing the authorized agent with Power of Attorney pursuant to applicable law (e.g., the California Probate code). We will ask the individual submitting the request to denote that they are an authorized agent or representative. When submitted by an authorized agent or representative, we ask the authorized agent or representative to provide name, email address and a description of the relationship with the individual who is the subject of the request and to certify that the representative has permission to submit the request and may request proof of the consumer’s written permission.
 
-              <Headings>SECURITY</Headings>
+              <Headings>Security</Headings>
 
               Kloudlite intends to protect your personal data. We have implemented appropriate physical, administrative, and technical safeguards to help us protect your personal data from unauthorized access, use and disclosure. For example, we encrypt certain personal data such as payment information when we transmit such information over the Internet. We also require that our business partners and service providers protect such information from unauthorized access, use and disclosure.
 
-              <Headings>SOCIAL MEDIA, PUBLIC FORUMS AND LINKS TO OTHER WEBSITES</Headings>
+              <Headings>Social media, public forums and links to other websites</Headings>
 
               Kloudlite may provide social media features that enable you to share information with your social networks and interact with Kloudlite on various social media websites. Your use of these features may result in the collection or sharing of information about you, depending on the feature. We encourage you to review the privacy policies and settings on the social media websites with which you interact to make sure you understand the information that may be collected, used, and shared by those websites.
 
@@ -273,22 +283,22 @@ export const SubList = ({ children }) => {
 
               Our websites may contain links to other websites. Kloudlite does not control and is not responsible for the information collected by websites that can be reached through links from our websites. If you have questions about the data collection procedures of linked websites, please contact the organizations that operate those websites directly.
 
-              <Headings>CHILDREN’S ONLINE PRIVACY</Headings>
+              <Headings>Children's online privacy</Headings>
 
               Kloudlite’s products and services are not directed to children and Kloudlite does not knowingly collect online personal data from children under the age of 16. If you are a parent or guardian of a minor under the age of 16 and believe that he or she has disclosed personal data to us, please <a href="/contact-us" className="underline  cursor-pointer">contact us</a> via
               our Feedback Form or as described below under “How to Contact Us.” Kloudlite will ensure their personal data is properly processed and disposed of with the consent of their parent or guardian.
 
-              <Headings>DATA TRANSFERS AND DATA PRIVACY FRAMEWORKS</Headings>
+              <Headings>Data transfers and data privacy frameworks</Headings>
 
               Kloudlite is a global organization, with legal entities, business processes, and technical systems that operate across borders. Kloudlite may transfer your personal data to other Kloudlite entities across borders, and these countries may not have the same data protection laws as the country from which you initially provided the information.
 
               Where required by applicable law, we have put in place appropriate safeguards (such as standard contractual clauses approved by the European Commission) in accordance with applicable legal requirements to ensure that your data is adequately protected. When transferring your personal data internationally, Kloudlite will protect your personal data as provided in this Privacy Statement and comply with applicable legal requirements as may be in effect from time to time. If you wish to obtain a copy of the relevant safeguards that are in place to protect the international transfer of your personal data, please <a href="/contact-us" className="underline  cursor-pointer">contact us</a> as described below under “How to Contact Us.”
 
-              <Headings>CHANGES TO THIS PRIVACY STATEMENT</Headings>
+              <Headings>Changes to this privacy statement</Headings>
 
               Kloudlite reserves the right to make corrections, changes or amendments to this Privacy Statement at any time. The revised Privacy Statement will be posted on this website. A notice will be posted on our homepage for 30 days whenever this Privacy Statement is changed in a material way, and the date of last update will be indicated at the top of the Privacy Statement. If you do not refuse the changes in writing within that notice period and you continue to use our websites, we consider that you have read and understand the Privacy Statement as changed, including with respect to personal data provided to us prior to the changes in the Privacy Statement. We encourage you to periodically review this Privacy Statement for any changes or updates. If you would like information related to the previous version of this Privacy Statement and/or a copy of the previous version, please <a href="/contact-us" className="underline  cursor-pointer">contact us</a> as described below under “How to Contact Us.”
 
-              <Headings>HOW TO CONTACT US</Headings>
+              <Headings>How to contact us</Headings>
 
               We provided this information above in the “Your Rights and Choices” section, but remember that if you would like to exercise any of your privacy rights, you may do so via our Personal Data Request Form. For California consumers, you may also submit requests, or access the information provided in this Privacy Statement in an alternative format, by mailing on Kloudlite’s mail id at {supportEmail} 
 
@@ -303,9 +313,4 @@ export const SubList = ({ children }) => {
 
               
               For a PDF version of the Privacy Statement, please <a className="hover:underline text-text-primary" href="/documents/Kloudlite-Privacy_policy.pdf" download>click here</a>.
-
-      </div>
-        </div>
-    </div>
-
-</div>
+</PrivacyContainer>

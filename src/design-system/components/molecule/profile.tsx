@@ -1,33 +1,49 @@
-import { forwardRef } from 'react';
+import { ComponentProps, ReactNode, forwardRef } from 'react';
 import { AvatarBase, IAvatar } from '../atoms/avatar';
 import { BounceIt } from '../bounce-it';
 import { cn } from '../utils';
 
-interface IProfile extends IAvatar {
-  name?: string;
-  subtitle?: string;
+interface IProfile extends IAvatar, Omit<ComponentProps<'button'>,'color'|'name'> {
+  name?: ReactNode;
+  subtitle?: ReactNode;
+  responsive?: boolean;
+  noImage?: boolean;
 }
 
 const Profile = forwardRef<HTMLButtonElement, IProfile>(
-  ({ name, subtitle, color, size, ...props }, ref) => {
+  (
+    { name, subtitle, color, responsive = true, size, noImage, ...props },
+    ref
+  ) => {
     return (
       <BounceIt className="w-fit">
         <button
           {...props}
           ref={ref}
           className={cn(
-            'flex py-sm px-md gap-lg items-center ring-offset-1 outline-none transition-all rounded focus-visible:ring-2 focus-visible:ring-border-focus'
+            'flex py-sm px-md gap-lg items-center ring-offset-1 dark:ring-offset-0 outline-none transition-all rounded focus-visible:ring-2 focus-visible:ring-border-focus dark:focus-visible:ring-border-darktheme-focus'
           )}
         >
-          <AvatarBase color={color} size={size} image={props.image} />
+          {!noImage && (
+            <AvatarBase color={color} size={size} image={props.image} />
+          )}
           {(name || subtitle) && (
-            <div className=" flex-col items-start hidden md:flex">
+            <div
+              className={cn(
+                'flex-col items-start',
+                responsive ? 'hidden md:flex' : ' flex'
+              )}
+            >
               {name && (
-                <div className="bodyMd-medium gap-y-md pulsable">{name}</div>
+                <div className="bodyMd-medium gap-y-md pulsable text-text-default dark:text-text-darktheme-default">
+                  {name}
+                </div>
               )}
 
               {subtitle && (
-                <div className="bodySm text-text-soft pulsable">{subtitle}</div>
+                <div className="text-start bodySm text-text-soft dark:text-text-darktheme-soft pulsable">
+                  {subtitle}
+                </div>
               )}
             </div>
           )}
