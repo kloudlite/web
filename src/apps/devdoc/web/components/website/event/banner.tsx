@@ -18,7 +18,7 @@ const Banner = ({
   linkContent?: string;
 }) => {
   return (
-    <div className="wb-sticky wb-top-0 wb-z-[9999] wb-bg-surface-primary-default wb-text-text-on-primary">
+    <div className="wb-top-0 wb-bg-surface-primary-default wb-text-text-on-primary">
       <Wrapper className="wb-flex wb-flex-col md:wb-flex-row md:wb-items-center wb-justify-center md:wb-justify-between wb-gap-xl md:wb-gap-3xl lg:wb-gap-8xl xl:wb-gap-6xl 2xl:wb-gap-8xl wb-h-[120px] md:wb-h-[68px]">
         <div className="wb-flex wb-flex-row wb-items-center justify-between wb-gap-lg lg:wb-gap-3xl md:wb-flex-1 xl:wb-flex-none">
           <span className="wb-bodyLg-medium wb-flex-1">{message}</span>

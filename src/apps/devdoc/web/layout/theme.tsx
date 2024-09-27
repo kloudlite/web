@@ -132,7 +132,6 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
 
   return (
     <>
-      {consts.eventBanner.enabled && <Banner {...consts.eventBanner} />}
       <ExternalLayout frontMatter={frontMatter}>
         <ActiveAnchorProvider>
           <Container

@@ -21,6 +21,9 @@ import { authUrl } from '~/app/utils/config';
 import PopupVideo from '../popup-video';
 import { useState } from 'react';
 import VideoSection from '../website/home/video-section';
+import DragResize from '~/app/test';
+import Events from '../website/home/events';
+import consts from '~/app/utils/const';
 
 const Title = () => {
   return (
@@ -161,8 +164,8 @@ const Index = () => {
         <PartnerSection />
         <HowItWorksSection />
         <DontBelieve />
-        <VideoSection />
         <FaqSection />
+        {consts.eventBanner.enabled && <Events />}
         <KeepExploring />
         <OpenSource />
         <SuperCharge />

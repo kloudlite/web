@@ -220,5 +220,5 @@ canvas {
 }
 
 .grecaptcha-badge {
-  visibility: hidden;
+  z-index: 99;
 }
