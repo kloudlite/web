@@ -13,7 +13,7 @@ import useConfig, { IConfig } from '../utils/use-config';
 import useMenu from '../utils/use-menu';
 import ButtonDev from './button';
 import { Anchor } from './anchor';
-import { authUrl, consoleUrl } from '../utils/config';
+import { authUrl, consoleUrl, demoUrl } from '../utils/config';
 import { cn } from '../utils/commons';
 import OptionList from 'kl-design-system/atoms/option-list';
 import Profile from 'kl-design-system/molecule/profile';
@@ -55,12 +55,14 @@ const ProfileMenu = ({ user }: { user: IConfig['user'] }) => {
 const UserComponent = ({
   config,
   hasSignIn,
+  hasSignUp,
   isInHeader,
   setShow,
   size,
 }: {
   config: IConfig;
   hasSignIn: boolean;
+  hasSignUp: boolean;
   isInHeader: boolean;
   setShow: any;
   size?: IButton['size'];
@@ -86,7 +88,7 @@ const UserComponent = ({
     return (
       <div
         className={cn('wb-flex wb-items-center wb-justify-center', {
-          'wb-w-[172px]': isInHeader,
+          'md:wb-w-[172px]': isInHeader,
         })}
       >
         <ButtonDev
@@ -110,9 +112,12 @@ const UserComponent = ({
   }
   return (
     <div
-      className={cn('wb-flex wb-flex-row wb-items-center wb-gap-lg', {
-        'wb-w-[172px]': isInHeader,
-      })}
+      className={cn(
+        'wb-flex wb-flex-col md:wb-flex-row md:wb-items-center wb-gap-lg',
+        {
+          'md:wb-w-[255px]': isInHeader,
+        },
+      )}
     >
       {hasSignIn && (
         <ButtonDev
@@ -131,21 +136,34 @@ const UserComponent = ({
           }}
         />
       )}
-      <ButtonDev
-        content={
-          isInHeader ? (
-            <span className="wb-bodyMd-medium">Sign up</span>
-          ) : (
-            'Sign up'
-          )
-        }
-        variant="primary"
-        block
-        size={size}
-        onClick={() => {
-          setShow('signup');
-        }}
-      />
+      {hasSignUp && (
+        <ButtonDev
+          content={
+            isInHeader ? (
+              <span className="wb-bodyMd-medium">Sign up</span>
+            ) : (
+              'Sign up'
+            )
+          }
+          variant="primary"
+          block
+          size={size}
+          onClick={() => {
+            setShow('signup');
+          }}
+        />
+      )}
+      {isInHeader && (
+        <ButtonDev
+          content="Request a demo"
+          variant="primary"
+          block
+          size={size}
+          linkComponent={Link}
+          to={demoUrl}
+          toLabel="href"
+        />
+      )}
     </div>
   );
 };
@@ -153,10 +171,12 @@ const UserComponent = ({
 const JoinProvidersDialog = ({
   size,
   hasSignIn,
+  hasSignUp = true,
   isInHeader,
 }: {
   size?: IButton['size'];
   hasSignIn?: boolean;
+  hasSignUp?: boolean;
   isInHeader?: boolean;
 }) => {
   const { config } = useConfig();
@@ -189,6 +209,7 @@ const JoinProvidersDialog = ({
       <UserComponent
         config={config}
         hasSignIn={!!hasSignIn}
+        hasSignUp={hasSignUp}
         isInHeader={!!isInHeader}
         setShow={setShow}
         size={size}

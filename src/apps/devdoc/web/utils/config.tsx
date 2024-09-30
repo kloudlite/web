@@ -25,6 +25,7 @@ export const gitUrl = 'https://github.com/kloudlite/kloudlite';
 export const communityUrl =
   'https://github.com/kloudlite/kloudlite/discussions';
 export const changeLogUrl = 'https://github.com/kloudlite/kloudlite/releases';
+export const demoUrl = 'https://cal.com/kloudlite/45min';
 const linkedinUrl = 'https://linkedin.com/company/kloudlite-io';
 const youtubeUrl = 'https://youtube.com/@kloudliteofficial';
 const discordUrl = 'https://discord.gg/4Y7VHccg';

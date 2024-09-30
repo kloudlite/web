@@ -69,7 +69,12 @@ const HeaderSecondary = () => {
               <>
                 <span className="wb-hidden lg:wb-block wb-h-2xl wb-w-xs wb-bg-border-default" />
                 <div className="wb-hidden lg:wb-block">
-                  <JoinProvidersDialog size="md" hasSignIn isInHeader />
+                  <JoinProvidersDialog
+                    size="md"
+                    hasSignIn
+                    isInHeader
+                    hasSignUp={false}
+                  />
                 </div>
               </>
             </div>
@@ -111,7 +116,7 @@ export const MobileMenu = ({ items = [] }: IHeaderSecondary) => {
             toLabel="href"
             to={config.gitRepoUrl}
           />
-          <JoinProvidersDialog />
+          <JoinProvidersDialog isInHeader hasSignIn hasSignUp={false} />
         </div>
       </div>
     </div>

@@ -472,7 +472,11 @@ export function Sidebar({
                             toLabel="href"
                             to={config.gitRepoUrl}
                           />
-                          <JoinProvidersDialog />
+                          <JoinProvidersDialog
+                            isInHeader
+                            hasSignIn
+                            hasSignUp={false}
+                          />
                         </div>
                       </div>
                     </div>
