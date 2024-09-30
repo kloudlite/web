@@ -1,11 +1,12 @@
 import React, { ReactNode } from 'react';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 import classNames from 'classnames';
-import { PageItem } from 'nextra/normalize-pages';
 import { ChevronDown } from '@jengaicons/react';
 import useConfig from '../utils/use-config';
 import { cn } from '../utils/commons';
 import { usePathname } from 'next/navigation';
+import { Button } from 'kl-design-system/atoms/button';
+import Link from 'next/link';
 
 export const NavListItem = React.forwardRef<
   HTMLAnchorElement,
@@ -93,9 +94,9 @@ const NavMenuItem = ({
             'wb-bodyLg-medium wb-cursor-pointer wb-px-2xl wb-flex hover:wb-text-text-default',
             active ? 'wb-text-text-default' : 'wb-text-text-soft',
           )}
-          href={href}
+          asChild
         >
-          {label}
+          <Link href={href || ''}>{label}</Link>
         </NavigationMenu.Link>
       )}
       {type === 'popup' && (

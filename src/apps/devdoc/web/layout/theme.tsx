@@ -1,6 +1,6 @@
 import type { NextraThemeLayoutProps } from 'nextra';
 import { MDXProvider } from 'nextra/mdx';
-import { useEffect, useLayoutEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useFSRoute } from 'nextra/hooks';
 import { Item, normalizePages } from 'nextra/normalize-pages';
 import { useRouter } from 'next/router';
