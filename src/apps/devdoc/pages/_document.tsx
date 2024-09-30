@@ -72,6 +72,12 @@ export default class Document extends NextDocument {
             src={`https://www.google.com/recaptcha/enterprise.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ''}`}
           />
           <script
+            type="text/javascript"
+            dangerouslySetInnerHTML={{
+              __html: `window.$crisp=[];window.CRISP_WEBSITE_ID="7af20d0e-8818-49f5-8c0e-5dba17379d44";(function(){d=document;s=d.createElement("script");s.src="https://client.crisp.chat/l.js";s.async=1;d.getElementsByTagName("head")[0].appendChild(s);})();`,
+            }}
+          />
+          <script
             // @ts-ignore
             // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{
