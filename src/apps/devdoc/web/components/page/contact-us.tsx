@@ -77,15 +77,7 @@ const SupportIcon = (props: ComponentProps<'svg'>) => {
   );
 };
 
-const addContact = async (data: {
-  email: string;
-  fullname: string;
-  companyName: string;
-  mobile: string;
-  country: string;
-  message: string;
-  token: string;
-}) => {
+const addContact = async (data: Inputs & { token: string }) => {
   return axios(contactUrl, {
     method: 'post',
     data,
@@ -93,9 +85,9 @@ const addContact = async (data: {
 };
 
 type Inputs = {
-  fullname: string;
+  name: string;
   email: string;
-  mobile: string;
+  mobileNo: string;
   country: string;
   message: string;
   companyName: string;
@@ -249,10 +241,10 @@ const FormSection = () => {
   const onFormSubmit = handleSubmit(async (d) => {
     setLoading(true);
     const token = await grecaptcha.execute(
-      process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "",
+      process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || '',
       {
         action: 'login',
-      },
+      }
     );
     if (!token) {
       toast.error('Something went wrong.');
@@ -302,16 +294,16 @@ const FormSection = () => {
           className="g-recaptcha hidden"
           data-sitekey="_your_site_key_"
           data-size="invisible"
-        ></div>
+        />
         <div className="wb-flex wb-flex-col wb-gap-3xl">
           <TextInput
             label="Full name"
             size="lg"
-            {...register('fullname', {
+            {...register('name', {
               required: 'Full name is required',
             })}
-            error={!!errors.fullname}
-            message={errors.fullname?.message}
+            error={!!errors.name}
+            message={errors.name?.message}
           />
           <div className="wb-flex wb-flex-col md:wb-flex-row wb-gap-3xl">
             <div className="wb-basis-full">
@@ -370,15 +362,15 @@ const FormSection = () => {
               <TextInput
                 label="Mobile"
                 size="lg"
-                {...register('mobile', {
+                {...register('mobileNo', {
                   required: 'Mobile is required',
                   pattern: {
                     value: /^[^a-zA-Z]*$/,
                     message: 'Invalid mobile number',
                   },
                 })}
-                error={!!errors.mobile}
-                message={errors.mobile?.message}
+                error={!!errors.mobileNo}
+                message={errors.mobileNo?.message}
               />
             </div>
           </div>

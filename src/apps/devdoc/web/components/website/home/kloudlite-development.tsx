@@ -119,11 +119,7 @@ const KloudliteDevelopment = () => {
         <GraphItem
           lines={{ bottom: false }}
           className={cn(
-            'wb-bg-surface-basic-subdued wb-p-3xl md:wb-p-5xl wb-sticky wb-z-50',
-            {
-              'wb-top-[68px]': consts.eventBanner.enabled,
-              'wb-top-0': !consts.eventBanner.enabled,
-            },
+            'wb-bg-surface-basic-subdued wb-p-3xl md:wb-p-5xl wb-sticky wb-z-50 wb-top-0',
           )}
         >
           <div className="wb-absolute wb-inset-0 wb-bg-surface-basic-subdued wb-z-[-1] -wb-mx-3xl md:wb-hidden" />

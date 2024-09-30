@@ -67,6 +67,11 @@ export default class Document extends NextDocument {
             />
           </noscript>
           <script
+            async
+            defer
+            src={`https://www.google.com/recaptcha/enterprise.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ''}`}
+          />
+          <script
             // @ts-ignore
             // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{
@@ -80,11 +85,6 @@ export default class Document extends NextDocument {
                 } catch (_) {}
               `,
             }}
-          />
-          <script
-            async
-            defer
-            src="https://www.google.com/recaptcha/enterprise.js?render=6LcxXUIqAAAAABtRW-S7Bov6z9PgUHhbNWjTLhND"
           />
         </Head>
         <body>

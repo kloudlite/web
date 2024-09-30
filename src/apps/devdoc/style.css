@@ -220,5 +220,10 @@ canvas {
 }
 
 .grecaptcha-badge {
+  z-index: 99;
   visibility: hidden;
+}
+
+.vjs-control-bar {
+  @apply !wb-bg-surface-basic-overlay-bg;
 }
