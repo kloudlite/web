@@ -4,13 +4,13 @@ import { GraphItem } from '~/app/components/graph';
 import ResponsiveContainer from '~/app/components/responsive-container';
 import Profile from 'kl-design-system/molecule/profile';
 import Button from '~/app/components/button';
-import eventImage from '~/images/homeNew/events/events.jpg';
-import eventImage2 from '~/images/homeNew/exploring/collaborative.jpeg';
 import { useEffect, useRef, useState } from 'react';
 import '@splidejs/react-splide/css/core';
 import { Splide, SplideSlide, SplideTrack } from '@splidejs/react-splide';
 import Radio from 'kl-design-system/atoms/radio';
 import ResponsiveImage from '../responsive-image';
+import Link from 'next/link';
+import { webinarUrl } from '~/app/utils/config';
 
 const events = [
   {
@@ -21,13 +21,12 @@ const events = [
         <br className="wb-hidden lg:wb-block" /> The New Era of Developments
       </div>
     ),
-    eventId: '1',
+    eventId: 'code-unbound-new-age-development-environments',
     eventType: 'Online',
     eventDate: 'Aug 31, 2024',
     eventTime: '11:00 to 12:00 pm',
     eventAuthorName: 'Karthik Thriumalasetti',
     eventAuthorDetail: 'Founder & CEO, Kloudlite',
-    eventImage: eventImage.src,
   },
 ];
 
@@ -79,22 +78,22 @@ const Events = () => {
               const banner = es.eventId;
               return (
                 <SplideSlide key={es.eventId}>
-                  <ResponsiveContainer className="wb-grid !wb-gap-0 wb-grid-cols-1 md:wb-grid-cols-2 2xl:wb-grid-cols-[auto_608px] wb-bg-surface-basic-default">
+                  <ResponsiveContainer className="wb-grid !wb-gap-0 wb-grid-cols-1 lg:wb-grid-cols-2 2xl:wb-grid-cols-[auto_608px] wb-bg-surface-basic-default">
                     <ResponsiveImage
                       alt={es.eventId}
-                      rmobile={`/events/${banner}-mobile.jpg`}
-                      rmobileDark={`/events/${banner}-mobile.jpg`}
-                      r768={`/events/${banner}-mobile.jpg`}
-                      r768Dark={`/events/${banner}-mobile.jpg`}
-                      r1024={`/events/${banner}-1024.jpg`}
-                      r1024Dark={`/events/${banner}-1024.jpg`}
-                      r1280={`/events/${banner}-1280.jpg`}
-                      r1280Dark={`/events/${banner}-1280.jpg`}
-                      r1440={`/events/${banner}-1440.jpg`}
-                      r1440Dark={`/events/${banner}-1440.jpg`}
-                      r1920={`/events/${banner}-1440.jpg`}
-                      r1920Dark={`/events/${banner}-1440.jpg`}
-                      className="wb-w-full wb-h-full wb-object-cover 2xl:wb-max-h-[416px]"
+                      rmobile={`/events/${banner}-home-mobile.png`}
+                      rmobileDark={`/events/${banner}-home-mobile.png`}
+                      r768={`/events/${banner}-home-768.png`}
+                      r768Dark={`/events/${banner}-home-768.png`}
+                      r1024={`/events/${banner}-home-1024.png`}
+                      r1024Dark={`/events/${banner}-home-1024.png`}
+                      r1280={`/events/${banner}-home-1280.png`}
+                      r1280Dark={`/events/${banner}-home-1280.png`}
+                      r1440={`/events/${banner}-home-1440.png`}
+                      r1440Dark={`/events/${banner}-home-1440.png`}
+                      r1920={`/events/${banner}-home-1920.png`}
+                      r1920Dark={`/events/${banner}-home-1920.png`}
+                      className="wb-w-full wb-h-full wb-object-contain xl:wb-max-h-[416px]"
                     />
                     <div className="wb-bg-surface-basic-default wb-p-4xl xl:wb-p-5xl wb-flex wb-flex-col wb-gap-4xl xl:wb-gap-4xl">
                       <div className="wb-flex wb-flex-row wb-items-center lg:wb-justify-between wb-gap-lg xl:wb-gap-x-3xl wb-gap-y-lg wb-bodyLg 2xl:wb-bodyXl wb-text-text-soft wb-flex-wrap">
@@ -117,24 +116,41 @@ const Events = () => {
                           <span>{es.eventType}</span>
                         </div>
                       </div>
-                      <div className="wb-heading2xl xl:wb-heading3xl wb-text-text-default wb-min-h-[129px] wb-flex wb-items-center wb-line-clamp-3">
+                      <div className="wb-heading2xl xl:wb-heading3xl wb-text-text-default xl:wb-min-h-[129px] wb-flex wb-items-center wb-line-clamp-3">
                         {es.eventTitle}
                       </div>
                       <div>
-                        <div className="wb-hidden md:wb-block">
+                        <div className="wb-hidden xl:wb-block">
                           <Profile size="lg" {...profileData(es)} />
                         </div>
-                        <div className="wb-block md:wb-hidden">
+                        <div className="wb-block xl:wb-hidden">
                           <Profile size="md" {...profileData(es)} />
                         </div>
                       </div>
+
                       <div>
-                        <Button
-                          block
-                          size="lg"
-                          content="Register now"
-                          variant="primary"
-                        />
+                        <div className="wb-hidden 2xl:wb-block">
+                          <Button
+                            block
+                            size="lg"
+                            content="Register now"
+                            variant="primary"
+                            linkComponent={Link}
+                            toLabel="href"
+                            to={`${webinarUrl}/around/join?aroundUrl=${webinarUrl}/around/join`}
+                          />
+                        </div>
+                        <div className="2xl:wb-hidden">
+                          <Button
+                            block
+                            size="md"
+                            content="Register now"
+                            variant="primary"
+                            linkComponent={Link}
+                            toLabel="href"
+                            to={`${webinarUrl}/around/join?aroundUrl=${webinarUrl}/around/join`}
+                          />
+                        </div>
                       </div>
                     </div>
                   </ResponsiveContainer>
@@ -155,7 +171,7 @@ const Events = () => {
           className="!wb-flex-row wb-self-center"
         >
           {/* @ts-ignore */}
-          {events.map((e, index) => {
+          {events.map((_, index) => {
             const i = index;
             // @ts-ignore
             return <Radio.Item key={i} value={`${i}`} />;

@@ -87,7 +87,7 @@ import FibrSvg from '../icons/Fibr';
 import PlaxonicSvg from '../icons/Plaxonic';
 import RedPlutoSvg from '../icons/RedPluto';
 import TalescaleSvg from '../icons/Talescale';
-import { authUrl, webinarUrl } from './config';
+import { webinarUrl } from './config';
 
 export const linkedInPrefix = 'https://www.linkedin.com/in/';
 export const githubPrefix = 'https://github.com/';
@@ -133,6 +133,16 @@ const partnersNew = [
 
 const consts = {
   homeNew: {
+    introVideo: [
+      {
+        src: '/intro.webm',
+        type: 'video/webm',
+      },
+      {
+        src: '/intro.mp4',
+        type: 'video/mp4',
+      },
+    ],
     partners: partnersNew,
     messages: [
       {
