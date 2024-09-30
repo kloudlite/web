@@ -76,3 +76,8 @@ select {
     overflow-x: hidden;
   }
 }
+
+.grecaptcha-badge {
+  z-index: 99;
+  visibility: hidden;
+}
