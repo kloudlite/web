@@ -17,10 +17,10 @@ With this feature we can now avoid building and deploying the applications into 
 You can intercept any application using following commands and start debugging and testing.
 
 ```shell
-kl intercept start -p <remote-port>:<local-port>
+kl intercept
 ```
 
-This command will prompt to choose the application from the list of available applications in the environment.
+This command will prompt to choose the application service to intercept and port to forward it to.
 
 > Note: All apps in the environment & workspaces connected to the environment will route to the intercepting 
 workspace when attempting to access the intercepted application.
