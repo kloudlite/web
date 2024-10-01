@@ -26,6 +26,7 @@ export interface IAvatar {
   color?: AvatarColors;
   image?: ReactNode;
   dot?: boolean;
+  isTemplate?: boolean;
 }
 
 export const AvatarBase = ({
@@ -33,6 +34,7 @@ export const AvatarBase = ({
   color = 'one',
   image,
   dot,
+  isTemplate = false,
 }: IAvatar) => {
   const isExternal = !Object.keys(colors).includes(color);
 
@@ -41,8 +43,8 @@ export const AvatarBase = ({
       style={
         isExternal
           ? {
-              background: color,
-            }
+            background: color,
+          }
           : {}
       }
       className={cn(
@@ -50,7 +52,9 @@ export const AvatarBase = ({
         'relative flex-shrink-0 flex flex-row items-center justify-center',
         'outline-none transition-all',
         'rounded-full',
-        'border border-border-default',
+        isTemplate
+          ? 'border border-border-tertiary'
+          : 'border border-border-default',
         {
           'w-8xl h-8xl': size === 'lg',
           'w-6xl h-6xl': size === 'md',
@@ -59,13 +63,13 @@ export const AvatarBase = ({
         },
         !image
           ? {
-              ' p-lg': size === 'lg',
-              ' p-md': size === 'md' || size === 'xs' || size === 'sm',
-            }
+            ' p-lg': size === 'lg',
+            ' p-md': size === 'md' || size === 'xs' || size === 'sm',
+          }
           : '',
         {
           'bg-surface-basic-default': !isExternal,
-        },
+        }
       )}
     >
       {dot && (
@@ -151,6 +155,14 @@ export const AvatarBase = ({
   );
 };
 
-export const Avatar = ({ size, color, image, dot }: IAvatar) => {
-  return <AvatarBase size={size} color={color} image={image} dot={dot} />;
+export const Avatar = ({ size, color, image, dot, isTemplate }: IAvatar) => {
+  return (
+    <AvatarBase
+      size={size}
+      color={color}
+      image={image}
+      dot={dot}
+      isTemplate={isTemplate}
+    />
+  );
 };
