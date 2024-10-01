@@ -1,5 +1,5 @@
 import { Link, useOutletContext, useParams } from '@remix-run/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Badge } from '~/components/atoms/badge';
 import { toast } from '~/components/molecule/toast';
 import { generateKey, titleCase } from '~/components/utils';
@@ -20,6 +20,7 @@ import ResourceExtraAction, {
   IResourceExtraItem,
 } from '~/console/components/resource-extra-action';
 import { SyncStatusV2 } from '~/console/components/sync-status';
+import TemplateAvatar from '~/console/components/template-avatar';
 import { findClusterStatus } from '~/console/hooks/use-cluster-status';
 import { useClusterStatusV2 } from '~/console/hooks/use-cluster-status-v2';
 import { IAccountContext } from '~/console/routes/_main+/$account+/_layout';
@@ -253,17 +254,35 @@ const ListView = ({ items, onAction }: IResource) => {
                   <ListTitleV2
                     title={name}
                     subtitle={id}
-                    avatar={<ConsoleAvatar name={id} />}
+                    avatar={
+                      i.clusterName === '' ? (
+                        // <TemplateAvatar />
+                        <TemplateAvatar name="{.}" color="text-white" />
+                      ) : (
+                        <ConsoleAvatar name={id} />
+                      )
+                    }
                   />
                 ),
               },
               cluster: {
-                render: () => (
-                  <ListItemV2 data={i.isArchived ? '' : i.clusterName} />
-                ),
+                render: () => {
+                  if (i.clusterName === '') {
+                    return <ListItemV2 className="px-4xl" data="-" />;
+                  }
+                  return (
+                    <ListItemV2 data={i.isArchived ? '' : i.clusterName} />
+                  );
+                },
               },
               status: {
                 render: () => {
+                  if (i.clusterName === '') {
+                    // return <Badge type="success">TEMPLATE</Badge>;
+                    // return <Note className="items-center" size={16} />;
+                    return <ListItemV2 className="px-4xl" data="-" />;
+                  }
+
                   if (i.isArchived) {
                     return <Badge type="neutral">Archived</Badge>;
                   }
@@ -312,7 +331,7 @@ const EnvironmentResourcesV2 = ({ items = [] }: { items: BaseType[] }) => {
   useWatchReload(
     items.map((i) => {
       return `account:${parseName(account)}.environment:${parseName(i)}`;
-    }),
+    })
   );
 
   const suspendEnvironment = async (item: BaseType, suspend: boolean) => {
@@ -334,11 +353,10 @@ const EnvironmentResourcesV2 = ({ items = [] }: { items: BaseType[] }) => {
         throw errors[0];
       }
       toast.success(
-        `${
-          suspend
-            ? 'Environment suspended successfully'
-            : 'Environment resumed successfully'
-        }`,
+        `${suspend
+          ? 'Environment suspended successfully'
+          : 'Environment resumed successfully'
+        }`
       );
       reloadPage();
     } catch (err) {
@@ -347,7 +365,7 @@ const EnvironmentResourcesV2 = ({ items = [] }: { items: BaseType[] }) => {
   };
 
   const [showDeleteDialog, setShowDeleteDialog] = useState<BaseType | null>(
-    null,
+    null
   );
   const [visible, setVisible] = useState<BaseType | null>(null);
 
