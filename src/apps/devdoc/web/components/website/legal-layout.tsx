@@ -38,7 +38,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
             </div>
             <GraphItem
               lines={{ bottom: false }}
-              className="wb-sticky wb-top-0 wb-flex wb-text-text-default wb-bg-surface-basic-subdued wb-flex-col wb-min-h-[80vh]"
+              className="wb-sticky wb-top-[68px] wb-flex wb-text-text-default wb-bg-surface-basic-subdued wb-flex-col wb-min-h-[80vh]"
             >
               {tabs.map((tab) => {
                 return (

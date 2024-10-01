@@ -359,6 +359,7 @@ export function Sidebar({
   }, [router.asPath]);
 
   const { config } = useConfig();
+
   return (
     <>
       {includePlaceholder && asPopover ? (
@@ -429,7 +430,7 @@ export function Sidebar({
               )}
               {mounted &&
                 window.innerWidth < 1024 &&
-                (rawLayout ? (
+                (rawLayout || router.asPath.startsWith('/blog') ? (
                   // @ts-ignore
                   <MobileMenu {...config.headerSecondary} />
                 ) : (

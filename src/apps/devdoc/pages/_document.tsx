@@ -69,7 +69,7 @@ export default class Document extends NextDocument {
           <script
             async
             defer
-            src={`https://www.google.com/recaptcha/enterprise.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ''}`}
+            src={`https://www.google.com/recaptcha/enterprise.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || ''}&badge=bottomleft`}
           />
           <script
             type="text/javascript"

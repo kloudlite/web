@@ -1,4 +1,8 @@
-import { CircleNotch, JengaIconCommonProps } from '@jengaicons/react';
+import {
+  CalendarCheck,
+  CircleNotch,
+  JengaIconCommonProps,
+} from '@jengaicons/react';
 import axios from 'axios';
 import { getCookie, setCookie } from 'cookies-next';
 import { TextArea, TextInput } from 'kl-design-system/atoms/input';
@@ -7,7 +11,7 @@ import { toast } from 'kl-design-system/molecule/toast';
 import Link from 'next/link';
 import { ComponentProps, ReactNode, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { contactUrl, supportEmail } from '~/app/utils/config';
+import { contactUrl, demoUrl, supportEmail } from '~/app/utils/config';
 import consts from '~/app/utils/const';
 import countries from '~/app/utils/countries.json';
 import grecaptcha from '~/app/utils/g-recaptcha';
@@ -17,6 +21,9 @@ import FAQSection from '../faq';
 import { GraphItem } from '../graph';
 import ResponsiveContainer from '../responsive-container';
 import Wrapper from '../wrapper';
+import Cal, { getCalApi } from '@calcom/embed-react';
+import { IButton } from 'kl-design-system/atoms/button';
+import DemoCalendar from '../demo-calendar';
 
 const SupportIcon = (props: ComponentProps<'svg'>) => {
   const { height, width } = props;
@@ -244,7 +251,7 @@ const FormSection = () => {
       process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || '',
       {
         action: 'login',
-      }
+      },
     );
     if (!token) {
       toast.error('Something went wrong.');
@@ -421,7 +428,10 @@ const FormSection = () => {
         title="Contact us"
         desc="Get in touch and let us know how we can help."
       >
-        <ResponsiveContainer className="wb-grid-cols-1 md:wb-grid-cols-[auto_236px] lg:wb-grid-cols-[auto_288px] 2xl:wb-grid-cols-[auto_352px] 3xl:wb-grid-cols-[auto_415px]">
+        <ResponsiveContainer
+          className="wb-grid-cols-1 md:wb-grid-cols-[auto_236px] lg:wb-grid-cols-[auto_288px] 2xl:wb-grid-cols-[auto_352px] 3xl:wb-grid-cols-[auto_415px]"
+          extResize={[pageLoading]}
+        >
           <GraphItem className="wb-bg-surface-basic-subdued">
             {getFormComponent()}
           </GraphItem>
@@ -457,12 +467,11 @@ const FormSection = () => {
                   </span>
                 </div>
                 <div className="wb-flex wb-flex-col wb-gap-lg wb-mt-xl">
-                  <span className="wb-headingLg wb-text-text-default">
-                    Contact No
-                  </span>
-                  <span className="wb-bodyLg wb-text-text-soft">
-                    +91 99015 09003
-                  </span>
+                  <DemoCalendar
+                    content="Book a Demo"
+                    variant="primary-outline"
+                    prefix={<CalendarCheck />}
+                  />
                 </div>
               </div>
             </div>

@@ -42,7 +42,7 @@ const HeaderSecondary = () => {
   }, []);
 
   return (
-    <div className="lg:wb-relative wb-flex wb-flex-row wb-top-0 wb-left-0 wb-right-0 wb-bg-surface-basic-subdued wb-border-b wb-border-border-default wb-min-h-[var(--kl-navbar-height)] wb-z-50">
+    <div className="wb-sticky wb-flex wb-flex-row wb-top-0 wb-left-0 wb-right-0 wb-bg-surface-basic-subdued/50 wb-backdrop-blur-2xl wb-border-b wb-border-border-default wb-min-h-[var(--kl-navbar-height)] wb-z-[9999]">
       <Wrapper className="wb-flex">
         <div className="wb-flex wb-flex-row wb-items-center wb-gap-6xl wb-w-full">
           {config.logo}

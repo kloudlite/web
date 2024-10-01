@@ -1,5 +1,6 @@
 import Popup from 'kl-design-system/molecule/popup';
 import {
+  CalendarCheck,
   CircleNotch,
   Envelope,
   GithubLogoFill,
@@ -18,6 +19,7 @@ import { cn } from '../utils/commons';
 import OptionList from 'kl-design-system/atoms/option-list';
 import Profile from 'kl-design-system/molecule/profile';
 import { ArrowRight } from '../icons/icons';
+import DemoCalendar from './demo-calendar';
 
 const ProfileMenu = ({ user }: { user: IConfig['user'] }) => {
   if (!user) {
@@ -115,7 +117,7 @@ const UserComponent = ({
       className={cn(
         'wb-flex wb-flex-col md:wb-flex-row md:wb-items-center wb-gap-lg',
         {
-          'md:wb-w-[255px]': isInHeader,
+          'md:wb-w-[267px]': isInHeader,
         },
       )}
     >
@@ -154,14 +156,12 @@ const UserComponent = ({
         />
       )}
       {isInHeader && (
-        <ButtonDev
+        <DemoCalendar
           content="Request a demo"
           variant="primary"
           block
           size={size}
-          linkComponent={Link}
-          to={demoUrl}
-          toLabel="href"
+          prefix={<CalendarCheck />}
         />
       )}
     </div>
