@@ -53,7 +53,7 @@ export const AvatarBase = ({
         'outline-none transition-all',
         'rounded-full',
         isTemplate
-          ? 'border border-border-tertiary'
+          ? 'border border-dashed border-border-tertiary'
           : 'border border-border-default',
         {
           'w-8xl h-8xl': size === 'lg',
