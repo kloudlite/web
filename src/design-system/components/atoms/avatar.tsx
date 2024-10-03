@@ -8,6 +8,7 @@ const colors = {
   four: ['fill-icon-critical', 'text-icon-critical'],
   five: ['fill-icon-secondary', 'text-icon-secondary'],
   six: ['fill-icon-primary', 'text-icon-primary'],
+  seven: ['basic-surface-subdued', 'text-icon-default'],
   dark: ['fill-text-soft', 'text-text-soft'],
 };
 
@@ -18,6 +19,8 @@ type AvatarColors =
   | 'three'
   | 'four'
   | 'five'
+  | 'six'
+  | 'seven'
   | 'dark'
   | (string & NonNullable<unknown>);
 
@@ -27,6 +30,7 @@ export interface IAvatar {
   image?: ReactNode;
   dot?: boolean;
   isTemplate?: boolean;
+  className?: string;
 }
 
 export const AvatarBase = ({
@@ -35,13 +39,14 @@ export const AvatarBase = ({
   image,
   dot,
   isTemplate = false,
+  className,
 }: IAvatar) => {
   const isExternal = !Object.keys(colors).includes(color);
 
   return (
     <div
       style={
-        isExternal
+        isExternal && color !== 'none'
           ? {
             background: color,
           }
@@ -52,9 +57,8 @@ export const AvatarBase = ({
         'relative flex-shrink-0 flex flex-row items-center justify-center',
         'outline-none transition-all',
         'rounded-full',
-        isTemplate
-          ? 'border border-dashed border-border-tertiary'
-          : 'border border-border-default',
+        'border border-border-default',
+        className,
         {
           'w-8xl h-8xl': size === 'lg',
           'w-6xl h-6xl': size === 'md',
@@ -155,7 +159,14 @@ export const AvatarBase = ({
   );
 };
 
-export const Avatar = ({ size, color, image, dot, isTemplate }: IAvatar) => {
+export const Avatar = ({
+  size,
+  color,
+  image,
+  dot,
+  isTemplate,
+  className,
+}: IAvatar) => {
   return (
     <AvatarBase
       size={size}
@@ -163,6 +174,7 @@ export const Avatar = ({ size, color, image, dot, isTemplate }: IAvatar) => {
       image={image}
       dot={dot}
       isTemplate={isTemplate}
+      className={className}
     />
   );
 };
