@@ -10,6 +10,15 @@
       "timestamp":false
     }
   },
+  "network-solution":{
+    "title":"Rethinking Development Environments & Workspaces: A Networking Solution Over Infrastructure",
+    "type":"page",
+    "theme":{
+      "sidebar":false,
+      "toc":true,
+      "header":"secondary"
+    }
+  },
   "containerisation-reviving-legacy-apps-for-developers":{
     "title":"Containerisation: Reviving Legacy Apps for Developers",
     "type":"page",
