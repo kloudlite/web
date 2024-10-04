@@ -1,7 +1,7 @@
-import React, { ReactElement, ReactNode, cloneElement, useId } from 'react';
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group';
-import { cn } from '../utils';
+import React, { ReactElement, ReactNode, cloneElement, useId } from 'react';
 import { BounceIt } from '../bounce-it';
+import { cn } from '../utils';
 
 type labelPlacements = 'left' | 'right' | (string & NonNullable<unknown>);
 
@@ -23,6 +23,7 @@ interface IRadioGroup {
   className?: string;
   labelPlacement?: labelPlacements;
   withBounceEffect?: boolean;
+  direction?: 'vertical' | 'horizontal';
 }
 
 export const Item = ({
@@ -89,17 +90,25 @@ export const Item = ({
 
 export const Root = ({
   value,
-  onChange = () => {},
+  onChange = () => { },
   label,
   disabled = false,
   children,
   className = '',
   labelPlacement = 'right',
   withBounceEffect = true,
+  direction = 'vertical',
 }: IRadioGroup) => {
   return (
     <RadioGroupPrimitive.Root
-      className={cn('flex flex-col gap-y-xl', className)}
+      className={cn(
+        'flex ',
+        {
+          'flex-row gap-x-xl': direction === 'horizontal',
+          'flex-col gap-y-xl': direction === 'vertical',
+        },
+        className
+      )}
       value={value}
       aria-label={label || 'Radio choice'}
       disabled={disabled}
