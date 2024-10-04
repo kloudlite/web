@@ -9,9 +9,15 @@ import { TextArea, TextInput } from 'kl-design-system/atoms/input';
 import Select from 'kl-design-system/atoms/select';
 import { toast } from 'kl-design-system/molecule/toast';
 import Link from 'next/link';
-import { ComponentProps, ReactNode, useEffect, useState } from 'react';
+import {
+  ComponentProps,
+  ReactNode,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { contactUrl, demoUrl, supportEmail } from '~/app/utils/config';
+import { contactUrl, supportEmail } from '~/app/utils/config';
 import consts from '~/app/utils/const';
 import countries from '~/app/utils/countries.json';
 import grecaptcha from '~/app/utils/g-recaptcha';
@@ -21,8 +27,6 @@ import FAQSection from '../faq';
 import { GraphItem } from '../graph';
 import ResponsiveContainer from '../responsive-container';
 import Wrapper from '../wrapper';
-import Cal, { getCalApi } from '@calcom/embed-react';
-import { IButton } from 'kl-design-system/atoms/button';
 import DemoCalendar from '../demo-calendar';
 
 const SupportIcon = (props: ComponentProps<'svg'>) => {
@@ -233,7 +237,7 @@ const FormSection = () => {
     control,
   } = useForm<Inputs>();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setHasFormSubmitted(!!getCookie('contact-form-submitted'));
 
     const timeOut = setTimeout(() => {

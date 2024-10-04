@@ -176,8 +176,8 @@ const SuggestionItem = ({
     <Link href={link}>
       <OptionList.OptionItemRaw className="wb-rounded">
         <div className="wb-flex wb-flex-col wb-gap-md">
-          <span className="wb-bodySm wb-text-text-default">{title}</span>
-          <span className="wb-bodySm wb-text-text-soft">{desc}</span>
+          <span className="wb-bodyLg-medium wb-text-text-default">{title}</span>
+          <span className="wb-bodyMd wb-text-text-soft">{desc}</span>
         </div>
       </OptionList.OptionItemRaw>
     </Link>
@@ -246,11 +246,11 @@ export function Flexsearch(): ReactElement {
           ),
           children: (
             <>
-              <div className="wb-text-base wb-bodyMd-semibold wb-text-text-default">
+              <div className="wb-text-base wb-bodyLg-medium wb-text-text-default">
                 <HighlightMatches match={search} value={title} />
               </div>
               {content && (
-                <div className="wb-excerpt wb-bodySm wb-text-text-soft">
+                <div className="wb-excerpt wb-bodyMd wb-text-text-soft">
                   <HighlightMatches match={search} value={content} />
                 </div>
               )}
@@ -395,7 +395,7 @@ export function Flexsearch(): ReactElement {
               </div>
             )}
             {results.length === 0 && !search && (
-              <div className="wb-bodySm wb-p-xl wb-text-text-soft wb-min-h-[250px]">
+              <div className="wb-bodyMd wb-p-xl wb-text-text-soft wb-min-h-[250px]">
                 <div className="wb-px-xl wb-py-lg">Suggestions</div>
                 <div className="wb-flex wb-flex-col wb-gap-md">
                   {consts.searchSuggestions.map((ss) => (

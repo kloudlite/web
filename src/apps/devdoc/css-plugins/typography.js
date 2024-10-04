@@ -118,9 +118,15 @@ function typography() {
       '.heading7xl-marketing': {
         '@apply wb-font-bold wb-text-7xl wb-leading-7xl wb-font-familjen': {},
       },
-
       '.heading7xl-1-marketing': {
         '@apply wb-font-normal wb-text-7xl wb-leading-7xl wb-font-sriracha': {},
+      },
+      '.sriracha5xl': {
+        '@apply wb-font-normal wb-text-5xl wb-leading-4xl wb-font-sriracha': {},
+      },
+      '.sriracha4xl': {
+        '@apply wb-font-normal wb-text-4xl wb-leading-2xl-1 wb-font-sriracha':
+          {},
       },
     });
   };
