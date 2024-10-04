@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import { ReactNode, useEffect, useLayoutEffect, useRef } from 'react';
 import { cn } from '../utils/commons';
 
 const ResponsiveContainer = ({
@@ -27,7 +27,7 @@ const ResponsiveContainer = ({
     }
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     resize();
 
     window.addEventListener('resize', resize);
