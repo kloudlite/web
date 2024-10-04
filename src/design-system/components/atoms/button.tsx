@@ -60,6 +60,7 @@ interface IBaseButton {
   value?: any;
   toLabel?: string;
   target?: string;
+  iconSize?: number;
 }
 
 export interface IIconButton extends IBaseButton {
@@ -110,6 +111,7 @@ export const ButtonBase = React.forwardRef<
     tabIndex,
     toLabel = 'to',
     target,
+    iconSize,
     ...mprops
   } = props;
 
@@ -340,13 +342,13 @@ export const ButtonBase = React.forwardRef<
       </AnimatePresence>
       {!!prefix &&
         React.cloneElement(prefix, {
-          size: iconOnly && size === 'lg' ? 20 : 16,
+          size: iconSize || (iconOnly && size === 'lg' ? 20 : 16),
           color: 'currentColor',
         })}
       {!iconOnly && <span className="block truncate">{content}</span>}
       {!!suffix &&
         React.cloneElement(suffix, {
-          size: 16,
+          size: iconSize || 16,
           color: 'currentColor',
         })}
     </Component>

@@ -3206,6 +3206,11 @@ select {
   }
 }
 
+.grecaptcha-badge {
+  z-index: 99;
+  visibility: hidden;
+}
+
 .first\:ml-0:first-child {
   margin-left: 0px;
 }

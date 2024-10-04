@@ -104,6 +104,12 @@ function typography() {
       '.heading6xl-marketing': {
         '@apply font-bold text-6xl leading-6xl font-familjen': {},
       },
+      '.sriracha5xl': {
+        '@apply font-normal text-5xl leading-4xl font-sriracha': {},
+      },
+      '.sriracha4xl': {
+        '@apply font-normal text-4xl leading-2xl-1 font-sriracha': {},
+      },
     });
   };
 }
