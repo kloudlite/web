@@ -1,11 +1,12 @@
 import Link from 'next/link';
 import { BrandLogo } from 'kl-design-system/branding/brand-logo';
-import { GithubLogoFill, Star } from '~/app/icons/icons';
+import { GithubLogoFill } from '~/app/icons/icons';
 import { gitUrl } from '~/app/utils/config';
 import { GraphExtended, GraphItem } from '../../graph';
 import { Anchor } from '../../anchor';
 import Button from '../../button';
 import ResponsiveContainer from '../../responsive-container';
+import { StarFill } from '@jengaicons/react';
 
 const OpenSource = () => {
   return (
@@ -31,8 +32,13 @@ const OpenSource = () => {
                     linkComponent={Link}
                     to={gitUrl}
                     toLabel="href"
-                    prefix={<Star />}
-                    content="Star Kloudlite on GitHub"
+                    prefix={<StarFill />}
+                    iconSize={20}
+                    content={
+                      <span className="wb-bodyXl-medium">
+                        Star Kloudlite on GitHub
+                      </span>
+                    }
                   />
                 </div>
               </div>

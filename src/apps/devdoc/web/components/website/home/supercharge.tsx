@@ -19,7 +19,12 @@ const SuperCharge = () => {
                 </p>
               </div>
               <div className="wb-w-full lg:wb-w-[300px]">
-                <JoinProvidersDialog size="lg" />
+                <JoinProvidersDialog
+                  size="lg"
+                  signUpContent={
+                    <span className="wb-bodyXl-medium">Sign up</span>
+                  }
+                />
               </div>
             </div>
           </GraphItem>

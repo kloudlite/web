@@ -1,36 +1,36 @@
 import DynamicImage from '~/app/components/dynamic-image';
 import { GraphExtended } from '~/app/components/graph';
+import FaqSection from '~/app/components/website/home/faq';
+import HowItWorksSection from '~/app/components/website/home/how-it-works';
+import KeepExploring from '~/app/components/website/home/keep-exploring';
+import KloudliteDevelopment from '~/app/components/website/home/kloudlite-development';
+import DontBelieve from '~/app/components/website/home/messages';
 import OpenSource from '~/app/components/website/home/opensource';
+import PartnerSection from '~/app/components/website/home/partners';
+import SecureAtCore from '~/app/components/website/home/secure-at-core';
 import SuperCharge from '~/app/components/website/home/supercharge';
 import Wrapper from '~/app/components/wrapper';
 import hero from '~/images/homeNew/hero';
 import HomeIllustrationMobileDark from '~/images/homeNew/illustration-mobile-dark.svg';
 import HomeIllustrationMobileWeb from '~/images/homeNew/illustration-mobile.webp';
+import Button from '../button';
 import { PlayCircle } from '@jengaicons/react';
 import { ArrowRight } from '~/app/icons/icons';
 import Link from 'next/link';
 import { authUrl } from '~/app/utils/config';
-import { useState } from 'react';
-import consts from '~/app/utils/const';
 import PopupVideo from '../popup-video';
+import { useState } from 'react';
 import Events from '../website/home/events';
-import HowItWorksSection from '../website/home/how-it-works_v2';
-import Button from '../button';
-import DontBelieve from '../website/home/messages_v2';
-import KeepExploring from '../website/home/keep-exploring_v2';
-import FaqSection from '../website/home/faq_v2';
-import KloudliteDevelopment from '../website/home/kloudlite-development_v2';
-import PartnerSection from '../website/home/partners_v2';
-import SecureAtCore from '../website/home/secure-at-core_v2';
+import consts from '~/app/utils/const';
 
 const Title = () => {
   return (
     <div className="wb-flex wb-flex-col wb-gap-3xl wb-text-center wb-items-center">
-      <h1 className="wb-heading4xl-marketing md:wb-heading6xl-marketing lg:wb-heading5xl-marketing wb-text-text-default wb-text-center lg:wb-w-[896px] xl:wb-w-[1024px] 2xl:wb-w-[1060px]">
+      <h1 className="wb-heading4xl-marketing md:wb-heading6xl-marketing lg:wb-heading7xl-marketing wb-text-text-default wb-text-center lg:wb-w-[896px] xl:wb-w-[1024px] 2xl:wb-w-[1060px]">
         <div className="wb-hidden md:wb-block">
           Building distributed applications
-          <span className="wb-sriracha5xl"> isn’t</span> complex
-          <span className="wb-sriracha5xl"> anymore!</span>
+          <span className="wb-heading7xl-1-marketing"> isn’t</span> complex
+          <span className="wb-heading7xl-1-marketing"> anymore!</span>
         </div>
 
         <div className="wb-block md:wb-hidden">
@@ -39,7 +39,7 @@ const Title = () => {
           <span className="wb-heading4xl-1-marketing"> anymore!</span>
         </div>
       </h1>
-      <p className="wb-bodyLg md:wb-bodyXl lg:wb-bodyXl wb-text-text-soft wb-text-center wb-max-w-[528px] lg:wb-w-[688px] lg:wb-max-w-full xl:wb-w-[920px]">
+      <p className="wb-bodyLg md:wb-bodyXl lg:wb-bodyXXl wb-text-text-soft wb-text-center wb-max-w-[528px] lg:wb-w-[688px] lg:wb-max-w-full xl:wb-w-[920px]">
         <span className="wb-hidden md:wb-block">
           With Kloudlite’s unified remote local environments,{' '}
           <br className="wb-hidden 3xl:wb-block" />
@@ -131,25 +131,17 @@ const Index = () => {
             >
               <span className="wb-flex wb-flex-col wb-flex-col-reverse md:wb-flex-row wb-items-center wb-gap-xl wb-max-w-[432px] wb-w-full">
                 <Button
-                  content={
-                    <span className="wb-bodyLg-medium !wb-font-semibold">
-                      Discover Kloudlite
-                    </span>
-                  }
+                  content="Discover Kloudlite"
                   variant="tertiary"
                   size="lg"
-                  prefix={<PlayCircle strokeWidth={1.5} />}
+                  prefix={<PlayCircle />}
                   block
                   onClick={() => {
                     setShowVideo(true);
                   }}
                 />
                 <Button
-                  content={
-                    <span className="wb-bodyLg-medium !wb-font-semibold">
-                      Get started
-                    </span>
-                  }
+                  content="Get started"
                   variant="primary"
                   size="lg"
                   suffix={<ArrowRight />}

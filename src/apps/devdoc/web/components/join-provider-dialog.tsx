@@ -8,13 +8,13 @@ import {
   GoogleLogoFill,
 } from '@jengaicons/react';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { Button, IButton } from 'kl-design-system/atoms/button';
 import useConfig, { IConfig } from '../utils/use-config';
 import useMenu from '../utils/use-menu';
 import ButtonDev from './button';
 import { Anchor } from './anchor';
-import { authUrl, consoleUrl, demoUrl } from '../utils/config';
+import { authUrl, consoleUrl } from '../utils/config';
 import { cn } from '../utils/commons';
 import OptionList from 'kl-design-system/atoms/option-list';
 import Profile from 'kl-design-system/molecule/profile';
@@ -61,6 +61,7 @@ const UserComponent = ({
   isInHeader,
   setShow,
   size,
+  signUpContent,
 }: {
   config: IConfig;
   hasSignIn: boolean;
@@ -68,6 +69,7 @@ const UserComponent = ({
   isInHeader: boolean;
   setShow: any;
   size?: IButton['size'];
+  signUpContent?: ReactNode;
 }) => {
   const user = config.user;
   if (config.userApiLoading) {
@@ -141,11 +143,12 @@ const UserComponent = ({
       {hasSignUp && (
         <ButtonDev
           content={
-            isInHeader ? (
+            signUpContent ||
+            (isInHeader ? (
               <span className="wb-bodyMd-medium">Sign up</span>
             ) : (
               'Sign up'
-            )
+            ))
           }
           variant="primary"
           block
@@ -157,10 +160,9 @@ const UserComponent = ({
       )}
       {isInHeader && (
         <DemoCalendar
-          content="Request a demo"
+          content={<span className="wb-bodyMd-medium">Request a demo</span>}
           variant="primary"
           block
-          size={size}
           prefix={<CalendarCheck />}
         />
       )}
@@ -173,11 +175,13 @@ const JoinProvidersDialog = ({
   hasSignIn,
   hasSignUp = true,
   isInHeader,
+  signUpContent,
 }: {
   size?: IButton['size'];
   hasSignIn?: boolean;
   hasSignUp?: boolean;
   isInHeader?: boolean;
+  signUpContent?: ReactNode;
 }) => {
   const { config } = useConfig();
   const { oathProviders } = config;
@@ -213,6 +217,7 @@ const JoinProvidersDialog = ({
         isInHeader={!!isInHeader}
         setShow={setShow}
         size={size}
+        signUpContent={signUpContent}
       />
       <Popup.Root
         show={!!show}

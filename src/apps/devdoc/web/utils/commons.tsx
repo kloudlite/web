@@ -60,7 +60,9 @@ export const CollapseItem = forwardRef(
                 : {})}
               className="wb-flex wb-flex-row wb-w-full"
             >
-              <span className="wb-flex-1 wb-text-start">{label}</span>
+              <span className="wb-flex-1 wb-text-start wb-bodyLg-medium">
+                {label}
+              </span>
               <span className="wb-transition-transform wb-duration-300 group-data-[state=open]:wb-rotate-90">
                 <ChevronRight size={16} />
               </span>

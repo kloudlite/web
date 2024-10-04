@@ -100,6 +100,50 @@ export const TitleBlock = ({
   );
 };
 
+export const TitleBlockV2 = ({
+  title,
+  desc,
+  titleContainerClass,
+  titleClass,
+  descClass,
+}: {
+  title: ReactNode;
+  desc?: ReactNode;
+  titleClass?: string;
+  titleContainerClass?: string;
+  descClass?: string;
+}) => {
+  return (
+    <div
+      className={cn(
+        'wb-flex wb-flex-col wb-gap-3xl wb-text-center',
+        titleContainerClass,
+      )}
+    >
+      <div className="flex flex-col gap-md">
+        <h2
+          className={cn(
+            'wb-heading3xl-marketing md:wb-heading4xl-marketing wb-text-text-default',
+            titleClass,
+          )}
+        >
+          {title}
+        </h2>
+      </div>
+      {desc && (
+        <p
+          className={cn(
+            'wb-bodyLg md:wb-bodyXl wb-text-text-soft wb-max-w-[784px] wb-m-auto',
+            descClass,
+          )}
+        >
+          {desc}
+        </p>
+      )}
+    </div>
+  );
+};
+
 export const Block = ({
   title,
   desc,
@@ -124,6 +168,45 @@ export const Block = ({
   return (
     <SectionWrapper className={cn('wb-flex-col', className)}>
       <TitleBlock
+        title={title}
+        desc={desc}
+        titleContainerClass={titleContainerClass}
+        titleClass={titleClass}
+        descClass={descClass}
+      />
+      {hasGraph ? (
+        <GraphExtended className={graphClass}>{children}</GraphExtended>
+      ) : (
+        children
+      )}
+    </SectionWrapper>
+  );
+};
+
+export const BlockV2 = ({
+  title,
+  desc,
+  className,
+  children,
+  titleClass,
+  titleContainerClass,
+  descClass,
+  hasGraph = true,
+  graphClass,
+}: {
+  title: ReactNode;
+  desc?: ReactNode;
+  className?: string;
+  children?: ReactNode;
+  titleClass?: string;
+  titleContainerClass?: string;
+  descClass?: string;
+  hasGraph?: boolean;
+  graphClass?: string;
+}) => {
+  return (
+    <SectionWrapper className={cn('wb-flex-col', className)}>
+      <TitleBlockV2
         title={title}
         desc={desc}
         titleContainerClass={titleContainerClass}
