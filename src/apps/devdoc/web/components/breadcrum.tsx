@@ -2,9 +2,9 @@ import type { Item } from 'nextra/normalize-pages';
 import type { ReactElement } from 'react';
 import { Fragment } from 'react';
 import { ChevronRight } from '@jengaicons/react';
-import { Anchor } from './anchor';
 import { cn } from '../utils/commons';
 import { Button } from 'kl-design-system/atoms/button';
+import Link from 'next/link';
 
 export function Breadcrumb({
   activePath,
@@ -22,7 +22,7 @@ export function Breadcrumb({
           return (
             <Fragment key={item.route + item.name}>
               {index > 0 && (
-                <span className="wb-text-icon-soft inline-block [vertical-align:middle]">
+                <span className="wb-text-icon-soft wb-inline-block [vertical-align:middle]">
                   <ChevronRight size={16} />
                 </span>
               )}
@@ -42,13 +42,15 @@ export function Breadcrumb({
                 {isLink && !isActive ? (
                   <Button
                     to={item.route}
+                    linkComponent={Link}
+                    toLabel="href"
                     content={item.title}
                     variant="plain"
                     size="sm"
-                    className="!wb-inline !wb-no-underline"
+                    className="!wb-inline-block !wb-no-underline  [vertical-align:bottom]"
                   />
                 ) : (
-                  item.title
+                  <span className="wb-px-md wb-py-sm">{item.title}</span>
                 )}
               </span>
             </Fragment>

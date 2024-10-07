@@ -364,7 +364,7 @@ export function Flexsearch(): ReactElement {
               <Search size={20} />
             </span>
             <input
-              className="wb-flex-1 wb-outline-none wb-p-lg wb-min-h-[32px] wb-box-content wb-bodyLg placeholder:wb-text-text-disabled wb-text-text-default wb-bg-surface-basic-input"
+              className="wb-flex-1 focus-within:wb-outline-none focus-visible:wb-outline-none wb-outline-none wb-p-lg wb-min-h-[32px] wb-box-content wb-bodyLg placeholder:wb-text-text-disabled wb-text-text-default wb-bg-surface-basic-input"
               placeholder="Search"
               onKeyDown={setKeyEvent}
               value={search}

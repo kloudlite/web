@@ -4,7 +4,10 @@
     "type": "separator"
   },
   "index": {
-    "title": "What is kloudlite?"
+    "title": "What is kloudlite?",
+    "theme": {
+      "breadcrumb": false
+    }
   },
   "basic-concepts": {
     "title": "Basic Concepts"

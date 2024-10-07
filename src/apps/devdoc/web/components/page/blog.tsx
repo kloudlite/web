@@ -13,6 +13,7 @@ import { GraphExtended, GraphItem } from '../graph';
 import { Block } from '../commons';
 import Pagination from '../website/pagination';
 import { ExploringItem } from '../website/home/keep-exploring';
+import Link from 'next/link';
 
 const tabs = [
   {
@@ -186,7 +187,7 @@ const BlogHome = () => {
                     return null;
                   }
                   return (
-                    <a
+                    <Link
                       href={bp.route}
                       key={bp.name}
                       className="hover:wb-bg-surface-basic-hovered"
@@ -205,7 +206,7 @@ const BlogHome = () => {
                       {index < page.length - 1 && (
                         <div className="md:wb-hidden wb-h-[1.5px] wb-bg-border-dark" />
                       )}
-                    </a>
+                    </Link>
                   );
                 })}
               </GraphItem>

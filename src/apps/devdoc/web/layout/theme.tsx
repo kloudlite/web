@@ -167,7 +167,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
               includePlaceholder
             />
             {!['blog', 'customer-stories'].includes(pageType) && showToc && (
-              <nav className="wb-order-last wb-w-[230px] wb-max-w-[230px] wb-min-w-[226px] wb-sticky wb-top-0 wb-self-start wb-hidden xl:wb-block">
+              <nav className="wb-order-last wb-w-[230px] wb-max-w-[230px] wb-min-w-[226px] wb-sticky wb-top-[var(--kl-navbar-height)] wb-self-start wb-hidden xl:wb-block">
                 <TOC headings={headings} />
               </nav>
             )}
