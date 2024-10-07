@@ -200,7 +200,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
             id={id}
             tabIndex={tabIndex}
             className={cn(
-              'outline-none flex-1 w-full h-full',
+              'outline-none focus-within:outline-none focus:outline-none focus-visible:outline-none flex-1 w-full h-full',
               'rounded bg-transparent',
               {
                 'text-text-critical placeholder:text-text-critical/70 bgh':
