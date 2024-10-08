@@ -95,7 +95,7 @@ const TabBase = ({
           'rounded-lg hover:bg-surface-basic-hovered active:bg-surface-basic-pressed':
             variant === 'filled',
           // 'border border-transparent': variant === 'filled' && !active,
-        },
+        }
       )}
     >
       <RovingFocusGroup.Item
@@ -126,7 +126,7 @@ const TabBase = ({
               ...(fitted && {
                 'py-md': variant !== 'filled',
               }),
-            },
+            }
           )}
         >
           {variant === 'plain' && <div className="h-md bg-none w-full z-0" />}
@@ -139,7 +139,7 @@ const TabBase = ({
             <motion.div
               layoutId="underline"
               className={cn(
-                'h-md z-10 absolute left-0 bottom-0 w-full bg-border-primary',
+                'h-md z-10 absolute left-0 bottom-0 w-full bg-border-primary'
               )}
             />
           )}
@@ -183,7 +183,7 @@ const Root = forwardRef<HTMLDivElement, ITabs<any>>(
       children,
       toLabel,
     },
-    ref,
+    ref
   ) => {
     const id = useId();
     // id = useMemo(() => id, [children, value, basePath, size, variant]);
@@ -198,7 +198,7 @@ const Root = forwardRef<HTMLDivElement, ITabs<any>>(
             'md:gap-4xl': size === 'md' && variant !== 'filled',
             'gap-lg': size === 'sm' || variant === 'filled',
           },
-          className,
+          className
         )}
         ref={ref}
         asChild
@@ -239,7 +239,7 @@ const Root = forwardRef<HTMLDivElement, ITabs<any>>(
         </motion.div>
       </RovingFocusGroup.Root>
     );
-  },
+  }
 );
 
 const Tabs = {
