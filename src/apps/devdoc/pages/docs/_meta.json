@@ -4,16 +4,13 @@
     "type": "separator"
   },
   "index": {
-    "title": "What is kloudlite?",
+    "title": "Getting Started",
     "theme": {
       "breadcrumb": false
     }
   },
   "basic-concepts": {
     "title": "Basic Concepts"
-  },
-  "getting-started": {
-    "title": "Getting Started"
   },
   "--core-components--": {
     "title": "CORE COMPONENTS",

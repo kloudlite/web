@@ -1,34 +1,165 @@
 ---
-title: "What is kloudlite?"  
-metaTitle: "Kloudlite Documentation | Comprehensive Guides & Resources"  
-description: "Explore Kloudlite's documentation for detailed guides, tutorials, and resources to maximize your use of our development environment platform"
+title: "Getting started"  
+metaTitle: "Getting Started with Kloudlite | Quick Start Guide"  
+description: "Begin your journey with Kloudlite. Follow our step-by-step guide to set up and start using Kloudlite's development environments effectively"
 ---
 
-# What is kloudlite?
+import Steps from "~/app/components/steps";
+import VideoPlayer from "~/app/components/video-player";
 
-Kloudlite is a Development Environment As a Service (DEaaS) platform that provides seamless integration between developer's 
-workspaces and application's development environments.
+# Getting Started
 
-### Why use kloudlite?
-Modern applications have become increasingly distributed. This complexity has made development more challenging, with longer 
-development loops and greater difficulty in managing these applications. 
+This guide will help you get started with Kloudlite. 
+It will show you how to attach your cluster, create an environment, 
+set up your workspace to access and intercept services of the environment.
 
-Kloudlite reduces the need for lengthy build and deployment cycles, allowing developers to focus on coding and innovation, 
-thereby improving productivity and efficiency.
+> **Note:** The quickest way to start using Kloudlite is to use our hosted solution. 
+Login and set up your free team.
 
-### Key Features
-- **No Build Or Deploy in Development Cycle:** Development workspaces are connected to running environments over the network, 
-there is no need for building and deploying the application to start testing
-- **Easy to switch environments:** Development workspaces can switch easily between connected environments. There is no need 
-to change configs or any connection parameters
-- **Ephemeral Environments:** Environments are stateless & ephemeral, allowing for easy cloning and independent work on features. 
-Multiple developers can run their own environments simultaneously.
-- **Integrated Services:** Supports creating stateful backing services on attached clusters. Allows importing these resources, 
-like databases, into environments for use.
-- **Dev Containers:** Containers with SSH servers, enable IDE attachment for development. Dependencies are managed 
-using the Nix package manager.
-- **Collaboration and Debugging:** Supports collaborative coding with multiple developers working on features across multiple 
-services. Developers can intercept apps running inside the environment for testing and debugging.
+## Quick start
 
-Kloudlite is designed to optimise development workflows, enhance productivity, and provide a seamless, integrated development 
-environment.
+<Steps>
+### Create Your Kloudlite Team
+
+To get started with Kloudlite, create a team in Kloudlite dashboard. The team is where you manage your environments, managed services,  infrastructure and devices.
+
+<VideoPlayer src="/docs/getting-started/setup-team.mp4"/>
+
+
+### Attach Your Cluster
+
+To create development environments and run your workloads, you'll need to attach a Kubernetes cluster to Kloudlite. You can add and manage cluster references from the infrastructure section of the Kloudlite dashboard.
+
+When you log in and select your team using the [Kloudlite CLI](https://github.com/kloudlite/kl) on your local system, Kloudlite will automatically create a default k3s cluster and attach it to your team. This allows developers to get started quickly without needing to provision compute from cloud providers.
+
+**Setting up Kloudlite CLI**
+
+> **Prerequisites:** kl will run docker containers. Make sure you have docker installed and running.
+
+##### Install using curl
+```shell
+curl 'https://kl.kloudlite.io/kloudlite/kl!?select=kl' | bash
+```
+
+##### Login to Kloudlite
+```shell
+kl auth login
+```
+
+<VideoPlayer src="/docs/getting-started/cluster-setup.mp4"/>
+
+*By end of the this step you will have a local k3s cluster installed and attached to kloudlite. You can verify this inside clusters in infrastructure section of your dashboard.*
+
+
+### Create and Setup an Environment
+
+With cluster attached you can create a new environment in Kloudlite by providing an environment name and the cluster.
+
+<VideoPlayer src="/docs/getting-started/setup-env.mp4"/>
+
+
+*Once environment is created you will be able to create applications and also manage configs and secrets inside the environment.*
+
+#### Creating applications
+<VideoPlayer src="/docs/introduction/create-app.mp4"/>
+
+#### Managing Configs and Secrets
+<VideoPlayer src="/docs/introduction/manage-config-secrets.mp4"/>
+
+### Initialize Workspace
+
+Now let's create a workspace to connect to the environment.
+
+##### Choose your workspace directory and create a `kl.yaml` file with the following command:
+```shell
+mkdir kl-workspace
+cd kl-workspace
+kl init
+```
+
+<VideoPlayer src="/docs/introduction/setup-workspace.mp4"/>
+
+You will be prompted to select kloudlite team and the default environment this workspace will connect to. 
+Once selected, a `kl.yml` file with the environment details will be created.
+
+##### You can now add necessary configs, secrets, from the environment to the local workspace with the following commands:
+
+> **Note:** Ensure that you have configs and secrets added to the environment before adding them to the workspace.
+
+```shell
+# Add config to your local workspace
+kl add config
+```
+
+<VideoPlayer src="/docs/introduction/setup-workspace-add-config.mp4"/>
+
+
+```bash
+# Add secret
+kl add secret
+```
+
+<VideoPlayer src="/docs/introduction/setup-workspace-add-secret.mp4"/>
+
+
+```bash
+# Add configmount
+kl add config-mount <file-path>
+```
+<VideoPlayer src="/docs/introduction/setup-workspace-add-config-mount.mp4"/>
+
+##### You can start and access workspace (development container) using the following command:
+```bash
+kl box ssh
+```
+<VideoPlayer src="/docs/introduction/access-intercept-env.mp4"/>
+
+
+This command creates a development container and mounts your codebase to it. The container will include all necessary 
+configs, secrets, resources, and packages. You can now start developing your application.
+
+The container runs an SSH service. You can also attach your IDEs like VSCode or IntelliJ to the container and start 
+developing your application.
+
+##### Add necessary packages to the local container using `pkg` command
+
+```bash
+# inside development container
+kl pkg add nvim
+
+# restart the container to avail the installed package
+kl box restart
+```
+
+<VideoPlayer src="/docs/introduction/add-packages.mp4"/>
+
+> **Note:** You can search for available packages using `kl pkg search <package-name>` or from [nixhub.io](https://www.nixhub.io/)
+
+### Working with the Workspace
+
+The workspace container is already connected to the environment using wireguard. And also service disvovery 
+is configured to resolve the domains of the services in the environment.
+
+As you are in same network now you can access the apps running in the environment using their name. All the configs, secrets, packages are already loaded inside the workspace container.
+
+Now you will be able to access the apps running in the environment using their name. All the configs, secrets, packages are already loaded inside the workspace container.
+
+##### Intercept the traffic of the apps running in the environment using the following command:
+```bash
+kl intercept start -p <remote-port>:<local-port>
+```
+You will be prompted to select the app you want to intercept.
+
+<VideoPlayer src="/docs/introduction/select-app.mp4"/>
+
+
+Now all the traffic to the remote application running in the environment will be 
+intercepted and redirected to the local port. 
+
+##### Use the following command to stop the interception:
+```bash
+kl intercept stop
+```
+
+**For more detailed explanation check reference guide [here](/reference-guide)**
+</Steps>
