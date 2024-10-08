@@ -38,7 +38,7 @@ const HorizontalTopTabItem = ({
     >
       <h3
         className={cn(
-          'wb-headingXl-marketing md:wb-headingXl wb-transition-all lg:wb-min-h-[84px] xl:wb-min-h-[auto] 3xl:wb-min-h-[auto] wb-shrink-0',
+          'wb-headingXl-marketing md:wb-headingXl wb-transition-all  wb-shrink-0',
           {
             'wb-text-text-default lg:wb-text-text-primary': active,
             'wb-text-text-default': !active,

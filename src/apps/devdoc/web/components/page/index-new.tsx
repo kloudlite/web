@@ -1,7 +1,5 @@
 import DynamicImage from '~/app/components/dynamic-image';
 import { GraphExtended } from '~/app/components/graph';
-import OpenSource from '~/app/components/website/home/opensource';
-import SuperCharge from '~/app/components/website/home/supercharge';
 import Wrapper from '~/app/components/wrapper';
 import hero from '~/images/homeNew/hero';
 import HomeIllustrationMobileDark from '~/images/homeNew/illustration-mobile-dark.svg';
@@ -22,11 +20,13 @@ import FaqSection from '../website/home/faq_v2';
 import KloudliteDevelopment from '../website/home/kloudlite-development_v2';
 import PartnerSection from '../website/home/partners_v2';
 import SecureAtCore from '../website/home/secure-at-core_v2';
+import SuperCharge from '../website/home/supercharge_v2';
+import OpenSource from '../website/home/opensource_v2';
 
 const Title = () => {
   return (
     <div className="wb-flex wb-flex-col wb-gap-3xl wb-text-center wb-items-center">
-      <h1 className="wb-heading4xl-marketing md:wb-heading6xl-marketing lg:wb-heading5xl-marketing wb-text-text-default wb-text-center lg:wb-w-[896px] xl:wb-w-[1024px] 2xl:wb-w-[1060px]">
+      <h1 className="wb-heading4xl-marketing md:wb-heading5xl-marketing wb-text-text-default wb-text-center lg:wb-w-[810px]">
         <div className="wb-hidden md:wb-block">
           Building distributed applications
           <span className="wb-sriracha5xl"> isn’t</span> complex
@@ -35,11 +35,11 @@ const Title = () => {
 
         <div className="wb-block md:wb-hidden">
           Building distributed apps
-          <span className="wb-heading4xl-1-marketing"> is&apos;nt</span> complex
-          <span className="wb-heading4xl-1-marketing"> anymore!</span>
+          <span className="wb-sriracha4xl"> is’nt</span> complex
+          <span className="wb-sriracha4xl"> anymore!</span>
         </div>
       </h1>
-      <p className="wb-bodyLg md:wb-bodyXl lg:wb-bodyXl wb-text-text-soft wb-text-center wb-max-w-[528px] lg:wb-w-[688px] lg:wb-max-w-full xl:wb-w-[920px]">
+      <p className="wb-bodyLg md:wb-bodyXl wb-text-text-soft wb-text-center wb-max-w-[528px] lg:wb-w-[703px] lg:wb-max-w-full">
         <span className="wb-hidden md:wb-block">
           With Kloudlite’s unified remote local environments,{' '}
           <br className="wb-hidden 3xl:wb-block" />
@@ -58,7 +58,7 @@ const Title = () => {
 const Illustration = () => {
   return (
     <Wrapper className="-wb-mt-5xl">
-      <div className="hidden md:block wb-pb-[36px] 2xl:wb-pb-[128px]">
+      <div className="hidden md:block wb-pb-[36px] 2xl:wb-pb-8xl">
         <GraphExtended
           // graph="graphIllustration"
           innerClass="-wb-mt-[2px] wb-flex wb-justify-center !wb-pt-[32px] 3xl:-wb-mx-[256px]"
@@ -132,7 +132,7 @@ const Index = () => {
               <span className="wb-flex wb-flex-col wb-flex-col-reverse md:wb-flex-row wb-items-center wb-gap-xl wb-max-w-[432px] wb-w-full">
                 <Button
                   content={
-                    <span className="wb-bodyLg-medium !wb-font-semibold">
+                    <span className="wb-bodyLg-medium md:wb-bodyLg-semibold">
                       Discover Kloudlite
                     </span>
                   }
@@ -146,7 +146,7 @@ const Index = () => {
                 />
                 <Button
                   content={
-                    <span className="wb-bodyLg-medium !wb-font-semibold">
+                    <span className="wb-bodyLg-medium md:wb-bodyLg-semibold">
                       Get started
                     </span>
                   }
@@ -165,14 +165,16 @@ const Index = () => {
       </Wrapper>
       <Illustration />
       <Wrapper>
-        <KloudliteDevelopment />
-        <SecureAtCore />
         <PartnerSection />
+        <div className="md:wb-pt-8xl">
+          <KloudliteDevelopment />
+        </div>
+        <SecureAtCore />
         <HowItWorksSection />
         <DontBelieve />
-        <FaqSection />
         {consts.eventBanner.enabled && <Events />}
         <KeepExploring />
+        <FaqSection />
         <OpenSource />
         <SuperCharge />
       </Wrapper>

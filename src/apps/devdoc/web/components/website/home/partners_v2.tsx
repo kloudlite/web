@@ -6,7 +6,7 @@ import '@splidejs/react-splide/css/core';
 
 const Partners = () => {
   return (
-    <div className="wb-relative [mask:linear-gradient(90deg,transparent,white_10%,white_90%,transparent)]">
+    <div className="wb-relative [mask:linear-gradient(90deg,transparent,white_10%,white_90%,transparent)] xl:-wb-mx-7xl">
       <Marquee
         className="wb-cursor-pointer wb-max-w-[calc(100vw_-_46px)] md:wb-max-w-[calc(100vw_-_70px)] lg:!wb-w-auto wb-text-text-default"
         autoFill
@@ -38,7 +38,7 @@ const Partners = () => {
 
 const PartnerSection = () => {
   return (
-    <div className="wb-pt-8xl lg:wb-pb-8xl lg:wb-pt-12xl wb-flex wb-flex-col">
+    <div className="wb-pt-8xl md:wb-pt-10xl md:wb-pb-5xl wb-flex wb-flex-col">
       <p className="wb-bodyXl wb-text-text-strong wb-text-center">
         Join the cult of our early adopters and discover the power of Kloudlite
       </p>
