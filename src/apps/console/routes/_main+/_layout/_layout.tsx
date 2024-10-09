@@ -196,7 +196,9 @@ const ProfileMenu = ({ hideProfileName }: { hideProfileName: boolean }) => {
         <OptionList.Item
           onClick={() => {
             setOpen(false);
-            navigate(`/${account}/user-profile/account`);
+            setTimeout(() => {
+              navigate(`/${account}/user-profile/account`);
+            }, 200);
           }}
         >
           Profile Settings
