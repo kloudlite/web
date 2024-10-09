@@ -16,6 +16,7 @@ type ChipTypes =
   | 'BASIC'
   | 'REMOVABLE'
   | 'CLICKABLE'
+  | 'SM'
   | (string & NonNullable<unknown>);
 
 type ItemType = any;
@@ -58,9 +59,9 @@ const ChipBase = React.forwardRef<HTMLButtonElement, IChipBase>(
       label,
       disabled = false,
       compType = 'BASIC',
-      onRemove = (_) => {},
+      onRemove = (_) => { },
       prefix = null,
-      onClick = (_) => {},
+      onClick = (_) => { },
       Component,
       loading = false,
       ...mprops
@@ -101,6 +102,10 @@ const ChipBase = React.forwardRef<HTMLButtonElement, IChipBase>(
             'px-lg py-md': compType !== 'REMOVABLE',
           },
           {
+            'pr-md pl-md py-sm': compType === 'SM',
+            // 'px-lg py-md': compType !== 'SM',
+          },
+          {
             'hover:bg-surface-basic-hovered active:bg-surface-basic-pressed focus-visible:ring-2 focus-visible:ring-border-focus':
               compType === 'CLICKABLE',
           }
@@ -125,7 +130,15 @@ const ChipBase = React.forwardRef<HTMLButtonElement, IChipBase>(
             <Spinner size={12} color="currentColor" />
           </span>
         )}
-        <span className="flex items-center">{label}</span>
+        <span
+          className={
+            compType === 'SM'
+              ? 'flex items-center text-text-default'
+              : 'flex items-center'
+          }
+        >
+          {label}
+        </span>
         {compType === 'REMOVABLE' && (
           <RovingFocusGroup.Item asChild focusable>
             <button
@@ -218,8 +231,8 @@ export const Chip = forwardRef<HTMLButtonElement, IChip>(
 );
 
 export const ChipGroup = ({
-  onClick = (_) => {},
-  onRemove = (_) => {},
+  onClick = (_) => { },
+  onRemove = (_) => { },
   children,
   className = '',
 }: IChipGroup) => {
