@@ -22,6 +22,7 @@ import MultiStepProgress, {
 import MultiStepProgressWrapper from '~/console/components/multi-step-progress-wrapper';
 import { NameIdView } from '~/console/components/name-id-view';
 import { findClusterStatus } from '~/console/hooks/use-cluster-status';
+import { ClusterSelectItem } from '~/console/page-components/handle-environment';
 import { useConsoleApi } from '~/console/server/gql/api-provider';
 import {
   IMSvTemplate,
@@ -75,9 +76,10 @@ const RenderField = ({
         onChange={({ target }) => {
           onChange(`res.${field.name}`)(
             dummyEvent(
-              `${parseFloat(target.value) * (field.multiplier || 1)}${field.unit
-              }`
-            )
+              `${parseFloat(target.value) * (field.multiplier || 1)}${
+                field.unit
+              }`,
+            ),
           );
         }}
         suffix={field.displayUnit}
@@ -101,8 +103,9 @@ const RenderField = ({
   if (field.inputType === 'Resource') {
     return (
       <div className="flex flex-col gap-md">
-        <div className="bodyMd-medium text-text-default">{`${field.label}${field.required ? ' *' : ''
-          }`}</div>
+        <div className="bodyMd-medium text-text-default">{`${field.label}${
+          field.required ? ' *' : ''
+        }`}</div>
         <div className="flex flex-row gap-xl items-center">
           <div className="flex flex-row gap-xl items-end flex-1 ">
             <div className="flex-1">
@@ -115,16 +118,18 @@ const RenderField = ({
                 onChange={({ target }) => {
                   onChange(`res.${field.name}.min`)(
                     dummyEvent(
-                      `${parseFloat(target.value) * (field.multiplier || 1)}${field.unit
-                      }`
-                    )
+                      `${parseFloat(target.value) * (field.multiplier || 1)}${
+                        field.unit
+                      }`,
+                    ),
                   );
                   if (qos) {
                     onChange(`res.${field.name}.max`)(
                       dummyEvent(
-                        `${parseFloat(target.value) * (field.multiplier || 1)}${field.unit
-                        }`
-                      )
+                        `${parseFloat(target.value) * (field.multiplier || 1)}${
+                          field.unit
+                        }`,
+                      ),
                     );
                   }
                 }}
@@ -142,9 +147,10 @@ const RenderField = ({
                   onChange={({ target }) => {
                     onChange(`res.${field.name}.max`)(
                       dummyEvent(
-                        `${parseFloat(target.value) * (field.multiplier || 1)}${field.unit
-                        }`
-                      )
+                        `${parseFloat(target.value) * (field.multiplier || 1)}${
+                          field.unit
+                        }`,
+                      ),
                     );
                   }}
                   suffix={field.displayUnit}
@@ -302,13 +308,14 @@ const FieldView = ({
         size="lg"
         value={values.clusterName}
         placeholder="Select a Cluster"
-        options={async () => [
-          ...((clusters &&
-            clusters.filter((c) => {
-              return c.ready;
-            })) ||
-            []),
-        ]}
+        options={async () => clusters}
+        // options={async () => [
+        //   ...((clusters &&
+        //     clusters.filter((c) => {
+        //       return c.ready;
+        //     })) ||
+        //     []),
+        // ]}
         onChange={({ value }) => {
           handleChange('clusterName')(dummyEvent(value));
           handleChange('nodepoolName')(dummyEvent(''));
@@ -316,7 +323,7 @@ const FieldView = ({
         showclear
         error={!!errors.clusterName}
         message={errors.clusterName}
-      // loading={cIsLoading || byokCIsLoading}
+        // loading={cIsLoading || byokCIsLoading}
       />
 
       {/* <Select
@@ -382,7 +389,7 @@ const ReviewView = ({
 }) => {
   const renderFieldView = () => {
     const fields = Object.entries(values.res).filter(
-      ([k, _v]) => !['resources'].includes(k)
+      ([k, _v]) => !['resources'].includes(k),
     );
     if (fields.length > 0) {
       return (
@@ -502,22 +509,22 @@ const ReviewView = ({
   );
 };
 
-const ClusterSelectItem = ({
-  label,
-  value,
-}: {
-  label: string;
-  value: string;
-}) => {
-  return (
-    <div>
-      <div className="flex flex-col">
-        <div>{label}</div>
-        <div className="bodySm text-text-soft">{value}</div>
-      </div>
-    </div>
-  );
-};
+// const ClusterSelectItem = ({
+//   label,
+//   value,
+// }: {
+//   label: string;
+//   value: string;
+// }) => {
+//   return (
+//     <div>
+//       <div className="flex flex-col">
+//         <div>{label}</div>
+//         <div className="bodySm text-text-soft">{value}</div>
+//       </div>
+//     </div>
+//   );
+// };
 
 const ManagedServiceLayout = () => {
   // const { msvtemplates, cluster, account } =
@@ -548,8 +555,13 @@ const ManagedServiceLayout = () => {
         label: c.displayName,
         value: parseName(c),
         ready: findClusterStatus(c),
-        render: () => (
-          <ClusterSelectItem label={c.displayName} value={parseName(c)} />
+        disabled: () => !findClusterStatus(c),
+        render: ({ disabled }: { disabled: boolean }) => (
+          <ClusterSelectItem
+            label={c.displayName}
+            value={parseName(c)}
+            disabled={disabled}
+          />
         ),
       }));
       setClusterList(data);
@@ -585,7 +597,7 @@ const ManagedServiceLayout = () => {
           'Cluster name is required',
           (v) => {
             return !(currentStep === 2 && !v);
-          }
+          },
         ),
         selectedTemplate: Yup.object({}).required('Template is required.'),
         // @ts-ignore
@@ -605,9 +617,9 @@ const ManagedServiceLayout = () => {
                     (acc: any, curr: any) => {
                       return { ...acc, [curr.name]: curr };
                     },
-                    {}
-                  )
-                )
+                    {},
+                  ),
+                ),
               );
             }
 
@@ -690,7 +702,7 @@ const ManagedServiceLayout = () => {
           ...flatM(
             selectedTemplate?.template?.fields.reduce((acc, curr) => {
               return { ...acc, [curr.name]: curr };
-            }, {})
+            }, {}),
           ),
         },
       }));

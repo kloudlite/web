@@ -109,7 +109,7 @@ const OptionMenuTrigger = forwardRef<HTMLButtonElement, ITrigger>(
         })}
       </OptionMenuTriggerBase>
     );
-  }
+  },
 );
 
 OptionMenuTrigger.displayName = 'OptionMenuTrigger';
@@ -129,7 +129,7 @@ const OptionMenuContent = forwardRef<
       side,
       ...props
     },
-    ref
+    ref,
   ) => (
     <AnimatePresence>
       {open && (
@@ -153,7 +153,7 @@ const OptionMenuContent = forwardRef<
               transition={{ duration: 0.2, ease: 'anticipate' }}
               className={cn(
                 'z-50 border border-border-default shadow-popover bg-surface-basic-default rounded min-w-[160px] overflow-hidden origin-top py-lg',
-                className
+                className,
               )}
             >
               {children}
@@ -162,7 +162,7 @@ const OptionMenuContent = forwardRef<
         </OptionMenuPrimitive.Portal>
       )}
     </AnimatePresence>
-  )
+  ),
 );
 OptionMenuContent.displayName = OptionMenuPrimitive.Content.displayName;
 
@@ -177,7 +177,7 @@ const OptionItemRaw = forwardRef(
       active?: boolean;
       className?: string;
     },
-    ref
+    ref,
   ) => {
     return (
       <div
@@ -188,13 +188,13 @@ const OptionItemRaw = forwardRef(
           {
             'bg-surface-basic-active': !!active,
           },
-          className
+          className,
         )}
       >
         {children}
       </div>
     );
-  }
+  },
 );
 
 const OptionMenuItem = forwardRef<HTMLDivElement, IOptionMenuItem>(
@@ -212,14 +212,14 @@ const OptionMenuItem = forwardRef<HTMLDivElement, IOptionMenuItem>(
             {
               'bg-surface-basic-active': !!props.active,
             },
-            className
+            className,
           )}
         >
           {props.children}
         </div>
       </OptionMenuPrimitive.Item>
     );
-  }
+  },
 );
 OptionMenuItem.displayName = OptionMenuPrimitive.Item.displayName;
 
@@ -234,7 +234,7 @@ const OptionMenuLink = forwardRef<HTMLDivElement, IOptionMenuLink>(
       rel,
       children,
     },
-    ref
+    ref,
   ) => {
     let tempToLabel = toLabel;
     let Component: any = LinkComponent;
@@ -253,9 +253,9 @@ const OptionMenuLink = forwardRef<HTMLDivElement, IOptionMenuLink>(
         ref={ref}
         className={cn(
           'group relative flex flex-row gap-xl items-center bodyMd gap cursor-pointer select-none py-lg px-xl text-text-default outline-none transition-colors focus:bg-surface-basic-hovered hover:bg-surface-basic-hovered data-[disabled]:pointer-events-none data-[disabled]:text-text-disabled',
-          className
+          className,
         )}
-        {...preventDefaultEvents}
+        // {...preventDefaultEvents}
         asChild
       >
         <Component {...{ [tempToLabel]: to }} target={target} rel={rel}>
@@ -263,7 +263,7 @@ const OptionMenuLink = forwardRef<HTMLDivElement, IOptionMenuLink>(
         </Component>
       </OptionMenuPrimitive.Item>
     );
-  }
+  },
 );
 OptionMenuLink.displayName = 'OptionMenuLink';
 
@@ -314,14 +314,14 @@ const OptionMenuTextInputItem = forwardRef<
             if (props.focusRing) {
               event.target?.parentElement?.classList?.add(
                 'ring-2',
-                'ring-border-focus'
+                'ring-border-focus',
               );
             }
           }}
           onBlur={(e) => {
             e.target?.parentElement?.classList?.remove(
               'ring-2',
-              'ring-border-focus'
+              'ring-border-focus',
             );
           }}
           onKeyDown={(e) => {
@@ -344,7 +344,7 @@ const OptionMenuCheckboxItem = forwardRef<HTMLDivElement, IOptionMenuCheckbox>(
       onValueChange,
       ...props
     },
-    ref
+    ref,
   ) => (
     <OptionMenuPrimitive.CheckboxItem
       ref={ref}
@@ -354,7 +354,7 @@ const OptionMenuCheckboxItem = forwardRef<HTMLDivElement, IOptionMenuCheckbox>(
           'data-[state=checked]:bg-surface-primary-subdued data-[state=checked]:text-text-primary data-[state=checked]:text-text-darktheme-primary':
             !showIndicator,
         },
-        className
+        className,
       )}
       checked={checked}
       {...preventDefaultEvents}
@@ -376,7 +376,7 @@ const OptionMenuCheckboxItem = forwardRef<HTMLDivElement, IOptionMenuCheckbox>(
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 className={cn(
-                  'stroke-text-on-primary group-data-[disabled]:stroke-text-disabled'
+                  'stroke-text-on-primary group-data-[disabled]:stroke-text-disabled',
                 )}
               />
             </svg>
@@ -385,7 +385,7 @@ const OptionMenuCheckboxItem = forwardRef<HTMLDivElement, IOptionMenuCheckbox>(
       )}
       {children}
     </OptionMenuPrimitive.CheckboxItem>
-  )
+  ),
 );
 OptionMenuCheckboxItem.displayName =
   OptionMenuPrimitive.CheckboxItem.displayName;
@@ -400,7 +400,7 @@ const OptionMenuRadioItem = forwardRef<HTMLDivElement, IOptionMenuRadio>(
           'data-[state=checked]:bg-surface-primary-subdued data-[state=checked]:text-text-primary':
             !showIndicator,
         },
-        className
+        className,
       )}
       onSelect={props.onClick}
       value={value}
@@ -409,13 +409,13 @@ const OptionMenuRadioItem = forwardRef<HTMLDivElement, IOptionMenuRadio>(
       {showIndicator && (
         <span
           className={cn(
-            'w-2xl h-2xl rounded-full border transition-all flex items-center justify-center border-border-default group-data-[state=checked]:border-border-primary group-data-[disabled]:border-border-disabled'
+            'w-2xl h-2xl rounded-full border transition-all flex items-center justify-center border-border-default group-data-[state=checked]:border-border-primary group-data-[disabled]:border-border-disabled',
           )}
         >
           <OptionMenuPrimitive.ItemIndicator>
             <div
               className={cn(
-                'block w-lg h-lg rounded-full bg-surface-primary-default group-data-[disabled]:bg-icon-disabled group-data-[disabled]:bg-icon-darktheme-disabled'
+                'block w-lg h-lg rounded-full bg-surface-primary-default group-data-[disabled]:bg-icon-disabled group-data-[disabled]:bg-icon-darktheme-disabled',
               )}
             />
           </OptionMenuPrimitive.ItemIndicator>
@@ -423,7 +423,7 @@ const OptionMenuRadioItem = forwardRef<HTMLDivElement, IOptionMenuRadio>(
       )}
       {children}
     </OptionMenuPrimitive.RadioItem>
-  )
+  ),
 );
 OptionMenuRadioItem.displayName = OptionMenuPrimitive.RadioItem.displayName;
 
@@ -434,7 +434,7 @@ const OptionMenuSeparator = forwardRef<HTMLDivElement, IOptionMenuSeparator>(
       className={cn('h-xs bg-border-disabled my-md', className)}
       {...props}
     />
-  )
+  ),
 );
 OptionMenuSeparator.displayName = OptionMenuPrimitive.Separator.displayName;
 
@@ -445,7 +445,7 @@ const focusElement = (element: any) => {
 
 const handleKeyNavigation = (
   e: KeyboardEvent,
-  tabElement: HTMLDivElement | null
+  tabElement: HTMLDivElement | null,
 ) => {
   if (!(tabElement && tabElement.parentNode)) {
     return;
@@ -461,7 +461,7 @@ const handleKeyNavigation = (
       const childs = Array.from(tab).filter(
         (c) =>
           c.hasAttribute('data-radix-collection-item') ||
-          c.querySelector('[data-radix-collection-item]')
+          c.querySelector('[data-radix-collection-item]'),
       );
 
       const currentIndex = childs.indexOf(tabElement);
@@ -485,7 +485,7 @@ const handleKeyNavigation = (
       const childs = Array.from(tab).filter(
         (c) =>
           c.hasAttribute('data-radix-collection-item') ||
-          c.querySelector('[data-radix-collection-item]')
+          c.querySelector('[data-radix-collection-item]'),
       );
 
       const currentIndex = childs.indexOf(tabElement);
@@ -518,7 +518,7 @@ const OptionMenuTabs = forwardRef<HTMLDivElement, IOptionMenuTabs>(
       compact,
       ...props
     },
-    ref
+    ref,
   ) => {
     const tabRef = useRef<HTMLDivElement>(null);
 
@@ -563,7 +563,7 @@ const OptionMenuTabs = forwardRef<HTMLDivElement, IOptionMenuTabs>(
         </OptionMenuPrimitive.Item>
       </div>
     );
-  }
+  },
 );
 
 OptionMenuTextInputItem.displayName = OptionMenuPrimitive.Item.displayName;
@@ -579,15 +579,23 @@ const Root = ({ ...props }: IRoot) => {
   const [open, setOpen] = useState(openExt);
 
   useEffect(() => {
-    if (onOpenChange) onOpenChange(open || false);
-  }, [open]);
+    setOpen(openExt);
+  }, [openExt]);
 
   return (
-    <OptionMenu open={open} onOpenChange={setOpen} modal={modal}>
+    <OptionMenu
+      open={openExt}
+      onOpenChange={(e) => {
+        setOpen(e);
+
+        onOpenChange?.(e);
+      }}
+      modal={modal}
+    >
       {Children.map(children as ReactElement[], (child) =>
         cloneElement(child, {
           open,
-        })
+        }),
       )}
     </OptionMenu>
   );

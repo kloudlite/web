@@ -27,6 +27,7 @@ export default withNextra({
     AUTH_URL: process.env.AUTH_URL,
     CONSOLE_URL: process.env.CONSOLE_URL,
     CONTACT_URL: process.env.CONTACT_URL,
+    NEXT_PUBLIC_RECAPTCHA_SITE_KEY: process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
   },
   images: {
     unoptimized: true,

@@ -25,7 +25,7 @@ import ResourceExtraAction, {
   IResourceExtraItem,
 } from '~/console/components/resource-extra-action';
 import { SyncStatusV2 } from '~/console/components/sync-status';
-import { useClusterStatusV2 } from '~/console/hooks/use-cluster-status-v2';
+import { findClusterStatusv3 } from '~/console/hooks/use-cluster-status';
 import { useConsoleApi } from '~/console/server/gql/api-provider';
 import { IApps } from '~/console/server/gql/queries/app-queries';
 import {
@@ -39,6 +39,7 @@ import { useReload } from '~/lib/client/helpers/reloader';
 import { useWatchReload } from '~/lib/client/helpers/socket/useWatch';
 import { handleError } from '~/lib/utils/common';
 import { NN } from '~/root/lib/types/common';
+import { useClusterStatusV3 } from '~/console/hooks/use-cluster-status-v3';
 import { IEnvironmentContext } from '../_layout';
 import HandleIntercept from './handle-intercept';
 
@@ -239,7 +240,10 @@ const GridView = ({ items = [], onAction: _ }: IResource) => {
 
 const ListView = ({ items = [], onAction }: IResource) => {
   const { environment, account } = useOutletContext<IEnvironmentContext>();
-  const { clusters } = useClusterStatusV2();
+  // const { clusters } = useClusterStatusV2();
+  const { clustersMap: clusterStatus } = useClusterStatusV3({
+    clusterName: environment.clusterName,
+  });
 
   // const [clusterOnlineStatus, setClusterOnlineStatus] = useState<
   //   Record<string, boolean>
@@ -304,7 +308,9 @@ const ListView = ({ items = [], onAction }: IResource) => {
           },
         ],
         rows: items.map((i) => {
-          // const isClusterOnline = clusterOnlineStatus[parseName(cluster)];
+          const isClusterOnline = findClusterStatusv3(
+            clusterStatus[environment.clusterName]
+          );
 
           const { name, id, updateInfo } = parseItem(i);
           return {
@@ -332,9 +338,17 @@ const ListView = ({ items = [], onAction }: IResource) => {
                     return null;
                   }
 
-                  // if (!isClusterOnline) {
-                  //   return <Badge type="warning">Cluster Offline</Badge>;
-                  // }
+                  if (environment.clusterName === '') {
+                    return <ListItemV2 className="px-4xl" data="-" />;
+                  }
+
+                  if (clusterStatus[environment.clusterName] === undefined) {
+                    return null;
+                  }
+
+                  if (!isClusterOnline) {
+                    return <Badge type="warning">Cluster Offline</Badge>;
+                  }
 
                   return <SyncStatusV2 item={i} />;
                 },
@@ -397,9 +411,10 @@ const AppsResourcesV2 = ({ items = [] }: Omit<IResource, 'onAction'>) => {
       }
       // toast.success('app intercepted successfully');
       toast.success(
-        `${intercept
-          ? 'App Intercepted successfully'
-          : 'App Intercept removed successfully'
+        `${
+          intercept
+            ? 'App Intercepted successfully'
+            : 'App Intercept removed successfully'
         }`
       );
       reload();

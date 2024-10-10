@@ -1,10 +1,3 @@
-import {
-  Buildings,
-  Check,
-  ChevronUpDown,
-  Plus,
-  Search,
-} from '~/console/components/icons';
 import { redirect } from '@remix-run/node';
 import {
   Link,
@@ -17,43 +10,46 @@ import {
 } from '@remix-run/react';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import Popup from '~/components/molecule/popup';
+import {
+  Buildings,
+  Check,
+  ChevronUpDown,
+  Plus,
+  Search,
+} from '~/console/components/icons';
 import { useDataFromMatches } from '~/root/lib/client/hooks/use-custom-matches';
 import { useUnsavedChanges } from '~/root/lib/client/hooks/use-unsaved-changes';
-import { IRemixCtx, LoaderResult } from '~/root/lib/types/common';
+import { IExtRemixCtx, LoaderResult } from '~/root/lib/types/common';
 
 import {
   IAccount,
   IAccounts,
 } from '~/console/server/gql/queries/account-queries';
-import {
-  ExtractNodeType,
-  parseName,
-  parseNodes,
-} from '~/console/server/r-utils/common';
+import { parseName } from '~/console/server/r-utils/common';
 
+import { Button } from '~/components/atoms/button';
+import OptionList from '~/components/atoms/option-list';
+import { cn } from '~/components/utils';
+import MenuSelect, { SelectItem } from '~/console/components/menu-select';
+import ClusterStatusProvider from '~/console/hooks/use-cluster-status-v3';
+import { useConsoleApi } from '~/console/server/gql/api-provider';
+import { IMSvTemplates } from '~/console/server/gql/queries/managed-templates-queries';
+import { GQLServerHandler } from '~/console/server/gql/saved-queries';
 import {
   ensureAccountClientSide,
   ensureAccountSet,
 } from '~/console/server/utils/auth-utils';
-import { GQLServerHandler } from '~/console/server/gql/saved-queries';
-import MenuSelect, { SelectItem } from '~/console/components/menu-select';
 import {
   BreadcrumButtonContent,
   BreadcrumSlash,
 } from '~/console/utils/commons';
-import OptionList from '~/components/atoms/option-list';
-import { Button } from '~/components/atoms/button';
-import { useConsoleApi } from '~/console/server/gql/api-provider';
-import { handleError } from '~/root/lib/utils/common';
-import { cn } from '~/components/utils';
-import useCustomSwr from '~/root/lib/client/hooks/use-custom-swr';
+import withContext from '~/root/lib/app-setup/with-contxt';
 import { useSearch } from '~/root/lib/client/helpers/search-filter';
-import { IMSvTemplates } from '~/console/server/gql/queries/managed-templates-queries';
-import { IByocClusters } from '~/console/server/gql/queries/byok-cluster-queries';
+import useCustomSwr from '~/root/lib/client/hooks/use-custom-swr';
+import { handleError } from '~/root/lib/utils/common';
 import { IConsoleRootContext } from '../_layout/_layout';
-import { useClusterStatusV2 } from '~/console/hooks/use-cluster-status-v2';
 
-export const loader = async (ctx: IRemixCtx) => {
+export const loader = async (ctx: IExtRemixCtx) => {
   const { account } = ctx.params;
   let acccountData: IAccount;
 
@@ -67,17 +63,23 @@ export const loader = async (ctx: IRemixCtx) => {
     }
 
     const { data: msvTemplates, errors: msvError } = await GQLServerHandler(
-      ctx.request,
+      ctx.request
     ).listMSvTemplates({});
     if (msvError) {
       throw msvError[0];
     }
 
     const { data: clusterList, errors: clusterError } = await GQLServerHandler(
-      ctx.request,
-    ).listByokClusters({
+      ctx.request
+    ).listClusterStatus({
       pagination: {
         first: 100,
+      },
+      search: {
+        allClusters: {
+          exact: true,
+          matchType: 'exact',
+        },
       },
     });
 
@@ -85,27 +87,20 @@ export const loader = async (ctx: IRemixCtx) => {
       throw clusterError[0];
     }
 
-    const cMaps = parseNodes(clusterList).reduce(
-      (acc, c) => {
-        acc[c.metadata.name] = c;
-        return acc;
-      },
-      {} as { [key: string]: ExtractNodeType<IByocClusters> },
-    );
-
     acccountData = data;
-    return {
+
+    return withContext(ctx, {
       msvtemplates: msvTemplates,
       account: data,
-      clustersMap: cMaps,
-    };
+      clustersMap: clusterList,
+    });
   } catch (err) {
     handleError(err);
     const k = redirect('/teams') as any;
     return k as {
       account: typeof acccountData;
       msvtemplates: IMSvTemplates;
-      clustersMap: { [key: string]: ExtractNodeType<IByocClusters> };
+      clustersMap: { [key: string]: string };
     };
   }
 };
@@ -192,17 +187,22 @@ const Account = () => {
     ensureAccountClientSide(params);
   }, []);
 
-  const { setClusters } = useClusterStatusV2();
+  const [cm, setCm] = useState(clustersMap);
 
   useEffect(() => {
-    // @ts-ignore
-    setClusters(clustersMap);
+    setCm(clustersMap);
   }, [clustersMap]);
 
   return (
-    <>
+    <ClusterStatusProvider clustersMap={cm} setClustersMap={setCm}>
       <Outlet
-        context={{ ...rootContext, account, msvtemplates, clustersMap }}
+        context={{
+          ...rootContext,
+          account,
+          msvtemplates,
+          clustersMap: cm,
+          setclustersMap: setCm,
+        }}
       />
       <Popup.Root
         show={unloadState === 'blocked'}
@@ -225,7 +225,7 @@ const Account = () => {
           />
         </Popup.Footer>
       </Popup.Root>
-    </>
+    </ClusterStatusProvider>
   );
 };
 
@@ -382,7 +382,7 @@ const CurrentBreadcrum = ({ account }: { account: IAccount }) => {
 
   const { data: accounts } = useCustomSwr(
     () => '/accounts',
-    async () => api.listAccounts({}),
+    async () => api.listAccounts({})
   );
 
   const [searchText, setSearchText] = useState('');
@@ -399,7 +399,7 @@ const CurrentBreadcrum = ({ account }: { account: IAccount }) => {
       searchText,
       keys: ['searchField'],
     },
-    [searchText, accounts],
+    [searchText, accounts]
   );
 
   const [open, setOpen] = useState(false);
@@ -434,7 +434,7 @@ const CurrentBreadcrum = ({ account }: { account: IAccount }) => {
             aria-label="accounts"
             className={cn(
               'outline-none rounded py-lg px-md mx-md bg-surface-basic-hovered',
-              open || isMouseOver ? 'bg-surface-basic-pressed' : '',
+              open || isMouseOver ? 'bg-surface-basic-pressed' : ''
             )}
             onMouseOver={() => {
               setIsMouseOver(true);
@@ -482,7 +482,7 @@ const CurrentBreadcrum = ({ account }: { account: IAccount }) => {
                   'flex flex-row items-center justify-between',
                   parseName(item) === parseName(account)
                     ? 'bg-surface-basic-pressed hover:!bg-surface-basic-pressed'
-                    : '',
+                    : ''
                 )}
               >
                 <span>{item.displayName}</span>
@@ -519,7 +519,10 @@ export const handle = ({ account }: any) => {
 export interface IAccountContext extends IConsoleRootContext {
   account: LoaderResult<typeof loader>['account'];
   msvtemplates: IMSvTemplates;
-  clustersMap: { [key: string]: ExtractNodeType<IByocClusters> };
+  clustersMap: { [key: string]: string };
+  setClustersMap: React.Dispatch<
+    React.SetStateAction<{ [key: string]: string }>
+  >;
 }
 
 export const shouldRevalidate: ShouldRevalidateFunction = ({

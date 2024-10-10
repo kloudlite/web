@@ -53,6 +53,20 @@ export const cliQueries = (executor: IExecutor) => ({
     }
   ),
 
+  cli_getDNSHostSuffix: executor(
+    gql`
+      query Core_getDNSHostSuffix {
+        core_getDNSHostSuffix
+      }
+    `,
+    {
+      transformer(data: any) {
+        return data.core_getDNSHostSuffix;
+      },
+      vars(_: any) {},
+    }
+  ),
+
   cli_getMresOutputKeyValues: executor(
     gql`
       query Core_getManagedResouceOutputKeyValues(
@@ -291,6 +305,31 @@ export const cliQueries = (executor: IExecutor) => ({
       vars: (_: any) => {},
     }
   ),
+  // cli_interceptApp: executor(
+  //   gql`
+  //     mutation Core_interceptAppOnLocalCluster(
+  //       $portMappings: [Github__com___kloudlite___operator___apis___crds___v1__AppInterceptPortMappingsIn!]
+  //       $intercept: Boolean!
+  //       $clusterName: String!
+  //       $ipAddr: String!
+  //       $appName: String!
+  //       $envName: String!
+  //     ) {
+  //       core_interceptAppOnLocalCluster(
+  //         portMappings: $portMappings
+  //         intercept: $intercept
+  //         clusterName: $clusterName
+  //         ipAddr: $ipAddr
+  //         appname: $appName
+  //         envName: $envName
+  //       )
+  //     }
+  //   `,
+  //   {
+  //     transformer: (data: any) => data.core_interceptAppOnLocalCluster,
+  //     vars: (_: any) => {},
+  //   }
+  // ),
   cli_interceptApp: executor(
     gql`
       mutation Core_interceptApp(
@@ -659,6 +698,69 @@ export const cliQueries = (executor: IExecutor) => ({
       vars: (_: any) => {},
     }
   ),
+  cli_listVPNDevices: executor(
+    gql`
+      query Infra_listGlobalVPNDevices(
+        $gvpn: String!
+        $pagination: CursorPaginationIn
+      ) {
+        infra_listGlobalVPNDevices(gvpn: $gvpn, pagination: $pagination) {
+          edges {
+            cursor
+            node {
+              accountName
+              createdBy {
+                userEmail
+                userId
+                userName
+              }
+              creationMethod
+              creationTime
+              displayName
+              globalVPNName
+              id
+              ipAddr
+              lastUpdatedBy {
+                userEmail
+                userId
+                userName
+              }
+              markedForDeletion
+              metadata {
+                annotations
+                creationTimestamp
+                deletionTimestamp
+                generation
+                labels
+                name
+                namespace
+              }
+              privateKey
+              publicEndpoint
+              publicKey
+              recordVersion
+              updateTime
+              wireguardConfig {
+                value
+                encoding
+              }
+            }
+          }
+          pageInfo {
+            endCursor
+            hasNextPage
+            hasPrevPage
+            startCursor
+          }
+          totalCount
+        }
+      }
+    `,
+    {
+      transformer: (data: any) => data.infra_listGlobalVPNDevices,
+      vars: (_: any) => {},
+    }
+  ),
   cli_listAccounts: executor(
     gql`
       query Accounts_listAccounts {
@@ -725,6 +827,7 @@ export const cliQueries = (executor: IExecutor) => ({
             node {
               clusterToken
               displayName
+              lastOnlineAt
               id
               metadata {
                 name

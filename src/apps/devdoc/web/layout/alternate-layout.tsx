@@ -5,6 +5,8 @@ import { Flexsearch } from '../components/flexsearch';
 import { ReactNode } from 'react';
 import Footer from '../components/footer';
 import Head from 'next/head';
+import consts from '../utils/const';
+import Banner from '../components/website/event/banner';
 
 const ExternalLayout = ({
   frontMatter,
@@ -13,9 +15,10 @@ const ExternalLayout = ({
   frontMatter: any;
   children?: ReactNode;
 }) => {
-  const canonicalURL = basePath + usePathname();
+  const path = usePathname();
+  const canonicalURL = basePath + path;
   return (
-    <div className="wb-bg-surface-basic-subdued wb-min-h-screen wb-antialiased">
+    <div className="wb-relative wb-bg-surface-basic-subdued wb-min-h-screen wb-antialiased">
       <Head>
         <title>{frontMatter.metaTitle || 'Kloudlite'}</title>
         <meta
@@ -52,6 +55,9 @@ const ExternalLayout = ({
         />
         <link rel="canonical" href={canonicalURL} />
       </Head>
+      {consts.eventBanner.enabled && path === '/' && (
+        <Banner {...consts.eventBanner} />
+      )}
       <HeaderSecondary />
       <Flexsearch />
       {children}

@@ -4,16 +4,16 @@ import { NN } from '~/root/lib/types/common';
 import {
   ConsoleCreateAccountMutation,
   ConsoleCreateAccountMutationVariables,
+  ConsoleDeleteAccountMutation,
+  ConsoleDeleteAccountMutationVariables,
   ConsoleGetAccountQuery,
   ConsoleGetAccountQueryVariables,
+  ConsoleGetAvailableKloudliteRegionsQuery,
+  ConsoleGetAvailableKloudliteRegionsQueryVariables,
   ConsoleListAccountsQuery,
   ConsoleListAccountsQueryVariables,
   ConsoleUpdateAccountMutation,
   ConsoleUpdateAccountMutationVariables,
-  ConsoleDeleteAccountMutation,
-  ConsoleDeleteAccountMutationVariables,
-  ConsoleGetAvailableKloudliteRegionsQuery,
-  ConsoleGetAvailableKloudliteRegionsQueryVariables,
 } from '~/root/src/generated/gql/server';
 
 export type IAccounts = NN<ConsoleListAccountsQuery['accounts_listAccounts']>;

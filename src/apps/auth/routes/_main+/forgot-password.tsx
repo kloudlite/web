@@ -1,13 +1,15 @@
+import { Link } from '@remix-run/react';
+import { RECAPTCHA_SITE_KEY } from '~/auth/consts';
+import { useAuthApi } from '~/auth/server/gql/api-provider';
 import { Button } from '~/components/atoms/button';
 import { TextInput } from '~/components/atoms/input';
-import { Link } from '@remix-run/react';
-import useForm from '~/root/lib/client/hooks/use-form';
-import Yup from '~/root/lib/server/helpers/yup';
+import { ArrowRight } from '~/components/icons';
 import { toast } from '~/components/molecule/toast';
 import { cn } from '~/components/utils';
+import grecaptcha from '~/root/lib/client/helpers/g-recaptcha';
+import useForm from '~/root/lib/client/hooks/use-form';
+import Yup from '~/root/lib/server/helpers/yup';
 import { handleError } from '~/root/lib/utils/common';
-import { useAuthApi } from '~/auth/server/gql/api-provider';
-import { ArrowRight } from '~/components/icons';
 import Container from '../../components/container';
 
 const ForgetPassword = () => {
@@ -21,8 +23,13 @@ const ForgetPassword = () => {
     }),
     onSubmit: async (val) => {
       try {
+        const token = await grecaptcha.execute(RECAPTCHA_SITE_KEY, {
+          action: 'login',
+        });
         const { errors: e } = await api.requestResetPassword({
           email: val.email,
+          // @ts-ignore
+          captchaToken: token,
         });
         if (e) {
           throw e[0];

@@ -11,15 +11,12 @@ import {
   listClass,
 } from '~/console/components/console-list-components';
 import Grid from '~/console/components/grid';
-import {
-  GearSix,
-  ListDashes,
-  PencilLine,
-  Trash,
-} from '~/console/components/icons';
+import { PencilLine, Trash } from '~/console/components/icons';
 import ListGridView from '~/console/components/list-grid-view';
 import ListV2 from '~/console/components/listV2';
-import ResourceExtraAction from '~/console/components/resource-extra-action';
+import ResourceExtraAction, {
+  IResourceExtraItem,
+} from '~/console/components/resource-extra-action';
 import { IAccountContext } from '~/console/routes/_main+/$account+/_layout';
 import { IClusters } from '~/console/server/gql/queries/cluster-queries';
 import {
@@ -49,7 +46,7 @@ import { handleError } from '~/root/lib/utils/common';
 // import { Github__Com___Kloudlite___Api___Pkg___Types__SyncState as SyncStatusState } from '~/root/src/generated/gql/server';
 import TooltipV2 from '~/components/atoms/tooltipV2';
 import { ViewClusterLogs } from '~/console/components/cluster-logs-popop';
-import { useClusterStatusV2 } from '~/console/hooks/use-cluster-status-v2';
+import { useClusterStatusV3 } from '~/console/hooks/use-cluster-status-v3';
 import { ensureAccountClientSide } from '~/console/server/utils/auth-utils';
 import HandleByokCluster from '../byok-cluster/handle-byok-cluster';
 
@@ -192,7 +189,7 @@ const ByokButton = ({ item }: { item: CombinedBaseType }) => {
             }}
             size="sm"
             variant="outline"
-          // prefix={<ArrowClockwise size={16} />}
+            // prefix={<ArrowClockwise size={16} />}
           />
         </div>
       )}
@@ -218,7 +215,7 @@ const GetByokClusterMessage = ({
     (currentTime.getTime() - lastTime.getTime()) / (1000 * 60);
 
   switch (true) {
-    case timeDifference <= 2:
+    case timeDifference <= 1:
       return (
         <div className="flex flex-row gap-sm bodyMd-medium text-text-strong pulsable">
           <span>Attached Compute</span>
@@ -242,7 +239,7 @@ const GetSyncStatus = ({ lastOnlineAt }: { lastOnlineAt: string }) => {
     (currentTime.getTime() - lastTime.getTime()) / (1000 * 60);
 
   switch (true) {
-    case timeDifference <= 2:
+    case timeDifference <= 1:
       return (
         <TooltipV2
           className="!w-fit !max-w-[500px]"
@@ -259,7 +256,7 @@ const GetSyncStatus = ({ lastOnlineAt }: { lastOnlineAt: string }) => {
           </div>
         </TooltipV2>
       );
-    case timeDifference > 2:
+    case timeDifference > 1:
       return (
         <TooltipV2
           className="!w-fit !max-w-[500px]"
@@ -278,20 +275,9 @@ const GetSyncStatus = ({ lastOnlineAt }: { lastOnlineAt: string }) => {
       );
     default:
       return (
-        <TooltipV2
-          className="!w-fit !max-w-[500px]"
-          place="top"
-          offset={tooltipOffset}
-          content={
-            <div className="flex-1 bodyMd-medium text-text-strong pulsable whitespace-normal">
-              {lastOnlineAt}
-            </div>
-          }
-        >
-          <div>
-            <Badge type="warning">Offline</Badge>
-          </div>
-        </TooltipV2>
+        <div>
+          <Badge type="warning">Offline</Badge>
+        </div>
       );
   }
 };
@@ -307,48 +293,39 @@ const ExtraButton = ({
   onShowLogs: () => void;
   item: CombinedBaseType;
 }) => {
-  const { account } = useParams();
-  return item.type === 'byok' ? (
-    <ResourceExtraAction
-      options={[
-        {
-          key: '1',
-          label: 'Edit',
-          icon: <PencilLine size={16} />,
-          type: 'item',
-          onClick: onEdit,
-        },
-        {
-          label: 'Delete',
-          icon: <Trash size={16} />,
-          type: 'item',
-          onClick: onDelete,
-          key: 'delete',
-          className: '!text-text-critical',
-        },
-      ]}
-    />
-  ) : (
-    <ResourceExtraAction
-      options={[
-        {
-          label: 'Show Logs',
-          icon: <ListDashes size={16} />,
-          type: 'item',
-          onClick: onShowLogs,
-          key: '1',
-          // className: '!text-text-critical',
-        },
-        {
-          label: 'Settings',
-          icon: <GearSix size={16} />,
-          type: 'item',
-          to: `/${account}/infra/${item.metadata.name}/settings`,
-          key: 'settings',
-        },
-      ]}
-    />
-  );
+  const options: IResourceExtraItem[] = [
+    {
+      key: '1',
+      label: 'Edit',
+      icon: <PencilLine size={16} />,
+      type: 'item',
+      onClick: onEdit,
+    },
+    {
+      label: 'Delete',
+      icon: <Trash size={16} />,
+      type: 'item',
+      onClick: onDelete,
+      key: 'delete',
+      className: '!text-text-critical',
+    },
+  ];
+
+  // if (item.type === 'byok' && item.ownedBy === null) {
+  //   options = [
+  //     ...options,
+  //     {
+  //       label: 'Delete',
+  //       icon: <Trash size={16} />,
+  //       type: 'item',
+  //       onClick: onDelete,
+  //       key: 'delete',
+  //       className: '!text-text-critical',
+  //     },
+  //   ];
+  // }
+
+  return <ResourceExtraAction options={options} />;
 };
 
 interface IResource {
@@ -416,7 +393,9 @@ const GridView = ({ items = [], onEdit, onDelete, onShowLogs }: IResource) => {
 };
 const ListView = ({ items = [], onEdit, onDelete, onShowLogs }: IResource) => {
   const { account } = useParams();
-  const { clusters } = useClusterStatusV2();
+  const { clustersMap: clustersStatus } = useClusterStatusV3({
+    clusterNames: items.map((i) => parseName(i)),
+  });
   return (
     <ListV2.Root
       linkComponent={Link}
@@ -455,7 +434,7 @@ const ListView = ({ items = [], onEdit, onDelete, onShowLogs }: IResource) => {
           },
         ],
         rows: items.map((i) => {
-          const { name, id, updateInfo, provider } = parseItem(i);
+          const { name, id, updateInfo } = parseItem(i);
 
           // const isLatest = dayjs(i.updateTime).isAfter(
           //   dayjs().subtract(3, 'hour')
@@ -484,7 +463,7 @@ const ListView = ({ items = [], onEdit, onDelete, onShowLogs }: IResource) => {
                   return (
                     <GetByokClusterMessage
                       // lastOnlineAt={i.lastOnlineAt}
-                      lastOnlineAt={clusters[id]?.lastOnlineAt}
+                      lastOnlineAt={clustersStatus[id]}
                       item={i}
                     />
                   );
@@ -492,7 +471,7 @@ const ListView = ({ items = [], onEdit, onDelete, onShowLogs }: IResource) => {
               },
               status: {
                 render: () => (
-                  <GetSyncStatus lastOnlineAt={clusters[id]?.lastOnlineAt} />
+                  <GetSyncStatus lastOnlineAt={clustersStatus[id]} />
                 ),
               },
               updated: {

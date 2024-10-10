@@ -1,6 +1,7 @@
 import { Link, useOutletContext, useParams } from '@remix-run/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Badge } from '~/components/atoms/badge';
+import { Chip } from '~/components/atoms/chips';
 import { toast } from '~/components/molecule/toast';
 import { generateKey, titleCase } from '~/components/utils';
 import ConsoleAvatar from '~/console/components/console-avatar';
@@ -13,15 +14,23 @@ import {
 } from '~/console/components/console-list-components';
 import DeleteDialog from '~/console/components/delete-dialog';
 import Grid from '~/console/components/grid';
-import { Copy, GearSix, Pause, Play, Trash } from '~/console/components/icons';
+import {
+  Copy,
+  EnvIconComponent,
+  EnvTemplateIconComponent,
+  GearSix,
+  Pause,
+  Play,
+  Trash,
+} from '~/console/components/icons';
 import ListGridView from '~/console/components/list-grid-view';
 import ListV2 from '~/console/components/listV2';
 import ResourceExtraAction, {
   IResourceExtraItem,
 } from '~/console/components/resource-extra-action';
 import { SyncStatusV2 } from '~/console/components/sync-status';
-import { findClusterStatus } from '~/console/hooks/use-cluster-status';
-import { useClusterStatusV2 } from '~/console/hooks/use-cluster-status-v2';
+import { findClusterStatusv3 } from '~/console/hooks/use-cluster-status';
+import { useClusterStatusV3 } from '~/console/hooks/use-cluster-status-v3';
 import { IAccountContext } from '~/console/routes/_main+/$account+/_layout';
 import { useConsoleApi } from '~/console/server/gql/api-provider';
 import { IEnvironments } from '~/console/server/gql/queries/environment-queries';
@@ -193,18 +202,9 @@ const GridView = ({ items = [], onAction }: IResource) => {
 
 const ListView = ({ items, onAction }: IResource) => {
   const { account } = useParams();
-  const { clusters } = useClusterStatusV2();
-
-  // const [clusterOnlineStatus, setClusterOnlineStatus] = useState<
-  //   Record<string, boolean>
-  // >({});
-  // useEffect(() => {
-  //   const states: Record<string, boolean> = {};
-  //   Object.entries(clusters).forEach(([key, value]) => {
-  //     states[key] = findClusterStatus(value);
-  //   });
-  //   setClusterOnlineStatus(states);
-  // }, [clusters]);
+  const { clustersMap: clusterStatus } = useClusterStatusV3({
+    clusterNames: items.map((i) => i.clusterName),
+  });
 
   return (
     <ListV2.Root
@@ -217,14 +217,14 @@ const ListView = ({ items, onAction }: IResource) => {
             className: listClass.title,
           },
           {
-            render: () => 'Cluster',
-            name: 'cluster',
-            className: listClass.item,
-          },
-          {
             render: () => '',
             name: 'flex-post',
             className: listClass.flex,
+          },
+          {
+            render: () => 'Cluster',
+            name: 'cluster',
+            className: 'w-[260px] flex',
           },
           {
             render: () => 'Status',
@@ -244,36 +244,77 @@ const ListView = ({ items, onAction }: IResource) => {
         ],
         rows: items.map((i) => {
           const { name, id, updateInfo } = parseItem(i);
-          const isClusterOnline = findClusterStatus(clusters[i.clusterName]);
+          const isClusterOnlinev3 = findClusterStatusv3(
+            clusterStatus[i.clusterName]
+          );
 
           return {
             columns: {
               name: {
                 render: () => (
-                  <ListTitleV2
-                    title={name}
-                    subtitle={id}
-                    avatar={<ConsoleAvatar name={id} />}
-                  />
+                  <div className="flex flex-row gap-lg">
+                    <ListTitleV2
+                      title={name}
+                      subtitle={id}
+                      avatar={
+                        i.clusterName === '' ? (
+                          <ConsoleAvatar
+                            name={id}
+                            color="none"
+                            isAvatar
+                            icon={<EnvTemplateIconComponent size={20} />}
+                            className="border border-dashed !bg-surface-basic-subdued "
+                          />
+                        ) : (
+                          <ConsoleAvatar
+                            name={id}
+                            color="white"
+                            isAvatar
+                            icon={<EnvIconComponent size={20} />}
+                          />
+                        )
+                      }
+                    />
+                    {i.clusterName === '' && (
+                      <Chip
+                        item={{ name: 'template' }}
+                        label="Template"
+                        type="SM"
+                      />
+                    )}
+                  </div>
                 ),
               },
               cluster: {
-                render: () => (
-                  <ListItemV2 data={i.isArchived ? '' : i.clusterName} />
-                ),
+                render: () => {
+                  if (i.clusterName === '') {
+                    return <ListItemV2 className="px-4xl" data="-" />;
+                  }
+                  return (
+                    <ListItemV2 data={i.isArchived ? '' : i.clusterName} />
+                  );
+                },
               },
               status: {
                 render: () => {
+                  if (i.clusterName === '') {
+                    return <ListItemV2 className="px-4xl" data="-" />;
+                  }
+
                   if (i.isArchived) {
                     return <Badge type="neutral">Archived</Badge>;
                   }
 
-                  if (!isClusterOnline) {
-                    return <Badge type="warning">Cluster Offline</Badge>;
-                  }
-
                   if (i.spec?.suspend) {
                     return <Badge type="neutral">Suspended</Badge>;
+                  }
+
+                  if (clusterStatus[i.clusterName] === undefined) {
+                    return <ListItemV2 className="px-4xl" data="-" />;
+                  }
+
+                  if (!isClusterOnlinev3) {
+                    return <Badge type="warning">Cluster Offline</Badge>;
                   }
 
                   return <SyncStatusV2 item={i} />;
@@ -292,7 +333,7 @@ const ListView = ({ items, onAction }: IResource) => {
                   <ExtraButton
                     item={i}
                     onAction={onAction}
-                    isClusterOnline={isClusterOnline}
+                    isClusterOnline={isClusterOnlinev3}
                   />
                 ),
               },
@@ -312,7 +353,7 @@ const EnvironmentResourcesV2 = ({ items = [] }: { items: BaseType[] }) => {
   useWatchReload(
     items.map((i) => {
       return `account:${parseName(account)}.environment:${parseName(i)}`;
-    }),
+    })
   );
 
   const suspendEnvironment = async (item: BaseType, suspend: boolean) => {
@@ -338,7 +379,7 @@ const EnvironmentResourcesV2 = ({ items = [] }: { items: BaseType[] }) => {
           suspend
             ? 'Environment suspended successfully'
             : 'Environment resumed successfully'
-        }`,
+        }`
       );
       reloadPage();
     } catch (err) {
@@ -347,7 +388,7 @@ const EnvironmentResourcesV2 = ({ items = [] }: { items: BaseType[] }) => {
   };
 
   const [showDeleteDialog, setShowDeleteDialog] = useState<BaseType | null>(
-    null,
+    null
   );
   const [visible, setVisible] = useState<BaseType | null>(null);
 

@@ -1,6 +1,6 @@
 import type { NextraThemeLayoutProps } from 'nextra';
 import { MDXProvider } from 'nextra/mdx';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useLayoutEffect, useMemo } from 'react';
 import { useFSRoute } from 'nextra/hooks';
 import { Item, normalizePages } from 'nextra/normalize-pages';
 import { useRouter } from 'next/router';
@@ -26,7 +26,6 @@ import { ExploringItem } from '../components/website/home/keep-exploring';
 import consts from '../utils/const';
 import { Block } from '../components/commons';
 import { deleteCookie } from 'cookies-next';
-import Banner from '../components/website/event/banner';
 import ExternalLayout from './alternate-layout';
 
 function GitTimestamp({ timestamp }: { timestamp: Date }) {
@@ -85,8 +84,22 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
   }, [state]);
 
   useEffect(() => {
+    let x = document.querySelector('.grecaptcha-badge') as HTMLDivElement;
+    if (x) {
+      if (!asPath.startsWith('/contact-us')) {
+        x.style.display = 'none';
+        x.style.setProperty('visibility', 'hidden');
+      } else {
+        x.style.setProperty('display', 'block', 'important');
+        x.style.setProperty('visibility', 'visible');
+      }
+    }
+  }, [asPath]);
+
+  useEffect(() => {
     if (!asPath.startsWith('/contact-us')) {
       deleteCookie(consts.contactUs.cookies.submitCookie);
+    } else {
     }
   }, [asPath]);
 
@@ -132,7 +145,6 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
 
   return (
     <>
-      {consts.eventBanner.enabled && <Banner {...consts.eventBanner} />}
       <ExternalLayout frontMatter={frontMatter}>
         <ActiveAnchorProvider>
           <Container

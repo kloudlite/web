@@ -8,6 +8,7 @@ const colors = {
   four: ['fill-icon-critical', 'text-icon-critical'],
   five: ['fill-icon-secondary', 'text-icon-secondary'],
   six: ['fill-icon-primary', 'text-icon-primary'],
+  seven: ['basic-surface-subdued', 'text-icon-default'],
   dark: ['fill-text-soft', 'text-text-soft'],
 };
 
@@ -18,6 +19,8 @@ type AvatarColors =
   | 'three'
   | 'four'
   | 'five'
+  | 'six'
+  | 'seven'
   | 'dark'
   | (string & NonNullable<unknown>);
 
@@ -26,6 +29,8 @@ export interface IAvatar {
   color?: AvatarColors;
   image?: ReactNode;
   dot?: boolean;
+  isTemplate?: boolean;
+  className?: string;
 }
 
 export const AvatarBase = ({
@@ -33,16 +38,18 @@ export const AvatarBase = ({
   color = 'one',
   image,
   dot,
+  isTemplate = false,
+  className,
 }: IAvatar) => {
   const isExternal = !Object.keys(colors).includes(color);
 
   return (
     <div
       style={
-        isExternal
+        isExternal && color !== 'none'
           ? {
-              background: color,
-            }
+            background: color,
+          }
           : {}
       }
       className={cn(
@@ -51,6 +58,7 @@ export const AvatarBase = ({
         'outline-none transition-all',
         'rounded-full',
         'border border-border-default',
+        className,
         {
           'w-8xl h-8xl': size === 'lg',
           'w-6xl h-6xl': size === 'md',
@@ -59,13 +67,13 @@ export const AvatarBase = ({
         },
         !image
           ? {
-              ' p-lg': size === 'lg',
-              ' p-md': size === 'md' || size === 'xs' || size === 'sm',
-            }
+            ' p-lg': size === 'lg',
+            ' p-md': size === 'md' || size === 'xs' || size === 'sm',
+          }
           : '',
         {
           'bg-surface-basic-default': !isExternal,
-        },
+        }
       )}
     >
       {dot && (
@@ -151,6 +159,22 @@ export const AvatarBase = ({
   );
 };
 
-export const Avatar = ({ size, color, image, dot }: IAvatar) => {
-  return <AvatarBase size={size} color={color} image={image} dot={dot} />;
+export const Avatar = ({
+  size,
+  color,
+  image,
+  dot,
+  isTemplate,
+  className,
+}: IAvatar) => {
+  return (
+    <AvatarBase
+      size={size}
+      color={color}
+      image={image}
+      dot={dot}
+      isTemplate={isTemplate}
+      className={className}
+    />
+  );
 };
