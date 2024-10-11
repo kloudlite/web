@@ -29,6 +29,9 @@
   "environments": {
     "title": "Environments"
   },
+  "cicd": {
+    "title": "CICD Integration"
+  },
   "--environments--": {
     "title": "ENVIRONMENTS",
     "type": "separator"

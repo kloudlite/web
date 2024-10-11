@@ -5,7 +5,9 @@ description: "Begin your journey with Kloudlite. Follow our step-by-step guide t
 ---
 
 import Steps from "~/app/components/steps";
+import Tabs,{TabContent} from "~/app/components/tabs";
 import VideoPlayer from "~/app/components/video-player";
+import cn from 'classnames';
 
 # Getting Started
 
@@ -20,15 +22,83 @@ Login and set up your free team.
 
 <Steps>
 ### Create Your Kloudlite Team
+To get started with Kloudlite, create a team in Kloudlite dashboard. The team is where you manage your 
+environments, managed services, infrastructure and devices.
 
-To get started with Kloudlite, create a team in Kloudlite dashboard. The team is where you manage your environments, managed services,  infrastructure and devices.
+{/* Video of creation of teams */}
+
+### Setup Kloudlite CLI
+
+> **Prerequisites:** kl will run docker containers. Make sure you have docker installed and running.
+
+#### Install `kl` using curl
+
+```shell
+curl 'https://kl.kloudlite.io/kloudlite/kloudlite!?select=kl' | bash
+```
+
+This will install the Kloudlite CLI on your system.
+
+#### Login to Kloudlite
+```shell
+kl auth login
+```
+This will open a browser window to authenticate your account. Once authenticated, you will be able to access your Kloudlite account from the CLI.
+
+***Note:** You will be prompted to select the team you want to work with. you can change the team using `kl use team` command.*
+
+### Attach Your Cluster
+To create development environments and run your workloads, you'll need to attach a Kubernetes cluster to Kloudlite. You can add and manage cluster references from the infrastructure section of the Kloudlite dashboard.
+
+
+<Tabs>
+<TabContent label="Local Cluster" value="local">
+
+With kloudlite you can run a local k3s cluster on your system and attach it to your team. This allows developers to get started quickly without needing to provision compute from cloud providers.
+
+```shell
+kl cluster up
+```
+This command will create a local k3s cluster and attach it to your team.
+
+</TabContent>
+<TabContent label="Remote Cluster" value="remote"> 
+
+You can add your remote kubernetes cluster running on your cloudproviders to kloudlite.
+You can add and manage your cluster references from infrastructure section of kloudlite 
+dashboard.
+
+Video
+
+Once added you can attach your cluster following the instructions provided
+
+
+Video
+
+After attaching the cluster it will take some time to come online. Once the 
+cluster is online it is ready for your workloads.
+
+**Important Note:* You need to have capability to run pods with NetAdmin capililities for kloudlite to run wireguard and intercept services.*
+
+</TabContent>
+</Tabs>
+
+<div className="mt-lg seperator" />
+
+### Create and Setup an Environment
+
+
+### Initialize Workspace
+### Working with the Workspace
+
+
+
 
 <VideoPlayer src="/docs/getting-started/setup-team.mp4"/>
 
+### Login to Kloudlite CLIxw
 
 ### Attach Your Cluster
-
-To create development environments and run your workloads, you'll need to attach a Kubernetes cluster to Kloudlite. You can add and manage cluster references from the infrastructure section of the Kloudlite dashboard.
 
 When you log in and select your team using the [Kloudlite CLI](https://github.com/kloudlite/kl) on your local system, Kloudlite will automatically create a default k3s cluster and attach it to your team. This allows developers to get started quickly without needing to provision compute from cloud providers.
 
