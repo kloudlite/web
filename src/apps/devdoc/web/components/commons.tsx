@@ -123,7 +123,7 @@ export const TitleBlockV2 = ({
       <div className="flex flex-col gap-md">
         <h2
           className={cn(
-            'wb-heading3xl-marketing md:wb-heading4xl-marketing wb-text-text-default',
+            'wb-heading2xl-marketing md:wb-heading4xl-marketing wb-text-text-default',
             titleClass,
           )}
         >

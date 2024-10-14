@@ -45,13 +45,13 @@ const KDElement = ({
     >
       <div
         className={cn(
-          'wb-relative wb-w-[40px] wb-shrink-0 wb-flex wb-flex-row wb-justify-center wb-pl-3xl md:wb-pl-4xl wb-box-content wb-pt-6xl',
+          'wb-relative wb-w-[48px] wb-shrink-0 wb-flex wb-flex-row wb-justify-center wb-pl-3xl md:wb-pl-4xl wb-box-content wb-pt-3xl md:wb-pt-6xl',
         )}
       >
         <div
           className={cn(
             'wb-w-[2px] wb-transition-all',
-            'wb-bg-border-default -wb-mb-6xl',
+            'wb-bg-border-default -wb-mb-3xl md:-wb-mb-6xl',
           )}
         />
 
@@ -67,29 +67,28 @@ const KDElement = ({
         )}
         <div
           className={cn(
-            'wb-flex wb-items-center wb-justify-center wb-rounded wb-w-[40px] wb-h-[40px] wb-absolute wb-transition-all',
+            'wb-flex wb-items-center wb-justify-center wb-rounded wb-w-[48px] wb-h-[48px] wb-absolute wb-transition-all',
             isActive
               ? 'wb-text-icon-on-primary wb-bg-surface-primary-default'
               : 'wb-text-icon-soft wb-bg-surface-basic-active',
           )}
         >
-          <Icon size={24} />
+          <Icon size={32} />
         </div>
       </div>
-      <div
-        className={cn('wb-px-3xl md:wb-px-6xl md:wb-py-6xl wb-gap-xl')}
-        key={kd.label}
-      >
+      <div className={cn('wb-p-3xl md:wb-p-6xl wb-gap-xl')} key={kd.label}>
         <h2
           className={cn(
-            'wb-headingLg wb-inline',
+            'wb-headingLg md:wb-headingXl wb-inline',
             isActive ? 'wb-text-text-default' : 'wb-text-text-soft',
           )}
         >
           {kd.label}.
         </h2>{' '}
         <span
-          className={cn('wb-bodyXl wb-transition-colors wb-text-text-soft')}
+          className={cn(
+            'wb-bodyXl md:wb-bodyXXl wb-transition-colors wb-text-text-soft',
+          )}
         >
           {kd.desc}
         </span>
@@ -121,7 +120,7 @@ const KloudliteDevelopment = () => {
           <AnimatePresence mode="wait">
             <div className="wb-flex wb-flex-col wb-gap-3xl">
               <div className="wb-flex wb-flex-col wb-gap-xl">
-                <h2 className="wb-heading4xl-1-marketing md:wb-sriracha4xl wb-text-text-default">
+                <h2 className="wb-sriracha3xl md:wb-sriracha4xl wb-text-text-default">
                   Why Kloudlite?
                 </h2>
                 <p className="wb-hidden md:wb-block wb-bodyLg md:wb-bodyXl wb-text-text-soft">

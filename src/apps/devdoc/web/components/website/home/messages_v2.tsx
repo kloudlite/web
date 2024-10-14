@@ -11,11 +11,19 @@ import ResponsiveContainer from '../../responsive-container';
 import { BlockV2 } from '../../commons';
 
 const TitleItem = ({ title }: { title: ReactNode }) => {
-  return <span className="wb-headingLg wb-text-text-default">{title}</span>;
+  return (
+    <span className="wb-headingLg-marketing md:wb-headingMd wb-text-text-default">
+      {title}
+    </span>
+  );
 };
 
 const SubTitleItem = ({ title }: { title: ReactNode }) => {
-  return <span className="wb-bodyMd wb-text-text-soft">{title}</span>;
+  return (
+    <span className="wb-bodyMd md:wb-bodyLg xl:wb-bodyMd wb-text-text-soft">
+      {title}
+    </span>
+  );
 };
 
 const ProfileItem = ({
@@ -63,18 +71,20 @@ const MessageCard = ({
   message: ReactNode;
 }) => {
   return (
-    <div className=" wb-flex wb-flex-col wb-gap-3xl wb-p-3xl wb-h-full wb-bg-surface-basic-default wb-min-h-[257px] smMd:wb-min-h-[233px]">
-      <div className="wb-flex md:wb-hidden xl:wb-flex wb-flex-row wb-items-center wb-gap-3xl">
+    <div className=" wb-flex wb-flex-col wb-gap-3xl wb-p-3xl wb-h-full wb-bg-surface-basic-default wb-h-full">
+      <div className="wb-hidden lg:wb-flex wb-flex-row wb-items-center wb-gap-3xl">
         <ProfileItem subtitle={subtitle} title={title} />
       </div>
-      <div className="wb-hidden md:wb-flex xl:wb-hidden wb-flex-col wb-gap-3xl">
+      <div className="wb-flex lg:wb-hidden wb-flex-col wb-gap-3xl">
         <ProfileItem size="lg" />
         <div className="wb-flex wb-flex-col wb-gap-lg">
           <TitleItem title={title} />
           <SubTitleItem title={subtitle} />
         </div>
       </div>
-      <p className="wb-bodyLg wb-text-text-soft">{message}</p>
+      <p className="wb-bodyLg wb-text-text-soft wb-h-[144px] md:wb-h-auto">
+        {message}
+      </p>
     </div>
   );
 };

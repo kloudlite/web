@@ -38,6 +38,9 @@ function typography() {
       '.bodyLg-medium': {
         '@apply wb-bodyLg !wb-font-medium': {},
       },
+      '.bodyLg-semibold': {
+        '@apply wb-bodyLg !wb-font-semibold': {},
+      },
       '.bodyLg-underline': {
         '@apply wb-bodyLg wb-underline': {},
       },
@@ -126,6 +129,10 @@ function typography() {
       },
       '.sriracha4xl': {
         '@apply wb-font-normal wb-text-4xl wb-leading-2xl-1 wb-font-sriracha':
+          {},
+      },
+      '.sriracha3xl': {
+        '@apply wb-font-normal wb-text-3xl wb-leading-xl-1 wb-font-sriracha':
           {},
       },
     });

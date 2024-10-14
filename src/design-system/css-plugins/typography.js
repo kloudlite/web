@@ -38,6 +38,9 @@ function typography() {
       '.bodyLg-medium': {
         '@apply bodyLg !font-medium': {},
       },
+      '.bodyLg-semibold': {
+        '@apply bodyLg !font-semibold': {},
+      },
       '.bodyLg-underline': {
         '@apply bodyLg underline': {},
       },
@@ -109,6 +112,9 @@ function typography() {
       },
       '.sriracha4xl': {
         '@apply font-normal text-4xl leading-2xl-1 font-sriracha': {},
+      },
+      '.sriracha3xl': {
+        '@apply font-normal text-3xl leading-xl-1 font-sriracha': {},
       },
     });
   };

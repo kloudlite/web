@@ -1,7 +1,5 @@
 import DynamicImage from '~/app/components/dynamic-image';
-import { GraphExtended } from '~/app/components/graph';
-import OpenSource from '~/app/components/website/home/opensource';
-import SuperCharge from '~/app/components/website/home/supercharge';
+import { GraphExtended, GraphItem } from '~/app/components/graph';
 import Wrapper from '~/app/components/wrapper';
 import hero from '~/images/homeNew/hero';
 import HomeIllustrationMobileDark from '~/images/homeNew/illustration-mobile-dark.svg';
@@ -10,7 +8,7 @@ import { PlayCircle } from '@jengaicons/react';
 import { ArrowRight } from '~/app/icons/icons';
 import Link from 'next/link';
 import { authUrl } from '~/app/utils/config';
-import { useState } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import consts from '~/app/utils/const';
 import PopupVideo from '../popup-video';
 import Events from '../website/home/events';
@@ -22,11 +20,16 @@ import FaqSection from '../website/home/faq_v2';
 import KloudliteDevelopment from '../website/home/kloudlite-development_v2';
 import PartnerSection from '../website/home/partners_v2';
 import SecureAtCore from '../website/home/secure-at-core_v2';
+import SuperCharge from '../website/home/supercharge_v2';
+import OpenSource from '../website/home/opensource_v2';
+import { cn } from '~/app/utils/commons';
+import VideoSection from '../website/home/video-section_v2';
+import Player from 'video.js/dist/types/player';
 
 const Title = () => {
   return (
-    <div className="wb-flex wb-flex-col wb-gap-3xl wb-text-center wb-items-center">
-      <h1 className="wb-heading4xl-marketing md:wb-heading6xl-marketing lg:wb-heading5xl-marketing wb-text-text-default wb-text-center lg:wb-w-[896px] xl:wb-w-[1024px] 2xl:wb-w-[1060px]">
+    <div className="wb-flex wb-flex-col wb-gap-3xl wb-text-center xl:wb-text-start wb-z-10 wb-items-center xl:wb-items-start">
+      <h1 className="wb-heading4xl-marketing md:wb-heading5xl-marketing wb-text-text-default xl:wb-text-start wb-text-center">
         <div className="wb-hidden md:wb-block">
           Building distributed applications
           <span className="wb-sriracha5xl"> isn’t</span> complex
@@ -35,11 +38,11 @@ const Title = () => {
 
         <div className="wb-block md:wb-hidden">
           Building distributed apps
-          <span className="wb-heading4xl-1-marketing"> is&apos;nt</span> complex
-          <span className="wb-heading4xl-1-marketing"> anymore!</span>
+          <span className="wb-sriracha4xl"> is’nt</span> complex
+          <span className="wb-sriracha4xl"> anymore!</span>
         </div>
       </h1>
-      <p className="wb-bodyLg md:wb-bodyXl lg:wb-bodyXl wb-text-text-soft wb-text-center wb-max-w-[528px] lg:wb-w-[688px] lg:wb-max-w-full xl:wb-w-[920px]">
+      <p className="wb-bodyLg md:wb-bodyXl wb-text-text-soft xl:wb-text-start wb-text-center">
         <span className="wb-hidden md:wb-block">
           With Kloudlite’s unified remote local environments,{' '}
           <br className="wb-hidden 3xl:wb-block" />
@@ -51,6 +54,183 @@ const Title = () => {
           of remote environments.
         </span>
       </p>
+      <span className="wb-flex wb-flex-col wb-flex-col-reverse md:wb-flex-row wb-items-center wb-gap-xl wb-pt-6xl xl:wb-pt-7xl">
+        <Button
+          content={
+            <span className="wb-bodyLg-medium md:wb-bodyLg-semibold">
+              Get started
+            </span>
+          }
+          variant="primary"
+          size="lg"
+          suffix={<ArrowRight />}
+          linkComponent={Link}
+          to={`${authUrl}/login`}
+          toLabel="href"
+        />
+        <Button
+          content={
+            <span className="wb-bodyLg-medium md:wb-bodyLg-semibold">
+              Request a demo
+            </span>
+          }
+          variant="basic"
+          size="lg"
+          linkComponent={Link}
+          to={`${authUrl}/login`}
+          toLabel="href"
+        />
+      </span>
+    </div>
+  );
+};
+
+const HeroVideoTabItem = ({
+  children,
+  active,
+  progress,
+  onClick,
+}: {
+  children: ReactNode;
+  active: boolean;
+  progress: number;
+  onClick: () => void;
+}) => {
+  return (
+    <button
+      className={cn('wb-py-xl wb-px-2xl wb-relative wb-pointer-events-auto', {
+        'wb-headingSm': !!active,
+        'wb-bodyMd': !active,
+      })}
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick();
+      }}
+    >
+      {children}
+      {active && (
+        <div
+          className="wb-h-[3px] wb-bg-border-primary wb-absolute wb-bottom-0 wb-left-0 wb-right-0"
+          style={{ width: `${progress}%` }}
+        />
+      )}
+    </button>
+  );
+};
+const HeroVideoTab = ({
+  items,
+  progress,
+  active,
+  onClick,
+}: {
+  items: { label: ReactNode; value: string }[];
+  active: number;
+  progress: number;
+  onClick: (item: number) => void;
+}) => {
+  return (
+    <div
+      className={cn(
+        'wb-bg-surface-basic-subdued wb-border wb-border-border-default',
+        'wb-h-[44px] wb-rounded-t-md wb-flex wb-flex-row',
+      )}
+    >
+      {items.map((item, index) => (
+        <HeroVideoTabItem
+          key={item.value}
+          active={active === index}
+          progress={progress}
+          onClick={() => onClick?.(index)}
+        >
+          {item.label}
+        </HeroVideoTabItem>
+      ))}
+    </div>
+  );
+};
+const IndexHero = () => {
+  const items = consts.homeNew.heroVideos;
+  const [active, setActive] = useState(0);
+  const [progress, setProgress] = useState(0);
+  const playerRef = useRef<Player | null>(null);
+  const [showVideo, setShowVideo] = useState(false);
+
+  useEffect(() => {
+    let player = playerRef.current;
+    try {
+      if (player) {
+        player.pause();
+        player.currentTime(0);
+        player.play();
+      }
+    } catch {}
+  }, [active, playerRef.current]);
+
+  return (
+    <div className="overflow-hidden wb-relative">
+      <Wrapper className="wb-grid wb-grid-cols-1 xl:wb-grid-cols-[512px_auto] wb-gap-8xl lg:wb-gap-10xl xl:wb-gap-8xl 2xl:wb-gap-10xl 3xl:wb-gap-15xl wb-items-center wb-py-8xl lg:wb-py-10xl xl:wb-py-5xl">
+        <Title />
+        <div className="wb-relative xl:wb-static">
+          <div className="wb-absolute wb-left-0 wb-right-0 wb-top-1/2 wb-transform -wb-translate-y-1/2 wb-grid wb-grid-cols-1 xl:wb-grid-cols-2 xl:wb-gap-11xl 2xl:wb-gap-10xl 3xl:wb-gap-11xl wb-h-full wb-max-h-[416px] xl:wb-h-[416px] wb-z-30 wb-pointer-events-none">
+            <div className="wb-hidden xl:wb-block wb-pointer-events-none" />
+            <div
+              className="wb-flex wb-items-center wb-justify-center z-10 wb-cursor-pointer xl:wb-max-w-[864px] wb-pointer-events-auto"
+              onClick={() => {
+                setShowVideo(true);
+              }}
+            >
+              <Button
+                content="Watch now"
+                variant="tertiary"
+                prefix={<PlayCircle />}
+                size="lg"
+                onClick={() => {
+                  setShowVideo(true);
+                }}
+              />
+              <div
+                className={cn(
+                  'wb-absolute wb-bottom-0 wb-pointer-events-none',
+                  'wb-transform wb-translate-y-5xl wb-z-30',
+                )}
+              >
+                <HeroVideoTab
+                  items={items}
+                  active={active}
+                  progress={progress}
+                  onClick={(n) => {
+                    setActive(n);
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+          <GraphExtended>
+            <GraphItem className="wb-h-[416px] xl:wb-min-w-[864px] wb-bg-surface-basic-default">
+              <VideoSection
+                srcs={items[active].video}
+                onReady={(p) => {
+                  playerRef.current = p;
+                  if (p) {
+                    p.on('ended', () => {
+                      setProgress(0);
+                      setActive((prev) => (prev + 1) % items.length);
+                    });
+                    p.on('timeupdate', () => {
+                      setProgress(
+                        Math.ceil(
+                          ((p.currentTime() || 0) * 100) / (p.duration() || 1),
+                        ),
+                      );
+                    });
+                  }
+                }}
+              />
+            </GraphItem>
+          </GraphExtended>
+        </div>
+      </Wrapper>
+      <PopupVideo show={showVideo} onClose={() => setShowVideo(false)} />
     </div>
   );
 };
@@ -58,7 +238,7 @@ const Title = () => {
 const Illustration = () => {
   return (
     <Wrapper className="-wb-mt-5xl">
-      <div className="hidden md:block wb-pb-[36px] 2xl:wb-pb-[128px]">
+      <div className="hidden md:block wb-pb-[36px] 2xl:wb-pb-8xl">
         <GraphExtended
           // graph="graphIllustration"
           innerClass="-wb-mt-[2px] wb-flex wb-justify-center !wb-pt-[32px] 3xl:-wb-mx-[256px]"
@@ -110,73 +290,23 @@ const Illustration = () => {
 };
 
 const Index = () => {
-  const [showVideo, setShowVideo] = useState(false);
   return (
     <div>
-      <Wrapper className="wb-relative wb-flex wb-justify-center lg:wb-justify-start wb-py-6xl md:wb-pt-8xl lg:wb-pt-10xl">
-        <div className="wb-z-[51] wb-hidden">
-          <div
-            className="fixed wb-right-[10px] wb-bottom-[10px] wb-z-[1]"
-            dangerouslySetInnerHTML={{
-              __html: `<a href="https://www.producthunt.com/posts/kloudlite?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-kloudlite" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=462798&theme=neutral" alt="Kloudlite - Distributed&#0032;Development&#0032;Environments&#0032;as&#0032;a&#0032;Service | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>`,
-            }}
-          />
-        </div>
-        <div className="wb-w-full wb-z-[1]">
-          <Title />
-          <div className="wb-pt-6xl wb-flex md:wb-flex-row wb-flex-col wb-gap-4xl md:wb-items-center wb-justify-center">
-            <div
-              id="join-waitlist"
-              className="md:wb-w-[610px] wb-flex wb-flex-col wb-gap-xl wb-items-center"
-            >
-              <span className="wb-flex wb-flex-col wb-flex-col-reverse md:wb-flex-row wb-items-center wb-gap-xl wb-max-w-[432px] wb-w-full">
-                <Button
-                  content={
-                    <span className="wb-bodyLg-medium !wb-font-semibold">
-                      Discover Kloudlite
-                    </span>
-                  }
-                  variant="tertiary"
-                  size="lg"
-                  prefix={<PlayCircle strokeWidth={1.5} />}
-                  block
-                  onClick={() => {
-                    setShowVideo(true);
-                  }}
-                />
-                <Button
-                  content={
-                    <span className="wb-bodyLg-medium !wb-font-semibold">
-                      Get started
-                    </span>
-                  }
-                  variant="primary"
-                  size="lg"
-                  suffix={<ArrowRight />}
-                  block
-                  linkComponent={Link}
-                  to={`${authUrl}/login`}
-                  toLabel="href"
-                />
-              </span>
-            </div>
-          </div>
-        </div>
-      </Wrapper>
-      <Illustration />
+      <IndexHero />
       <Wrapper>
-        <KloudliteDevelopment />
-        <SecureAtCore />
         <PartnerSection />
+        <div className="md:wb-pt-8xl">
+          <KloudliteDevelopment />
+        </div>
+        <SecureAtCore />
         <HowItWorksSection />
         <DontBelieve />
-        <FaqSection />
         {consts.eventBanner.enabled && <Events />}
         <KeepExploring />
+        <FaqSection />
         <OpenSource />
         <SuperCharge />
       </Wrapper>
-      <PopupVideo show={showVideo} onClose={() => setShowVideo(false)} />
     </div>
   );
 };

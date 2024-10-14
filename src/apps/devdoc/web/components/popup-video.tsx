@@ -1,6 +1,6 @@
-import { CircleNotch, XFill } from '@jengaicons/react';
+import { XFill } from '@jengaicons/react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, useRef } from 'react';
+import { ChangeEvent, useEffect, useMemo, useRef } from 'react';
 import videojs from 'video.js';
 import 'video.js/dist/video-js.css';
 import Button from './button';
@@ -11,6 +11,12 @@ import consts from '../utils/const';
 export const VideoJS = (props: {
   options: any;
   onReady?: (player: Player) => void;
+  onTimeUpdate?: (
+    currentTime: number | undefined,
+    totalTime: number | undefined,
+  ) => void;
+  onEnded?: (e: ChangeEvent<HTMLVideoElement>) => void;
+  className?: string;
 }) => {
   const videoRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<Player | null>();
@@ -33,11 +39,18 @@ export const VideoJS = (props: {
         //@ts-ignore
         videoRef.current?.classList.remove('vjs-waiting');
       });
+
+      player.on('timeupdate', () => {
+        props.onTimeUpdate?.(player.currentTime(), player.duration());
+      });
+
+      player.on('ended', (e: ChangeEvent<HTMLVideoElement>) => {
+        props.onEnded?.(e);
+      });
       // You could update an existing player in the `else` block here
       // on prop change, for example:
     } else {
       const player = playerRef.current;
-
       player.autoplay(options.autoplay);
       player.src(options.sources);
     }
@@ -59,9 +72,12 @@ export const VideoJS = (props: {
     <div
       onClick={(e) => e.stopPropagation()}
       data-vjs-player
-      className="wb-w-full wb-rounded-xl wb-overflow-hidden"
+      className={cn(
+        'wb-w-full wb-rounded-xl wb-overflow-hidden',
+        props.className,
+      )}
     >
-      <div ref={videoRef} className="wb-w-full vjs-waiting" />
+      <div ref={videoRef} className="wb-w-full wb-h-full vjs-waiting" />
     </div>
   );
 };
@@ -74,30 +90,54 @@ const PopupVideo = ({
   onClose?: () => void;
 }) => {
   useEffect(() => {
+    const article = document.querySelector('#kl-article') as HTMLDivElement;
+    const nav = document.querySelector('#kl-nav') as HTMLDivElement;
     if (show) {
       document.body.style.overflowY = 'hidden';
+      document.body.style.zIndex = '10';
+      if (article) {
+        article.style.zIndex = '10';
+      }
+      if (nav) {
+        nav.style.zIndex = '10';
+      }
     } else {
       document.body.style.overflowY = 'auto';
+      if (article) {
+        article.style.zIndex = '50';
+      }
+      if (nav) {
+        nav.style.zIndex = '9999999';
+      }
     }
     return () => {
       document.body.style.overflowY = 'auto';
+      if (article) {
+        article.style.zIndex = '50';
+      }
+      if (nav) {
+        nav.style.zIndex = '99999999';
+      }
     };
   }, [show]);
 
-  const videoJsOptions = {
-    autoplay: true,
-    controls: true,
-    controlBar: {
-      fullscreenToggle: false,
-      pictureInPictureToggle: false,
-    },
-    loadingSpinner: true,
-    bigPlayButton: false,
-    responsive: true,
-    fluid: true,
-    preload: 'auto',
-    sources: consts.homeNew.introVideo,
-  };
+  const videoJsOptions = useMemo(
+    () => ({
+      autoplay: true,
+      controls: true,
+      controlBar: {
+        fullscreenToggle: false,
+        pictureInPictureToggle: false,
+      },
+      loadingSpinner: true,
+      bigPlayButton: false,
+      responsive: true,
+      fluid: true,
+      preload: 'auto',
+      sources: consts.homeNew.introVideo,
+    }),
+    [],
+  );
 
   return (
     <AnimatePresence>

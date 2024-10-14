@@ -177,6 +177,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
               </div>
             )}
             <article
+              id="kl-article"
               className={cn(
                 'wb-flex-1 wb-w-full lg:!wb-z-50',
                 activeThemeContext.layout === 'raw' ? '' : 'lg:wb-pt-xl',
