@@ -12,6 +12,9 @@
   "what-is-kloudlite":{
     "title": "What is Kloudlite?"
   },
+  "architecture":{
+    "title": "Architecture"
+  },
   "basic-concepts": {
     "title": "Basic Concepts"
   },
@@ -52,6 +55,9 @@
     "title": "WORKSPACES",
     "type": "separator"
   },
+  "environment-sync": {
+    "title": "Environment Sync"
+  },
   "workspace-configuration": {
     "title": "Configuration"
   },
@@ -64,11 +70,9 @@
   "app-intercept": {
     "title": "App Intercepts"
   },
-  "vpn-connection": {
-    "title": "VPN Connection"
-  },
   "cli":{
-      "title": "Cli Reference"
+      "title": "CLI Reference",
+      "href":"https://github.com/kloudlite/kl"
   },
   "--PARTICIPATE--": {
     "title": "PARTICIPATE",

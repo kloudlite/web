@@ -1,0 +1,57 @@
+---
+title: "Architecture"
+metaTitle: "Kloudlite Architecture"
+description: "Explore the architecture of Kloudlite, a Development Environment as a Service platform. Learn how Kloudlite connects local development workspaces with Kubernetes-based environments through a secure WireGuard mesh, enabling seamless development, testing, and collaboration. Understand its stateless environments, local container integration, and full production parity, designed to streamline developer workflows and boost productivity."
+---
+
+import Img from "~/app/components/img";
+
+# Architecture
+
+## Platform Overview
+
+Kloudlite platform consists of graphql federation on top of APIs. This graphql will serve frontend portal and
+Kloudlite CLI. 
+
+APIs will take care of managing the resources and configurations across the network.
+
+All communication with the clusters is done through the Message Office, which operates on top of the NATS 
+streaming server. Within each cluster, the Kloudlite agent and operators are responsible for reconciling 
+resources and configurations.
+
+Kloudlite APIs also serve DNS queries for service discovery in the network.
+
+<Img src="/docs/arch/platform.png" alt="Platform Overview"/>
+
+## Network Overview
+Kloudlite creates a secure wireguard network for each team. All the clusters and devices in the team are part of
+this network connected via wireguard edge gateway. 
+
+Kloudlite will reconcile and sync the configurations across the network. All the apps in environments and managed 
+services created in the team will be accessable from any other workload running in the network.
+
+Each pod and device is assigned a unique IP address, and all services are exposed with a unique IP, ensuring 
+seamless access and communication. 
+
+> **Note:** To avoid any conflicts with existing networks, all the ip addresses are in a private range of 100.64.0.0/10.
+
+<Img src="/docs/arch/vpn.png" alt="Global VPN"/>
+
+*All devices, clusters and developer's workspaces of a team are connected to wireguard mesh*
+
+<Img src="/docs/arch/cluster-connection.png" alt="Global VPN"/>
+*In kubernetes clusters all apps in the environments and workloads of managed services are connected to 
+wireguard mesh via wireguard gateway. And all the services managed by kloudlite will be exposed to wireguard
+network via reverse proxy running in gateway container*
+
+<Img src="/docs/arch/workspace-connection.png" alt="Global VPN"/>
+***Note:** Workspace is connected to wireguard mesh as a wireguard device.*
+
+#### App Intercept
+Apps in the environment can be intercepted and traffic can be redirected to any other ip in the network. This allows developers 
+to test and debug the apps running in the environment with out building and deploying the code.
+
+#### Service Discovery
+To ensure the service discovery, all the apps in the environment and managed serivces are registered with the DNS server running 
+in the network. This DNS service is in turn exposed to cloudflare for public access. Because of this all the domains in side the 
+VPN can be resolved with out any DNS configurations on the developer's machine.

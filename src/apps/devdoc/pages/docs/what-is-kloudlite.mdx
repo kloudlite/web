@@ -9,18 +9,6 @@ description: "Explore Kloudlite's documentation for detailed guides, tutorials, 
 Kloudlite is a Development Environment As a Service (DEaaS) platform that provides seamless integration between developer's 
 workspaces and application's development environments.
 
-### How Kloudlite works?
-Kloudlite creates a secure wireguard network for each team. All the clusters and devices connected to the team are part of
-this network. Kloudlite will reconcile and sync the configurations across the network. All the apps in environments and managed 
-services created in the team will be accessable from any other workload running in the network.
-
-Apps in the environment can be intercepted and traffic can be redirected to any other ip in the network. This allows developers
-to test and debug the apps running in the environment with out building and deploying the code.
-
-To ensure the service discovery, all the apps in the environment and managed serivces are registered with the DNS server running 
-in the network. This DNS service is in turn exposed to cloudflare for public access. Because of this all the domains in side the 
-VPN can be resolved with out any DNS configurations on the developer's machine.
-
 ### Why use kloudlite?
 Modern applications have become increasingly distributed. This complexity has made development more challenging, with longer 
 development loops and greater difficulty in managing these applications. 
