@@ -9,6 +9,9 @@
       "breadcrumb": false
     }
   },
+  "what-is-kloudlite":{
+    "title": "What is Kloudlite?"
+  },
   "basic-concepts": {
     "title": "Basic Concepts"
   },
@@ -42,18 +45,18 @@
   "configs-secrets": {
     "title": "Configs & Secrets"
   },
-  "integrated-resources": {
-    "title": "Integrated Resources"
+  "managed-resources": {
+    "title": "Managed Resources"
   },
   "---workspaces-": {
     "title": "WORKSPACES",
     "type": "separator"
   },
-  "setup-connect": {
-    "title": "Setup & Connect"
+  "workspace-configuration": {
+    "title": "Configuration"
   },
-  "workspace-management": {
-    "title": "Workspace Management"
+  "workspace-packages": {
+    "title": "Packages"
   },
   "ide-integrations": {
     "title": "IDE Integrations"
@@ -61,8 +64,11 @@
   "app-intercept": {
     "title": "App Intercepts"
   },
-  "uninstall": {
-    "title": "Uninstall"
+  "vpn-connection": {
+    "title": "VPN Connection"
+  },
+  "cli":{
+      "title": "Cli Reference"
   },
   "--PARTICIPATE--": {
     "title": "PARTICIPATE",

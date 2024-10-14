@@ -408,8 +408,8 @@ export function Sidebar({
                   'no-scrollbar': !showSidebar,
                 },
                 {
-                  'lg:wb-pt-2xl': !!rawLayout,
-                  'lg:wb-pt-6xl': !rawLayout,
+                  'lg:wb-py-2xl': !!rawLayout,
+                  'lg:wb-py-6xl': !rawLayout,
                 },
               )}
               ref={sidebarRef}

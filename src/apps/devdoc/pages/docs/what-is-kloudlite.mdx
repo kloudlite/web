@@ -1,0 +1,45 @@
+---
+title: "What is kloudlite?"  
+metaTitle: "Kloudlite Documentation | Comprehensive Guides & Resources"  
+description: "Explore Kloudlite's documentation for detailed guides, tutorials, and resources to maximize your use of our development environment platform"
+---
+
+# What is kloudlite?
+
+Kloudlite is a Development Environment As a Service (DEaaS) platform that provides seamless integration between developer's 
+workspaces and application's development environments.
+
+### How Kloudlite works?
+Kloudlite creates a secure wireguard network for each team. All the clusters and devices connected to the team are part of
+this network. Kloudlite will reconcile and sync the configurations across the network. All the apps in environments and managed 
+services created in the team will be accessable from any other workload running in the network.
+
+Apps in the environment can be intercepted and traffic can be redirected to any other ip in the network. This allows developers
+to test and debug the apps running in the environment with out building and deploying the code.
+
+To ensure the service discovery, all the apps in the environment and managed serivces are registered with the DNS server running 
+in the network. This DNS service is in turn exposed to cloudflare for public access. Because of this all the domains in side the 
+VPN can be resolved with out any DNS configurations on the developer's machine.
+
+### Why use kloudlite?
+Modern applications have become increasingly distributed. This complexity has made development more challenging, with longer 
+development loops and greater difficulty in managing these applications. 
+
+Kloudlite reduces the need for lengthy build and deployment cycles, allowing developers to focus on coding and innovation, 
+thereby improving productivity and efficiency.
+
+### Key Features
+- **Instant Testing Without Build or Deploy:** Skip the build and deploy steps in your development workflow. Connected workspaces let you instantly test your changes in live environments, streamlining the development process.
+
+- **Seamless Environment Switching:** Effortlessly switch between environments without adjusting configs or connection settings. Stay focused on coding, not setup.
+
+- **Ephemeral and Stateless Environments:** Work independently with lightweight, stateless environments that can be easily cloned. Each developer can run their own environment, ensuring seamless parallel development.
+
+- **Integrated Managed Services:** Easily create and manage stateful backing services, like databases, on attached clusters. Import these resources directly into your environments.
+
+- **Dev Containers with IDE Support:** Develop in SSH-enabled containers that support direct IDE attachment. Manage dependencies effortlessly with the Nix package manager.
+
+- **Collaborative Coding and Debugging:** Collaborate in real-time, working on multiple services across the same environment. Intercept and debug running apps seamlessly for enhanced productivity.
+
+Kloudlite is designed to optimise development workflows, enhance productivity, and provide a seamless, integrated development 
+environment.
