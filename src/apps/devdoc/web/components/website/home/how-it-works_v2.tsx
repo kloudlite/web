@@ -99,7 +99,7 @@ const HowItWorksSection = () => {
     <HorizontalTopTab
       images={imgs}
       title={
-        <div className="2xl:!wb-max-w-[746px] wb-m-auto">
+        <div className="wb-m-auto">
           How Kloudlite transforms your workflows?
         </div>
       }

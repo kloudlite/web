@@ -10,21 +10,20 @@ import { cn } from '../utils';
 import AnimateHide from './animate-hide';
 
 const menuItemRender = (props: IMenuItemRender) => {
-  const { innerProps, render, active, focused } = props;
+  const { innerProps, render, active, focused, disabled } = props;
   return (
     <div
       {...innerProps}
-      className={cn(
-        'px-xl text-text-default py-lg cursor-pointer select-none',
-        {
-          'bg-surface-basic-hovered': !!focused && !active,
-          'bg-surface-basic-active': !!active,
-        },
-      )}
+      className={cn('px-xl py-lg select-none', {
+        'bg-surface-basic-hovered': !!focused && !active && !disabled,
+        'bg-surface-basic-active': !!active,
+        'text-text-default': !disabled,
+        'text-text-disabled': !!disabled,
+      })}
     >
       {typeof render === 'string'
         ? render
-        : render?.({ active: !!active, focused: !!focused })}
+        : render?.({ active: !!active, focused: !!focused, disabled })}
     </div>
   );
 };
@@ -180,6 +179,12 @@ const Select = <T, U extends boolean | undefined = undefined>(
               }
               disableWhileLoading={disableWhileLoading}
               createLabel={createLabel}
+              onWheel={(e) => {
+                e.stopPropagation();
+              }}
+              onTouchMove={(e) => {
+                e.stopPropagation();
+              }}
             />
           </div>
         </div>

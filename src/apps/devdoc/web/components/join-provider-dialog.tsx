@@ -8,7 +8,7 @@ import {
   GoogleLogoFill,
 } from '@jengaicons/react';
 import Link from 'next/link';
-import { ReactNode, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button, IButton } from 'kl-design-system/atoms/button';
 import useConfig, { IConfig } from '../utils/use-config';
 import useMenu from '../utils/use-menu';
@@ -69,7 +69,7 @@ const UserComponent = ({
   isInHeader: boolean;
   setShow: any;
   size?: IButton['size'];
-  signUpContent?: ReactNode;
+  signUpContent?: IButton;
 }) => {
   const user = config.user;
   if (config.userApiLoading) {
@@ -143,19 +143,19 @@ const UserComponent = ({
       {hasSignUp && (
         <ButtonDev
           content={
-            signUpContent ||
-            (isInHeader ? (
+            isInHeader ? (
               <span className="wb-bodyMd-medium">Sign up</span>
             ) : (
               'Sign up'
-            ))
+            )
           }
           variant="primary"
           block
-          size={size}
           onClick={() => {
             setShow('signup');
           }}
+          {...signUpContent}
+          size={size}
         />
       )}
       {isInHeader && (
@@ -175,13 +175,13 @@ const JoinProvidersDialog = ({
   hasSignIn,
   hasSignUp = true,
   isInHeader,
-  signUpContent,
+  signupButton,
 }: {
   size?: IButton['size'];
   hasSignIn?: boolean;
   hasSignUp?: boolean;
   isInHeader?: boolean;
-  signUpContent?: ReactNode;
+  signupButton?: IButton;
 }) => {
   const { config } = useConfig();
   const { oathProviders } = config;
@@ -217,7 +217,7 @@ const JoinProvidersDialog = ({
         isInHeader={!!isInHeader}
         setShow={setShow}
         size={size}
-        signUpContent={signUpContent}
+        signUpContent={signupButton}
       />
       <Popup.Root
         show={!!show}

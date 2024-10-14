@@ -6,29 +6,42 @@ import { Block, BlockV2 } from '../../commons';
 import Slider from '../../slider';
 import { GraphItem } from '../../graph';
 import { Anchor } from '../../anchor';
+import ResponsiveContainer from '../../responsive-container';
+import ResponsiveImage from '../responsive-image';
 
 export const ExploringItem = ({
   label,
   desc,
-  img,
+  imgs,
   to,
 }: {
   label: ReactNode;
   desc: ReactNode;
-  img: string;
+  imgs: any;
   to?: string;
 }) => {
   return (
     <Anchor
       href={to}
-      className="wb-h-full wb-flex wb-flex-col wb-bg-surface-basic-default md:wb-min-h-[416px] 2xl:wb-min-h-[176px] 3xl:wb-min-h-[416px] 3xl:wb-max-h-[416px] wb-group hover:wb-will-change-contents focus:wb-will-change-contents wb-ring-offset-0 wb-ring-border-focus wb-outline-none focus-visible:wb-ring-2"
+      className="wb-bg-surface-basic-default wb-h-full wb-flex wb-flex-col wb-ring-offset-0 wb-ring-border-focus wb-outline-none focus-visible:wb-ring-2 wb-group"
     >
-      <img
-        alt="explore"
-        className="wb-object-cover wb-h-[156px] lg:wb-h-[136px] xl:wb-h-[160px] 2xl:wb-h-[192px] 3xl:wb-h-[232px] md:group-hover:wb-h-[136px] lg:group-hover:wb-h-[108px] xl:group-hover:wb-h-[140px] 2xl:group-hover:wb-h-[156px] 3xl:group-hover:wb-h-[206px] wb-transition-[height] wb-ease-in-out wb-duration-300 md:group-focus-within:wb-h-[136px] lg:group-focus-within:wb-h-[108px] xl:group-focus-within:wb-h-[140px] 2xl:group-focus-within:wb-h-[156px] 3xl:group-focus-within::wb-h-[206px]"
-        src={img}
+      <ResponsiveImage
+        className="wb-w-full wb-object-top wb-object-cover wb-h-full md:wb-h-[224px]"
+        alt={''}
+        rmobile={imgs.rmobile}
+        rmobileDark={imgs.rmobile}
+        r768={imgs.r768}
+        r768Dark={imgs.r768Dark}
+        r1024={imgs.r1024}
+        r1024Dark={imgs.r1024Dark}
+        r1280={imgs.r1280}
+        r1280Dark={imgs.r1280Dark}
+        r1440={imgs.r1440}
+        r1440Dark={imgs.r1440Dark}
+        r1920={imgs.r1920}
+        r1920Dark={imgs.r1920Dark}
       />
-      <div className="wb-flex wb-flex-col wb-gap-lg md:wb-gap-xl wb-p-3xl 2xl:wb-p-4xl">
+      <div className="wb-bg-surface-basic-default wb-flex wb-flex-col wb-gap-lg md:wb-gap-3xl wb-p-3xl md:group-hover:-wb-translate-y-[50px] wb-transition-all wb-duration-300 wb-ease-in-out">
         <h3 className="wb-headingLg-marketing md:wb-headingXl wb-text-text-default">
           {label}
         </h3>
@@ -61,15 +74,17 @@ const KeepExploring = () => {
         </Slider>
       </div>
 
-      <div className="wb-hidden md:wb-grid wb-grid-cols-1 md:wb-grid-cols-3 wb-gap-3xl lg:wb-gap-5xl">
-        {consts.homeNew.exploring.map((e) => {
-          return (
-            <GraphItem key={e.label}>
-              <ExploringItem {...e} />
-            </GraphItem>
-          );
-        })}
-      </div>
+      <ResponsiveContainer>
+        <div className="wb-hidden md:wb-grid wb-grid-cols-1 md:wb-grid-cols-3 wb-gap-3xl lg:wb-gap-5xl">
+          {consts.homeNew.exploring.map((e) => {
+            return (
+              <GraphItem key={e.label}>
+                <ExploringItem {...e} />
+              </GraphItem>
+            );
+          })}
+        </div>
+      </ResponsiveContainer>
     </BlockV2>
   );
 };

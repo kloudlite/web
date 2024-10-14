@@ -35,7 +35,7 @@ import connect1440Dark from '~/images/homeNew/connect1440-dark.svg';
 import integrate1440Dark from '~/images/homeNew/integrate1440-dark.svg';
 import nocommit1440Dark from '~/images/homeNew/nocommit1440-dark.svg';
 
-import collaborateMd from '~/images/homeNew/collaborateMd.svg';
+import collaboratesMd from '~/images/homeNew/collaborateMd.svg';
 import connectMd from '~/images/homeNew/connectMd.svg';
 import integrateMd from '~/images/homeNew/integrateMd.svg';
 import nocommitMd from '~/images/homeNew/nocommitMd.svg';
@@ -50,10 +50,62 @@ import connectMobileDark from '~/images/homeNew/connectMobile-dark.svg';
 import integrateMobileDark from '~/images/homeNew/integrateMobile-dark.svg';
 import nocommitMobileDark from '~/images/homeNew/nocommitMobile-dark.svg';
 
-import collaborateMobile from '~/images/homeNew/collaborateMobile.svg';
+import collaboratesMobile from '~/images/homeNew/collaborateMobile.svg';
 import connectMobile from '~/images/homeNew/connectMobile.svg';
 import integrateMobile from '~/images/homeNew/integrateMobile.svg';
 import nocommitMobile from '~/images/homeNew/nocommitMobile.svg';
+
+import collaborate3xl from '~/images/homeNew/exploring/collaborative-3xl.jpg';
+import workflow3xl from '~/images/homeNew/exploring/development-workflow-3xl.jpg';
+import remoteLocal3xl from '~/images/homeNew/exploring/remote-local-3xl.jpg';
+
+import collaborateDark3xl from '~/images/homeNew/exploring/collaborative-dark-3xl.jpg';
+import workflowDark3xl from '~/images/homeNew/exploring/development-workflow-dark-3xl.jpg';
+import remoteLocalDark3xl from '~/images/homeNew/exploring/remote-local-dark-3xl.jpg';
+
+import collaborate2xl from '~/images/homeNew/exploring/collaborative-2xl.jpg';
+import workflow2xl from '~/images/homeNew/exploring/development-workflow-2xl.jpg';
+import remoteLocal2xl from '~/images/homeNew/exploring/remote-local-2xl.jpg';
+
+import collaborateDark2xl from '~/images/homeNew/exploring/collaborative-dark-2xl.jpg';
+import workflowDark2xl from '~/images/homeNew/exploring/development-workflow-dark-2xl.jpg';
+import remoteLocalDark2xl from '~/images/homeNew/exploring/remote-local-dark-2xl.jpg';
+
+import collaborateXl from '~/images/homeNew/exploring/collaborative-xl.jpg';
+import workflowXl from '~/images/homeNew/exploring/development-workflow-xl.jpg';
+import remoteLocalXl from '~/images/homeNew/exploring/remote-local-xl.jpg';
+
+import collaborateDarkXl from '~/images/homeNew/exploring/collaborative-dark-xl.jpg';
+import workflowDarkXl from '~/images/homeNew/exploring/development-workflow-dark-xl.jpg';
+import remoteLocalDarkXl from '~/images/homeNew/exploring/remote-local-dark-xl.jpg';
+
+import collaborateLg from '~/images/homeNew/exploring/collaborative-lg.jpg';
+import workflowLg from '~/images/homeNew/exploring/development-workflow-lg.jpg';
+import remoteLocalLg from '~/images/homeNew/exploring/remote-local-lg.jpg';
+
+import collaborateDarkLg from '~/images/homeNew/exploring/collaborative-dark-lg.jpg';
+import workflowDarkLg from '~/images/homeNew/exploring/development-workflow-dark-lg.jpg';
+import remoteLocalDarkLg from '~/images/homeNew/exploring/remote-local-dark-lg.jpg';
+
+import collaborateMd from '~/images/homeNew/exploring/collaborative-md.jpg';
+import workflowMd from '~/images/homeNew/exploring/development-workflow-md.jpg';
+import remoteLocalMd from '~/images/homeNew/exploring/remote-local-md.jpg';
+
+import collaborateDarkMd from '~/images/homeNew/exploring/collaborative-dark-md.jpg';
+import workflowDarkMd from '~/images/homeNew/exploring/development-workflow-dark-md.jpg';
+import remoteLocalDarkMd from '~/images/homeNew/exploring/remote-local-dark-md.jpg';
+
+import collaborateMobile from '~/images/homeNew/exploring/collaborative-mobile.jpg';
+import workflowMobile from '~/images/homeNew/exploring/development-workflow-mobile.jpg';
+import remoteLocalMobile from '~/images/homeNew/exploring/remote-local-mobile.jpg';
+
+import collaborateDarkMobile from '~/images/homeNew/exploring/collaborative-dark-mobile.jpg';
+import workflowDarkMobile from '~/images/homeNew/exploring/development-workflow-dark-mobile.jpg';
+import remoteLocalDarkMobile from '~/images/homeNew/exploring/remote-local-dark-mobile.jpg';
+
+import collBlog from '~/images/homeNew/exploring/collaborative.jpeg';
+import workflowBlog from '~/images/homeNew/exploring/workflow.jpeg';
+import remoteBlog from '~/images/homeNew/exploring/remote-local.jpeg';
 
 import explore from '~/images/explore.jpeg';
 
@@ -75,9 +127,6 @@ import {
   SelectionForeground,
   Users,
 } from '~/app/icons/icons';
-import Collarative from '~/images/homeNew/exploring/collaborative.jpeg';
-import RemoteLocal from '~/images/homeNew/exploring/remote-local.jpeg';
-import Workflow from '~/images/homeNew/exploring/workflow.jpeg';
 import Button from '../components/button';
 import JoinProvidersDialog from '../components/join-provider-dialog';
 import AnserSvg from '../icons/AnserRobotics';
@@ -143,6 +192,58 @@ const consts = {
         type: 'video/mp4',
       },
     ],
+    heroVideos: [
+      {
+        label: 'Workspace',
+        value: 'workspace',
+        video: [
+          {
+            src: '/intro.mp4',
+            type: 'video/mp4',
+          },
+        ],
+      },
+      {
+        label: 'Environment',
+        value: 'env',
+        video: [
+          {
+            src: '/docs/environment/create-app.mp4',
+            type: 'video/mp4',
+          },
+        ],
+      },
+      {
+        label: 'Connect',
+        value: 'connect',
+        video: [
+          {
+            src: '/docs/environment/use-config-in-app.mp4',
+            type: 'video/mp4',
+          },
+        ],
+      },
+      {
+        label: 'Switch',
+        value: 'switch',
+        video: [
+          {
+            src: '/docs/environment/import-resource.mp4',
+            type: 'video/mp4',
+          },
+        ],
+      },
+      {
+        label: 'Collaboration',
+        value: 'collab',
+        video: [
+          {
+            src: '/docs/environment/app-settings.mp4',
+            type: 'video/mp4',
+          },
+        ],
+      },
+    ],
     partners: partnersNew,
     messages: [
       {
@@ -169,19 +270,61 @@ const consts = {
     ],
     exploring: [
       {
-        img: Collarative.src,
+        img: collBlog.src,
+        imgs: {
+          rmobile: collaborateMobile.src,
+          rmobileDark: collaborateDarkMobile.src,
+          r768: collaborateMd.src,
+          r768Dark: collaborateDarkMd.src,
+          r1024: collaborateLg.src,
+          r1024Dark: collaborateDarkLg.src,
+          r1280: collaborateXl.src,
+          r1208Dark: collaborateDarkXl.src,
+          r1440: collaborate2xl.src,
+          r1440Dark: collaborateDark2xl.src,
+          r1920: collaborate3xl.src,
+          r1920Dark: collaborateDark3xl.src,
+        },
         label: 'Collaborative development',
         desc: 'In a globalized landscape, collaborative development faces challenges but fuels innovation.',
         to: '/blog/collaborative-development',
       },
       {
-        img: RemoteLocal.src,
+        img: workflowBlog.src,
+        imgs: {
+          rmobile: workflowMobile.src,
+          rmobileDark: workflowDarkMobile.src,
+          r768: workflowMd.src,
+          r768Dark: workflowDarkMd.src,
+          r1024: workflowLg.src,
+          r1024Dark: workflowDarkLg.src,
+          r1280: workflowXl.src,
+          r1208Dark: workflowDarkXl.src,
+          r1440: workflow2xl.src,
+          r1440Dark: workflowDark2xl.src,
+          r1920: workflow3xl.src,
+          r1920Dark: workflowDark3xl.src,
+        },
         label: 'Remote local environments',
         desc: 'Discover how Kloudlite pioneers transformative remote local environments.',
         to: '/blog/remote-local-environments',
       },
       {
-        img: Workflow.src,
+        img: remoteBlog.src,
+        imgs: {
+          rmobile: remoteLocalMobile.src,
+          rmobileDark: remoteLocalDarkMobile.src,
+          r768: remoteLocalMd.src,
+          r768Dark: remoteLocalDarkMd.src,
+          r1024: remoteLocalLg.src,
+          r1024Dark: remoteLocalDarkLg.src,
+          r1280: remoteLocalXl.src,
+          r1208Dark: remoteLocalDarkXl.src,
+          r1440: remoteLocal2xl.src,
+          r1440Dark: remoteLocalDark2xl.src,
+          r1920: remoteLocal3xl.src,
+          r1920Dark: remoteLocalDark3xl.src,
+        },
         label: 'Development workflow',
         desc: 'Kloudlite revolutionizes software development with streamlined efficiency and productivity',
         to: '/blog/development-workflow',
@@ -190,11 +333,11 @@ const consts = {
     howitworks: {
       images: {
         collaborate: {
-          rmobile: collaborateMobile.src,
+          rmobile: collaboratesMobile.src,
           rmobileDark: collaborateMobileDark.src,
           r1440: collaborate1440.src,
           r1440Dark: collaborate1440Dark.src,
-          r768: collaborateMd.src,
+          r768: collaboratesMd.src,
           r768Dark: collaborateMdDark.src,
         },
         connect: {

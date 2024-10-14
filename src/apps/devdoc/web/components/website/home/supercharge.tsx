@@ -21,9 +21,9 @@ const SuperCharge = () => {
               <div className="wb-w-full lg:wb-w-[300px]">
                 <JoinProvidersDialog
                   size="lg"
-                  signUpContent={
-                    <span className="wb-bodyXl-medium">Sign up</span>
-                  }
+                  signupButton={{
+                    content: <span className="wb-bodyXl-medium">Sign up</span>,
+                  }}
                 />
               </div>
             </div>
