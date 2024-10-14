@@ -192,6 +192,58 @@ const consts = {
         type: 'video/mp4',
       },
     ],
+    heroVideos: [
+      {
+        label: 'Workspace',
+        value: 'workspace',
+        video: [
+          {
+            src: '/intro.mp4',
+            type: 'video/mp4',
+          },
+        ],
+      },
+      {
+        label: 'Environment',
+        value: 'env',
+        video: [
+          {
+            src: '/docs/environment/create-app.mp4',
+            type: 'video/mp4',
+          },
+        ],
+      },
+      {
+        label: 'Connect',
+        value: 'connect',
+        video: [
+          {
+            src: '/docs/environment/use-config-in-app.mp4',
+            type: 'video/mp4',
+          },
+        ],
+      },
+      {
+        label: 'Switch',
+        value: 'switch',
+        video: [
+          {
+            src: '/docs/environment/import-resource.mp4',
+            type: 'video/mp4',
+          },
+        ],
+      },
+      {
+        label: 'Collaboration',
+        value: 'collab',
+        video: [
+          {
+            src: '/docs/environment/app-settings.mp4',
+            type: 'video/mp4',
+          },
+        ],
+      },
+    ],
     partners: partnersNew,
     messages: [
       {
