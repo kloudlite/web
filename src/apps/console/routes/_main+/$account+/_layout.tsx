@@ -402,6 +402,7 @@ const CurrentBreadcrum = ({ account }: { account: IAccount }) => {
     [searchText, accounts]
   );
 
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [isMouseOver, setIsMouseOver] = useState<boolean>(false);
@@ -474,10 +475,14 @@ const CurrentBreadcrum = ({ account }: { account: IAccount }) => {
 
           {searchResp?.map((item) => {
             return (
-              <OptionList.Link
+              <OptionList.Item
                 key={parseName(item)}
-                LinkComponent={Link}
-                to={`/${parseName(item)}/environments`}
+                onClick={() => {
+                  setOpen(false);
+                  setTimeout(() => {
+                    navigate(`/${parseName(item)}/environments`);
+                  }, 200);
+                }}
                 className={cn(
                   'flex flex-row items-center justify-between',
                   parseName(item) === parseName(account)
@@ -491,18 +496,22 @@ const CurrentBreadcrum = ({ account }: { account: IAccount }) => {
                     <Check size={16} />
                   </span>
                 )}
-              </OptionList.Link>
+              </OptionList.Item>
             );
           })}
 
           <OptionList.Separator />
-          <OptionList.Link
-            LinkComponent={Link}
-            to="/new-team"
+          <OptionList.Item
             className="text-text-primary"
+            onClick={() => {
+              setOpen(false);
+              setTimeout(() => {
+                navigate('/new-team');
+              }, 200);
+            }}
           >
             <Plus size={16} /> <span>Create team</span>
-          </OptionList.Link>
+          </OptionList.Item>
         </OptionList.Content>
       </OptionList.Root>
     </>
