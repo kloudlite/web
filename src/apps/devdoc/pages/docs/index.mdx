@@ -48,6 +48,8 @@ kl auth login
 
 ***Note:** You will be prompted to select the team you want to work with*
 
+<VideoPlayer src="/docs/getting-started/cli-download-login.mp4"/>
+
 ### Attach Cluster
 
 To create development environments and run your workloads, you'll need to attach a Kubernetes cluster to Kloudlite. 
@@ -59,7 +61,7 @@ With kloudlite you can run a local k3s cluster on your system and attach it to y
 This allows developers to get started quickly without needing to provision compute from cloud 
 providers.
 
-<VideoPlayer src="/docs/introduction/attach-local-cluster.mp4"/>
+<VideoPlayer src="/docs/getting-started/attach-local-cluster.mp4"/>
 
 ```shell
 kl cluster up
@@ -152,7 +154,8 @@ kl add config-mount <file-path>
 ```
 <VideoPlayer src="/docs/introduction/setup-workspace-add-config-mount.mp4"/>
 
-##### You can start and access workspace (development container) using the following command:
+You can start and access workspace (development container) using the following command:
+
 ```bash
 kl box ssh
 ```
@@ -177,7 +180,12 @@ kl box restart
 
 <VideoPlayer src="/docs/introduction/add-packages.mp4"/>
 
-> **Note:** You can search for available packages using `kl pkg search <package-name>` or from [nixhub.io](https://www.nixhub.io/)
+***Note:** You can search for available packages using `kl pkg search <package-name>` or from [nixhub.io](https://www.nixhub.io/)*
+
+
+> You can add configs, secrets, config-mounts and packages to the workspace from inside or outside the workspace. When inside the workspce, you need to restart the workspace using `kl box restart` command to reflect these changes.
+
+> In the above example we showed adding configs and secrets from outside and packages from inside.
 
 ### Working with the Workspace
 
@@ -189,22 +197,24 @@ All the configs, secrets, packages are already loaded inside the workspace conta
 
 Now you will be able to access the apps running in the environment using their name. All the configs, secrets, packages are already loaded inside the workspace container.
 
+
+<VideoPlayer src="/docs/getting-started/access-apps.mp4"/>
+
 ##### Intercept the traffic of the apps running in the environment using the following command:
 ```bash
-kl intercept start
+kl intercept
 ```
 You will be prompted to select the app you want to intercept, and port you want to redirect the traffic to.
-
-<VideoPlayer src="/docs/introduction/select-app.mp4"/>
-
-
-Now all the traffic to the remote application running in the environment will be 
-intercepted and redirected to the local port. 
 
 ##### Use the following command to stop the interception:
 ```bash
 kl intercept stop
 ```
+
+<VideoPlayer src="/docs/getting-started/intercept.mp4"/>
+
+***Note:** In the above example, we have intercepted traffic going to the app running an nginx container with the workspace.*
+
 
 **For more detailed explanation check reference guide [here](/reference-guide)**
 </Steps>
