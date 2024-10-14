@@ -48,6 +48,7 @@ const primitives = {
     md: '24px',
     lg: '28px',
     xl: '32px',
+    'xl-1': '38px',
     '2xl': '40px',
     '2xl-1': '46px',
     '3xl': '48px',
