@@ -55,14 +55,11 @@
     "title": "WORKSPACES",
     "type": "separator"
   },
-  "environment-sync": {
-    "title": "Environment Sync"
+  "setup-connect": {
+    "title": "Setup & Connect"
   },
-  "workspace-configuration": {
-    "title": "Configuration"
-  },
-  "workspace-packages": {
-    "title": "Packages"
+  "workspace-management": {
+    "title": "Workspace Management"
   },
   "ide-integrations": {
     "title": "IDE Integrations"
