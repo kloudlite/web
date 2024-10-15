@@ -71,7 +71,7 @@ The setup itself can vary based on the developer's role and the services they wo
 **For QA Developer**
 <Img src="/docs/getting-started/qa.png" alt="qa-workspace-env"/>
 
-## Connecting Workspaces and Environments complicates development loop:
+## Why Development loops are slow?
 
 Despite advancements in development tools, developers still face persistent issues. These include juggling configs, secrets, multiple environment setups and 
 lengthy development loops. Developers switch between environments by tweaking configs, but this change is usually one-directional. The environment remains 
@@ -82,7 +82,7 @@ the frontend, they must deploy their code to the environment and test it. Changi
 isn’t feasible in most cases, especially in remote environments.
 
 Because of this, many developers prefer to create isolated local environments where they can configure services and test code before deploying 
-it to a shared environment.
+it to a shared environment. This approach is time-consuming and make development loops slower.
 
 ## Why Does This Development Cycle Matter?
 
@@ -91,10 +91,9 @@ This is especially true in microservices architectures, where interdependencies 
 integration and testing. Shortening the development loop with two-way connections accelerates the development 
 process and boosts overall efficiency.
 
-## Solutions to connect Workspaces and Environments
+## Some existing solutions connect Workspaces and Environments
 
-What if we could establish a two-way connection between workspaces and environments? This approach would allow developers to test their code 
-without going through CICD pipelines or deploying to the environment, saving time and increasing efficiency.
+There are some ways to bridge the gap between workspaces and environments. Let's explore the pros and cons of each approach:
 
 #### Types of Solutions:
 
@@ -137,4 +136,4 @@ With Kloudlite, we're pioneering a network-based solution that dramatically shor
 We invite developers to join us on this transformative journey. Try out Kloudlite today and experience the difference 
 firsthand. 
 
-Your feedback will help us refine and perfect our solution. 
+Your feedback will help us refine and perfect our solution.
