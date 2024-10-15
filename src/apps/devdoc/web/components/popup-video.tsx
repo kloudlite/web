@@ -3,9 +3,9 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { ChangeEvent, useEffect, useMemo, useRef } from 'react';
 import videojs from 'video.js';
 import 'video.js/dist/video-js.css';
+import Player from 'video.js/dist/types/player';
 import Button from './button';
 import { cn } from '../utils/commons';
-import Player from 'video.js/dist/types/player';
 import consts from '../utils/const';
 
 export const VideoJS = (props: {
@@ -13,7 +13,7 @@ export const VideoJS = (props: {
   onReady?: (player: Player) => void;
   onTimeUpdate?: (
     currentTime: number | undefined,
-    totalTime: number | undefined,
+    totalTime: number | undefined
   ) => void;
   onEnded?: (e: ChangeEvent<HTMLVideoElement>) => void;
   className?: string;
@@ -36,7 +36,7 @@ export const VideoJS = (props: {
       }));
 
       player.on('playing', () => {
-        //@ts-ignore
+        // @ts-ignore
         videoRef.current?.classList.remove('vjs-waiting');
       });
 
@@ -74,7 +74,7 @@ export const VideoJS = (props: {
       data-vjs-player
       className={cn(
         'wb-w-full wb-rounded-xl wb-overflow-hidden',
-        props.className,
+        props.className
       )}
     >
       <div ref={videoRef} className="wb-w-full wb-h-full vjs-waiting" />
@@ -136,7 +136,7 @@ const PopupVideo = ({
       preload: 'auto',
       sources: consts.homeNew.introVideo,
     }),
-    [],
+    []
   );
 
   return (
@@ -150,7 +150,7 @@ const PopupVideo = ({
             ease: 'anticipate',
           }}
           className={cn(
-            'wb-flex wb-items-center wb-justify-center wb-z-[99999] wb-bg-surface-basic-overlay-bg/60 wb-fixed wb-inset-0',
+            'wb-flex wb-items-center wb-justify-center wb-z-[99999] wb-bg-surface-basic-overlay-bg/60 wb-fixed wb-inset-0'
           )}
           onClick={onClose}
         >

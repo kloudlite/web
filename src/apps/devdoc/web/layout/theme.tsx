@@ -5,6 +5,7 @@ import { useFSRoute } from 'nextra/hooks';
 import { Item, normalizePages } from 'nextra/normalize-pages';
 import { useRouter } from 'next/router';
 import { ArrowUpLg } from '@jengaicons/react';
+import { deleteCookie } from 'cookies-next';
 import Container from '~/app/components/container';
 import { NavLinks } from '~/app/components/nav-links';
 import { TOC } from '~/app/components/toc';
@@ -25,7 +26,6 @@ import { GraphItem } from '../components/graph';
 import { ExploringItem } from '../components/website/home/keep-exploring';
 import consts from '../utils/const';
 import { Block } from '../components/commons';
-import { deleteCookie } from 'cookies-next';
 import ExternalLayout from './alternate-layout';
 
 function GitTimestamp({ timestamp }: { timestamp: Date }) {
@@ -84,7 +84,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
   }, [state]);
 
   useEffect(() => {
-    let x = document.querySelector('.grecaptcha-badge') as HTMLDivElement;
+    const x = document.querySelector('.grecaptcha-badge') as HTMLDivElement;
     if (x) {
       if (!asPath.startsWith('/contact-us')) {
         x.style.display = 'none';
@@ -99,7 +99,6 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
   useEffect(() => {
     if (!asPath.startsWith('/contact-us')) {
       deleteCookie(consts.contactUs.cookies.submitCookie);
-    } else {
     }
   }, [asPath]);
 
@@ -113,7 +112,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
         defaultLocale,
         route: fsPath,
       }),
-    [pageMap, locale, defaultLocale, fsPath],
+    [pageMap, locale, defaultLocale, fsPath]
   );
 
   const {
@@ -155,7 +154,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
                 : 'wb-max-w-none',
               ['blog', 'customer-stories'].includes(pageType)
                 ? 'wb-py-6xl md:!wb-py-8xl'
-                : '',
+                : ''
             )}
           >
             <Sidebar
@@ -180,7 +179,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
               id="kl-article"
               className={cn(
                 'wb-flex-1 wb-w-full lg:!wb-z-50',
-                activeThemeContext.layout === 'raw' ? '' : 'lg:wb-pt-xl',
+                activeThemeContext.layout === 'raw' ? '' : 'lg:wb-pt-xl'
               )}
             >
               <main
@@ -196,7 +195,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
                     : '',
                   ['blog'].includes(pageType)
                     ? 'md:wb-px-5xl lg:wb-px-8xl xl:!wb-px-11xl 2xl:!wb-px-12xl 3xl:!wb-px-14xl'
-                    : '',
+                    : ''
                 )}
               >
                 <MDXProvider

@@ -1,15 +1,8 @@
-import React, {
-  ReactNode,
-  cloneElement,
-  isValidElement,
-  useEffect,
-  useId,
-  useState,
-} from 'react';
-import { cn } from '../utils/commons';
+import React, { ReactNode, useEffect, useId, useState } from 'react';
 import { IconButton } from 'kl-design-system/atoms/button';
 import { XFill } from '@jengaicons/react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { cn } from '../utils/commons';
 
 const useFullscreen = () => {
   const [fullscreen, setFullscreen] = useState(false);
@@ -36,6 +29,38 @@ const Fullscreen = ({
   const { fullscreen, toggleFullscreen } = useFullscreen();
   const layoutId = useId();
   const transitionDuration = 0.3;
+
+  useEffect(() => {
+    const article = document.querySelector('#kl-article') as HTMLDivElement;
+    const nav = document.querySelector('#kl-nav') as HTMLDivElement;
+    if (fullscreen) {
+      document.body.style.overflowY = 'hidden';
+      document.body.style.zIndex = '10';
+      if (article) {
+        article.style.zIndex = '10';
+      }
+      if (nav) {
+        nav.style.zIndex = '10';
+      }
+    } else {
+      document.body.style.overflowY = 'auto';
+      if (article) {
+        article.style.zIndex = '50';
+      }
+      if (nav) {
+        nav.style.zIndex = '9999999';
+      }
+    }
+    return () => {
+      document.body.style.overflowY = 'auto';
+      if (article) {
+        article.style.zIndex = '50';
+      }
+      if (nav) {
+        nav.style.zIndex = '99999999';
+      }
+    };
+  }, [fullscreen]);
 
   return (
     <>

@@ -1,4 +1,4 @@
-import { ComponentProps, useEffect, useState } from 'react';
+import { ComponentProps } from 'react';
 import { cn } from '../utils/commons';
 import Fullscreen from './fullscreen';
 
