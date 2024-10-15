@@ -79,3 +79,25 @@ When there is a change in the environment, your shell prompt will indicate that 
 ```bash
 kl box restart
 ```
+
+
+## Connection Status
+
+To check the connection status. Use the following command:
+
+```bash
+kl status
+```
+
+If this command is executed on host system it will show details of current active account, 
+cluster status and cluster's connection status.
+
+When executed inside the development container, it will also show the connection status
+of workspace container.
+
+Sometimes when there is disruption in network connection, the workspace container or cluster may lose 
+connection with wireguard mesh. In such cases, you can use the following command to reconnect:
+
+```bash
+kl connect
+```
