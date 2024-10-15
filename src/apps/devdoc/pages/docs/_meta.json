@@ -9,10 +9,10 @@
       "breadcrumb": false
     }
   },
-  "what-is-kloudlite":{
+  "what-is-kloudlite": {
     "title": "What is Kloudlite?"
   },
-  "architecture":{
+  "architecture": {
     "title": "Architecture"
   },
   "basic-concepts": {
@@ -67,9 +67,9 @@
   "app-intercept": {
     "title": "App Intercepts"
   },
-  "cli":{
-      "title": "CLI Reference",
-      "href":"https://github.com/kloudlite/kl"
+  "cli": {
+    "title": "CLI Reference",
+    "href": "https://github.com/kloudlite/kl"
   },
   "--PARTICIPATE--": {
     "title": "PARTICIPATE",
@@ -92,5 +92,8 @@
   },
   "faq": {
     "title": "FAQ"
+  },
+  "uninstall-guide": {
+    "title": "Uninstall Guide"
   }
 }
