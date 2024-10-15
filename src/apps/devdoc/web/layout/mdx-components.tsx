@@ -59,13 +59,13 @@ function HeadingLink({
               'wb-headingLg wb-bg-surface-basic-subdued wb-mt-[30px] wb-z-[1]',
               isBlog
                 ? 'md:wb-headingXl wb-mt-5xl'
-                : 'md:wb-heading2xl wb-sticky wb-top-0 wb-py-[10px] ',
+                : 'md:wb-heading2xl wb-sticky wb-top-[var(--kl-navbar-height)] wb-py-[10px]'
             ),
-            h3: 'wb-headingLg wb-headingXl wb-mt-6xl',
+            h3: 'wb-headingLg wb-mt-6xl',
             h4: 'wb-headingLg wb-mt-6xl',
             h5: 'wb-mt-6xl',
             h6: 'wb-mt-6xl',
-          }[Tag],
+          }[Tag]
         )}
         {...props}
       >
@@ -166,7 +166,7 @@ export const createComponents = ({
       <ul
         className={cn(
           'wb-list-disc wb-pl-[18px] wb-list-outside wb-text-text-strong',
-          isBlog ? 'wb-bodyXl' : 'wb-bodyLg',
+          isBlog ? 'wb-bodyXl' : 'wb-bodyLg'
         )}
         {...props}
       />
@@ -175,7 +175,7 @@ export const createComponents = ({
       <ol
         className={cn(
           'wb-list-decimal wb-pl-[24px] wb-list-outside wb-text-text-strong',
-          isBlog ? 'wb-bodyXl' : 'wb-bodyLg',
+          isBlog ? 'wb-bodyXl' : 'wb-bodyLg'
         )}
         {...props}
       />
@@ -185,7 +185,7 @@ export const createComponents = ({
       <blockquote
         className={cn(
           "blockquote wb-mt-3xl wb-rounded-md wb-p-xl wb-bg-surface-primary-selected before:wb-content-[''] before:wb-w-md before:wb-bg-border-primary before:wb-flex before:wb-shrink-0 wb-flex wb-gap-3xl",
-          isBlog ? 'wb-bodyXl' : 'wb-bodyLg',
+          isBlog ? 'wb-bodyXl' : 'wb-bodyLg'
         )}
         {...props}
       />
@@ -199,7 +199,7 @@ export const createComponents = ({
           'wb-mt-3xl rounded-image wb-text-text-strong wb-break-words',
           isBlog
             ? 'wb-bodyXl !wb-leading-[32px]'
-            : 'wb-bodyLg !wb-leading-[28px]',
+            : 'wb-bodyLg !wb-leading-[28px]'
         )}
         {...props}
       />

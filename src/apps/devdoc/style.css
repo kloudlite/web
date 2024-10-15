@@ -65,7 +65,7 @@ html {
 }
 
 .kl-steps > h3 {
-  @apply wb-sticky wb-top-[50px] wb-bg-surface-basic-subdued wb-pb-[6px] wb-mt-[40px];
+  @apply wb-sticky wb-top-[calc(var(--kl-navbar-height)+50px)] wb-bg-surface-basic-subdued wb-pb-[6px] wb-mt-[40px] wb-z-[1];
 }
 
 .kl-steps > p {
