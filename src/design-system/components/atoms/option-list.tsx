@@ -131,37 +131,28 @@ const OptionMenuContent = forwardRef<
     },
     ref,
   ) => (
-    <AnimatePresence>
-      {open && (
-        <OptionMenuPrimitive.Portal forceMount>
-          <OptionMenuPrimitive.Content
-            ref={ref}
-            sideOffset={sideOffset}
-            align={align}
-            side={side}
-            alignOffset={alignOffset}
-            loop
-            forceMount
-            asChild
-            {...props}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.2, ease: 'anticipate' }}
-              className={cn(
-                'z-50 border border-border-default shadow-popover bg-surface-basic-default rounded min-w-[160px] overflow-hidden origin-top py-lg',
-                className,
-              )}
-            >
-              {children}
-            </motion.div>
-          </OptionMenuPrimitive.Content>
-        </OptionMenuPrimitive.Portal>
-      )}
-    </AnimatePresence>
+    <OptionMenuPrimitive.Portal>
+      <OptionMenuPrimitive.Content
+        ref={ref}
+        sideOffset={sideOffset}
+        align={align}
+        side={side}
+        alignOffset={alignOffset}
+        loop
+        asChild
+        {...props}
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div
+          className={cn(
+            'z-50 border border-border-default shadow-popover bg-surface-basic-default rounded min-w-[160px] overflow-hidden origin-top py-lg will-change-[opacity,transform] data-[side=bottom]:animate-slideUpAndFade data-[side=left]:animate-slideRightAndFade data-[side=right]:animate-slideLeftAndFade data-[side=top]:animate-slideDownAndFade',
+            className,
+          )}
+        >
+          {children}
+        </div>
+      </OptionMenuPrimitive.Content>
+    </OptionMenuPrimitive.Portal>
   ),
 );
 OptionMenuContent.displayName = OptionMenuPrimitive.Content.displayName;
