@@ -1,0 +1,19 @@
+# CICD Integration
+
+## Image Pull Secrets
+To pull images from private repositories you can add the pull secrets to the team in settings
+section of the dashboard.
+
+
+## Wekhook for Image Changes
+
+**In Beta**
+
+
+To ensure that the apps restart with updated image kloudlite provided a webhook to trigger the image
+changes. You can configure your CI pipelines to trigger using this webhook.
+
+This webhook will help in image discovery during app creation and also triggers app restarts
+when the a matching app image is updated.
+
+You can find the webhook url in the settings section of the dashboard.

@@ -4,16 +4,19 @@
     "type": "separator"
   },
   "index": {
-    "title": "What is kloudlite?",
+    "title": "Getting Started",
     "theme": {
       "breadcrumb": false
     }
   },
+  "what-is-kloudlite":{
+    "title": "What is Kloudlite?"
+  },
+  "architecture":{
+    "title": "Architecture"
+  },
   "basic-concepts": {
     "title": "Basic Concepts"
-  },
-  "getting-started": {
-    "title": "Getting Started"
   },
   "--core-components--": {
     "title": "CORE COMPONENTS",
@@ -32,6 +35,9 @@
   "environments": {
     "title": "Environments"
   },
+  "cicd": {
+    "title": "CICD Integration"
+  },
   "--environments--": {
     "title": "ENVIRONMENTS",
     "type": "separator"
@@ -42,8 +48,8 @@
   "configs-secrets": {
     "title": "Configs & Secrets"
   },
-  "integrated-resources": {
-    "title": "Integrated Resources"
+  "managed-resources": {
+    "title": "Managed Resources"
   },
   "---workspaces-": {
     "title": "WORKSPACES",
@@ -61,8 +67,9 @@
   "app-intercept": {
     "title": "App Intercepts"
   },
-  "uninstall": {
-    "title": "Uninstall"
+  "cli":{
+      "title": "CLI Reference",
+      "href":"https://github.com/kloudlite/kl"
   },
   "--PARTICIPATE--": {
     "title": "PARTICIPATE",
