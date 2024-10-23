@@ -97,7 +97,7 @@ export const GraphExtended = ({
     <Graph
       graph={graph}
       className={cn(
-        'xl:-wb-mx-10xl wb-py-7xl md:wb-py-8xl lg:wb-py-10xl',
+        'xl:-wb-mx-10xl wb-py-6xl md:wb-py-8xl lg:wb-py-10xl',
         className,
       )}
       style={style}

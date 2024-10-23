@@ -369,14 +369,14 @@ export function Sidebar({
         className={cn(
           'motion-reduce:wb-transition-none [transition:background-color_1.5s_ease]',
           menu
-            ? 'wb-fixed wb-inset-0 wb-z-10 wb-bg-black/80'
+            ? 'wb-fixed wb-inset-0 wb-z-[51] md:wb-z-10 wb-bg-black/80'
             : 'wb-bg-transparent',
         )}
         onClick={() => setMenu(false)}
       />
       <aside
         className={cn(
-          'kl-sidebar wb-bg-surface-basic-subdued wb-z-40 kl-sidebar-container wb-flex-col wb-pb-6xl lg:wb-pt-0',
+          'kl-sidebar wb-bg-surface-basic-subdued wb-z-[51] md:wb-z-10 kl-sidebar-container wb-flex-col wb-pb-6xl lg:wb-pt-0',
           'wb-top-[var(--kl-navbar-height)] lg:wb-shrink-0 motion-reduce:wb-transform-none',
           // 'wb-transform-gpu wb-transition-all wb-ease-in-out wb-duration-[3s]',
           'print:wb-hidden',
@@ -474,7 +474,7 @@ export function Sidebar({
                             to={config.gitRepoUrl}
                           />
                           <JoinProvidersDialog
-                            isInHeader
+                            isInHeader={false}
                             hasSignIn
                             hasSignUp={false}
                           />

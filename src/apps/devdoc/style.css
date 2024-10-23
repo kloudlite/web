@@ -65,7 +65,13 @@ html {
 }
 
 .kl-steps > h3 {
-  @apply wb-sticky wb-top-[calc(var(--kl-navbar-height)+50px)] wb-bg-surface-basic-subdued wb-pb-[6px] wb-mt-[40px] wb-z-[12];
+  @apply wb-sticky wb-top-[calc(var(--kl-navbar-height)+44px)] wb-bg-surface-basic-subdued wb-pb-[6px] wb-mt-[40px] wb-z-[12];
+}
+
+@media screen and (min-width: 768px) {
+  .kl-steps > h3 {
+    @apply wb-top-[calc(var(--kl-navbar-height)+50px)];
+  }
 }
 
 .kl-steps > p {
@@ -115,7 +121,7 @@ code {
 
 @media (max-width: 1023px) {
   .kl-sidebar-container {
-    @apply wb-fixed wb-inset-0 wb-w-full wb-bottom-0 wb-z-50 wb-overscroll-contain wb-pr-0 wb-pb-3xl;
+    @apply wb-fixed wb-inset-0 wb-w-full wb-bottom-0 wb-overscroll-contain wb-pr-0 wb-pb-3xl;
     transition: transform 0.3s ease-in-out;
     will-change: transform, opacity;
     contain: layout style;

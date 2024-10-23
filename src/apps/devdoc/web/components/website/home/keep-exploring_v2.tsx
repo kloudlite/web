@@ -1,12 +1,12 @@
-import { ReactNode, useState } from 'react';
 import { Button } from 'kl-design-system/atoms/button';
-import consts from '~/app/utils/const';
+import { ReactNode, useState } from 'react';
 import { ArrowRight } from '~/app/icons/icons';
-import { Block, BlockV2 } from '../../commons';
-import Slider from '../../slider';
-import { GraphItem } from '../../graph';
+import consts from '~/app/utils/const';
 import { Anchor } from '../../anchor';
+import { BlockV2 } from '../../commons';
+import { GraphItem } from '../../graph';
 import ResponsiveContainer from '../../responsive-container';
+import Slider from '../../slider';
 import ResponsiveImage from '../responsive-image';
 
 export const ExploringItem = ({
@@ -26,10 +26,10 @@ export const ExploringItem = ({
       className="wb-bg-surface-basic-default wb-h-full wb-flex wb-flex-col wb-ring-offset-0 wb-ring-border-focus wb-outline-none focus-visible:wb-ring-2 wb-group"
     >
       <ResponsiveImage
-        className="wb-w-full wb-object-top wb-object-cover wb-h-full md:wb-h-[224px]"
-        alt={''}
+        className="wb-w-full wb-object-top wb-object-cover wb-h-full xl:wb-h-[224px]"
+        alt="blogs"
         rmobile={imgs.rmobile}
-        rmobileDark={imgs.rmobile}
+        rmobileDark={imgs.rmobileDark}
         r768={imgs.r768}
         r768Dark={imgs.r768Dark}
         r1024={imgs.r1024}
@@ -66,7 +66,7 @@ const KeepExploring = () => {
       title="Unveil the untold - Keep exploring"
       graphClass="xl:[clip-path:inset(24px_1.5px_24px_1.5px)] 3xl:[clip-path:inset(1.5px)]"
     >
-      <div className="wb-block md:wb-hidden">
+      <div className="wb-block lg:wb-hidden">
         <Slider autoPlay active={`${active}`} onMove={(e) => setActive(e)}>
           {consts.homeNew.exploring.map((message) => (
             <ExploringItem key={message.label} {...message} />
@@ -75,7 +75,7 @@ const KeepExploring = () => {
       </div>
 
       <ResponsiveContainer>
-        <div className="wb-hidden md:wb-grid wb-grid-cols-1 md:wb-grid-cols-3 wb-gap-3xl lg:wb-gap-5xl">
+        <div className="wb-hidden lg:wb-grid wb-grid-cols-1 lg:wb-grid-cols-3 wb-gap-3xl lg:wb-gap-5xl">
           {consts.homeNew.exploring.map((e) => {
             return (
               <GraphItem key={e.label}>

@@ -112,7 +112,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
         defaultLocale,
         route: fsPath,
       }),
-    [pageMap, locale, defaultLocale, fsPath]
+    [pageMap, locale, defaultLocale, fsPath],
   );
 
   const {
@@ -154,7 +154,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
                 : 'wb-max-w-none',
               ['blog', 'customer-stories'].includes(pageType)
                 ? 'wb-py-6xl md:!wb-py-8xl'
-                : ''
+                : '',
             )}
           >
             <Sidebar
@@ -178,8 +178,8 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
             <article
               id="kl-article"
               className={cn(
-                'wb-flex-1 wb-w-full lg:!wb-z-50',
-                activeThemeContext.layout === 'raw' ? '' : 'lg:wb-pt-xl'
+                'wb-flex-1 wb-w-full lg:wb-z-50',
+                activeThemeContext.layout === 'raw' ? '' : 'lg:wb-pt-xl',
               )}
             >
               <main
@@ -195,7 +195,7 @@ const Main = ({ children, pageOpts }: NextraThemeLayoutProps) => {
                     : '',
                   ['blog'].includes(pageType)
                     ? 'md:wb-px-5xl lg:wb-px-8xl xl:!wb-px-11xl 2xl:!wb-px-12xl 3xl:!wb-px-14xl'
-                    : ''
+                    : '',
                 )}
               >
                 <MDXProvider

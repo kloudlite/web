@@ -38,7 +38,7 @@ const Partners = () => {
 
 const PartnerSection = () => {
   return (
-    <div className="wb-pt-8xl md:wb-pt-10xl md:wb-pb-5xl wb-flex wb-flex-col">
+    <div className="wb-pt-6xl md:wb-pt-10xl md:wb-pb-5xl wb-flex wb-flex-col">
       <p className="wb-bodyXl wb-text-text-strong wb-text-center">
         Join the cult of our early adopters and discover the power of Kloudlite
       </p>

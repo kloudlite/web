@@ -7,13 +7,14 @@ import Player from 'video.js/dist/types/player';
 import Button from './button';
 import { cn } from '../utils/commons';
 import consts from '../utils/const';
+import * as Dialog from '@radix-ui/react-dialog';
 
 export const VideoJS = (props: {
   options: any;
   onReady?: (player: Player) => void;
   onTimeUpdate?: (
     currentTime: number | undefined,
-    totalTime: number | undefined
+    totalTime: number | undefined,
   ) => void;
   onEnded?: (e: ChangeEvent<HTMLVideoElement>) => void;
   className?: string;
@@ -74,7 +75,7 @@ export const VideoJS = (props: {
       data-vjs-player
       className={cn(
         'wb-w-full wb-rounded-xl wb-overflow-hidden',
-        props.className
+        props.className,
       )}
     >
       <div ref={videoRef} className="wb-w-full wb-h-full vjs-waiting" />
@@ -99,7 +100,7 @@ const PopupVideo = ({
         article.style.zIndex = '10';
       }
       if (nav) {
-        nav.style.zIndex = '10';
+        nav.style.zIndex = '11';
       }
     } else {
       document.body.style.overflowY = 'auto';
@@ -107,7 +108,7 @@ const PopupVideo = ({
         article.style.zIndex = '50';
       }
       if (nav) {
-        nav.style.zIndex = '9999999';
+        nav.style.zIndex = '9999';
       }
     }
     return () => {
@@ -116,7 +117,7 @@ const PopupVideo = ({
         article.style.zIndex = '50';
       }
       if (nav) {
-        nav.style.zIndex = '99999999';
+        nav.style.zIndex = '9999';
       }
     };
   }, [show]);
@@ -136,41 +137,68 @@ const PopupVideo = ({
       preload: 'auto',
       sources: consts.homeNew.introVideo,
     }),
-    []
+    [],
   );
 
   return (
-    <AnimatePresence>
-      {show ? (
-        <motion.div
-          initial={{ opacity: 0, top: -20 }} // Initial state
-          animate={{ opacity: 1, top: 0 }} // Animate to visible
-          exit={{ opacity: 0, top: -20 }} // Animate to visible
-          transition={{
-            ease: 'anticipate',
-          }}
-          className={cn(
-            'wb-flex wb-items-center wb-justify-center wb-z-[99999] wb-bg-surface-basic-overlay-bg/60 wb-fixed wb-inset-0'
-          )}
-          onClick={onClose}
-        >
-          <div className="wb-z-[99999] wb-absolute wb-top-[20px] wb-right-[20px]">
-            <Button
-              variant="plain"
-              content={
-                <XFill
-                  size={20}
-                  className="wb-text-text-on-primary hover:wb-opacity-60"
-                />
-              }
-            />
-          </div>
-          <div className="wb-relative wb-m-2xl wb-max-h-[90vh] md:wb-max-h-[80vh] wb-overflow-hidden wb-rounded wb-h-[90vh] md:wb-h-[80vh] wb-max-w-[90vw] md:wb-max-w-[80vw] wb-aspect-video wb-flex wb-items-center">
-            <VideoJS options={videoJsOptions} />
-          </div>
-        </motion.div>
-      ) : null}
-    </AnimatePresence>
+    <Dialog.Root>
+      <AnimatePresence>
+        {show ? (
+          <Dialog.Portal forceMount>
+            <Dialog.Overlay asChild forceMount>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.4, ease: 'anticipate' }}
+                className={cn(
+                  'wb-fixed wb-inset-0 wb-z-[9999999]',
+                  'wb-bg-surface-basic-overlay-bg/60',
+                )}
+                /* className={cn(
+                'wb-flex wb-items-center wb-justify-center wb-z-[99999] wb-bg-surface-basic-overlay-bg/60 wb-fixed wb-inset-0',
+              )} */
+                onClick={onClose}
+              />
+            </Dialog.Overlay>
+            <Dialog.Content asChild forceMount>
+              <motion.div
+                initial={{ x: '-50%', y: '10%', opacity: 0 }}
+                animate={{ x: '-50%', y: '0%', opacity: 1 }}
+                exit={{ x: '-50%', y: '10%', opacity: 0 }}
+                transition={{
+                  ease: 'anticipate',
+                }}
+                className="wb-w-full wb-z-[99999999] wb-fixed wb-inset-0 wb-left-1/2 wb-flex wb-items-center wb-justify-center"
+                onClick={onClose}
+              >
+                <div className="wb-z-[99999] wb-absolute wb-top-[20px] wb-right-[20px]">
+                  <Button
+                    onClick={onClose}
+                    variant="plain"
+                    content={
+                      <XFill
+                        size={20}
+                        className="wb-text-text-on-primary hover:wb-opacity-60"
+                      />
+                    }
+                  />
+                </div>
+                <div
+                  onClick={(e) => {
+                    onClose?.();
+                    e.stopPropagation();
+                  }}
+                  className="wb-m-2xl wb-max-h-[90vh] md:wb-max-h-[80vh] wb-h-[90vh] md:wb-h-[80vh] wb-max-w-[90vw] md:wb-max-w-[80vw]  wb-overflow-hidden wb-rounded wb-aspect-video wb-flex wb-items-center"
+                >
+                  <VideoJS options={videoJsOptions} />
+                </div>
+              </motion.div>
+            </Dialog.Content>
+          </Dialog.Portal>
+        ) : null}
+      </AnimatePresence>
+    </Dialog.Root>
   );
 };
 

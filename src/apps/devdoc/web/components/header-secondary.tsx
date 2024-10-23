@@ -119,7 +119,7 @@ export const MobileMenu = ({ items = [] }: IHeaderSecondary) => {
             toLabel="href"
             to={config.gitRepoUrl}
           />
-          <JoinProvidersDialog isInHeader hasSignIn hasSignUp={false} />
+          <JoinProvidersDialog isInHeader={false} hasSignIn hasSignUp={false} />
         </div>
       </div>
     </div>

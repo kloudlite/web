@@ -1,13 +1,13 @@
 /** eslint-disable prettier/prettier */
 import {
-  ArrowLeftLg,
-  Config,
-  Money,
-  OpenSource,
-  PhoneCall,
-  Question,
-  Star,
-  TwitterNewLogoFill,
+    ArrowLeftLg,
+    Config,
+    Money,
+    OpenSource,
+    PhoneCall,
+    Question,
+    Star,
+    TwitterNewLogoFill,
 } from '@jengaicons/react';
 
 import Link from 'next/link';
@@ -104,28 +104,28 @@ import workflowDarkMobile from '~/images/homeNew/exploring/development-workflow-
 import remoteLocalDarkMobile from '~/images/homeNew/exploring/remote-local-dark-mobile.jpg';
 
 import collBlog from '~/images/homeNew/exploring/collaborative.jpeg';
-import workflowBlog from '~/images/homeNew/exploring/workflow.jpeg';
 import remoteBlog from '~/images/homeNew/exploring/remote-local.jpeg';
+import workflowBlog from '~/images/homeNew/exploring/workflow.jpeg';
 
 import explore from '~/images/explore.jpeg';
 
 import {
-  Agritech,
-  AnscerRoboticsLogo,
-  ArrowRight,
-  BoltchemLogo,
-  Code,
-  DesktopTower,
-  Developer,
-  Flask,
-  Infinity as InfinityIcon,
-  Lightbulb,
-  LockSimple,
-  PlaxonicLogo,
-  Robot,
-  RocketLaunch,
-  SelectionForeground,
-  Users,
+    Agritech,
+    AnscerRoboticsLogo,
+    ArrowRight,
+    BoltchemLogo,
+    Code,
+    DesktopTower,
+    Developer,
+    Flask,
+    Infinity as InfinityIcon,
+    Lightbulb,
+    LockSimple,
+    PlaxonicLogo,
+    Robot,
+    RocketLaunch,
+    SelectionForeground,
+    Users,
 } from '~/app/icons/icons';
 import Button from '../components/button';
 import JoinProvidersDialog from '../components/join-provider-dialog';
@@ -279,7 +279,7 @@ const consts = {
           r1024: collaborateLg.src,
           r1024Dark: collaborateDarkLg.src,
           r1280: collaborateXl.src,
-          r1208Dark: collaborateDarkXl.src,
+          r1280Dark: collaborateDarkXl.src,
           r1440: collaborate2xl.src,
           r1440Dark: collaborateDark2xl.src,
           r1920: collaborate3xl.src,
@@ -299,7 +299,7 @@ const consts = {
           r1024: workflowLg.src,
           r1024Dark: workflowDarkLg.src,
           r1280: workflowXl.src,
-          r1208Dark: workflowDarkXl.src,
+          r1280Dark: workflowDarkXl.src,
           r1440: workflow2xl.src,
           r1440Dark: workflowDark2xl.src,
           r1920: workflow3xl.src,
@@ -319,7 +319,7 @@ const consts = {
           r1024: remoteLocalLg.src,
           r1024Dark: remoteLocalDarkLg.src,
           r1280: remoteLocalXl.src,
-          r1208Dark: remoteLocalDarkXl.src,
+          r1280Dark: remoteLocalDarkXl.src,
           r1440: remoteLocal2xl.src,
           r1440Dark: remoteLocalDark2xl.src,
           r1920: remoteLocal3xl.src,
@@ -442,31 +442,31 @@ const consts = {
       {
         title: 'How does Kloudlite Development Environments work?',
         desc: `Kloudlite Development Environments work by linking your local machine to remote environment
-         where your applications run. Configs and Secrets are kept in sync between your local machine and the remote environment. 
-         Local containers will be in the same wireguard network as remote environment. 
-         These  connect through a secure network, allowing you to access and work with all necessary services without installing them locally. 
-         This setup enables developers to work efficiently, ensuring that what they build on their computers will function the same way when 
+         where your applications run. Configs and Secrets are kept in sync between your local machine and the remote environment.
+         Local containers will be in the same wireguard network as remote environment.
+         These  connect through a secure network, allowing you to access and work with all necessary services without installing them locally.
+         This setup enables developers to work efficiently, ensuring that what they build on their computers will function the same way when
          deployed on the remote servers.`,
         classNames: 'wb-pb-lg 3xl:wb-pb-md',
       },
       {
         title: 'How to use Kloudlite?',
-        desc: `To use Kloudlite, begin by attaching your cluster to the Kloudlite platform. 
-        Once your cluster is connected, you can create your environment and deploy your applications effortlessly. 
-        Use the \`kl\` CLI tool on your local machine to set up a local development container and connect it to your environment. 
-        This allows you to start coding and testing your applications in local development containers seamlessly integrated with remote 
+        desc: `To use Kloudlite, begin by attaching your cluster to the Kloudlite platform.
+        Once your cluster is connected, you can create your environment and deploy your applications effortlessly.
+        Use the \`kl\` CLI tool on your local machine to set up a local development container and connect it to your environment.
+        This allows you to start coding and testing your applications in local development containers seamlessly integrated with remote
         environments.`,
         classNames: 'wb-pb-lg 3xl:wb-pb-md',
       },
       {
         title: 'How to collaborate?',
         desc: `
-        To collaborate using Kloudlite, multiple developers can connect their local development containers to the same 
-        remote environment via a secure WireGuard network. This setup allows them to work on different dependent services 
-        within the same environment, sharing configurations and secrets seamlessly. By using the same Kubernetes namespace, 
-        they ensure consistency and integration, facilitating real-time collaboration and testing without conflicts. 
-        Developers can also access services running on each other’s machines as they are on the same network. 
-        When a developer intercepts a service, all traffic to that service is rerouted to their local machine, enabling 
+        To collaborate using Kloudlite, multiple developers can connect their local development containers to the same
+        remote environment via a secure WireGuard network. This setup allows them to work on different dependent services
+        within the same environment, sharing configurations and secrets seamlessly. By using the same Kubernetes namespace,
+        they ensure consistency and integration, facilitating real-time collaboration and testing without conflicts.
+        Developers can also access services running on each other’s machines as they are on the same network.
+        When a developer intercepts a service, all traffic to that service is rerouted to their local machine, enabling
         efficient collaboration and development without lengthy deployment loops.`,
         classNames: 'wb-pb-xl 3xl:wb-pb-lg',
       },

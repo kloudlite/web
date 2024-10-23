@@ -1,30 +1,31 @@
+import { PlayCircle } from '@jengaicons/react';
+import Radio from 'kl-design-system/atoms/radio';
+import Link from 'next/link';
+import { ReactNode, useEffect, useRef, useState } from 'react';
+import Player from 'video.js/dist/types/player';
 import DynamicImage from '~/app/components/dynamic-image';
 import { GraphExtended, GraphItem } from '~/app/components/graph';
 import Wrapper from '~/app/components/wrapper';
+import { ArrowRight } from '~/app/icons/icons';
+import { cn } from '~/app/utils/commons';
+import { authUrl } from '~/app/utils/config';
+import consts from '~/app/utils/const';
 import hero from '~/images/homeNew/hero';
 import HomeIllustrationMobileDark from '~/images/homeNew/illustration-mobile-dark.svg';
 import HomeIllustrationMobileWeb from '~/images/homeNew/illustration-mobile.webp';
-import { PlayCircle } from '@jengaicons/react';
-import { ArrowRight } from '~/app/icons/icons';
-import Link from 'next/link';
-import { authUrl } from '~/app/utils/config';
-import { ReactNode, useEffect, useRef, useState } from 'react';
-import consts from '~/app/utils/const';
+import Button from '../button';
 import PopupVideo from '../popup-video';
 import Events from '../website/home/events';
-import HowItWorksSection from '../website/home/how-it-works_v2';
-import Button from '../button';
-import DontBelieve from '../website/home/messages_v2';
-import KeepExploring from '../website/home/keep-exploring_v2';
 import FaqSection from '../website/home/faq_v2';
+import HowItWorksSection from '../website/home/how-it-works_v2';
+import KeepExploring from '../website/home/keep-exploring_v2';
 import KloudliteDevelopment from '../website/home/kloudlite-development_v2';
+import DontBelieve from '../website/home/messages_v2';
+import OpenSource from '../website/home/opensource_v2';
 import PartnerSection from '../website/home/partners_v2';
 import SecureAtCore from '../website/home/secure-at-core_v2';
 import SuperCharge from '../website/home/supercharge_v2';
-import OpenSource from '../website/home/opensource_v2';
-import { cn } from '~/app/utils/commons';
 import VideoSection from '../website/home/video-section_v2';
-import Player from 'video.js/dist/types/player';
 
 const Title = () => {
   return (
@@ -35,7 +36,6 @@ const Title = () => {
           <span className="wb-sriracha5xl"> isn’t</span> complex
           <span className="wb-sriracha5xl"> anymore!</span>
         </div>
-
         <div className="wb-block md:wb-hidden">
           Building distributed apps
           <span className="wb-sriracha4xl"> is’nt</span> complex
@@ -54,7 +54,7 @@ const Title = () => {
           of remote environments.
         </span>
       </p>
-      <span className="wb-flex wb-flex-col wb-flex-col-reverse md:wb-flex-row wb-items-center wb-gap-xl wb-pt-6xl xl:wb-pt-7xl">
+      <span className="wb-flex wb-flex-col  md:wb-flex-row wb-items-center wb-gap-xl wb-pt-6xl xl:wb-pt-7xl wb-w-full md:wb-w-auto">
         <Button
           content={
             <span className="wb-bodyLg-medium md:wb-bodyLg-semibold">
@@ -67,6 +67,7 @@ const Title = () => {
           linkComponent={Link}
           to={`${authUrl}/login`}
           toLabel="href"
+          block
         />
         <Button
           content={
@@ -79,6 +80,7 @@ const Title = () => {
           linkComponent={Link}
           to={`${authUrl}/login`}
           toLabel="href"
+          block
         />
       </span>
     </div>
@@ -98,10 +100,13 @@ const HeroVideoTabItem = ({
 }) => {
   return (
     <button
-      className={cn('wb-py-xl wb-px-2xl wb-relative wb-pointer-events-auto', {
-        'wb-headingSm': !!active,
-        'wb-bodyMd': !active,
-      })}
+      className={cn(
+        'wb-py-xl wb-px-2xl wb-relative wb-pointer-events-auto wb-text-text-default',
+        {
+          'wb-headingSm': !!active,
+          'wb-bodyMd': !active,
+        }
+      )}
       onClick={(e) => {
         e.stopPropagation();
         onClick();
@@ -117,6 +122,46 @@ const HeroVideoTabItem = ({
     </button>
   );
 };
+
+const RadioTab = ({
+  active,
+  onClick,
+  items,
+}: {
+  items: { label: ReactNode; value: string }[];
+  active: number;
+  onClick: (item: number) => void;
+}) => {
+  return (
+    <Radio.Root
+      value={`${active}`}
+      className="!wb-flex-row wb-self-center wb-pointer-events-auto"
+      onChange={(e) => {
+        onClick?.(parseInt(e || '0', 10));
+      }}
+    >
+      {items.map((item, index) => {
+        return (
+          <Radio.Item key={item.value} value={`${index}`}>
+            {null}
+          </Radio.Item>
+        );
+      })}
+    </Radio.Root>
+  );
+};
+
+const getElements = (array: any[], activeIndex: number) => {
+  const { length } = array;
+
+  if (activeIndex % 2 === 0) {
+    // If even, return the element at activeIndex and the next one, wrapping around if needed
+    return [array[activeIndex], array[(activeIndex + 1) % length]];
+  }
+  // If odd, return the previous element and the current one
+  return [array[(activeIndex - 1 + length) % length], array[activeIndex]];
+};
+
 const HeroVideoTab = ({
   items,
   progress,
@@ -129,22 +174,53 @@ const HeroVideoTab = ({
   onClick: (item: number) => void;
 }) => {
   return (
-    <div
-      className={cn(
-        'wb-bg-surface-basic-subdued wb-border wb-border-border-default',
-        'wb-h-[44px] wb-rounded-t-md wb-flex wb-flex-row',
-      )}
-    >
-      {items.map((item, index) => (
-        <HeroVideoTabItem
-          key={item.value}
-          active={active === index}
-          progress={progress}
-          onClick={() => onClick?.(index)}
-        >
-          {item.label}
-        </HeroVideoTabItem>
-      ))}
+    <div>
+      <div
+        className={cn(
+          'wb-bg-surface-basic-subdued wb-border wb-border-border-default',
+          'wb-h-[44px] wb-rounded-t-md wb-hidden md:wb-flex wb-flex-row'
+        )}
+      >
+        {items.map((item, index) => (
+          <HeroVideoTabItem
+            key={item.value}
+            active={active === index}
+            progress={progress}
+            onClick={() => onClick?.(index)}
+          >
+            {item.label}
+          </HeroVideoTabItem>
+        ))}
+      </div>
+      <div
+        className={cn(
+          'wb-bg-surface-basic-subdued wb-border wb-border-border-default',
+          'wb-h-[44px] wb-rounded-md wb-flex md:wb-hidden wb-flex-row'
+        )}
+      >
+        {getElements(items, active).map((item) => {
+          const index = items.findIndex((i) => i.value === item.value);
+          return (
+            <HeroVideoTabItem
+              key={item.value}
+              active={active === index}
+              progress={progress}
+              onClick={() => onClick?.(index)}
+            >
+              {item.label}
+            </HeroVideoTabItem>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+const VideoOverlayWrapper = ({ children }: { children?: ReactNode }) => {
+  return (
+    <div className="wb-absolute wb-left-0 wb-right-0 wb-top-1/2 wb-transform -wb-translate-y-1/2 wb-grid wb-grid-cols-1 xl:wb-grid-cols-2 xl:wb-gap-11xl 2xl:wb-gap-10xl 3xl:wb-gap-11xl wb-h-[calc(100%_-_96px)] md:wb-h-full md:wb-max-h-[416px] xl:wb-h-[416px] wb-z-30 wb-pointer-events-none">
+      <div className="wb-hidden xl:wb-block wb-pointer-events-none" />
+      {children}
     </div>
   );
 };
@@ -156,23 +232,24 @@ const IndexHero = () => {
   const [showVideo, setShowVideo] = useState(false);
 
   useEffect(() => {
-    let player = playerRef.current;
+    const player = playerRef.current;
     try {
       if (player) {
         player.pause();
         player.currentTime(0);
         player.play();
       }
-    } catch {}
+    } catch {
+      console.log('Erro');
+    }
   }, [active, playerRef.current]);
 
   return (
     <div className="overflow-hidden wb-relative">
-      <Wrapper className="wb-grid wb-grid-cols-1 xl:wb-grid-cols-[512px_auto] wb-gap-8xl lg:wb-gap-10xl xl:wb-gap-8xl 2xl:wb-gap-10xl 3xl:wb-gap-15xl wb-items-center wb-py-8xl lg:wb-py-10xl xl:wb-py-5xl">
+      <Wrapper className="wb-grid wb-grid-cols-1 xl:wb-grid-cols-[512px_auto] wb-gap-8xl lg:wb-gap-10xl xl:wb-gap-8xl 2xl:wb-gap-10xl 3xl:wb-gap-15xl wb-items-center wb-py-6xl lg:wb-py-10xl xl:wb-py-5xl">
         <Title />
         <div className="wb-relative xl:wb-static">
-          <div className="wb-absolute wb-left-0 wb-right-0 wb-top-1/2 wb-transform -wb-translate-y-1/2 wb-grid wb-grid-cols-1 xl:wb-grid-cols-2 xl:wb-gap-11xl 2xl:wb-gap-10xl 3xl:wb-gap-11xl wb-h-full wb-max-h-[416px] xl:wb-h-[416px] wb-z-30 wb-pointer-events-none">
-            <div className="wb-hidden xl:wb-block wb-pointer-events-none" />
+          <VideoOverlayWrapper>
             <div
               className="wb-flex wb-items-center wb-justify-center z-10 wb-cursor-pointer xl:wb-max-w-[864px] wb-pointer-events-auto"
               onClick={() => {
@@ -188,10 +265,14 @@ const IndexHero = () => {
                   setShowVideo(true);
                 }}
               />
+            </div>
+          </VideoOverlayWrapper>
+          <VideoOverlayWrapper>
+            <div className="wb-flex wb-items-center wb-justify-center z-10 wb-cursor-pointer xl:wb-max-w-[864px] wb-pointer-events-auto wb-h-fit">
               <div
                 className={cn(
-                  'wb-absolute wb-bottom-0 wb-pointer-events-none',
-                  'wb-transform wb-translate-y-5xl wb-z-30',
+                  'wb-absolute -wb-bottom-[22px] md:wb-bottom-0 wb-pointer-events-none wb-w-full wb-flex wb-flex-col wb-items-center wb-justify-center xl:wb-max-w-[864px]',
+                  'wb-transform md:wb-translate-y-5xl wb-z-30'
                 )}
               >
                 <HeroVideoTab
@@ -204,9 +285,9 @@ const IndexHero = () => {
                 />
               </div>
             </div>
-          </div>
+          </VideoOverlayWrapper>
           <GraphExtended>
-            <GraphItem className="wb-h-[416px] xl:wb-min-w-[864px] wb-bg-surface-basic-default">
+            <GraphItem className="md:wb-h-[416px] xl:wb-min-w-[864px] wb-bg-surface-basic-default">
               <VideoSection
                 srcs={items[active].video}
                 onReady={(p) => {
@@ -219,8 +300,8 @@ const IndexHero = () => {
                     p.on('timeupdate', () => {
                       setProgress(
                         Math.ceil(
-                          ((p.currentTime() || 0) * 100) / (p.duration() || 1),
-                        ),
+                          ((p.currentTime() || 0) * 100) / (p.duration() || 1)
+                        )
                       );
                     });
                   }
@@ -228,6 +309,15 @@ const IndexHero = () => {
               />
             </GraphItem>
           </GraphExtended>
+          <div className="md:wb-hidden wb-flex wb-items-center wb-justify-center">
+            <RadioTab
+              items={items}
+              active={active}
+              onClick={(n) => {
+                setActive(n);
+              }}
+            />
+          </div>
         </div>
       </Wrapper>
       <PopupVideo show={showVideo} onClose={() => setShowVideo(false)} />
@@ -295,7 +385,7 @@ const Index = () => {
       <IndexHero />
       <Wrapper>
         <PartnerSection />
-        <div className="md:wb-pt-8xl">
+        <div className="md:wb-pt-6xl">
           <KloudliteDevelopment />
         </div>
         <SecureAtCore />
