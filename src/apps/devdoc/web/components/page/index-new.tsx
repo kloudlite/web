@@ -14,6 +14,7 @@ import hero from '~/images/homeNew/hero';
 import HomeIllustrationMobileDark from '~/images/homeNew/illustration-mobile-dark.svg';
 import HomeIllustrationMobileWeb from '~/images/homeNew/illustration-mobile.webp';
 import Button from '../button';
+import { BlockV2 } from '../commons';
 import PopupVideo from '../popup-video';
 import Events from '../website/home/events';
 import FaqSection from '../website/home/faq_v2';
@@ -376,6 +377,16 @@ const Illustration = () => {
         />
       </div>
     </Wrapper>
+  );
+};
+
+const Video = () => {
+  return (
+    <BlockV2 title="Take a Peek and See for Yourself: Kloudlite in Action">
+      <div className="wb-max-w-[1152px] wb-m-auto">
+        <GraphItem>hell</GraphItem>
+      </div>
+    </BlockV2>
   );
 };
 

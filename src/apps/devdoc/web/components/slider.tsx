@@ -77,7 +77,7 @@ const Slider = ({
               ref.current.slickGoTo(parseInt(e, 10) || 0);
             }
           }}
-          className="!wb-flex-row wb-self-center"
+          className="!wb-flex-row wb-self-center wb-z-[10]"
         >
           {/* @ts-ignore */}
           {React.Children.map(children, (_, index) => {
