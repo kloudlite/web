@@ -3337,6 +3337,10 @@ video {
   transition-duration: 200ms;
 }
 
+.will-change-\[opacity\2c transform\] {
+  will-change: opacity,transform;
+}
+
 .\[pointer-events\:all\] {
   pointer-events: all;
 }
@@ -3647,6 +3651,70 @@ select {
 .data-\[state\=checked\]\:translate-x-full[data-state=checked] {
   --tw-translate-x: 100%;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+@keyframes slideUpAndFade {
+  from {
+    opacity: 0;
+    transform: translateY(-2px) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.data-\[side\=bottom\]\:animate-slideUpAndFade[data-side=bottom] {
+  animation: slideUpAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideRightAndFade {
+  from {
+    opacity: 0;
+    transform: translateX(-2px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.data-\[side\=left\]\:animate-slideRightAndFade[data-side=left] {
+  animation: slideRightAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideLeftAndFade {
+  from {
+    opacity: 0;
+    transform: translateX(2px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.data-\[side\=right\]\:animate-slideLeftAndFade[data-side=right] {
+  animation: slideLeftAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideDownAndFade {
+  from {
+    opacity: 0;
+    transform: translateY(-2px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.data-\[side\=top\]\:animate-slideDownAndFade[data-side=top] {
+  animation: slideDownAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .data-\[disabled\]\:\!cursor-default[data-disabled] {
