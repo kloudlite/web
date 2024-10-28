@@ -53,7 +53,7 @@ const getProdPackage = () => {
   const jsonResult = readDirectoryRecursively('', '.');
 
   const p = {
-    name: 'kl-design-system',
+    name: '@kloudlite/design-system',
     private: false,
     version,
     description,
@@ -90,10 +90,10 @@ const setup = () => {
   try {
     fs.writeFileSync(`${outPath}/package.json`, packageJson);
   } catch (e) {
-    // logger.log('e', e);
+    console.log('e', e);
   }
 
-  // logger.log('Done!');
+  console.log('Done!');
 };
 
 setup();

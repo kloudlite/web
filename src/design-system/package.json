@@ -3,12 +3,13 @@
   "private": true,
   "type": "module",
   "description": "A design system for building ambitious products.",
-  "version": "1.0.1",
+  "version": "0.0.1",
   "keywords": [],
   "author": "",
   "license": "ISC",
   "scripts": {
     "local:release": "mkdir -p out && npm run build:css && npm run build && node prod-package.js && cd dist && npm pack --pack-destination ../out",
+    "release": "mkdir -p out && npm run build:css && npm run build && node prod-package.js && cd dist && npm publish",
     "build": "npm run clean && node build.js && npm run tsc",
     "clean": "rimraf dist",
     "tsc": "tsc --emitDeclarationOnly --outDir ./dist/",
@@ -41,5 +42,9 @@
     "tailwindcss": "^3.4.0",
     "typescript": "^5.3.3",
     "vite": "^4.5.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kloudlite/design-system.git"
   }
 }
