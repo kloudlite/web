@@ -1,4 +1,13 @@
 {
+    "introduction2":{
+        "title":"Introduction"
+    },
+    "getting-started2":{
+        "title":"Getting Started"
+    },
+    "core-concepts":{
+        "title":"Core Concepts"
+    },
     "--introduction--":{
         "title":"Introduction",
         "type":"separator"

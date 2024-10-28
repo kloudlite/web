@@ -1,0 +1,47 @@
+# Developer Experience & Inner Development Loop
+
+The developer experience encompasses the workflow used to develop, test, deploy, and release software. 
+Traditionally, this experience has involved both an inner dev loop and an outer dev loop.
+
+### Understanding the Dev Loops
+
+- **Inner Dev Loop:** This is where individual developers code and test their software. 
+- **Outer Dev Loop:** This is triggered once the code is pushed to version control and 
+includes everything leading up to the release, such as code merge, automated code review, test execution, deployment, and observation of results. Modern outer dev loops often feature automated CI/CD pipelines as part of a GitOps workflow, employing strategies like progressive delivery with automated canaries to optimize efficiency and speed.
+
+### The Changing Developer Experience
+
+Cloud-native technologies have fundamentally altered the developer experience in two significant ways:
+1. **Additional Steps in the Inner Dev Loop:** Developers now need to manage external dependencies, build containers, and implement orchestration configurations, adding to the development time.
+2. **Increased Responsibility in the Outer Dev Loop:** Developers must now concern themselves with the entire development life cycle, not just coding.
+
+Developers must design and build distributed service-based applications, moving away from monolithic application practices such as checking out the entire codebase and coding locally with rapid "live-reload" cycles.
+
+### The Inner Dev Loop
+
+The inner dev loop is the single developer workflow, enabling quick coding and testing. Even within cloud-native environments like Kubernetes, much of the inner dev loop remains familiar. Developers still write code locally and commit it to version control. 
+
+In a traditional inner dev loop, a developer might code for 6 hours a day with a typical local iterative development loop of 5 minutes—3 minutes coding, 1 minute building, and 1 minute testing and inspecting. This process allows for approximately 70 iterations per day, with the only minor delay being the commit process.
+
+### The Impact of Containerization on the Inner Dev Loop
+
+Containerization introduces new steps to the inner dev loop, which can slow down the workflow:
+- **Packaging Code in Containers**
+- **Writing a Manifest:** Specifies how Kubernetes should run the application.
+- **Pushing the Container to the Registry**
+- **Deploying Containers in Kubernetes**
+
+These additional steps can significantly increase build times. For example, a build time of 5 minutes, including container build, registry upload, and deployment, reduces the number of possible development iterations per day to around 40—a potential 40% decrease in productivity.
+
+### Tackling the Slow Inner Dev Loop
+
+A slow inner dev loop can negatively impact both frontend and backend teams, delaying individual and team workflows and slowing overall releases into production.
+
+- **Frontend Developers:** Must wait for backend changes to be deployed in a shared dev/staging environment or rely on mocks/stubs/virtual services. Verification requires going through the CI/CD process.
+- **Backend Developers:** Need CI/CD to build and deploy their app to verify code works with dependencies and to share their work for feedback.
+
+New technologies and tools can facilitate cloud-native, containerized development. Accelerating productivity involves adopting tools that speed up the inner dev loop.
+
+### Conclusion
+
+The developer experience is evolving with the adoption of cloud-native technologies and the shift-left approach. While these changes introduce new complexities and responsibilities, tools like Kloudlite can help developers maintain efficiency by providing seamless integration, real-time synchronization, and the ability to develop, test, and deploy code quickly and effectively. Embracing these changes and utilizing the right tools will lead to a more productive and reliable software development process.
