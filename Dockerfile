@@ -46,7 +46,6 @@ COPY ./tailwind-base.js ./tailwind-base.js
 COPY ./remix.config.js ./remix.config.js
 COPY ./pnpm-lock.yaml ./pnpm-lock.yaml
 COPY ./package.json ./package.json
-COPY ./jsconfig.json ./jsconfig.json
 COPY ./tsconfig.json ./tsconfig.json
 COPY ./remix.env.d.ts ./remix.env.d.ts
 COPY ./css-plugins ./css-plugins
