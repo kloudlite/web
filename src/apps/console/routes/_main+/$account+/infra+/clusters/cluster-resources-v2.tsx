@@ -1,5 +1,9 @@
 import { Link, useOutletContext, useParams } from '@remix-run/react';
-import { generateKey, titleCase, useMapper } from '@kloudlite/design-system/utils';
+import {
+  generateKey,
+  titleCase,
+  useMapper,
+} from '@kloudlite/design-system/utils';
 import { listRender } from '~/console/components/commons';
 import ConsoleAvatar from '~/console/components/console-avatar';
 import {
@@ -18,7 +22,10 @@ import ResourceExtraAction, {
   IResourceExtraItem,
 } from '~/console/components/resource-extra-action';
 import { IAccountContext } from '~/console/routes/_main+/$account+/_layout';
-import { IClusters } from '~/console/server/gql/queries/cluster-queries';
+import {
+  clustersStatusMap,
+  IClusters,
+} from '~/console/server/gql/queries/cluster-queries';
 import {
   ExtractNodeType,
   parseName,
@@ -30,7 +37,6 @@ import { useWatchReload } from '~/lib/client/helpers/socket/useWatch';
 import logger from '~/root/lib/client/helpers/log';
 
 import { useState } from 'react';
-// import { SyncStatusV2 } from '~/console/components/sync-status';
 import { Badge } from '@kloudlite/design-system/atoms/badge';
 import { Button } from '@kloudlite/design-system/atoms/button';
 import Popup from '@kloudlite/design-system/molecule/popup';
@@ -43,7 +49,6 @@ import { IByocClusters } from '~/console/server/gql/queries/byok-cluster-queries
 import { useReload } from '~/root/lib/client/helpers/reloader';
 import useCustomSwr from '~/root/lib/client/hooks/use-custom-swr';
 import { handleError } from '~/root/lib/utils/common';
-// import { Github__Com___Kloudlite___Api___Pkg___Types__SyncState as SyncStatusState } from '~/root/src/generated/gql/server';
 import TooltipV2 from '@kloudlite/design-system/atoms/tooltipV2';
 import { ViewClusterLogs } from '~/console/components/cluster-logs-popop';
 import { useClusterStatusV3 } from '~/console/hooks/use-cluster-status-v3';
@@ -198,17 +203,17 @@ const ByokButton = ({ item }: { item: CombinedBaseType }) => {
 };
 
 const GetByokClusterMessage = ({
-  lastOnlineAt,
+  clusterStatus,
   item,
 }: {
-  lastOnlineAt: string;
+  clusterStatus: clustersStatusMap[string];
   item: CombinedBaseType;
 }) => {
-  if (lastOnlineAt === null) {
+  if (!clusterStatus) {
     return <ByokButton item={item} />;
   }
 
-  const lastTime = new Date(lastOnlineAt);
+  const lastTime = new Date(clusterStatus.lastOnlineAt);
   const currentTime = new Date();
 
   const timeDifference =
@@ -226,13 +231,17 @@ const GetByokClusterMessage = ({
   }
 };
 
-const GetSyncStatus = ({ lastOnlineAt }: { lastOnlineAt: string }) => {
+const GetSyncStatus = ({
+  clusterStatus,
+}: {
+  clusterStatus: clustersStatusMap[string];
+}) => {
   const tooltipOffset = 5;
-  if (lastOnlineAt === null || typeof lastOnlineAt === 'object') {
+  if (!clusterStatus || typeof clusterStatus.lastOnlineAt === 'object') {
     return <Badge type="warning">Offline</Badge>;
   }
 
-  const lastTime = new Date(lastOnlineAt);
+  const lastTime = new Date(clusterStatus.lastOnlineAt);
   const currentTime = new Date();
 
   const timeDifference =
@@ -285,8 +294,8 @@ const GetSyncStatus = ({ lastOnlineAt }: { lastOnlineAt: string }) => {
 const ExtraButton = ({
   onDelete,
   onEdit,
-  onShowLogs,
-  item,
+  onShowLogs: _,
+  item: __,
 }: {
   onDelete: () => void;
   onEdit: () => void;
@@ -463,7 +472,7 @@ const ListView = ({ items = [], onEdit, onDelete, onShowLogs }: IResource) => {
                   return (
                     <GetByokClusterMessage
                       // lastOnlineAt={i.lastOnlineAt}
-                      lastOnlineAt={clustersStatus[id]}
+                      clusterStatus={clustersStatus[id]}
                       item={i}
                     />
                   );
@@ -471,7 +480,7 @@ const ListView = ({ items = [], onEdit, onDelete, onShowLogs }: IResource) => {
               },
               status: {
                 render: () => (
-                  <GetSyncStatus lastOnlineAt={clustersStatus[id]} />
+                  <GetSyncStatus clusterStatus={clustersStatus[id]} />
                 ),
               },
               updated: {

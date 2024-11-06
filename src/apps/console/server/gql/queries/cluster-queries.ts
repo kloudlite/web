@@ -32,6 +32,30 @@ export type IClustersStatus = NN<
   ConsoleListClusterStatusQuery['infra_listBYOKClusters']
 >;
 
+export const findClusterStatus = (onlineAt?: string): boolean => {
+  if (!onlineAt || !onlineAt) {
+    return false;
+  }
+
+  const lastTime = new Date(onlineAt);
+  const currentTime = new Date();
+
+  const timeDifference =
+    (currentTime.getTime() - lastTime.getTime()) / (1000 * 60);
+
+  return timeDifference <= 1;
+};
+
+type clusterStatusData = {
+  lastOnlineAt: string;
+  isOnline: boolean;
+  lastCheckAt: string;
+  displayName: string;
+  name: string;
+};
+
+export type clustersStatusMap = { [key: string]: clusterStatusData | null };
+
 export type IDnsHosts = NN<ConsoleListDnsHostsQuery>['infra_listClusters'];
 
 export const clusterQueries = (executor: IExecutor) => ({
@@ -539,6 +563,7 @@ export const clusterQueries = (executor: IExecutor) => ({
               metadata {
                 name
               }
+              displayName
             }
           }
         }
@@ -547,9 +572,15 @@ export const clusterQueries = (executor: IExecutor) => ({
     {
       transformer: (data: ConsoleListClusterStatusQuery) => {
         return parseNodes(data.infra_listBYOKClusters).reduce((acc, curr) => {
-          acc[parseName(curr)] = curr.lastOnlineAt;
+          acc[parseName(curr)] = {
+            lastOnlineAt: curr.lastOnlineAt,
+            isOnline: findClusterStatus(curr.lastOnlineAt),
+            lastCheckAt: Date.now().toLocaleString(),
+            displayName: curr.displayName,
+            name: parseName(curr),
+          };
           return acc;
-        }, {} as { [key: string]: string });
+        }, {} as { [key: string]: clusterStatusData });
       },
       vars(_: ConsoleListClusterStatusQueryVariables) {},
     }

@@ -11,10 +11,9 @@ import Yup from '~/root/lib/server/helpers/yup';
 import { handleError } from '~/root/lib/utils/common';
 import { NameIdView } from '../components/name-id-view';
 import { IDialog } from '../components/types.d';
-import { findClusterStatus } from '../hooks/use-cluster-status';
 import { useConsoleApi } from '../server/gql/api-provider';
 import { IEnvironment } from '../server/gql/queries/environment-queries';
-import { parseName, parseNodes } from '../server/r-utils/common';
+import { parseName } from '../server/r-utils/common';
 import { DIALOG_TYPE } from '../utils/commons';
 
 export const ClusterSelectItem = ({
@@ -61,20 +60,22 @@ const HandleEnvironment = ({ show, setShow }: IDialog<IEnvironment | null>) => {
 
   const getClusters = useCallback(async () => {
     try {
-      const byokClusters = await api.listByokClusters({});
-      const data = parseNodes(byokClusters.data).map((c) => ({
-        label: c.displayName,
-        value: parseName(c),
-        ready: findClusterStatus(c),
-        disabled: () => !findClusterStatus(c),
-        render: ({ disabled }: { disabled: boolean }) => (
-          <ClusterSelectItem
-            label={c.displayName}
-            value={parseName(c)}
-            disabled={disabled}
-          />
-        ),
-      }));
+      const { data: cmap } = await api.listClusterStatus({});
+      const data = Object.values(cmap).map(
+        ({ name, displayName, isOnline }) => ({
+          label: displayName,
+          value: name,
+          ready: isOnline,
+          disabled: () => !isOnline,
+          render: ({ disabled }: { disabled: boolean }) => (
+            <ClusterSelectItem
+              label={displayName}
+              value={name}
+              disabled={disabled}
+            />
+          ),
+        })
+      );
       setClusterList(data);
     } catch (err) {
       handleError(err);
@@ -90,7 +91,7 @@ const HandleEnvironment = ({ show, setShow }: IDialog<IEnvironment | null>) => {
       displayName: Yup.string().required(),
       name: Yup.string().required(),
       // clusterName: Yup.string().required(),
-    }),
+    })
   );
 
   const {

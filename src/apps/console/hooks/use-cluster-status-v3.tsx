@@ -7,17 +7,16 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { ChildrenProps } from '@kloudlite/design-system/types';
 import { useSocketWatch } from '~/root/lib/client/helpers/socket/useWatch';
 import useDebounce from '~/root/lib/client/hooks/use-debounce';
+import { ChildrenProps } from '@kloudlite/design-system/types';
 import { IAccountContext } from '../routes/_main+/$account+/_layout';
 import { useConsoleApi } from '../server/gql/api-provider';
+import { clustersStatusMap } from '../server/gql/queries/cluster-queries';
+
+// export const findClusterStatusv3 = findClusterStatus;
 
 const ctx = createContext<{
-  // clusters: {
-  //   [key: string]: string;
-  // };
-  // setClusters: React.Dispatch<React.SetStateAction<{ [key: string]: string }>>;
   addToWatchList: (clusterNames: string[]) => void;
   removeFromWatchList: (clusterNames: string[]) => void;
 }>({
@@ -32,10 +31,8 @@ const ClusterStatusProvider = ({
   clustersMap,
   setClustersMap,
 }: ChildrenProps & {
-  clustersMap: { [key: string]: string };
-  setClustersMap: React.Dispatch<
-    React.SetStateAction<{ [key: string]: string }>
-  >;
+  clustersMap: clustersStatusMap;
+  setClustersMap: React.Dispatch<React.SetStateAction<clustersStatusMap>>;
 }) => {
   const [watchList, setWatchList] = useState<{
     [key: string]: number;

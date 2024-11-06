@@ -30,11 +30,11 @@ env:
 settings:
   import/resolver:
     node:  
-      extensions: [.js, .jsx, .ts, .tsx, .json]
+      extensions: [.js, .jsx, .ts, .tsx, .json, ".d.ts"]
       moduleDirectory:
         - node_modules
-    jsconfig:
-      config: ./jsconfig.json
+    # jsconfig:
+    #   config: ./jsconfig.json
     typescript:
       project: ./tsconfig.json
 
@@ -115,6 +115,7 @@ rules:
       - \.svg
 
   import/no-extraneous-dependencies: 0
+  react/no-unused-prop-types: 0
 
   no-unused-vars: 
     - error

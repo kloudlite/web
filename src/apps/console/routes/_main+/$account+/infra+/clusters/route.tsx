@@ -22,7 +22,7 @@ export const loader = async (ctx: IRemixCtx) => {
   const promise = pWrapper(async () => {
     ensureAccountSet(ctx);
     const { data, errors } = await GQLServerHandler(
-      ctx.request,
+      ctx.request
     ).listAllClusters({
       pagination: getPagination(ctx),
       search: getSearch(ctx),

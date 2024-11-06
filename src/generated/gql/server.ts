@@ -1790,7 +1790,7 @@ export type ConsoleListClusterStatusQueryVariables = Exact<{
 }>;
 
 
-export type ConsoleListClusterStatusQuery = { infra_listBYOKClusters?: { edges: Array<{ node: { lastOnlineAt?: any, metadata: { name: string } } }> } };
+export type ConsoleListClusterStatusQuery = { infra_listBYOKClusters?: { edges: Array<{ node: { lastOnlineAt?: any, displayName: string, metadata: { name: string } } }> } };
 
 export type ConsoleGetKubeConfigQueryVariables = Exact<{
   name: Scalars['String']['input'];

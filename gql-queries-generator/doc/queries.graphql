@@ -409,6 +409,7 @@ query consoleListClusterStatus($search: SearchCluster, $pagination: CursorPagina
         metadata {
           name
         }
+        displayName
       }
     }
   }

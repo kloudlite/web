@@ -98,6 +98,7 @@ const state = ({
         text: textData(),
       };
     case 'in-progress':
+      // eslint-disable-next-line no-case-declarations
       const progressComponent = (
         <span className="animate-spin relative flex items-center justify-center text-text-warning">
           <CircleNotch size={type === 'minimal' ? iconSize : 12} />
