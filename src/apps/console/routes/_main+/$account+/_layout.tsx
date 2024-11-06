@@ -47,6 +47,7 @@ import withContext from '~/root/lib/app-setup/with-contxt';
 import { useSearch } from '~/root/lib/client/helpers/search-filter';
 import useCustomSwr from '~/root/lib/client/hooks/use-custom-swr';
 import { handleError } from '~/root/lib/utils/common';
+import { clustersStatusMap } from '~/console/server/gql/queries/cluster-queries';
 import { IConsoleRootContext } from '../_layout/_layout';
 
 export const loader = async (ctx: IExtRemixCtx) => {
@@ -63,14 +64,14 @@ export const loader = async (ctx: IExtRemixCtx) => {
     }
 
     const { data: msvTemplates, errors: msvError } = await GQLServerHandler(
-      ctx.request,
+      ctx.request
     ).listMSvTemplates({});
     if (msvError) {
       throw msvError[0];
     }
 
     const { data: clusterList, errors: clusterError } = await GQLServerHandler(
-      ctx.request,
+      ctx.request
     ).listClusterStatus({
       pagination: {
         first: 100,
@@ -100,7 +101,7 @@ export const loader = async (ctx: IExtRemixCtx) => {
     return k as {
       account: typeof acccountData;
       msvtemplates: IMSvTemplates;
-      clustersMap: { [key: string]: string };
+      clustersMap: clustersStatusMap;
     };
   }
 };
@@ -382,7 +383,7 @@ const CurrentBreadcrum = ({ account }: { account: IAccount }) => {
 
   const { data: accounts } = useCustomSwr(
     () => '/accounts',
-    async () => api.listAccounts({}),
+    async () => api.listAccounts({})
   );
 
   const [searchText, setSearchText] = useState('');
@@ -399,7 +400,7 @@ const CurrentBreadcrum = ({ account }: { account: IAccount }) => {
       searchText,
       keys: ['searchField'],
     },
-    [searchText, accounts],
+    [searchText, accounts]
   );
 
   const [open, setOpen] = useState(false);
@@ -434,7 +435,7 @@ const CurrentBreadcrum = ({ account }: { account: IAccount }) => {
             aria-label="accounts"
             className={cn(
               'outline-none rounded py-lg px-md mx-md bg-surface-basic-hovered',
-              open || isMouseOver ? 'bg-surface-basic-pressed' : '',
+              open || isMouseOver ? 'bg-surface-basic-pressed' : ''
             )}
             onMouseOver={() => {
               setIsMouseOver(true);
@@ -482,7 +483,7 @@ const CurrentBreadcrum = ({ account }: { account: IAccount }) => {
                   'flex flex-row items-center justify-between',
                   parseName(item) === parseName(account)
                     ? 'bg-surface-basic-pressed hover:!bg-surface-basic-pressed'
-                    : '',
+                    : ''
                 )}
               >
                 <span>{item.displayName}</span>
@@ -519,10 +520,8 @@ export const handle = ({ account }: any) => {
 export interface IAccountContext extends IConsoleRootContext {
   account: LoaderResult<typeof loader>['account'];
   msvtemplates: IMSvTemplates;
-  clustersMap: { [key: string]: string };
-  setClustersMap: React.Dispatch<
-    React.SetStateAction<{ [key: string]: string }>
-  >;
+  clustersMap: clustersStatusMap;
+  setClustersMap: React.Dispatch<React.SetStateAction<clustersStatusMap>>;
 }
 
 export const shouldRevalidate: ShouldRevalidateFunction = ({

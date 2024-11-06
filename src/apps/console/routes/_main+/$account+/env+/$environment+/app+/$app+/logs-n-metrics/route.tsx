@@ -4,7 +4,6 @@ import axios from 'axios';
 import { useState } from 'react';
 import { dayjs } from '@kloudlite/design-system/molecule/dayjs';
 import Chart from '~/console/components/charts/charts-client';
-import { findClusterStatusv3 } from '~/console/hooks/use-cluster-status';
 import { useClusterStatusV3 } from '~/console/hooks/use-cluster-status-v3';
 import { useDataState } from '~/console/page-components/common-state';
 import LogAction from '~/console/page-components/log-action';
@@ -24,10 +23,7 @@ const LogsAndMetrics = () => {
     clusterName: environment.clusterName,
   });
 
-  const isClusterOnline = findClusterStatusv3(
-    clusterStatus[environment.clusterName]
-  );
-
+  const isClusterOnline = !!clusterStatus[environment.clusterName]?.isOnline;
   type tData = {
     metric: {
       pod_name: string;

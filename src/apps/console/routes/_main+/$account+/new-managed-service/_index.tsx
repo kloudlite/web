@@ -21,14 +21,13 @@ import MultiStepProgress, {
 } from '~/console/components/multi-step-progress';
 import MultiStepProgressWrapper from '~/console/components/multi-step-progress-wrapper';
 import { NameIdView } from '~/console/components/name-id-view';
-import { findClusterStatus } from '~/console/hooks/use-cluster-status';
 import { ClusterSelectItem } from '~/console/page-components/handle-environment';
 import { useConsoleApi } from '~/console/server/gql/api-provider';
 import {
   IMSvTemplate,
   IMSvTemplates,
 } from '~/console/server/gql/queries/managed-templates-queries';
-import { parseName, parseNodes } from '~/console/server/r-utils/common';
+import { parseName } from '~/console/server/r-utils/common';
 import { keyconstants } from '~/console/server/r-utils/key-constants';
 import { ensureAccountClientSide } from '~/console/server/utils/auth-utils';
 import { flatM, flatMapValidations } from '~/console/utils/commons';
@@ -78,8 +77,8 @@ const RenderField = ({
             dummyEvent(
               `${parseFloat(target.value) * (field.multiplier || 1)}${
                 field.unit
-              }`,
-            ),
+              }`
+            )
           );
         }}
         suffix={field.displayUnit}
@@ -120,16 +119,16 @@ const RenderField = ({
                     dummyEvent(
                       `${parseFloat(target.value) * (field.multiplier || 1)}${
                         field.unit
-                      }`,
-                    ),
+                      }`
+                    )
                   );
                   if (qos) {
                     onChange(`res.${field.name}.max`)(
                       dummyEvent(
                         `${parseFloat(target.value) * (field.multiplier || 1)}${
                           field.unit
-                        }`,
-                      ),
+                        }`
+                      )
                     );
                   }
                 }}
@@ -149,8 +148,8 @@ const RenderField = ({
                       dummyEvent(
                         `${parseFloat(target.value) * (field.multiplier || 1)}${
                           field.unit
-                        }`,
-                      ),
+                        }`
+                      )
                     );
                   }}
                   suffix={field.displayUnit}
@@ -389,7 +388,7 @@ const ReviewView = ({
 }) => {
   const renderFieldView = () => {
     const fields = Object.entries(values.res).filter(
-      ([k, _v]) => !['resources'].includes(k),
+      ([k, _v]) => !['resources'].includes(k)
     );
     if (fields.length > 0) {
       return (
@@ -550,20 +549,24 @@ const ManagedServiceLayout = () => {
   const getClusters = useCallback(async () => {
     ensureAccountClientSide(params);
     try {
-      const byokClusters = await api.listByokClusters({});
-      const data = parseNodes(byokClusters.data).map((c) => ({
-        label: c.displayName,
-        value: parseName(c),
-        ready: findClusterStatus(c),
-        disabled: () => !findClusterStatus(c),
-        render: ({ disabled }: { disabled: boolean }) => (
-          <ClusterSelectItem
-            label={c.displayName}
-            value={parseName(c)}
-            disabled={disabled}
-          />
-        ),
-      }));
+      const { data: cmap } = await api.listClusterStatus({});
+
+      const data = Object.values(cmap).map(
+        ({ name, displayName, isOnline }) => ({
+          label: displayName,
+          value: name,
+          ready: isOnline,
+          disabled: () => !isOnline,
+          // eslint-disable-next-line react/no-unused-prop-types
+          render: ({ disabled }: { disabled: boolean }) => (
+            <ClusterSelectItem
+              label={displayName}
+              value={name}
+              disabled={disabled}
+            />
+          ),
+        })
+      );
       setClusterList(data);
     } catch (err) {
       handleError(err);
@@ -597,7 +600,7 @@ const ManagedServiceLayout = () => {
           'Cluster name is required',
           (v) => {
             return !(currentStep === 2 && !v);
-          },
+          }
         ),
         selectedTemplate: Yup.object({}).required('Template is required.'),
         // @ts-ignore
@@ -617,9 +620,9 @@ const ManagedServiceLayout = () => {
                     (acc: any, curr: any) => {
                       return { ...acc, [curr.name]: curr };
                     },
-                    {},
-                  ),
-                ),
+                    {}
+                  )
+                )
               );
             }
 
@@ -702,7 +705,7 @@ const ManagedServiceLayout = () => {
           ...flatM(
             selectedTemplate?.template?.fields.reduce((acc, curr) => {
               return { ...acc, [curr.name]: curr };
-            }, {}),
+            }, {})
           ),
         },
       }));

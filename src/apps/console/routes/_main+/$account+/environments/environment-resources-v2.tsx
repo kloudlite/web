@@ -29,7 +29,6 @@ import ResourceExtraAction, {
   IResourceExtraItem,
 } from '~/console/components/resource-extra-action';
 import { SyncStatusV2 } from '~/console/components/sync-status';
-import { findClusterStatusv3 } from '~/console/hooks/use-cluster-status';
 import { useClusterStatusV3 } from '~/console/hooks/use-cluster-status-v3';
 import { IAccountContext } from '~/console/routes/_main+/$account+/_layout';
 import { useConsoleApi } from '~/console/server/gql/api-provider';
@@ -244,10 +243,7 @@ const ListView = ({ items, onAction }: IResource) => {
         ],
         rows: items.map((i) => {
           const { name, id, updateInfo } = parseItem(i);
-          const isClusterOnlinev3 = findClusterStatusv3(
-            clusterStatus[i.clusterName]
-          );
-
+          const isClusterOnline = !!clusterStatus[i.clusterName]?.isOnline;
           return {
             columns: {
               name: {
@@ -313,7 +309,7 @@ const ListView = ({ items, onAction }: IResource) => {
                     return <ListItemV2 className="px-4xl" data="-" />;
                   }
 
-                  if (!isClusterOnlinev3) {
+                  if (!isClusterOnline) {
                     return <Badge type="warning">Cluster Offline</Badge>;
                   }
 
@@ -333,7 +329,7 @@ const ListView = ({ items, onAction }: IResource) => {
                   <ExtraButton
                     item={i}
                     onAction={onAction}
-                    isClusterOnline={isClusterOnlinev3}
+                    isClusterOnline={isClusterOnline}
                   />
                 ),
               },

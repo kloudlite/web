@@ -17,7 +17,7 @@ import ListGridView from '~/console/components/list-grid-view';
 import ListV2 from '~/console/components/listV2';
 import ResourceExtraAction from '~/console/components/resource-extra-action';
 import { SyncStatusV2 } from '~/console/components/sync-status';
-import { findClusterStatusv3 } from '~/console/hooks/use-cluster-status';
+import { useClusterStatusV3 } from '~/console/hooks/use-cluster-status-v3';
 import { useConsoleApi } from '~/console/server/gql/api-provider';
 import { IClusterMSvs } from '~/console/server/gql/queries/cluster-managed-services-queries';
 import { IMSvTemplates } from '~/console/server/gql/queries/managed-templates-queries';
@@ -31,7 +31,6 @@ import { getManagedTemplate } from '~/console/utils/commons';
 import { useReload } from '~/root/lib/client/helpers/reloader';
 import { useWatchReload } from '~/root/lib/client/helpers/socket/useWatch';
 import { handleError } from '~/root/lib/utils/common';
-import { useClusterStatusV3 } from '~/console/hooks/use-cluster-status-v3';
 import { IAccountContext } from '../_layout';
 import { IClusterContext } from '../infra+/$cluster+/_layout';
 import CloneManagedService from './clone-managed-service';
@@ -204,9 +203,7 @@ const ListView = ({ items, templates, onAction }: IResource) => {
           },
         ],
         rows: items.map((i) => {
-          const isClusterOnline = findClusterStatusv3(
-            clusterStatus[i.clusterName]
-          );
+          const isClusterOnline = !!clusterStatus[i.clusterName]?.isOnline;
           const { name, id, logo, updateInfo } = parseItem(i, templates);
           return {
             columns: {

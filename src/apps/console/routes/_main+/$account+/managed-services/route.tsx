@@ -20,14 +20,14 @@ export const loader = (ctx: IRemixCtx) => {
   ensureAccountSet(ctx);
   const promise = pWrapper(async () => {
     const { data: mData, errors: mErrors } = await GQLServerHandler(
-      ctx.request,
+      ctx.request
     ).listClusterMSvs({
       pagination: getPagination(ctx),
       search: getSearch(ctx),
     });
 
     const { data: msvTemplates, errors: msvError } = await GQLServerHandler(
-      ctx.request,
+      ctx.request
     ).listMSvTemplates({});
 
     if (mErrors) {

@@ -16,7 +16,6 @@ import { LockSimple, Trash } from '~/console/components/icons';
 import ListGridView from '~/console/components/list-grid-view';
 import ListV2 from '~/console/components/listV2';
 import ResourceExtraAction from '~/console/components/resource-extra-action';
-import { findClusterStatusv3 } from '~/console/hooks/use-cluster-status';
 import { useClusterStatusV3 } from '~/console/hooks/use-cluster-status-v3';
 import { useConsoleApi } from '~/console/server/gql/api-provider';
 import { IImportedManagedResources } from '~/console/server/gql/queries/imported-managed-resource-queries';
@@ -197,10 +196,8 @@ const ListView = ({ items = [], onAction, templates }: IResource) => {
         rows: items.map((i) => {
           const { name, id, logo, updateInfo } = parseItem(i, templates);
           // const isClusterOnline = clusterOnlineStatus[parseName(cluster)];
-          const isClusterOnline = findClusterStatusv3(
-            clustersStatus[environment.clusterName]
-          );
-
+          const isClusterOnline =
+            !!clustersStatus[environment.clusterName]?.isOnline;
           return {
             columns: {
               name: {

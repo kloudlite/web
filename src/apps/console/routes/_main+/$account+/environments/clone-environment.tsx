@@ -7,15 +7,10 @@ import { toast } from '@kloudlite/design-system/molecule/toast';
 import CommonPopupHandle from '~/console/components/common-popup-handle';
 import { NameIdView } from '~/console/components/name-id-view';
 import { IDialogBase } from '~/console/components/types.d';
-import { findClusterStatus } from '~/console/hooks/use-cluster-status';
 import { ClusterSelectItem } from '~/console/page-components/handle-environment';
 import { useConsoleApi } from '~/console/server/gql/api-provider';
 import { IEnvironments } from '~/console/server/gql/queries/environment-queries';
-import {
-  ExtractNodeType,
-  parseName,
-  parseNodes,
-} from '~/console/server/r-utils/common';
+import { ExtractNodeType, parseName } from '~/console/server/r-utils/common';
 import { useReload } from '~/root/lib/client/helpers/reloader';
 import useForm, { dummyEvent } from '~/root/lib/client/hooks/use-form';
 import Yup from '~/root/lib/server/helpers/yup';
@@ -32,20 +27,23 @@ const Root = (props: IDialog) => {
 
   const getClusters = useCallback(async () => {
     try {
-      const byokClusters = await api.listByokClusters({});
-      const data = parseNodes(byokClusters.data).map((c) => ({
-        label: c.displayName,
-        value: parseName(c),
-        ready: findClusterStatus(c),
-        disabled: () => !findClusterStatus(c),
-        render: ({ disabled }: { disabled: boolean }) => (
-          <ClusterSelectItem
-            label={c.displayName}
-            value={parseName(c)}
-            disabled={disabled}
-          />
-        ),
-      }));
+      const { data: cmap } = await api.listClusterStatus({});
+      const data = Object.values(cmap).map(
+        ({ name, displayName, isOnline }) => ({
+          label: displayName,
+          value: name,
+          ready: isOnline,
+          disabled: () => !isOnline,
+          // eslint-disable-next-line react/no-unused-prop-types
+          render: ({ disabled }: { disabled: boolean }) => (
+            <ClusterSelectItem
+              label={displayName}
+              value={name}
+              disabled={disabled}
+            />
+          ),
+        })
+      );
       setClusterList(data);
     } catch (err) {
       handleError(err);

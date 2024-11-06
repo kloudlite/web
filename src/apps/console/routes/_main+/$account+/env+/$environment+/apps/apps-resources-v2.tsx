@@ -25,7 +25,7 @@ import ResourceExtraAction, {
   IResourceExtraItem,
 } from '~/console/components/resource-extra-action';
 import { SyncStatusV2 } from '~/console/components/sync-status';
-import { findClusterStatusv3 } from '~/console/hooks/use-cluster-status';
+import { useClusterStatusV3 } from '~/console/hooks/use-cluster-status-v3';
 import { useConsoleApi } from '~/console/server/gql/api-provider';
 import { IApps } from '~/console/server/gql/queries/app-queries';
 import {
@@ -39,7 +39,6 @@ import { useReload } from '~/lib/client/helpers/reloader';
 import { useWatchReload } from '~/lib/client/helpers/socket/useWatch';
 import { handleError } from '~/lib/utils/common';
 import { NN } from '~/root/lib/types/common';
-import { useClusterStatusV3 } from '~/console/hooks/use-cluster-status-v3';
 import { IEnvironmentContext } from '../_layout';
 import HandleIntercept from './handle-intercept';
 
@@ -308,10 +307,8 @@ const ListView = ({ items = [], onAction }: IResource) => {
           },
         ],
         rows: items.map((i) => {
-          const isClusterOnline = findClusterStatusv3(
-            clusterStatus[environment.clusterName]
-          );
-
+          const isClusterOnline =
+            !!clusterStatus[environment.clusterName]?.isOnline;
           const { name, id, updateInfo } = parseItem(i);
           return {
             columns: {
