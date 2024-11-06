@@ -377,12 +377,14 @@ export const cliQueries = (executor: IExecutor) => ({
               RawMessage
             }
           }
+          isArchived
           metadata {
             name
           }
           displayName
           clusterName
           spec {
+            suspend
             targetNamespace
           }
         }
@@ -393,6 +395,21 @@ export const cliQueries = (executor: IExecutor) => ({
       vars: (_: any) => {},
     }
   ),
+
+  cli_updateEnvironment: executor(
+    gql`
+      mutation Core_updateEnvironment($env: EnvironmentIn!) {
+        core_updateEnvironment(env: $env) {
+          id
+        }
+      }
+    `,
+    {
+      transformer: (data: any) => data.core_updateEnvironment,
+      vars(_: any) {},
+    }
+  ),
+
   cli_cloneEnvironment: executor(
     gql`
       mutation Core_cloneEnvironment(
@@ -625,11 +642,13 @@ export const cliQueries = (executor: IExecutor) => ({
               displayName
               markedForDeletion
               clusterName
+              isArchived
               metadata {
                 name
                 namespace
               }
               spec {
+                suspend
                 targetNamespace
               }
               status {
@@ -840,6 +859,27 @@ export const cliQueries = (executor: IExecutor) => ({
     `,
     {
       transformer: (data: any) => data.infra_listBYOKClusters,
+      vars(_: any) {},
+    }
+  ),
+  cli_getBYOKCluster: executor(
+    gql`
+      query Infra_getBYOKCluster($name: String!) {
+        infra_getBYOKCluster(name: $name) {
+          clusterToken
+          displayName
+          lastOnlineAt
+          markedForDeletion
+          metadata {
+            labels
+            name
+            namespace
+          }
+        }
+      }
+    `,
+    {
+      transformer: (data: any) => data.infra_getBYOKCluster,
       vars(_: any) {},
     }
   ),
