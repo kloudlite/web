@@ -15,6 +15,7 @@ import { useReload } from '~/root/lib/client/helpers/reloader';
 import useForm, { dummyEvent } from '~/root/lib/client/hooks/use-form';
 import Yup from '~/root/lib/server/helpers/yup';
 import { handleError } from '~/root/lib/utils/common';
+import { useClusterStatusV3 } from '~/console/hooks/use-cluster-status-v3';
 
 type IDialog = IDialogBase<ExtractNodeType<IEnvironments>>;
 
@@ -25,16 +26,21 @@ const Root = (props: IDialog) => {
 
   const [clusterList, setClusterList] = useState<any[]>([]);
 
+  const { clustersMap } = useClusterStatusV3({});
+
   const getClusters = useCallback(async () => {
     try {
-      const { data: cmap } = await api.listClusterStatus({});
-      const data = Object.values(cmap).map(
-        ({ name, displayName, isOnline }) => ({
+      const data = Object.values(clustersMap).map((cm) => {
+        if (cm == null) {
+          return {};
+        }
+
+        const { name, displayName, isOnline } = cm;
+        return {
           label: displayName,
           value: name,
           ready: isOnline,
           disabled: () => !isOnline,
-          // eslint-disable-next-line react/no-unused-prop-types
           render: ({ disabled }: { disabled: boolean }) => (
             <ClusterSelectItem
               label={displayName}
@@ -42,8 +48,8 @@ const Root = (props: IDialog) => {
               disabled={disabled}
             />
           ),
-        })
-      );
+        };
+      });
       setClusterList(data);
     } catch (err) {
       handleError(err);

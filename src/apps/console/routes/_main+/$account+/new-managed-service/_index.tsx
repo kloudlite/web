@@ -34,6 +34,7 @@ import { flatM, flatMapValidations } from '~/console/utils/commons';
 import useForm, { dummyEvent } from '~/root/lib/client/hooks/use-form';
 import Yup from '~/root/lib/server/helpers/yup';
 import { handleError } from '~/root/lib/utils/common';
+import { useClusterStatusV3 } from '~/console/hooks/use-cluster-status-v3';
 import { IAccountContext } from '../_layout';
 
 const valueRender = ({ label, icon }: { label: string; icon: string }) => {
@@ -546,13 +547,19 @@ const ManagedServiceLayout = () => {
   const [clusterList, setClusterList] = useState<any[]>([]);
   const params = useParams();
 
+  const { clustersMap } = useClusterStatusV3({});
+
   const getClusters = useCallback(async () => {
     ensureAccountClientSide(params);
     try {
-      const { data: cmap } = await api.listClusterStatus({});
+      const data = Object.values(clustersMap).map((cm) => {
+        if (cm == null) {
+          return {};
+        }
 
-      const data = Object.values(cmap).map(
-        ({ name, displayName, isOnline }) => ({
+        const { name, displayName, isOnline } = cm;
+
+        return {
           label: displayName,
           value: name,
           ready: isOnline,
@@ -565,8 +572,8 @@ const ManagedServiceLayout = () => {
               disabled={disabled}
             />
           ),
-        })
-      );
+        };
+      });
       setClusterList(data);
     } catch (err) {
       handleError(err);

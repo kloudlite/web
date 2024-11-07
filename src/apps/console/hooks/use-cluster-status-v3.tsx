@@ -10,6 +10,8 @@ import {
 import { useSocketWatch } from '~/root/lib/client/helpers/socket/useWatch';
 import useDebounce from '~/root/lib/client/hooks/use-debounce';
 import { ChildrenProps } from '@kloudlite/design-system/types';
+import { usePulsableLoading } from '~/root/lib/client/components/pulsable';
+import logger from '~/root/lib/client/helpers/log';
 import { IAccountContext } from '../routes/_main+/$account+/_layout';
 import { useConsoleApi } from '../server/gql/api-provider';
 import { clustersStatusMap } from '../server/gql/queries/cluster-queries';
@@ -61,6 +63,10 @@ const ClusterStatusProvider = ({
 
   const caller = (wl: { [key: string]: number }) => {
     const keys = Object.keys(wl);
+
+    if (!keys.length) {
+      return;
+    }
 
     (async () => {
       try {
@@ -159,10 +165,20 @@ export const useClusterStatusV3 = ({
   clusterName?: string;
   clusterNames?: string[];
 }) => {
-  const { clustersMap } = useOutletContext<IAccountContext>();
+  const cCtx = useOutletContext<IAccountContext>();
+
+  logger.trace('useClusterStatusV3', cCtx);
+  const { clustersMap } = cCtx || {};
+
   const { addToWatchList, removeFromWatchList: _ } = useContext(ctx);
+  const isLoading = usePulsableLoading();
+
   useDebounce(
     () => {
+      if (isLoading) {
+        return () => {};
+      }
+
       if (!clusterName && !clusterNames) {
         return () => {};
       }

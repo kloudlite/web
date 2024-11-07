@@ -24,22 +24,11 @@ export const loader = async (ctx: IRemixCtx) => {
 
   const promise = pWrapper(async () => {
     const { data, errors } = await GQLServerHandler(
-      ctx.request,
+      ctx.request
     ).listEnvironments({
       pq: getPagination(ctx),
       search: getSearch(ctx),
     });
-
-    // const { data: clusterData, errors: clusterErrors } = await GQLServerHandler(
-    //   ctx.request
-    // ).listAllClusters({
-    //   pagination: getPagination(ctx),
-    //   search: getSearch(ctx),
-    // });
-
-    // if (clusterErrors) {
-    //   throw clusterErrors[0];
-    // }
 
     if (errors) {
       throw errors[0];
@@ -47,7 +36,6 @@ export const loader = async (ctx: IRemixCtx) => {
 
     return {
       environmentData: data || {},
-      // clusterList: clusterData || {},
     };
   });
 
@@ -76,54 +64,6 @@ const Workspaces = () => {
           if (!environments) {
             return null;
           }
-
-          // if (clusters?.length === 0) {
-          //   return (
-          //     <Wrapper
-          //       header={{
-          //         title: 'Environments',
-          //       }}
-          //       empty={{
-          //         image: <EmptyEnvironmentImage />,
-          //         is: environments?.length === 0,
-          //         title: 'This is where you’ll manage your environment.',
-          //         content: (
-          //           <p>
-          //             You don't have any compute attached to your account.
-          //             Please attach a compute to your account to create an
-          //             environment.
-          //             <br />
-          //             Go to{' '}
-          //             <Link
-          //               to={`/${account}/infra/clusters`}
-          //               className="text-text-default"
-          //             >
-          //               <span className="bodyMd-semibold underline underline-offset-1 text-text-default">
-          //                 Infrastructure
-          //               </span>
-          //             </Link>{' '}
-          //             to attach your compute or local device.
-          //           </p>
-          //           /* <Button
-          //               size="sm"
-          //               content={
-          //                 <span className="truncate text-left">
-          //                   Infrastructure
-          //                 </span>
-          //               }
-          //               variant="primary-plain"
-          //               className="truncate justify-center"
-          //               to={`/${account}/infra/clusters`}
-          //             /> */
-          //         ),
-          //       }}
-          //       tools={<Tools />}
-          //       pagination={environmentData}
-          //     >
-          //       <EnvironmentResourcesV2 items={environments || []} />
-          //     </Wrapper>
-          //   );
-          // }
 
           return (
             <Wrapper

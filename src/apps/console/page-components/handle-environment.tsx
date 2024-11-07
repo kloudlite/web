@@ -15,6 +15,7 @@ import { useConsoleApi } from '../server/gql/api-provider';
 import { IEnvironment } from '../server/gql/queries/environment-queries';
 import { parseName } from '../server/r-utils/common';
 import { DIALOG_TYPE } from '../utils/commons';
+import { useClusterStatusV3 } from '../hooks/use-cluster-status-v3';
 
 export const ClusterSelectItem = ({
   label,
@@ -58,11 +59,16 @@ const HandleEnvironment = ({ show, setShow }: IDialog<IEnvironment | null>) => {
   //   ),
   // };
 
+  const { clustersMap } = useClusterStatusV3({});
+
   const getClusters = useCallback(async () => {
     try {
-      const { data: cmap } = await api.listClusterStatus({});
-      const data = Object.values(cmap).map(
-        ({ name, displayName, isOnline }) => ({
+      const data = Object.values(clustersMap).map((cm) => {
+        if (cm == null) {
+          return {};
+        }
+        const { name, displayName, isOnline } = cm;
+        return {
           label: displayName,
           value: name,
           ready: isOnline,
@@ -74,8 +80,8 @@ const HandleEnvironment = ({ show, setShow }: IDialog<IEnvironment | null>) => {
               disabled={disabled}
             />
           ),
-        })
-      );
+        };
+      });
       setClusterList(data);
     } catch (err) {
       handleError(err);

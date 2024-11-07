@@ -5,7 +5,6 @@ import {
   useOutletContext,
   useParams,
 } from '@remix-run/react';
-import { useState } from 'react';
 import Breadcrum from '~/console/components/breadcrum';
 import { CommonTabs } from '~/console/components/common-navbar-tabs';
 import {
@@ -14,7 +13,7 @@ import {
   File,
   GearSix,
 } from '~/console/components/icons';
-import HandleScope from '~/console/page-components/handle-environment';
+// import HandleScope from '~/console/page-components/handle-environment';
 import { IEnvironment } from '~/console/server/gql/queries/environment-queries';
 import { ILoginUrls, ILogins } from '~/console/server/gql/queries/git-queries';
 import { GQLServerHandler } from '~/console/server/gql/saved-queries';
@@ -29,6 +28,7 @@ import { IAccountContext } from '../../_layout';
 
 const Environment = () => {
   const rootContext = useOutletContext<IAccountContext>();
+
   const {
     environment,
     managedTemplates,
@@ -127,8 +127,6 @@ const EnvironmentTabs = () => {
 
 const CurrentBreadcrum = ({ environment }: { environment: IEnvironment }) => {
   const params = useParams();
-
-  const [showPopup, setShowPopup] = useState<any>(null);
 
   // const api = useConsoleApi();
   // const [search, setSearch] = useState('');
@@ -283,7 +281,6 @@ const CurrentBreadcrum = ({ environment }: { environment: IEnvironment }) => {
           </OptionList.Item>
         </OptionList.Content>
       </OptionList.Root> */}
-      <HandleScope show={showPopup} setShow={setShowPopup} />
     </>
   );
 };
