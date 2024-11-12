@@ -3011,7 +3011,14 @@ export type AuthCli_GetEnvironmentQueryVariables = Exact<{
 }>;
 
 
-export type AuthCli_GetEnvironmentQuery = { core_getEnvironment?: { displayName: string, clusterName: string, status?: { isReady: boolean, message?: { RawMessage?: any } }, metadata?: { name: string }, spec?: { targetNamespace?: string } } };
+export type AuthCli_GetEnvironmentQuery = { core_getEnvironment?: { isArchived?: boolean, displayName: string, clusterName: string, status?: { isReady: boolean, message?: { RawMessage?: any } }, metadata?: { name: string }, spec?: { suspend?: boolean, targetNamespace?: string } } };
+
+export type AuthCli_UpdateEnvironmentMutationVariables = Exact<{
+  env: EnvironmentIn;
+}>;
+
+
+export type AuthCli_UpdateEnvironmentMutation = { core_updateEnvironment?: { id: string } };
 
 export type AuthCli_CloneEnvironmentMutationVariables = Exact<{
   clusterName: Scalars['String']['input'];
@@ -3069,7 +3076,7 @@ export type AuthCli_ListEnvironmentsQueryVariables = Exact<{
 }>;
 
 
-export type AuthCli_ListEnvironmentsQuery = { core_listEnvironments?: { totalCount: number, edges: Array<{ cursor: string, node: { displayName: string, markedForDeletion?: boolean, clusterName: string, metadata?: { name: string, namespace?: string }, spec?: { targetNamespace?: string }, status?: { isReady: boolean, message?: { RawMessage?: any } } } }>, pageInfo: { endCursor?: string, hasNextPage?: boolean, hasPrevPage?: boolean, startCursor?: string } } };
+export type AuthCli_ListEnvironmentsQuery = { core_listEnvironments?: { totalCount: number, edges: Array<{ cursor: string, node: { displayName: string, markedForDeletion?: boolean, clusterName: string, isArchived?: boolean, metadata?: { name: string, namespace?: string }, spec?: { suspend?: boolean, targetNamespace?: string }, status?: { isReady: boolean, message?: { RawMessage?: any } } } }>, pageInfo: { endCursor?: string, hasNextPage?: boolean, hasPrevPage?: boolean, startCursor?: string } } };
 
 export type AuthCli_GetKubeConfigQueryVariables = Exact<{
   name: Scalars['String']['input'];
@@ -3124,6 +3131,13 @@ export type AuthCli_ListAccountClustersQueryVariables = Exact<{
 
 
 export type AuthCli_ListAccountClustersQuery = { infra_listBYOKClusters?: { edges: Array<{ node: { clusterToken: string, displayName: string, lastOnlineAt?: any, id: string, metadata: { name: string, labels?: any } } }> } };
+
+export type AuthCli_GetByokClusterQueryVariables = Exact<{
+  name: Scalars['String']['input'];
+}>;
+
+
+export type AuthCli_GetByokClusterQuery = { infra_getBYOKCluster?: { clusterToken: string, displayName: string, lastOnlineAt?: any, markedForDeletion?: boolean, metadata: { labels?: any, name: string, namespace?: string } } };
 
 export type AuthCli_CreateClusterReferenceMutationVariables = Exact<{
   cluster: ByokClusterIn;

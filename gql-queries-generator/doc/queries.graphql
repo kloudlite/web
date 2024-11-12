@@ -4725,14 +4725,22 @@ query authCli_getEnvironment($name: String!) {
         RawMessage
       }
     }
+    isArchived
     metadata {
       name
     }
     displayName
     clusterName
     spec {
+      suspend
       targetNamespace
     }
+  }
+}
+
+mutation authCli_updateEnvironment($env: EnvironmentIn!) {
+  core_updateEnvironment(env: $env) {
+    id
   }
 }
 
@@ -4896,11 +4904,13 @@ query authCli_listEnvironments($pq: CursorPaginationIn) {
         displayName
         markedForDeletion
         clusterName
+        isArchived
         metadata {
           name
           namespace
         }
         spec {
+          suspend
           targetNamespace
         }
         status {
@@ -5043,6 +5053,20 @@ query authCli_listAccountClusters($pagination: CursorPaginationIn) {
           labels
         }
       }
+    }
+  }
+}
+
+query authCli_getBYOKCluster($name: String!) {
+  infra_getBYOKCluster(name: $name) {
+    clusterToken
+    displayName
+    lastOnlineAt
+    markedForDeletion
+    metadata {
+      labels
+      name
+      namespace
     }
   }
 }
