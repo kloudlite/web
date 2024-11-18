@@ -1,7 +1,9 @@
 import { defer } from '@remix-run/node';
 import { Link, useLoaderData } from '@remix-run/react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '~/components/atoms/button.jsx';
+import OptionList from '~/components/atoms/option-list';
+import DockerComposeYamlEditorOverlay from '~/console/components/docker-compose-yaml-editor-overlay';
 import { EmptyStorageImage } from '~/console/components/empty-resource-images';
 import { Plus } from '~/console/components/icons';
 import { LoadingComp, pWrapper } from '~/console/components/loading-component';
@@ -43,6 +45,45 @@ export const loader = (ctx: IRemixCtx) => {
   return defer({ promise });
 };
 
+const CreateManagedServiceButton = () => {
+  const [visible, setVisible] = useState(false);
+
+  return (
+    <>
+      <OptionList.Root>
+        <OptionList.Trigger>
+          <Button
+            variant="primary"
+            content="Create managed service"
+            prefix={<Plus />}
+            // to="../new-managed-service"
+            // linkComponent={Link}
+          />
+        </OptionList.Trigger>
+        <OptionList.Content>
+          <OptionList.Link to="../new-managed-service" LinkComponent={Link}>
+            Create Managed Service
+          </OptionList.Link>
+          <OptionList.Item onClick={() => setVisible(true)}>
+            Use Docker Compose
+          </OptionList.Item>
+        </OptionList.Content>
+      </OptionList.Root>
+      <DockerComposeYamlEditorOverlay
+        item=""
+        showDialog={visible}
+        setShowDialog={() => {
+          setVisible(false);
+        }}
+        onCommit={async ({ yamlData }) => {
+          console.log('yamlData++', yamlData);
+          return true;
+        }}
+      />
+    </>
+  );
+};
+
 const KlOperatorServices = () => {
   const { promise } = useLoaderData<typeof loader>();
 
@@ -68,13 +109,14 @@ const KlOperatorServices = () => {
             header={{
               title: 'Managed services',
               action: backendServices.length > 0 && (
-                <Button
-                  variant="primary"
-                  content="Create managed service"
-                  prefix={<Plus />}
-                  to="../new-managed-service"
-                  linkComponent={Link}
-                />
+                // <Button
+                //   variant="primary"
+                //   content="Create managed service"
+                //   prefix={<Plus />}
+                //   to="../new-managed-service"
+                //   linkComponent={Link}
+                // />
+                <CreateManagedServiceButton />
               ),
             }}
             empty={{

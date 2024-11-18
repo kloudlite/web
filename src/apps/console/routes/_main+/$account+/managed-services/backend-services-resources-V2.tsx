@@ -12,12 +12,15 @@ import {
 } from '~/console/components/console-list-components';
 import DeleteDialog from '~/console/components/delete-dialog';
 import Grid from '~/console/components/grid';
-import { GearSix, Trash } from '~/console/components/icons';
+import { GearSix, Pause, Trash } from '~/console/components/icons';
 import ListGridView from '~/console/components/list-grid-view';
 import ListV2 from '~/console/components/listV2';
-import ResourceExtraAction from '~/console/components/resource-extra-action';
+import ResourceExtraAction, {
+  IResourceExtraItem,
+} from '~/console/components/resource-extra-action';
 import { SyncStatusV2 } from '~/console/components/sync-status';
 import { findClusterStatusv3 } from '~/console/hooks/use-cluster-status';
+import { useClusterStatusV3 } from '~/console/hooks/use-cluster-status-v3';
 import { useConsoleApi } from '~/console/server/gql/api-provider';
 import { IClusterMSvs } from '~/console/server/gql/queries/cluster-managed-services-queries';
 import { IMSvTemplates } from '~/console/server/gql/queries/managed-templates-queries';
@@ -31,7 +34,6 @@ import { getManagedTemplate } from '~/console/utils/commons';
 import { useReload } from '~/root/lib/client/helpers/reloader';
 import { useWatchReload } from '~/root/lib/client/helpers/socket/useWatch';
 import { handleError } from '~/root/lib/utils/common';
-import { useClusterStatusV3 } from '~/console/hooks/use-cluster-status-v3';
 import { IAccountContext } from '../_layout';
 import { IClusterContext } from '../infra+/$cluster+/_layout';
 import CloneManagedService from './clone-managed-service';
@@ -60,7 +62,7 @@ type OnAction = ({
   action,
   item,
 }: {
-  action: 'clone' | 'delete';
+  action: 'clone' | 'delete' | 'suspend' | 'resumed';
   item: BaseType;
 }) => void;
 
@@ -69,24 +71,25 @@ type IExtraButton = {
   item: BaseType;
 };
 
-const ExtraButton = ({ item, onAction }: IExtraButton) => {
+const ExtraButton = ({
+  item,
+  onAction,
+  isClusterOnline,
+}: IExtraButton & { isClusterOnline?: boolean }) => {
   const { account } = useParams();
-  return item.isArchived ? (
-    <ResourceExtraAction
-      options={[
+
+  let options: IResourceExtraItem[] = [];
+
+  if (!item.isArchived) {
+    if (isClusterOnline) {
+      options = [
         {
-          label: 'Delete',
-          icon: <Trash size={16} />,
+          label: 'Suspend',
+          icon: <Pause size={16} />,
           type: 'item',
-          onClick: () => onAction({ action: 'delete', item }),
-          key: 'delete',
-          className: '!text-text-critical',
+          key: 'suspend',
+          onClick: () => onAction({ action: 'suspend', item }),
         },
-      ]}
-    />
-  ) : (
-    <ResourceExtraAction
-      options={[
         {
           label: 'Settings',
           icon: <GearSix size={16} />,
@@ -95,9 +98,60 @@ const ExtraButton = ({ item, onAction }: IExtraButton) => {
           to: `/${account}/msvc/${parseName(item)}/settings`,
           key: 'settings',
         },
-      ]}
-    />
-  );
+      ];
+    } else {
+      options = [
+        {
+          label: 'Settings',
+          icon: <GearSix size={16} />,
+          type: 'item',
+          to: `/${account}/msvc/${parseName(item)}/settings`,
+          key: 'settings',
+        },
+      ];
+    }
+  } else if (item.isArchived) {
+    options = [
+      {
+        label: 'Delete',
+        icon: <Trash size={16} />,
+        type: 'item',
+        onClick: () => onAction({ action: 'delete', item }),
+        key: 'delete',
+        className: '!text-text-critical',
+      },
+    ];
+  }
+
+  return <ResourceExtraAction options={options} />;
+
+  // return item.isArchived ? (
+  //   <ResourceExtraAction
+  //     options={[
+  //       {
+  //         label: 'Delete',
+  //         icon: <Trash size={16} />,
+  //         type: 'item',
+  //         onClick: () => onAction({ action: 'delete', item }),
+  //         key: 'delete',
+  //         className: '!text-text-critical',
+  //       },
+  //     ]}
+  //   />
+  // ) : (
+  //   <ResourceExtraAction
+  //     options={[
+  //       {
+  //         label: 'Settings',
+  //         icon: <GearSix size={16} />,
+  //         type: 'item',
+
+  //         to: `/${account}/msvc/${parseName(item)}/settings`,
+  //         key: 'settings',
+  //       },
+  //     ]}
+  //   />
+  // );
 };
 
 interface IResource {
@@ -254,7 +308,13 @@ const ListView = ({ items, templates, onAction }: IResource) => {
                 ),
               },
               action: {
-                render: () => <ExtraButton item={i} onAction={onAction} />,
+                render: () => (
+                  <ExtraButton
+                    item={i}
+                    onAction={onAction}
+                    isClusterOnline={isClusterOnline}
+                  />
+                ),
               },
             },
             ...(i.isArchived
@@ -275,6 +335,7 @@ const BackendServicesResourcesV2 = ({
   templates: IMSvTemplates;
 }) => {
   const { account } = useOutletContext<IClusterContext>();
+
   useWatchReload(
     items.map((i) => {
       return `account:${parseName(account)}.cluster:${
@@ -290,6 +351,37 @@ const BackendServicesResourcesV2 = ({
   const api = useConsoleApi();
   const reloadPage = useReload();
 
+  const suspendEnvironment = async (item: BaseType, suspend: boolean) => {
+    try {
+      const { errors } = await api.updateEnvironment({
+        env: {
+          displayName: item.displayName,
+          clusterName: item.clusterName,
+          metadata: {
+            name: parseName(item),
+          },
+          spec: {
+            suspend,
+          },
+        },
+      });
+
+      if (errors) {
+        throw errors[0];
+      }
+      toast.success(
+        `${
+          suspend
+            ? 'Environment suspended successfully'
+            : 'Environment resumed successfully'
+        }`
+      );
+      reloadPage();
+    } catch (err) {
+      handleError(err);
+    }
+  };
+
   const props: IResource = {
     items,
     templates,
@@ -297,6 +389,12 @@ const BackendServicesResourcesV2 = ({
       switch (action) {
         case 'clone':
           setVisible(item);
+          break;
+        case 'suspend':
+          suspendEnvironment(item, true);
+          break;
+        case 'resumed':
+          suspendEnvironment(item, false);
           break;
         case 'delete':
           setShowDeleteDialog(item);

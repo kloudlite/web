@@ -1,8 +1,10 @@
-import { Plus } from '~/console/components/icons';
 import { defer } from '@remix-run/node';
 import { useLoaderData, useParams } from '@remix-run/react';
 import { useEffect, useState } from 'react';
 import { Button } from '~/components/atoms/button';
+import OptionList from '~/components/atoms/option-list';
+import { EmptyConfigEntryImage } from '~/console/components/empty-resource-images';
+import { Plus } from '~/console/components/icons';
 import { LoadingComp, pWrapper } from '~/console/components/loading-component';
 import {
   IConfigOrSecretData,
@@ -18,8 +20,7 @@ import { ensureAccountSet } from '~/console/server/utils/auth-utils';
 import { constants } from '~/console/server/utils/constants';
 import { useReload } from '~/lib/client/helpers/reloader';
 import { IRemixCtx } from '~/lib/types/common';
-import { EmptyConfigEntryImage } from '~/console/components/empty-resource-images';
-import Handle, { updateConfig } from './handle';
+import Handle, { updateConfig, UploadEnvironmentFile } from './handle';
 import Resources from './resources';
 import Tools from './tools';
 
@@ -47,6 +48,66 @@ export const loader = async (ctx: IRemixCtx) => {
   });
 
   return defer({ promise });
+};
+
+const AddConfigEntry = ({
+  success,
+  modifiedItems,
+  setShowHandleConfig,
+}: {
+  success: boolean;
+  modifiedItems: IModifiedItem;
+  /// make type of setShowHandleConfig more specific
+  setShowHandleConfig: React.Dispatch<
+    React.SetStateAction<IShowDialog<IModifiedItem> | null>
+  >;
+}) => {
+  // const [showHandleConfig, setShowHandleConfig] =
+  //   useState<IShowDialog<IModifiedItem>>(null);
+  const [visible, setVisible] = useState(false);
+
+  return (
+    <>
+      <OptionList.Root>
+        <OptionList.Trigger>
+          <Button
+            variant="outline"
+            content="Add new entry"
+            prefix={<Plus />}
+            // onClick={() =>
+            //   setShowHandleConfig({
+            //     type: 'Add',
+            //     data: modifiedItems,
+            //   })
+            // }
+            disabled={success}
+          />
+        </OptionList.Trigger>
+        <OptionList.Content>
+          <OptionList.Item
+            onClick={() =>
+              setShowHandleConfig({
+                type: 'Add',
+                data: modifiedItems,
+              })
+            }
+          >
+            Add new entry
+          </OptionList.Item>
+          <OptionList.Item onClick={() => setVisible(true)}>
+            Upload .env file
+          </OptionList.Item>
+        </OptionList.Content>
+      </OptionList.Root>
+      <UploadEnvironmentFile
+        {...{
+          show: visible,
+          onClose: () => setVisible(false),
+          onUpload: (fileContent) => console.log('fileContent', fileContent),
+        }}
+      />
+    </>
+  );
 };
 
 const ConfigBody = ({ config }: { config: IConfig }) => {
@@ -115,7 +176,7 @@ const ConfigBody = ({ config }: { config: IConfig }) => {
           backurl: `/${account}/env/${environment}/cs/configs`,
           action: Object.keys(modifiedItems).length > 0 && (
             <div className="flex flex-row items-center gap-lg">
-              <Button
+              {/* <Button
                 variant="outline"
                 content="Add new entry"
                 prefix={<Plus />}
@@ -126,6 +187,11 @@ const ConfigBody = ({ config }: { config: IConfig }) => {
                   })
                 }
                 disabled={success}
+              /> */}
+              <AddConfigEntry
+                success={success}
+                modifiedItems={modifiedItems}
+                setShowHandleConfig={setShowHandleConfig}
               />
               {changesCount() > 0 && !success && (
                 <Button
@@ -184,12 +250,19 @@ const ConfigBody = ({ config }: { config: IConfig }) => {
               entries.
             </p>
           ),
-          action: {
-            content: 'Add new entry',
-            prefix: <Plus />,
-            onClick: () =>
-              setShowHandleConfig({ type: 'add', data: modifiedItems }),
-          },
+          action: (
+            <AddConfigEntry
+              success={success}
+              modifiedItems={modifiedItems}
+              setShowHandleConfig={setShowHandleConfig}
+            />
+          ),
+          // {
+          //   content: 'Add new entry',
+          //   prefix: <Plus />,
+          //   onClick: () =>
+          //     setShowHandleConfig({ type: 'add', data: modifiedItems }),
+          // },
         }}
         tools={<Tools searchText={searchText} setSearchText={setSearchText} />}
       >

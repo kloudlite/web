@@ -90,7 +90,7 @@ const HandleEnvironment = ({ show, setShow }: IDialog<IEnvironment | null>) => {
       displayName: Yup.string().required(),
       name: Yup.string().required(),
       // clusterName: Yup.string().required(),
-    }),
+    })
   );
 
   const {

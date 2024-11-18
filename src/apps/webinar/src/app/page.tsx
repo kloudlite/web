@@ -31,7 +31,7 @@ async function getUserDetails() {
     return null;
   }
 
-}
+  }
 
 async function getMeetingDetails() {
   const token = btoa(`${process.env.DYTE_ORG_ID}:${process.env.DYTE_API_KEY}`);

@@ -1,8 +1,9 @@
-import { FileLock, Plus } from '~/console/components/icons';
 import { defer } from '@remix-run/node';
 import { useLoaderData, useParams } from '@remix-run/react';
 import { useEffect, useState } from 'react';
 import { Button } from '~/components/atoms/button';
+import OptionList from '~/components/atoms/option-list';
+import { FileLock, Plus } from '~/console/components/icons';
 import { LoadingComp, pWrapper } from '~/console/components/loading-component';
 import {
   IConfigOrSecretData,
@@ -11,13 +12,14 @@ import {
 } from '~/console/components/types.d';
 import Wrapper from '~/console/components/wrapper';
 import { useConsoleApi } from '~/console/server/gql/api-provider';
+import { ISecret } from '~/console/server/gql/queries/secret-queries';
 import { GQLServerHandler } from '~/console/server/gql/saved-queries';
 import { parseName } from '~/console/server/r-utils/common';
 import { ensureAccountSet } from '~/console/server/utils/auth-utils';
 import { constants } from '~/console/server/utils/constants';
 import { useReload } from '~/lib/client/helpers/reloader';
 import { IRemixCtx } from '~/lib/types/common';
-import { ISecret } from '~/console/server/gql/queries/secret-queries';
+import { UploadEnvironmentFile } from '../config.$config/handle';
 import Handle, { updateSecret } from './handle';
 import Resources from './resources';
 import Tools from './tools';
@@ -45,6 +47,66 @@ export const loader = async (ctx: IRemixCtx) => {
   });
 
   return defer({ promise });
+};
+
+const AddSecretEntry = ({
+  success,
+  modifiedItems,
+  setShowHandleConfig,
+}: {
+  success: boolean;
+  modifiedItems: IModifiedItem;
+  /// make type of setShowHandleConfig more specific
+  setShowHandleConfig: React.Dispatch<
+    React.SetStateAction<IShowDialog<IModifiedItem> | null>
+  >;
+}) => {
+  // const [showHandleConfig, setShowHandleConfig] =
+  //   useState<IShowDialog<IModifiedItem>>(null);
+  const [visible, setVisible] = useState(false);
+
+  return (
+    <>
+      <OptionList.Root>
+        <OptionList.Trigger>
+          <Button
+            variant="outline"
+            content="Add new entry"
+            prefix={<Plus />}
+            // onClick={() =>
+            //   setShowHandleConfig({
+            //     type: 'Add',
+            //     data: modifiedItems,
+            //   })
+            // }
+            disabled={success}
+          />
+        </OptionList.Trigger>
+        <OptionList.Content>
+          <OptionList.Item
+            onClick={() =>
+              setShowHandleConfig({
+                type: 'Add',
+                data: modifiedItems,
+              })
+            }
+          >
+            Add new entry
+          </OptionList.Item>
+          <OptionList.Item onClick={() => setVisible(true)}>
+            Upload .env file
+          </OptionList.Item>
+        </OptionList.Content>
+      </OptionList.Root>
+      <UploadEnvironmentFile
+        {...{
+          show: visible,
+          onClose: () => setVisible(false),
+          onUpload: (fileContent) => console.log('fileContent', fileContent),
+        }}
+      />
+    </>
+  );
 };
 
 const ConfigBody = ({ secret }: { secret: ISecret }) => {
@@ -113,7 +175,7 @@ const ConfigBody = ({ secret }: { secret: ISecret }) => {
           backurl: `/${account}/env/${environment}/cs/secrets`,
           action: Object.keys(modifiedItems).length > 0 && (
             <div className="flex flex-row items-center gap-lg">
-              <Button
+              {/* <Button
                 variant="outline"
                 content="Add new entry"
                 prefix={<Plus />}
@@ -124,6 +186,11 @@ const ConfigBody = ({ secret }: { secret: ISecret }) => {
                   })
                 }
                 disabled={success}
+              /> */}
+              <AddSecretEntry
+                success={success}
+                modifiedItems={modifiedItems}
+                setShowHandleConfig={setShowHandleConfig}
               />
               {changesCount() > 0 && !success && (
                 <Button
@@ -181,12 +248,19 @@ const ConfigBody = ({ secret }: { secret: ISecret }) => {
               entries.
             </p>
           ),
-          action: {
-            content: 'Add new entry',
-            prefix: <Plus />,
-            onClick: () =>
-              setShowHandleConfig({ type: 'add', data: modifiedItems }),
-          },
+          action: (
+            <AddSecretEntry
+              success={success}
+              modifiedItems={modifiedItems}
+              setShowHandleConfig={setShowHandleConfig}
+            />
+          ),
+          // {
+          //   content: 'Add new entry',
+          //   prefix: <Plus />,
+          //   onClick: () =>
+          //     setShowHandleConfig({ type: 'add', data: modifiedItems }),
+          // },
         }}
         tools={<Tools searchText={searchText} setSearchText={setSearchText} />}
       >

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { TextArea, TextInput } from '~/components/atoms/input';
 import Popup from '~/components/molecule/popup';
 import { IDialog, IModifiedItem } from '~/console/components/types.d';
@@ -9,6 +9,10 @@ import useForm from '~/lib/client/hooks/use-form';
 import Yup from '~/lib/server/helpers/yup';
 import { handleError } from '~/lib/utils/common';
 import { ConfigIn } from '~/root/src/generated/gql/server';
+
+import { useParams } from '@remix-run/react';
+import { Button } from '~/components/atoms/button';
+import { ensureAccountClientSide } from '~/console/server/utils/auth-utils';
 
 export interface IConfigValue {
   key: string;
@@ -160,3 +164,108 @@ const Handle = ({
 };
 
 export default Handle;
+
+export const UploadEnvironmentFile = ({
+  show,
+  onClose,
+  onUpload,
+}: {
+  show: boolean;
+  onClose: () => void;
+  onUpload: (fileContent: string) => void;
+}) => {
+  const params = useParams();
+  ensureAccountClientSide(params);
+
+  const [fileContent, setFileContent] = useState(''); // Store .env file content
+  const [file, setFile] = useState<File | null>(null);
+
+  useEffect(() => {
+    if (!show) {
+      setFileContent('');
+      setFile(null);
+    }
+  }, [show]);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0];
+
+    if (selectedFile && selectedFile.name.endsWith('env')) {
+      setFile(selectedFile);
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setFileContent(event.target?.result as string);
+      };
+      reader.readAsText(selectedFile);
+    } else {
+      setFile(null);
+    }
+  };
+
+  const handleButtonClick = () => {
+    if (file || fileContent.trim()) {
+      onUpload(fileContent);
+      onClose();
+      console.log('Uploading content:', fileContent);
+    } else {
+      document.getElementById('hiddenFileInput')?.click();
+    }
+  };
+
+  return (
+    <Popup.Root onOpenChange={onClose} show={show} className="!w-[800px]">
+      <Popup.Header>Upload your .env file</Popup.Header>
+      <Popup.Content>
+        <div className="flex flex-col gap-lg">
+          {/* <input
+            type="file"
+            accept="env"
+            onChange={handleFileChange}
+            className="mb-4"
+          /> */}
+          {/* {!fileContent.trim() && (
+            <div className="flex flex-col gap-sm text-start">
+              <span className="flex flex-wrap items-center gap-md py-lg">
+                1. Select your .env
+              </span>
+              <span className="flex flex-wrap items-center gap-md py-lg">
+                1. Download and install kloudlite cli
+              </span>
+            </div>
+          )} */}
+          <input
+            type="file"
+            // accept="env"
+            id="hiddenFileInput"
+            style={{ display: 'none' }}
+            onChange={handleFileChange}
+          />
+          {fileContent ? (
+            <TextArea
+              placeholder="Enter docker config json"
+              label="Your Environment variables listed here:"
+              value={fileContent}
+              // onChange={(e) => setFileContent(e.target.value)}
+              resize={false}
+              rows="6"
+            />
+          ) : (
+            <span className="text-text-default text-center">
+              Please select file to upload
+            </span>
+          )}
+        </div>
+      </Popup.Content>
+      <Popup.Footer>
+        <Button variant="primary-outline" content="close" onClick={onClose} />
+        <Popup.Button
+          onClick={handleButtonClick}
+          type="submit"
+          content={fileContent ? 'Upload' : 'Select file'}
+          variant="primary"
+        />
+      </Popup.Footer>
+    </Popup.Root>
+  );
+};

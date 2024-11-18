@@ -1,13 +1,13 @@
 import { useParams } from '@remix-run/react';
 import Popup from '~/components/molecule/popup';
 import { toast } from '~/components/molecule/toast';
+import { NameIdView } from '~/console/components/name-id-view';
 import { IDialog } from '~/console/components/types.d';
 import { useConsoleApi } from '~/console/server/gql/api-provider';
 import { useReload } from '~/lib/client/helpers/reloader';
 import useForm from '~/lib/client/hooks/use-form';
 import Yup from '~/lib/server/helpers/yup';
 import { handleError } from '~/lib/utils/common';
-import { NameIdView } from '~/console/components/name-id-view';
 
 const HandleSecret = ({ show, setShow }: IDialog) => {
   const api = useConsoleApi();

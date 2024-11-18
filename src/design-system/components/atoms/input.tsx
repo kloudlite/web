@@ -169,7 +169,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
               'h-[60px]': size === 'xl' && component === 'input',
             },
             size === 'xl' ? '!px-2xl' : 'px-lg',
-            className,
+            className
           )}
         >
           {!!prefixIcon && (
@@ -219,7 +219,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
                 'no-spinner': type === 'number',
               },
               size === 'xl' ? '' : 'bodyMd',
-              textFieldClassName,
+              textFieldClassName
             )}
             value={value}
             onChange={(e: any) => {
@@ -271,7 +271,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
                 'outline-none flex items-center rounded justify-center',
                 {
                   'cursor-default': disabled,
-                },
+                }
               )}
             >
               <X size={16} color="currentColor" />
@@ -288,7 +288,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
                 'outline-none flex items-center rounded justify-center',
                 {
                   'cursor-default': disabled,
-                },
+                }
               )}
             >
               {t === 'password' ? (
@@ -308,7 +308,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
                 'text-text-critical': error,
                 'text-text-default': !error,
               },
-              'pt-md',
+              'pt-md'
             )}
           >
             {message}
@@ -316,7 +316,7 @@ export const TextInputBase = forwardRef<HTMLInputElement, ITextInputBase>(
         </AnimateHide>
       </div>
     );
-  },
+  }
 );
 
 export const NumberInput = ({
@@ -370,7 +370,7 @@ export const NumberInput = ({
                   ref?.current?.focus();
                 }}
                 className={cn(
-                  'flex-1 p-sm disabled:text-icon-disabled hover:bg-surface-basic-hovered active:bg-surface-basic-pressed',
+                  'flex-1 p-sm disabled:text-icon-disabled hover:bg-surface-basic-hovered active:bg-surface-basic-pressed'
                 )}
               >
                 <CaretUpFill size={12} color="currentColor" />
@@ -388,7 +388,7 @@ export const NumberInput = ({
                   ref?.current?.focus();
                 }}
                 className={cn(
-                  'flex-1 p-sm disabled:text-icon-disabled hover:bg-surface-basic-hovered active:bg-surface-basic-pressed',
+                  'flex-1 p-sm disabled:text-icon-disabled hover:bg-surface-basic-hovered active:bg-surface-basic-pressed'
                 )}
               >
                 <CaretDownFill size={12} color="currentColor" />
@@ -410,7 +410,7 @@ export const TextInput = forwardRef<HTMLInputElement, ITextInput>(
         {...{ ...props, id, component: 'input', type: 'text', ref }}
       />
     );
-  },
+  }
 );
 
 export const TextArea = forwardRef<HTMLInputElement, ITextArea>(
@@ -422,7 +422,7 @@ export const TextArea = forwardRef<HTMLInputElement, ITextArea>(
       rows = '3',
       ...etc
     },
-    ref,
+    ref
   ) => {
     const id = useId();
     return (
@@ -440,7 +440,7 @@ export const TextArea = forwardRef<HTMLInputElement, ITextArea>(
         }}
       />
     );
-  },
+  }
 );
 
 export const PasswordInput = (props: IInputRow) => {
