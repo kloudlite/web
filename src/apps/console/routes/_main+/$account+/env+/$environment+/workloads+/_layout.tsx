@@ -1,28 +1,28 @@
 import { Outlet, useOutletContext } from '@remix-run/react';
 import SidebarLayout from '~/console/components/sidebar-layout';
 import { useHandleFromMatches } from '~/root/lib/client/hooks/use-custom-matches';
-import { IAccountContext } from '../_layout';
+import { IEnvironmentContext } from '../_layout';
 
-const Infra = () => {
-  const rootContext = useOutletContext<IAccountContext>();
+const Workloads = () => {
+  const rootContext = useOutletContext<IEnvironmentContext>();
   const noLayout = useHandleFromMatches('noLayout', null);
 
   if (noLayout) {
     return <Outlet context={rootContext} />;
   }
+
+  console.log('workloads');
   return (
     <SidebarLayout
       navItems={[
-        { label: 'Attached Clusters', value: 'clusters' },
-        { label: 'Helm Repos', value: 'helm-charts' },
-        // { label: 'Bring your own Kubernetes', value: 'byok-cluster' },
-        { label: 'Wireguard Devices', value: 'vpn-devices' },
+        { label: 'Apps', value: 'apps' },
+        { label: 'Helm charts', value: 'helm-charts' },
       ]}
-      parentPath="/infra"
+      parentPath="/workloads"
     >
       <Outlet context={rootContext} />
     </SidebarLayout>
   );
 };
 
-export default Infra;
+export default Workloads;

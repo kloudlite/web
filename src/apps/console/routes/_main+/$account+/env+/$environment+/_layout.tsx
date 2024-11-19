@@ -58,11 +58,11 @@ const tabs = [
     label: (
       <span className="flex flex-row items-center gap-lg">
         <CirclesFour size={tabIconSize} />
-        Apps
+        Workloads
       </span>
     ),
-    to: '/apps',
-    value: '/apps',
+    to: '/workloads',
+    value: '/workloads',
   },
   {
     label: (
@@ -302,7 +302,7 @@ export const loader = async (ctx: IRemixCtx) => {
     const { data, errors } = await GQLServerHandler(ctx.request).getEnvironment(
       {
         name: environment,
-      }
+      },
     );
 
     if (errors) {
@@ -320,7 +320,7 @@ export const loader = async (ctx: IRemixCtx) => {
     // }
 
     const { data: logins, errors: loginErrors } = await GQLServerHandler(
-      ctx.request
+      ctx.request,
     ).getLogins({});
 
     if (loginErrors) {
@@ -328,7 +328,7 @@ export const loader = async (ctx: IRemixCtx) => {
     }
 
     const { data: loginUrls, errors: dErrors } = await GQLServerHandler(
-      ctx.request
+      ctx.request,
     ).loginUrls({});
 
     if (dErrors) {

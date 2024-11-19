@@ -1578,191 +1578,6 @@ query consoleListExternalApps($envName: String!, $search: SearchExternalApps, $p
   }
 }
 
-mutation consoleCreateRouter($envName: String!, $router: RouterIn!) {
-  core_createRouter(envName: $envName, router: $router) {
-    id
-  }
-}
-
-mutation consoleUpdateRouter($envName: String!, $router: RouterIn!) {
-  core_updateRouter(envName: $envName, router: $router) {
-    id
-  }
-}
-
-mutation consoleDeleteRouter($envName: String!, $routerName: String!) {
-  core_deleteRouter(envName: $envName, routerName: $routerName)
-}
-
-query consoleListRouters($envName: String!, $search: SearchRouters, $pq: CursorPaginationIn) {
-  core_listRouters(envName: $envName, search: $search, pq: $pq) {
-    edges {
-      cursor
-      node {
-        createdBy {
-          userEmail
-          userId
-          userName
-        }
-        creationTime
-        displayName
-        enabled
-        environmentName
-        lastUpdatedBy {
-          userEmail
-          userId
-          userName
-        }
-        markedForDeletion
-        metadata {
-          generation
-          name
-          namespace
-        }
-        recordVersion
-        spec {
-          backendProtocol
-          basicAuth {
-            enabled
-            secretName
-            username
-          }
-          cors {
-            allowCredentials
-            enabled
-            origins
-          }
-          domains
-          https {
-            clusterIssuer
-            enabled
-            forceRedirect
-          }
-          ingressClass
-          maxBodySizeInMB
-          rateLimit {
-            connections
-            enabled
-            rpm
-            rps
-          }
-          routes {
-            app
-            path
-            port
-            rewrite
-          }
-        }
-        status {
-          checks
-          checkList {
-            description
-            debug
-            name
-            title
-          }
-          isReady
-          lastReadyGeneration
-          lastReconcileTime
-          message {
-            RawMessage
-          }
-          resources {
-            apiVersion
-            kind
-            name
-            namespace
-          }
-        }
-        syncStatus {
-          action
-          error
-          lastSyncedAt
-          recordVersion
-          state
-          syncScheduledAt
-        }
-        updateTime
-      }
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-      hasPrevPage
-      startCursor
-    }
-    totalCount
-  }
-}
-
-query consoleGetRouter($envName: String!, $name: String!) {
-  core_getRouter(envName: $envName, name: $name) {
-    createdBy {
-      userEmail
-      userId
-      userName
-    }
-    creationTime
-    displayName
-    enabled
-    environmentName
-    lastUpdatedBy {
-      userEmail
-      userId
-      userName
-    }
-    markedForDeletion
-    metadata {
-      name
-      namespace
-    }
-    spec {
-      backendProtocol
-      basicAuth {
-        enabled
-        secretName
-        username
-      }
-      cors {
-        allowCredentials
-        enabled
-        origins
-      }
-      domains
-      https {
-        clusterIssuer
-        enabled
-        forceRedirect
-      }
-      ingressClass
-      maxBodySizeInMB
-      rateLimit {
-        connections
-        enabled
-        rpm
-        rps
-      }
-      routes {
-        app
-        path
-        port
-        rewrite
-      }
-    }
-    status {
-      checks
-      checkList {
-        description
-        debug
-        name
-        title
-      }
-      isReady
-    }
-    updateTime
-  }
-}
-
 mutation consoleUpdateConfig($envName: String!, $config: ConfigIn!) {
   core_updateConfig(envName: $envName, config: $config) {
     id
@@ -3853,16 +3668,18 @@ query consoleGetHelmChart($clusterName: String!, $name: String!) {
   }
 }
 
-query consoleListHelmChart($clusterName: String!, $search: SearchHelmRelease, $pagination: CursorPaginationIn) {
-  infra_listHelmReleases(
-    clusterName: $clusterName
-    search: $search
-    pagination: $pagination
-  ) {
+query consoleListHelmCharts($envName: String!) {
+  core_listHelmCharts(envName: $envName) {
+    totalCount
+    pageInfo {
+      endCursor
+      hasNextPage
+      hasPrevPage
+      startCursor
+    }
     edges {
       cursor
       node {
-        clusterName
         createdBy {
           userEmail
           userId
@@ -3870,19 +3687,18 @@ query consoleListHelmChart($clusterName: String!, $search: SearchHelmRelease, $p
         }
         creationTime
         displayName
+        environmentName
+        markedForDeletion
+        recordVersion
+        updateTime
         lastUpdatedBy {
           userEmail
           userId
           userName
         }
-        markedForDeletion
         metadata {
-          generation
           name
-          namespace
-          annotations
         }
-        recordVersion
         spec {
           chartName
           chartRepoURL
@@ -3890,21 +3706,20 @@ query consoleListHelmChart($clusterName: String!, $search: SearchHelmRelease, $p
           values
         }
         status {
-          checks
           checkList {
-            description
             debug
-            title
+            description
+            hide
             name
+            title
           }
+          checks
           isReady
           lastReadyGeneration
           lastReconcileTime
           message {
             RawMessage
           }
-          releaseNotes
-          releaseStatus
           resources {
             apiVersion
             kind
@@ -3920,21 +3735,13 @@ query consoleListHelmChart($clusterName: String!, $search: SearchHelmRelease, $p
           state
           syncScheduledAt
         }
-        updateTime
       }
     }
-    pageInfo {
-      endCursor
-      hasNextPage
-      hasPrevPage
-      startCursor
-    }
-    totalCount
   }
 }
 
-mutation consoleCreateHelmChart($clusterName: String!, $release: HelmReleaseIn!) {
-  infra_createHelmRelease(clusterName: $clusterName, release: $release) {
+mutation consoleCreateHelmChart($envName: String!, $helmchart: HelmChartIn!) {
+  core_createHelmChart(envName: $envName, helmchart: $helmchart) {
     id
   }
 }

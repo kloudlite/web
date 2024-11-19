@@ -14,9 +14,7 @@ import {
   ConsoleDeleteHelmChartMutationVariables,
 } from '~/root/src/generated/gql/server';
 
-export type IHelmCharts = NN<
-  ConsoleListHelmChartQuery['infra_listHelmReleases']
->;
+export type IHelmCharts = NN<ConsoleListHelmChartQuery['core_listHelmCharts']>;
 
 export const helmChartQueries = (executor: IExecutor) => ({
   getHelmChart: executor(
@@ -78,24 +76,22 @@ export const helmChartQueries = (executor: IExecutor) => ({
         return data.infra_getHelmRelease;
       },
       vars(_: ConsoleGetHelmChartQueryVariables) {},
-    }
+    },
   ),
-  listHelmChart: executor(
+  listHelmCharts: executor(
     gql`
-      query Infra_listHelmReleases(
-        $clusterName: String!
-        $search: SearchHelmRelease
-        $pagination: CursorPaginationIn
-      ) {
-        infra_listHelmReleases(
-          clusterName: $clusterName
-          search: $search
-          pagination: $pagination
-        ) {
+      query Core_listHelmCharts($envName: String!) {
+        core_listHelmCharts(envName: $envName) {
+          totalCount
+          pageInfo {
+            endCursor
+            hasNextPage
+            hasPrevPage
+            startCursor
+          }
           edges {
             cursor
             node {
-              clusterName
               createdBy {
                 userEmail
                 userId
@@ -103,19 +99,18 @@ export const helmChartQueries = (executor: IExecutor) => ({
               }
               creationTime
               displayName
+              environmentName
+              markedForDeletion
+              recordVersion
+              updateTime
               lastUpdatedBy {
                 userEmail
                 userId
                 userName
               }
-              markedForDeletion
               metadata {
-                generation
                 name
-                namespace
-                annotations
               }
-              recordVersion
               spec {
                 chartName
                 chartRepoURL
@@ -123,21 +118,20 @@ export const helmChartQueries = (executor: IExecutor) => ({
                 values
               }
               status {
-                checks
                 checkList {
-                  description
                   debug
-                  title
+                  description
+                  hide
                   name
+                  title
                 }
+                checks
                 isReady
                 lastReadyGeneration
                 lastReconcileTime
                 message {
                   RawMessage
                 }
-                releaseNotes
-                releaseStatus
                 resources {
                   apiVersion
                   kind
@@ -153,41 +147,33 @@ export const helmChartQueries = (executor: IExecutor) => ({
                 state
                 syncScheduledAt
               }
-              updateTime
             }
           }
-          pageInfo {
-            endCursor
-            hasNextPage
-            hasPrevPage
-            startCursor
-          }
-          totalCount
         }
       }
     `,
     {
       transformer: (data: ConsoleListHelmChartQuery) =>
-        data.infra_listHelmReleases,
+        data.core_listHelmCharts,
       vars(_: ConsoleListHelmChartQueryVariables) {},
-    }
+    },
   ),
   createHelmChart: executor(
     gql`
-      mutation Infra_createHelmRelease(
-        $clusterName: String!
-        $release: HelmReleaseIn!
+      mutation Core_createHelmChart(
+        $envName: String!
+        $helmchart: HelmChartIn!
       ) {
-        infra_createHelmRelease(clusterName: $clusterName, release: $release) {
+        core_createHelmChart(envName: $envName, helmchart: $helmchart) {
           id
         }
       }
     `,
     {
       transformer: (data: ConsoleCreateHelmChartMutation) =>
-        data.infra_createHelmRelease,
+        data.core_createHelmChart,
       vars(_: ConsoleCreateHelmChartMutationVariables) {},
-    }
+    },
   ),
   updateHelmChart: executor(
     gql`
@@ -205,7 +191,7 @@ export const helmChartQueries = (executor: IExecutor) => ({
         return data.infra_updateHelmRelease;
       },
       vars(_: ConsoleUpdateHelmChartMutationVariables) {},
-    }
+    },
   ),
   deleteHelmChart: executor(
     gql`
@@ -224,6 +210,6 @@ export const helmChartQueries = (executor: IExecutor) => ({
         return data.infra_deleteHelmRelease;
       },
       vars(_: ConsoleDeleteHelmChartMutationVariables) {},
-    }
+    },
   ),
 });

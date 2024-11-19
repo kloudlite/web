@@ -29,7 +29,7 @@ import { pvQueries } from './queries/pv-queries';
 import { pvcQueries } from './queries/pvc-queries';
 import { registryImagesQueries } from './queries/registry-image-queries';
 import { repoQueries } from './queries/repo-queries';
-import { routerQueries } from './queries/router-queries';
+/* import { routerQueries } from './queries/router-queries'; */
 import { secretQueries } from './queries/secret-queries';
 import { tagsQueries } from './queries/tags-queries';
 
@@ -44,7 +44,7 @@ export const GQLServerHandler = ({ headers, cookies }: IGQLServerProps) => {
     ...environmentQueries(executor),
     ...appQueries(executor),
     ...externalAppQueries(executor),
-    ...routerQueries(executor),
+    /* ...routerQueries(executor), */
     ...configQueries(executor),
     ...secretQueries(executor),
     ...accessQueries(executor),

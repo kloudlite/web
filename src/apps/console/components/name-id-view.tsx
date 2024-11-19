@@ -1,7 +1,10 @@
 /* eslint-disable no-nested-ternary */
 import { CircleNotch } from '~/console/components/icons';
 import { ReactNode, forwardRef, useEffect, useState } from 'react';
-import { ITextInputBase, TextInput } from '@kloudlite/design-system/atoms/input';
+import {
+  ITextInputBase,
+  TextInput,
+} from '@kloudlite/design-system/atoms/input';
 import useDebounce from '~/root/lib/client/hooks/use-debounce';
 import { NonNullableString } from '~/root/lib/types/common';
 import { handleError } from '~/root/lib/utils/common';
@@ -72,6 +75,7 @@ export const NameIdView = forwardRef<HTMLInputElement, INameIdView>(
         case 'managed_resource':
         case 'router':
         case 'secret':
+        case 'helm_release':
         case 'imported_managed_resource':
           ensureAccountClientSide(params);
           ensureClusterClientSide(params);
@@ -82,7 +86,6 @@ export const NameIdView = forwardRef<HTMLInputElement, INameIdView>(
         case 'global_vpn_device':
           ensureAccountClientSide(params);
           return api.infraCheckNameAvailability;
-        case 'helm_release':
         case 'cluster_managed_service':
         case 'vpn_device':
         case 'nodepool':
