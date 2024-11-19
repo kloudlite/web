@@ -1,3 +1,7 @@
+import { NumberInput, TextInput } from '@kloudlite/design-system/atoms/input';
+import Select from '@kloudlite/design-system/atoms/select';
+import { Switch } from '@kloudlite/design-system/atoms/switch';
+import { titleCase, useMapper } from '@kloudlite/design-system/utils';
 import { defer } from '@remix-run/node';
 import {
   useLoaderData,
@@ -6,10 +10,6 @@ import {
   useParams,
 } from '@remix-run/react';
 import { FormEventHandler, useCallback, useEffect, useState } from 'react';
-import { NumberInput, TextInput } from '@kloudlite/design-system/atoms/input';
-import Select from '@kloudlite/design-system/atoms/select';
-import { Switch } from '@kloudlite/design-system/atoms/switch';
-import { titleCase, useMapper } from '@kloudlite/design-system/utils';
 import {
   BottomNavigation,
   ReviewComponent,
@@ -458,9 +458,9 @@ const App = ({ services }: { services: ExtractNodeType<IClusterMSvs>[] }) => {
   const commonTemplates = useCallback(() => {
     return getManagedTemplate({
       templates: msvtemplates || [],
-      kind: managedService?.spec?.msvcSpec.serviceTemplate.kind || '',
+      kind: managedService?.spec?.msvcSpec.serviceTemplate?.kind || '',
       apiVersion:
-        managedService?.spec?.msvcSpec.serviceTemplate.apiVersion || '',
+        managedService?.spec?.msvcSpec.serviceTemplate?.apiVersion || '',
     });
   }, [managedService, msvtemplates]);
 
@@ -527,9 +527,9 @@ const App = ({ services }: { services: ExtractNodeType<IClusterMSvs>[] }) => {
                       namespace: managedService?.spec?.targetNamespace || '',
                       apiVersion:
                         managedService?.spec?.msvcSpec.serviceTemplate
-                          .apiVersion || '',
+                          ?.apiVersion || '',
                       kind:
-                        managedService?.spec?.msvcSpec.serviceTemplate.kind ||
+                        managedService?.spec?.msvcSpec.serviceTemplate?.kind ||
                         '',
                       // clusterName: managedService.clusterName,
                     },

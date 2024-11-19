@@ -2,16 +2,16 @@ import gql from 'graphql-tag';
 import { IExecutor } from '~/root/lib/server/helpers/execute-query-with-context';
 import { NN } from '~/root/lib/types/common';
 import {
-  ConsoleListRoutersQuery,
+  ConsoleCreateRouterMutation,
+  ConsoleCreateRouterMutationVariables,
+  ConsoleDeleteRouterMutation,
+  ConsoleDeleteRouterMutationVariables,
   ConsoleGetRouterQuery,
   ConsoleGetRouterQueryVariables,
-  ConsoleCreateRouterMutation,
-  ConsoleUpdateRouterMutation,
-  ConsoleDeleteRouterMutation,
-  ConsoleCreateRouterMutationVariables,
-  ConsoleDeleteRouterMutationVariables,
-  ConsoleUpdateRouterMutationVariables,
+  ConsoleListRoutersQuery,
   ConsoleListRoutersQueryVariables,
+  ConsoleUpdateRouterMutation,
+  ConsoleUpdateRouterMutationVariables,
 } from '~/root/src/generated/gql/server';
 
 export type IRouters = NN<ConsoleListRoutersQuery['core_listRouters']>;
@@ -20,14 +20,8 @@ export type IRouter = NN<ConsoleGetRouterQuery['core_getRouter']>;
 export const routerQueries = (executor: IExecutor) => ({
   createRouter: executor(
     gql`
-      mutation Core_createRouter(
-        $envName: String!
-        $router: RouterIn!
-      ) {
-        core_createRouter(
-          envName: $envName
-          router: $router
-        ) {
+      mutation Core_createRouter($envName: String!, $router: RouterIn!) {
+        core_createRouter(envName: $envName, router: $router) {
           id
         }
       }
@@ -40,14 +34,8 @@ export const routerQueries = (executor: IExecutor) => ({
   ),
   updateRouter: executor(
     gql`
-      mutation Core_updateRouter(
-        $envName: String!
-        $router: RouterIn!
-      ) {
-        core_updateRouter(
-          envName: $envName
-          router: $router
-        ) {
+      mutation Core_updateRouter($envName: String!, $router: RouterIn!) {
+        core_updateRouter(envName: $envName, router: $router) {
           id
         }
       }
@@ -60,14 +48,8 @@ export const routerQueries = (executor: IExecutor) => ({
   ),
   deleteRouter: executor(
     gql`
-      mutation Core_deleteRouter(
-        $envName: String!
-        $routerName: String!
-      ) {
-        core_deleteRouter(
-          envName: $envName
-          routerName: $routerName
-        )
+      mutation Core_deleteRouter($envName: String!, $routerName: String!) {
+        core_deleteRouter(envName: $envName, routerName: $routerName)
       }
     `,
     {
@@ -83,11 +65,7 @@ export const routerQueries = (executor: IExecutor) => ({
         $search: SearchRouters
         $pq: CursorPaginationIn
       ) {
-        core_listRouters(
-          envName: $envName
-          search: $search
-          pq: $pq
-        ) {
+        core_listRouters(envName: $envName, search: $search, pq: $pq) {
           edges {
             cursor
             node {
@@ -194,14 +172,8 @@ export const routerQueries = (executor: IExecutor) => ({
   ),
   getRouter: executor(
     gql`
-      query Core_getRouter(
-        $envName: String!
-        $name: String!
-      ) {
-        core_getRouter(
-          envName: $envName
-          name: $name
-        ) {
+      query Core_getRouter($envName: String!, $name: String!) {
+        core_getRouter(envName: $envName, name: $name) {
           createdBy {
             userEmail
             userId

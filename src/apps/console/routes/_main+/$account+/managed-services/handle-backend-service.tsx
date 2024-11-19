@@ -1,6 +1,5 @@
 /* eslint-disable guard-for-in */
 /* eslint-disable react/destructuring-assignment */
-import { useEffect, useRef, useState } from 'react';
 import {
   ITextInputBase,
   NumberInput,
@@ -8,6 +7,7 @@ import {
 } from '@kloudlite/design-system/atoms/input';
 import { Switch } from '@kloudlite/design-system/atoms/switch';
 import Popup from '@kloudlite/design-system/molecule/popup';
+import { useEffect, useRef, useState } from 'react';
 import { NameIdView } from '~/console/components/name-id-view';
 import { IDialogBase } from '~/console/components/types.d';
 import { useConsoleApi } from '~/console/server/gql/api-provider';
@@ -242,7 +242,7 @@ const Root = (props: IDialog) => {
           clusterName: props.data.clusterName,
           isNameError: false,
           res: {
-            ...props.data.spec?.msvcSpec.serviceTemplate.spec,
+            ...props.data.spec?.msvcSpec.serviceTemplate?.spec,
           },
         }
       : {
@@ -267,9 +267,9 @@ const Root = (props: IDialog) => {
                 msvcSpec: {
                   serviceTemplate: {
                     apiVersion:
-                      props.data.spec?.msvcSpec.serviceTemplate.apiVersion ||
+                      props.data.spec?.msvcSpec.serviceTemplate?.apiVersion ||
                       '',
-                    kind: props.data.spec?.msvcSpec.serviceTemplate.kind || '',
+                    kind: props.data.spec?.msvcSpec.serviceTemplate?.kind || '',
                     spec: {
                       ...val.res,
                     },
@@ -294,8 +294,8 @@ const Root = (props: IDialog) => {
     if (isUpdate)
       return getManagedTemplate({
         templates,
-        apiVersion: props.data.spec?.msvcSpec.serviceTemplate.apiVersion || '',
-        kind: props.data.spec?.msvcSpec.serviceTemplate.kind || '',
+        apiVersion: props.data.spec?.msvcSpec.serviceTemplate?.apiVersion || '',
+        kind: props.data.spec?.msvcSpec.serviceTemplate?.kind || '',
       });
     return undefined;
   };

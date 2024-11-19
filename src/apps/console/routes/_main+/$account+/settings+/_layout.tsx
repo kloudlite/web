@@ -24,6 +24,7 @@ const Settings = () => {
         // { label: 'Cloud providers', value: 'cloud-providers' },
         { label: 'Image pull secrets', value: 'image-pull-secrets' },
         { label: 'Image Discovery', value: 'images' },
+        { label: 'Secrets & variables', value: 'secrets-variables' },
         // { label: 'VPN', value: 'vpn' },
       ]}
       parentPath="/settings"
