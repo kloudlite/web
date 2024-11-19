@@ -214,10 +214,7 @@ const ListView = ({
                   }
                 : {}),
             },
-            to:
-              linkComponent !== null
-                ? `/${account}/settings/svar/${id}`
-                : undefined,
+            to: linkComponent !== null ? `/${account}/svar/${id}` : undefined,
           };
         }),
       }}

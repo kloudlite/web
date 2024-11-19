@@ -30,7 +30,6 @@ export const handle = () => {
 export const loader = async (ctx: IRemixCtx) => {
   const promise = pWrapper(async () => {
     ensureAccountSet(ctx);
-    console.log('params', ctx.params);
     const { secvar } = ctx.params;
 
     const { data, errors } = await GQLServerHandler(
@@ -38,8 +37,6 @@ export const loader = async (ctx: IRemixCtx) => {
     ).getSecretVariable({
       name: secvar,
     });
-
-    console.log('data', data);
 
     if (errors) {
       throw errors[0];

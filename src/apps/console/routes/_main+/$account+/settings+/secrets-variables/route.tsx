@@ -23,7 +23,6 @@ import Tools from './tools';
 export const loader = async (ctx: IRemixCtx) => {
   ensureAccountSet(ctx);
   ensureClusterSet(ctx);
-  // const { environment } = ctx.params;
 
   const promise = pWrapper(async () => {
     const { data, errors } = await GQLServerHandler(
