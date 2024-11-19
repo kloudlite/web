@@ -2,16 +2,6 @@ import { toast } from '@kloudlite/design-system/molecule/toast';
 import { generateKey, titleCase } from '@kloudlite/design-system/utils';
 import { useParams } from '@remix-run/react';
 import { useState } from 'react';
-import { Trash } from '~/console/components/icons';
-import {
-  ExtractNodeType,
-  parseName,
-  parseUpdateOrCreatedBy,
-  parseUpdateOrCreatedOn,
-} from '~/console/server/r-utils/common';
-import { useWatchReload } from '~/lib/client/helpers/socket/useWatch';
-import { useReload } from '~/root/lib/client/helpers/reloader';
-import { handleError } from '~/root/lib/utils/common';
 import {
   ListBody,
   ListItem,
@@ -19,17 +9,26 @@ import {
   ListTitle,
   ListTitleV2,
   listClass,
-} from '../components/console-list-components';
-import DeleteDialog from '../components/delete-dialog';
-import Grid from '../components/grid';
-import ListGridView from '../components/list-grid-view';
-import ListV2 from '../components/listV2';
-import ResourceExtraAction from '../components/resource-extra-action';
-import { useConsoleApi } from '../server/gql/api-provider';
-import { ISecrets } from '../server/gql/queries/secret-queries';
+} from '~/console/components/console-list-components';
+import DeleteDialog from '~/console/components/delete-dialog';
+import Grid from '~/console/components/grid';
+import { Trash } from '~/console/components/icons';
+import ListGridView from '~/console/components/list-grid-view';
+import ListV2 from '~/console/components/listV2';
+import ResourceExtraAction from '~/console/components/resource-extra-action';
+import { useConsoleApi } from '~/console/server/gql/api-provider';
+import { ISecretVariables } from '~/console/server/gql/queries/secret-variables-queries';
+import {
+  ExtractNodeType,
+  parseUpdateOrCreatedBy,
+  parseUpdateOrCreatedOn,
+} from '~/console/server/r-utils/common';
+import { useWatchReload } from '~/lib/client/helpers/socket/useWatch';
+import { useReload } from '~/root/lib/client/helpers/reloader';
+import { handleError } from '~/root/lib/utils/common';
 
 const RESOURCE_NAME = 'secret';
-type BaseType = ExtractNodeType<ISecrets>;
+type BaseType = ExtractNodeType<ISecretVariables>;
 
 interface IResource {
   onDelete: (item: BaseType) => void;
@@ -41,8 +40,8 @@ interface IResource {
 
 const parseItem = (item: BaseType) => {
   return {
-    name: item.displayName || parseName(item),
-    id: parseName(item),
+    name: item.displayName || item.name,
+    id: item.name,
     entries: `${Object.keys(item?.stringData || {}).length || 0} Entries`,
     updateInfo: {
       author: `Updated by ${titleCase(parseUpdateOrCreatedBy(item))}`,
@@ -149,7 +148,7 @@ const ListView = ({
   onDelete = (_) => _,
   linkComponent = null,
 }: IResource) => {
-  const { account, environment } = useParams();
+  const { account } = useParams();
   const [selected, setSelected] = useState('');
   let props = {};
   if (linkComponent) {
@@ -217,7 +216,7 @@ const ListView = ({
             },
             to:
               linkComponent !== null
-                ? `/${account}/env/${environment}/secret/${id}`
+                ? `/${account}/settings/svar/${id}`
                 : undefined,
           };
         }),
@@ -226,7 +225,7 @@ const ListView = ({
   );
 };
 
-const SecretResourcesV2 = ({
+const SecretVariableResource = ({
   items = [],
   hasActions = true,
   onClick = (_) => _,
@@ -244,9 +243,7 @@ const SecretResourcesV2 = ({
 
   useWatchReload(
     items.map((i) => {
-      return `account:${account}.environment:${environment}.secret:${parseName(
-        i
-      )}`;
+      return `account:${account}.environment:${environment}.secret:${i.name}`;
     })
   );
 
@@ -271,14 +268,12 @@ const SecretResourcesV2 = ({
         show={showDeleteDialog}
         setShow={setShowDeleteDialog}
         onSubmit={async () => {
-          if (!environment) {
-            throw new Error('Project and Environment is required!.');
-          }
+          // if (!environment) {
+          //   throw new Error('Project and Environment is required!.');
+          // }
           try {
-            const { errors } = await api.deleteSecret({
-              envName: environment,
-
-              secretName: parseName(showDeleteDialog),
+            const { errors } = await api.deleteSecretVariable({
+              name: showDeleteDialog?.name || '',
             });
 
             if (errors) {
@@ -296,4 +291,4 @@ const SecretResourcesV2 = ({
   );
 };
 
-export default SecretResourcesV2;
+export default SecretVariableResource;

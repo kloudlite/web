@@ -1,8 +1,8 @@
+import { dayjs } from '@kloudlite/design-system/molecule/dayjs';
 import { useOutletContext } from '@remix-run/react';
 import { ApexOptions } from 'apexcharts';
 import axios from 'axios';
 import { useState } from 'react';
-import { dayjs } from '@kloudlite/design-system/molecule/dayjs';
 import Chart from '~/console/components/charts/charts-client';
 import { useClusterStatusV3 } from '~/console/hooks/use-cluster-status-v3';
 import { useDataState } from '~/console/page-components/common-state';
@@ -208,7 +208,7 @@ const LogsAndMetrics = () => {
             },
 
             annotations: getAnnotations(
-              managedService.spec?.msvcSpec.serviceTemplate.spec?.resources
+              managedService.spec?.msvcSpec.serviceTemplate?.spec?.resources
                 ?.cpu || {},
 
               'cpu'
@@ -218,7 +218,7 @@ const LogsAndMetrics = () => {
               min: 0,
               max:
                 parseValue(
-                  managedService.spec?.msvcSpec.serviceTemplate.spec?.resources
+                  managedService.spec?.msvcSpec.serviceTemplate?.spec?.resources
                     ?.cpu?.max,
                   0
                 ) * 1.1,
@@ -250,7 +250,7 @@ const LogsAndMetrics = () => {
             ],
 
             annotations: getAnnotations(
-              managedService.spec?.msvcSpec.serviceTemplate.spec?.resources
+              managedService.spec?.msvcSpec.serviceTemplate?.spec?.resources
                 ?.cpu || {},
               'memory'
             ),
@@ -259,7 +259,7 @@ const LogsAndMetrics = () => {
               min: 0,
               max:
                 parseValue(
-                  managedService.spec?.msvcSpec.serviceTemplate.spec?.resources
+                  managedService.spec?.msvcSpec.serviceTemplate?.spec?.resources
                     ?.cpu?.max,
                   0
                 ) * 1.1,

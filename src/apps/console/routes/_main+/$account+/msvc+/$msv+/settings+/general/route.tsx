@@ -1,27 +1,27 @@
-import { CopySimple } from '~/console/components/icons';
-import { useLocation, useNavigate, useOutletContext } from '@remix-run/react';
-import { useEffect, useState } from 'react';
 import { Button } from '@kloudlite/design-system/atoms/button';
 import { TextInput } from '@kloudlite/design-system/atoms/input';
 import { toast } from '@kloudlite/design-system/molecule/toast';
+import { useLocation, useNavigate, useOutletContext } from '@remix-run/react';
+import { useEffect, useState } from 'react';
 import {
   Box,
   DeleteContainer,
 } from '~/console/components/common-console-components';
+import DeleteDialog from '~/console/components/delete-dialog';
+import { CopySimple } from '~/console/components/icons';
+import Wrapper from '~/console/components/wrapper';
 import { useConsoleApi } from '~/console/server/gql/api-provider';
 import { parseName } from '~/console/server/r-utils/common';
+import { getManagedTemplate } from '~/console/utils/commons';
+import { useReload } from '~/root/lib/client/helpers/reloader';
 import useClipboard from '~/root/lib/client/hooks/use-clipboard';
 import useForm from '~/root/lib/client/hooks/use-form';
 import { useUnsavedChanges } from '~/root/lib/client/hooks/use-unsaved-changes';
 import { consoleBaseUrl } from '~/root/lib/configs/base-url.cjs';
 import Yup from '~/root/lib/server/helpers/yup';
 import { handleError } from '~/root/lib/utils/common';
-import Wrapper from '~/console/components/wrapper';
-import { useReload } from '~/root/lib/client/helpers/reloader';
-import DeleteDialog from '~/console/components/delete-dialog';
-import { getManagedTemplate } from '~/console/utils/commons';
-import { IManagedServiceContext } from '../../_layout';
 import { Fill } from '../../../../managed-services/handle-backend-service';
+import { IManagedServiceContext } from '../../_layout';
 
 const ClusterManagedServiceSettingGeneral = () => {
   const { account, managedService, msvtemplates } =
@@ -45,8 +45,8 @@ const ClusterManagedServiceSettingGeneral = () => {
     return getManagedTemplate({
       templates: msvtemplates,
       apiVersion:
-        managedService.spec?.msvcSpec.serviceTemplate.apiVersion || '',
-      kind: managedService.spec?.msvcSpec.serviceTemplate.kind || '',
+        managedService.spec?.msvcSpec.serviceTemplate?.apiVersion || '',
+      kind: managedService.spec?.msvcSpec.serviceTemplate?.kind || '',
     });
   };
 
@@ -58,7 +58,7 @@ const ClusterManagedServiceSettingGeneral = () => {
         clusterName: managedService.clusterName,
         isNameError: false,
         res: {
-          ...managedService.spec?.msvcSpec.serviceTemplate.spec,
+          ...managedService.spec?.msvcSpec.serviceTemplate?.spec,
         },
       },
       validationSchema: Yup.object({}),
@@ -74,10 +74,10 @@ const ClusterManagedServiceSettingGeneral = () => {
               msvcSpec: {
                 serviceTemplate: {
                   apiVersion:
-                    managedService.spec?.msvcSpec.serviceTemplate.apiVersion ||
+                    managedService.spec?.msvcSpec.serviceTemplate?.apiVersion ||
                     '',
                   kind:
-                    managedService.spec?.msvcSpec.serviceTemplate.kind || '',
+                    managedService.spec?.msvcSpec.serviceTemplate?.kind || '',
                   spec: {
                     ...val.res,
                   },
@@ -99,7 +99,7 @@ const ClusterManagedServiceSettingGeneral = () => {
     if (
       values.displayName !== managedService.displayName ||
       JSON.stringify(values.res) !==
-        JSON.stringify(managedService.spec?.msvcSpec.serviceTemplate.spec)
+        JSON.stringify(managedService.spec?.msvcSpec.serviceTemplate?.spec)
     ) {
       return true;
     }
@@ -152,7 +152,7 @@ const ClusterManagedServiceSettingGeneral = () => {
               <TextInput
                 label="Integrated service URL"
                 value={`${consoleBaseUrl}/${parseName(account)}/${parseName(
-                  managedService,
+                  managedService
                 )}`}
                 message="This is your URL namespace within Kloudlite"
                 disabled
@@ -166,8 +166,8 @@ const ClusterManagedServiceSettingGeneral = () => {
                       onClick={() =>
                         copy(
                           `${consoleBaseUrl}/${parseName(account)}/${parseName(
-                            managedService,
-                          )}`,
+                            managedService
+                          )}`
                         )
                       }
                       className="outline-none hover:bg-surface-basic-hovered active:bg-surface-basic-active rounded text-text-default"
