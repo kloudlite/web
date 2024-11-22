@@ -18,8 +18,8 @@ import { mapper } from '@kloudlite/design-system/utils';
 import { useOutletContext } from '@remix-run/react';
 import { ISetState } from '~/console/page-components/app-states';
 import { useReload } from '~/root/lib/client/helpers/reloader';
-import { IEnvironmentContext } from '../_layout';
 import ExposedPortList, { exposedPortsType } from './network';
+import { IEnvironmentContext } from '../../_layout';
 
 type IDialog = {
   app?: ExtractNodeType<IApps>;
@@ -41,7 +41,7 @@ const Root = (props: IDialog) => {
           first: 100,
         },
       }),
-    true
+    true,
   );
 
   const devices = useCallback(() => parseNodes(dData), [dData])();
@@ -56,10 +56,10 @@ const Root = (props: IDialog) => {
             appPort: s.port,
             devicePort:
               app.spec.intercept?.portMappings?.find(
-                (v) => v.appPort === s.port
+                (v) => v.appPort === s.port,
               )?.devicePort || s.port,
           };
-        }) || []
+        }) || [],
       );
     }
   }, [app]);

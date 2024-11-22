@@ -4349,6 +4349,81 @@ query consoleListRegistryImages($pq: CursorPaginationIn) {
   }
 }
 
+query consoleListSecretVariables($pq: CursorPaginationIn, $search: SearchSecretVariables) {
+  core_listSecretVariables(pq: $pq, search: $search) {
+    totalCount
+    edges {
+      node {
+        id
+        accountName
+        createdBy {
+          userEmail
+          userId
+          userName
+        }
+        creationTime
+        displayName
+        lastUpdatedBy {
+          userEmail
+          userId
+          userName
+        }
+        markedForDeletion
+        name
+        recordVersion
+        stringData
+        updateTime
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+      hasPrevPage
+      startCursor
+    }
+  }
+}
+
+mutation consoleCreateSecretVariable($secretVariable: SecretVariableIn!) {
+  core_createSecretVariable(secretVariable: $secretVariable) {
+    id
+  }
+}
+
+query consoleGetSecretVariable($name: String!) {
+  core_getSecretVariable(name: $name) {
+    accountName
+    createdBy {
+      userEmail
+      userId
+      userName
+    }
+    creationTime
+    displayName
+    id
+    lastUpdatedBy {
+      userEmail
+      userId
+      userName
+    }
+    markedForDeletion
+    name
+    recordVersion
+    stringData
+    updateTime
+  }
+}
+
+mutation consoleUpdateSecretVariable($secretVariable: SecretVariableIn!) {
+  core_updateSecretVariable(secretVariable: $secretVariable) {
+    id
+  }
+}
+
+mutation consoleDeleteSecretVariable($name: String!) {
+  core_deleteSecretVariable(name: $name)
+}
+
 mutation authCli_createGlobalVPNDevice($gvpnDevice: GlobalVPNDeviceIn!) {
   infra_createGlobalVPNDevice(gvpnDevice: $gvpnDevice) {
     accountName

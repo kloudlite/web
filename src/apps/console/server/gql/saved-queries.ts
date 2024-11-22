@@ -31,6 +31,7 @@ import { registryImagesQueries } from './queries/registry-image-queries';
 import { repoQueries } from './queries/repo-queries';
 /* import { routerQueries } from './queries/router-queries'; */
 import { secretQueries } from './queries/secret-queries';
+import { secretVariableQueries } from './queries/secret-variables-queries';
 import { tagsQueries } from './queries/tags-queries';
 
 export const GQLServerHandler = ({ headers, cookies }: IGQLServerProps) => {
@@ -68,6 +69,7 @@ export const GQLServerHandler = ({ headers, cookies }: IGQLServerProps) => {
     ...commsNotificationQueries(executor),
     ...importedManagedResourceQueries(executor),
     ...registryImagesQueries(executor),
+    ...secretVariableQueries(executor),
   };
 };
 

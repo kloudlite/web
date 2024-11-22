@@ -10,7 +10,7 @@ type IHelmDoc = {
   generated: string;
 };
 
-const useFetchHelmCharts = ({ repoUrl }: { repoUrl: string }) => {
+const useFetchHelmCharts = ({ repoUrl }: { repoUrl?: string }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [helmCharts, setHelmCharts] = useState<

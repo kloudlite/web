@@ -85,7 +85,10 @@ const Root = (props: IDialog) => {
   const { values, errors, handleSubmit, handleChange, isLoading, resetValues } =
     useForm({
       initialValues: !isUpdate
-        ? {}
+        ? {
+            displayName: '',
+            name: '',
+          }
         : {
             isNameError: false,
             displayName: props.data.displayName,

@@ -1,8 +1,8 @@
-import { Link, useOutletContext, useParams } from '@remix-run/react';
-import { useState } from 'react';
 import { Badge } from '@kloudlite/design-system/atoms/badge';
 import { toast } from '@kloudlite/design-system/molecule/toast';
 import { generateKey, titleCase } from '@kloudlite/design-system/utils';
+import { Link, useOutletContext, useParams } from '@remix-run/react';
+import { useState } from 'react';
 import {
   ListItem,
   ListItemV2,
@@ -41,8 +41,8 @@ type BaseType = ExtractNodeType<IClusterMSvs>;
 const parseItem = (item: BaseType, templates: IMSvTemplates) => {
   const template = getManagedTemplate({
     templates,
-    kind: item.spec?.msvcSpec?.serviceTemplate.kind || '',
-    apiVersion: item.spec?.msvcSpec?.serviceTemplate.apiVersion || '',
+    kind: item.spec?.msvcSpec?.serviceTemplate?.kind || '',
+    apiVersion: item.spec?.msvcSpec?.serviceTemplate?.apiVersion || '',
   });
   return {
     name: item?.displayName,

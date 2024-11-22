@@ -6100,6 +6100,82 @@ export type ConsoleListRegistryImagesQuery = {
   };
 };
 
+export type ConsoleListSecretVariablesQueryVariables = Exact<{
+  pq?: InputMaybe<CursorPaginationIn>;
+  search?: InputMaybe<SearchSecretVariables>;
+}>;
+
+export type ConsoleListSecretVariablesQuery = {
+  core_listSecretVariables?: {
+    totalCount: number;
+    edges: Array<{
+      node: {
+        id: string;
+        accountName: string;
+        creationTime: any;
+        displayName: string;
+        markedForDeletion?: boolean;
+        name: string;
+        recordVersion: number;
+        stringData: any;
+        updateTime: any;
+        createdBy: { userEmail: string; userId: string; userName: string };
+        lastUpdatedBy: { userEmail: string; userId: string; userName: string };
+      };
+    }>;
+    pageInfo: {
+      endCursor?: string;
+      hasNextPage?: boolean;
+      hasPrevPage?: boolean;
+      startCursor?: string;
+    };
+  };
+};
+
+export type ConsoleCreateSecretVariableMutationVariables = Exact<{
+  secretVariable: SecretVariableIn;
+}>;
+
+export type ConsoleCreateSecretVariableMutation = {
+  core_createSecretVariable?: { id: string };
+};
+
+export type ConsoleGetSecretVariableQueryVariables = Exact<{
+  name: Scalars['String']['input'];
+}>;
+
+export type ConsoleGetSecretVariableQuery = {
+  core_getSecretVariable?: {
+    accountName: string;
+    creationTime: any;
+    displayName: string;
+    id: string;
+    markedForDeletion?: boolean;
+    name: string;
+    recordVersion: number;
+    stringData: any;
+    updateTime: any;
+    createdBy: { userEmail: string; userId: string; userName: string };
+    lastUpdatedBy: { userEmail: string; userId: string; userName: string };
+  };
+};
+
+export type ConsoleUpdateSecretVariableMutationVariables = Exact<{
+  secretVariable: SecretVariableIn;
+}>;
+
+export type ConsoleUpdateSecretVariableMutation = {
+  core_updateSecretVariable?: { id: string };
+};
+
+export type ConsoleDeleteSecretVariableMutationVariables = Exact<{
+  name: Scalars['String']['input'];
+}>;
+
+export type ConsoleDeleteSecretVariableMutation = {
+  core_deleteSecretVariable: boolean;
+};
+
 export type AuthCli_CreateGlobalVpnDeviceMutationVariables = Exact<{
   gvpnDevice: GlobalVpnDeviceIn;
 }>;
