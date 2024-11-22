@@ -11,7 +11,6 @@ const Workloads = () => {
     return <Outlet context={rootContext} />;
   }
 
-  console.log('workloads');
   return (
     <SidebarLayout
       navItems={[

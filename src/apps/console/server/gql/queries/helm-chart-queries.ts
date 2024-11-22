@@ -2,9 +2,7 @@ import gql from 'graphql-tag';
 import { IExecutor } from '~/root/lib/server/helpers/execute-query-with-context';
 import { NN } from '~/root/lib/types/common';
 import {
-  ConsoleListHelmChartQuery,
   ConsoleGetHelmChartQueryVariables,
-  ConsoleListHelmChartQueryVariables,
   ConsoleGetHelmChartQuery,
   ConsoleCreateHelmChartMutation,
   ConsoleCreateHelmChartMutationVariables,
@@ -12,9 +10,11 @@ import {
   ConsoleUpdateHelmChartMutationVariables,
   ConsoleDeleteHelmChartMutation,
   ConsoleDeleteHelmChartMutationVariables,
+  ConsoleListHelmChartsQuery,
+  ConsoleListHelmChartsQueryVariables,
 } from '~/root/src/generated/gql/server';
 
-export type IHelmCharts = NN<ConsoleListHelmChartQuery['core_listHelmCharts']>;
+export type IHelmCharts = NN<ConsoleListHelmChartsQuery['core_listHelmCharts']>;
 
 export const helmChartQueries = (executor: IExecutor) => ({
   getHelmChart: executor(
@@ -110,6 +110,7 @@ export const helmChartQueries = (executor: IExecutor) => ({
               }
               metadata {
                 name
+                annotations
               }
               spec {
                 chartName
@@ -153,9 +154,9 @@ export const helmChartQueries = (executor: IExecutor) => ({
       }
     `,
     {
-      transformer: (data: ConsoleListHelmChartQuery) =>
+      transformer: (data: ConsoleListHelmChartsQuery) =>
         data.core_listHelmCharts,
-      vars(_: ConsoleListHelmChartQueryVariables) {},
+      vars(_: ConsoleListHelmChartsQueryVariables) {},
     },
   ),
   createHelmChart: executor(
@@ -177,37 +178,34 @@ export const helmChartQueries = (executor: IExecutor) => ({
   ),
   updateHelmChart: executor(
     gql`
-      mutation Infra_updateHelmRelease(
-        $clusterName: String!
-        $release: HelmReleaseIn!
+      mutation Core_updateHelmChart(
+        $envName: String!
+        $helmchart: HelmChartIn!
       ) {
-        infra_updateHelmRelease(clusterName: $clusterName, release: $release) {
+        core_updateHelmChart(envName: $envName, helmchart: $helmchart) {
           id
         }
       }
     `,
     {
       transformer(data: ConsoleUpdateHelmChartMutation) {
-        return data.infra_updateHelmRelease;
+        return data.core_updateHelmChart;
       },
       vars(_: ConsoleUpdateHelmChartMutationVariables) {},
     },
   ),
   deleteHelmChart: executor(
     gql`
-      mutation Infra_deleteHelmRelease(
-        $clusterName: String!
-        $releaseName: String!
+      mutation Core_deleteHelmChart(
+        $envName: String!
+        $helmChartName: String!
       ) {
-        infra_deleteHelmRelease(
-          clusterName: $clusterName
-          releaseName: $releaseName
-        )
+        core_deleteHelmChart(envName: $envName, helmChartName: $helmChartName)
       }
     `,
     {
       transformer(data: ConsoleDeleteHelmChartMutation) {
-        return data.infra_deleteHelmRelease;
+        return data.core_deleteHelmChart;
       },
       vars(_: ConsoleDeleteHelmChartMutationVariables) {},
     },

@@ -12,6 +12,7 @@ import { Plus } from '@jengaicons/react';
 import { EmptyHelmReleaseImage } from '~/console/components/empty-resource-images';
 import HelmChartResourcesV2 from './helm-chart-resources-v2';
 import Tools from './tools';
+import fake from '~/root/fake-data-generator/fake';
 
 export const loader = (ctx: IRemixCtx) => {
   const { environment } = ctx.params;
@@ -22,7 +23,6 @@ export const loader = (ctx: IRemixCtx) => {
       envName: environment,
     });
 
-    console.log(mData, environment);
     if (mErrors) {
       throw mErrors[0];
     }
@@ -36,23 +36,21 @@ const HelmCharts = () => {
   const [visible, setVisible] = useState(false);
   const { promise } = useLoaderData<typeof loader>();
 
-  console.log(promise);
-
   return (
     <>
       <LoadingComp
         data={promise}
-        /* skeletonData={{
-          helmChartData: fake.ConsoleListHelmChartQuery
-            .infra_listHelmReleases as any,
-        }} */
+        skeletonData={{
+          helmChartData: fake.ConsoleListHelmChartsQuery
+            .core_listHelmCharts as any,
+        }}
       >
         {({ helmChartData }) => {
           const helmCharts = parseNodes(helmChartData);
 
           return (
             <Wrapper
-              header={{
+              secondaryHeader={{
                 title: 'Helm charts',
                 action: helmCharts.length > 0 && (
                   <Button
@@ -77,9 +75,8 @@ const HelmCharts = () => {
                 action: {
                   content: 'Install helm chart',
                   prefix: <Plus />,
-                  onClick: () => {
-                    setVisible(true);
-                  },
+                  to: '../new-helm-chart',
+                  linkComponent: Link,
                 },
               }}
               tools={<Tools />}

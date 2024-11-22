@@ -86,6 +86,7 @@ const AppComp = () => {
 
 export const handle = {
   noMainLayout: true,
+  noLayout: true,
 };
 
 const App = () => {

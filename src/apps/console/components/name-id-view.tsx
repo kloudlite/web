@@ -75,7 +75,7 @@ export const NameIdView = forwardRef<HTMLInputElement, INameIdView>(
         case 'managed_resource':
         case 'router':
         case 'secret':
-        case 'helm_release':
+        case 'helm_chart':
         case 'imported_managed_resource':
           ensureAccountClientSide(params);
           ensureClusterClientSide(params);
@@ -171,6 +171,7 @@ export const NameIdView = forwardRef<HTMLInputElement, INameIdView>(
                   'config',
                   'secret',
                   'console_vpn_device',
+                  'helm_chart',
                   'router',
                   'imported_managed_resource',
                 ].includes(tempResType)

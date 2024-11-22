@@ -13,21 +13,22 @@ import {
   parseUpdateOrCreatedOn,
 } from '~/console/server/r-utils/common';
 import DeleteDialog from '~/console/components/delete-dialog';
-import ResourceExtraAction from '~/console/components/resource-extra-action';
+import ResourceExtraAction, {
+  IResourceExtraItem,
+} from '~/console/components/resource-extra-action';
 import { useConsoleApi } from '~/console/server/gql/api-provider';
 import { useReload } from '~/root/lib/client/helpers/reloader';
 import { useState } from 'react';
 import { handleError } from '~/root/lib/utils/common';
 import { toast } from '@kloudlite/design-system/molecule/toast';
-import { useOutletContext, useParams } from '@remix-run/react';
+import { useOutletContext } from '@remix-run/react';
 import { IHelmCharts } from '~/console/server/gql/queries/helm-chart-queries';
-import { IAccountContext } from '~/console/routes/_main+/$account+/_layout';
-import { IClusterContext } from '~/console/routes/_main+/$account+/infra+/$cluster+/_layout';
 import { useWatchReload } from '~/lib/client/helpers/socket/useWatch';
 import ListV2 from '~/console/components/listV2';
-import { SyncStatusV2 } from '~/console/components/sync-status';
+import { status, SyncStatusV2 } from '~/console/components/sync-status';
 import { constants } from '~/console/server/utils/constants';
 import HandleHelmChart from './handle-helm-chart';
+import { IEnvironmentContext } from '../../_layout';
 
 const RESOURCE_NAME = 'helm chart';
 type BaseType = ExtractNodeType<IHelmCharts>;
@@ -59,26 +60,35 @@ type IExtraButton = {
 const ExtraButton = ({ onAction, item }: IExtraButton) => {
   const kloudliteAgentName = item.metadata?.name;
   const iconSize = 16;
+
+  const s = status({ item });
+
+  let items: IResourceExtraItem[] = [
+    {
+      label: 'Delete',
+      icon: <Trash size={iconSize} />,
+      type: 'item',
+      onClick: () => onAction({ action: 'delete', item }),
+      key: 'delete',
+      className: '!text-text-critical',
+    },
+  ];
+
+  if (s !== 'deleting') {
+    items = [
+      {
+        label: 'Edit',
+        icon: <PencilSimple size={iconSize} />,
+        type: 'item',
+        onClick: () => onAction({ action: 'edit', item }),
+        key: 'edit',
+      },
+      ...items,
+    ];
+  }
+
   return kloudliteAgentName !== constants.kloudliteHelmAgentName ? (
-    <ResourceExtraAction
-      options={[
-        {
-          label: 'Edit',
-          icon: <PencilSimple size={iconSize} />,
-          type: 'item',
-          onClick: () => onAction({ action: 'edit', item }),
-          key: 'edit',
-        },
-        {
-          label: 'Delete',
-          icon: <Trash size={iconSize} />,
-          type: 'item',
-          onClick: () => onAction({ action: 'delete', item }),
-          key: 'delete',
-          className: '!text-text-critical',
-        },
-      ]}
-    />
+    <ResourceExtraAction options={items} />
   ) : null;
 };
 
@@ -152,7 +162,7 @@ const ListView = ({ items = [], onAction }: IResource) => {
           {
             render: () => '',
             name: 'action',
-            className: 'w-[24px]',
+            className: 'w-[28px]',
           },
         ],
         rows: items.map((i) => {
@@ -187,21 +197,19 @@ const ListView = ({ items = [], onAction }: IResource) => {
 
 const HelmChartResourcesV2 = ({ items = [] }: { items: BaseType[] }) => {
   const [showDeleteDialog, setShowDeleteDialog] = useState<BaseType | null>(
-    null
+    null,
   );
   const [showHandleHelm, setShowHandlehelm] = useState<BaseType | null>(null);
   const api = useConsoleApi();
   const reloadPage = useReload();
-  const params = useParams();
 
-  const { account } = useOutletContext<IAccountContext>();
-  const { cluster } = useOutletContext<IClusterContext>();
+  const { environment, account } = useOutletContext<IEnvironmentContext>();
   useWatchReload(
     items.map((i) => {
-      return `account:${parseName(account)}.cluster:${parseName(
-        cluster
+      return `account:${parseName(account)}.environment:${parseName(
+        environment,
       )}.helm_release:${parseName(i)}`;
-    })
+    }),
   );
 
   const props: IResource = {
@@ -241,8 +249,8 @@ const HelmChartResourcesV2 = ({ items = [] }: { items: BaseType[] }) => {
         onSubmit={async () => {
           try {
             const { errors } = await api.deleteHelmChart({
-              releaseName: parseName(showDeleteDialog),
-              clusterName: params.cluster || '',
+              envName: parseName(environment),
+              helmChartName: parseName(showDeleteDialog),
             });
 
             if (errors) {

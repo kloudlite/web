@@ -5,8 +5,8 @@ import {
   useAppState,
 } from '~/console/page-components/app-states';
 import AppWrapper from '~/console/page-components/app/app-wrapper';
-import { EnvironmentVariables } from '~/console/routes/_main+/$account+/env+/$environment+/new-app/app-environment-variables';
-import { ConfigMounts } from '~/console/routes/_main+/$account+/env+/$environment+/new-app/app-config-mount';
+import { EnvironmentVariables } from '~/console/routes/_main+/$account+/env+/$environment+/workloads+/new-app/app-environment-variables';
+import { ConfigMounts } from '~/console/routes/_main+/$account+/env+/$environment+/workloads+/new-app/app-config-mount';
 
 export interface IAppDialogValue {
   refKey: string;

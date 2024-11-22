@@ -12,22 +12,20 @@ import { NameIdView } from '~/console/components/name-id-view';
 import useForm, { dummyEvent } from '~/root/lib/client/hooks/use-form';
 import Yup from '~/root/lib/server/helpers/yup';
 import Select from '@kloudlite/design-system/atoms/select';
-import { ReactNode, useState } from 'react';
-import useDebounce from '~/root/lib/client/hooks/use-debounce';
-import { CircleWavyCheckFill } from '@jengaicons/react';
+import { useRef, useState } from 'react';
 import { cn } from '@kloudlite/design-system/utils';
-import axios from 'axios';
 import { toast } from '@kloudlite/design-system/molecule/toast';
 import yaml from 'js-yaml';
-import Pulsable from 'react-pulsable';
 import ExtendedFilledTab from '~/console/components/extended-filled-tab';
-import { TextArea } from '@kloudlite/design-system/atoms/input';
 import { keyconstants } from '~/console/server/r-utils/key-constants';
 import { IEnvironmentContext } from '../../_layout';
 import { parseName } from '~/console/server/r-utils/common';
 import { handleError } from '~/root/lib/utils/common';
-
-const LOGO_URL = 'https://artifacthub.io/image/';
+import CodeEditorClient from '~/root/lib/client/components/editor-client';
+import FillerHelm from '~/console/assets/filler-helm';
+import useFetchHelmValue from '../helm-charts/helm-utils/use-fetch-helmvalues';
+import useFetchHelmCharts from '../helm-charts/helm-utils/use-fetch-helmcharts';
+import useHelmRepoSearch from '../helm-charts/helm-utils/use-helm-repo-search';
 
 type IHelmDoc = {
   apiVersion: string;
@@ -59,322 +57,162 @@ const filterUniqueVersions = (versions: IHelmDoc['entries']['keys']) => {
 };
 
 const HelmChartLayout = () => {
-  // const { msvtemplates, cluster, account } =
-  //   useOutletContext<IClusterContext>();
+  const { environment } = useOutletContext<IEnvironmentContext>();
+  const navigate = useNavigate();
+  const api = useConsoleApi();
 
-  const [hemlCharts, setHelmCharts] = useState<
-    Array<{ label: string; value: string; item: IHelmDoc['entries']['key'] }>
-  >([]);
+  const rootUrl = `../helm-charts`;
+
+  const editorRef = useRef<any>();
 
   const [chartVersions, setChartVersions] = useState<
     IHelmDoc['entries']['key']
   >([]);
 
-  const [helmChartsLoading, setHelmChartsLoading] = useState(false);
-  const [isRepoCreatable, setIsRepoCreatable] = useState(false);
   const [selectedRepo, setSelectedRepo] = useState<string>('');
-  const [repoErrors, setRepoErrors] = useState(false);
 
   const [repoSearchText, setRepoSearchText] = useState('');
-  const [repos, setRepos] = useState<
-    {
-      label: string;
-      value: string;
-      repoUrl: string;
-      render: () => ReactNode;
-    }[]
-  >([]);
 
-  const [reposLoading, setReposLoading] = useState(false);
   const [chartName, setChartName] = useState<
     { label: string; value: string } | undefined
   >(undefined);
   const [chartVersion, setChartVersion] = useState<
     { label: string; value: string } | undefined
   >(undefined);
-  const [helmValues, setHelmValues] = useState('');
-  const [activeTab, setActiveTab] = useState('defaults');
-
-  const { environment } = useOutletContext<IEnvironmentContext>();
-  const navigate = useNavigate();
-  const api = useConsoleApi();
-
-  // const rootUrl = `/${parseName(account)}/infra/${parseName(
-  //   account
-  // )}/managed-services`;
-
-  const rootUrl = `../helm-charts`;
 
   const { currentStep, jumpStep, nextStep } = useMultiStepProgress({
     defaultStep: 1,
     totalSteps: 4,
   });
 
-  const fetchValues = async ({
-    packageId,
-    version,
-  }: {
-    packageId: string;
-    version: string;
-  }) => {
-    try {
-      const r = await axios({
-        method: 'get',
-        url: `/artifacthub-values-api`,
-        params: {
-          packageId,
-          version,
-        },
-      });
-      setHelmValues(r.data);
-    } catch (err) {
-      toast.error('Error fetching chart values');
-    }
-  };
+  const { values: helmValues } = useFetchHelmValue({
+    packageId: selectedRepo,
+    version: chartVersion?.value,
+  });
 
-  /* useEffect(() => {
-    setChartName(undefined);
-    setChartVersions([]);
-  }, [hemlCharts]);
+  const {
+    repos,
+    isRepoCreatable,
+    loading: repoLoading,
+  } = useHelmRepoSearch({ searchText: repoSearchText });
 
-  useEffect(() => {
-    setChartVersion(undefined);
-  }, [chartVersions]); */
-
-  const fetchHelmCharts = async (repoUrl: string) => {
-    try {
-      setRepoErrors(false);
-      setHelmChartsLoading(true);
-      const res = await axios.get(`/helmchart-api?url=${repoUrl}`);
-      const repos = yaml.load(res.data, { json: true }) as IHelmDoc;
-      setHelmCharts(
-        Object.entries(repos.entries).map(([key, value]) => ({
-          label: key,
-          value: key,
-          item: value,
-        })),
-      );
-    } catch (error) {
-      console.log(error);
-      setRepoErrors(true);
-    } finally {
-      setHelmChartsLoading(false);
-    }
-  };
-
-  const searchRepos = async (text: string) => {
-    setChartVersions([]);
-    if (text) {
-      try {
-        const r = await axios({
-          method: 'get',
-          url: '/artifacthub-api',
-          params: {
-            offset: 0,
-            limit: 10,
-            kind: 0,
-            ts_query_web: text,
-          },
-        });
-
-        setRepos(
-          r.data.packages.map(
-            (hc: {
-              name: string;
-              package_id: string;
-              logo_image_id: string;
-              repository: {
-                url: string;
-                name: string;
-                verified_publisher: boolean;
-                organization_display_name?: string;
-                user_alias?: string;
-              };
-            }) => ({
-              label: hc.name,
-              value: hc.package_id,
-              repoUrl: hc.repository.url,
-              render: () => (
-                <div className="flex flex-row gap-xl items-center">
-                  <Pulsable isLoading={!hc.logo_image_id}>
-                    <span className=" pulsable pulsable-img">
-                      <img
-                        className={cn({
-                          'w-4xl aspect-square object-contain': true,
-                        })}
-                        src={`${LOGO_URL}${hc.logo_image_id}`}
-                        alt={hc.name}
-                      />
-                    </span>
-                  </Pulsable>
-                  <div className="flex flex-col flex-1">
-                    <div className="flex flex-row gap-lg items-center">
-                      <div className="flex-1">{hc.name}</div>
-                      <div className="text-icon-primary mt-sm">
-                        {hc.repository.verified_publisher && (
-                          <CircleWavyCheckFill size={12} />
-                        )}
-                      </div>
-                    </div>
-                    <div className="bodySm text-text-disabled flex flex-row gap-md lowercase">
-                      <span>
-                        {hc.repository.organization_display_name ? (
-                          <span>
-                            ORG:{' '}
-                            <span className="bodySm-semibold">
-                              {hc.repository.organization_display_name}
-                            </span>
-                          </span>
-                        ) : (
-                          <span>
-                            USER:{' '}
-                            <span className="bodySm-semibold">
-                              {hc.repository.user_alias}
-                            </span>
-                          </span>
-                        )}
-                      </span>{' '}
-                      |{' '}
-                      <span>
-                        REPO:{' '}
-                        <span className="bodySm-semibold">
-                          {hc.repository.name}
-                        </span>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              ),
-            }),
-          ),
-        );
-      } catch {
-        setRepoErrors(true);
-      } finally {
-        setReposLoading(false);
-      }
-    } else {
-      //
-      setReposLoading(false);
-      setRepos([]);
-    }
-  };
-
-  useDebounce(
-    async () => {
-      if (!repoSearchText.startsWith('https://')) {
-        searchRepos(repoSearchText);
-        setIsRepoCreatable(false);
-      } else {
-        setIsRepoCreatable(true);
-        setReposLoading(false);
-        setRepos([]);
-      }
+  const { values, errors, handleSubmit, handleChange, isLoading } = useForm({
+    initialValues: {
+      displayName: '',
+      name: '',
+      chartName: '',
+      chartRepoURL: '',
+      chartVersion: '',
+      values: '',
+      isNameError: false,
+      activeTab: 'defaults',
     },
-    200,
-    [repoSearchText],
-  );
+    validationSchema: Yup.object({
+      displayName: Yup.string().required(),
+      name: Yup.string().required(),
+      chartName: Yup.string().test(
+        'required',
+        'Chart Name is required',
+        (v) => {
+          return !(currentStep === 2 && !v);
+        },
+      ),
+      chartRepoURL: Yup.string().test(
+        'required',
+        'Chart Repo Url is required',
+        (v) => {
+          return !(currentStep === 2 && !v);
+        },
+      ),
+      chartVersion: Yup.string().test(
+        'required',
+        'Chart Version is required',
+        (v) => {
+          return !(currentStep === 2 && !v);
+        },
+      ),
+    }),
 
-  const { values, errors, handleSubmit, handleChange, isLoading, resetValues } =
-    useForm({
-      initialValues: {
-        displayName: '',
-        name: '',
-        chartName: '',
-        chartRepoURL: '',
-        chartVersion: '',
-        values: '',
-        isNameError: false,
-      },
-      validationSchema: Yup.object({
-        displayName: Yup.string().required(),
-        name: Yup.string().required(),
-        chartName: Yup.string().test(
-          'required',
-          'Chart Name is required',
-          (v) => {
-            return !(currentStep === 2 && !v);
-          },
-        ),
-        chartRepoURL: Yup.string().test(
-          'required',
-          'Chart Repo Url is required',
-          (v) => {
-            return !(currentStep === 2 && !v);
-          },
-        ),
-        chartVersion: Yup.string().test(
-          'required',
-          'Chart Version is required',
-          (v) => {
-            return !(currentStep === 2 && !v);
-          },
-        ),
-      }),
-
-      onSubmit: async (val) => {
-        const submit = async () => {
-          try {
-            const { errors } = await api.createHelmChart({
-              envName: parseName(environment),
-              helmchart: {
-                displayName: val.displayName,
-                metadata: {
-                  name: val.name,
-                  annotations: {
-                    [keyconstants.helmChartRepoPackageId]: selectedRepo,
-                  },
-                },
-                spec: {
-                  chartName: val.chartName,
-                  chartRepoURL: val.chartRepoURL,
-                  chartVersion: val.chartVersion,
-                  values: val.values
-                    ? yaml.load(val.values, { json: true })
-                    : {},
+    onSubmit: async (val) => {
+      const submit = async () => {
+        try {
+          const { errors } = await api.createHelmChart({
+            envName: parseName(environment),
+            helmchart: {
+              displayName: val.displayName,
+              metadata: {
+                name: val.name,
+                annotations: {
+                  [keyconstants.helmChartRepoPackageId]: selectedRepo,
                 },
               },
-            });
+              spec: {
+                chartName: val.chartName,
+                chartRepoURL: val.chartRepoURL,
+                chartVersion: val.chartVersion,
+                values: val.values ? yaml.load(val.values, { json: true }) : {},
+              },
+            },
+          });
 
-            if (errors) {
-              throw errors[0];
-            }
-
-            toast.success('Helm chart created successfully');
-            navigate(rootUrl);
-          } catch (err) {
-            handleError(err);
+          if (errors) {
+            throw errors[0];
           }
-        };
 
-        switch (currentStep) {
-          case 1:
-            nextStep();
-            break;
-          case 2:
-            nextStep();
-            break;
-          case 3:
-            nextStep();
-            break;
-          case 4:
-            await submit();
-            break;
-          default:
-            break;
+          toast.success('Helm chart created successfully');
+          navigate(rootUrl);
+        } catch (err) {
+          handleError(err);
         }
-      },
-    });
+      };
 
-  useDebounce(
-    () => {
-      if (values.chartRepoURL) {
-        fetchHelmCharts(values.chartRepoURL);
+      switch (currentStep) {
+        case 1:
+          nextStep();
+          break;
+        case 2:
+          nextStep();
+          break;
+        case 3:
+          nextStep();
+          break;
+        case 4:
+          await submit();
+          break;
+        default:
+          break;
       }
     },
-    300,
-    [values.chartRepoURL],
-  );
+  });
+
+  const { helmCharts, loading: helmChartsLoading } = useFetchHelmCharts({
+    repoUrl: values.chartRepoURL,
+  });
+
+  const resetHelmFields = () => {
+    handleChange('chartName')(dummyEvent(''));
+    handleChange('chartVersion')(dummyEvent(''));
+    setChartName(undefined);
+    setChartVersion(undefined);
+    setChartVersions([]);
+    setSelectedRepo('');
+    handleChange('chartRepoURL')(dummyEvent(''));
+  };
+
+  const valueEditorProps = {
+    height: '500px',
+    options: {
+      fontSize: 14,
+      padding: {
+        top: 20,
+        bottom: 20,
+      },
+      tabSize: 2,
+      minimap: {
+        enabled: false,
+      },
+    },
+  };
 
   return (
     <MultiStepProgressWrapper
@@ -384,8 +222,16 @@ const HelmChartLayout = () => {
         content: 'Back to Helm charts',
         to: rootUrl,
       }}
+      className="!max-w-[none]"
+      fillerImage={<FillerHelm />}
     >
-      <MultiStepProgress.Root currentStep={currentStep} jumpStep={jumpStep}>
+      <MultiStepProgress.Root
+        currentStep={currentStep}
+        jumpStep={jumpStep}
+        className={cn({
+          'max-w-[568px]': currentStep !== 3,
+        })}
+      >
         <MultiStepProgress.Step label="Helm chart details" step={1}>
           <form
             className="flex flex-col gap-3xl"
@@ -403,7 +249,7 @@ const HelmChartLayout = () => {
               versioning, and scalability.
             </div>
             <NameIdView
-              resType="environment"
+              resType="helm_chart"
               displayName={values.displayName}
               name={values.name}
               label="Helm chart name"
@@ -427,10 +273,7 @@ const HelmChartLayout = () => {
             <div className="bodyMd text-text-soft">
               Provide advanced chart details for a customized setup.
             </div>
-
             <Select
-              // open
-              showclear={!!values.chartRepoURL}
               size="lg"
               label="Chart repo url"
               placeholder="Search for or enter the repo url"
@@ -445,55 +288,49 @@ const HelmChartLayout = () => {
                   handleChange('chartRepoURL')(dummyEvent(value.value));
                 }
                 setSelectedRepo(value.value);
-                setHelmCharts([]);
+                /* setHelmCharts([]); */
               }}
               onSearch={(text) => {
                 setRepoSearchText(text);
-                setReposLoading(true);
+                resetHelmFields();
               }}
               valueRender={repoRenderer}
-              loading={reposLoading}
+              loading={repoLoading}
               noOptionMessage={
                 <div className="p-2xl bodyMd text-center">
                   Search for or enter the repo url
                 </div>
               }
-              error={repoErrors}
-              message={repoErrors ? 'Error loading helm charts.' : ''}
+              error={!!errors.chartRepoURL}
+              message={errors.chartRepoURL}
             />
             <Select
               label="Chart name"
               placeholder="Chart name"
               searchable
               size="lg"
-              disabled={
-                hemlCharts.length === 0 ||
-                reposLoading ||
-                repoErrors ||
-                !selectedRepo
-              }
+              disabled={helmCharts.length === 0 || repoLoading || !selectedRepo}
               //@ts-ignore
               value={chartName?.value}
-              options={async () => hemlCharts}
-              loading={!repoErrors && helmChartsLoading}
+              options={async () => helmCharts}
+              loading={!errors.chartVersion && helmChartsLoading}
               onChange={(val) => {
                 handleChange('chartName')(dummyEvent(val.value));
                 setChartName(val);
+                setChartVersion(undefined);
+                handleChange('chartVersion')(dummyEvent(''));
                 setChartVersions(filterUniqueVersions(val.item));
               }}
               onSearch={() => true}
+              error={!!errors.chartName}
+              message={errors.chartName}
             />
             <Select
               searchable
               label="Chart version"
               size="lg"
               placeholder="Chart version"
-              disabled={
-                reposLoading ||
-                helmChartsLoading ||
-                repoErrors ||
-                !values.chartName
-              }
+              disabled={repoLoading || helmChartsLoading || !values.chartName}
               value={chartVersion?.value}
               options={async () => [
                 ...chartVersions.map((cv) => ({
@@ -505,10 +342,10 @@ const HelmChartLayout = () => {
               onChange={(val) => {
                 handleChange('chartVersion')(dummyEvent(val.value));
                 setChartVersion(val);
-                setHelmValues('');
-                fetchValues({ packageId: selectedRepo, version: val.value });
               }}
               onSearch={() => true}
+              error={!!errors.chartVersion}
+              message={errors.chartVersion}
             />
             <BottomNavigation
               primaryButton={{
@@ -528,8 +365,10 @@ const HelmChartLayout = () => {
               {chartVersion ? (
                 <div className="flex flex-col gap-3xl h-full">
                   <ExtendedFilledTab
-                    value={activeTab}
-                    onChange={setActiveTab}
+                    value={values.activeTab}
+                    onChange={(e) => {
+                      handleChange('activeTab')(dummyEvent(e));
+                    }}
                     items={[
                       { label: 'Defaults', value: 'defaults' },
                       {
@@ -538,34 +377,36 @@ const HelmChartLayout = () => {
                       },
                     ]}
                   />
-                  <TextArea
-                    containerClassName="h-full"
-                    className="h-[500px]"
-                    textFieldClassName={cn(
-                      '!font-mono whitespace-pre break-normal overflow-x-scroll',
-                    )}
-                    placeholder={
-                      activeTab === 'defaults'
-                        ? 'Default values'
-                        : 'Helm Values'
+                  <CodeEditorClient
+                    {...valueEditorProps}
+                    options={{
+                      ...valueEditorProps.options,
+                      readOnly: values.activeTab === 'defaults',
+                    }}
+                    value={
+                      values.activeTab === 'defaults'
+                        ? helmValues
+                        : values.values
                     }
+                    lang="yaml"
                     onChange={(e) => {
-                      if (activeTab === 'values') {
-                        handleChange('values')(e);
+                      const path = editorRef.current.getModel().uri.path;
+
+                      if (
+                        values.activeTab === 'values' &&
+                        path === '/values.yaml'
+                      ) {
+                        handleChange('values')(dummyEvent(e));
                       }
                     }}
-                    error={!!errors.values}
-                    message={errors.values}
-                    value={(() => {
-                      if (activeTab === 'defaults') {
-                        return helmValues;
-                      }
-                      if (activeTab === 'values') {
-                        return values.values;
-                      }
-                      return '';
-                    })()}
-                    name="helm-chart-values"
+                    path={
+                      values.activeTab === 'defaults'
+                        ? 'defaults.yaml'
+                        : 'values.yaml'
+                    }
+                    onMount={(e) => {
+                      editorRef.current = e;
+                    }}
                   />
                 </div>
               ) : (
@@ -635,20 +476,6 @@ const HelmChartLayout = () => {
                   </div>
                 </div>
               </ReviewComponent>
-              {values.values && (
-                <ReviewComponent
-                  title="Values"
-                  onEdit={() => {
-                    jumpStep(3);
-                  }}
-                >
-                  <div className="flex flex-col gap-xl p-xl rounded border border-border-default divide-y divide-border-default">
-                    <p className="whitespace-pre-wrap line-clamp-[10]">
-                      {values.values}
-                    </p>
-                  </div>
-                </ReviewComponent>
-              )}
             </div>
             <BottomNavigation
               primaryButton={{

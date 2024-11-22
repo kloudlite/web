@@ -25,8 +25,8 @@ import {
 import Yup from '~/lib/server/helpers/yup';
 import { handleError } from '~/lib/utils/common';
 import { registryHost } from '~/root/lib/configs/base-url.cjs';
-import appFun from '~/console/routes/_main+/$account+/env+/$environment+/new-app/app-pre-submit';
-import { getImageTag } from '~/console/routes/_main+/$account+/env+/$environment+/new-app/app-utils';
+import appFun from '~/console/routes/_main+/$account+/env+/$environment+/workloads+/new-app/app-pre-submit';
+import { getImageTag } from '~/console/routes/_main+/$account+/env+/$environment+/workloads+/new-app/app-utils';
 import { IAppContext } from '../_layout';
 
 const navItems = [

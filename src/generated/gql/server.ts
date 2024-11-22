@@ -59,6 +59,7 @@ export type ConsoleResType =
   | 'app'
   | 'config'
   | 'environment'
+  | 'helm_chart'
   | 'imported_managed_resource'
   | 'managed_resource'
   | 'managed_service'
@@ -147,7 +148,7 @@ export type Github__Com___Kloudlite___Api___Apps___Console___Internal___Entities
     | 'config'
     | 'environment'
     | 'external_app'
-    | 'hlem_chart'
+    | 'helm_chart'
     | 'image_pull_secret'
     | 'imported_managed_resource'
     | 'managed_resource'
@@ -5432,7 +5433,7 @@ export type ConsoleListHelmChartsQuery = {
         updateTime: any;
         createdBy: { userEmail: string; userId: string; userName: string };
         lastUpdatedBy: { userEmail: string; userId: string; userName: string };
-        metadata?: { name: string };
+        metadata?: { name: string; annotations?: any };
         spec?: {
           chartName: string;
           chartRepoURL: string;
@@ -5482,22 +5483,20 @@ export type ConsoleCreateHelmChartMutation = {
 };
 
 export type ConsoleUpdateHelmChartMutationVariables = Exact<{
-  clusterName: Scalars['String']['input'];
-  release: HelmReleaseIn;
+  envName: Scalars['String']['input'];
+  helmchart: HelmChartIn;
 }>;
 
 export type ConsoleUpdateHelmChartMutation = {
-  infra_updateHelmRelease?: { id: string };
+  core_updateHelmChart?: { id: string };
 };
 
 export type ConsoleDeleteHelmChartMutationVariables = Exact<{
-  clusterName: Scalars['String']['input'];
-  releaseName: Scalars['String']['input'];
+  envName: Scalars['String']['input'];
+  helmChartName: Scalars['String']['input'];
 }>;
 
-export type ConsoleDeleteHelmChartMutation = {
-  infra_deleteHelmRelease: boolean;
-};
+export type ConsoleDeleteHelmChartMutation = { core_deleteHelmChart: boolean };
 
 export type ConsoleListNamespacesQueryVariables = Exact<{
   clusterName: Scalars['String']['input'];

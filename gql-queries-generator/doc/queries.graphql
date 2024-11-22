@@ -3698,6 +3698,7 @@ query consoleListHelmCharts($envName: String!) {
         }
         metadata {
           name
+          annotations
         }
         spec {
           chartName
@@ -3746,14 +3747,14 @@ mutation consoleCreateHelmChart($envName: String!, $helmchart: HelmChartIn!) {
   }
 }
 
-mutation consoleUpdateHelmChart($clusterName: String!, $release: HelmReleaseIn!) {
-  infra_updateHelmRelease(clusterName: $clusterName, release: $release) {
+mutation consoleUpdateHelmChart($envName: String!, $helmchart: HelmChartIn!) {
+  core_updateHelmChart(envName: $envName, helmchart: $helmchart) {
     id
   }
 }
 
-mutation consoleDeleteHelmChart($clusterName: String!, $releaseName: String!) {
-  infra_deleteHelmRelease(clusterName: $clusterName, releaseName: $releaseName)
+mutation consoleDeleteHelmChart($envName: String!, $helmChartName: String!) {
+  core_deleteHelmChart(envName: $envName, helmChartName: $helmChartName)
 }
 
 query consoleListNamespaces($clusterName: String!) {

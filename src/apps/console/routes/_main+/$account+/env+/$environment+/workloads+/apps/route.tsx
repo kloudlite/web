@@ -58,7 +58,7 @@ const Apps = () => {
         return (
           <div>
             <Wrapper
-              header={{
+              secondaryHeader={{
                 title: 'Apps',
                 action: apps?.length > 0 && (
                   <Button

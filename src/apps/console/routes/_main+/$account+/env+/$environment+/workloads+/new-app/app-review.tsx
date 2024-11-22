@@ -22,9 +22,9 @@ import Yup from '~/lib/server/helpers/yup';
 import { handleError, sleep } from '~/lib/utils/common';
 import { registryHost } from '~/root/lib/configs/base-url.cjs';
 import { validateType } from '~/root/src/generated/gql/validator';
-import { IEnvironmentContext } from '../_layout';
 import appFun from './app-pre-submit';
 import { getImageTag } from './app-utils';
+import { IEnvironmentContext } from '../../_layout';
 
 const AppState = ({ message, state }: { message: string; state: string }) => {
   const iconSize = 12;
@@ -308,7 +308,7 @@ const AppReview = () => {
                         parseValue(
                           app.metadata?.annotations?.[keyconstants.memPerCpu] ||
                             '1',
-                          4
+                          4,
                         )) /
                       1000
                     ).toFixed(2)}

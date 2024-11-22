@@ -26,9 +26,9 @@ import { ensureAccountClientSide } from '~/console/server/utils/auth-utils';
 import { constants } from '~/console/server/utils/constants';
 import useDebounce from '~/root/lib/client/hooks/use-debounce';
 import { handleError } from '~/root/lib/utils/common';
-import { IEnvironmentContext } from '../_layout';
 import BuildSelectionDialog from './app-build-selection-dialog';
 import { getImageTag } from './app-utils';
+import { IEnvironmentContext } from '../../_layout';
 
 const ExtraButton = ({
   onNew,
@@ -86,7 +86,7 @@ export const AppSelectItem = ({
         </span>
       ) : (
         part
-      )
+      ),
     );
   };
 
@@ -162,7 +162,7 @@ const AppDetail = () => {
         setImageLoaded(false);
       }
     },
-    []
+    [],
   );
 
   useEffect(() => {
@@ -176,7 +176,7 @@ const AppDetail = () => {
       }
     },
     300,
-    [imageSearchText]
+    [imageSearchText],
   );
 
   const { values, errors, handleChange, handleSubmit, isLoading, setValues } =
@@ -207,7 +207,7 @@ const AppDetail = () => {
         displayName: Yup.string().required(),
         imageUrl: Yup.string().matches(
           constants.dockerImageFormatRegex,
-          'Invalid image format'
+          'Invalid image format',
         ),
         manualRepo: Yup.string().when(
           ['imageUrl', 'imageMode'],
@@ -220,7 +220,7 @@ const AppDetail = () => {
               return schema.required().matches(regex, 'Invalid image format');
             }
             return schema;
-          }
+          },
         ),
         imageMode: Yup.string().required(),
         source: Yup.object()

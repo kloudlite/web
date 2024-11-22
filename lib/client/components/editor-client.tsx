@@ -8,9 +8,9 @@ type codelang = 'yaml' | 'json';
 const CodeEditorClient = (
   props: EditorProps & {
     lang?: codelang;
-  }
+  },
 ) => {
-  const { lang, className } = props;
+  const { lang, className, options } = props;
 
   return (
     <Editor
@@ -28,7 +28,7 @@ const CodeEditorClient = (
             bottom: 20,
           },
           tabSize: 2,
-          fontSize: 18,
+          fontSize: options?.fontSize || 18,
           minimap: {
             enabled: false,
           },
@@ -36,7 +36,7 @@ const CodeEditorClient = (
         ...props,
         className: cn(
           className,
-          'h-full w-full border border-border-default overflow-hidden rounded-t-lg'
+          'h-full w-full border border-border-default overflow-hidden rounded-t-lg',
         ),
       }}
     />
