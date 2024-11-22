@@ -952,6 +952,12 @@ export type SecretVariableIn = {
   stringData: Scalars['Map']['input'];
 };
 
+export type Github__Com___Kloudlite___Operator___Apis___Crds___V1__SvcInterceptPortMappingsIn =
+  {
+    containerPort: Scalars['Int']['input'];
+    servicePort: Scalars['Int']['input'];
+  };
+
 export type BuildIn = {
   buildClusterName: Scalars['String']['input'];
   name: Scalars['String']['input'];
@@ -1290,6 +1296,14 @@ export type CoreSearchVpnDevices = {
   markedForDeletion?: InputMaybe<MatchFilterIn>;
   text?: InputMaybe<MatchFilterIn>;
 };
+
+export type Github__Com___Kloudlite___Api___Apps___Console___Internal___Entities__InterceptStatusIn =
+  {
+    intercepted?: InputMaybe<Scalars['Boolean']['input']>;
+    portMappings?: InputMaybe<
+      Array<Github__Com___Kloudlite___Operator___Apis___Crds___V1__SvcInterceptPortMappingsIn>
+    >;
+  };
 
 export type Github__Com___Kloudlite___Api___Apps___Console___Internal___Entities__ManagedResourceRefIn =
   {
@@ -1858,6 +1872,7 @@ export type ServiceBindingIn = {
   clusterName: Scalars['String']['input'];
   creationTime: Scalars['Date']['input'];
   id: Scalars['ID']['input'];
+  interceptStatus?: InputMaybe<Github__Com___Kloudlite___Api___Apps___Console___Internal___Entities__InterceptStatusIn>;
   kind?: InputMaybe<Scalars['String']['input']>;
   markedForDeletion?: InputMaybe<Scalars['Boolean']['input']>;
   metadata?: InputMaybe<MetadataIn>;

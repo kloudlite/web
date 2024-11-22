@@ -716,6 +716,16 @@ type Github__com___kloudlite___api___apps___comms___types__NotifyContent {
   title: String!
 }
 
+type Github__com___kloudlite___api___apps___console___internal___entities__InterceptStatus {
+  intercepted: Boolean
+  portMappings: [Github__com___kloudlite___operator___apis___crds___v1__SvcInterceptPortMappings!]
+}
+
+input Github__com___kloudlite___api___apps___console___internal___entities__InterceptStatusIn {
+  intercepted: Boolean
+  portMappings: [Github__com___kloudlite___operator___apis___crds___v1__SvcInterceptPortMappingsIn!]
+}
+
 type Github__com___kloudlite___api___apps___console___internal___entities__ManagedResourceRef {
   id: String!
   name: String!
@@ -1871,6 +1881,16 @@ type Github__com___kloudlite___operator___apis___crds___v1__ShellProbe {
 
 input Github__com___kloudlite___operator___apis___crds___v1__ShellProbeIn {
   command: [String!]
+}
+
+type Github__com___kloudlite___operator___apis___crds___v1__SvcInterceptPortMappings {
+  containerPort: Int!
+  servicePort: Int!
+}
+
+input Github__com___kloudlite___operator___apis___crds___v1__SvcInterceptPortMappingsIn {
+  containerPort: Int!
+  servicePort: Int!
 }
 
 type Github__com___kloudlite___operator___apis___crds___v1__TcpProbe {
@@ -3627,6 +3647,7 @@ type Mutation {
   core_createRouter(envName: String!, router: RouterIn!): Router
   core_createSecret(envName: String!, secret: SecretIn!): Secret
   core_createSecretVariable(secretVariable: SecretVariableIn!): SecretVariable
+  core_createServiceIntercept(envName: String!, interceptTo: String!, portMappings: [Github__com___kloudlite___operator___apis___crds___v1__SvcInterceptPortMappingsIn!], serviceName: String!): Boolean!
   core_deleteApp(appName: String!, envName: String!): Boolean!
   core_deleteConfig(configName: String!, envName: String!): Boolean!
   core_deleteEnvironment(envName: String!): Boolean!
@@ -3639,6 +3660,7 @@ type Mutation {
   core_deleteRouter(envName: String!, routerName: String!): Boolean!
   core_deleteSecret(envName: String!, secretName: String!): Boolean!
   core_deleteSecretVariable(name: String!): Boolean!
+  core_deleteServiceIntercept(envName: String!, serviceName: String!): Boolean!
   core_importManagedResource(envName: String!, importName: String!, mresName: String!, msvcName: String!): ImportedManagedResource
   core_interceptApp(appname: String!, deviceName: String!, envName: String!, intercept: Boolean!, portMappings: [Github__com___kloudlite___operator___apis___crds___v1__AppInterceptPortMappingsIn!]): Boolean!
   core_interceptAppOnLocalCluster(appname: String!, clusterName: String!, envName: String!, intercept: Boolean!, ipAddr: String!, portMappings: [Github__com___kloudlite___operator___apis___crds___v1__AppInterceptPortMappingsIn!]): Boolean!
@@ -4517,6 +4539,7 @@ type ServiceBinding {
   creationTime: Date!
   environmentName: String!
   id: ID!
+  interceptStatus: Github__com___kloudlite___api___apps___console___internal___entities__InterceptStatus
   kind: String
   markedForDeletion: Boolean
   metadata: Metadata
@@ -4537,6 +4560,7 @@ input ServiceBindingIn {
   clusterName: String!
   creationTime: Date!
   id: ID!
+  interceptStatus: Github__com___kloudlite___api___apps___console___internal___entities__InterceptStatusIn
   kind: String
   markedForDeletion: Boolean
   metadata: MetadataIn
