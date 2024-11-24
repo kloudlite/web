@@ -1,10 +1,10 @@
 import { ReactNode } from 'react';
-import SelectZener from '@oshq/react-select';
+import SelectZener from '@zener/react-select';
 import type {
   IGroupRender,
   IMenuItemRender,
   ISelect,
-} from '@oshq/react-select';
+} from '@zener/react-select';
 import { cn } from '@kloudlite/design-system/utils';
 import AnimateHide from '@kloudlite/design-system/atoms/animate-hide';
 
