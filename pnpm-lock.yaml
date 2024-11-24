@@ -20,9 +20,6 @@ importers:
       '@monaco-editor/react':
         specifier: ^4.6.0
         version: 4.6.0(monaco-editor@0.52.0)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
-      '@oshq/react-select':
-        specifier: ^3.2.1
-        version: 3.2.1(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
       '@radix-ui/primitive':
         specifier: ^1.0.1
         version: 1.1.0
@@ -131,6 +128,9 @@ importers:
       '@remix-run/react':
         specifier: ^1.19.3
         version: 1.19.3(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
+      '@zener/react-select':
+        specifier: ^3.2.3
+        version: 3.2.3(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
       anser:
         specifier: ^2.1.1
         version: 2.3.0
@@ -2672,6 +2672,13 @@ packages:
 
   '@yr/monotone-cubic-spline@1.0.3':
     resolution: {integrity: sha512-FQXkOta0XBSUPHndIKON2Y9JeQz5ZeMqLYZVVK93FliNBFm7LNMIZmY6FrMEB9XPcDbE2bekMbZD6kzDkxwYjA==}
+
+  '@zener/react-select@3.2.3':
+    resolution: {integrity: sha512-gbl2A9Cz2zvtRUcUCejEgiF2uAnmGKD8azkz488gMptlMqro88kI1tARUSOfCORuWkLd93rUdybn2H/zzyy1uA==}
+    peerDependencies:
+      '@types/react': ^18.2.22
+      '@types/react-dom': ^18.2.14
+      react: ^18.2.0 || ^17.0.0 || ^16.0.0
 
   '@zxing/text-encoding@0.9.0':
     resolution: {integrity: sha512-U/4aVJ2mxI0aDNI8Uq0wEhMgY+u4CNtEb0om3+y3+niDAsoTCOB33UF0sxpzqzdqXLqmvc+vZyAt4O8pPdfkwA==}
@@ -8829,6 +8836,21 @@ snapshots:
   '@web3-storage/multipart-parser@1.0.0': {}
 
   '@yr/monotone-cubic-spline@1.0.3': {}
+
+  '@zener/react-select@3.2.3(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)':
+    dependencies:
+      '@radix-ui/react-portal': 1.1.2(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
+      '@types/react': 18.3.12
+      '@types/react-dom': 18.3.1
+      classnames: 2.5.1
+      framer-motion: 10.18.0(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
+      react: 18.2.0
+      virtua: 0.33.7(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
+    transitivePeerDependencies:
+      - react-dom
+      - solid-js
+      - svelte
+      - vue
 
   '@zxing/text-encoding@0.9.0':
     optional: true

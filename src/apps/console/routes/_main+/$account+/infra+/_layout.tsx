@@ -14,8 +14,6 @@ const Infra = () => {
     <SidebarLayout
       navItems={[
         { label: 'Attached Clusters', value: 'clusters' },
-        { label: 'Helm Repos', value: 'helm-charts' },
-        // { label: 'Bring your own Kubernetes', value: 'byok-cluster' },
         { label: 'Wireguard Devices', value: 'vpn-devices' },
       ]}
       parentPath="/infra"
