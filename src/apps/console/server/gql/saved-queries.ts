@@ -33,6 +33,7 @@ import { repoQueries } from './queries/repo-queries';
 import { secretQueries } from './queries/secret-queries';
 import { secretVariableQueries } from './queries/secret-variables-queries';
 import { tagsQueries } from './queries/tags-queries';
+import { serviceBindingQueries } from './queries/service-binding-queries';
 
 export const GQLServerHandler = ({ headers, cookies }: IGQLServerProps) => {
   const executor = ExecuteQueryWithContext(headers, cookies);
@@ -70,6 +71,7 @@ export const GQLServerHandler = ({ headers, cookies }: IGQLServerProps) => {
     ...importedManagedResourceQueries(executor),
     ...registryImagesQueries(executor),
     ...secretVariableQueries(executor),
+    ...serviceBindingQueries(executor),
   };
 };
 

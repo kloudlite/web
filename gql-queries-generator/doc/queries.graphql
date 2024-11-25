@@ -4424,6 +4424,82 @@ mutation consoleDeleteSecretVariable($name: String!) {
   core_deleteSecretVariable(name: $name)
 }
 
+query consoleListServiceBinding($envName: String!, $pagination: CursorPaginationIn) {
+  core_listServiceBindings(envName: $envName, pagination: $pagination) {
+    totalCount
+    pageInfo {
+      endCursor
+      hasNextPage
+      hasPrevPage
+      startCursor
+    }
+    edges {
+      cursor
+      node {
+        environmentName
+        creationTime
+        interceptStatus {
+          intercepted
+          portMappings {
+            containerPort
+            servicePort
+          }
+        }
+        kind
+        markedForDeletion
+        metadata {
+          name
+        }
+        recordVersion
+        spec {
+          globalIP
+          hostname
+          ports {
+            appProtocol
+            name
+            nodePort
+            port
+            protocol
+            targetPort {
+              IntVal
+              StrVal
+              Type
+            }
+          }
+          serviceIP
+          serviceRef {
+            name
+            namespace
+          }
+        }
+        status {
+          checkList {
+            debug
+            description
+            hide
+            name
+            title
+          }
+          checks
+          isReady
+          lastReadyGeneration
+          lastReconcileTime
+          message {
+            RawMessage
+          }
+          resources {
+            apiVersion
+            kind
+            name
+            namespace
+          }
+        }
+        updateTime
+      }
+    }
+  }
+}
+
 mutation authCli_createGlobalVPNDevice($gvpnDevice: GlobalVPNDeviceIn!) {
   infra_createGlobalVPNDevice(gvpnDevice: $gvpnDevice) {
     accountName

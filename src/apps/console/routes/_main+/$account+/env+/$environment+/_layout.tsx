@@ -67,6 +67,16 @@ const tabs = [
   {
     label: (
       <span className="flex flex-row items-center gap-lg">
+        <CirclesFour size={tabIconSize} />
+        Services
+      </span>
+    ),
+    to: '/services',
+    value: '/services',
+  },
+  {
+    label: (
+      <span className="flex flex-row items-center gap-lg">
         <BackingServices size={tabIconSize} />
         Imported Managed Resources
       </span>

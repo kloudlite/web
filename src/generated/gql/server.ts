@@ -6176,6 +6176,73 @@ export type ConsoleDeleteSecretVariableMutation = {
   core_deleteSecretVariable: boolean;
 };
 
+export type ConsoleListServiceBindingQueryVariables = Exact<{
+  envName: Scalars['String']['input'];
+  pagination?: InputMaybe<CursorPaginationIn>;
+}>;
+
+export type ConsoleListServiceBindingQuery = {
+  core_listServiceBindings?: {
+    totalCount: number;
+    pageInfo: {
+      endCursor?: string;
+      hasNextPage?: boolean;
+      hasPrevPage?: boolean;
+      startCursor?: string;
+    };
+    edges: Array<{
+      cursor: string;
+      node: {
+        environmentName: string;
+        creationTime: any;
+        kind?: string;
+        markedForDeletion?: boolean;
+        recordVersion: number;
+        updateTime: any;
+        interceptStatus?: {
+          intercepted?: boolean;
+          portMappings?: Array<{ containerPort: number; servicePort: number }>;
+        };
+        metadata?: { name: string };
+        spec?: {
+          globalIP: string;
+          hostname?: string;
+          serviceIP?: string;
+          ports?: Array<{
+            appProtocol?: string;
+            name?: string;
+            nodePort?: number;
+            port: number;
+            protocol?: K8s__Io___Api___Core___V1__Protocol;
+            targetPort?: { IntVal: number; StrVal: string; Type: number };
+          }>;
+          serviceRef?: { name: string; namespace: string };
+        };
+        status?: {
+          checks?: any;
+          isReady: boolean;
+          lastReadyGeneration?: number;
+          lastReconcileTime?: any;
+          checkList?: Array<{
+            debug?: boolean;
+            description?: string;
+            hide?: boolean;
+            name: string;
+            title: string;
+          }>;
+          message?: { RawMessage?: any };
+          resources?: Array<{
+            apiVersion: string;
+            kind: string;
+            name: string;
+            namespace: string;
+          }>;
+        };
+      };
+    }>;
+  };
+};
+
 export type AuthCli_CreateGlobalVpnDeviceMutationVariables = Exact<{
   gvpnDevice: GlobalVpnDeviceIn;
 }>;
