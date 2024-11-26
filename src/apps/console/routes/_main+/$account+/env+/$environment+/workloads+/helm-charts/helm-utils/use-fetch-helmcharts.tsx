@@ -10,12 +10,13 @@ type IHelmDoc = {
   generated: string;
 };
 
-const useFetchHelmCharts = ({ repoUrl }: { repoUrl?: string }) => {
+type IHelmChart =
+  Array<{ label: string; value: string; item: IHelmDoc['entries']['key'] }>
+
+const useFetchHelmCharts = ({ repoUrl }: { repoUrl?: string }, onFetch?: (data: IHelmChart) => void) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const [helmCharts, setHelmCharts] = useState<
-    Array<{ label: string; value: string; item: IHelmDoc['entries']['key'] }>
-  >([]);
+  const [helmCharts, setHelmCharts] = useState<IHelmChart>([]);
 
   const fetchHelmCharts = async () => {
     try {
@@ -23,13 +24,16 @@ const useFetchHelmCharts = ({ repoUrl }: { repoUrl?: string }) => {
       setError(false);
       const res = await axios.get(`/helmchart-api?url=${repoUrl}`);
       const repos = yaml.load(res.data, { json: true }) as IHelmDoc;
-      setHelmCharts(
+      const d =
         Object.entries(repos.entries).map(([key, value]) => ({
           label: key,
           value: key,
           item: value,
-        })),
+        }))
+      setHelmCharts(
+        d
       );
+      onFetch?.(d)
     } catch (error) {
       setError(true);
       setHelmCharts([]);
@@ -41,7 +45,6 @@ const useFetchHelmCharts = ({ repoUrl }: { repoUrl?: string }) => {
   useEffect(() => {
     if (repoUrl) {
       fetchHelmCharts();
-      console.log('fetch repos', repoUrl);
     }
   }, [repoUrl]);
 

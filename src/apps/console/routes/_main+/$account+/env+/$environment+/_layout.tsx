@@ -10,6 +10,7 @@ import { CommonTabs } from '~/console/components/common-navbar-tabs';
 import {
   BackingServices,
   CirclesFour,
+  Container,
   File,
   GearSix,
 } from '~/console/components/icons';
@@ -25,6 +26,7 @@ import { IRemixCtx, LoaderResult } from '~/lib/types/common';
 import logger from '~/root/lib/client/helpers/log';
 import { handleError } from '~/root/lib/utils/common';
 import { IAccountContext } from '../../_layout';
+import { MultiTenant } from '@jengaicons/react';
 
 const Environment = () => {
   const rootContext = useOutletContext<IAccountContext>();
@@ -57,7 +59,7 @@ const tabs = [
   {
     label: (
       <span className="flex flex-row items-center gap-lg">
-        <CirclesFour size={tabIconSize} />
+        <Container size={tabIconSize} />
         Workloads
       </span>
     ),
@@ -67,7 +69,7 @@ const tabs = [
   {
     label: (
       <span className="flex flex-row items-center gap-lg">
-        <CirclesFour size={tabIconSize} />
+        <MultiTenant size={tabIconSize} />
         Services
       </span>
     ),

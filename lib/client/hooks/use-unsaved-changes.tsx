@@ -30,27 +30,29 @@ const UnsavedChanges = createContext<{
   loading: boolean;
 }>({
   hasChanges: false,
-  setHasChanges() {},
+  setHasChanges() { },
   unloadState: 'unblocked',
-  proceed() {},
-  reset() {},
-  resetAndReload() {},
-  setIgnorePaths() {},
+  proceed() { },
+  reset() { },
+  resetAndReload() { },
+  setIgnorePaths() { },
   performAction: '',
-  setPerformAction() {},
+  setPerformAction() { },
   loading: false,
 });
 
 export const UnsavedChangesProvider = ({
   children,
   onProceed,
+  ignorePaths: iP
 }: {
   children?: ReactNode;
   onProceed?: (props: { setPerformAction?: (action: string) => void }) => void;
+  ignorePaths?: string[]
 }) => {
   const [hasChanges, setHasChanges] = useState<boolean>(false);
   const [reload, setReload] = useState(false);
-  const [ignorePaths, setIgnorePaths] = useState<string[]>([]);
+  const [ignorePaths, setIgnorePaths] = useState<string[]>(iP || []);
   const [performAction, setPerformAction] = useState<string>('');
   const location = useLocation();
   const { state, proceed, reset } = unstable_useBlocker(({ nextLocation }) => {

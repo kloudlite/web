@@ -3616,8 +3616,8 @@ mutation consoleDeleteManagedResource($msvcName: String!, $mresName: String!) {
   core_deleteManagedResource(msvcName: $msvcName, mresName: $mresName)
 }
 
-query consoleGetHelmChart($clusterName: String!, $name: String!) {
-  infra_getHelmRelease(clusterName: $clusterName, name: $name) {
+query consoleGetHelmChart($envName: String!, $name: String!) {
+  core_getHelmChart(envName: $envName, name: $name) {
     createdBy {
       userEmail
       userId
@@ -3625,6 +3625,7 @@ query consoleGetHelmChart($clusterName: String!, $name: String!) {
     }
     creationTime
     displayName
+    environmentName
     lastUpdatedBy {
       userEmail
       userId
@@ -3632,6 +3633,11 @@ query consoleGetHelmChart($clusterName: String!, $name: String!) {
     }
     markedForDeletion
     metadata {
+      annotations
+      creationTimestamp
+      deletionTimestamp
+      generation
+      labels
       name
       namespace
     }
@@ -3642,13 +3648,14 @@ query consoleGetHelmChart($clusterName: String!, $name: String!) {
       values
     }
     status {
-      checks
       checkList {
-        description
         debug
-        title
+        description
+        hide
         name
+        title
       }
+      checks
       isReady
       lastReadyGeneration
       lastReconcileTime
@@ -3663,6 +3670,14 @@ query consoleGetHelmChart($clusterName: String!, $name: String!) {
         name
         namespace
       }
+    }
+    syncStatus {
+      action
+      error
+      lastSyncedAt
+      recordVersion
+      state
+      syncScheduledAt
     }
     updateTime
   }
@@ -4444,6 +4459,7 @@ query consoleListServiceBinding($envName: String!, $pagination: CursorPagination
             containerPort
             servicePort
           }
+          toAddr
         }
         kind
         markedForDeletion
@@ -4498,6 +4514,19 @@ query consoleListServiceBinding($envName: String!, $pagination: CursorPagination
       }
     }
   }
+}
+
+mutation consoleInterceptService($envName: String!, $serviceName: String!, $interceptTo: String!, $portMappings: [Github__com___kloudlite___operator___apis___crds___v1__SvcInterceptPortMappingsIn!]) {
+  core_createServiceIntercept(
+    envName: $envName
+    serviceName: $serviceName
+    interceptTo: $interceptTo
+    portMappings: $portMappings
+  )
+}
+
+mutation consoleRemoveInterceptService($envName: String!, $serviceName: String!) {
+  core_deleteServiceIntercept(envName: $envName, serviceName: $serviceName)
 }
 
 mutation authCli_createGlobalVPNDevice($gvpnDevice: GlobalVPNDeviceIn!) {

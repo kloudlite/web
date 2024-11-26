@@ -1,10 +1,7 @@
 import { Link, useOutletContext, useParams } from '@remix-run/react';
-import { useState } from 'react';
 import { Badge } from '@kloudlite/design-system/atoms/badge';
-import TooltipV2 from '@kloudlite/design-system/atoms/tooltipV2';
 import { toast } from '@kloudlite/design-system/molecule/toast';
 import { generateKey, titleCase } from '@kloudlite/design-system/utils';
-import { CopyContentToClipboard } from '~/console/components/common-console-components';
 import {
   ListItem,
   ListItemV2,
@@ -15,9 +12,7 @@ import {
 import Grid from '~/console/components/grid';
 import {
   GearSix,
-  LinkBreak,
   Link as LinkIcon,
-  Repeat,
 } from '~/console/components/icons';
 import ListGridView from '~/console/components/list-grid-view';
 import ListV2 from '~/console/components/listV2';
@@ -35,12 +30,10 @@ import {
   parseUpdateOrCreatedOn,
   parseName as pn,
 } from '~/console/server/r-utils/common';
-import { useReload } from '~/lib/client/helpers/reloader';
 import { useWatchReload } from '~/lib/client/helpers/socket/useWatch';
 import { handleError } from '~/lib/utils/common';
-import { NN } from '~/root/lib/types/common';
 import { IEnvironmentContext } from '~/console/routes/_main+/$account+/env+/$environment+/_layout';
-import HandleIntercept from './handle-intercept';
+
 
 const RESOURCE_NAME = 'app';
 type BaseType = ExtractNodeType<IApps>;
@@ -70,55 +63,6 @@ type IExtraButton = {
   item: BaseType;
 };
 
-const InterceptPortView = ({
-  ports = [],
-  devName = '',
-}: {
-  ports: NN<ExtractNodeType<IApps>['spec']['intercept']>['portMappings'];
-  devName: string;
-}) => {
-  return (
-    <div className="flex flex-row items-center gap-md pulsable">
-      <TooltipV2
-        content={
-          <div>
-            <span className="bodyMd-medium text-text-soft">
-              Intercepted to{' '}
-              <span className="bodyMd-medium text-text-strong">{devName}</span>
-            </span>
-            <div className="flex flex-row gap-md py-md">
-              {ports?.map((d) => {
-                return (
-                  <Badge className="shrink-0" key={d.appPort}>
-                    <div>
-                      {d.appPort} → {d.devicePort}
-                    </div>
-                  </Badge>
-                );
-              })}
-            </div>
-          </div>
-        }
-      >
-        <div className="bodyMd-medium text-text-strong w-fit truncate">
-          {ports?.length === 1 ? (
-            <span>{ports.length} port</span>
-          ) : (
-            <span>{ports.length} ports</span>
-          )}
-          <span className="text-text-soft">
-            {' '}
-            intercepted to{' '}
-            <span className="bodyMd-medium text-text-strong truncate">
-              {devName}
-            </span>
-          </span>
-        </div>
-      </TooltipV2>
-    </div>
-  );
-};
-
 const ExtraButton = ({ onAction, item }: IExtraButton) => {
   const { account, environment } = useParams();
   const iconSize = 16;
@@ -133,30 +77,6 @@ const ExtraButton = ({ onAction, item }: IExtraButton) => {
       key: 'settings',
     },
   ];
-
-  if (item.spec.intercept && item.spec.intercept.enabled) {
-    options = [
-      {
-        label: 'Remove intercept',
-        icon: <LinkBreak size={iconSize} />,
-        type: 'item',
-        onClick: () => onAction({ action: 'remove_intercept', item }),
-        key: 'remove-intercept',
-      },
-      ...options,
-    ];
-  } else {
-    options = [
-      {
-        label: 'Intercept',
-        icon: <Repeat size={iconSize} />,
-        type: 'item',
-        onClick: () => onAction({ action: 'intercept', item }),
-        key: 'intercept',
-      },
-      ...options,
-    ];
-  }
 
   options = [
     {
@@ -176,15 +96,6 @@ interface IResource {
   items: BaseType[];
   onAction: OnAction;
 }
-
-const AppServiceView = ({ service }: { service: string }) => {
-  return (
-    <CopyContentToClipboard
-      content={service}
-      toastMessage="App service url copied successfully."
-    />
-  );
-};
 
 const GridView = ({ items = [], onAction: _ }: IResource) => {
   const { account, environment } = useParams();
@@ -239,21 +150,9 @@ const GridView = ({ items = [], onAction: _ }: IResource) => {
 
 const ListView = ({ items = [], onAction }: IResource) => {
   const { environment, account } = useOutletContext<IEnvironmentContext>();
-  // const { clusters } = useClusterStatusV2();
   const { clustersMap: clusterStatus } = useClusterStatusV3({
     clusterName: environment.clusterName,
   });
-
-  // const [clusterOnlineStatus, setClusterOnlineStatus] = useState<
-  //   Record<string, boolean>
-  // >({});
-  // useEffect(() => {
-  //   const states: Record<string, boolean> = {};
-  //   Object.entries(clusters).forEach(([key, value]) => {
-  //     states[key] = findClusterStatus(value);
-  //   });
-  //   setClusterOnlineStatus(states);
-  // }, [clusters]);
 
   return (
     <ListV2.Root
@@ -267,18 +166,8 @@ const ListView = ({ items = [], onAction }: IResource) => {
           },
           {
             render: () => '',
-            name: 'intercept',
-            className: 'w-[250px] truncate',
-          },
-          {
-            render: () => '',
             name: 'flex-pre',
             className: listClass.flex,
-          },
-          {
-            render: () => 'Service',
-            name: 'service',
-            className: 'w-[240px] flex',
           },
           {
             render: () => '',
@@ -314,20 +203,6 @@ const ListView = ({ items = [], onAction }: IResource) => {
             columns: {
               name: {
                 render: () => <ListTitleV2 title={name} subtitle={id} />,
-              },
-              intercept: {
-                render: () =>
-                  i.spec.intercept?.enabled ? (
-                    <div>
-                      <InterceptPortView
-                        ports={i.spec.intercept.portMappings || []}
-                        devName={i.spec.intercept.toDevice || ''}
-                      />
-                    </div>
-                  ) : null,
-              },
-              service: {
-                render: () => <AppServiceView service={i.serviceHost || ''} />,
               },
               status: {
                 render: () => {
@@ -375,10 +250,6 @@ const ListView = ({ items = [], onAction }: IResource) => {
 const AppsResourcesV2 = ({ items = [] }: Omit<IResource, 'onAction'>) => {
   const api = useConsoleApi();
   const { environment, account } = useOutletContext<IEnvironmentContext>();
-  const reload = useReload();
-
-  const [visible, setVisible] = useState(false);
-  const [mi, setItem] = useState<ExtractNodeType<IApps>>();
 
   useWatchReload(
     items.map((i) => {
@@ -387,38 +258,6 @@ const AppsResourcesV2 = ({ items = [] }: Omit<IResource, 'onAction'>) => {
       )}.app:${parseName(i)}`;
     }),
   );
-
-  const interceptApp = async (item: BaseType, intercept: boolean) => {
-    if (intercept) {
-      setItem(item);
-      setVisible(true);
-      return;
-    }
-
-    try {
-      const { errors } = await api.interceptApp({
-        appname: pn(item),
-        deviceName: item.spec.intercept?.toDevice || '',
-        envName: pn(environment),
-        intercept,
-      });
-
-      if (errors) {
-        throw errors[0];
-      }
-      // toast.success('app intercepted successfully');
-      toast.success(
-        `${
-          intercept
-            ? 'App Intercepted successfully'
-            : 'App Intercept removed successfully'
-        }`,
-      );
-      reload();
-    } catch (error) {
-      handleError(error);
-    }
-  };
 
   const restartApp = async (item: BaseType) => {
     if (!environment) {
@@ -445,14 +284,8 @@ const AppsResourcesV2 = ({ items = [] }: Omit<IResource, 'onAction'>) => {
     items,
     onAction: ({ action, item }) => {
       switch (action) {
-        case 'intercept':
-          interceptApp(item, true);
-          break;
         case 'restart':
           restartApp(item);
-          break;
-        case 'remove_intercept':
-          interceptApp(item, false);
           break;
         default:
       }
@@ -463,13 +296,6 @@ const AppsResourcesV2 = ({ items = [] }: Omit<IResource, 'onAction'>) => {
       <ListGridView
         listView={<ListView {...props} />}
         gridView={<GridView {...props} />}
-      />
-      <HandleIntercept
-        {...{
-          visible,
-          setVisible,
-          app: mi,
-        }}
       />
     </>
   );

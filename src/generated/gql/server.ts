@@ -1303,6 +1303,7 @@ export type Github__Com___Kloudlite___Api___Apps___Console___Internal___Entities
     portMappings?: InputMaybe<
       Array<Github__Com___Kloudlite___Operator___Apis___Crds___V1__SvcInterceptPortMappingsIn>
     >;
+    toAddr: Scalars['String']['input'];
   };
 
 export type Github__Com___Kloudlite___Api___Apps___Console___Internal___Entities__ManagedResourceRefIn =
@@ -5381,19 +5382,28 @@ export type ConsoleDeleteManagedResourceMutation = {
 };
 
 export type ConsoleGetHelmChartQueryVariables = Exact<{
-  clusterName: Scalars['String']['input'];
+  envName: Scalars['String']['input'];
   name: Scalars['String']['input'];
 }>;
 
 export type ConsoleGetHelmChartQuery = {
-  infra_getHelmRelease?: {
+  core_getHelmChart?: {
     creationTime: any;
     displayName: string;
+    environmentName: string;
     markedForDeletion?: boolean;
     updateTime: any;
     createdBy: { userEmail: string; userId: string; userName: string };
     lastUpdatedBy: { userEmail: string; userId: string; userName: string };
-    metadata?: { name: string; namespace?: string };
+    metadata?: {
+      annotations?: any;
+      creationTimestamp: any;
+      deletionTimestamp?: any;
+      generation: number;
+      labels?: any;
+      name: string;
+      namespace?: string;
+    };
     spec?: {
       chartName: string;
       chartRepoURL: string;
@@ -5408,10 +5418,11 @@ export type ConsoleGetHelmChartQuery = {
       releaseNotes: string;
       releaseStatus: string;
       checkList?: Array<{
-        description?: string;
         debug?: boolean;
-        title: string;
+        description?: string;
+        hide?: boolean;
         name: string;
+        title: string;
       }>;
       message?: { RawMessage?: any };
       resources?: Array<{
@@ -5420,6 +5431,14 @@ export type ConsoleGetHelmChartQuery = {
         name: string;
         namespace: string;
       }>;
+    };
+    syncStatus: {
+      action: Github__Com___Kloudlite___Api___Pkg___Types__SyncAction;
+      error?: string;
+      lastSyncedAt?: any;
+      recordVersion: number;
+      state: Github__Com___Kloudlite___Api___Pkg___Types__SyncState;
+      syncScheduledAt?: any;
     };
   };
 };
@@ -6201,6 +6220,7 @@ export type ConsoleListServiceBindingQuery = {
         updateTime: any;
         interceptStatus?: {
           intercepted?: boolean;
+          toAddr: string;
           portMappings?: Array<{ containerPort: number; servicePort: number }>;
         };
         metadata?: { name: string };
@@ -6241,6 +6261,29 @@ export type ConsoleListServiceBindingQuery = {
       };
     }>;
   };
+};
+
+export type ConsoleInterceptServiceMutationVariables = Exact<{
+  envName: Scalars['String']['input'];
+  serviceName: Scalars['String']['input'];
+  interceptTo: Scalars['String']['input'];
+  portMappings?: InputMaybe<
+    | Array<Github__Com___Kloudlite___Operator___Apis___Crds___V1__SvcInterceptPortMappingsIn>
+    | Github__Com___Kloudlite___Operator___Apis___Crds___V1__SvcInterceptPortMappingsIn
+  >;
+}>;
+
+export type ConsoleInterceptServiceMutation = {
+  core_createServiceIntercept: boolean;
+};
+
+export type ConsoleRemoveInterceptServiceMutationVariables = Exact<{
+  envName: Scalars['String']['input'];
+  serviceName: Scalars['String']['input'];
+}>;
+
+export type ConsoleRemoveInterceptServiceMutation = {
+  core_deleteServiceIntercept: boolean;
 };
 
 export type AuthCli_CreateGlobalVpnDeviceMutationVariables = Exact<{

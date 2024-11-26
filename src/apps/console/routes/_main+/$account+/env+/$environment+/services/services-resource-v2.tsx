@@ -1,8 +1,7 @@
-import { useOutletContext, useParams } from '@remix-run/react';
+import { useOutletContext } from '@remix-run/react';
 import { useState } from 'react';
 import { Badge } from '@kloudlite/design-system/atoms/badge';
-import { toast } from '@kloudlite/design-system/molecule/toast';
-import { generateKey, titleCase } from '@kloudlite/design-system/utils';
+import { generateKey } from '@kloudlite/design-system/utils';
 import {
   ListItem,
   ListItemV2,
@@ -10,35 +9,33 @@ import {
   ListTitleV2,
   listClass,
 } from '~/console/components/console-list-components';
-import DeleteDialog from '~/console/components/delete-dialog';
 import Grid from '~/console/components/grid';
-import { LockSimple, Trash } from '~/console/components/icons';
+import { LinkBreak, Repeat } from '~/console/components/icons';
 import ListGridView from '~/console/components/list-grid-view';
 import ListV2 from '~/console/components/listV2';
-import ResourceExtraAction from '~/console/components/resource-extra-action';
-import { useClusterStatusV3 } from '~/console/hooks/use-cluster-status-v3';
-import { useConsoleApi } from '~/console/server/gql/api-provider';
-import { IImportedManagedResources } from '~/console/server/gql/queries/imported-managed-resource-queries';
-import { IMSvTemplates } from '~/console/server/gql/queries/managed-templates-queries';
+import ResourceExtraAction, { IResourceExtraItem } from '~/console/components/resource-extra-action';
 import {
   ExtractNodeType,
   parseName,
-  parseUpdateOrCreatedBy,
   parseUpdateOrCreatedOn,
 } from '~/console/server/r-utils/common';
-import { getManagedTemplateLogo } from '~/console/utils/commons';
-import { useReload } from '~/lib/client/helpers/reloader';
 import { useWatchReload } from '~/lib/client/helpers/socket/useWatch';
-import { handleError } from '~/lib/utils/common';
-import { IEnvironmentContext } from '../_layout';
 import { IServiceBinding } from '~/console/server/gql/queries/service-binding-queries';
+import HandleIntercept from './handle-intercept-service';
+import { NN } from '~/root/lib/types/common';
+import TooltipV2 from '@kloudlite/design-system/atoms/tooltipV2';
+import { handleError } from '~/root/lib/utils/common';
+import { useConsoleApi } from '~/console/server/gql/api-provider';
+import { IEnvironmentContext } from '../_layout';
+import { useReload } from '~/root/lib/client/helpers/reloader';
+import { toast } from '@kloudlite/design-system/molecule/toast';
 
 const RESOURCE_NAME = 'managed resource';
 type BaseType = ExtractNodeType<IServiceBinding>;
 
 const parseItem = (item: BaseType) => {
   return {
-    name: parseName(item),
+    name: item.spec?.serviceRef?.name || "",
     updateInfo: {
       time: parseUpdateOrCreatedOn(item),
     },
@@ -49,7 +46,7 @@ type OnAction = ({
   action,
   item,
 }: {
-  action: 'delete' | 'edit' | 'view_secret';
+  action: 'intercept' | 'remove_intercept';
   item: BaseType;
 }) => void;
 
@@ -59,28 +56,92 @@ type IExtraButton = {
 };
 
 const ExtraButton = ({ onAction, item }: IExtraButton) => {
+  const iconSize = 16;
+
+  let options: IResourceExtraItem[] = [
+  ]
+
+  if (item.interceptStatus?.intercepted) {
+    options = [
+      {
+        label: 'Remove intercept',
+        icon: <LinkBreak size={iconSize} />,
+        type: 'item',
+        onClick: () => onAction({ action: 'remove_intercept', item }),
+        key: 'remove-intercept',
+      },
+      ...options,
+    ];
+  } else {
+    options = [
+      {
+        label: 'Intercept',
+        icon: <Repeat size={iconSize} />,
+        type: 'item',
+        onClick: () => onAction({ action: 'intercept', item }),
+        key: 'intercept',
+      },
+      ...options,
+    ];
+  }
+
   return (
     <ResourceExtraAction
-      options={[
-        {
-          label: 'View Secret',
-          icon: <LockSimple size={16} />,
-          type: 'item',
-          onClick: () => onAction({ action: 'view_secret', item }),
-          key: 'view_secret',
-        },
-        {
-          label: 'Delete',
-          icon: <Trash size={16} />,
-          type: 'item',
-          onClick: () => onAction({ action: 'delete', item }),
-          key: 'delete',
-          className: '!text-text-critical',
-        },
-      ]}
+      options={options}
     />
   );
 };
+
+
+const InterceptPortView = ({
+  ports = [],
+  devName = '',
+}: {
+  ports: NN<NN<ExtractNodeType<IServiceBinding>['interceptStatus']>['portMappings']>;
+  devName: string;
+}) => {
+  return (
+    <div className="flex flex-row items-center gap-md pulsable">
+      <TooltipV2
+        content={
+          <div>
+            <span className="bodyMd-medium text-text-soft">
+              Intercepted to{' '}
+              <span className="bodyMd-medium text-text-strong">{devName}</span>
+            </span>
+            <div className="flex flex-row gap-md py-md">
+              {ports?.map((d) => {
+                return (
+                  <Badge className="shrink-0" key={d.containerPort}>
+                    <div>
+                      {d.containerPort} → {d.servicePort}
+                    </div>
+                  </Badge>
+                );
+              })}
+            </div>
+          </div>
+        }
+      >
+        <div className="bodyMd-medium text-text-strong w-fit truncate">
+          {ports?.length === 1 ? (
+            <span>{ports.length} port</span>
+          ) : (
+            <span>{ports.length} ports</span>
+          )}
+          <span className="text-text-soft">
+            {' '}
+            intercepted to{' '}
+            <span className="bodyMd-medium text-text-strong truncate">
+              {devName}
+            </span>
+          </span>
+        </div>
+      </TooltipV2>
+    </div>
+  );
+};
+
 
 interface IResource {
   items: BaseType[];
@@ -125,28 +186,18 @@ const ListView = ({ items = [], onAction }: IResource) => {
       data={{
         headers: [
           {
-            render: () => 'Resource Name',
+            render: () => 'Service Name',
             name: 'name',
             className: listClass.title,
           },
           {
-            render: () => 'Resource Type',
-            name: 'resource',
-            className: listClass.item,
+            render: () => '',
+            name: 'intercept',
+            className: 'w-[250px] truncate',
           },
           {
             render: () => '',
             name: 'flex-pre',
-            className: listClass.flex,
-          },
-          {
-            render: () => 'Integrated Service',
-            name: 'service',
-            className: 'w-[175px]',
-          },
-          {
-            render: () => '',
-            name: 'flex-post',
             className: listClass.flex,
           },
           {
@@ -167,6 +218,18 @@ const ListView = ({ items = [], onAction }: IResource) => {
               name: {
                 render: () => <ListTitleV2 title={name} />,
               },
+              intercept: {
+                render: () =>
+                  i.interceptStatus?.intercepted ? (
+                    <div>
+                      <InterceptPortView
+                        ports={i.interceptStatus.portMappings || []}
+                        devName={i.interceptStatus.toAddr || ''}
+                      />
+                    </div>
+                  ) : null,
+              },
+
               updated: {
                 render: () => <ListItemV2 subtitle={updateInfo.time} />,
               },
@@ -182,25 +245,50 @@ const ListView = ({ items = [], onAction }: IResource) => {
 };
 
 const ServiceBindingsResourcesV2 = ({ items = [] }: { items: BaseType[] }) => {
-  const [showSecret, setShowSecret] = useState<BaseType | null>(null);
-  const api = useConsoleApi();
-  const reloadPage = useReload();
-  const params = useParams();
 
-  const { environment, account } = useParams();
+  const { environment, account } = useOutletContext<IEnvironmentContext>()
+  const api = useConsoleApi()
+  const reload = useReload()
+  const [visible, setVisible] = useState(false);
+  const [mi, setItem] = useState<ExtractNodeType<IServiceBinding>>();
 
   useWatchReload(
     items.map((i) => {
-      return `account:${account}.environment:${environment}.managed_resource:${parseName(i)}`;
+      return `account:${account}.environment:${environment}.service_binding:${parseName(i)}`;
     }),
   );
+
+
+  const removeIntercept = async (item: BaseType) => {
+    try {
+      if (item.interceptStatus && item.spec?.serviceRef) {
+        const { errors } = await api.removeInterceptService({
+          envName: parseName(environment),
+          interceptTo: item.interceptStatus?.toAddr,
+          serviceName: item.spec?.serviceRef?.name,
+          portMappings: item.interceptStatus.portMappings
+        })
+        if (errors) {
+          throw errors[0]
+        }
+        toast.success("Service intercept is removed.")
+        reload()
+      }
+    } catch (e) {
+      handleError(e)
+    }
+  }
 
   const props: IResource = {
     items,
     onAction: ({ action, item }) => {
       switch (action) {
-        case 'view_secret':
-          setShowSecret(item);
+        case 'intercept':
+          setItem(item)
+          setVisible(true)
+          break;
+        case 'remove_intercept':
+          removeIntercept(item)
           break;
         default:
           break;
@@ -213,6 +301,14 @@ const ServiceBindingsResourcesV2 = ({ items = [] }: { items: BaseType[] }) => {
         listView={<ListView {...props} />}
         gridView={<GridView {...props} />}
       />
+      <HandleIntercept
+        {...{
+          visible,
+          setVisible,
+          service: mi,
+        }}
+      />
+
     </>
   );
 };

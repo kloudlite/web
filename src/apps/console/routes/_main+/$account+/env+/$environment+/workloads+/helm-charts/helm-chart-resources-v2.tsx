@@ -1,4 +1,4 @@
-import { PencilSimple, Trash } from '~/console/components/icons';
+import { Trash } from '~/console/components/icons';
 import { generateKey, titleCase } from '@kloudlite/design-system/utils';
 import {
   ListItem,
@@ -21,13 +21,12 @@ import { useReload } from '~/root/lib/client/helpers/reloader';
 import { useState } from 'react';
 import { handleError } from '~/root/lib/utils/common';
 import { toast } from '@kloudlite/design-system/molecule/toast';
-import { useOutletContext } from '@remix-run/react';
+import { Link, useOutletContext } from '@remix-run/react';
 import { IHelmCharts } from '~/console/server/gql/queries/helm-chart-queries';
 import { useWatchReload } from '~/lib/client/helpers/socket/useWatch';
 import ListV2 from '~/console/components/listV2';
-import { status, SyncStatusV2 } from '~/console/components/sync-status';
+import { SyncStatusV2 } from '~/console/components/sync-status';
 import { constants } from '~/console/server/utils/constants';
-import HandleHelmChart from './handle-helm-chart';
 import { IEnvironmentContext } from '../../_layout';
 
 const RESOURCE_NAME = 'helm chart';
@@ -48,7 +47,7 @@ type OnAction = ({
   action,
   item,
 }: {
-  action: 'delete' | 'edit';
+  action: 'delete';
   item: BaseType;
 }) => void;
 
@@ -61,8 +60,6 @@ const ExtraButton = ({ onAction, item }: IExtraButton) => {
   const kloudliteAgentName = item.metadata?.name;
   const iconSize = 16;
 
-  const s = status({ item });
-
   let items: IResourceExtraItem[] = [
     {
       label: 'Delete',
@@ -73,19 +70,6 @@ const ExtraButton = ({ onAction, item }: IExtraButton) => {
       className: '!text-text-critical',
     },
   ];
-
-  if (s !== 'deleting') {
-    items = [
-      {
-        label: 'Edit',
-        icon: <PencilSimple size={iconSize} />,
-        type: 'item',
-        onClick: () => onAction({ action: 'edit', item }),
-        key: 'edit',
-      },
-      ...items,
-    ];
-  }
 
   return kloudliteAgentName !== constants.kloudliteHelmAgentName ? (
     <ResourceExtraAction options={items} />
@@ -137,6 +121,7 @@ const GridView = ({ items = [], onAction }: IResource) => {
 const ListView = ({ items = [], onAction }: IResource) => {
   return (
     <ListV2.Root
+      linkComponent={Link}
       data={{
         headers: [
           {
@@ -188,6 +173,7 @@ const ListView = ({ items = [], onAction }: IResource) => {
                 render: () => <ExtraButton item={i} onAction={onAction} />,
               },
             },
+            to: `../helm-chart/${id}`
           };
         }),
       }}
@@ -199,7 +185,6 @@ const HelmChartResourcesV2 = ({ items = [] }: { items: BaseType[] }) => {
   const [showDeleteDialog, setShowDeleteDialog] = useState<BaseType | null>(
     null,
   );
-  const [showHandleHelm, setShowHandlehelm] = useState<BaseType | null>(null);
   const api = useConsoleApi();
   const reloadPage = useReload();
 
@@ -216,9 +201,6 @@ const HelmChartResourcesV2 = ({ items = [] }: { items: BaseType[] }) => {
     items,
     onAction: ({ action, item }) => {
       switch (action) {
-        case 'edit':
-          setShowHandlehelm(item);
-          break;
         case 'delete':
           setShowDeleteDialog(item);
           break;
@@ -232,14 +214,6 @@ const HelmChartResourcesV2 = ({ items = [] }: { items: BaseType[] }) => {
       <ListGridView
         listView={<ListView {...props} />}
         gridView={<GridView {...props} />}
-      />
-      <HandleHelmChart
-        {...{
-          isUpdate: true,
-          data: showHandleHelm!,
-          setVisible: () => setShowHandlehelm(null),
-          visible: !!showHandleHelm,
-        }}
       />
       <DeleteDialog
         resourceName={parseName(showDeleteDialog)}

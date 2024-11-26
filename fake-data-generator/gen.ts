@@ -37,6 +37,7 @@ const types: string[] = [
   'ConsoleListRegistryImagesQuery',
   'ConsoleListImagePullSecretsQuery',
   'ConsoleListHelmChartsQuery',
+  'ConsoleListServiceBindingQuery'
 ];
 
 async function fake(files: string[], types: string[] = []) {

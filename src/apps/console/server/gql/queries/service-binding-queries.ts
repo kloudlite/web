@@ -4,6 +4,8 @@ import { NN } from '~/root/lib/types/common';
 import {
   ConsoleListServiceBindingQuery,
   ConsoleListServiceBindingQueryVariables,
+  ConsoleInterceptServiceMutation,
+  ConsoleInterceptServiceMutationVariables
 } from '~/root/src/generated/gql/server';
 
 export type IServiceBinding = NN<
@@ -36,6 +38,7 @@ export const serviceBindingQueries = (executor: IExecutor) => ({
                   containerPort
                   servicePort
                 }
+                toAddr
               }
               kind
               markedForDeletion
@@ -95,7 +98,28 @@ export const serviceBindingQueries = (executor: IExecutor) => ({
     {
       transformer: (data: ConsoleListServiceBindingQuery) =>
         data.core_listServiceBindings,
-      vars(_: ConsoleListServiceBindingQueryVariables) {},
+      vars(_: ConsoleListServiceBindingQueryVariables) { },
     },
   ),
+  interceptService: executor(
+    gql`mutation Core_createServiceIntercept($envName: String!, $serviceName: String!, $interceptTo: String!, $portMappings: [Github__com___kloudlite___operator___apis___crds___v1__SvcInterceptPortMappingsIn!]) {
+  core_createServiceIntercept(envName: $envName, serviceName: $serviceName, interceptTo: $interceptTo, portMappings: $portMappings)
+}`,
+    {
+      transformer: (data: ConsoleInterceptServiceMutation) =>
+        data.core_createServiceIntercept,
+      vars(_: ConsoleInterceptServiceMutationVariables) { },
+    },
+  ),
+
+  removeInterceptService: executor(
+    gql`mutation Core_deleteServiceIntercept($envName: String!, $serviceName: String!) {
+  core_deleteServiceIntercept(envName: $envName, serviceName: $serviceName)
+}`,
+    {
+      transformer: (data: ConsoleInterceptServiceMutation) =>
+        data.core_createServiceIntercept,
+      vars(_: ConsoleInterceptServiceMutationVariables) { },
+    },
+  )
 });

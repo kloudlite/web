@@ -719,11 +719,13 @@ type Github__com___kloudlite___api___apps___comms___types__NotifyContent {
 type Github__com___kloudlite___api___apps___console___internal___entities__InterceptStatus {
   intercepted: Boolean
   portMappings: [Github__com___kloudlite___operator___apis___crds___v1__SvcInterceptPortMappings!]
+  toAddr: String!
 }
 
 input Github__com___kloudlite___api___apps___console___internal___entities__InterceptStatusIn {
   intercepted: Boolean
   portMappings: [Github__com___kloudlite___operator___apis___crds___v1__SvcInterceptPortMappingsIn!]
+  toAddr: String!
 }
 
 type Github__com___kloudlite___api___apps___console___internal___entities__ManagedResourceRef {
