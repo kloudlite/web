@@ -254,10 +254,9 @@ const ServiceBindingsResourcesV2 = ({ items = [] }: { items: BaseType[] }) => {
 
   useWatchReload(
     items.map((i) => {
-      return `account:${account}.environment:${environment}.service_binding:${parseName(i)}`;
+      return `account:${parseName(account)}.environment:${parseName(environment)}.service_binding:${parseName(i)}`;
     }),
   );
-
 
   const removeIntercept = async (item: BaseType) => {
     try {
