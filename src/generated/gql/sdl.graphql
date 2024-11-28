@@ -3667,7 +3667,6 @@ type Mutation {
   core_interceptApp(appname: String!, deviceName: String!, envName: String!, intercept: Boolean!, portMappings: [Github__com___kloudlite___operator___apis___crds___v1__AppInterceptPortMappingsIn!]): Boolean!
   core_interceptAppOnLocalCluster(appname: String!, clusterName: String!, envName: String!, intercept: Boolean!, ipAddr: String!, portMappings: [Github__com___kloudlite___operator___apis___crds___v1__AppInterceptPortMappingsIn!]): Boolean!
   core_interceptExternalApp(deviceName: String!, envName: String!, externalAppName: String!, intercept: Boolean!, portMappings: [Github__com___kloudlite___operator___apis___crds___v1__AppInterceptPortMappingsIn!]): Boolean!
-  core_listManagedServicePlugins: [ManagedServicePlugins!]
   core_removeDeviceIntercepts(deviceName: String!, envName: String!): Boolean!
   core_setupDefaultEnvironment: Boolean!
   core_updateApp(app: AppIn!, envName: String!): App
@@ -4019,6 +4018,7 @@ type Query {
   core_getManagedResouceOutputKeys(envName: String, msvcName: String, name: String!): [String!]!
   core_getManagedResouceOutputKeyValues(envName: String, keyrefs: [ManagedResourceKeyRefIn], msvcName: String): [ManagedResourceKeyValueRef!]!
   core_getManagedResource(envName: String, msvcName: String, name: String!): ManagedResource
+  core_getManagedServicePlugin(category: String!, name: String!): ManagedServicePlugin
   core_getRegistryImage(image: String!): RegistryImage
   core_getRegistryImageURL: RegistryImageURL!
   core_getRouter(envName: String!, name: String!): Router
@@ -4035,6 +4035,7 @@ type Query {
   core_listImagePullSecrets(pq: CursorPaginationIn, search: SearchImagePullSecrets): ImagePullSecretPaginatedRecords
   core_listImportedManagedResources(envName: String!, pq: CursorPaginationIn, search: SearchImportedManagedResources): ImportedManagedResourcePaginatedRecords
   core_listManagedResources(pq: CursorPaginationIn, search: SearchManagedResources): ManagedResourcePaginatedRecords
+  core_listManagedServicePlugins: [ManagedServicePlugins!]
   core_listRegistryImages(pq: CursorPaginationIn): RegistryImagePaginatedRecords
   core_listRouters(envName: String!, pq: CursorPaginationIn, search: SearchRouters): RouterPaginatedRecords
   core_listSecrets(envName: String!, pq: CursorPaginationIn, search: SearchSecrets): SecretPaginatedRecords

@@ -12,7 +12,7 @@ import { CopySimple } from '~/console/components/icons';
 import Wrapper from '~/console/components/wrapper';
 import { useConsoleApi } from '~/console/server/gql/api-provider';
 import { parseName } from '~/console/server/r-utils/common';
-import { getManagedTemplate } from '~/console/utils/commons';
+import { getManagedPlugin, getManagedTemplate } from '~/console/utils/commons';
 import { useReload } from '~/root/lib/client/helpers/reloader';
 import useClipboard from '~/root/lib/client/hooks/use-clipboard';
 import useForm from '~/root/lib/client/hooks/use-form';
@@ -24,7 +24,7 @@ import { Fill } from '../../../../managed-services/handle-backend-service';
 import { IManagedServiceContext } from '../../_layout';
 
 const ClusterManagedServiceSettingGeneral = () => {
-  const { account, managedService, msvtemplates } =
+  const { account, managedService, msvtemplates, msvPlugins } =
     useOutletContext<IManagedServiceContext>();
 
   const { setHasChanges, resetAndReload } = useUnsavedChanges();
@@ -44,6 +44,15 @@ const ClusterManagedServiceSettingGeneral = () => {
   const getService = () => {
     return getManagedTemplate({
       templates: msvtemplates,
+      apiVersion:
+        managedService.spec?.msvcSpec.serviceTemplate?.apiVersion || '',
+      kind: managedService.spec?.msvcSpec.serviceTemplate?.kind || '',
+    });
+  };
+
+  const getServicePlugin = () => {
+    return getManagedPlugin({
+      plugins: msvPlugins,
       apiVersion:
         managedService.spec?.msvcSpec.serviceTemplate?.apiVersion || '',
       kind: managedService.spec?.msvcSpec.serviceTemplate?.kind || '',
@@ -212,11 +221,16 @@ const ClusterManagedServiceSettingGeneral = () => {
                 category: { displayName: '', name: '' },
                 service: getService(),
               },
+              selectedServicePlugins: {
+                category: { displayName: '', name: '' },
+                service: getServicePlugin(),
+              },
               values,
               errors,
               handleChange,
             }}
             size="md"
+            annotations={managedService.metadata?.annotations}
           />
         </Box>
 

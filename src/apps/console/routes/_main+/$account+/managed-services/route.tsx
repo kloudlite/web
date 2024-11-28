@@ -1,7 +1,7 @@
+import { Button } from '@kloudlite/design-system/atoms/button';
 import { defer } from '@remix-run/node';
 import { Link, useLoaderData } from '@remix-run/react';
 import { useEffect } from 'react';
-import { Button } from '@kloudlite/design-system/atoms/button';
 import { EmptyStorageImage } from '~/console/components/empty-resource-images';
 import { Plus } from '~/console/components/icons';
 import { LoadingComp, pWrapper } from '~/console/components/loading-component';
@@ -30,6 +30,14 @@ export const loader = (ctx: IRemixCtx) => {
       ctx.request
     ).listMSvTemplates({});
 
+    const { data: msvPlugins, errors: msvPluginError } = await GQLServerHandler(
+      ctx.request
+    ).listMSvPlugins({});
+
+    if (msvPluginError) {
+      throw msvPluginError[0];
+    }
+
     if (mErrors) {
       throw mErrors[0];
     }
@@ -38,7 +46,11 @@ export const loader = (ctx: IRemixCtx) => {
       throw msvError[0];
     }
 
-    return { managedServices: mData, templates: msvTemplates };
+    return {
+      managedServices: mData,
+      templates: msvTemplates,
+      plugins: msvPlugins,
+    };
   });
   return defer({ promise });
 };
@@ -58,9 +70,14 @@ const KlOperatorServices = () => {
           .infra_listClusterManagedServices as any,
         templates: fake.ConsoleListMSvTemplatesQuery
           .infra_listManagedServiceTemplates as any,
+        plugins: fake.ConsoleListMSvPluginsQuery as any,
       }}
     >
-      {({ managedServices, templates: templatesData }) => {
+      {({
+        managedServices,
+        templates: templatesData,
+        plugins: pluginsData,
+      }) => {
         const backendServices = parseNodes(managedServices);
 
         return (
@@ -100,6 +117,7 @@ const KlOperatorServices = () => {
             <BackendServicesResourcesV2
               items={backendServices}
               templates={templatesData}
+              plugins={pluginsData}
             />
           </Wrapper>
         );

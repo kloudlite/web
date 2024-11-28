@@ -1,30 +1,30 @@
+import Select from '@kloudlite/design-system/atoms/select';
+import { toast } from '@kloudlite/design-system/molecule/toast';
+import { cn } from '@kloudlite/design-system/utils';
 import { useNavigate, useOutletContext } from '@remix-run/react';
-import MultiStepProgress, {
-  useMultiStepProgress,
-} from '~/console/components/multi-step-progress';
-import MultiStepProgressWrapper from '~/console/components/multi-step-progress-wrapper';
-import { useConsoleApi } from '~/console/server/gql/api-provider';
+import yaml from 'js-yaml';
+import { useRef, useState } from 'react';
+import FillerHelm from '~/console/assets/filler-helm';
 import {
   BottomNavigation,
   ReviewComponent,
 } from '~/console/components/commons';
+import ExtendedFilledTab from '~/console/components/extended-filled-tab';
+import MultiStepProgress, {
+  useMultiStepProgress,
+} from '~/console/components/multi-step-progress';
+import MultiStepProgressWrapper from '~/console/components/multi-step-progress-wrapper';
 import { NameIdView } from '~/console/components/name-id-view';
+import { useConsoleApi } from '~/console/server/gql/api-provider';
+import { parseName } from '~/console/server/r-utils/common';
+import { keyconstants } from '~/console/server/r-utils/key-constants';
+import CodeEditorClient from '~/root/lib/client/components/editor-client';
 import useForm, { dummyEvent } from '~/root/lib/client/hooks/use-form';
 import Yup from '~/root/lib/server/helpers/yup';
-import Select from '@kloudlite/design-system/atoms/select';
-import { useRef, useState } from 'react';
-import { cn } from '@kloudlite/design-system/utils';
-import { toast } from '@kloudlite/design-system/molecule/toast';
-import yaml from 'js-yaml';
-import ExtendedFilledTab from '~/console/components/extended-filled-tab';
-import { keyconstants } from '~/console/server/r-utils/key-constants';
-import { IEnvironmentContext } from '../../_layout';
-import { parseName } from '~/console/server/r-utils/common';
 import { handleError } from '~/root/lib/utils/common';
-import CodeEditorClient from '~/root/lib/client/components/editor-client';
-import FillerHelm from '~/console/assets/filler-helm';
-import useFetchHelmValue from '../helm-charts/helm-utils/use-fetch-helmvalues';
+import { IEnvironmentContext } from '../../_layout';
 import useFetchHelmCharts from '../helm-charts/helm-utils/use-fetch-helmcharts';
+import useFetchHelmValue from '../helm-charts/helm-utils/use-fetch-helmvalues';
 import useHelmRepoSearch from '../helm-charts/helm-utils/use-helm-repo-search';
 
 type IHelmDoc = {
@@ -52,7 +52,7 @@ const repoRenderer = ({
 const filterUniqueVersions = (versions: IHelmDoc['entries']['keys']) => {
   return versions.filter(
     (obj, index, self) =>
-      index === self.findIndex((t) => t.version === obj.version),
+      index === self.findIndex((t) => t.version === obj.version)
   );
 };
 
@@ -115,21 +115,21 @@ const HelmChartLayout = () => {
         'Chart Name is required',
         (v) => {
           return !(currentStep === 2 && !v);
-        },
+        }
       ),
       chartRepoURL: Yup.string().test(
         'required',
         'Chart Repo Url is required',
         (v) => {
           return !(currentStep === 2 && !v);
-        },
+        }
       ),
       chartVersion: Yup.string().test(
         'required',
         'Chart Version is required',
         (v) => {
           return !(currentStep === 2 && !v);
-        },
+        }
       ),
     }),
 
@@ -310,7 +310,7 @@ const HelmChartLayout = () => {
               searchable
               size="lg"
               disabled={helmCharts.length === 0 || repoLoading || !selectedRepo}
-              //@ts-ignore
+              // @ts-ignore
               value={chartName?.value}
               options={async () => helmCharts}
               loading={!errors.chartVersion && helmChartsLoading}
@@ -390,7 +390,7 @@ const HelmChartLayout = () => {
                     }
                     lang="yaml"
                     onChange={(e) => {
-                      const path = editorRef.current.getModel().uri.path;
+                      const { path } = editorRef.current.getModel().uri;
 
                       if (
                         values.activeTab === 'values' &&

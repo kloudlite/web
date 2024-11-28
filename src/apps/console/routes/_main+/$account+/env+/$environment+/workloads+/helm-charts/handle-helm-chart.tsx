@@ -1,6 +1,8 @@
 /* eslint-disable react/destructuring-assignment */
 import { TextInput } from '@kloudlite/design-system/atoms/input';
 import Popup from '@kloudlite/design-system/molecule/popup';
+import { useOutletContext } from '@remix-run/react';
+import yaml from 'js-yaml';
 import { IDialogBase } from '~/console/components/types.d';
 import { useConsoleApi } from '~/console/server/gql/api-provider';
 import { IHelmCharts } from '~/console/server/gql/queries/helm-chart-queries';
@@ -9,19 +11,17 @@ import { useReload } from '~/root/lib/client/helpers/reloader';
 import useForm, { dummyEvent } from '~/root/lib/client/hooks/use-form';
 import Yup from '~/root/lib/server/helpers/yup';
 import { handleError } from '~/root/lib/utils/common';
-import yaml from 'js-yaml';
-import { useOutletContext } from '@remix-run/react';
 
-import { useEffect, useRef, useState } from 'react';
 import Select from '@kloudlite/design-system/atoms/select';
+import { useEffect, useRef, useState } from 'react';
 import { NameIdView } from '~/console/components/name-id-view';
 
 import ExtendedFilledTab from '~/console/components/extended-filled-tab';
 import { keyconstants } from '~/console/server/r-utils/key-constants';
 
-import { IEnvironmentContext } from '../../_layout';
-import CodeEditorClient from '~/root/lib/client/components/editor-client';
 import { LoadingPlaceHolder } from '~/console/components/loading';
+import CodeEditorClient from '~/root/lib/client/components/editor-client';
+import { IEnvironmentContext } from '../../_layout';
 import useFetchHelmCharts from './helm-utils/use-fetch-helmcharts';
 import useFetchHelmValue from './helm-utils/use-fetch-helmvalues';
 
@@ -38,7 +38,7 @@ type IHelmDoc = {
 const filterUniqueVersions = (versions: IHelmDoc['entries']['keys']) => {
   return versions.filter(
     (obj, index, self) =>
-      index === self.findIndex((t) => t.version === obj.version),
+      index === self.findIndex((t) => t.version === obj.version)
   );
 };
 
@@ -167,8 +167,8 @@ const Root = (props: IDialog) => {
         setChartVersions(
           filterUniqueVersions(
             helmCharts.find((v) => v.value === props.data.spec?.chartName)
-              ?.item || [],
-          ),
+              ?.item || []
+          )
         );
         setChartName({
           label: props.data.spec?.chartName || '',
@@ -215,7 +215,7 @@ const Root = (props: IDialog) => {
               errors={errors.name}
               handleChange={handleChange}
               nameErrorLabel="isNameError"
-              isUpdate={true}
+              isUpdate
             />
 
             <TextInput
@@ -281,7 +281,7 @@ const Root = (props: IDialog) => {
                   }
                   lang="yaml"
                   onChange={(e) => {
-                    const path = editorRef.current.getModel().uri.path;
+                    const { path } = editorRef.current.getModel().uri;
 
                     if (
                       values.activeTab === 'values' &&

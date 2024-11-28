@@ -3402,6 +3402,75 @@ query consoleListMSvTemplates {
   }
 }
 
+query consoleGetMSvPlugin($category: String!, $name: String!) {
+  core_getManagedServicePlugin(category: $category, name: $name) {
+    meta {
+      logo
+    }
+    plugin
+    spec {
+      apiVersion
+      services {
+        active
+        description
+        inputs {
+          defaultValue
+          displayUnit
+          input
+          label
+          max
+          min
+          multiplier
+          required
+          type
+          unit
+        }
+        kind
+        resources {
+          description
+          kind
+        }
+      }
+    }
+  }
+}
+
+query consoleListMSvPlugins {
+  core_listManagedServicePlugins {
+    category
+    items {
+      meta {
+        logo
+      }
+      plugin
+      spec {
+        apiVersion
+        services {
+          active
+          description
+          inputs {
+            defaultValue
+            displayUnit
+            input
+            label
+            max
+            min
+            multiplier
+            required
+            type
+            unit
+          }
+          kind
+          resources {
+            description
+            kind
+          }
+        }
+      }
+    }
+  }
+}
+
 query consoleGetManagedResource($name: String!, $msvcName: String, $envName: String) {
   core_getManagedResource(name: $name, msvcName: $msvcName, envName: $envName) {
     accountName

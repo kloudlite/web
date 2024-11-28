@@ -4,11 +4,11 @@ import { generateKey, titleCase } from '@kloudlite/design-system/utils';
 import { Link, useOutletContext, useParams } from '@remix-run/react';
 import { useState } from 'react';
 import {
+  listClass,
   ListItem,
   ListItemV2,
   ListTitle,
   ListTitleV2,
-  listClass,
 } from '~/console/components/console-list-components';
 import DeleteDialog from '~/console/components/delete-dialog';
 import Grid from '~/console/components/grid';
@@ -20,14 +20,17 @@ import { SyncStatusV2 } from '~/console/components/sync-status';
 import { useClusterStatusV3 } from '~/console/hooks/use-cluster-status-v3';
 import { useConsoleApi } from '~/console/server/gql/api-provider';
 import { IClusterMSvs } from '~/console/server/gql/queries/cluster-managed-services-queries';
-import { IMSvTemplates } from '~/console/server/gql/queries/managed-templates-queries';
+import {
+  IMsvPlugins,
+  IMSvTemplates,
+} from '~/console/server/gql/queries/managed-templates-queries';
 import {
   ExtractNodeType,
   parseName,
   parseUpdateOrCreatedBy,
   parseUpdateOrCreatedOn,
 } from '~/console/server/r-utils/common';
-import { getManagedTemplate } from '~/console/utils/commons';
+import { getManagedPlugin, getManagedTemplate } from '~/console/utils/commons';
 import { useReload } from '~/root/lib/client/helpers/reloader';
 import { useWatchReload } from '~/root/lib/client/helpers/socket/useWatch';
 import { handleError } from '~/root/lib/utils/common';
@@ -38,11 +41,20 @@ import CloneManagedService from './clone-managed-service';
 const RESOURCE_NAME = 'managed service';
 type BaseType = ExtractNodeType<IClusterMSvs>;
 
-const parseItem = (item: BaseType, templates: IMSvTemplates) => {
+const parseItem = (
+  item: BaseType,
+  templates: IMSvTemplates,
+  plugins: IMsvPlugins
+) => {
   const template = getManagedTemplate({
     templates,
     kind: item.spec?.msvcSpec?.serviceTemplate?.kind || '',
     apiVersion: item.spec?.msvcSpec?.serviceTemplate?.apiVersion || '',
+  });
+  const plugin = getManagedPlugin({
+    plugins,
+    apiVersion: item.spec?.msvcSpec?.serviceTemplate?.apiVersion || '',
+    kind: item.spec?.msvcSpec?.serviceTemplate?.kind || '',
   });
   return {
     name: item?.displayName,
@@ -52,6 +64,7 @@ const parseItem = (item: BaseType, templates: IMSvTemplates) => {
       time: parseUpdateOrCreatedOn(item),
     },
     logo: template?.logoUrl,
+    logoUrl: plugin?.meta?.logo,
   };
 };
 
@@ -102,15 +115,20 @@ const ExtraButton = ({ item, onAction }: IExtraButton) => {
 interface IResource {
   items: BaseType[];
   templates: IMSvTemplates;
+  plugins: IMsvPlugins;
   onAction: OnAction;
 }
 
-const GridView = ({ items, templates, onAction }: IResource) => {
+const GridView = ({ items, templates, plugins, onAction }: IResource) => {
   const { account, project } = useParams();
   return (
     <Grid.Root className="!grid-cols-1 md:!grid-cols-3" linkComponent={Link}>
       {items.map((item, index) => {
-        const { name, id, logo, updateInfo } = parseItem(item, templates);
+        const { name, id, logo, updateInfo } = parseItem(
+          item,
+          templates,
+          plugins
+        );
         const keyPrefix = `${RESOURCE_NAME}-${id}-${index}`;
         return (
           <Grid.Column
@@ -160,7 +178,7 @@ const GridView = ({ items, templates, onAction }: IResource) => {
   );
 };
 
-const ListView = ({ items, templates, onAction }: IResource) => {
+const ListView = ({ items, templates, plugins, onAction }: IResource) => {
   const { account } = useOutletContext<IAccountContext>();
   const { clustersMap: clusterStatus } = useClusterStatusV3({
     clusterNames: items.map((i) => i.clusterName),
@@ -204,7 +222,11 @@ const ListView = ({ items, templates, onAction }: IResource) => {
         ],
         rows: items.map((i) => {
           const isClusterOnline = !!clusterStatus[i.clusterName]?.isOnline;
-          const { name, id, logo, updateInfo } = parseItem(i, templates);
+          const { name, id, logo, updateInfo, logoUrl } = parseItem(
+            i,
+            templates,
+            plugins
+          );
           return {
             columns: {
               name: {
@@ -214,7 +236,11 @@ const ListView = ({ items, templates, onAction }: IResource) => {
                     subtitle={id}
                     avatar={
                       <div className="pulsable pulsable-circle aspect-square">
-                        <img src={logo} alt={name} className="w-4xl h-4xl" />
+                        <img
+                          src={logoUrl || logo}
+                          alt={name}
+                          className="w-4xl h-4xl"
+                        />
                       </div>
                     }
                   />
@@ -267,9 +293,11 @@ const ListView = ({ items, templates, onAction }: IResource) => {
 const BackendServicesResourcesV2 = ({
   items = [],
   templates = [],
+  plugins = [],
 }: {
   items: BaseType[];
   templates: IMSvTemplates;
+  plugins: IMsvPlugins;
 }) => {
   const { account } = useOutletContext<IClusterContext>();
   useWatchReload(
@@ -290,6 +318,7 @@ const BackendServicesResourcesV2 = ({
   const props: IResource = {
     items,
     templates,
+    plugins,
     onAction: ({ action, item }) => {
       switch (action) {
         case 'clone':
