@@ -1,17 +1,20 @@
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable guard-for-in */
+import { cn } from '@kloudlite/design-system/utils';
 import {
   AWSlogoFill,
   ChevronRight,
   GoogleCloudlogo,
 } from '~/console/components/icons';
-import { Github__Com___Kloudlite___Operator___Apis___Common____Types__CloudProvider as CloudProviders } from '~/root/src/generated/gql/server';
-import { cn } from '@kloudlite/design-system/utils';
 import yup from '~/root/lib/server/helpers/yup';
+import { Github__Com___Kloudlite___Operator___Apis___Common____Types__CloudProvider as CloudProviders } from '~/root/src/generated/gql/server';
+import { parseValue } from '../page-components/util';
 import {
+  IMSvPlugin,
+  IMsvPlugins,
   IMSvTemplate,
   IMSvTemplates,
 } from '../server/gql/queries/managed-templates-queries';
-import { parseValue } from '../page-components/util';
 
 export const getManagedTemplate = ({
   templates,
@@ -25,6 +28,31 @@ export const getManagedTemplate = ({
   return templates
     ?.flatMap((t) => t.items.flat())
     .find((t) => t.kind === kind && t.apiVersion === apiVersion);
+};
+
+export const getManagedPlugin = ({
+  plugins,
+  kind,
+  apiVersion,
+}: {
+  plugins: IMsvPlugins;
+  kind: string;
+  apiVersion: string;
+}): IMSvPlugin | undefined => {
+  return Array.isArray(plugins)
+    ? plugins
+        .flatMap((t) => t.items.flat())
+        .find(
+          (t) =>
+            t.spec.services[0].kind === kind && t.spec.apiVersion === apiVersion
+        )
+    : undefined;
+  // return plugins
+  //   ?.flatMap((t) => t.items.flat())
+  //   .find(
+  //     (t) =>
+  //       t.spec.services[0].kind === kind && t.spec.apiVersion === apiVersion
+  //   );
 };
 
 export const getManagedTemplateLogo = (
@@ -192,14 +220,16 @@ export const flatM = (
     string,
     {
       defaultValue: number | string | boolean;
-      inputType: string;
+      type: string;
       multiplier?: number;
       unit?: string;
+      input?: string;
     }
   >
 ) => {
   const flatJson = {};
   for (const key in obj) {
+    console.log('key', key);
     const parts = key.split('.');
 
     let temp: Record<string, any> = flatJson;
@@ -211,24 +241,26 @@ export const flatM = (
         temp[part] = temp[part] || {};
 
         if (index === parts.length - 1) {
-          temp[part] = obj[key].defaultValue + (obj[key].unit || '');
+          temp[part] = (obj[key].defaultValue || 1) + (obj[key].unit || '');
 
           if (
             typeof obj[key].defaultValue === 'number' ||
             typeof obj[key].defaultValue === 'bigint'
           ) {
             temp[part] =
-              Number(obj[key].defaultValue) * (obj[key].multiplier || 1) +
+              Number(obj[key].defaultValue || 1) * (obj[key].multiplier || 1) +
               (obj[key].unit || '');
           }
-
-          if (obj[key].inputType === 'Resource') {
+          if (obj[key].type === 'Resource' || obj[key].type === 'int-range') {
+            console.log('obj[key].defaultValue', obj[key].defaultValue);
             temp[part] = {
               min:
-                Number(obj[key].defaultValue) * (obj[key].multiplier || 1) +
+                Number(obj[key].defaultValue || 1) *
+                  (obj[key].multiplier || 1) +
                 (obj[key].unit || ''),
               max:
-                Number(obj[key].defaultValue) * (obj[key].multiplier || 1) +
+                Number(obj[key].defaultValue || 1) *
+                  (obj[key].multiplier || 1) +
                 (obj[key].unit || ''),
             };
           }

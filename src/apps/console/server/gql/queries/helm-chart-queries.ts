@@ -2,100 +2,110 @@ import gql from 'graphql-tag';
 import { IExecutor } from '~/root/lib/server/helpers/execute-query-with-context';
 import { NN } from '~/root/lib/types/common';
 import {
-  ConsoleListHelmChartQuery,
-  ConsoleGetHelmChartQueryVariables,
-  ConsoleListHelmChartQueryVariables,
   ConsoleGetHelmChartQuery,
+  ConsoleGetHelmChartQueryVariables,
   ConsoleCreateHelmChartMutation,
   ConsoleCreateHelmChartMutationVariables,
   ConsoleUpdateHelmChartMutation,
   ConsoleUpdateHelmChartMutationVariables,
   ConsoleDeleteHelmChartMutation,
   ConsoleDeleteHelmChartMutationVariables,
+  ConsoleListHelmChartsQuery,
+  ConsoleListHelmChartsQueryVariables,
 } from '~/root/src/generated/gql/server';
 
-export type IHelmCharts = NN<
-  ConsoleListHelmChartQuery['infra_listHelmReleases']
->;
+export type IHelmCharts = NN<ConsoleListHelmChartsQuery['core_listHelmCharts']>;
+export type IHelmChart = NN<ConsoleGetHelmChartQuery['core_getHelmChart']>
 
 export const helmChartQueries = (executor: IExecutor) => ({
   getHelmChart: executor(
-    gql`
-      query Infra_getHelmRelease($clusterName: String!, $name: String!) {
-        infra_getHelmRelease(clusterName: $clusterName, name: $name) {
-          createdBy {
-            userEmail
-            userId
-            userName
-          }
-          creationTime
-          displayName
-          lastUpdatedBy {
-            userEmail
-            userId
-            userName
-          }
-          markedForDeletion
-          metadata {
-            name
-            namespace
-          }
-          spec {
-            chartName
-            chartRepoURL
-            chartVersion
-            values
-          }
-          status {
-            checks
-            checkList {
-              description
-              debug
-              title
-              name
-            }
-            isReady
-            lastReadyGeneration
-            lastReconcileTime
-            message {
-              RawMessage
-            }
-            releaseNotes
-            releaseStatus
-            resources {
-              apiVersion
-              kind
-              name
-              namespace
-            }
-          }
-          updateTime
-        }
+    gql`query Core_getHelmChart($envName: String!, $name: String!) {
+  core_getHelmChart(envName: $envName, name: $name) {
+    createdBy {
+      userEmail
+      userId
+      userName
+    }
+    creationTime
+    displayName
+    environmentName
+    lastUpdatedBy {
+      userEmail
+      userId
+      userName
+    }
+    markedForDeletion
+    metadata {
+      annotations
+      creationTimestamp
+      deletionTimestamp
+      generation
+      labels
+      name
+      namespace
+    }
+    spec {
+      chartName
+      chartRepoURL
+      chartVersion
+      values
+    }
+    status {
+      checkList {
+        debug
+        description
+        hide
+        name
+        title
       }
-    `,
+      checks
+      isReady
+      lastReadyGeneration
+      lastReconcileTime
+      message {
+        RawMessage
+      }
+      releaseNotes
+      releaseStatus
+      resources {
+        apiVersion
+        kind
+        name
+        namespace
+      }
+    }
+    syncStatus {
+      action
+      error
+      lastSyncedAt
+      recordVersion
+      state
+      syncScheduledAt
+    }
+    updateTime
+  }
+}`,
     {
       transformer(data: ConsoleGetHelmChartQuery) {
-        return data.infra_getHelmRelease;
+        return data.core_getHelmChart;
       },
-      vars(_: ConsoleGetHelmChartQueryVariables) {},
-    }
+      vars(_: ConsoleGetHelmChartQueryVariables) { },
+    },
   ),
-  listHelmChart: executor(
+  listHelmCharts: executor(
     gql`
-      query Infra_listHelmReleases(
-        $clusterName: String!
-        $search: SearchHelmRelease
-        $pagination: CursorPaginationIn
-      ) {
-        infra_listHelmReleases(
-          clusterName: $clusterName
-          search: $search
-          pagination: $pagination
-        ) {
+      query Core_listHelmCharts($envName: String!) {
+        core_listHelmCharts(envName: $envName) {
+          totalCount
+          pageInfo {
+            endCursor
+            hasNextPage
+            hasPrevPage
+            startCursor
+          }
           edges {
             cursor
             node {
-              clusterName
               createdBy {
                 userEmail
                 userId
@@ -103,19 +113,19 @@ export const helmChartQueries = (executor: IExecutor) => ({
               }
               creationTime
               displayName
+              environmentName
+              markedForDeletion
+              recordVersion
+              updateTime
               lastUpdatedBy {
                 userEmail
                 userId
                 userName
               }
-              markedForDeletion
               metadata {
-                generation
                 name
-                namespace
                 annotations
               }
-              recordVersion
               spec {
                 chartName
                 chartRepoURL
@@ -123,21 +133,20 @@ export const helmChartQueries = (executor: IExecutor) => ({
                 values
               }
               status {
-                checks
                 checkList {
-                  description
                   debug
-                  title
+                  description
+                  hide
                   name
+                  title
                 }
+                checks
                 isReady
                 lastReadyGeneration
                 lastReconcileTime
                 message {
                   RawMessage
                 }
-                releaseNotes
-                releaseStatus
                 resources {
                   apiVersion
                   kind
@@ -153,77 +162,66 @@ export const helmChartQueries = (executor: IExecutor) => ({
                 state
                 syncScheduledAt
               }
-              updateTime
             }
           }
-          pageInfo {
-            endCursor
-            hasNextPage
-            hasPrevPage
-            startCursor
-          }
-          totalCount
         }
       }
     `,
     {
-      transformer: (data: ConsoleListHelmChartQuery) =>
-        data.infra_listHelmReleases,
-      vars(_: ConsoleListHelmChartQueryVariables) {},
-    }
+      transformer: (data: ConsoleListHelmChartsQuery) =>
+        data.core_listHelmCharts,
+      vars(_: ConsoleListHelmChartsQueryVariables) { },
+    },
   ),
   createHelmChart: executor(
     gql`
-      mutation Infra_createHelmRelease(
-        $clusterName: String!
-        $release: HelmReleaseIn!
+      mutation Core_createHelmChart(
+        $envName: String!
+        $helmchart: HelmChartIn!
       ) {
-        infra_createHelmRelease(clusterName: $clusterName, release: $release) {
+        core_createHelmChart(envName: $envName, helmchart: $helmchart) {
           id
         }
       }
     `,
     {
       transformer: (data: ConsoleCreateHelmChartMutation) =>
-        data.infra_createHelmRelease,
-      vars(_: ConsoleCreateHelmChartMutationVariables) {},
-    }
+        data.core_createHelmChart,
+      vars(_: ConsoleCreateHelmChartMutationVariables) { },
+    },
   ),
   updateHelmChart: executor(
     gql`
-      mutation Infra_updateHelmRelease(
-        $clusterName: String!
-        $release: HelmReleaseIn!
+      mutation Core_updateHelmChart(
+        $envName: String!
+        $helmchart: HelmChartIn!
       ) {
-        infra_updateHelmRelease(clusterName: $clusterName, release: $release) {
+        core_updateHelmChart(envName: $envName, helmchart: $helmchart) {
           id
         }
       }
     `,
     {
       transformer(data: ConsoleUpdateHelmChartMutation) {
-        return data.infra_updateHelmRelease;
+        return data.core_updateHelmChart;
       },
-      vars(_: ConsoleUpdateHelmChartMutationVariables) {},
-    }
+      vars(_: ConsoleUpdateHelmChartMutationVariables) { },
+    },
   ),
   deleteHelmChart: executor(
     gql`
-      mutation Infra_deleteHelmRelease(
-        $clusterName: String!
-        $releaseName: String!
+      mutation Core_deleteHelmChart(
+        $envName: String!
+        $helmChartName: String!
       ) {
-        infra_deleteHelmRelease(
-          clusterName: $clusterName
-          releaseName: $releaseName
-        )
+        core_deleteHelmChart(envName: $envName, helmChartName: $helmChartName)
       }
     `,
     {
       transformer(data: ConsoleDeleteHelmChartMutation) {
-        return data.infra_deleteHelmRelease;
+        return data.core_deleteHelmChart;
       },
-      vars(_: ConsoleDeleteHelmChartMutationVariables) {},
-    }
+      vars(_: ConsoleDeleteHelmChartMutationVariables) { },
+    },
   ),
 });

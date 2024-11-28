@@ -1,3 +1,7 @@
+import { NumberInput, TextInput } from '@kloudlite/design-system/atoms/input';
+import Select from '@kloudlite/design-system/atoms/select';
+import { Switch } from '@kloudlite/design-system/atoms/switch';
+import { titleCase } from '@kloudlite/design-system/utils';
 import { useNavigate, useOutletContext, useParams } from '@remix-run/react';
 import {
   FormEventHandler,
@@ -8,10 +12,6 @@ import {
   useState,
 } from 'react';
 import { toast } from 'react-toastify';
-import { NumberInput, TextInput } from '@kloudlite/design-system/atoms/input';
-import Select from '@kloudlite/design-system/atoms/select';
-import { Switch } from '@kloudlite/design-system/atoms/switch';
-import { titleCase } from '@kloudlite/design-system/utils';
 import {
   BottomNavigation,
   ReviewComponent,
@@ -21,6 +21,7 @@ import MultiStepProgress, {
 } from '~/console/components/multi-step-progress';
 import MultiStepProgressWrapper from '~/console/components/multi-step-progress-wrapper';
 import { NameIdView } from '~/console/components/name-id-view';
+import { useClusterStatusV3 } from '~/console/hooks/use-cluster-status-v3';
 import { ClusterSelectItem } from '~/console/page-components/handle-environment';
 import { useConsoleApi } from '~/console/server/gql/api-provider';
 import {
@@ -34,8 +35,8 @@ import { flatM, flatMapValidations } from '~/console/utils/commons';
 import useForm, { dummyEvent } from '~/root/lib/client/hooks/use-form';
 import Yup from '~/root/lib/server/helpers/yup';
 import { handleError } from '~/root/lib/utils/common';
-import { useClusterStatusV3 } from '~/console/hooks/use-cluster-status-v3';
 import { IAccountContext } from '../_layout';
+import { ManagedServiceLayoutV2 } from './managed-service-layout-v2';
 
 const valueRender = ({ label, icon }: { label: string; icon: string }) => {
   return (
@@ -775,7 +776,8 @@ const ManagedServiceLayout = () => {
 };
 
 const NewManagedService = () => {
-  return <ManagedServiceLayout />;
+  // return <ManagedServiceLayout />;
+  return <ManagedServiceLayoutV2 />;
 };
 
 export const handle = {

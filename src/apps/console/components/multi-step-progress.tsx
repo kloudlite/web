@@ -51,10 +51,11 @@ type IProgressTrackerItem = {
   editable?: boolean;
   step: number;
   hasPages?: boolean;
+  className?: string;
 };
 
 function ProgressTrackerItem(
-  props: IProgressTrackerItem & { children?: ReactNode }
+  props: IProgressTrackerItem & { children?: ReactNode },
 ) {
   const {
     children,
@@ -67,12 +68,16 @@ function ProgressTrackerItem(
     editable,
     step,
     hasPages,
+    className,
   } = props;
 
   if (!hasPages) {
     return (
       <div>
-        <span className="headingMd text-text-default"> {label}</span>
+        <span className={cn('headingMd text-text-default', className)}>
+          {' '}
+          {label}
+        </span>
         {children}
       </div>
     );
@@ -85,7 +90,8 @@ function ProgressTrackerItem(
         {
           '[&:not(:last-child)]:border-l': !active,
           'border-l': active,
-        }
+        },
+        className,
       )}
     >
       <div>
@@ -104,7 +110,7 @@ function ProgressTrackerItem(
                 !completed && !active,
               'bg-surface-primary-selected text-text-default':
                 active && !completed,
-            }
+            },
           )}
         >
           {completed ? <Check size={12} /> : index}
@@ -116,7 +122,7 @@ function ProgressTrackerItem(
             {
               'text-text-default': !completed || (!!completed && !!editable),
               'text-text-disabled': !!completed && !editable,
-            }
+            },
           )}
           onClick={onClick}
         >
@@ -156,6 +162,7 @@ interface IMultiStepProgress {
   noJump?: (step: number) => boolean;
   editable?: boolean;
   hasPages?: boolean;
+  className?: string;
 }
 const Root = ({
   children,
@@ -164,6 +171,7 @@ const Root = ({
   noJump,
   editable = true,
   hasPages = true,
+  className,
 }: IMultiStepProgress) => {
   let child = children;
   // @ts-ignore
@@ -173,7 +181,12 @@ const Root = ({
   }
 
   return (
-    <div className="pl-[12px] flex flex-col relative [counter-reset:steps]">
+    <div
+      className={cn(
+        'pl-[12px] flex flex-col relative [counter-reset:steps]',
+        className,
+      )}
+    >
       {Children.map(child, (ch, index) => {
         return (
           <ProgressTrackerItem
@@ -186,6 +199,7 @@ const Root = ({
             editable={editable}
             completed={currentStep > ch.props.step}
             hasPages={hasPages}
+            className={ch.props.className}
             onClick={() => {
               if (noJump ? !noJump?.(ch.props.step) : index + 1 < currentStep) {
                 jumpStep(index + 1);

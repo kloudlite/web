@@ -29,10 +29,11 @@ import { pvQueries } from './queries/pv-queries';
 import { pvcQueries } from './queries/pvc-queries';
 import { registryImagesQueries } from './queries/registry-image-queries';
 import { repoQueries } from './queries/repo-queries';
-import { routerQueries } from './queries/router-queries';
+/* import { routerQueries } from './queries/router-queries'; */
 import { secretQueries } from './queries/secret-queries';
 import { secretVariableQueries } from './queries/secret-variables-queries';
 import { tagsQueries } from './queries/tags-queries';
+import { serviceBindingQueries } from './queries/service-binding-queries';
 
 export const GQLServerHandler = ({ headers, cookies }: IGQLServerProps) => {
   const executor = ExecuteQueryWithContext(headers, cookies);
@@ -45,7 +46,7 @@ export const GQLServerHandler = ({ headers, cookies }: IGQLServerProps) => {
     ...environmentQueries(executor),
     ...appQueries(executor),
     ...externalAppQueries(executor),
-    ...routerQueries(executor),
+    /* ...routerQueries(executor), */
     ...configQueries(executor),
     ...secretQueries(executor),
     ...accessQueries(executor),
@@ -70,6 +71,7 @@ export const GQLServerHandler = ({ headers, cookies }: IGQLServerProps) => {
     ...importedManagedResourceQueries(executor),
     ...registryImagesQueries(executor),
     ...secretVariableQueries(executor),
+    ...serviceBindingQueries(executor),
   };
 };
 

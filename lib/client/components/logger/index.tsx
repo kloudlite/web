@@ -28,7 +28,6 @@ import { generatePlainColor } from '~/root/lib/utils/color-generator';
 import ReactPulsable from 'react-pulsable';
 import { ChildrenProps } from '@kloudlite/design-system/types';
 // import { mapper } from '@kloudlite/design-system/utils';
-// import Select from './log-select';
 import { logsMockData } from './dummy';
 import { LoadingIndicator } from '../reload-indicator';
 import logger from '../../helpers/log';
@@ -395,9 +394,8 @@ const LogLine = ({
 }: ILogLine) => {
   return (
     <code
-      title={`pod: ${log.podName} | container: ${log.containerName} | line: ${
-        log.lineNumber
-      } | timestamp: ${dayjs(`${log.timestamp}`).format('lll')}`}
+      title={`pod: ${log.podName} | container: ${log.containerName} | line: ${log.lineNumber
+        } | timestamp: ${dayjs(`${log.timestamp}`).format('lll')}`}
       className={classNames(
         'flex py-xs items-center whitespace-pre border-b border-transparent transition-all',
         {

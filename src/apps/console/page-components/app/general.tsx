@@ -7,7 +7,7 @@ import { BottomNavigation } from '~/console/components/commons';
 import { NameIdView } from '~/console/components/name-id-view';
 import { useAppState } from '~/console/page-components/app-states';
 import { FadeIn } from '~/console/page-components/util';
-import { AppSelectItem } from '~/console/routes/_main+/$account+/env+/$environment+/new-app/app-detail';
+import { AppSelectItem } from '~/console/routes/_main+/$account+/env+/$environment+/workloads+/new-app/app-detail';
 import HandleBuild from '~/console/routes/_main+/$account+/repo+/$repo+/builds/handle-builds';
 import { useConsoleApi } from '~/console/server/gql/api-provider';
 import { parseName } from '~/console/server/r-utils/common';

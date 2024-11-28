@@ -1,5 +1,5 @@
 extends:
-  - ../.eslintrc.yml
+  - ../../.eslintrc.yml
 
 rules:
   camelcase: 0

@@ -12,17 +12,14 @@ importers:
         specifier: 1.6.0
         version: 1.6.0(react@18.2.0)
       '@kloudlite/design-system':
-        specifier: ^0.0.3
-        version: 0.0.3(@emotion/is-prop-valid@0.8.8)(@types/react-dom@18.3.1)(@types/react@18.3.12)(immer@10.1.1)(monaco-editor@0.52.0)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)(websocket@1.0.35)
+        specifier: ^0.0.4
+        version: 0.0.4(@emotion/is-prop-valid@0.8.8)(@types/react-dom@18.3.1)(@types/react@18.3.12)(immer@10.1.1)(monaco-editor@0.52.0)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)(websocket@1.0.35)
       '@mdx-js/react':
         specifier: ^2.3.0
         version: 2.3.0(react@18.2.0)
       '@monaco-editor/react':
         specifier: ^4.6.0
         version: 4.6.0(monaco-editor@0.52.0)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
-      '@oshq/react-select':
-        specifier: ^3.2.1
-        version: 3.2.1(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
       '@radix-ui/primitive':
         specifier: ^1.0.1
         version: 1.1.0
@@ -131,6 +128,9 @@ importers:
       '@remix-run/react':
         specifier: ^1.19.3
         version: 1.19.3(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
+      '@zener/react-select':
+        specifier: ^3.2.3
+        version: 3.2.3(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
       anser:
         specifier: ^2.1.1
         version: 2.3.0
@@ -204,7 +204,7 @@ importers:
         specifier: ^3.3.1
         version: 3.5.0(react@18.2.0)
       react-pulsable:
-        specifier: ^1.0.17
+        specifier: ^1.0.19
         version: 1.0.19(classnames@2.5.1)(react@18.2.0)
       react-qr-code:
         specifier: ^2.0.12
@@ -1443,8 +1443,8 @@ packages:
   '@jspm/core@2.1.0':
     resolution: {integrity: sha512-3sRl+pkyFY/kLmHl0cgHiFp2xEqErA8N3ECjMs7serSUBmoJ70lBa0PG5t0IM6WJgdZNyyI0R8YFfi5wM8+mzg==}
 
-  '@kloudlite/design-system@0.0.3':
-    resolution: {integrity: sha512-WRcV8yQtXJxJOFCTfdxFD1B3J8gJWMuo82jFanGwOyB7oq211v1FcajXIr4lvDWexqPdbCXf3eROyegFIAKaxA==}
+  '@kloudlite/design-system@0.0.4':
+    resolution: {integrity: sha512-XIGByJDQFyrAJPhNvovQaXMofTNajUd6/0LbmQdB+8sW3mAV0eSAVvK5jO1YCsu8z4XlfFkWO9xdrYMZHwgkxw==}
     peerDependencies:
       react: ^18.2.0 || ^17.0.0 || ^16.0.0
       react-dom: ^18.2.0 || ^17.0.0 || ^16.0.0
@@ -1493,13 +1493,6 @@ packages:
   '@npmcli/package-json@2.0.0':
     resolution: {integrity: sha512-42jnZ6yl16GzjWSH7vtrmWyJDGVa/LXPdpN2rcUWolFjc9ON2N3uz0qdBbQACfmhuJZ2lbKYtmK5qx68ZPLHMA==}
     engines: {node: ^12.13.0 || ^14.15.0 || >=16.0.0}
-
-  '@oshq/react-select@3.2.1':
-    resolution: {integrity: sha512-jhj1AfKWEOYLlcgQiFLWYUFWbAjdDx/UInQaDcuAnCA8IHxfzsCIpPYWBErKGvEFt/L0Mj6Yqg03CjpUCpKibw==}
-    peerDependencies:
-      '@types/react': ^18.2.22
-      '@types/react-dom': ^18.2.14
-      react: ^18.2.0 || ^17.0.0 || ^16.0.0
 
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
@@ -2672,6 +2665,13 @@ packages:
 
   '@yr/monotone-cubic-spline@1.0.3':
     resolution: {integrity: sha512-FQXkOta0XBSUPHndIKON2Y9JeQz5ZeMqLYZVVK93FliNBFm7LNMIZmY6FrMEB9XPcDbE2bekMbZD6kzDkxwYjA==}
+
+  '@zener/react-select@3.2.3':
+    resolution: {integrity: sha512-gbl2A9Cz2zvtRUcUCejEgiF2uAnmGKD8azkz488gMptlMqro88kI1tARUSOfCORuWkLd93rUdybn2H/zzyy1uA==}
+    peerDependencies:
+      '@types/react': ^18.2.22
+      '@types/react-dom': ^18.2.14
+      react: ^18.2.0 || ^17.0.0 || ^16.0.0
 
   '@zxing/text-encoding@0.9.0':
     resolution: {integrity: sha512-U/4aVJ2mxI0aDNI8Uq0wEhMgY+u4CNtEb0om3+y3+niDAsoTCOB33UF0sxpzqzdqXLqmvc+vZyAt4O8pPdfkwA==}
@@ -7300,12 +7300,11 @@ snapshots:
 
   '@jspm/core@2.1.0': {}
 
-  '@kloudlite/design-system@0.0.3(@emotion/is-prop-valid@0.8.8)(@types/react-dom@18.3.1)(@types/react@18.3.12)(immer@10.1.1)(monaco-editor@0.52.0)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)(websocket@1.0.35)':
+  '@kloudlite/design-system@0.0.4(@emotion/is-prop-valid@0.8.8)(@types/react-dom@18.3.1)(@types/react@18.3.12)(immer@10.1.1)(monaco-editor@0.52.0)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)(websocket@1.0.35)':
     dependencies:
       '@jengaicons/react': 1.6.0(react@18.2.0)
       '@mdx-js/react': 2.3.0(react@18.2.0)
       '@monaco-editor/react': 4.6.0(monaco-editor@0.52.0)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
-      '@oshq/react-select': 3.2.1(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
       '@radix-ui/primitive': 1.1.0
       '@radix-ui/react-alert-dialog': 1.0.4(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
       '@radix-ui/react-checkbox': 1.1.2(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
@@ -7342,6 +7341,7 @@ snapshots:
       '@react-types/shared': 3.25.0(react@18.2.0)
       '@remix-run/node': 1.19.3
       '@remix-run/react': 1.19.3(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
+      '@zener/react-select': 3.2.3(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
       anser: 2.3.0
       apexcharts: 3.54.1
       aria-hidden: 1.2.4
@@ -7438,21 +7438,6 @@ snapshots:
   '@npmcli/package-json@2.0.0':
     dependencies:
       json-parse-even-better-errors: 2.3.1
-
-  '@oshq/react-select@3.2.1(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)':
-    dependencies:
-      '@radix-ui/react-portal': 1.1.2(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
-      '@types/react': 18.3.12
-      '@types/react-dom': 18.3.1
-      classnames: 2.5.1
-      framer-motion: 10.18.0(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
-      react: 18.2.0
-      virtua: 0.33.7(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
-    transitivePeerDependencies:
-      - react-dom
-      - solid-js
-      - svelte
-      - vue
 
   '@pkgjs/parseargs@0.11.0':
     optional: true
@@ -8829,6 +8814,21 @@ snapshots:
   '@web3-storage/multipart-parser@1.0.0': {}
 
   '@yr/monotone-cubic-spline@1.0.3': {}
+
+  '@zener/react-select@3.2.3(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)':
+    dependencies:
+      '@radix-ui/react-portal': 1.1.2(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
+      '@types/react': 18.3.12
+      '@types/react-dom': 18.3.1
+      classnames: 2.5.1
+      framer-motion: 10.18.0(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
+      react: 18.2.0
+      virtua: 0.33.7(react-dom@18.3.1(react@18.2.0))(react@18.2.0)
+    transitivePeerDependencies:
+      - react-dom
+      - solid-js
+      - svelte
+      - vue
 
   '@zxing/text-encoding@0.9.0':
     optional: true

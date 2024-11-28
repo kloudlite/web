@@ -10,6 +10,7 @@ import { CommonTabs } from '~/console/components/common-navbar-tabs';
 import {
   BackingServices,
   CirclesFour,
+  Container,
   File,
   GearSix,
 } from '~/console/components/icons';
@@ -25,6 +26,7 @@ import { IRemixCtx, LoaderResult } from '~/lib/types/common';
 import logger from '~/root/lib/client/helpers/log';
 import { handleError } from '~/root/lib/utils/common';
 import { IAccountContext } from '../../_layout';
+import { MultiTenant } from '@jengaicons/react';
 
 const Environment = () => {
   const rootContext = useOutletContext<IAccountContext>();
@@ -57,12 +59,22 @@ const tabs = [
   {
     label: (
       <span className="flex flex-row items-center gap-lg">
-        <CirclesFour size={tabIconSize} />
-        Apps
+        <Container size={tabIconSize} />
+        Workloads
       </span>
     ),
-    to: '/apps',
-    value: '/apps',
+    to: '/workloads',
+    value: '/workloads',
+  },
+  {
+    label: (
+      <span className="flex flex-row items-center gap-lg">
+        <MultiTenant size={tabIconSize} />
+        Services
+      </span>
+    ),
+    to: '/services',
+    value: '/services',
   },
   {
     label: (
@@ -302,7 +314,7 @@ export const loader = async (ctx: IRemixCtx) => {
     const { data, errors } = await GQLServerHandler(ctx.request).getEnvironment(
       {
         name: environment,
-      }
+      },
     );
 
     if (errors) {
@@ -320,7 +332,7 @@ export const loader = async (ctx: IRemixCtx) => {
     // }
 
     const { data: logins, errors: loginErrors } = await GQLServerHandler(
-      ctx.request
+      ctx.request,
     ).getLogins({});
 
     if (loginErrors) {
@@ -328,7 +340,7 @@ export const loader = async (ctx: IRemixCtx) => {
     }
 
     const { data: loginUrls, errors: dErrors } = await GQLServerHandler(
-      ctx.request
+      ctx.request,
     ).loginUrls({});
 
     if (dErrors) {

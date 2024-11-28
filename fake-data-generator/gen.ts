@@ -36,6 +36,9 @@ const types: string[] = [
   'ConsoleListAllClustersQuery',
   'ConsoleListRegistryImagesQuery',
   'ConsoleListImagePullSecretsQuery',
+  'ConsoleListHelmChartsQuery',
+  'ConsoleListServiceBindingQuery',
+  'ConsoleListMSvPluginsQuery',
 ];
 
 async function fake(files: string[], types: string[] = []) {
@@ -60,7 +63,7 @@ async function fake(files: string[], types: string[] = []) {
   const generator = tjs.buildGenerator(
     program,
     { validationKeywords, required: true, include: files },
-    files
+    files,
   );
   if (!generator) {
     throw new Error('Failed to create generator');
@@ -74,7 +77,7 @@ async function fake(files: string[], types: string[] = []) {
       }
       const jsonSchema = generator.getSchemaForSymbol(sym);
       return jsf.resolve(jsonSchema, []);
-    })
+    }),
   );
   for (let i = 0; i < fakeDatas.length; i += 1) {
     if (fakeDatas[i]) {
@@ -88,7 +91,7 @@ async function fake(files: string[], types: string[] = []) {
 // @ts-ignore
 // just to make it work in node
 global.location = new URL(
-  'file:///home/runner/work/nextjs-graphql/nextjs-graphql/src/generated/gql/server.ts'
+  'file:///home/runner/work/nextjs-graphql/nextjs-graphql/src/generated/gql/server.ts',
 );
 
 (async () => {
@@ -100,6 +103,6 @@ global.location = new URL(
 
 const fake = ${JSON.stringify(data, null, 2)};
 
-export default fake;`
+export default fake;`,
   );
 })();

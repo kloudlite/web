@@ -57,7 +57,7 @@ export const Box = ({ children, title, className }: IBox) => {
     <div
       className={cn(
         'rounded border border-border-default bg-surface-basic-default shadow-button p-3xl flex flex-col gap-3xl ',
-        className
+        className,
       )}
     >
       <div className="text-text-strong headingLg">{title}</div>
@@ -91,7 +91,7 @@ export const CopyContentToClipboard = ({
 
   return (
     <div
-      className="flex flex-row items-center flex-1 cursor-pointer group"
+      className="flex flex-row items-center flex-1 cursor-pointer group pulsable"
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();

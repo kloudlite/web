@@ -1578,191 +1578,6 @@ query consoleListExternalApps($envName: String!, $search: SearchExternalApps, $p
   }
 }
 
-mutation consoleCreateRouter($envName: String!, $router: RouterIn!) {
-  core_createRouter(envName: $envName, router: $router) {
-    id
-  }
-}
-
-mutation consoleUpdateRouter($envName: String!, $router: RouterIn!) {
-  core_updateRouter(envName: $envName, router: $router) {
-    id
-  }
-}
-
-mutation consoleDeleteRouter($envName: String!, $routerName: String!) {
-  core_deleteRouter(envName: $envName, routerName: $routerName)
-}
-
-query consoleListRouters($envName: String!, $search: SearchRouters, $pq: CursorPaginationIn) {
-  core_listRouters(envName: $envName, search: $search, pq: $pq) {
-    edges {
-      cursor
-      node {
-        createdBy {
-          userEmail
-          userId
-          userName
-        }
-        creationTime
-        displayName
-        enabled
-        environmentName
-        lastUpdatedBy {
-          userEmail
-          userId
-          userName
-        }
-        markedForDeletion
-        metadata {
-          generation
-          name
-          namespace
-        }
-        recordVersion
-        spec {
-          backendProtocol
-          basicAuth {
-            enabled
-            secretName
-            username
-          }
-          cors {
-            allowCredentials
-            enabled
-            origins
-          }
-          domains
-          https {
-            clusterIssuer
-            enabled
-            forceRedirect
-          }
-          ingressClass
-          maxBodySizeInMB
-          rateLimit {
-            connections
-            enabled
-            rpm
-            rps
-          }
-          routes {
-            app
-            path
-            port
-            rewrite
-          }
-        }
-        status {
-          checks
-          checkList {
-            description
-            debug
-            name
-            title
-          }
-          isReady
-          lastReadyGeneration
-          lastReconcileTime
-          message {
-            RawMessage
-          }
-          resources {
-            apiVersion
-            kind
-            name
-            namespace
-          }
-        }
-        syncStatus {
-          action
-          error
-          lastSyncedAt
-          recordVersion
-          state
-          syncScheduledAt
-        }
-        updateTime
-      }
-    }
-    pageInfo {
-      endCursor
-      hasNextPage
-      hasPrevPage
-      startCursor
-    }
-    totalCount
-  }
-}
-
-query consoleGetRouter($envName: String!, $name: String!) {
-  core_getRouter(envName: $envName, name: $name) {
-    createdBy {
-      userEmail
-      userId
-      userName
-    }
-    creationTime
-    displayName
-    enabled
-    environmentName
-    lastUpdatedBy {
-      userEmail
-      userId
-      userName
-    }
-    markedForDeletion
-    metadata {
-      name
-      namespace
-    }
-    spec {
-      backendProtocol
-      basicAuth {
-        enabled
-        secretName
-        username
-      }
-      cors {
-        allowCredentials
-        enabled
-        origins
-      }
-      domains
-      https {
-        clusterIssuer
-        enabled
-        forceRedirect
-      }
-      ingressClass
-      maxBodySizeInMB
-      rateLimit {
-        connections
-        enabled
-        rpm
-        rps
-      }
-      routes {
-        app
-        path
-        port
-        rewrite
-      }
-    }
-    status {
-      checks
-      checkList {
-        description
-        debug
-        name
-        title
-      }
-      isReady
-    }
-    updateTime
-  }
-}
-
 mutation consoleUpdateConfig($envName: String!, $config: ConfigIn!) {
   core_updateConfig(envName: $envName, config: $config) {
     id
@@ -3587,6 +3402,75 @@ query consoleListMSvTemplates {
   }
 }
 
+query consoleGetMSvPlugin($category: String!, $name: String!) {
+  core_getManagedServicePlugin(category: $category, name: $name) {
+    meta {
+      logo
+    }
+    plugin
+    spec {
+      apiVersion
+      services {
+        active
+        description
+        inputs {
+          defaultValue
+          displayUnit
+          input
+          label
+          max
+          min
+          multiplier
+          required
+          type
+          unit
+        }
+        kind
+        resources {
+          description
+          kind
+        }
+      }
+    }
+  }
+}
+
+query consoleListMSvPlugins {
+  core_listManagedServicePlugins {
+    category
+    items {
+      meta {
+        logo
+      }
+      plugin
+      spec {
+        apiVersion
+        services {
+          active
+          description
+          inputs {
+            defaultValue
+            displayUnit
+            input
+            label
+            max
+            min
+            multiplier
+            required
+            type
+            unit
+          }
+          kind
+          resources {
+            description
+            kind
+          }
+        }
+      }
+    }
+  }
+}
+
 query consoleGetManagedResource($name: String!, $msvcName: String, $envName: String) {
   core_getManagedResource(name: $name, msvcName: $msvcName, envName: $envName) {
     accountName
@@ -3801,8 +3685,8 @@ mutation consoleDeleteManagedResource($msvcName: String!, $mresName: String!) {
   core_deleteManagedResource(msvcName: $msvcName, mresName: $mresName)
 }
 
-query consoleGetHelmChart($clusterName: String!, $name: String!) {
-  infra_getHelmRelease(clusterName: $clusterName, name: $name) {
+query consoleGetHelmChart($envName: String!, $name: String!) {
+  core_getHelmChart(envName: $envName, name: $name) {
     createdBy {
       userEmail
       userId
@@ -3810,6 +3694,7 @@ query consoleGetHelmChart($clusterName: String!, $name: String!) {
     }
     creationTime
     displayName
+    environmentName
     lastUpdatedBy {
       userEmail
       userId
@@ -3817,6 +3702,11 @@ query consoleGetHelmChart($clusterName: String!, $name: String!) {
     }
     markedForDeletion
     metadata {
+      annotations
+      creationTimestamp
+      deletionTimestamp
+      generation
+      labels
       name
       namespace
     }
@@ -3827,13 +3717,14 @@ query consoleGetHelmChart($clusterName: String!, $name: String!) {
       values
     }
     status {
-      checks
       checkList {
-        description
         debug
-        title
+        description
+        hide
         name
+        title
       }
+      checks
       isReady
       lastReadyGeneration
       lastReconcileTime
@@ -3849,20 +3740,30 @@ query consoleGetHelmChart($clusterName: String!, $name: String!) {
         namespace
       }
     }
+    syncStatus {
+      action
+      error
+      lastSyncedAt
+      recordVersion
+      state
+      syncScheduledAt
+    }
     updateTime
   }
 }
 
-query consoleListHelmChart($clusterName: String!, $search: SearchHelmRelease, $pagination: CursorPaginationIn) {
-  infra_listHelmReleases(
-    clusterName: $clusterName
-    search: $search
-    pagination: $pagination
-  ) {
+query consoleListHelmCharts($envName: String!) {
+  core_listHelmCharts(envName: $envName) {
+    totalCount
+    pageInfo {
+      endCursor
+      hasNextPage
+      hasPrevPage
+      startCursor
+    }
     edges {
       cursor
       node {
-        clusterName
         createdBy {
           userEmail
           userId
@@ -3870,19 +3771,19 @@ query consoleListHelmChart($clusterName: String!, $search: SearchHelmRelease, $p
         }
         creationTime
         displayName
+        environmentName
+        markedForDeletion
+        recordVersion
+        updateTime
         lastUpdatedBy {
           userEmail
           userId
           userName
         }
-        markedForDeletion
         metadata {
-          generation
           name
-          namespace
           annotations
         }
-        recordVersion
         spec {
           chartName
           chartRepoURL
@@ -3890,21 +3791,20 @@ query consoleListHelmChart($clusterName: String!, $search: SearchHelmRelease, $p
           values
         }
         status {
-          checks
           checkList {
-            description
             debug
-            title
+            description
+            hide
             name
+            title
           }
+          checks
           isReady
           lastReadyGeneration
           lastReconcileTime
           message {
             RawMessage
           }
-          releaseNotes
-          releaseStatus
           resources {
             apiVersion
             kind
@@ -3920,33 +3820,25 @@ query consoleListHelmChart($clusterName: String!, $search: SearchHelmRelease, $p
           state
           syncScheduledAt
         }
-        updateTime
       }
     }
-    pageInfo {
-      endCursor
-      hasNextPage
-      hasPrevPage
-      startCursor
-    }
-    totalCount
   }
 }
 
-mutation consoleCreateHelmChart($clusterName: String!, $release: HelmReleaseIn!) {
-  infra_createHelmRelease(clusterName: $clusterName, release: $release) {
+mutation consoleCreateHelmChart($envName: String!, $helmchart: HelmChartIn!) {
+  core_createHelmChart(envName: $envName, helmchart: $helmchart) {
     id
   }
 }
 
-mutation consoleUpdateHelmChart($clusterName: String!, $release: HelmReleaseIn!) {
-  infra_updateHelmRelease(clusterName: $clusterName, release: $release) {
+mutation consoleUpdateHelmChart($envName: String!, $helmchart: HelmChartIn!) {
+  core_updateHelmChart(envName: $envName, helmchart: $helmchart) {
     id
   }
 }
 
-mutation consoleDeleteHelmChart($clusterName: String!, $releaseName: String!) {
-  infra_deleteHelmRelease(clusterName: $clusterName, releaseName: $releaseName)
+mutation consoleDeleteHelmChart($envName: String!, $helmChartName: String!) {
+  core_deleteHelmChart(envName: $envName, helmChartName: $helmChartName)
 }
 
 query consoleListNamespaces($clusterName: String!) {
@@ -4614,6 +4506,96 @@ mutation consoleUpdateSecretVariable($secretVariable: SecretVariableIn!) {
 
 mutation consoleDeleteSecretVariable($name: String!) {
   core_deleteSecretVariable(name: $name)
+}
+
+query consoleListServiceBinding($envName: String!, $pagination: CursorPaginationIn) {
+  core_listServiceBindings(envName: $envName, pagination: $pagination) {
+    totalCount
+    pageInfo {
+      endCursor
+      hasNextPage
+      hasPrevPage
+      startCursor
+    }
+    edges {
+      cursor
+      node {
+        environmentName
+        creationTime
+        interceptStatus {
+          intercepted
+          portMappings {
+            containerPort
+            servicePort
+          }
+          toAddr
+        }
+        kind
+        markedForDeletion
+        metadata {
+          name
+        }
+        recordVersion
+        spec {
+          globalIP
+          hostname
+          ports {
+            appProtocol
+            name
+            nodePort
+            port
+            protocol
+            targetPort {
+              IntVal
+              StrVal
+              Type
+            }
+          }
+          serviceIP
+          serviceRef {
+            name
+            namespace
+          }
+        }
+        status {
+          checkList {
+            debug
+            description
+            hide
+            name
+            title
+          }
+          checks
+          isReady
+          lastReadyGeneration
+          lastReconcileTime
+          message {
+            RawMessage
+          }
+          resources {
+            apiVersion
+            kind
+            name
+            namespace
+          }
+        }
+        updateTime
+      }
+    }
+  }
+}
+
+mutation consoleInterceptService($envName: String!, $serviceName: String!, $interceptTo: String!, $portMappings: [Github__com___kloudlite___operator___apis___crds___v1__SvcInterceptPortMappingsIn!]) {
+  core_createServiceIntercept(
+    envName: $envName
+    serviceName: $serviceName
+    interceptTo: $interceptTo
+    portMappings: $portMappings
+  )
+}
+
+mutation consoleRemoveInterceptService($envName: String!, $serviceName: String!) {
+  core_deleteServiceIntercept(envName: $envName, serviceName: $serviceName)
 }
 
 mutation authCli_createGlobalVPNDevice($gvpnDevice: GlobalVPNDeviceIn!) {

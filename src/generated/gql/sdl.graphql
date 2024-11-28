@@ -432,6 +432,7 @@ enum ConsoleResType {
   app
   config
   environment
+  helm_chart
   imported_managed_resource
   managed_resource
   managed_service
@@ -715,6 +716,18 @@ type Github__com___kloudlite___api___apps___comms___types__NotifyContent {
   title: String!
 }
 
+type Github__com___kloudlite___api___apps___console___internal___entities__InterceptStatus {
+  intercepted: Boolean
+  portMappings: [Github__com___kloudlite___operator___apis___crds___v1__SvcInterceptPortMappings!]
+  toAddr: String!
+}
+
+input Github__com___kloudlite___api___apps___console___internal___entities__InterceptStatusIn {
+  intercepted: Boolean
+  portMappings: [Github__com___kloudlite___operator___apis___crds___v1__SvcInterceptPortMappingsIn!]
+  toAddr: String!
+}
+
 type Github__com___kloudlite___api___apps___console___internal___entities__ManagedResourceRef {
   id: String!
   name: String!
@@ -793,7 +806,7 @@ enum Github__com___kloudlite___api___apps___console___internal___entities__Resou
   config
   environment
   external_app
-  hlem_chart
+  helm_chart
   image_pull_secret
   imported_managed_resource
   managed_resource
@@ -1870,6 +1883,16 @@ type Github__com___kloudlite___operator___apis___crds___v1__ShellProbe {
 
 input Github__com___kloudlite___operator___apis___crds___v1__ShellProbeIn {
   command: [String!]
+}
+
+type Github__com___kloudlite___operator___apis___crds___v1__SvcInterceptPortMappings {
+  containerPort: Int!
+  servicePort: Int!
+}
+
+input Github__com___kloudlite___operator___apis___crds___v1__SvcInterceptPortMappingsIn {
+  containerPort: Int!
+  servicePort: Int!
 }
 
 type Github__com___kloudlite___operator___apis___crds___v1__TcpProbe {
@@ -3626,6 +3649,7 @@ type Mutation {
   core_createRouter(envName: String!, router: RouterIn!): Router
   core_createSecret(envName: String!, secret: SecretIn!): Secret
   core_createSecretVariable(secretVariable: SecretVariableIn!): SecretVariable
+  core_createServiceIntercept(envName: String!, interceptTo: String!, portMappings: [Github__com___kloudlite___operator___apis___crds___v1__SvcInterceptPortMappingsIn!], serviceName: String!): Boolean!
   core_deleteApp(appName: String!, envName: String!): Boolean!
   core_deleteConfig(configName: String!, envName: String!): Boolean!
   core_deleteEnvironment(envName: String!): Boolean!
@@ -3638,11 +3662,11 @@ type Mutation {
   core_deleteRouter(envName: String!, routerName: String!): Boolean!
   core_deleteSecret(envName: String!, secretName: String!): Boolean!
   core_deleteSecretVariable(name: String!): Boolean!
+  core_deleteServiceIntercept(envName: String!, serviceName: String!): Boolean!
   core_importManagedResource(envName: String!, importName: String!, mresName: String!, msvcName: String!): ImportedManagedResource
   core_interceptApp(appname: String!, deviceName: String!, envName: String!, intercept: Boolean!, portMappings: [Github__com___kloudlite___operator___apis___crds___v1__AppInterceptPortMappingsIn!]): Boolean!
   core_interceptAppOnLocalCluster(appname: String!, clusterName: String!, envName: String!, intercept: Boolean!, ipAddr: String!, portMappings: [Github__com___kloudlite___operator___apis___crds___v1__AppInterceptPortMappingsIn!]): Boolean!
   core_interceptExternalApp(deviceName: String!, envName: String!, externalAppName: String!, intercept: Boolean!, portMappings: [Github__com___kloudlite___operator___apis___crds___v1__AppInterceptPortMappingsIn!]): Boolean!
-  core_listManagedServicePlugins: [ManagedServicePlugins!]
   core_removeDeviceIntercepts(deviceName: String!, envName: String!): Boolean!
   core_setupDefaultEnvironment: Boolean!
   core_updateApp(app: AppIn!, envName: String!): App
@@ -3994,6 +4018,7 @@ type Query {
   core_getManagedResouceOutputKeys(envName: String, msvcName: String, name: String!): [String!]!
   core_getManagedResouceOutputKeyValues(envName: String, keyrefs: [ManagedResourceKeyRefIn], msvcName: String): [ManagedResourceKeyValueRef!]!
   core_getManagedResource(envName: String, msvcName: String, name: String!): ManagedResource
+  core_getManagedServicePlugin(category: String!, name: String!): ManagedServicePlugin
   core_getRegistryImage(image: String!): RegistryImage
   core_getRegistryImageURL: RegistryImageURL!
   core_getRouter(envName: String!, name: String!): Router
@@ -4010,6 +4035,7 @@ type Query {
   core_listImagePullSecrets(pq: CursorPaginationIn, search: SearchImagePullSecrets): ImagePullSecretPaginatedRecords
   core_listImportedManagedResources(envName: String!, pq: CursorPaginationIn, search: SearchImportedManagedResources): ImportedManagedResourcePaginatedRecords
   core_listManagedResources(pq: CursorPaginationIn, search: SearchManagedResources): ManagedResourcePaginatedRecords
+  core_listManagedServicePlugins: [ManagedServicePlugins!]
   core_listRegistryImages(pq: CursorPaginationIn): RegistryImagePaginatedRecords
   core_listRouters(envName: String!, pq: CursorPaginationIn, search: SearchRouters): RouterPaginatedRecords
   core_listSecrets(envName: String!, pq: CursorPaginationIn, search: SearchSecrets): SecretPaginatedRecords
@@ -4516,6 +4542,7 @@ type ServiceBinding {
   creationTime: Date!
   environmentName: String!
   id: ID!
+  interceptStatus: Github__com___kloudlite___api___apps___console___internal___entities__InterceptStatus
   kind: String
   markedForDeletion: Boolean
   metadata: Metadata
@@ -4536,6 +4563,7 @@ input ServiceBindingIn {
   clusterName: String!
   creationTime: Date!
   id: ID!
+  interceptStatus: Github__com___kloudlite___api___apps___console___internal___entities__InterceptStatusIn
   kind: String
   markedForDeletion: Boolean
   metadata: MetadataIn

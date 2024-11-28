@@ -4,8 +4,8 @@ import { TextArea, TextInput } from '@kloudlite/design-system/atoms/input';
 import Git from '~/console/components/git';
 import KeyValuePair from '~/console/components/key-value-pair';
 import { IGIT_PROVIDERS } from '~/console/hooks/use-git';
-import { IAppContext } from '~/console/routes/_main+/$account+/env+/$environment+/app+/$app+/_layout';
 import { dummyEvent } from '~/root/lib/client/hooks/use-form';
+import { IAppContext } from '~/console/routes/_main+/$account+/env+/$environment+/workloads+/app+/$app+/_layout';
 
 const AppBuildIntegration = ({
   values,
@@ -30,7 +30,7 @@ const AppBuildIntegration = ({
               branch: git.branch,
               repository: git.repo,
               provider: git.provider,
-            })
+            }),
           );
         }}
         value={{
@@ -53,7 +53,7 @@ const AppBuildIntegration = ({
             size="lg"
             label="Build args"
             value={Object.entries(values.buildArgs || {}).map(
-              ([key, value]) => ({ key, value })
+              ([key, value]) => ({ key, value }),
             )}
             onChange={(_, items) => {
               handleChange('buildArgs')(dummyEvent(items));
@@ -65,7 +65,7 @@ const AppBuildIntegration = ({
             size="lg"
             label="Build contexts"
             value={Object.entries(values.buildContexts || {}).map(
-              ([key, value]) => ({ key, value })
+              ([key, value]) => ({ key, value }),
             )}
             onChange={(_, items) => {
               handleChange('buildContexts')(dummyEvent(items));
