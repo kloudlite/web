@@ -66,6 +66,7 @@ const ClusterManagedServiceSettingGeneral = () => {
         displayName: managedService.displayName,
         clusterName: managedService.clusterName,
         isNameError: false,
+        annotations: managedService.metadata?.annotations,
         res: {
           ...managedService.spec?.msvcSpec.serviceTemplate?.spec,
         },
@@ -77,6 +78,7 @@ const ClusterManagedServiceSettingGeneral = () => {
             displayName: val.displayName,
             metadata: {
               name: val.name,
+              annotations: val.annotations,
             },
             clusterName: val.clusterName,
             spec: {
