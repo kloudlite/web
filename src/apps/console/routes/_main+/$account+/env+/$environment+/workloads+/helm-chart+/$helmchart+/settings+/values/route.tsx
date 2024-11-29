@@ -11,6 +11,7 @@ import { useEffect, useRef } from 'react';
 import { LoadingPlaceHolder } from '~/console/components/loading';
 import Yup from '~/root/lib/server/helpers/yup';
 import { DISCARD_ACTIONS, useUnsavedChanges } from '~/root/lib/client/hooks/use-unsaved-changes';
+import { parseName } from '~/console/server/r-utils/common';
 
 
 const SettingValues = () => {
@@ -130,15 +131,15 @@ const SettingValues = () => {
 
                   if (
                     values.activeTab === 'values' &&
-                    path === '/values.yaml'
+                    path === `/${parseName(readOnlyHelmChart)}-values.yaml`
                   ) {
                     handleChange('values')(dummyEvent(e));
                   }
                 }}
                 path={
                   values.activeTab === 'defaults'
-                    ? 'defaults.yaml'
-                    : 'values.yaml'
+                    ? `${parseName(readOnlyHelmChart)}-defaults.yaml`
+                    : `${parseName(readOnlyHelmChart)}-values.yaml`
                 }
                 onMount={(e) => {
                   editorRef.current = e;
