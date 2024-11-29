@@ -33,7 +33,7 @@ import {
   IMSvPlugin,
   IMsvPlugins,
 } from '~/console/server/gql/queries/managed-templates-queries';
-import { parseName } from '~/console/server/r-utils/common';
+import { parseName, parseNodes } from '~/console/server/r-utils/common';
 import { keyconstants } from '~/console/server/r-utils/key-constants';
 import { ensureAccountClientSide } from '~/console/server/utils/auth-utils';
 import { flatM, flatMapValidations } from '~/console/utils/commons';
@@ -201,8 +201,8 @@ const RenderHelmFields = ({
                     Search for or enter the repo url
                   </div>
                 }
-                // error={!!errors[fieldKey]}
-                // message={errors[fieldKey]}
+              // error={!!errors[fieldKey]}
+              // message={errors[fieldKey]}
               />
             );
           case 'chart.name':
@@ -351,8 +351,7 @@ const RenderField = ({
         onChange={({ target }) => {
           onChange(`res.${field.input}`)(
             dummyEvent(
-              `${parseFloat(target.value) * (field.multiplier || 1)}${
-                field.unit
+              `${parseFloat(target.value) * (field.multiplier || 1)}${field.unit
               }`
             )
           );
@@ -397,9 +396,8 @@ const RenderField = ({
   if (field.type === 'int-range') {
     return (
       <div className="flex flex-col gap-md">
-        <div className="bodyMd-medium text-text-default">{`${field.label}${
-          field.required ? ' *' : ''
-        }`}</div>
+        <div className="bodyMd-medium text-text-default">{`${field.label}${field.required ? ' *' : ''
+          }`}</div>
         <div className="flex flex-row gap-xl items-center">
           <div className="flex flex-row gap-xl items-end flex-1 ">
             <div className="flex-1">
@@ -412,16 +410,14 @@ const RenderField = ({
                 onChange={({ target }) => {
                   onChange(`res.${field.input}.min`)(
                     dummyEvent(
-                      `${parseFloat(target.value) * (field.multiplier || 1)}${
-                        field.unit
+                      `${parseFloat(target.value) * (field.multiplier || 1)}${field.unit
                       }`
                     )
                   );
                   if (qos) {
                     onChange(`res.${field.input}.max`)(
                       dummyEvent(
-                        `${parseFloat(target.value) * (field.multiplier || 1)}${
-                          field.unit
+                        `${parseFloat(target.value) * (field.multiplier || 1)}${field.unit
                         }`
                       )
                     );
@@ -441,8 +437,7 @@ const RenderField = ({
                 onChange={({ target }) => {
                   onChange(`res.${field.input}.max`)(
                     dummyEvent(
-                      `${parseFloat(target.value) * (field.multiplier || 1)}${
-                        field.unit
+                      `${parseFloat(target.value) * (field.multiplier || 1)}${field.unit
                       }`
                     )
                   );
@@ -459,9 +454,8 @@ const RenderField = ({
   if (field.type === 'Resource') {
     return (
       <div className="flex flex-col gap-md">
-        <div className="bodyMd-medium text-text-default">{`${field.label}${
-          field.required ? ' *' : ''
-        }`}</div>
+        <div className="bodyMd-medium text-text-default">{`${field.label}${field.required ? ' *' : ''
+          }`}</div>
         <div className="flex flex-row gap-xl items-center">
           <div className="flex flex-row gap-xl items-end flex-1 ">
             <div className="flex-1">
@@ -474,16 +468,14 @@ const RenderField = ({
                 onChange={({ target }) => {
                   onChange(`res.${field.input}.min`)(
                     dummyEvent(
-                      `${parseFloat(target.value) * (field.multiplier || 1)}${
-                        field.unit
+                      `${parseFloat(target.value) * (field.multiplier || 1)}${field.unit
                       }`
                     )
                   );
                   if (qos) {
                     onChange(`res.${field.input}.max`)(
                       dummyEvent(
-                        `${parseFloat(target.value) * (field.multiplier || 1)}${
-                          field.unit
+                        `${parseFloat(target.value) * (field.multiplier || 1)}${field.unit
                         }`
                       )
                     );
@@ -503,8 +495,7 @@ const RenderField = ({
                   onChange={({ target }) => {
                     onChange(`res.${field.input}.max`)(
                       dummyEvent(
-                        `${parseFloat(target.value) * (field.multiplier || 1)}${
-                          field.unit
+                        `${parseFloat(target.value) * (field.multiplier || 1)}${field.unit
                         }`
                       )
                     );
@@ -716,7 +707,7 @@ const FieldView = ({
         showclear
         error={!!errors.clusterName}
         message={errors.clusterName}
-        // loading={cIsLoading || byokCIsLoading}
+      // loading={cIsLoading || byokCIsLoading}
       />
       {getRenderField()}
 
@@ -923,28 +914,29 @@ export const ManagedServiceLayoutV2 = () => {
   const getClusters = useCallback(async () => {
     ensureAccountClientSide(params);
     try {
-      const data = Object.values(clustersMap).map((cm) => {
-        if (cm == null) {
-          return {};
-        }
+      const { data: cl, errors } = await api.listAllClusters({})
+      if (errors) {
+        throw errors[0]
+      }
 
-        const { name, displayName, isOnline } = cm;
-
-        return {
-          label: displayName,
-          value: name,
-          ready: isOnline,
-          disabled: () => !isOnline,
-          // eslint-disable-next-line react/no-unused-prop-types
+      const data = parseNodes(cl).map((c) => {
+        const n = parseName(c)
+        let cs = clustersMap[n]
+        return ({
+          label: c.displayName,
+          value: n,
+          ready: cs?.isOnline,
+          disabled: () => !cs?.isOnline,
           render: ({ disabled }: { disabled: boolean }) => (
             <ClusterSelectItem
-              label={displayName}
-              value={name}
+              label={c.displayName}
+              value={n}
               disabled={disabled}
             />
           ),
-        };
-      });
+        })
+      })
+
       setClusterList(data);
     } catch (err) {
       handleError(err);

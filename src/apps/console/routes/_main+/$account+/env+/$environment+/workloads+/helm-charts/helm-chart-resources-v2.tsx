@@ -2,6 +2,7 @@ import { Trash } from '~/console/components/icons';
 import { generateKey, titleCase } from '@kloudlite/design-system/utils';
 import {
   ListItem,
+  ListItemV2,
   ListTitle,
 } from '~/console/components/console-list-components';
 import Grid from '~/console/components/grid';
@@ -28,6 +29,8 @@ import ListV2 from '~/console/components/listV2';
 import { SyncStatusV2 } from '~/console/components/sync-status';
 import { constants } from '~/console/server/utils/constants';
 import { IEnvironmentContext } from '../../_layout';
+import { useClusterStatusV3 } from '~/console/hooks/use-cluster-status-v3';
+import { Badge } from '@kloudlite/design-system/atoms/badge';
 
 const RESOURCE_NAME = 'helm chart';
 type BaseType = ExtractNodeType<IHelmCharts>;
@@ -119,6 +122,12 @@ const GridView = ({ items = [], onAction }: IResource) => {
 };
 
 const ListView = ({ items = [], onAction }: IResource) => {
+  const { environment } = useOutletContext<IEnvironmentContext>();
+  const { clustersMap: clusterStatus } = useClusterStatusV3({
+    clusterName: environment.clusterName,
+  });
+
+
   return (
     <ListV2.Root
       linkComponent={Link}
@@ -152,14 +161,34 @@ const ListView = ({ items = [], onAction }: IResource) => {
         ],
         rows: items.map((i) => {
           const { name, id, updateInfo } = parseItem(i);
+          const isClusterOnline =
+            !!clusterStatus[environment.clusterName]?.isOnline;
+
           return {
             columns: {
               name: {
                 render: () => <ListTitle title={name} subtitle={id} />,
               },
-
               status: {
-                render: () => <SyncStatusV2 item={i} />,
+                render: () => {
+                  if (environment.spec?.suspend) {
+                    return null;
+                  }
+
+                  if (environment.clusterName === '') {
+                    return <ListItemV2 className="px-4xl" data="-" />;
+                  }
+
+                  if (clusterStatus[environment.clusterName] === undefined) {
+                    return null;
+                  }
+
+                  if (!isClusterOnline) {
+                    return <Badge type="warning">Cluster Offline</Badge>;
+                  }
+
+                  return <SyncStatusV2 item={i} />;
+                },
               },
               updated: {
                 render: () => (
