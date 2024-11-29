@@ -13,9 +13,24 @@ import ServiceBindingsResourcesV2 from './services-resource-v2';
 import { BackingServicesFill } from '@jengaicons/react';
 
 export const loader = (ctx: IRemixCtx) => {
-  const { environment } = ctx.params;
+  const { environment, account } = ctx.params;
   const promise = pWrapper(async () => {
     ensureAccountSet(ctx);
+
+    const { data, errors } = await GQLServerHandler(ctx.request).getEnvironment(
+      {
+        name: environment,
+      },
+    );
+
+    if (errors) {
+      throw errors[0];
+    }
+
+    let shouldRedirect = false
+    if (!data.clusterName) {
+      shouldRedirect = true
+    }
 
     const { data: mData, errors: mErrors } = await GQLServerHandler(
       ctx.request,
@@ -27,7 +42,11 @@ export const loader = (ctx: IRemixCtx) => {
     if (mErrors) {
       throw mErrors[0];
     }
-    return { serviceBindingsData: mData };
+    if (shouldRedirect) {
+      return { serviceBindingsData: mData, redirect: `/${account}/env/${environment}` };
+    } else {
+      return { serviceBindingsData: mData, redirect: '' };
+    }
   });
   return defer({ promise });
 };
@@ -41,6 +60,7 @@ const ServiceBinding = () => {
       <LoadingComp
         data={promise}
         skeletonData={{
+          redirect: '',
           serviceBindingsData: fake.ConsoleListServiceBindingQuery
             .core_listServiceBindings as any,
         }}
