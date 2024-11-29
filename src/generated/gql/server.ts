@@ -6286,6 +6286,7 @@ export type ConsoleListServiceBindingQuery = {
         markedForDeletion?: boolean;
         recordVersion: number;
         updateTime: any;
+        serviceHost?: string;
         interceptStatus?: {
           intercepted?: boolean;
           toAddr: string;

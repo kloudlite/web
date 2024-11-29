@@ -4547,6 +4547,7 @@ type ServiceBinding {
   markedForDeletion: Boolean
   metadata: Metadata
   recordVersion: Int!
+  serviceHost: String
   spec: Github__com___kloudlite___operator___apis___networking___v1__ServiceBindingSpec
   status: Github__com___kloudlite___operator___pkg___operator__Status
   updateTime: Date!

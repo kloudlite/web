@@ -29,13 +29,16 @@ import { useConsoleApi } from '~/console/server/gql/api-provider';
 import { IEnvironmentContext } from '../_layout';
 import { useReload } from '~/root/lib/client/helpers/reloader';
 import { toast } from '@kloudlite/design-system/molecule/toast';
+import { CopyContentToClipboard } from '~/console/components/common-console-components';
 
 const RESOURCE_NAME = 'managed resource';
 type BaseType = ExtractNodeType<IServiceBinding>;
 
 const parseItem = (item: BaseType) => {
+  console.log("svcbinding", item)
   return {
     name: item.spec?.serviceRef?.name || "",
+    serviceHost: item.serviceHost,
     updateInfo: {
       time: parseUpdateOrCreatedOn(item),
     },
@@ -142,6 +145,14 @@ const InterceptPortView = ({
   );
 };
 
+const ServiceView = ({ service }: { service: string }) => {
+  return (
+    <CopyContentToClipboard
+      content={service}
+      toastMessage="App service url copied successfully."
+    />
+  );
+};
 
 interface IResource {
   items: BaseType[];
@@ -191,6 +202,11 @@ const ListView = ({ items = [], onAction }: IResource) => {
             className: listClass.title,
           },
           {
+            render: () => 'Service Host',
+            name: 'serviceHost',
+            className: 'w-[300px] truncate',
+          },
+          {
             render: () => '',
             name: 'intercept',
             className: 'w-[250px] truncate',
@@ -212,11 +228,14 @@ const ListView = ({ items = [], onAction }: IResource) => {
           },
         ],
         rows: items.map((i) => {
-          const { name, updateInfo } = parseItem(i);
+          const { name, updateInfo, serviceHost } = parseItem(i);
           return {
             columns: {
               name: {
                 render: () => <ListTitleV2 title={name} />,
+              },
+              serviceHost: {
+                render: () => <ServiceView service={serviceHost || ""} />
               },
               intercept: {
                 render: () =>
@@ -229,7 +248,6 @@ const ListView = ({ items = [], onAction }: IResource) => {
                     </div>
                   ) : null,
               },
-
               updated: {
                 render: () => <ListItemV2 subtitle={updateInfo.time} />,
               },
