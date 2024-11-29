@@ -24,8 +24,8 @@ const ctx = createContext<{
 }>({
   // clusters: {},
   // setClusters: () => {},
-  addToWatchList: () => {},
-  removeFromWatchList: () => {},
+  addToWatchList: () => { },
+  removeFromWatchList: () => { },
 });
 
 const ClusterStatusProvider = ({
@@ -167,7 +167,6 @@ export const useClusterStatusV3 = ({
 }) => {
   const cCtx = useOutletContext<IAccountContext>();
 
-  logger.trace('useClusterStatusV3', cCtx);
   const { clustersMap } = cCtx || {};
 
   const { addToWatchList, removeFromWatchList: _ } = useContext(ctx);
@@ -176,11 +175,11 @@ export const useClusterStatusV3 = ({
   useDebounce(
     () => {
       if (isLoading) {
-        return () => {};
+        return () => { };
       }
 
       if (!clusterName && !clusterNames) {
-        return () => {};
+        return () => { };
       }
 
       if (clusterName) {

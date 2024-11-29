@@ -10,7 +10,7 @@ import { IDialogBase } from '~/console/components/types.d';
 import { ClusterSelectItem } from '~/console/page-components/handle-environment';
 import { useConsoleApi } from '~/console/server/gql/api-provider';
 import { IEnvironments } from '~/console/server/gql/queries/environment-queries';
-import { ExtractNodeType, parseName } from '~/console/server/r-utils/common';
+import { ExtractNodeType, parseName, parseNodes } from '~/console/server/r-utils/common';
 import { useReload } from '~/root/lib/client/helpers/reloader';
 import useForm, { dummyEvent } from '~/root/lib/client/hooks/use-form';
 import Yup from '~/root/lib/server/helpers/yup';
@@ -30,26 +30,29 @@ const Root = (props: IDialog) => {
 
   const getClusters = useCallback(async () => {
     try {
-      const data = Object.values(clustersMap).map((cm) => {
-        if (cm == null) {
-          return {};
-        }
+      const { data: cl, errors } = await api.listAllClusters({})
+      if (errors) {
+        throw errors[0]
+      }
 
-        const { name, displayName, isOnline } = cm;
-        return {
-          label: displayName,
-          value: name,
-          ready: isOnline,
-          disabled: () => !isOnline,
+      const data = parseNodes(cl).map((c) => {
+        const n = parseName(c)
+        let cs = clustersMap[n]
+        return ({
+          label: c.displayName,
+          value: n,
+          ready: cs?.isOnline,
+          disabled: () => !cs?.isOnline,
           render: ({ disabled }: { disabled: boolean }) => (
             <ClusterSelectItem
-              label={displayName}
-              value={name}
+              label={c.displayName}
+              value={n}
               disabled={disabled}
             />
           ),
-        };
-      });
+        })
+      })
+
       setClusterList(data);
     } catch (err) {
       handleError(err);

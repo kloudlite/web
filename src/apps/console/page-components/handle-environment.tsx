@@ -13,7 +13,7 @@ import { NameIdView } from '../components/name-id-view';
 import { IDialog } from '../components/types.d';
 import { useConsoleApi } from '../server/gql/api-provider';
 import { IEnvironment } from '../server/gql/queries/environment-queries';
-import { parseName } from '../server/r-utils/common';
+import { parseName, parseNodes } from '../server/r-utils/common';
 import { DIALOG_TYPE } from '../utils/commons';
 import { useClusterStatusV3 } from '../hooks/use-cluster-status-v3';
 
@@ -63,25 +63,30 @@ const HandleEnvironment = ({ show, setShow }: IDialog<IEnvironment | null>) => {
 
   const getClusters = useCallback(async () => {
     try {
-      const data = Object.values(clustersMap).map((cm) => {
-        if (cm == null) {
-          return {};
-        }
-        const { name, displayName, isOnline } = cm;
-        return {
-          label: displayName,
-          value: name,
-          ready: isOnline,
-          disabled: () => !isOnline,
+      const { data: cl, errors } = await api.listAllClusters({})
+      if (errors) {
+        throw errors[0]
+      }
+
+      const data = parseNodes(cl).map((c) => {
+        const n = parseName(c)
+        let cs = clustersMap[n]
+
+        return ({
+          label: c.displayName,
+          value: n,
+          ready: cs?.isOnline,
+          disabled: () => !cs?.isOnline,
           render: ({ disabled }: { disabled: boolean }) => (
             <ClusterSelectItem
-              label={displayName}
-              value={name}
+              label={c.displayName}
+              value={n}
               disabled={disabled}
             />
           ),
-        };
-      });
+        })
+      })
+
       setClusterList(data);
     } catch (err) {
       handleError(err);
