@@ -90,6 +90,7 @@ export const serviceBindingQueries = (executor: IExecutor) => ({
                 }
               }
               updateTime
+              serviceHost
             }
           }
         }

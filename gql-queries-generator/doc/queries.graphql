@@ -4580,6 +4580,7 @@ query consoleListServiceBinding($envName: String!, $pagination: CursorPagination
           }
         }
         updateTime
+        serviceHost
       }
     }
   }
