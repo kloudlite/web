@@ -6625,6 +6625,109 @@ export type AuthCli_GetConfigQuery = {
   };
 };
 
+export type AuthCli_ListServicesQueryVariables = Exact<{
+  envName: Scalars['String']['input'];
+  pagination?: InputMaybe<CursorPaginationIn>;
+}>;
+
+export type AuthCli_ListServicesQuery = {
+  core_listServiceBindings?: {
+    totalCount: number;
+    edges: Array<{
+      cursor: string;
+      node: {
+        accountName: string;
+        apiVersion?: string;
+        clusterName: string;
+        creationTime: any;
+        environmentName: string;
+        id: string;
+        kind?: string;
+        markedForDeletion?: boolean;
+        recordVersion: number;
+        updateTime: any;
+        interceptStatus?: {
+          intercepted?: boolean;
+          toAddr: string;
+          portMappings?: Array<{ containerPort: number; servicePort: number }>;
+        };
+        metadata?: {
+          annotations?: any;
+          creationTimestamp: any;
+          deletionTimestamp?: any;
+          generation: number;
+          labels?: any;
+          name: string;
+          namespace?: string;
+        };
+        spec?: {
+          globalIP: string;
+          hostname?: string;
+          serviceIP?: string;
+          ports?: Array<{
+            appProtocol?: string;
+            name?: string;
+            nodePort?: number;
+            port: number;
+            protocol?: K8s__Io___Api___Core___V1__Protocol;
+            targetPort?: { IntVal: number; StrVal: string; Type: number };
+          }>;
+          serviceRef?: { name: string; namespace: string };
+        };
+        status?: {
+          checks?: any;
+          isReady: boolean;
+          lastReadyGeneration?: number;
+          lastReconcileTime?: any;
+          checkList?: Array<{
+            debug?: boolean;
+            description?: string;
+            hide?: boolean;
+            name: string;
+            title: string;
+          }>;
+          message?: { RawMessage?: any };
+          resources?: Array<{
+            apiVersion: string;
+            kind: string;
+            name: string;
+            namespace: string;
+          }>;
+        };
+      };
+    }>;
+    pageInfo: {
+      endCursor?: string;
+      hasNextPage?: boolean;
+      hasPrevPage?: boolean;
+      startCursor?: string;
+    };
+  };
+};
+
+export type AuthCli_CreateServiceInterceptMutationVariables = Exact<{
+  envName: Scalars['String']['input'];
+  serviceName: Scalars['String']['input'];
+  interceptTo: Scalars['String']['input'];
+  portMappings?: InputMaybe<
+    | Array<Github__Com___Kloudlite___Operator___Apis___Crds___V1__SvcInterceptPortMappingsIn>
+    | Github__Com___Kloudlite___Operator___Apis___Crds___V1__SvcInterceptPortMappingsIn
+  >;
+}>;
+
+export type AuthCli_CreateServiceInterceptMutation = {
+  core_createServiceIntercept: boolean;
+};
+
+export type AuthCli_DeleteServiceInterceptMutationVariables = Exact<{
+  envName: Scalars['String']['input'];
+  serviceName: Scalars['String']['input'];
+}>;
+
+export type AuthCli_DeleteServiceInterceptMutation = {
+  core_deleteServiceIntercept: boolean;
+};
+
 export type AuthCli_ListAppsQueryVariables = Exact<{
   pq?: InputMaybe<CursorPaginationIn>;
   envName: Scalars['String']['input'];
