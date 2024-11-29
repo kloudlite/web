@@ -1,8 +1,11 @@
+/* eslint-disable react/jsx-no-useless-fragment */
+/* eslint-disable no-nested-ternary */
 import { NumberInput, TextInput } from '@kloudlite/design-system/atoms/input';
 import Select from '@kloudlite/design-system/atoms/select';
 import { Switch } from '@kloudlite/design-system/atoms/switch';
 import { titleCase } from '@kloudlite/design-system/utils';
 import { useNavigate, useOutletContext, useParams } from '@remix-run/react';
+import yaml from 'js-yaml';
 import {
   FormEventHandler,
   ReactNode,
@@ -16,6 +19,8 @@ import {
   BottomNavigation,
   ReviewComponent,
 } from '~/console/components/commons';
+import ExtendedFilledTab from '~/console/components/extended-filled-tab';
+import { LoadingPlaceHolder } from '~/console/components/loading';
 import MultiStepProgress, {
   useMultiStepProgress,
 } from '~/console/components/multi-step-progress';
@@ -25,18 +30,82 @@ import { useClusterStatusV3 } from '~/console/hooks/use-cluster-status-v3';
 import { ClusterSelectItem } from '~/console/page-components/handle-environment';
 import { useConsoleApi } from '~/console/server/gql/api-provider';
 import {
-  IMSvTemplate,
-  IMSvTemplates,
+  IMSvPlugin,
+  IMsvPlugins,
 } from '~/console/server/gql/queries/managed-templates-queries';
 import { parseName } from '~/console/server/r-utils/common';
 import { keyconstants } from '~/console/server/r-utils/key-constants';
 import { ensureAccountClientSide } from '~/console/server/utils/auth-utils';
 import { flatM, flatMapValidations } from '~/console/utils/commons';
+import CodeEditorClient from '~/root/lib/client/components/editor-client';
 import useForm, { dummyEvent } from '~/root/lib/client/hooks/use-form';
 import Yup from '~/root/lib/server/helpers/yup';
 import { handleError } from '~/root/lib/utils/common';
 import { IAccountContext } from '../_layout';
-import { ManagedServiceLayoutV2 } from './managed-service-layout-v2';
+import useFetchHelmCharts from '../env+/$environment+/workloads+/helm-charts/helm-utils/use-fetch-helmcharts';
+import useFetchHelmValue from '../env+/$environment+/workloads+/helm-charts/helm-utils/use-fetch-helmvalues';
+import useHelmRepoSearch from '../env+/$environment+/workloads+/helm-charts/helm-utils/use-helm-repo-search';
+
+// type IDialog = IDialogBase<ExtractNodeType<IHelmCharts>>;
+
+type IHelmDoc = {
+  apiVersion: string;
+  entries: {
+    [key: string]: { version: string }[];
+  };
+  generated: string;
+};
+
+const helmValueEditorProps = {
+  height: '400px',
+  options: {
+    fontSize: 14,
+    padding: {
+      top: 20,
+      bottom: 20,
+    },
+    tabSize: 2,
+    minimap: {
+      enabled: false,
+    },
+  },
+};
+
+const valueEditorProps = {
+  height: '200px',
+  options: {
+    fontSize: 14,
+    padding: {
+      top: 20,
+      bottom: 20,
+    },
+    tabSize: 2,
+    minimap: {
+      enabled: false,
+    },
+  },
+};
+
+const repoRenderer = ({
+  value,
+  repoUrl,
+}: {
+  value: string;
+  repoUrl: string;
+}) => {
+  return (
+    <div className="flex flex-row gap-xl items-center bodyMd text-text-default">
+      <span>{!repoUrl ? value : repoUrl}</span>
+    </div>
+  );
+};
+
+const filterUniqueVersions = (versions: IHelmDoc['entries']['keys']) => {
+  return versions.filter(
+    (obj, index, self) =>
+      index === self.findIndex((t) => t.version === obj.version)
+  );
+};
 
 const valueRender = ({ label, icon }: { label: string; icon: string }) => {
   return (
@@ -49,6 +118,208 @@ const valueRender = ({ label, icon }: { label: string; icon: string }) => {
   );
 };
 
+const RenderHelmFields = ({
+  values,
+  onChange,
+  errors,
+  fields,
+}: {
+  onChange: (e: string) => (e: { target: { value: any } }) => void;
+  values: any;
+  errors: {
+    [key: string]: string;
+  };
+  fields: IMSvPlugin['spec']['services'][0]['inputs'];
+}) => {
+  const [activeTab, setActiveTab] = useState('defaults');
+
+  const editorRef = useRef<any>();
+
+  const [chartVersions, setChartVersions] = useState<
+    IHelmDoc['entries']['key']
+  >([]);
+
+  const [selectedRepo, setSelectedRepo] = useState<string>('');
+
+  const [repoSearchText, setRepoSearchText] = useState('');
+
+  const [chartName, setChartName] = useState<
+    { label: string; value: string } | undefined
+  >(undefined);
+  const [chartVersion, setChartVersion] = useState<
+    { label: string; value: string } | undefined
+  >(undefined);
+
+  const { values: helmValues, isLoading: helmValuesLoading } =
+    useFetchHelmValue({
+      packageId: selectedRepo,
+      version: chartVersion?.value,
+    });
+
+  const {
+    repos,
+    isRepoCreatable,
+    loading: repoLoading,
+  } = useHelmRepoSearch({ searchText: repoSearchText });
+
+  const { helmCharts, loading: helmChartsLoading } = useFetchHelmCharts({
+    repoUrl: values.res.chart.url,
+  });
+
+  return (
+    <div className="flex flex-col gap-3xl">
+      {fields.map((field) => {
+        switch (field.input) {
+          case 'chart.url':
+            return (
+              <Select
+                size="lg"
+                label={field.label}
+                placeholder="Search for or enter the repo url"
+                searchable
+                creatable={isRepoCreatable}
+                options={async () => repos}
+                value={selectedRepo}
+                onChange={(value) => {
+                  if (!repoSearchText.startsWith('https://')) {
+                    onChange(`res.${field.input}`)(dummyEvent(value.repoUrl));
+                  } else {
+                    onChange(`res.${field.input}`)(dummyEvent(value.value));
+                  }
+                  setSelectedRepo(value.value);
+                  onChange('helmPackageId')(dummyEvent(value.value));
+                  /* setHelmCharts([]); */
+                }}
+                onSearch={(text) => {
+                  setRepoSearchText(text);
+                  // resetHelmFields();
+                }}
+                valueRender={repoRenderer}
+                loading={repoLoading}
+                noOptionMessage={
+                  <div className="p-2xl bodyMd text-center">
+                    Search for or enter the repo url
+                  </div>
+                }
+                // error={!!errors[fieldKey]}
+                // message={errors[fieldKey]}
+              />
+            );
+          case 'chart.name':
+            return (
+              <Select
+                label={field.label}
+                placeholder="Chart name"
+                searchable
+                size="lg"
+                disabled={
+                  helmCharts.length === 0 || repoLoading || !selectedRepo
+                }
+                // @ts-ignore
+                value={chartName?.value}
+                options={async () => helmCharts}
+                loading={!errors.chartVersion && helmChartsLoading}
+                onChange={(val) => {
+                  onChange(`res.${field.input}`)(dummyEvent(val.value));
+                  setChartName(val);
+                  setChartVersion(undefined);
+                  onChange(`res.chart.version`)(dummyEvent(''));
+                  setChartVersions(filterUniqueVersions(val.item));
+                }}
+                onSearch={() => true}
+                error={!!errors.chartName}
+                message={errors.chartName}
+              />
+            );
+          case 'chart.version':
+            return (
+              <Select
+                searchable
+                size="lg"
+                label="Chart version"
+                placeholder="Chart version"
+                disabled={chartVersions.length === 0 || helmChartsLoading}
+                value={chartVersion?.value}
+                options={async () => [
+                  ...chartVersions.map((cv) => ({
+                    label: cv.version,
+                    value: cv.version,
+                  })),
+                ]}
+                loading={helmChartsLoading}
+                onChange={(val) => {
+                  onChange(`res.${field.input}`)(dummyEvent(val.value));
+                  setChartVersion(val);
+                }}
+                onSearch={() => true}
+              />
+            );
+          case 'helmValues':
+            return (
+              <div className="basis-full flex flex-col">
+                {helmValuesLoading ? (
+                  <LoadingPlaceHolder height={466} />
+                ) : (
+                  chartVersion && (
+                    <div className="flex flex-col gap-3xl h-full">
+                      <ExtendedFilledTab
+                        value={activeTab || 'defaults'}
+                        onChange={(e) => {
+                          // onChange('activeTab')(dummyEvent(e));
+                          setActiveTab(e);
+                        }}
+                        items={[
+                          { label: 'Defaults', value: 'defaults' },
+                          {
+                            label: 'Values',
+                            value: 'values',
+                          },
+                        ]}
+                      />
+                      <CodeEditorClient
+                        {...helmValueEditorProps}
+                        options={{
+                          ...helmValueEditorProps.options,
+                          readOnly: activeTab === 'defaults',
+                        }}
+                        value={
+                          activeTab === 'defaults'
+                            ? helmValues
+                            : values.res.helmValues
+                        }
+                        lang="yaml"
+                        onChange={(e) => {
+                          const { path } = editorRef.current.getModel().uri;
+
+                          if (
+                            activeTab === 'values' &&
+                            path === '/values.yaml'
+                          ) {
+                            onChange('res.helmValues')(dummyEvent(e));
+                          }
+                        }}
+                        path={
+                          activeTab === 'defaults'
+                            ? 'defaults.yaml'
+                            : 'values.yaml'
+                        }
+                        onMount={(e) => {
+                          editorRef.current = e;
+                        }}
+                      />
+                    </div>
+                  )
+                )}
+              </div>
+            );
+          default:
+            return null;
+        }
+      })}
+    </div>
+  );
+};
+
 const RenderField = ({
   field,
   value,
@@ -56,7 +327,8 @@ const RenderField = ({
   errors,
   fieldKey,
 }: {
-  field: IMSvTemplate['fields'][number];
+  //   field: IMSvTemplate['fields'][number];
+  field: IMSvPlugin['spec']['services'][0]['inputs'][number];
   onChange: (e: string) => (e: { target: { value: any } }) => void;
   value: any;
   errors: {
@@ -65,7 +337,9 @@ const RenderField = ({
   fieldKey: string;
 }) => {
   const [qos, setQos] = useState(false);
-  if (field.inputType === 'Number') {
+  // const editorRef = useRef<any>();
+
+  if (field.type === 'Number') {
     return (
       <NumberInput
         error={!!errors[fieldKey]}
@@ -75,7 +349,7 @@ const RenderField = ({
         value={parseFloat(value) / (field.multiplier || 1) || ''}
         size="lg"
         onChange={({ target }) => {
-          onChange(`res.${field.name}`)(
+          onChange(`res.${field.input}`)(
             dummyEvent(
               `${parseFloat(target.value) * (field.multiplier || 1)}${
                 field.unit
@@ -88,12 +362,12 @@ const RenderField = ({
     );
   }
 
-  if (field.inputType === 'String') {
+  if (field.type === 'String') {
     return (
       <TextInput
         label={field.label}
         value={value || ''}
-        onChange={onChange(`res.${field.name}`)}
+        onChange={onChange(`res.${field.input}`)}
         suffix={field.displayUnit}
         error={!!errors[fieldKey]}
         message={errors[fieldKey]}
@@ -101,7 +375,88 @@ const RenderField = ({
       />
     );
   }
-  if (field.inputType === 'Resource') {
+
+  if (field.type === 'text/yaml') {
+    const v = typeof value === 'string' ? value : JSON.stringify(value);
+    return (
+      <div className="flex flex-col gap-2xl">
+        <div className="bodyMd-medium text-text-default">{field.label}</div>
+        <CodeEditorClient
+          {...valueEditorProps}
+          value={v || ''}
+          lang="yaml"
+          onChange={(e) => {
+            onChange(`res.${field.input}`)(dummyEvent(e));
+          }}
+          path={field.input}
+        />
+      </div>
+    );
+  }
+
+  if (field.type === 'int-range') {
+    return (
+      <div className="flex flex-col gap-md">
+        <div className="bodyMd-medium text-text-default">{`${field.label}${
+          field.required ? ' *' : ''
+        }`}</div>
+        <div className="flex flex-row gap-xl items-center">
+          <div className="flex flex-row gap-xl items-end flex-1 ">
+            <div className="flex-1">
+              <NumberInput
+                size="lg"
+                error={!!errors[`${fieldKey}.min`]}
+                message={errors[`${fieldKey}.min`]}
+                placeholder={`${field.label} min`}
+                value={parseFloat(value.min) / (field.multiplier || 1)}
+                onChange={({ target }) => {
+                  onChange(`res.${field.input}.min`)(
+                    dummyEvent(
+                      `${parseFloat(target.value) * (field.multiplier || 1)}${
+                        field.unit
+                      }`
+                    )
+                  );
+                  if (qos) {
+                    onChange(`res.${field.input}.max`)(
+                      dummyEvent(
+                        `${parseFloat(target.value) * (field.multiplier || 1)}${
+                          field.unit
+                        }`
+                      )
+                    );
+                  }
+                }}
+                suffix={field.displayUnit}
+              />
+            </div>
+
+            <div className="flex-1">
+              <NumberInput
+                size="lg"
+                error={!!errors[`${fieldKey}.max`]}
+                message={errors[`${fieldKey}.max`]}
+                placeholder={`${field.label} max`}
+                value={parseFloat(value.max) / (field.multiplier || 1)}
+                onChange={({ target }) => {
+                  onChange(`res.${field.input}.max`)(
+                    dummyEvent(
+                      `${parseFloat(target.value) * (field.multiplier || 1)}${
+                        field.unit
+                      }`
+                    )
+                  );
+                }}
+                suffix={field.displayUnit}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (field.type === 'Resource') {
     return (
       <div className="flex flex-col gap-md">
         <div className="bodyMd-medium text-text-default">{`${field.label}${
@@ -117,7 +472,7 @@ const RenderField = ({
                 placeholder={qos ? field.label : `${field.label} min`}
                 value={parseFloat(value.min) / (field.multiplier || 1)}
                 onChange={({ target }) => {
-                  onChange(`res.${field.name}.min`)(
+                  onChange(`res.${field.input}.min`)(
                     dummyEvent(
                       `${parseFloat(target.value) * (field.multiplier || 1)}${
                         field.unit
@@ -125,7 +480,7 @@ const RenderField = ({
                     )
                   );
                   if (qos) {
-                    onChange(`res.${field.name}.max`)(
+                    onChange(`res.${field.input}.max`)(
                       dummyEvent(
                         `${parseFloat(target.value) * (field.multiplier || 1)}${
                           field.unit
@@ -146,7 +501,7 @@ const RenderField = ({
                   placeholder={`${field.label} max`}
                   value={parseFloat(value.max) / (field.multiplier || 1)}
                   onChange={({ target }) => {
-                    onChange(`res.${field.name}.max`)(
+                    onChange(`res.${field.input}.max`)(
                       dummyEvent(
                         `${parseFloat(target.value) * (field.multiplier || 1)}${
                           field.unit
@@ -166,7 +521,9 @@ const RenderField = ({
               onChange={(_value) => {
                 setQos(_value);
                 if (_value) {
-                  onChange(`res.${field.name}.max`)(dummyEvent(`${value.min}`));
+                  onChange(`res.${field.input}.max`)(
+                    dummyEvent(`${value.min}`)
+                  );
                 }
               }}
             />
@@ -175,13 +532,13 @@ const RenderField = ({
       </div>
     );
   }
-  return <div>unknown input type {field.inputType}</div>;
+  return <div>unknown input type {field.type}</div>;
 };
 
-type ISelectedTemplate = {
+type ISelectedPlugin = {
   category: string;
   categoryDisplayName: string;
-  template: IMSvTemplate;
+  plugin: IMSvPlugin;
 };
 
 const TemplateView = ({
@@ -189,13 +546,13 @@ const TemplateView = ({
   values,
   handleChange,
   errors,
-  templates,
+  plugins,
   isLoading,
 }: {
   handleSubmit: FormEventHandler<HTMLFormElement>;
   values: Record<string, any>;
   errors: Record<string, any>;
-  templates: IMSvTemplates;
+  plugins: IMsvPlugins;
   isLoading: boolean;
   handleChange: (key: string) => (e: { target: { value: any } }) => void;
 }) => {
@@ -206,36 +563,36 @@ const TemplateView = ({
         label="Managed service templates"
         size="lg"
         placeholder="Select templates"
-        value={values.selectedTemplate?.template.name}
+        value={values.selectedPlugin?.category}
         valueRender={valueRender}
         searchable
-        error={!!errors.selectedTemplate}
-        message={errors.selectedTemplate}
+        error={!!errors.selectedPlugin}
+        message={errors.selectedPlugin}
         onChange={({ item }) => {
-          handleChange('selectedTemplate')(dummyEvent(item));
+          handleChange('selectedPlugin')(dummyEvent(item));
         }}
         options={async () =>
-          templates.map((mt) => ({
-            label: mt.displayName,
+          plugins.map((mt) => ({
+            label: mt.category,
             options: mt.items.map((mti) => ({
-              label: mti.displayName,
-              value: mti.name,
-              icon: mti.logoUrl,
+              label: mti.plugin,
+              value: mti.plugin,
+              icon: mti.meta?.logo || '',
               item: {
-                categoryDisplayName: mt.displayName,
-                category: mt.category,
-                template: mti,
+                categoryDisplayName: mti.plugin,
+                category: mti.plugin,
+                plugin: mti,
               },
               render: () => (
                 <div className="flex flex-row items-center gap-xl">
                   <span>
                     <img
-                      alt={mti.displayName}
-                      src={mti.logoUrl}
+                      alt={mti.plugin}
+                      src={mti.meta?.logo}
                       className="w-2xl h-w-2xl"
                     />
                   </span>
-                  <div>{mti.displayName}</div>
+                  <div>{mti.plugin}</div>
                 </div>
               ),
             })),
@@ -254,9 +611,7 @@ const TemplateView = ({
 };
 
 const FieldView = ({
-  selectedTemplate,
-  // nodepools,
-  // nodepoolIsLoading,
+  selectedPlugin,
   clusters,
   values,
   handleSubmit,
@@ -267,9 +622,7 @@ const FieldView = ({
   handleSubmit: FormEventHandler<HTMLFormElement>;
   values: Record<string, any>;
   errors: Record<string, any>;
-  selectedTemplate: ISelectedTemplate | null;
-  // nodepools: { label: string; value: string }[];
-  // nodepoolIsLoading: boolean;
+  selectedPlugin: ISelectedPlugin | null;
   clusters: {
     label: string;
     value: string;
@@ -281,6 +634,45 @@ const FieldView = ({
   useEffect(() => {
     nameRef.current?.focus();
   }, [nameRef.current]);
+
+  const getRenderField = () => {
+    switch (selectedPlugin?.plugin?.plugin) {
+      case 'HelmChart':
+        return (
+          <RenderHelmFields
+            values={values}
+            fields={selectedPlugin?.plugin?.spec?.services[0].inputs}
+            onChange={handleChange}
+            errors={errors}
+          />
+        );
+      default:
+        return (
+          <>
+            {selectedPlugin?.plugin?.spec?.services[0].inputs.map((field) => {
+              const k = field.input;
+              const x = k.split('.').reduce((acc, curr) => {
+                if (!acc) {
+                  return values.res?.[curr] || '';
+                }
+                return acc[curr];
+              }, null);
+              return (
+                <RenderField
+                  field={field}
+                  key={field.input}
+                  onChange={handleChange}
+                  value={x}
+                  errors={errors}
+                  fieldKey={k}
+                />
+              );
+            })}
+          </>
+        );
+    }
+  };
+
   return (
     <form
       className="flex flex-col gap-3xl"
@@ -326,47 +718,8 @@ const FieldView = ({
         message={errors.clusterName}
         // loading={cIsLoading || byokCIsLoading}
       />
+      {getRenderField()}
 
-      {/* <Select
-        label="Nodepool Name"
-        size="lg"
-        placeholder="Select Nodepool"
-        value={values.nodepoolName}
-        creatable
-        onChange={(val) => {
-          handleChange('nodepoolName')(dummyEvent(val.value));
-        }}
-        options={async () => [...nodepools]}
-        error={!!errors.nodepoolName}
-        message={errors.nodepoolName}
-        showclear
-        loading={nodepoolIsLoading}
-        noOptionMessage={
-          <div className="p-2xl bodyMd text-center">
-            No stateful nodepools available
-          </div>
-        }
-      /> */}
-
-      {selectedTemplate?.template.fields?.map((field) => {
-        const k = field.name;
-        const x = k.split('.').reduce((acc, curr) => {
-          if (!acc) {
-            return values.res?.[curr];
-          }
-          return acc[curr];
-        }, null);
-        return (
-          <RenderField
-            field={field}
-            key={field.name}
-            onChange={handleChange}
-            value={x}
-            errors={errors}
-            fieldKey={k}
-          />
-        );
-      })}
       <BottomNavigation
         primaryButton={{
           type: 'submit',
@@ -403,7 +756,26 @@ const ReviewView = ({
           <div className="flex flex-col p-xl  gap-lg rounded border border-border-default flex-1 overflow-hidden">
             {fields?.map(([key, value]) => {
               const k = key as string;
-              const v = value as string;
+              const v = value;
+              if (key === 'helmValues') {
+                return null;
+              }
+              const getValueRenderer = () => {
+                if (typeof v === 'string') {
+                  return <div className="bodySm text-text-soft">{v}</div>;
+                }
+                return (
+                  <div className="flex flex-col gap-lg bodySm text-text-soft">
+                    {Object.entries(v || {}).map(([pKey, pValue]) => (
+                      <div key={pKey}>
+                        <span>{titleCase(pKey)}</span>
+                        {' : '}
+                        {pValue}
+                      </div>
+                    ))}
+                  </div>
+                );
+              };
               return (
                 <div
                   key={k}
@@ -412,7 +784,7 @@ const ReviewView = ({
                   <div className="bodyMd-medium text-text-default">
                     {titleCase(k)}
                   </div>
-                  <div className="bodySm text-text-soft">{v}</div>
+                  {getValueRenderer()}
                 </div>
               );
             })}
@@ -450,10 +822,10 @@ const ReviewView = ({
           <div className="flex flex-col gap-xl p-xl rounded border border-border-default">
             <div className="flex flex-col gap-lg pb-xl border-b border-border-default">
               <div className="flex-1 bodyMd-medium text-text-default">
-                {values?.selectedTemplate?.categoryDisplayName}
+                {values?.selectedPlugin?.categoryDisplayName}
               </div>
               <div className="text-text-soft bodyMd">
-                {values?.selectedTemplate?.template?.displayName}
+                {values?.selectedPlugin?.categoryDisplayName}
               </div>
             </div>
             <div className="flex flex-col gap-lg ">
@@ -527,10 +899,8 @@ const ReviewView = ({
 //   );
 // };
 
-const ManagedServiceLayout = () => {
-  // const { msvtemplates, cluster, account } =
-  //   useOutletContext<IClusterContext>();
-  const { msvtemplates, account } = useOutletContext<IAccountContext>();
+export const ManagedServiceLayoutV2 = () => {
+  const { account, msvPlugins } = useOutletContext<IAccountContext>();
   const navigate = useNavigate();
   const api = useConsoleApi();
 
@@ -591,7 +961,9 @@ const ManagedServiceLayout = () => {
         name: '',
         displayName: '',
         res: {},
-        selectedTemplate: null,
+        helmPackageId: '',
+        // selectedTemplate: null,
+        selectedPlugin: null,
         isNameError: false,
         clusterName: '',
         nodepoolName: '',
@@ -610,7 +982,7 @@ const ManagedServiceLayout = () => {
             return !(currentStep === 2 && !v);
           }
         ),
-        selectedTemplate: Yup.object({}).required('Template is required.'),
+        selectedPlugin: Yup.object({}).required('Plugin is required.'),
         // @ts-ignore
         res: Yup.object({}).test({
           name: 'res',
@@ -644,21 +1016,28 @@ const ManagedServiceLayout = () => {
         }),
       }),
       onSubmit: async (val) => {
-        const selectedTemplate =
-          val.selectedTemplate as unknown as ISelectedTemplate;
+        const selectedPlugin = val.selectedPlugin as unknown as ISelectedPlugin;
         const submit = async () => {
           try {
             if (
-              !selectedTemplate?.template?.apiVersion ||
-              !selectedTemplate?.template?.kind
+              !selectedPlugin.plugin.spec.apiVersion ||
+              !selectedPlugin?.plugin?.spec.services[0].kind
             ) {
               throw new Error('Service apiversion or kind error.');
+            }
+            const res = { ...val.res };
+            if (selectedPlugin.plugin.plugin === 'HelmChart') {
+              // @ts-ignore
+              res.helmValues = res.helmValues ? yaml.dump(res.helmValues) : '';
             }
             const { errors: e } = await api.createClusterMSv({
               service: {
                 displayName: val.displayName,
                 metadata: {
                   name: val.name,
+                  annotations: {
+                    [keyconstants.helmChartRepoPackageId]: values.helmPackageId,
+                  },
                 },
                 clusterName: val.clusterName,
                 spec: {
@@ -667,8 +1046,8 @@ const ManagedServiceLayout = () => {
                       [keyconstants.nodepoolName]: val.nodepoolName,
                     },
                     serviceTemplate: {
-                      apiVersion: selectedTemplate.template.apiVersion,
-                      kind: selectedTemplate.template.kind,
+                      apiVersion: selectedPlugin.plugin.spec.apiVersion,
+                      kind: selectedPlugin.plugin.spec.services[0].kind,
                       spec: {
                         ...val.res,
                       },
@@ -704,21 +1083,23 @@ const ManagedServiceLayout = () => {
     });
 
   useEffect(() => {
-    const selectedTemplate =
-      values.selectedTemplate as unknown as ISelectedTemplate;
-    if (selectedTemplate?.template?.fields) {
+    const selectedPlugin = values.selectedPlugin as unknown as ISelectedPlugin;
+    if (selectedPlugin?.plugin?.spec?.services[0]?.inputs) {
       setValues((v) => ({
         ...v,
         res: {
           ...flatM(
-            selectedTemplate?.template?.fields.reduce((acc, curr) => {
-              return { ...acc, [curr.name]: curr };
-            }, {})
+            selectedPlugin.plugin?.spec.services[0].inputs.reduce(
+              (acc, curr) => {
+                return { ...acc, [curr.input]: curr };
+              },
+              {}
+            )
           ),
         },
       }));
     }
-  }, [values.selectedTemplate]);
+  }, [values.selectedPlugin]);
 
   useEffect(() => {
     setValues((v) => ({
@@ -743,7 +1124,7 @@ const ManagedServiceLayout = () => {
         <MultiStepProgress.Step label="Select Managed Service" step={1}>
           <TemplateView
             isLoading={isLoading}
-            templates={msvtemplates}
+            plugins={msvPlugins}
             handleChange={handleChange}
             handleSubmit={handleSubmit}
             errors={errors}
@@ -752,7 +1133,7 @@ const ManagedServiceLayout = () => {
         </MultiStepProgress.Step>
         <MultiStepProgress.Step label="Configure managed service" step={2}>
           <FieldView
-            selectedTemplate={values.selectedTemplate}
+            selectedPlugin={values.selectedPlugin}
             values={values}
             errors={errors}
             handleChange={handleChange}
@@ -774,14 +1155,3 @@ const ManagedServiceLayout = () => {
     </MultiStepProgressWrapper>
   );
 };
-
-const NewManagedService = () => {
-  // return <ManagedServiceLayout />;
-  return <ManagedServiceLayoutV2 />;
-};
-
-export const handle = {
-  noMainLayout: true,
-};
-
-export default NewManagedService;

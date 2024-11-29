@@ -5169,6 +5169,74 @@ export type ConsoleListMSvTemplatesQuery = {
   }>;
 };
 
+export type ConsoleGetMSvPluginQueryVariables = Exact<{
+  category: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+}>;
+
+export type ConsoleGetMSvPluginQuery = {
+  core_getManagedServicePlugin?: {
+    plugin: string;
+    meta?: { logo: string };
+    spec: {
+      apiVersion: string;
+      services: Array<{
+        active: boolean;
+        description: string;
+        kind: string;
+        inputs: Array<{
+          defaultValue?: any;
+          displayUnit?: string;
+          input: string;
+          label: string;
+          max?: number;
+          min?: number;
+          multiplier?: number;
+          required?: boolean;
+          type: string;
+          unit?: string;
+        }>;
+        resources: Array<{ description: string; kind: string }>;
+      }>;
+    };
+  };
+};
+
+export type ConsoleListMSvPluginsQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type ConsoleListMSvPluginsQuery = {
+  core_listManagedServicePlugins?: Array<{
+    category: string;
+    items: Array<{
+      plugin: string;
+      meta?: { logo: string };
+      spec: {
+        apiVersion: string;
+        services: Array<{
+          active: boolean;
+          description: string;
+          kind: string;
+          inputs: Array<{
+            defaultValue?: any;
+            displayUnit?: string;
+            input: string;
+            label: string;
+            max?: number;
+            min?: number;
+            multiplier?: number;
+            required?: boolean;
+            type: string;
+            unit?: string;
+          }>;
+          resources: Array<{ description: string; kind: string }>;
+        }>;
+      };
+    }>;
+  }>;
+};
+
 export type ConsoleGetManagedResourceQueryVariables = Exact<{
   name: Scalars['String']['input'];
   msvcName?: InputMaybe<Scalars['String']['input']>;

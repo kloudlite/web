@@ -1,3 +1,4 @@
+import Popup from '@kloudlite/design-system/molecule/popup';
 import { redirect } from '@remix-run/node';
 import {
   Link,
@@ -9,7 +10,6 @@ import {
   useParams,
 } from '@remix-run/react';
 import { ReactNode, useEffect, useRef, useState } from 'react';
-import Popup from '@kloudlite/design-system/molecule/popup';
 import {
   Buildings,
   Check,
@@ -33,7 +33,11 @@ import { cn } from '@kloudlite/design-system/utils';
 import MenuSelect, { SelectItem } from '~/console/components/menu-select';
 import ClusterStatusProvider from '~/console/hooks/use-cluster-status-v3';
 import { useConsoleApi } from '~/console/server/gql/api-provider';
-import { IMSvTemplates } from '~/console/server/gql/queries/managed-templates-queries';
+import { clustersStatusMap } from '~/console/server/gql/queries/cluster-queries';
+import {
+  IMsvPlugins,
+  IMSvTemplates,
+} from '~/console/server/gql/queries/managed-templates-queries';
 import { GQLServerHandler } from '~/console/server/gql/saved-queries';
 import {
   ensureAccountClientSide,
@@ -47,7 +51,6 @@ import withContext from '~/root/lib/app-setup/with-contxt';
 import { useSearch } from '~/root/lib/client/helpers/search-filter';
 import useCustomSwr from '~/root/lib/client/hooks/use-custom-swr';
 import { handleError } from '~/root/lib/utils/common';
-import { clustersStatusMap } from '~/console/server/gql/queries/cluster-queries';
 import { IConsoleRootContext } from '../_layout/_layout';
 
 export const loader = async (ctx: IExtRemixCtx) => {
@@ -68,6 +71,13 @@ export const loader = async (ctx: IExtRemixCtx) => {
     ).listMSvTemplates({});
     if (msvError) {
       throw msvError[0];
+    }
+
+    const { data: msvPlugins, errors: msvPluginError } = await GQLServerHandler(
+      ctx.request
+    ).listMSvPlugins({});
+    if (msvPluginError) {
+      throw msvPluginError[0];
     }
 
     const { data: clusterList, errors: clusterError } = await GQLServerHandler(
@@ -92,6 +102,7 @@ export const loader = async (ctx: IExtRemixCtx) => {
 
     return withContext(ctx, {
       msvtemplates: msvTemplates,
+      msvPlugins,
       account: data,
       clustersMap: clusterList,
     });
@@ -101,6 +112,7 @@ export const loader = async (ctx: IExtRemixCtx) => {
     return k as {
       account: typeof acccountData;
       msvtemplates: IMSvTemplates;
+      msvPlugins: IMsvPlugins;
       clustersMap: clustersStatusMap;
     };
   }
@@ -179,7 +191,8 @@ const _AccountMenu = ({ account }: { account: IAccount }) => {
 };
 
 const Account = () => {
-  const { account, msvtemplates, clustersMap } = useLoaderData<typeof loader>();
+  const { account, msvtemplates, msvPlugins, clustersMap } =
+    useLoaderData<typeof loader>();
   const rootContext = useOutletContext<IConsoleRootContext>();
   const { unloadState, reset, proceed } = useUnsavedChanges();
 
@@ -201,6 +214,7 @@ const Account = () => {
           ...rootContext,
           account,
           msvtemplates,
+          msvPlugins,
           clustersMap: cm,
           setclustersMap: setCm,
         }}
@@ -520,6 +534,7 @@ export const handle = ({ account }: any) => {
 export interface IAccountContext extends IConsoleRootContext {
   account: LoaderResult<typeof loader>['account'];
   msvtemplates: IMSvTemplates;
+  msvPlugins: IMsvPlugins;
   clustersMap: clustersStatusMap;
   setClustersMap: React.Dispatch<React.SetStateAction<clustersStatusMap>>;
 }
