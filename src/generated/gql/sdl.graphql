@@ -365,6 +365,7 @@ type Config {
   apiVersion: String
   binaryData: Map
   createdBy: Github__com___kloudlite___api___common__CreatedOrUpdatedBy!
+  createdByHelm: String
   creationTime: Date!
   data: Map
   displayName: String!
@@ -748,6 +749,7 @@ type Github__com___kloudlite___api___apps___console___internal___entities__Manag
 
 type Github__com___kloudlite___api___apps___console___internal___entities__ManagedServicePluginInputField {
   defaultValue: Any
+  description: String
   displayUnit: String
   input: String!
   label: String!
@@ -761,6 +763,7 @@ type Github__com___kloudlite___api___apps___console___internal___entities__Manag
 
 input Github__com___kloudlite___api___apps___console___internal___entities__ManagedServicePluginInputFieldIn {
   defaultValue: Any
+  description: String
   displayUnit: String
   input: String!
   label: String!
@@ -1430,11 +1433,13 @@ input Github__com___kloudlite___operator___apis___crds___v1__AppContainerIn {
 type Github__com___kloudlite___operator___apis___crds___v1__AppInterceptPortMappings {
   appPort: Int!
   devicePort: Int!
+  protocol: Github__com___kloudlite___operator___apis___crds___v1__ServiceProtocol!
 }
 
 input Github__com___kloudlite___operator___apis___crds___v1__AppInterceptPortMappingsIn {
   appPort: Int!
   devicePort: Int!
+  protocol: Github__com___kloudlite___operator___apis___crds___v1__ServiceProtocol!
 }
 
 type Github__com___kloudlite___operator___apis___crds___v1__AppRouter {
@@ -1764,17 +1769,13 @@ input Github__com___kloudlite___operator___apis___crds___v1__ManagedResourceSpec
 }
 
 type Github__com___kloudlite___operator___apis___crds___v1__ManagedServiceSpec {
-  nodeSelector: Map
   plugin: Github__com___kloudlite___operator___apis___crds___v1__ServiceTemplate
   serviceTemplate: Github__com___kloudlite___operator___apis___crds___v1__ServiceTemplate
-  tolerations: [K8s__io___api___core___v1__Toleration!]
 }
 
 input Github__com___kloudlite___operator___apis___crds___v1__ManagedServiceSpecIn {
-  nodeSelector: Map
   plugin: Github__com___kloudlite___operator___apis___crds___v1__ServiceTemplateIn
   serviceTemplate: Github__com___kloudlite___operator___apis___crds___v1__ServiceTemplateIn
-  tolerations: [K8s__io___api___core___v1__TolerationIn!]
 }
 
 type Github__com___kloudlite___operator___apis___crds___v1__MresResourceTemplate {
@@ -1863,6 +1864,11 @@ input Github__com___kloudlite___operator___apis___crds___v1__RouterSpecIn {
   routes: [Github__com___kloudlite___operator___apis___crds___v1__RouteIn!]
 }
 
+enum Github__com___kloudlite___operator___apis___crds___v1__ServiceProtocol {
+  TCP
+  UDP
+}
+
 type Github__com___kloudlite___operator___apis___crds___v1__ServiceTemplate {
   apiVersion: String!
   export: Github__com___kloudlite___operator___pkg___plugin__Export
@@ -1886,12 +1892,12 @@ input Github__com___kloudlite___operator___apis___crds___v1__ShellProbeIn {
 }
 
 type Github__com___kloudlite___operator___apis___crds___v1__SvcInterceptPortMappings {
-  containerPort: Int!
+  devicePort: Int!
   servicePort: Int!
 }
 
 input Github__com___kloudlite___operator___apis___crds___v1__SvcInterceptPortMappingsIn {
-  containerPort: Int!
+  devicePort: Int!
   servicePort: Int!
 }
 
@@ -2070,12 +2076,12 @@ input Github__com___kloudlite___operator___pkg___operator__StatusIn {
 }
 
 type Github__com___kloudlite___operator___pkg___plugin__Export {
-  kv: Map!
+  template: String!
   viaSecret: String
 }
 
 input Github__com___kloudlite___operator___pkg___plugin__ExportIn {
-  kv: Map!
+  template: String!
   viaSecret: String
 }
 
@@ -4419,6 +4425,7 @@ type Secret {
   accountName: String!
   apiVersion: String
   createdBy: Github__com___kloudlite___api___common__CreatedOrUpdatedBy!
+  createdByHelm: String
   creationTime: Date!
   data: Map
   displayName: String!
@@ -4541,6 +4548,7 @@ type ServiceBinding {
   clusterName: String!
   creationTime: Date!
   environmentName: String!
+  environmentNamespace: String!
   id: ID!
   interceptStatus: Github__com___kloudlite___api___apps___console___internal___entities__InterceptStatus
   kind: String

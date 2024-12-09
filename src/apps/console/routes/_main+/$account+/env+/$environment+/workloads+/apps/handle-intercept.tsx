@@ -53,6 +53,7 @@ const Root = (props: IDialog) => {
       setPorts(
         app.spec.services?.map((s) => {
           return {
+            protocol: 'TCP',
             appPort: s.port,
             devicePort:
               app.spec.intercept?.portMappings?.find(

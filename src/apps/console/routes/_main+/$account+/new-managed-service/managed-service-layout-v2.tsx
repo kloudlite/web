@@ -103,7 +103,7 @@ const repoRenderer = ({
 const filterUniqueVersions = (versions: IHelmDoc['entries']['keys']) => {
   return versions.filter(
     (obj, index, self) =>
-      index === self.findIndex((t) => t.version === obj.version)
+      index === self.findIndex((t) => t.version === obj.version),
   );
 };
 
@@ -201,8 +201,8 @@ const RenderHelmFields = ({
                     Search for or enter the repo url
                   </div>
                 }
-              // error={!!errors[fieldKey]}
-              // message={errors[fieldKey]}
+                // error={!!errors[fieldKey]}
+                // message={errors[fieldKey]}
               />
             );
           case 'chart.name':
@@ -351,9 +351,10 @@ const RenderField = ({
         onChange={({ target }) => {
           onChange(`res.${field.input}`)(
             dummyEvent(
-              `${parseFloat(target.value) * (field.multiplier || 1)}${field.unit
-              }`
-            )
+              `${parseFloat(target.value) * (field.multiplier || 1)}${
+                field.unit
+              }`,
+            ),
           );
         }}
         suffix={field.displayUnit}
@@ -396,8 +397,9 @@ const RenderField = ({
   if (field.type === 'int-range') {
     return (
       <div className="flex flex-col gap-md">
-        <div className="bodyMd-medium text-text-default">{`${field.label}${field.required ? ' *' : ''
-          }`}</div>
+        <div className="bodyMd-medium text-text-default">{`${field.label}${
+          field.required ? ' *' : ''
+        }`}</div>
         <div className="flex flex-row gap-xl items-center">
           <div className="flex flex-row gap-xl items-end flex-1 ">
             <div className="flex-1">
@@ -410,16 +412,18 @@ const RenderField = ({
                 onChange={({ target }) => {
                   onChange(`res.${field.input}.min`)(
                     dummyEvent(
-                      `${parseFloat(target.value) * (field.multiplier || 1)}${field.unit
-                      }`
-                    )
+                      `${parseFloat(target.value) * (field.multiplier || 1)}${
+                        field.unit
+                      }`,
+                    ),
                   );
                   if (qos) {
                     onChange(`res.${field.input}.max`)(
                       dummyEvent(
-                        `${parseFloat(target.value) * (field.multiplier || 1)}${field.unit
-                        }`
-                      )
+                        `${parseFloat(target.value) * (field.multiplier || 1)}${
+                          field.unit
+                        }`,
+                      ),
                     );
                   }
                 }}
@@ -437,9 +441,10 @@ const RenderField = ({
                 onChange={({ target }) => {
                   onChange(`res.${field.input}.max`)(
                     dummyEvent(
-                      `${parseFloat(target.value) * (field.multiplier || 1)}${field.unit
-                      }`
-                    )
+                      `${parseFloat(target.value) * (field.multiplier || 1)}${
+                        field.unit
+                      }`,
+                    ),
                   );
                 }}
                 suffix={field.displayUnit}
@@ -454,8 +459,9 @@ const RenderField = ({
   if (field.type === 'Resource') {
     return (
       <div className="flex flex-col gap-md">
-        <div className="bodyMd-medium text-text-default">{`${field.label}${field.required ? ' *' : ''
-          }`}</div>
+        <div className="bodyMd-medium text-text-default">{`${field.label}${
+          field.required ? ' *' : ''
+        }`}</div>
         <div className="flex flex-row gap-xl items-center">
           <div className="flex flex-row gap-xl items-end flex-1 ">
             <div className="flex-1">
@@ -468,16 +474,18 @@ const RenderField = ({
                 onChange={({ target }) => {
                   onChange(`res.${field.input}.min`)(
                     dummyEvent(
-                      `${parseFloat(target.value) * (field.multiplier || 1)}${field.unit
-                      }`
-                    )
+                      `${parseFloat(target.value) * (field.multiplier || 1)}${
+                        field.unit
+                      }`,
+                    ),
                   );
                   if (qos) {
                     onChange(`res.${field.input}.max`)(
                       dummyEvent(
-                        `${parseFloat(target.value) * (field.multiplier || 1)}${field.unit
-                        }`
-                      )
+                        `${parseFloat(target.value) * (field.multiplier || 1)}${
+                          field.unit
+                        }`,
+                      ),
                     );
                   }
                 }}
@@ -495,9 +503,10 @@ const RenderField = ({
                   onChange={({ target }) => {
                     onChange(`res.${field.input}.max`)(
                       dummyEvent(
-                        `${parseFloat(target.value) * (field.multiplier || 1)}${field.unit
-                        }`
-                      )
+                        `${parseFloat(target.value) * (field.multiplier || 1)}${
+                          field.unit
+                        }`,
+                      ),
                     );
                   }}
                   suffix={field.displayUnit}
@@ -513,7 +522,7 @@ const RenderField = ({
                 setQos(_value);
                 if (_value) {
                   onChange(`res.${field.input}.max`)(
-                    dummyEvent(`${value.min}`)
+                    dummyEvent(`${value.min}`),
                   );
                 }
               }}
@@ -707,7 +716,7 @@ const FieldView = ({
         showclear
         error={!!errors.clusterName}
         message={errors.clusterName}
-      // loading={cIsLoading || byokCIsLoading}
+        // loading={cIsLoading || byokCIsLoading}
       />
       {getRenderField()}
 
@@ -734,7 +743,7 @@ const ReviewView = ({
 }) => {
   const renderFieldView = () => {
     const fields = Object.entries(values.res).filter(
-      ([k, _v]) => !['resources'].includes(k)
+      ([k, _v]) => !['resources'].includes(k),
     );
     if (fields.length > 0) {
       return (
@@ -914,15 +923,15 @@ export const ManagedServiceLayoutV2 = () => {
   const getClusters = useCallback(async () => {
     ensureAccountClientSide(params);
     try {
-      const { data: cl, errors } = await api.listAllClusters({})
+      const { data: cl, errors } = await api.listAllClusters({});
       if (errors) {
-        throw errors[0]
+        throw errors[0];
       }
 
       const data = parseNodes(cl).map((c) => {
-        const n = parseName(c)
-        let cs = clustersMap[n]
-        return ({
+        const n = parseName(c);
+        let cs = clustersMap[n];
+        return {
           label: c.displayName,
           value: n,
           ready: cs?.isOnline,
@@ -934,8 +943,8 @@ export const ManagedServiceLayoutV2 = () => {
               disabled={disabled}
             />
           ),
-        })
-      })
+        };
+      });
 
       setClusterList(data);
     } catch (err) {
@@ -972,7 +981,7 @@ export const ManagedServiceLayoutV2 = () => {
           'Cluster name is required',
           (v) => {
             return !(currentStep === 2 && !v);
-          }
+          },
         ),
         selectedPlugin: Yup.object({}).required('Plugin is required.'),
         // @ts-ignore
@@ -992,9 +1001,9 @@ export const ManagedServiceLayoutV2 = () => {
                     (acc: any, curr: any) => {
                       return { ...acc, [curr.name]: curr };
                     },
-                    {}
-                  )
-                )
+                    {},
+                  ),
+                ),
               );
             }
 
@@ -1034,9 +1043,6 @@ export const ManagedServiceLayoutV2 = () => {
                 clusterName: val.clusterName,
                 spec: {
                   msvcSpec: {
-                    nodeSelector: {
-                      [keyconstants.nodepoolName]: val.nodepoolName,
-                    },
                     serviceTemplate: {
                       apiVersion: selectedPlugin.plugin.spec.apiVersion,
                       kind: selectedPlugin.plugin.spec.services[0].kind,
@@ -1085,8 +1091,8 @@ export const ManagedServiceLayoutV2 = () => {
               (acc, curr) => {
                 return { ...acc, [curr.input]: curr };
               },
-              {}
-            )
+              {},
+            ),
           ),
         },
       }));

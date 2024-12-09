@@ -17,15 +17,19 @@ import { useOutletContext } from '@remix-run/react';
 import { ISetState } from '~/console/page-components/app-states';
 import { useReload } from '~/root/lib/client/helpers/reloader';
 import { IEnvironmentContext } from '../_layout';
-import ExposedPortList, { exposedPortsType } from '../workloads+/apps/network';
 import { toast } from '@kloudlite/design-system/molecule/toast';
 import { IServiceBinding } from '~/console/server/gql/queries/service-binding-queries';
+import { NN } from '~/root/lib/types/common';
+import { Github__Com___Kloudlite___Operator___Apis___Crds___V1__SvcInterceptPortMappingsIn as InterceptServiceIn } from '~/root/src/generated/gql/server';
+import ExposedPortList from './exposed-service';
 
 type IDialog = {
   service?: ExtractNodeType<IServiceBinding>;
   visible: boolean;
   setVisible: ISetState<boolean>;
 };
+
+export type exposedPortsType = NN<InterceptServiceIn>;
 
 const Root = (props: IDialog) => {
   const { visible, setVisible, service } = props;
@@ -49,13 +53,15 @@ const Root = (props: IDialog) => {
   const [ports, setPorts] = useState<exposedPortsType[]>([]);
 
   useEffect(() => {
-    console.log("here",)
     if (service) {
       setPorts(
         service.spec?.ports?.map((s) => {
           return {
-            appPort: s.port,
-            devicePort: service.interceptStatus?.portMappings?.find((f) => f.containerPort === s.port)?.servicePort || s.port
+            devicePort: s.port,
+            servicePort:
+              service.interceptStatus?.portMappings?.find(
+                (f) => f.devicePort === s.port,
+              )?.servicePort || s.port,
           };
         }) || [],
       );
@@ -75,8 +81,8 @@ const Root = (props: IDialog) => {
   } = useForm({
     initialValues: service
       ? {
-        deviceName: '',
-      }
+          deviceName: '',
+        }
       : {},
     validationSchema: Yup.object({
       deviceName: Yup.string().required(),
@@ -97,7 +103,7 @@ const Root = (props: IDialog) => {
           envName: parseName(environment),
           serviceName,
           interceptTo: `${values.deviceName}.device.local`,
-          portMappings: ports.map((p) => ({ containerPort: p.appPort, servicePort: p.devicePort }))
+          portMappings: ports,
         });
         if (e) {
           throw e[0];
@@ -114,7 +120,7 @@ const Root = (props: IDialog) => {
 
   useEffect(() => {
     if (devices.length) {
-      console.log(devices.length)
+      console.log(devices.length);
       setValues((v) => ({ ...v, deviceName: parseName(devices[0]) }));
     }
   }, [dData]);

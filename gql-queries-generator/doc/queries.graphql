@@ -1033,6 +1033,7 @@ query consoleGetApp($envName: String!, $name: String!) {
         portMappings {
           devicePort
           appPort
+          protocol
         }
       }
       nodeSelector
@@ -1215,6 +1216,7 @@ query consoleListApps($envName: String!, $pq: CursorPaginationIn, $search: Searc
             portMappings {
               appPort
               devicePort
+              protocol
             }
             toDevice
           }
@@ -3037,18 +3039,10 @@ query consoleGetClusterMSv($name: String!) {
     recordVersion
     spec {
       msvcSpec {
-        nodeSelector
         serviceTemplate {
           apiVersion
           kind
           spec
-        }
-        tolerations {
-          effect
-          key
-          operator
-          tolerationSeconds
-          value
         }
       }
       targetNamespace
@@ -3116,18 +3110,10 @@ query consoleListClusterMSvs($pagination: CursorPaginationIn, $search: SearchClu
         recordVersion
         spec {
           msvcSpec {
-            nodeSelector
             serviceTemplate {
               apiVersion
               kind
               spec
-            }
-            tolerations {
-              effect
-              key
-              operator
-              tolerationSeconds
-              value
             }
           }
           targetNamespace
@@ -4525,7 +4511,7 @@ query consoleListServiceBinding($envName: String!, $pagination: CursorPagination
         interceptStatus {
           intercepted
           portMappings {
-            containerPort
+            devicePort
             servicePort
           }
           toAddr

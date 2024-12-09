@@ -5,7 +5,7 @@ import {
   ConsoleListServiceBindingQuery,
   ConsoleListServiceBindingQueryVariables,
   ConsoleInterceptServiceMutation,
-  ConsoleInterceptServiceMutationVariables
+  ConsoleInterceptServiceMutationVariables,
 } from '~/root/src/generated/gql/server';
 
 export type IServiceBinding = NN<
@@ -35,7 +35,7 @@ export const serviceBindingQueries = (executor: IExecutor) => ({
               interceptStatus {
                 intercepted
                 portMappings {
-                  containerPort
+                  devicePort
                   servicePort
                 }
                 toAddr
@@ -99,28 +99,48 @@ export const serviceBindingQueries = (executor: IExecutor) => ({
     {
       transformer: (data: ConsoleListServiceBindingQuery) =>
         data.core_listServiceBindings,
-      vars(_: ConsoleListServiceBindingQueryVariables) { },
+      vars(_: ConsoleListServiceBindingQueryVariables) {},
     },
   ),
   interceptService: executor(
-    gql`mutation Core_createServiceIntercept($envName: String!, $serviceName: String!, $interceptTo: String!, $portMappings: [Github__com___kloudlite___operator___apis___crds___v1__SvcInterceptPortMappingsIn!]) {
-  core_createServiceIntercept(envName: $envName, serviceName: $serviceName, interceptTo: $interceptTo, portMappings: $portMappings)
-}`,
+    gql`
+      mutation Core_createServiceIntercept(
+        $envName: String!
+        $serviceName: String!
+        $interceptTo: String!
+        $portMappings: [Github__com___kloudlite___operator___apis___crds___v1__SvcInterceptPortMappingsIn!]
+      ) {
+        core_createServiceIntercept(
+          envName: $envName
+          serviceName: $serviceName
+          interceptTo: $interceptTo
+          portMappings: $portMappings
+        )
+      }
+    `,
     {
       transformer: (data: ConsoleInterceptServiceMutation) =>
         data.core_createServiceIntercept,
-      vars(_: ConsoleInterceptServiceMutationVariables) { },
+      vars(_: ConsoleInterceptServiceMutationVariables) {},
     },
   ),
 
   removeInterceptService: executor(
-    gql`mutation Core_deleteServiceIntercept($envName: String!, $serviceName: String!) {
-  core_deleteServiceIntercept(envName: $envName, serviceName: $serviceName)
-}`,
+    gql`
+      mutation Core_deleteServiceIntercept(
+        $envName: String!
+        $serviceName: String!
+      ) {
+        core_deleteServiceIntercept(
+          envName: $envName
+          serviceName: $serviceName
+        )
+      }
+    `,
     {
       transformer: (data: ConsoleInterceptServiceMutation) =>
         data.core_createServiceIntercept,
-      vars(_: ConsoleInterceptServiceMutationVariables) { },
+      vars(_: ConsoleInterceptServiceMutationVariables) {},
     },
-  )
+  ),
 });

@@ -90,6 +90,9 @@ export type Github__Com___Kloudlite___Api___Apps___Container____Registry___Inter
 export type Github__Com___Kloudlite___Operator___Apis___Crds___V1__ConfigOrSecret =
   'config' | 'pvc' | 'secret';
 
+export type Github__Com___Kloudlite___Operator___Apis___Crds___V1__ServiceProtocol =
+  'TCP' | 'UDP';
+
 export type K8s__Io___Api___Core___V1__TaintEffect =
   | 'NoExecute'
   | 'NoSchedule'
@@ -601,6 +604,7 @@ export type Github__Com___Kloudlite___Operator___Apis___Crds___V1__AppInterceptP
   {
     appPort: Scalars['Int']['input'];
     devicePort: Scalars['Int']['input'];
+    protocol: Github__Com___Kloudlite___Operator___Apis___Crds___V1__ServiceProtocol;
   };
 
 export type Github__Com___Kloudlite___Operator___Apis___Crds___V1__AppRouterIn =
@@ -954,7 +958,7 @@ export type SecretVariableIn = {
 
 export type Github__Com___Kloudlite___Operator___Apis___Crds___V1__SvcInterceptPortMappingsIn =
   {
-    containerPort: Scalars['Int']['input'];
+    devicePort: Scalars['Int']['input'];
     servicePort: Scalars['Int']['input'];
   };
 
@@ -1110,10 +1114,8 @@ export type Github__Com___Kloudlite___Operator___Apis___Crds___V1__ClusterManage
 
 export type Github__Com___Kloudlite___Operator___Apis___Crds___V1__ManagedServiceSpecIn =
   {
-    nodeSelector?: InputMaybe<Scalars['Map']['input']>;
     plugin?: InputMaybe<Github__Com___Kloudlite___Operator___Apis___Crds___V1__ServiceTemplateIn>;
     serviceTemplate?: InputMaybe<Github__Com___Kloudlite___Operator___Apis___Crds___V1__ServiceTemplateIn>;
-    tolerations?: InputMaybe<Array<K8s__Io___Api___Core___V1__TolerationIn>>;
   };
 
 export type Github__Com___Kloudlite___Operator___Apis___Crds___V1__ServiceTemplateIn =
@@ -1125,7 +1127,7 @@ export type Github__Com___Kloudlite___Operator___Apis___Crds___V1__ServiceTempla
   };
 
 export type Github__Com___Kloudlite___Operator___Pkg___Plugin__ExportIn = {
-  kv: Scalars['Map']['input'];
+  template: Scalars['String']['input'];
   viaSecret?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -1316,6 +1318,7 @@ export type Github__Com___Kloudlite___Api___Apps___Console___Internal___Entities
 export type Github__Com___Kloudlite___Api___Apps___Console___Internal___Entities__ManagedServicePluginInputFieldIn =
   {
     defaultValue?: InputMaybe<Scalars['Any']['input']>;
+    description?: InputMaybe<Scalars['String']['input']>;
     displayUnit?: InputMaybe<Scalars['String']['input']>;
     input: Scalars['String']['input'];
     label: Scalars['String']['input'];
@@ -2878,7 +2881,11 @@ export type ConsoleGetAppQuery = {
       intercept?: {
         enabled?: boolean;
         toDevice?: string;
-        portMappings?: Array<{ devicePort: number; appPort: number }>;
+        portMappings?: Array<{
+          devicePort: number;
+          appPort: number;
+          protocol: Github__Com___Kloudlite___Operator___Apis___Crds___V1__ServiceProtocol;
+        }>;
       };
       services?: Array<{ port: number }>;
       tolerations?: Array<{
@@ -3028,7 +3035,11 @@ export type ConsoleListAppsQuery = {
           intercept?: {
             enabled?: boolean;
             toDevice?: string;
-            portMappings?: Array<{ appPort: number; devicePort: number }>;
+            portMappings?: Array<{
+              appPort: number;
+              devicePort: number;
+              protocol: Github__Com___Kloudlite___Operator___Apis___Crds___V1__ServiceProtocol;
+            }>;
           };
           router?: {
             backendProtocol?: string;
@@ -4806,15 +4817,7 @@ export type ConsoleGetClusterMSvQuery = {
     spec?: {
       targetNamespace: string;
       msvcSpec: {
-        nodeSelector?: any;
         serviceTemplate?: { apiVersion: string; kind: string; spec?: any };
-        tolerations?: Array<{
-          effect?: K8s__Io___Api___Core___V1__TaintEffect;
-          key?: string;
-          operator?: K8s__Io___Api___Core___V1__TolerationOperator;
-          tolerationSeconds?: number;
-          value?: string;
-        }>;
       };
     };
   };
@@ -4883,15 +4886,7 @@ export type ConsoleListClusterMSvsQuery = {
         spec?: {
           targetNamespace: string;
           msvcSpec: {
-            nodeSelector?: any;
             serviceTemplate?: { apiVersion: string; kind: string; spec?: any };
-            tolerations?: Array<{
-              effect?: K8s__Io___Api___Core___V1__TaintEffect;
-              key?: string;
-              operator?: K8s__Io___Api___Core___V1__TolerationOperator;
-              tolerationSeconds?: number;
-              value?: string;
-            }>;
           };
         };
         status?: {
@@ -6290,7 +6285,7 @@ export type ConsoleListServiceBindingQuery = {
         interceptStatus?: {
           intercepted?: boolean;
           toAddr: string;
-          portMappings?: Array<{ containerPort: number; servicePort: number }>;
+          portMappings?: Array<{ devicePort: number; servicePort: number }>;
         };
         metadata?: { name: string };
         spec?: {
