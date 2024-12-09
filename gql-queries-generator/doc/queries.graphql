@@ -4851,6 +4851,106 @@ query authCli_getConfig($envName: String!, $name: String!) {
   }
 }
 
+query authCli_listServices($envName: String!, $pagination: CursorPaginationIn) {
+  core_listServiceBindings(envName: $envName, pagination: $pagination) {
+    edges {
+      cursor
+      node {
+        accountName
+        apiVersion
+        clusterName
+        creationTime
+        environmentName
+        id
+        interceptStatus {
+          intercepted
+          portMappings {
+            containerPort
+            servicePort
+          }
+          toAddr
+        }
+        kind
+        markedForDeletion
+        metadata {
+          annotations
+          creationTimestamp
+          deletionTimestamp
+          generation
+          labels
+          name
+          namespace
+        }
+        recordVersion
+        spec {
+          globalIP
+          hostname
+          ports {
+            appProtocol
+            name
+            nodePort
+            port
+            protocol
+            targetPort {
+              IntVal
+              StrVal
+              Type
+            }
+          }
+          serviceIP
+          serviceRef {
+            name
+            namespace
+          }
+        }
+        status {
+          checkList {
+            debug
+            description
+            hide
+            name
+            title
+          }
+          checks
+          isReady
+          lastReadyGeneration
+          lastReconcileTime
+          message {
+            RawMessage
+          }
+          resources {
+            apiVersion
+            kind
+            name
+            namespace
+          }
+        }
+        updateTime
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+      hasPrevPage
+      startCursor
+    }
+    totalCount
+  }
+}
+
+mutation authCli_createServiceIntercept($envName: String!, $serviceName: String!, $interceptTo: String!, $portMappings: [Github__com___kloudlite___operator___apis___crds___v1__SvcInterceptPortMappingsIn!]) {
+  core_createServiceIntercept(
+    envName: $envName
+    serviceName: $serviceName
+    interceptTo: $interceptTo
+    portMappings: $portMappings
+  )
+}
+
+mutation authCli_deleteServiceIntercept($envName: String!, $serviceName: String!) {
+  core_deleteServiceIntercept(envName: $envName, serviceName: $serviceName)
+}
+
 query authCli_listApps($pq: CursorPaginationIn, $envName: String!) {
   apps: core_listExternalApps(pq: $pq, envName: $envName) {
     edges {

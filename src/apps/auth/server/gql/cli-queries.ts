@@ -487,6 +487,144 @@ export const cliQueries = (executor: IExecutor) => ({
     }
   ),
 
+  cli_listServices: executor(
+    gql`
+      query Core_listServiceBindings(
+        $envName: String!
+        $pagination: CursorPaginationIn
+      ) {
+        core_listServiceBindings(envName: $envName, pagination: $pagination) {
+          edges {
+            cursor
+            node {
+              accountName
+              apiVersion
+              clusterName
+              creationTime
+              environmentName
+              id
+              interceptStatus {
+                intercepted
+                portMappings {
+                  containerPort
+                  servicePort
+                }
+                toAddr
+              }
+              kind
+              markedForDeletion
+              metadata {
+                annotations
+                creationTimestamp
+                deletionTimestamp
+                generation
+                labels
+                name
+                namespace
+              }
+              recordVersion
+              spec {
+                globalIP
+                hostname
+                ports {
+                  appProtocol
+                  name
+                  nodePort
+                  port
+                  protocol
+                  targetPort {
+                    IntVal
+                    StrVal
+                    Type
+                  }
+                }
+                serviceIP
+                serviceRef {
+                  name
+                  namespace
+                }
+              }
+              status {
+                checkList {
+                  debug
+                  description
+                  hide
+                  name
+                  title
+                }
+                checks
+                isReady
+                lastReadyGeneration
+                lastReconcileTime
+                message {
+                  RawMessage
+                }
+                resources {
+                  apiVersion
+                  kind
+                  name
+                  namespace
+                }
+              }
+              updateTime
+            }
+          }
+          pageInfo {
+            endCursor
+            hasNextPage
+            hasPrevPage
+            startCursor
+          }
+          totalCount
+        }
+      }
+    `,
+    {
+      transformer: (data: any) => data.core_listServiceBindings,
+      vars: (_: any) => {},
+    }
+  ),
+
+  cli_createServiceIntercept: executor(
+    gql`
+      mutation Core_createServiceIntercept(
+        $envName: String!
+        $serviceName: String!
+        $interceptTo: String!
+        $portMappings: [Github__com___kloudlite___operator___apis___crds___v1__SvcInterceptPortMappingsIn!]
+      ) {
+        core_createServiceIntercept(
+          envName: $envName
+          serviceName: $serviceName
+          interceptTo: $interceptTo
+          portMappings: $portMappings
+        )
+      }
+    `,
+    {
+      transformer: (data: any) => data.core_createServiceIntercept,
+      vars: (_: any) => {},
+    }
+  ),
+
+  cli_deleteServiceIntercept: executor(
+    gql`
+      mutation Core_deleteServiceIntercept(
+        $envName: String!
+        $serviceName: String!
+      ) {
+        core_deleteServiceIntercept(
+          envName: $envName
+          serviceName: $serviceName
+        )
+      }
+    `,
+    {
+      transformer: (data: any) => data.core_deleteServiceIntercept,
+      vars: (_: any) => {},
+    }
+  ),
+
   cli_listApps: executor(
     gql`
       query Core_listApps($pq: CursorPaginationIn, $envName: String!) {
