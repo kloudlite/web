@@ -1,4 +1,4 @@
-import { Box, BoxPrimitive } from '~/console/components/common-console-components';
+import { BoxPrimitive } from '~/console/components/common-console-components';
 import HelmChartLayout from '../helm-chart-layout';
 import useForm, { dummyEvent } from '~/root/lib/client/hooks/use-form';
 import { useHelmChartState } from '../../useHelmChartContext';
@@ -10,57 +10,50 @@ import yaml from 'js-yaml';
 import { useEffect, useRef } from 'react';
 import { LoadingPlaceHolder } from '~/console/components/loading';
 import Yup from '~/root/lib/server/helpers/yup';
-import { DISCARD_ACTIONS, useUnsavedChanges } from '~/root/lib/client/hooks/use-unsaved-changes';
+import {
+  DISCARD_ACTIONS,
+  useUnsavedChanges,
+} from '~/root/lib/client/hooks/use-unsaved-changes';
 import { parseName } from '~/console/server/r-utils/common';
-
 
 const SettingValues = () => {
   const { performAction } = useUnsavedChanges();
 
   const editorRef = useRef<any>();
 
-  const { helmChart, readOnlyHelmChart, setHelmChart } = useHelmChartState()
+  const { helmChart, readOnlyHelmChart, setHelmChart } = useHelmChartState();
 
-  const { values: helmValues, isLoading } =
-    useFetchHelmValue({
-      packageId: helmChart?.metadata?.annotations?.[
-        keyconstants.helmChartRepoPackageId
-      ]
-      ,
-      version: helmChart.spec?.chartVersion,
-    });
-
+  const { values: helmValues, isLoading } = useFetchHelmValue({
+    packageId:
+      helmChart?.metadata?.annotations?.[keyconstants.helmChartRepoPackageId],
+    version: helmChart.spec?.chartVersion,
+  });
 
   const { values, handleChange, submit, resetValues } = useForm({
     initialValues: {
-      activeTab: 'defaults',
+      activeTab: 'values',
       values:
         Object.keys(helmChart.spec?.values).length > 0
           ? yaml.dump(helmChart.spec?.values)
           : '',
-
     },
     validationSchema: Yup.object({}),
     onSubmit(val) {
       setHelmChart({
         ...helmChart,
         spec: {
-          chartName: helmChart.spec?.chartName || "",
-          chartRepoURL: helmChart.spec?.chartRepoURL || "",
-          chartVersion: helmChart.spec?.chartVersion || "",
-          values: val.values
-            ? yaml.load(val.values, { json: true })
-            : {}
-        }
-      })
-    }
-  })
-
+          chartName: helmChart.spec?.chartName || '',
+          chartRepoURL: helmChart.spec?.chartRepoURL || '',
+          chartVersion: helmChart.spec?.chartVersion || '',
+          values: val.values ? yaml.load(val.values, { json: true }) : {},
+        },
+      });
+    },
+  });
 
   useEffect(() => {
     submit();
   }, [values]);
-
 
   const reset = () => {
     resetValues({
@@ -68,17 +61,14 @@ const SettingValues = () => {
         Object.keys(readOnlyHelmChart.spec?.values).length > 0
           ? yaml.dump(readOnlyHelmChart.spec?.values)
           : '',
-
     });
-  }
+  };
 
   useEffect(() => {
     if (performAction === DISCARD_ACTIONS.DISCARD_CHANGES) {
-      reset()
+      reset();
     }
   }, [performAction]);
-
-
 
   const valueEditorProps = {
     height: '400px',
@@ -108,13 +98,24 @@ const SettingValues = () => {
                 onChange={(e) => {
                   handleChange('activeTab')(dummyEvent(e));
                 }}
-                items={[
-                  { label: 'Defaults', value: 'defaults' },
-                  {
-                    label: 'Values',
-                    value: 'values',
-                  },
-                ]}
+                items={
+                  helmChart?.metadata?.annotations?.[
+                    keyconstants.helmChartRepoPackageId
+                  ]
+                    ? [
+                        { label: 'Defaults', value: 'defaults' },
+                        {
+                          label: 'Values',
+                          value: 'values',
+                        },
+                      ]
+                    : [
+                        {
+                          label: 'Values',
+                          value: 'values',
+                        },
+                      ]
+                }
               />
               <CodeEditorClient
                 {...valueEditorProps}
@@ -152,7 +153,6 @@ const SettingValues = () => {
             </div>
           )}
         </div>
-
       </BoxPrimitive>
     </HelmChartLayout>
   );
