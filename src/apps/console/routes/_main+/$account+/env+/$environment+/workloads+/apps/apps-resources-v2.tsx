@@ -10,10 +10,7 @@ import {
   listClass,
 } from '~/console/components/console-list-components';
 import Grid from '~/console/components/grid';
-import {
-  GearSix,
-  Link as LinkIcon,
-} from '~/console/components/icons';
+import { GearSix, Link as LinkIcon } from '~/console/components/icons';
 import ListGridView from '~/console/components/list-grid-view';
 import ListV2 from '~/console/components/listV2';
 import ResourceExtraAction, {
@@ -33,7 +30,6 @@ import {
 import { useWatchReload } from '~/lib/client/helpers/socket/useWatch';
 import { handleError } from '~/lib/utils/common';
 import { IEnvironmentContext } from '~/console/routes/_main+/$account+/env+/$environment+/_layout';
-
 
 const RESOURCE_NAME = 'app';
 type BaseType = ExtractNodeType<IApps>;
@@ -71,7 +67,7 @@ const ExtraButton = ({ onAction, item }: IExtraButton) => {
       label: 'Settings',
       icon: <GearSix size={iconSize} />,
       type: 'item',
-      to: `/${account}/env/${environment}/app/${parseName(
+      to: `/${account}/env/${environment}/workloads/app/${parseName(
         item,
       )}/settings/general`,
       key: 'settings',
