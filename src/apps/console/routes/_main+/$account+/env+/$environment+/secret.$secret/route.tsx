@@ -81,7 +81,7 @@ const ConfigBody = ({ secret }: { secret: ISecret }) => {
               newvalue: null,
             },
           };
-        }, {})
+        }, {}),
       );
     } catch {
       //
@@ -97,7 +97,7 @@ const ConfigBody = ({ secret }: { secret: ISecret }) => {
       (mi) =>
         mi.delete ||
         mi.insert ||
-        (mi.newvalue != null && mi.newvalue !== mi.value)
+        (mi.newvalue != null && mi.newvalue !== mi.value),
     ).length;
   };
 
@@ -123,7 +123,7 @@ const ConfigBody = ({ secret }: { secret: ISecret }) => {
                     data: modifiedItems,
                   })
                 }
-                disabled={success}
+                disabled={success || !!secret.createdByHelm}
               />
               {changesCount() > 0 && !success && (
                 <Button
@@ -151,7 +151,7 @@ const ConfigBody = ({ secret }: { secret: ISecret }) => {
                           [key]: val.newvalue ? val.newvalue : val.value,
                         };
                       },
-                      {}
+                      {},
                     );
                     if (!environment) {
                       throw new Error('Project or Environment is required!.');
@@ -191,6 +191,7 @@ const ConfigBody = ({ secret }: { secret: ISecret }) => {
         tools={<Tools searchText={searchText} setSearchText={setSearchText} />}
       >
         <Resources
+          orgItem={secret}
           searchText={searchText.trim()}
           modifiedItems={modifiedItems}
           editItem={(item, value) => {

@@ -17,6 +17,9 @@ import {
   IShowDialog,
 } from '~/console/components/types.d';
 import Handle from './handle';
+import { ISecret, ISecrets } from '~/console/server/gql/queries/secret-queries';
+import { ExtractNodeType } from '~/console/server/r-utils/common';
+import { NN } from '~/root/lib/types/common';
 
 // const RESOURCE_NAME = 'secret';
 
@@ -26,6 +29,7 @@ interface IResourceBase {
   deleteItem: (item: ICSBase) => void;
   restoreItem: (item: ICSBase) => void;
   searchText: string;
+  orgItem: ISecret;
 }
 
 interface IShowSecretDialog extends Omit<IAlertModal, 'setShow'> {
@@ -51,13 +55,15 @@ type OnAction = ({
 type IExtraButton = {
   onAction: OnAction;
   item: [string, ICSValueExtended];
+  orgItem: ISecret;
 };
 
-const ExtraButton = ({ onAction, item }: IExtraButton) => {
+const ExtraButton = ({ onAction, item, orgItem }: IExtraButton) => {
   const iconSize = 16;
 
   return item[1].newvalue || item[1].delete ? (
     <ResourceExtraAction
+      disabled={!!orgItem.createdByHelm}
       options={[
         {
           label: 'Restore',
@@ -85,6 +91,7 @@ const ExtraButton = ({ onAction, item }: IExtraButton) => {
     />
   ) : (
     <ResourceExtraAction
+      disabled={!!orgItem.createdByHelm}
       options={[
         {
           label: 'Edit',
@@ -184,7 +191,7 @@ const ValueComponent = ({
 //   );
 // };
 
-const ListView = ({ items, onAction, onShow }: IResource) => {
+const ListView = ({ items, onAction, onShow, orgItem }: IResource) => {
   return (
     <ListV2.Root
       data={{
@@ -222,7 +229,13 @@ const ListView = ({ items, onAction, onShow }: IResource) => {
                 ),
               },
               action: {
-                render: () => <ExtraButton onAction={onAction} item={item} />,
+                render: () => (
+                  <ExtraButton
+                    onAction={onAction}
+                    item={item}
+                    orgItem={orgItem}
+                  />
+                ),
               },
             },
           };
@@ -238,6 +251,7 @@ const SecretItemResources = ({
   deleteItem,
   editItem,
   restoreItem,
+  orgItem,
 }: IResourceBase) => {
   const [showSecret, setShowSecret] = useState<IShowSecretDialog>({
     show: false,
@@ -259,7 +273,7 @@ const SecretItemResources = ({
           return true;
         }
         return false;
-      })
+      }),
     );
   }, [searchText, modifiedItems]);
 
@@ -281,6 +295,7 @@ const SecretItemResources = ({
     deleteItem,
     editItem,
     restoreItem,
+    orgItem,
     onShow,
     onAction: ({ action, item }) => {
       const data = {

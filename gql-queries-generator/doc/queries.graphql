@@ -1670,6 +1670,7 @@ query consoleListSecrets($envName: String!, $search: SearchSecrets, $pq: CursorP
         }
         creationTime
         displayName
+        createdByHelm
         stringData
         environmentName
         isReadyOnly
@@ -1716,6 +1717,7 @@ query consoleGetSecret($envName: String!, $name: String!) {
     environmentName
     immutable
     markedForDeletion
+    createdByHelm
     metadata {
       annotations
       creationTimestamp

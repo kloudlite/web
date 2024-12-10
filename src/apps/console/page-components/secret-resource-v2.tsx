@@ -27,6 +27,7 @@ import ListV2 from '../components/listV2';
 import ResourceExtraAction from '../components/resource-extra-action';
 import { useConsoleApi } from '../server/gql/api-provider';
 import { ISecrets } from '../server/gql/queries/secret-queries';
+import { Chip } from '@kloudlite/design-system/atoms/chips';
 
 const RESOURCE_NAME = 'secret';
 type BaseType = ExtractNodeType<ISecrets>;
@@ -48,12 +49,21 @@ const parseItem = (item: BaseType) => {
       author: `Updated by ${titleCase(parseUpdateOrCreatedBy(item))}`,
       time: parseUpdateOrCreatedOn(item),
     },
+    createdByHelm: item.createdByHelm,
   };
 };
 
-const ExtraButton = ({ onDelete }: { onDelete: () => void }) => {
+const ExtraButton = ({
+  onDelete,
+  item,
+}: {
+  onDelete: () => void;
+  item: BaseType;
+}) => {
+  console.log(item);
   return (
     <ResourceExtraAction
+      disabled={!!item.createdByHelm}
       options={[
         {
           label: 'Delete',
@@ -111,6 +121,7 @@ const GridView = ({
                           onDelete={() => {
                             onDelete(item);
                           }}
+                          item={item}
                         />
                       )
                     }
@@ -166,10 +177,16 @@ const ListView = ({
             className: listClass.title,
           },
           {
+            render: () => 'Managed by',
+            name: 'managedBy',
+            className: 'flex-1 min-w-[30px] flex items-center justify-center',
+          },
+          {
             render: () => 'Entries',
             name: 'entries',
             className: 'flex-1 min-w-[30px] flex items-center justify-center',
           },
+
           {
             render: () => 'Updated',
             name: 'updated',
@@ -182,7 +199,7 @@ const ListView = ({
           },
         ],
         rows: items.map((i) => {
-          const { name, id, entries, updateInfo } = parseItem(i);
+          const { name, id, entries, updateInfo, createdByHelm } = parseItem(i);
           return {
             onClick: () => {
               onClick(i);
@@ -192,6 +209,12 @@ const ListView = ({
             columns: {
               name: {
                 render: () => <ListTitleV2 title={name} />,
+              },
+              managedBy: {
+                render: () =>
+                  createdByHelm ? (
+                    <Chip item={'helm-chart'} label="Helm chart" />
+                  ) : null,
               },
               entries: {
                 render: () => <ListItemV2 data={entries} />,
@@ -209,7 +232,7 @@ const ListView = ({
                 ? {
                     action: {
                       render: () => (
-                        <ExtraButton onDelete={() => onDelete(i)} />
+                        <ExtraButton onDelete={() => onDelete(i)} item={i} />
                       ),
                     },
                   }
@@ -233,7 +256,7 @@ const SecretResourcesV2 = ({
   linkComponent = null,
 }: Omit<IResource, 'onDelete'>) => {
   const [showDeleteDialog, setShowDeleteDialog] = useState<BaseType | null>(
-    null
+    null,
   );
 
   const api = useConsoleApi();
@@ -245,9 +268,9 @@ const SecretResourcesV2 = ({
   useWatchReload(
     items.map((i) => {
       return `account:${account}.environment:${environment}.secret:${parseName(
-        i
+        i,
       )}`;
-    })
+    }),
   );
 
   const props: IResource = {

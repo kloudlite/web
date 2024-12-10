@@ -3479,6 +3479,7 @@ export type ConsoleListSecretsQuery = {
       node: {
         creationTime: any;
         displayName: string;
+        createdByHelm?: string;
         stringData?: any;
         environmentName: string;
         isReadyOnly: boolean;
@@ -3529,6 +3530,7 @@ export type ConsoleGetSecretQuery = {
     environmentName: string;
     immutable?: boolean;
     markedForDeletion?: boolean;
+    createdByHelm?: string;
     stringData?: any;
     type?: K8s__Io___Api___Core___V1__SecretType;
     metadata?: {

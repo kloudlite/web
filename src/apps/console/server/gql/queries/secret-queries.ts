@@ -36,6 +36,7 @@ export const secretQueries = (executor: IExecutor) => ({
               }
               creationTime
               displayName
+              createdByHelm
               stringData
               environmentName
               isReadyOnly
@@ -72,7 +73,7 @@ export const secretQueries = (executor: IExecutor) => ({
     {
       transformer: (data: ConsoleListSecretsQuery) => data.core_listSecrets,
       vars(_: ConsoleListSecretsQueryVariables) {},
-    }
+    },
   ),
   createSecret: executor(
     gql`
@@ -86,7 +87,7 @@ export const secretQueries = (executor: IExecutor) => ({
       transformer: (data: ConsoleCreateSecretMutation) =>
         data.core_createSecret,
       vars(_: ConsoleCreateSecretMutationVariables) {},
-    }
+    },
   ),
 
   getSecret: executor(
@@ -98,6 +99,7 @@ export const secretQueries = (executor: IExecutor) => ({
           environmentName
           immutable
           markedForDeletion
+          createdByHelm
           metadata {
             annotations
             creationTimestamp
@@ -115,7 +117,7 @@ export const secretQueries = (executor: IExecutor) => ({
     {
       transformer: (data: ConsoleGetSecretQuery) => data.core_getSecret,
       vars(_: ConsoleGetSecretQueryVariables) {},
-    }
+    },
   ),
   updateSecret: executor(
     gql`
@@ -128,7 +130,7 @@ export const secretQueries = (executor: IExecutor) => ({
     {
       transformer: (data: ConsoleUpdateSecretMutation) => data,
       vars(_: ConsoleUpdateSecretMutationVariables) {},
-    }
+    },
   ),
   deleteSecret: executor(
     gql`
@@ -139,6 +141,6 @@ export const secretQueries = (executor: IExecutor) => ({
     {
       transformer: (data: ConsoleDeleteSecretMutation) => data,
       vars(_: ConsoleDeleteSecretMutationVariables) {},
-    }
+    },
   ),
 });
