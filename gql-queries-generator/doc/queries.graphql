@@ -3022,7 +3022,6 @@ query consoleGetClusterMSv($name: String!) {
     displayName
     isArchived
     id
-    kind
     lastUpdatedBy {
       userEmail
       userId
@@ -3093,7 +3092,6 @@ query consoleListClusterMSvs($pagination: CursorPaginationIn, $search: SearchClu
         creationTime
         displayName
         id
-        kind
         lastUpdatedBy {
           userEmail
           userId
@@ -4853,7 +4851,7 @@ query authCli_listServices($envName: String!, $pagination: CursorPaginationIn) {
         interceptStatus {
           intercepted
           portMappings {
-            containerPort
+            devicePort
             servicePort
           }
           toAddr
