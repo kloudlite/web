@@ -35,7 +35,6 @@ export const clusterManagedServicesQueries = (executor: IExecutor) => ({
           displayName
           isArchived
           id
-          kind
           lastUpdatedBy {
             userEmail
             userId
@@ -154,7 +153,6 @@ export const clusterManagedServicesQueries = (executor: IExecutor) => ({
               creationTime
               displayName
               id
-              kind
               lastUpdatedBy {
                 userEmail
                 userId

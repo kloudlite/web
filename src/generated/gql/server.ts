@@ -4802,7 +4802,6 @@ export type ConsoleGetClusterMSvQuery = {
     displayName: string;
     isArchived?: boolean;
     id: string;
-    kind?: string;
     markedForDeletion?: boolean;
     recordVersion: number;
     updateTime: any;
@@ -4870,7 +4869,6 @@ export type ConsoleListClusterMSvsQuery = {
         creationTime: any;
         displayName: string;
         id: string;
-        kind?: string;
         markedForDeletion?: boolean;
         recordVersion: number;
         updateTime: any;
@@ -6647,7 +6645,7 @@ export type AuthCli_ListServicesQuery = {
         interceptStatus?: {
           intercepted?: boolean;
           toAddr: string;
-          portMappings?: Array<{ containerPort: number; servicePort: number }>;
+          portMappings?: Array<{ devicePort: number; servicePort: number }>;
         };
         metadata?: {
           annotations?: any;
