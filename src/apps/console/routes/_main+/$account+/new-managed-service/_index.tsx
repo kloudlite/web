@@ -79,8 +79,8 @@ const RenderField = ({
             dummyEvent(
               `${parseFloat(target.value) * (field.multiplier || 1)}${
                 field.unit
-              }`
-            )
+              }`,
+            ),
           );
         }}
         suffix={field.displayUnit}
@@ -121,16 +121,16 @@ const RenderField = ({
                     dummyEvent(
                       `${parseFloat(target.value) * (field.multiplier || 1)}${
                         field.unit
-                      }`
-                    )
+                      }`,
+                    ),
                   );
                   if (qos) {
                     onChange(`res.${field.name}.max`)(
                       dummyEvent(
                         `${parseFloat(target.value) * (field.multiplier || 1)}${
                           field.unit
-                        }`
-                      )
+                        }`,
+                      ),
                     );
                   }
                 }}
@@ -150,8 +150,8 @@ const RenderField = ({
                       dummyEvent(
                         `${parseFloat(target.value) * (field.multiplier || 1)}${
                           field.unit
-                        }`
-                      )
+                        }`,
+                      ),
                     );
                   }}
                   suffix={field.displayUnit}
@@ -390,7 +390,7 @@ const ReviewView = ({
 }) => {
   const renderFieldView = () => {
     const fields = Object.entries(values.res).filter(
-      ([k, _v]) => !['resources'].includes(k)
+      ([k, _v]) => !['resources'].includes(k),
     );
     if (fields.length > 0) {
       return (
@@ -608,7 +608,7 @@ const ManagedServiceLayout = () => {
           'Cluster name is required',
           (v) => {
             return !(currentStep === 2 && !v);
-          }
+          },
         ),
         selectedTemplate: Yup.object({}).required('Template is required.'),
         // @ts-ignore
@@ -628,9 +628,9 @@ const ManagedServiceLayout = () => {
                     (acc: any, curr: any) => {
                       return { ...acc, [curr.name]: curr };
                     },
-                    {}
-                  )
-                )
+                    {},
+                  ),
+                ),
               );
             }
 
@@ -663,9 +663,6 @@ const ManagedServiceLayout = () => {
                 clusterName: val.clusterName,
                 spec: {
                   msvcSpec: {
-                    nodeSelector: {
-                      [keyconstants.nodepoolName]: val.nodepoolName,
-                    },
                     serviceTemplate: {
                       apiVersion: selectedTemplate.template.apiVersion,
                       kind: selectedTemplate.template.kind,
@@ -713,7 +710,7 @@ const ManagedServiceLayout = () => {
           ...flatM(
             selectedTemplate?.template?.fields.reduce((acc, curr) => {
               return { ...acc, [curr.name]: curr };
-            }, {})
+            }, {}),
           ),
         },
       }));

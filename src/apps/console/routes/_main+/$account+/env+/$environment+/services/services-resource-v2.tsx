@@ -13,7 +13,9 @@ import Grid from '~/console/components/grid';
 import { LinkBreak, Repeat } from '~/console/components/icons';
 import ListGridView from '~/console/components/list-grid-view';
 import ListV2 from '~/console/components/listV2';
-import ResourceExtraAction, { IResourceExtraItem } from '~/console/components/resource-extra-action';
+import ResourceExtraAction, {
+  IResourceExtraItem,
+} from '~/console/components/resource-extra-action';
 import {
   ExtractNodeType,
   parseName,
@@ -35,9 +37,9 @@ const RESOURCE_NAME = 'managed resource';
 type BaseType = ExtractNodeType<IServiceBinding>;
 
 const parseItem = (item: BaseType) => {
-  console.log("svcbinding", item)
+  console.log('svcbinding', item);
   return {
-    name: item.spec?.serviceRef?.name || "",
+    name: item.spec?.serviceRef?.name || '',
     serviceHost: item.serviceHost,
     updateInfo: {
       time: parseUpdateOrCreatedOn(item),
@@ -61,8 +63,7 @@ type IExtraButton = {
 const ExtraButton = ({ onAction, item }: IExtraButton) => {
   const iconSize = 16;
 
-  let options: IResourceExtraItem[] = [
-  ]
+  let options: IResourceExtraItem[] = [];
 
   if (item.interceptStatus?.intercepted) {
     options = [
@@ -88,19 +89,16 @@ const ExtraButton = ({ onAction, item }: IExtraButton) => {
     ];
   }
 
-  return (
-    <ResourceExtraAction
-      options={options}
-    />
-  );
+  return <ResourceExtraAction options={options} />;
 };
-
 
 const InterceptPortView = ({
   ports = [],
   devName = '',
 }: {
-  ports: NN<NN<ExtractNodeType<IServiceBinding>['interceptStatus']>['portMappings']>;
+  ports: NN<
+    NN<ExtractNodeType<IServiceBinding>['interceptStatus']>['portMappings']
+  >;
   devName: string;
 }) => {
   return (
@@ -115,9 +113,9 @@ const InterceptPortView = ({
             <div className="flex flex-row gap-md py-md">
               {ports?.map((d) => {
                 return (
-                  <Badge className="shrink-0" key={d.containerPort}>
+                  <Badge className="shrink-0" key={d.servicePort}>
                     <div>
-                      {d.containerPort} → {d.servicePort}
+                      {d.servicePort} → {d.devicePort}
                     </div>
                   </Badge>
                 );
@@ -235,7 +233,7 @@ const ListView = ({ items = [], onAction }: IResource) => {
                 render: () => <ListTitleV2 title={name} />,
               },
               serviceHost: {
-                render: () => <ServiceView service={serviceHost || ""} />
+                render: () => <ServiceView service={serviceHost || ''} />,
               },
               intercept: {
                 render: () =>
@@ -263,10 +261,9 @@ const ListView = ({ items = [], onAction }: IResource) => {
 };
 
 const ServiceBindingsResourcesV2 = ({ items = [] }: { items: BaseType[] }) => {
-
-  const { environment, account } = useOutletContext<IEnvironmentContext>()
-  const api = useConsoleApi()
-  const reload = useReload()
+  const { environment, account } = useOutletContext<IEnvironmentContext>();
+  const api = useConsoleApi();
+  const reload = useReload();
   const [visible, setVisible] = useState(false);
   const [mi, setItem] = useState<ExtractNodeType<IServiceBinding>>();
 
@@ -283,29 +280,29 @@ const ServiceBindingsResourcesV2 = ({ items = [] }: { items: BaseType[] }) => {
           envName: parseName(environment),
           interceptTo: item.interceptStatus?.toAddr,
           serviceName: item.spec?.serviceRef?.name,
-          portMappings: item.interceptStatus.portMappings
-        })
+          portMappings: item.interceptStatus.portMappings,
+        });
         if (errors) {
-          throw errors[0]
+          throw errors[0];
         }
-        toast.success("Service intercept is removed.")
-        reload()
+        toast.success('Service intercept is removed.');
+        reload();
       }
     } catch (e) {
-      handleError(e)
+      handleError(e);
     }
-  }
+  };
 
   const props: IResource = {
     items,
     onAction: ({ action, item }) => {
       switch (action) {
         case 'intercept':
-          setItem(item)
-          setVisible(true)
+          setItem(item);
+          setVisible(true);
           break;
         case 'remove_intercept':
-          removeIntercept(item)
+          removeIntercept(item);
           break;
         default:
           break;
@@ -325,7 +322,6 @@ const ServiceBindingsResourcesV2 = ({ items = [] }: { items: BaseType[] }) => {
           service: mi,
         }}
       />
-
     </>
   );
 };

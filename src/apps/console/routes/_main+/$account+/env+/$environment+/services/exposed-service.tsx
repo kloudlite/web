@@ -9,15 +9,12 @@ import {
   ChevronRight,
   SmileySad,
 } from '~/console/components/icons';
-import { NN } from '~/root/lib/types/common';
-import { ExtractArrayType, parseValue } from '~/console/page-components/util';
+import { parseValue } from '~/console/page-components/util';
 import { ISetState } from '~/console/page-components/app-states';
 import { NumberInput } from '@kloudlite/design-system/atoms/input';
-import { AppIn } from '~/root/src/generated/gql/server';
+import { Github__Com___Kloudlite___Operator___Apis___Crds___V1__SvcInterceptPortMappingsIn as InterceptServiceIn } from '~/root/src/generated/gql/server';
 
-export type exposedPortsType = ExtractArrayType<
-  NN<NN<AppIn['spec']['intercept']>['portMappings']>
->;
+export type exposedPortsType = InterceptServiceIn;
 
 interface IExposedPortList {
   exposedPorts: exposedPortsType[];
@@ -34,7 +31,9 @@ const ExposedPortList = ({
     });
 
   const updateDevPort = (p: exposedPortsType) => {
-    setExposedPorts((s) => s.map((d) => (p.appPort === d.appPort ? p : d)));
+    setExposedPorts((s) =>
+      s.map((d) => (p.servicePort === d.servicePort ? p : d)),
+    );
   };
 
   useEffect(() => {
@@ -76,7 +75,7 @@ const ExposedPortList = ({
                   '!border-b': index < 4,
                   '!rounded-b-none': index < 4,
                 })}
-                key={ep.appPort}
+                key={ep.servicePort}
                 columns={[
                   {
                     key: `${index}-column-1`,
@@ -84,7 +83,7 @@ const ExposedPortList = ({
                     render: () => (
                       <div className="flex flex-row gap-md items-center bodyMd text-text-soft">
                         <span>Container: </span>
-                        {ep.appPort}
+                        {ep.servicePort}
                       </div>
                     ),
                   },
@@ -99,8 +98,7 @@ const ExposedPortList = ({
                           onChange={(value) =>
                             updateDevPort({
                               devicePort: parseValue(value.target.value, 0),
-                              appPort: ep.appPort,
-                              protocol: 'TCP',
+                              servicePort: ep.servicePort,
                             })
                           }
                         />

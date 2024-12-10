@@ -52,7 +52,7 @@ const repoRenderer = ({
 const filterUniqueVersions = (versions: IHelmDoc['entries']['keys']) => {
   return versions.filter(
     (obj, index, self) =>
-      index === self.findIndex((t) => t.version === obj.version)
+      index === self.findIndex((t) => t.version === obj.version),
   );
 };
 
@@ -70,6 +70,7 @@ const HelmChartLayout = () => {
   >([]);
 
   const [selectedRepo, setSelectedRepo] = useState<string>('');
+  const [packageId, setPackageId] = useState<string>('');
 
   const [repoSearchText, setRepoSearchText] = useState('');
 
@@ -86,7 +87,7 @@ const HelmChartLayout = () => {
   });
 
   const { values: helmValues } = useFetchHelmValue({
-    packageId: selectedRepo,
+    packageId,
     version: chartVersion?.value,
   });
 
@@ -105,7 +106,7 @@ const HelmChartLayout = () => {
       chartVersion: '',
       values: '',
       isNameError: false,
-      activeTab: 'defaults',
+      activeTab: 'values',
     },
     validationSchema: Yup.object({
       displayName: Yup.string().required(),
@@ -115,21 +116,21 @@ const HelmChartLayout = () => {
         'Chart Name is required',
         (v) => {
           return !(currentStep === 2 && !v);
-        }
+        },
       ),
       chartRepoURL: Yup.string().test(
         'required',
         'Chart Repo Url is required',
         (v) => {
           return !(currentStep === 2 && !v);
-        }
+        },
       ),
       chartVersion: Yup.string().test(
         'required',
         'Chart Version is required',
         (v) => {
           return !(currentStep === 2 && !v);
-        }
+        },
       ),
     }),
 
@@ -143,7 +144,7 @@ const HelmChartLayout = () => {
               metadata: {
                 name: val.name,
                 annotations: {
-                  [keyconstants.helmChartRepoPackageId]: selectedRepo,
+                  [keyconstants.helmChartRepoPackageId]: packageId,
                 },
               },
               spec: {
@@ -284,11 +285,11 @@ const HelmChartLayout = () => {
               onChange={(value) => {
                 if (!repoSearchText.startsWith('https://')) {
                   handleChange('chartRepoURL')(dummyEvent(value.repoUrl));
+                  setPackageId(value.value);
                 } else {
                   handleChange('chartRepoURL')(dummyEvent(value.value));
                 }
                 setSelectedRepo(value.value);
-                /* setHelmCharts([]); */
               }}
               onSearch={(text) => {
                 setRepoSearchText(text);
@@ -309,7 +310,9 @@ const HelmChartLayout = () => {
               placeholder="Chart name"
               searchable
               size="lg"
-              disabled={helmCharts.length === 0 || repoLoading || !selectedRepo}
+              disabled={
+                helmCharts.length === 0 || repoLoading || !values.chartRepoURL
+              }
               // @ts-ignore
               value={chartName?.value}
               options={async () => helmCharts}
@@ -369,13 +372,22 @@ const HelmChartLayout = () => {
                     onChange={(e) => {
                       handleChange('activeTab')(dummyEvent(e));
                     }}
-                    items={[
-                      { label: 'Defaults', value: 'defaults' },
-                      {
-                        label: 'Values',
-                        value: 'values',
-                      },
-                    ]}
+                    items={
+                      packageId
+                        ? [
+                            { label: 'Defaults', value: 'defaults' },
+                            {
+                              label: 'Values',
+                              value: 'values',
+                            },
+                          ]
+                        : [
+                            {
+                              label: 'Values',
+                              value: 'values',
+                            },
+                          ]
+                    }
                   />
                   <CodeEditorClient
                     {...valueEditorProps}

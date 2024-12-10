@@ -33,7 +33,7 @@ export const appQueries = (executor: IExecutor) => ({
     {
       transformer: (data: ConsoleRestartAppQuery) => data.core_restartApp,
       vars: (_: ConsoleRestartAppQueryVariables) => {},
-    }
+    },
   ),
   createApp: executor(
     gql`
@@ -46,7 +46,7 @@ export const appQueries = (executor: IExecutor) => ({
     {
       transformer: (data: ConsoleCreateAppMutation) => data.core_createApp,
       vars(_: ConsoleCreateAppMutationVariables) {},
-    }
+    },
   ),
 
   updateApp: executor(
@@ -62,7 +62,7 @@ export const appQueries = (executor: IExecutor) => ({
         return data.core_updateApp;
       },
       vars(_: ConsoleUpdateAppMutationVariables) {},
-    }
+    },
   ),
   interceptApp: executor(
     gql`
@@ -86,7 +86,7 @@ export const appQueries = (executor: IExecutor) => ({
       transformer: (data: ConsoleInterceptAppMutation) =>
         data.core_interceptApp,
       vars(_: ConsoleInterceptAppMutationVariables) {},
-    }
+    },
   ),
   removeDeviceIntercepts: executor(
     gql`
@@ -101,7 +101,7 @@ export const appQueries = (executor: IExecutor) => ({
       transformer: (data: ConsoleRemoveDeviceInterceptsMutation) =>
         data.core_removeDeviceIntercepts,
       vars(_: ConsoleRemoveDeviceInterceptsMutationVariables) {},
-    }
+    },
   ),
   deleteApp: executor(
     gql`
@@ -112,7 +112,7 @@ export const appQueries = (executor: IExecutor) => ({
     {
       transformer: (data: ConsoleDeleteAppMutation) => data.core_deleteApp,
       vars(_: ConsoleDeleteAppMutationVariables) {},
-    }
+    },
   ),
   getApp: executor(
     gql`
@@ -218,6 +218,7 @@ export const appQueries = (executor: IExecutor) => ({
               portMappings {
                 devicePort
                 appPort
+                protocol
               }
             }
             nodeSelector
@@ -296,7 +297,7 @@ export const appQueries = (executor: IExecutor) => ({
         return data.core_getApp;
       },
       vars(_: ConsoleGetAppQueryVariables) {},
-    }
+    },
   ),
   listApps: executor(
     gql`
@@ -413,6 +414,7 @@ export const appQueries = (executor: IExecutor) => ({
                   portMappings {
                     appPort
                     devicePort
+                    protocol
                   }
                   toDevice
                 }
@@ -589,6 +591,6 @@ export const appQueries = (executor: IExecutor) => ({
     {
       transformer: (data: ConsoleListAppsQuery) => data.core_listApps,
       vars(_: ConsoleListAppsQueryVariables) {},
-    }
+    },
   ),
 });

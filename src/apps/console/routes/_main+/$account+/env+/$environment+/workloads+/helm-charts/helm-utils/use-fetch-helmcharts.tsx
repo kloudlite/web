@@ -18,7 +18,7 @@ type IHelmChart = Array<{
 
 const useFetchHelmCharts = (
   { repoUrl }: { repoUrl?: string },
-  onFetch?: (data: IHelmChart) => void
+  onFetch?: (data: IHelmChart) => void,
 ) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
