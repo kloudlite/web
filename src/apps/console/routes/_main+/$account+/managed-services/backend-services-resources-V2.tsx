@@ -3,6 +3,7 @@ import { toast } from '@kloudlite/design-system/molecule/toast';
 import { generateKey, titleCase } from '@kloudlite/design-system/utils';
 import { Link, useOutletContext, useParams } from '@remix-run/react';
 import { useState } from 'react';
+import ConsoleAvatar from '~/console/components/console-avatar';
 import {
   listClass,
   ListItem,
@@ -235,13 +236,17 @@ const ListView = ({ items, templates, plugins, onAction }: IResource) => {
                     title={name}
                     subtitle={id}
                     avatar={
-                      <div className="pulsable pulsable-circle aspect-square">
-                        <img
-                          src={logoUrl || logo}
-                          alt={name}
-                          className="w-4xl h-4xl"
-                        />
-                      </div>
+                      logo || logoUrl ? (
+                        <div className="pulsable pulsable-circle aspect-square">
+                          <img
+                            src={logoUrl || logo}
+                            alt={name}
+                            className="w-4xl h-4xl"
+                          />
+                        </div>
+                      ) : (
+                        <ConsoleAvatar name={id} />
+                      )
                     }
                   />
                 ),

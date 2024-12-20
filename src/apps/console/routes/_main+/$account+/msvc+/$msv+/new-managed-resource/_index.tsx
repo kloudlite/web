@@ -24,14 +24,17 @@ import { IAccountContext } from '~/console/routes/_main+/$account+/_layout';
 import { IManagedServiceContext } from '~/console/routes/_main+/$account+/msvc+/$msv+/_layout';
 import { useConsoleApi } from '~/console/server/gql/api-provider';
 import { IClusterMSvs } from '~/console/server/gql/queries/cluster-managed-services-queries';
-import { IMSvTemplate } from '~/console/server/gql/queries/managed-templates-queries';
+import {
+  IMSvPlugin,
+  IMSvTemplate,
+} from '~/console/server/gql/queries/managed-templates-queries';
 import { GQLServerHandler } from '~/console/server/gql/saved-queries';
 import {
   ExtractNodeType,
   parseName,
   parseNodes,
 } from '~/console/server/r-utils/common';
-import { getManagedTemplate } from '~/console/utils/commons';
+import { getManagedPlugin, getManagedTemplate } from '~/console/utils/commons';
 import useForm, { dummyEvent } from '~/lib/client/hooks/use-form';
 import Yup from '~/lib/server/helpers/yup';
 import { IRemixCtx } from '~/lib/types/common';
@@ -57,6 +60,21 @@ export const loader = (ctx: IRemixCtx) => {
   return defer({ promise });
 };
 
+// const valueEditorProps = {
+//   height: '200px',
+//   options: {
+//     fontSize: 14,
+//     padding: {
+//       top: 20,
+//       bottom: 20,
+//     },
+//     tabSize: 2,
+//     minimap: {
+//       enabled: false,
+//     },
+//   },
+// };
+
 const RenderField = ({
   field,
   value,
@@ -64,14 +82,15 @@ const RenderField = ({
   error,
   message,
 }: {
-  field: IMSvTemplate['fields'][number];
+  // field: IMSvTemplate['fields'][number];
+  field: IMSvPlugin['spec']['services'][0]['inputs'][number];
   onChange: (e: string) => (e: { target: { value: any } }) => void;
   value: any;
   error: boolean;
   message?: string;
 }) => {
   const [qos, setQos] = useState(false);
-  if (field.inputType === 'Number') {
+  if (field.type === 'Number') {
     return (
       <NumberInput
         error={error}
@@ -82,7 +101,7 @@ const RenderField = ({
         placeholder={field.label}
         value={parseFloat(value) / (field.multiplier || 1) || ''}
         onChange={({ target }) => {
-          onChange(`res.${field.name}`)(
+          onChange(`res.${field.input}`)(
             dummyEvent(
               `${parseFloat(target.value) * (field.multiplier || 1)}${
                 field.unit
@@ -95,17 +114,102 @@ const RenderField = ({
     );
   }
 
-  if (field.inputType === 'String') {
+  if (field.type === 'String') {
     return (
       <TextInput
         label={field.label}
         value={value || ''}
-        onChange={onChange(`res.${field.name}`)}
+        onChange={onChange(`res.${field.input}`)}
         suffix={field.displayUnit}
       />
     );
   }
-  if (field.inputType === 'Resource') {
+
+  // if (field.type === 'text/yaml') {
+  //   const v = typeof value === 'string' ? value : JSON.stringify(value);
+  //   return (
+  //     <div className="flex flex-col gap-2xl">
+  //       <div className="bodyMd-medium text-text-default">{field.label}</div>
+  //       <CodeEditorClient
+  //         {...valueEditorProps}
+  //         value={v || ''}
+  //         lang="yaml"
+  //         onChange={(e) => {
+  //           onChange(`res.${field.input}`)(dummyEvent(e));
+  //         }}
+  //         path={field.input}
+  //       />
+  //     </div>
+  //   );
+  // }
+
+  // if (field.type === 'int-range') {
+  //   return (
+  //     <div className="flex flex-col gap-md">
+  //       <div className="bodyMd-medium text-text-default">{`${field.label}${
+  //         field.required ? ' *' : ''
+  //       }`}</div>
+  //       <div className="flex flex-row gap-xl items-center">
+  //         <div className="flex flex-row gap-xl items-end flex-1 ">
+  //           <div className="flex-1">
+  //             <NumberInput
+  //               size="lg"
+  //               // error={!!errors[`${fieldKey}.min`]}
+  //               // message={errors[`${fieldKey}.min`]}
+  //               error={error}
+  //               message={message}
+  //               placeholder={`${field.label} min`}
+  //               value={parseFloat(value.min) / (field.multiplier || 1)}
+  //               onChange={({ target }) => {
+  //                 onChange(`res.${field.input}.min`)(
+  //                   dummyEvent(
+  //                     `${parseFloat(target.value) * (field.multiplier || 1)}${
+  //                       field.unit
+  //                     }`
+  //                   )
+  //                 );
+  //                 if (qos) {
+  //                   onChange(`res.${field.input}.max`)(
+  //                     dummyEvent(
+  //                       `${parseFloat(target.value) * (field.multiplier || 1)}${
+  //                         field.unit
+  //                       }`
+  //                     )
+  //                   );
+  //                 }
+  //               }}
+  //               suffix={field.displayUnit}
+  //             />
+  //           </div>
+
+  //           <div className="flex-1">
+  //             <NumberInput
+  //               size="lg"
+  //               // error={!!errors[`${fieldKey}.max`]}
+  //               // message={errors[`${fieldKey}.max`]}
+  //               error={error}
+  //               message={message}
+  //               placeholder={`${field.label} max`}
+  //               value={parseFloat(value.max) / (field.multiplier || 1)}
+  //               onChange={({ target }) => {
+  //                 onChange(`res.${field.input}.max`)(
+  //                   dummyEvent(
+  //                     `${parseFloat(target.value) * (field.multiplier || 1)}${
+  //                       field.unit
+  //                     }`
+  //                   )
+  //                 );
+  //               }}
+  //               suffix={field.displayUnit}
+  //             />
+  //           </div>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
+
+  if (field.type === 'Resource') {
     return (
       <div className="flex flex-col gap-md">
         <div className="bodyMd-medium text-text-default">{`${field.label}${
@@ -122,7 +226,7 @@ const RenderField = ({
                 placeholder={qos ? field.label : `${field.label} min`}
                 value={parseFloat(value.min) / (field.multiplier || 1) || ''}
                 onChange={({ target }) => {
-                  onChange(`res.${field.name}.min`)(
+                  onChange(`res.${field.input}.min`)(
                     dummyEvent(
                       `${parseFloat(target.value) * (field.multiplier || 1)}${
                         field.unit
@@ -130,7 +234,7 @@ const RenderField = ({
                     )
                   );
                   if (qos) {
-                    onChange(`res.${field.name}.max`)(
+                    onChange(`res.${field.input}.max`)(
                       dummyEvent(
                         `${parseFloat(target.value) * (field.multiplier || 1)}${
                           field.unit
@@ -152,7 +256,7 @@ const RenderField = ({
                   placeholder={`${field.label} max`}
                   value={parseFloat(value.max) / (field.multiplier || 1)}
                   onChange={({ target }) => {
-                    onChange(`res.${field.name}.max`)(
+                    onChange(`res.${field.input}.max`)(
                       dummyEvent(
                         `${parseFloat(target.value) * (field.multiplier || 1)}${
                           field.unit
@@ -172,7 +276,9 @@ const RenderField = ({
               onChange={(_value) => {
                 setQos(_value);
                 if (_value) {
-                  onChange(`res.${field.name}.max`)(dummyEvent(`${value.min}`));
+                  onChange(`res.${field.input}.max`)(
+                    dummyEvent(`${value.min}`)
+                  );
                 }
               }}
             />
@@ -181,7 +287,8 @@ const RenderField = ({
       </div>
     );
   }
-  return <div>unknown input type {field.inputType}</div>;
+  // return <div>unknown input type {field.type}</div>;
+  return null;
 };
 
 const flatM = (obj: Record<string, any>) => {
@@ -215,17 +322,23 @@ const flatM = (obj: Record<string, any>) => {
 type ISelectedResource = {
   label: string;
   value: string;
-  resource: IMSvTemplate['resources'][number];
+  // resource: IMSvTemplate['resources'][number];
+  pluginService: IMSvPlugin['spec'];
 };
 
 interface ITemplateView {
   handleSubmit: FormEventHandler<HTMLFormElement>;
   values: Record<string, any>;
   errors: Record<string, any>;
-  resources: {
+  resources1?: {
     label: string;
     value: string;
     resource: ExtractNodeType<IMSvTemplate>['resources'][number];
+  }[];
+  resources: {
+    label: string;
+    value: string;
+    pluginService: ExtractNodeType<IMSvPlugin>['spec']['services'][0]['resources'][number];
   }[];
   services: ExtractNodeType<IClusterMSvs>[];
   isLoading: boolean;
@@ -303,8 +416,8 @@ const FieldView = ({
         handleChange={handleChange}
         nameErrorLabel="isNameError"
       />
-      {selectedResource?.resource?.fields?.map((field) => {
-        const k = field.name;
+      {selectedResource?.pluginService?.services[0].inputs?.map((field) => {
+        const k = field.input;
         const x = k.split('.').reduce((acc, curr) => {
           if (!acc) {
             return values.res?.[curr];
@@ -315,7 +428,7 @@ const FieldView = ({
         return (
           <RenderField
             field={field}
-            key={field.name}
+            key={field.input}
             onChange={handleChange}
             value={x}
             error={!!errors[k]}
@@ -421,13 +534,14 @@ const ReviewView = ({
                   Resource type
                 </div>
                 <div className="bodySm text-text-soft">
-                  {selectedResource?.resource?.name}
+                  {/* {selectedResource?.resource?.name} */}
+                  {selectedResource?.pluginService.services[0].kind}
                 </div>
               </div>
             </div>
           </ReviewComponent>
         )}
-        {renderFieldView()}
+        {/* {renderFieldView()} */}
       </div>
       <BottomNavigation
         primaryButton={{
@@ -442,7 +556,7 @@ const ReviewView = ({
 };
 
 const App = ({ services }: { services: ExtractNodeType<IClusterMSvs>[] }) => {
-  const { msvtemplates } = useOutletContext<IAccountContext>();
+  const { msvtemplates, msvPlugins } = useOutletContext<IAccountContext>();
   const navigate = useNavigate();
   const api = useConsoleApi();
 
@@ -464,20 +578,49 @@ const App = ({ services }: { services: ExtractNodeType<IClusterMSvs>[] }) => {
     });
   }, [managedService, msvtemplates]);
 
+  const commonPlugin = useCallback(() => {
+    return getManagedPlugin({
+      plugins: msvPlugins || [],
+      kind: managedService?.spec?.msvcSpec.serviceTemplate?.kind || '',
+      apiVersion:
+        managedService?.spec?.msvcSpec.serviceTemplate?.apiVersion || '',
+    });
+  }, [managedService, msvPlugins]);
+
   const { values, errors, handleSubmit, handleChange, isLoading, setValues } =
     useForm({
       initialValues: {
         name: '',
         displayName: '',
+        // selectedResource: (() => {
+        //   const ct = commonTemplates()?.resources;
+        //   if (ct && ct.length === 1) {
+        //     return {
+        //       label: ct[0].displayName || '',
+        //       value: ct[0].name || '',
+        //       resource: ct[0],
+        //     };
+        //   }
+        //   return null;
+        // })(),
         selectedResource: (() => {
-          const ct = commonTemplates()?.resources;
-          if (ct && ct.length === 1) {
+          const ct = commonPlugin()?.spec;
+          console.log('ct', ct);
+          if (ct) {
+            console.log('ct+++', ct);
             return {
-              label: ct[0].displayName || '',
-              value: ct[0].name || '',
-              resource: ct[0],
+              label: ct.services[0].resources[0].kind || '',
+              value: ct.services[0].resources[0].kind || '',
+              pluginService: ct,
             };
           }
+          // if (ct && ct.length === 1) {
+          //   return {
+          //     label: ct[0].label || '',
+          //     value: ct[0].input || '',
+          //     pluginService: ct[0],
+          //   };
+          // }
           return null;
         })(),
         res: {},
@@ -517,8 +660,10 @@ const App = ({ services }: { services: ExtractNodeType<IClusterMSvs>[] }) => {
 
                 spec: {
                   resourceTemplate: {
-                    apiVersion: selectedResource.resource.apiVersion || '',
-                    kind: selectedResource.resource.kind || '',
+                    // apiVersion: selectedResource.resource.apiVersion || '',
+                    // kind: selectedResource.resource.kind || '',
+                    apiVersion: selectedResource.pluginService.apiVersion || '',
+                    kind: selectedResource.pluginService.services[0].kind || '',
                     spec: {
                       ...val.res,
                     },
@@ -564,26 +709,38 @@ const App = ({ services }: { services: ExtractNodeType<IClusterMSvs>[] }) => {
   useEffect(() => {
     const selectedResource =
       values?.selectedResource as unknown as ISelectedResource;
-    if (selectedResource?.resource?.fields) {
+    if (selectedResource?.pluginService.services[0].inputs) {
       setValues({
         ...values,
         res: {
           ...flatM(
-            selectedResource?.resource?.fields.reduce((acc, curr) => {
-              return { ...acc, [curr.name]: curr.defaultValue };
-            }, {})
+            selectedResource?.pluginService.services[0].inputs.reduce(
+              (acc, curr) => {
+                return { ...acc, [curr.input]: curr.defaultValue };
+              },
+              {}
+            )
           ),
         },
       });
     }
   }, [values.selectedResource]);
 
-  const resources = useMapper(
+  const resources1 = useMapper(
     [...(commonTemplates()?.resources || [])],
     (res) => ({
       label: res.displayName,
       value: res.name,
       resource: res,
+    })
+  );
+
+  const resources = useMapper(
+    commonPlugin()?.spec?.services[0].resources || [],
+    (res) => ({
+      label: res.kind,
+      value: res.kind,
+      pluginService: res,
     })
   );
 
