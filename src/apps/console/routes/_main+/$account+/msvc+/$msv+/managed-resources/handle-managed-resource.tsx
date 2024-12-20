@@ -1,34 +1,34 @@
 /* eslint-disable guard-for-in */
 /* eslint-disable react/destructuring-assignment */
+import { NumberInput, TextInput } from '@kloudlite/design-system/atoms/input';
+import { Switch } from '@kloudlite/design-system/atoms/switch';
+import Popup from '@kloudlite/design-system/molecule/popup';
+import { toast } from '@kloudlite/design-system/molecule/toast';
 import { useOutletContext, useParams } from '@remix-run/react';
 import { useEffect, useRef, useState } from 'react';
-import { NumberInput, TextInput } from '@kloudlite/design-system/atoms/input';
-import Popup from '@kloudlite/design-system/molecule/popup';
+import { CopyContentToClipboard } from '~/console/components/common-console-components';
+import { ListItem } from '~/console/components/console-list-components';
+import ListV2 from '~/console/components/listV2';
+import { LoadingPlaceHolder } from '~/console/components/loading';
+import MultiStep, { useMultiStep } from '~/console/components/multi-step';
+import { NameIdView } from '~/console/components/name-id-view';
 import { IDialogBase } from '~/console/components/types.d';
+import { IEnvironmentContext } from '~/console/routes/_main+/$account+/env+/$environment+/_layout';
 import { useConsoleApi } from '~/console/server/gql/api-provider';
-import { ExtractNodeType, parseName } from '~/console/server/r-utils/common';
-import { useReload } from '~/lib/client/helpers/reloader';
-import useForm, { dummyEvent } from '~/lib/client/hooks/use-form';
-import Yup from '~/lib/server/helpers/yup';
-import { NN } from '~/lib/types/common';
-import { handleError } from '~/lib/utils/common';
+import { IManagedResources } from '~/console/server/gql/queries/managed-resources-queries';
 import {
   IMSvTemplate,
   IMSvTemplates,
 } from '~/console/server/gql/queries/managed-templates-queries';
-import { Switch } from '@kloudlite/design-system/atoms/switch';
-import { getManagedTemplate } from '~/console/utils/commons';
-import { NameIdView } from '~/console/components/name-id-view';
-import { IManagedResources } from '~/console/server/gql/queries/managed-resources-queries';
-import useCustomSwr from '~/lib/client/hooks/use-custom-swr';
-import { toast } from '@kloudlite/design-system/molecule/toast';
-import MultiStep, { useMultiStep } from '~/console/components/multi-step';
-import ListV2 from '~/console/components/listV2';
-import { ListItem } from '~/console/components/console-list-components';
-import { CopyContentToClipboard } from '~/console/components/common-console-components';
-import { LoadingPlaceHolder } from '~/console/components/loading';
-import { IEnvironmentContext } from '~/console/routes/_main+/$account+/env+/$environment+/_layout';
+import { ExtractNodeType, parseName } from '~/console/server/r-utils/common';
 import { ensureAccountClientSide } from '~/console/server/utils/auth-utils';
+import { getManagedTemplate } from '~/console/utils/commons';
+import { useReload } from '~/lib/client/helpers/reloader';
+import useCustomSwr from '~/lib/client/hooks/use-custom-swr';
+import useForm, { dummyEvent } from '~/lib/client/hooks/use-form';
+import Yup from '~/lib/server/helpers/yup';
+import { NN } from '~/lib/types/common';
+import { handleError } from '~/lib/utils/common';
 
 type BaseType = ExtractNodeType<IManagedResources>;
 type IDialog = IDialogBase<BaseType> & {
