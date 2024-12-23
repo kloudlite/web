@@ -2,95 +2,94 @@ import gql from 'graphql-tag';
 import { IExecutor } from '~/root/lib/server/helpers/execute-query-with-context';
 import { NN } from '~/root/lib/types/common';
 import {
-  ConsoleGetHelmChartQuery,
-  ConsoleGetHelmChartQueryVariables,
   ConsoleCreateHelmChartMutation,
   ConsoleCreateHelmChartMutationVariables,
-  ConsoleUpdateHelmChartMutation,
-  ConsoleUpdateHelmChartMutationVariables,
   ConsoleDeleteHelmChartMutation,
   ConsoleDeleteHelmChartMutationVariables,
+  ConsoleGetHelmChartQuery,
+  ConsoleGetHelmChartQueryVariables,
   ConsoleListHelmChartsQuery,
   ConsoleListHelmChartsQueryVariables,
+  ConsoleUpdateHelmChartMutation,
+  ConsoleUpdateHelmChartMutationVariables,
 } from '~/root/src/generated/gql/server';
 
 export type IHelmCharts = NN<ConsoleListHelmChartsQuery['core_listHelmCharts']>;
-export type IHelmChart = NN<ConsoleGetHelmChartQuery['core_getHelmChart']>
+export type IHelmChart = NN<ConsoleGetHelmChartQuery['core_getHelmChart']>;
 
 export const helmChartQueries = (executor: IExecutor) => ({
   getHelmChart: executor(
-    gql`query Core_getHelmChart($envName: String!, $name: String!) {
-  core_getHelmChart(envName: $envName, name: $name) {
-    createdBy {
-      userEmail
-      userId
-      userName
-    }
-    creationTime
-    displayName
-    environmentName
-    lastUpdatedBy {
-      userEmail
-      userId
-      userName
-    }
-    markedForDeletion
-    metadata {
-      annotations
-      creationTimestamp
-      deletionTimestamp
-      generation
-      labels
-      name
-      namespace
-    }
-    spec {
-      chartName
-      chartRepoURL
-      chartVersion
-      values
-    }
-    status {
-      checkList {
-        debug
-        description
-        hide
-        name
-        title
+    gql`
+      query Core_getHelmChart($envName: String!, $name: String!) {
+        core_getHelmChart(envName: $envName, name: $name) {
+          createdBy {
+            userEmail
+            userId
+            userName
+          }
+          creationTime
+          displayName
+          environmentName
+          lastUpdatedBy {
+            userEmail
+            userId
+            userName
+          }
+          markedForDeletion
+          metadata {
+            annotations
+            creationTimestamp
+            deletionTimestamp
+            generation
+            labels
+            name
+            namespace
+          }
+          spec {
+            chartName
+            chartRepoURL
+            chartVersion
+            values
+          }
+          status {
+            checkList {
+              debug
+              description
+              hide
+              name
+              title
+            }
+            checks
+            isReady
+            lastReadyGeneration
+            lastReconcileTime
+            releaseNotes
+            releaseStatus
+            resources {
+              apiVersion
+              kind
+              name
+              namespace
+            }
+          }
+          syncStatus {
+            action
+            error
+            lastSyncedAt
+            recordVersion
+            state
+            syncScheduledAt
+          }
+          updateTime
+        }
       }
-      checks
-      isReady
-      lastReadyGeneration
-      lastReconcileTime
-      message {
-        RawMessage
-      }
-      releaseNotes
-      releaseStatus
-      resources {
-        apiVersion
-        kind
-        name
-        namespace
-      }
-    }
-    syncStatus {
-      action
-      error
-      lastSyncedAt
-      recordVersion
-      state
-      syncScheduledAt
-    }
-    updateTime
-  }
-}`,
+    `,
     {
       transformer(data: ConsoleGetHelmChartQuery) {
         return data.core_getHelmChart;
       },
-      vars(_: ConsoleGetHelmChartQueryVariables) { },
-    },
+      vars(_: ConsoleGetHelmChartQueryVariables) {},
+    }
   ),
   listHelmCharts: executor(
     gql`
@@ -144,9 +143,6 @@ export const helmChartQueries = (executor: IExecutor) => ({
                 isReady
                 lastReadyGeneration
                 lastReconcileTime
-                message {
-                  RawMessage
-                }
                 resources {
                   apiVersion
                   kind
@@ -170,8 +166,8 @@ export const helmChartQueries = (executor: IExecutor) => ({
     {
       transformer: (data: ConsoleListHelmChartsQuery) =>
         data.core_listHelmCharts,
-      vars(_: ConsoleListHelmChartsQueryVariables) { },
-    },
+      vars(_: ConsoleListHelmChartsQueryVariables) {},
+    }
   ),
   createHelmChart: executor(
     gql`
@@ -187,8 +183,8 @@ export const helmChartQueries = (executor: IExecutor) => ({
     {
       transformer: (data: ConsoleCreateHelmChartMutation) =>
         data.core_createHelmChart,
-      vars(_: ConsoleCreateHelmChartMutationVariables) { },
-    },
+      vars(_: ConsoleCreateHelmChartMutationVariables) {},
+    }
   ),
   updateHelmChart: executor(
     gql`
@@ -205,8 +201,8 @@ export const helmChartQueries = (executor: IExecutor) => ({
       transformer(data: ConsoleUpdateHelmChartMutation) {
         return data.core_updateHelmChart;
       },
-      vars(_: ConsoleUpdateHelmChartMutationVariables) { },
-    },
+      vars(_: ConsoleUpdateHelmChartMutationVariables) {},
+    }
   ),
   deleteHelmChart: executor(
     gql`
@@ -221,7 +217,7 @@ export const helmChartQueries = (executor: IExecutor) => ({
       transformer(data: ConsoleDeleteHelmChartMutation) {
         return data.core_deleteHelmChart;
       },
-      vars(_: ConsoleDeleteHelmChartMutationVariables) { },
-    },
+      vars(_: ConsoleDeleteHelmChartMutationVariables) {},
+    }
   ),
 });

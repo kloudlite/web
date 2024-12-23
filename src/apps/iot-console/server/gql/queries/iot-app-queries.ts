@@ -4,14 +4,14 @@ import { NN } from '~/root/lib/types/common';
 import {
   IotconsoleCreateIotAppMutation,
   IotconsoleCreateIotAppMutationVariables,
+  IotconsoleDeleteIotAppMutation,
+  IotconsoleDeleteIotAppMutationVariables,
   IotconsoleGetIotAppQuery,
   IotconsoleGetIotAppQueryVariables,
   IotconsoleListIotAppsQuery,
   IotconsoleListIotAppsQueryVariables,
   IotconsoleUpdateIotAppMutation,
   IotconsoleUpdateIotAppMutationVariables,
-  IotconsoleDeleteIotAppMutation,
-  IotconsoleDeleteIotAppMutationVariables,
 } from '~/root/src/generated/gql/server';
 
 export type IApps = NN<IotconsoleListIotAppsQuery['iot_listApps']>;
@@ -412,9 +412,6 @@ export const iotAppQueries = (executor: IExecutor) => ({
                 isReady
                 lastReadyGeneration
                 lastReconcileTime
-                message {
-                  RawMessage
-                }
                 resources {
                   apiVersion
                   kind

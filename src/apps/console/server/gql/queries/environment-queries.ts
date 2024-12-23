@@ -76,9 +76,6 @@ export const environmentQueries = (executor: IExecutor) => ({
             isReady
             lastReadyGeneration
             lastReconcileTime
-            message {
-              RawMessage
-            }
             resources {
               apiVersion
               kind
@@ -93,7 +90,7 @@ export const environmentQueries = (executor: IExecutor) => ({
     {
       transformer: (data: ConsoleGetEnvironmentQuery) =>
         data.core_getEnvironment,
-      vars(_: ConsoleGetEnvironmentQueryVariables) { },
+      vars(_: ConsoleGetEnvironmentQueryVariables) {},
     }
   ),
   createEnvironment: executor(
@@ -107,7 +104,7 @@ export const environmentQueries = (executor: IExecutor) => ({
     {
       transformer: (data: ConsoleCreateEnvironmentMutation) =>
         data.core_createEnvironment,
-      vars(_: ConsoleCreateEnvironmentMutationVariables) { },
+      vars(_: ConsoleCreateEnvironmentMutationVariables) {},
     }
   ),
   setupDefaultEnvironment: executor(
@@ -119,7 +116,7 @@ export const environmentQueries = (executor: IExecutor) => ({
     {
       transformer: (data: ConsoleSetupDefaultEnvironmentMutation) =>
         data.core_setupDefaultEnvironment,
-      vars(_: ConsoleSetupDefaultEnvironmentMutationVariables) { },
+      vars(_: ConsoleSetupDefaultEnvironmentMutationVariables) {},
     }
   ),
   updateEnvironment: executor(
@@ -134,7 +131,7 @@ export const environmentQueries = (executor: IExecutor) => ({
       transformer(data: ConsoleUpdateEnvironmentMutation) {
         return data.core_updateEnvironment;
       },
-      vars(_: ConsoleUpdateEnvironmentMutationVariables) { },
+      vars(_: ConsoleUpdateEnvironmentMutationVariables) {},
     }
   ),
   deleteEnvironment: executor(
@@ -147,7 +144,7 @@ export const environmentQueries = (executor: IExecutor) => ({
       transformer(data: ConsoleDeleteEnvironmentMutation) {
         return data.core_deleteEnvironment;
       },
-      vars(_: ConsoleDeleteEnvironmentMutationVariables) { },
+      vars(_: ConsoleDeleteEnvironmentMutationVariables) {},
     }
   ),
   listEnvironments: executor(
@@ -201,9 +198,6 @@ export const environmentQueries = (executor: IExecutor) => ({
                 isReady
                 lastReadyGeneration
                 lastReconcileTime
-                message {
-                  RawMessage
-                }
                 resources {
                   apiVersion
                   kind
@@ -235,7 +229,7 @@ export const environmentQueries = (executor: IExecutor) => ({
     {
       transformer: (data: ConsoleListEnvironmentsQuery) =>
         data.core_listEnvironments,
-      vars(_: ConsoleListEnvironmentsQueryVariables) { },
+      vars(_: ConsoleListEnvironmentsQueryVariables) {},
     }
   ),
   cloneEnvironment: executor(
@@ -261,7 +255,7 @@ export const environmentQueries = (executor: IExecutor) => ({
     {
       transformer: (data: ConsoleCloneEnvironmentMutation) =>
         data.core_cloneEnvironment,
-      vars(_: ConsoleCloneEnvironmentMutationVariables) { },
+      vars(_: ConsoleCloneEnvironmentMutationVariables) {},
     }
   ),
 });

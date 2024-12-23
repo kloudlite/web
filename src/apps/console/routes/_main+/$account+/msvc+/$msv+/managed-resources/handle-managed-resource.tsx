@@ -244,7 +244,7 @@ const Root = (props: IDialog) => {
           namespace: props.data.metadata?.namespace,
           isNameError: false,
           res: {
-            ...props.data.spec?.resourceTemplate.msvcRef,
+            ...props.data.spec?.managedServiceRef,
           },
         }
       : {
@@ -271,13 +271,25 @@ const Root = (props: IDialog) => {
               },
 
               spec: {
-                resourceTemplate: {
-                  ...props.data.spec.resourceTemplate,
+                managedServiceRef: {
+                  ...props.data.spec.managedServiceRef,
+                },
+                plugin: {
+                  ...props.data.spec.plugin,
                   spec: {
                     ...val.res,
                   },
                 },
               },
+
+              // spec: {
+              //   resourceTemplate: {
+              //     ...props.data.spec.resourceTemplate,
+              //     spec: {
+              //       ...val.res,
+              //     },
+              //   },
+              // },
             },
           });
           if (e) {
@@ -296,12 +308,12 @@ const Root = (props: IDialog) => {
     if (isUpdate)
       return getManagedTemplate({
         templates,
-        apiVersion: props.data.spec?.resourceTemplate.msvcRef.apiVersion || '',
-        kind: props.data.spec?.resourceTemplate.msvcRef.kind || '',
+        apiVersion: props.data.spec?.managedServiceRef.apiVersion || '',
+        kind: props.data.spec?.managedServiceRef.kind || '',
       })?.resources.find(
         (rs) =>
-          rs.apiVersion === props.data.spec.resourceTemplate.apiVersion &&
-          rs.kind === props.data.spec.resourceTemplate.kind
+          rs.apiVersion === props.data.spec.plugin.apiVersion &&
+          rs.kind === props.data.spec.plugin.kind
       );
     return undefined;
   };

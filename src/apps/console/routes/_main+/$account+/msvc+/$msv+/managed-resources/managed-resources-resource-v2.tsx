@@ -1,5 +1,9 @@
-import { LockSimple, PencilSimple, Trash } from '~/console/components/icons';
+import { Badge } from '@kloudlite/design-system/atoms/badge';
+import { Button } from '@kloudlite/design-system/atoms/button';
+import { toast } from '@kloudlite/design-system/molecule/toast';
 import { generateKey, titleCase } from '@kloudlite/design-system/utils';
+import { useParams } from '@remix-run/react';
+import { useState } from 'react';
 import {
   ListItem,
   ListItemV2,
@@ -7,29 +11,25 @@ import {
   ListTitleV2,
   listClass,
 } from '~/console/components/console-list-components';
+import DeleteDialog from '~/console/components/delete-dialog';
 import Grid from '~/console/components/grid';
+import { LockSimple, PencilSimple, Trash } from '~/console/components/icons';
 import ListGridView from '~/console/components/list-grid-view';
+import ListV2 from '~/console/components/listV2';
+import ResourceExtraAction from '~/console/components/resource-extra-action';
+import { useConsoleApi } from '~/console/server/gql/api-provider';
+import { IManagedResources } from '~/console/server/gql/queries/managed-resources-queries';
+import { IMSvTemplates } from '~/console/server/gql/queries/managed-templates-queries';
 import {
   ExtractNodeType,
   parseName,
   parseUpdateOrCreatedBy,
   parseUpdateOrCreatedOn,
 } from '~/console/server/r-utils/common';
-import { IMSvTemplates } from '~/console/server/gql/queries/managed-templates-queries';
-import DeleteDialog from '~/console/components/delete-dialog';
-import ResourceExtraAction from '~/console/components/resource-extra-action';
-import { useConsoleApi } from '~/console/server/gql/api-provider';
-import { useReload } from '~/lib/client/helpers/reloader';
-import { useState } from 'react';
-import { handleError } from '~/lib/utils/common';
-import { toast } from '@kloudlite/design-system/molecule/toast';
-import { useParams } from '@remix-run/react';
-import { IManagedResources } from '~/console/server/gql/queries/managed-resources-queries';
-import { Button } from '@kloudlite/design-system/atoms/button';
-import { useWatchReload } from '~/lib/client/helpers/socket/useWatch';
-import ListV2 from '~/console/components/listV2';
 import { getManagedTemplate } from '~/console/utils/commons';
-import { Badge } from '@kloudlite/design-system/atoms/badge';
+import { useReload } from '~/lib/client/helpers/reloader';
+import { useWatchReload } from '~/lib/client/helpers/socket/useWatch';
+import { handleError } from '~/lib/utils/common';
 import HandleManagedResources, { ViewSecret } from './handle-managed-resource';
 
 const RESOURCE_NAME = 'integrated resource';
@@ -38,8 +38,8 @@ type BaseType = ExtractNodeType<IManagedResources>;
 const parseItem = (item: BaseType, templates: IMSvTemplates) => {
   const template = getManagedTemplate({
     templates,
-    kind: item.spec?.resourceTemplate.msvcRef?.kind || '',
-    apiVersion: item.spec?.resourceTemplate.msvcRef?.apiVersion || '',
+    kind: item.spec?.managedServiceRef?.kind || '',
+    apiVersion: item.spec?.managedServiceRef?.apiVersion || '',
   });
   return {
     name: item?.displayName,
@@ -66,7 +66,7 @@ type IExtraButton = {
 };
 
 const ExtraButton = ({ onAction, item }: IExtraButton) => {
-  return item.spec?.resourceTemplate?.kind === 'RootCredentials' ? (
+  return item.spec?.plugin?.kind === 'RootCredentials' ? (
     <ResourceExtraAction
       options={[
         {
@@ -214,9 +214,7 @@ const ListView = ({ items = [], onAction, templates }: IResource) => {
                   ) : null,
               },
               resource: {
-                render: () => (
-                  <ListItemV2 data={`${i.spec?.resourceTemplate?.kind}`} />
-                ),
+                render: () => <ListItemV2 data={`${i.spec?.plugin?.kind}`} />,
               },
               status: {
                 render: () =>

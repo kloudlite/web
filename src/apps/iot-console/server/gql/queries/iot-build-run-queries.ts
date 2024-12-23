@@ -2,10 +2,10 @@ import gql from 'graphql-tag';
 import { IExecutor } from '~/root/lib/server/helpers/execute-query-with-context';
 import { NN } from '~/root/lib/types/common';
 import {
-  ConsoleListBuildRunsQuery,
-  ConsoleListBuildRunsQueryVariables,
   ConsoleGetBuildRunQuery,
   ConsoleGetBuildRunQueryVariables,
+  ConsoleListBuildRunsQuery,
+  ConsoleListBuildRunsQueryVariables,
 } from '~/root/src/generated/gql/server';
 
 export type IBuildRuns = NN<ConsoleListBuildRunsQuery['cr_listBuildRuns']>;
@@ -67,9 +67,6 @@ export const iotBuildRunQueries = (executor: IExecutor) => ({
                 isReady
                 lastReadyGeneration
                 lastReconcileTime
-                message {
-                  RawMessage
-                }
                 resources {
                   apiVersion
                   kind

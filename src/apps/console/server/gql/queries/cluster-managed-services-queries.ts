@@ -2,18 +2,18 @@ import gql from 'graphql-tag';
 import { IExecutor } from '~/root/lib/server/helpers/execute-query-with-context';
 import { NN } from '~/root/lib/types/common';
 import {
+  ConsoleCloneClusterMSvMutation,
+  ConsoleCloneClusterMSvMutationVariables,
+  ConsoleCreateClusterMSvMutation,
+  ConsoleCreateClusterMSvMutationVariables,
+  ConsoleDeleteClusterMSvMutation,
+  ConsoleDeleteClusterMSvMutationVariables,
   ConsoleGetClusterMSvQuery,
   ConsoleGetClusterMSvQueryVariables,
   ConsoleListClusterMSvsQuery,
   ConsoleListClusterMSvsQueryVariables,
-  ConsoleCreateClusterMSvMutation,
-  ConsoleCreateClusterMSvMutationVariables,
   ConsoleUpdateClusterMSvMutation,
   ConsoleUpdateClusterMSvMutationVariables,
-  ConsoleDeleteClusterMSvMutation,
-  ConsoleDeleteClusterMSvMutationVariables,
-  ConsoleCloneClusterMSvMutation,
-  ConsoleCloneClusterMSvMutationVariables,
 } from '~/root/src/generated/gql/server';
 
 export type IClusterMSv = NN<
@@ -70,7 +70,7 @@ export const clusterManagedServicesQueries = (executor: IExecutor) => ({
         return data.infra_getClusterManagedService;
       },
       vars(_: ConsoleGetClusterMSvQueryVariables) {},
-    },
+    }
   ),
   createClusterMSv: executor(
     gql`
@@ -86,7 +86,7 @@ export const clusterManagedServicesQueries = (executor: IExecutor) => ({
       transformer: (data: ConsoleCreateClusterMSvMutation) =>
         data.infra_createClusterManagedService,
       vars(_: ConsoleCreateClusterMSvMutationVariables) {},
-    },
+    }
   ),
   cloneClusterMSv: executor(
     gql`
@@ -110,7 +110,7 @@ export const clusterManagedServicesQueries = (executor: IExecutor) => ({
       transformer: (data: ConsoleCloneClusterMSvMutation) =>
         data.infra_cloneClusterManagedService,
       vars(_: ConsoleCloneClusterMSvMutationVariables) {},
-    },
+    }
   ),
   updateClusterMSv: executor(
     gql`
@@ -126,7 +126,7 @@ export const clusterManagedServicesQueries = (executor: IExecutor) => ({
       transformer: (data: ConsoleUpdateClusterMSvMutation) =>
         data.infra_updateClusterManagedService,
       vars(_: ConsoleUpdateClusterMSvMutationVariables) {},
-    },
+    }
   ),
   listClusterMSvs: executor(
     gql`
@@ -190,10 +190,6 @@ export const clusterManagedServicesQueries = (executor: IExecutor) => ({
                 checks
                 isReady
                 lastReadyGeneration
-                lastReconcileTime
-                message {
-                  RawMessage
-                }
                 resources {
                   apiVersion
                   kind
@@ -226,7 +222,7 @@ export const clusterManagedServicesQueries = (executor: IExecutor) => ({
       transformer: (data: ConsoleListClusterMSvsQuery) =>
         data.infra_listClusterManagedServices,
       vars(_: ConsoleListClusterMSvsQueryVariables) {},
-    },
+    }
   ),
   deleteClusterMSv: executor(
     gql`
@@ -238,6 +234,6 @@ export const clusterManagedServicesQueries = (executor: IExecutor) => ({
       transformer: (data: ConsoleDeleteClusterMSvMutation) =>
         data.infra_deleteClusterManagedService,
       vars(_: ConsoleDeleteClusterMSvMutationVariables) {},
-    },
+    }
   ),
 });

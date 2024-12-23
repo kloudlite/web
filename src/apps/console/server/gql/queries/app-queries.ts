@@ -2,22 +2,22 @@ import gql from 'graphql-tag';
 import { IExecutor } from '~/root/lib/server/helpers/execute-query-with-context';
 import { NN } from '~/root/lib/types/common';
 import {
-  ConsoleListAppsQuery,
-  ConsoleListAppsQueryVariables,
   ConsoleCreateAppMutation,
+  ConsoleCreateAppMutationVariables,
   ConsoleDeleteAppMutation,
   ConsoleDeleteAppMutationVariables,
-  ConsoleCreateAppMutationVariables,
   ConsoleGetAppQuery,
   ConsoleGetAppQueryVariables,
-  ConsoleUpdateAppMutation,
-  ConsoleUpdateAppMutationVariables,
   ConsoleInterceptAppMutation,
   ConsoleInterceptAppMutationVariables,
-  ConsoleRestartAppQuery,
-  ConsoleRestartAppQueryVariables,
+  ConsoleListAppsQuery,
+  ConsoleListAppsQueryVariables,
   ConsoleRemoveDeviceInterceptsMutation,
   ConsoleRemoveDeviceInterceptsMutationVariables,
+  ConsoleRestartAppQuery,
+  ConsoleRestartAppQueryVariables,
+  ConsoleUpdateAppMutation,
+  ConsoleUpdateAppMutationVariables,
 } from '~/root/src/generated/gql/server';
 
 export type IApp = NN<ConsoleGetAppQuery['core_getApp']>;
@@ -33,7 +33,7 @@ export const appQueries = (executor: IExecutor) => ({
     {
       transformer: (data: ConsoleRestartAppQuery) => data.core_restartApp,
       vars: (_: ConsoleRestartAppQueryVariables) => {},
-    },
+    }
   ),
   createApp: executor(
     gql`
@@ -46,7 +46,7 @@ export const appQueries = (executor: IExecutor) => ({
     {
       transformer: (data: ConsoleCreateAppMutation) => data.core_createApp,
       vars(_: ConsoleCreateAppMutationVariables) {},
-    },
+    }
   ),
 
   updateApp: executor(
@@ -62,7 +62,7 @@ export const appQueries = (executor: IExecutor) => ({
         return data.core_updateApp;
       },
       vars(_: ConsoleUpdateAppMutationVariables) {},
-    },
+    }
   ),
   interceptApp: executor(
     gql`
@@ -86,7 +86,7 @@ export const appQueries = (executor: IExecutor) => ({
       transformer: (data: ConsoleInterceptAppMutation) =>
         data.core_interceptApp,
       vars(_: ConsoleInterceptAppMutationVariables) {},
-    },
+    }
   ),
   removeDeviceIntercepts: executor(
     gql`
@@ -101,7 +101,7 @@ export const appQueries = (executor: IExecutor) => ({
       transformer: (data: ConsoleRemoveDeviceInterceptsMutation) =>
         data.core_removeDeviceIntercepts,
       vars(_: ConsoleRemoveDeviceInterceptsMutationVariables) {},
-    },
+    }
   ),
   deleteApp: executor(
     gql`
@@ -112,7 +112,7 @@ export const appQueries = (executor: IExecutor) => ({
     {
       transformer: (data: ConsoleDeleteAppMutation) => data.core_deleteApp,
       vars(_: ConsoleDeleteAppMutationVariables) {},
-    },
+    }
   ),
   getApp: executor(
     gql`
@@ -247,9 +247,6 @@ export const appQueries = (executor: IExecutor) => ({
             isReady
             lastReadyGeneration
             lastReconcileTime
-            message {
-              RawMessage
-            }
             resources {
               apiVersion
               kind
@@ -297,7 +294,7 @@ export const appQueries = (executor: IExecutor) => ({
         return data.core_getApp;
       },
       vars(_: ConsoleGetAppQueryVariables) {},
-    },
+    }
   ),
   listApps: executor(
     gql`
@@ -496,9 +493,6 @@ export const appQueries = (executor: IExecutor) => ({
                 isReady
                 lastReadyGeneration
                 lastReconcileTime
-                message {
-                  RawMessage
-                }
                 resources {
                   apiVersion
                   kind
@@ -591,6 +585,6 @@ export const appQueries = (executor: IExecutor) => ({
     {
       transformer: (data: ConsoleListAppsQuery) => data.core_listApps,
       vars(_: ConsoleListAppsQueryVariables) {},
-    },
+    }
   ),
 });

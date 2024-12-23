@@ -2,10 +2,10 @@ import gql from 'graphql-tag';
 import { IExecutor } from '~/root/lib/server/helpers/execute-query-with-context';
 import { NN } from '~/root/lib/types/common';
 import {
-  ConsoleListServiceBindingQuery,
-  ConsoleListServiceBindingQueryVariables,
   ConsoleInterceptServiceMutation,
   ConsoleInterceptServiceMutationVariables,
+  ConsoleListServiceBindingQuery,
+  ConsoleListServiceBindingQueryVariables,
 } from '~/root/src/generated/gql/server';
 
 export type IServiceBinding = NN<
@@ -79,9 +79,6 @@ export const serviceBindingQueries = (executor: IExecutor) => ({
                 isReady
                 lastReadyGeneration
                 lastReconcileTime
-                message {
-                  RawMessage
-                }
                 resources {
                   apiVersion
                   kind
@@ -100,7 +97,7 @@ export const serviceBindingQueries = (executor: IExecutor) => ({
       transformer: (data: ConsoleListServiceBindingQuery) =>
         data.core_listServiceBindings,
       vars(_: ConsoleListServiceBindingQueryVariables) {},
-    },
+    }
   ),
   interceptService: executor(
     gql`
@@ -122,7 +119,7 @@ export const serviceBindingQueries = (executor: IExecutor) => ({
       transformer: (data: ConsoleInterceptServiceMutation) =>
         data.core_createServiceIntercept,
       vars(_: ConsoleInterceptServiceMutationVariables) {},
-    },
+    }
   ),
 
   removeInterceptService: executor(
@@ -141,6 +138,6 @@ export const serviceBindingQueries = (executor: IExecutor) => ({
       transformer: (data: ConsoleInterceptServiceMutation) =>
         data.core_createServiceIntercept,
       vars(_: ConsoleInterceptServiceMutationVariables) {},
-    },
+    }
   ),
 });

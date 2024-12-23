@@ -1,10 +1,10 @@
-import { PencilLine } from '~/console/components/icons';
-import { useParams } from '@remix-run/react';
-import { ChangeEvent, useEffect, useState } from 'react';
 import AnimateHide from '@kloudlite/design-system/atoms/animate-hide';
 import Chips from '@kloudlite/design-system/atoms/chips';
 import { TextInput } from '@kloudlite/design-system/atoms/input';
 import Popover from '@kloudlite/design-system/molecule/popover';
+import { useParams } from '@remix-run/react';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { PencilLine } from '~/console/components/icons';
 import { useAPIClient } from '~/root/lib/client/hooks/api-provider';
 import useDebounce from '~/root/lib/client/hooks/use-debounce';
 import { NonNullableString } from '~/root/lib/types/common';
@@ -64,7 +64,6 @@ export const IdSelector = ({
       case 'environment':
       case 'managed_service':
       case 'managed_resource':
-      case 'helm_release':
       case 'router':
       case 'secret':
         ensureAccountClientSide(params);
