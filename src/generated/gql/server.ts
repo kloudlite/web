@@ -286,7 +286,6 @@ export type ResType =
   | 'cluster'
   | 'cluster_managed_service'
   | 'global_vpn_device'
-  | 'helm_release'
   | 'nodepool'
   | 'providersecret';
 
@@ -337,9 +336,11 @@ export type K8s__Io___Api___Core___V1__PersistentVolumePhase =
   | 'Released';
 
 export type K8s__Io___Api___Core___V1__PersistentVolumeClaimConditionType =
+  | 'ControllerResizeError'
   | 'FileSystemResizePending'
   | 'ModifyingVolume'
   | 'ModifyVolumeError'
+  | 'NodeResizeError'
   | 'Resizing';
 
 export type K8s__Io___Api___Core___V1__PersistentVolumeClaimModifyVolumeStatus =
@@ -374,11 +375,6 @@ export type SearchGlobalVpnDevices = {
 };
 
 export type SearchGlobalVpNs = {
-  text?: InputMaybe<MatchFilterIn>;
-};
-
-export type SearchHelmRelease = {
-  isReady?: InputMaybe<MatchFilterIn>;
   text?: InputMaybe<MatchFilterIn>;
 };
 
@@ -731,7 +727,7 @@ export type ExternalAppIn = {
   kind?: InputMaybe<Scalars['String']['input']>;
   metadata?: InputMaybe<MetadataIn>;
   spec?: InputMaybe<Github__Com___Kloudlite___Operator___Apis___Crds___V1__ExternalAppSpecIn>;
-  status?: InputMaybe<Github__Com___Kloudlite___Operator___Pkg___Operator__StatusIn>;
+  status?: InputMaybe<Github__Com___Kloudlite___Operator___Toolkit___Reconciler__StatusIn>;
 };
 
 export type Github__Com___Kloudlite___Operator___Apis___Crds___V1__ExternalAppSpecIn =
@@ -741,34 +737,30 @@ export type Github__Com___Kloudlite___Operator___Apis___Crds___V1__ExternalAppSp
     recordType: Github__Com___Kloudlite___Operator___Apis___Crds___V1__ExternalAppRecordType;
   };
 
-export type Github__Com___Kloudlite___Operator___Pkg___Operator__StatusIn = {
-  checkList?: InputMaybe<
-    Array<Github__Com___Kloudlite___Operator___Pkg___Operator__CheckMetaIn>
-  >;
-  checks?: InputMaybe<Scalars['Map']['input']>;
-  isReady: Scalars['Boolean']['input'];
-  lastReadyGeneration?: InputMaybe<Scalars['Int']['input']>;
-  lastReconcileTime?: InputMaybe<Scalars['Date']['input']>;
-  message?: InputMaybe<Github__Com___Kloudlite___Operator___Pkg___Raw____Json__RawJsonIn>;
-  resources?: InputMaybe<
-    Array<Github__Com___Kloudlite___Operator___Pkg___Operator__ResourceRefIn>
-  >;
-};
-
-export type Github__Com___Kloudlite___Operator___Pkg___Operator__CheckMetaIn = {
-  debug?: InputMaybe<Scalars['Boolean']['input']>;
-  description?: InputMaybe<Scalars['String']['input']>;
-  hide?: InputMaybe<Scalars['Boolean']['input']>;
-  name: Scalars['String']['input'];
-  title: Scalars['String']['input'];
-};
-
-export type Github__Com___Kloudlite___Operator___Pkg___Raw____Json__RawJsonIn =
+export type Github__Com___Kloudlite___Operator___Toolkit___Reconciler__StatusIn =
   {
-    RawMessage?: InputMaybe<Scalars['Any']['input']>;
+    checkList?: InputMaybe<
+      Array<Github__Com___Kloudlite___Operator___Toolkit___Reconciler__CheckMetaIn>
+    >;
+    checks?: InputMaybe<Scalars['Map']['input']>;
+    isReady: Scalars['Boolean']['input'];
+    lastReadyGeneration?: InputMaybe<Scalars['Int']['input']>;
+    lastReconcileTime?: InputMaybe<Scalars['Date']['input']>;
+    resources?: InputMaybe<
+      Array<Github__Com___Kloudlite___Operator___Toolkit___Reconciler__ResourceRefIn>
+    >;
   };
 
-export type Github__Com___Kloudlite___Operator___Pkg___Operator__ResourceRefIn =
+export type Github__Com___Kloudlite___Operator___Toolkit___Reconciler__CheckMetaIn =
+  {
+    debug?: InputMaybe<Scalars['Boolean']['input']>;
+    description?: InputMaybe<Scalars['String']['input']>;
+    hide?: InputMaybe<Scalars['Boolean']['input']>;
+    name: Scalars['String']['input'];
+    title: Scalars['String']['input'];
+  };
+
+export type Github__Com___Kloudlite___Operator___Toolkit___Reconciler__ResourceRefIn =
   {
     apiVersion: Scalars['String']['input'];
     kind: Scalars['String']['input'];
@@ -895,25 +887,30 @@ export type ManagedResourceIn = {
 
 export type Github__Com___Kloudlite___Operator___Apis___Crds___V1__ManagedResourceSpecIn =
   {
-    resourceNamePrefix?: InputMaybe<Scalars['String']['input']>;
-    resourceTemplate: Github__Com___Kloudlite___Operator___Apis___Crds___V1__MresResourceTemplateIn;
+    managedServiceRef: Github__Com___Kloudlite___Operator___Toolkit___Types__ObjectReferenceIn;
+    plugin: Github__Com___Kloudlite___Operator___Apis___Crds___V1__PluginTemplateIn;
   };
 
-export type Github__Com___Kloudlite___Operator___Apis___Crds___V1__MresResourceTemplateIn =
+export type Github__Com___Kloudlite___Operator___Toolkit___Types__ObjectReferenceIn =
   {
     apiVersion: Scalars['String']['input'];
     kind: Scalars['String']['input'];
-    msvcRef: Github__Com___Kloudlite___Operator___Apis___Common____Types__MsvcRefIn;
-    spec?: InputMaybe<Scalars['Map']['input']>;
-  };
-
-export type Github__Com___Kloudlite___Operator___Apis___Common____Types__MsvcRefIn =
-  {
-    apiVersion?: InputMaybe<Scalars['String']['input']>;
-    kind?: InputMaybe<Scalars['String']['input']>;
     name: Scalars['String']['input'];
     namespace: Scalars['String']['input'];
   };
+
+export type Github__Com___Kloudlite___Operator___Apis___Crds___V1__PluginTemplateIn =
+  {
+    apiVersion: Scalars['String']['input'];
+    export?: InputMaybe<Github__Com___Kloudlite___Operator___Toolkit___Plugin__ExportIn>;
+    kind: Scalars['String']['input'];
+    spec?: InputMaybe<Scalars['Map']['input']>;
+  };
+
+export type Github__Com___Kloudlite___Operator___Toolkit___Plugin__ExportIn = {
+  template?: InputMaybe<Scalars['String']['input']>;
+  viaSecret: Scalars['String']['input'];
+};
 
 export type RouterIn = {
   apiVersion?: InputMaybe<Scalars['String']['input']>;
@@ -1054,7 +1051,6 @@ export type ClusterIn = {
   globalVPN?: InputMaybe<Scalars['String']['input']>;
   kind?: InputMaybe<Scalars['String']['input']>;
   metadata: MetadataIn;
-  ownedBy?: InputMaybe<Scalars['String']['input']>;
   spec: Github__Com___Kloudlite___Operator___Apis___Clusters___V1__ClusterSpecIn;
 };
 
@@ -1114,22 +1110,9 @@ export type Github__Com___Kloudlite___Operator___Apis___Crds___V1__ClusterManage
 
 export type Github__Com___Kloudlite___Operator___Apis___Crds___V1__ManagedServiceSpecIn =
   {
-    plugin?: InputMaybe<Github__Com___Kloudlite___Operator___Apis___Crds___V1__ServiceTemplateIn>;
-    serviceTemplate?: InputMaybe<Github__Com___Kloudlite___Operator___Apis___Crds___V1__ServiceTemplateIn>;
+    plugin?: InputMaybe<Github__Com___Kloudlite___Operator___Apis___Crds___V1__PluginTemplateIn>;
+    serviceTemplate?: InputMaybe<Github__Com___Kloudlite___Operator___Apis___Crds___V1__PluginTemplateIn>;
   };
-
-export type Github__Com___Kloudlite___Operator___Apis___Crds___V1__ServiceTemplateIn =
-  {
-    apiVersion: Scalars['String']['input'];
-    export?: InputMaybe<Github__Com___Kloudlite___Operator___Pkg___Plugin__ExportIn>;
-    kind: Scalars['String']['input'];
-    spec?: InputMaybe<Scalars['Map']['input']>;
-  };
-
-export type Github__Com___Kloudlite___Operator___Pkg___Plugin__ExportIn = {
-  template: Scalars['String']['input'];
-  viaSecret?: InputMaybe<Scalars['String']['input']>;
-};
 
 export type DomainEntryIn = {
   clusterName: Scalars['String']['input'];
@@ -1154,14 +1137,6 @@ export type GlobalVpnDeviceIn = {
   displayName: Scalars['String']['input'];
   globalVPNName: Scalars['String']['input'];
   metadata: MetadataIn;
-};
-
-export type HelmReleaseIn = {
-  apiVersion?: InputMaybe<Scalars['String']['input']>;
-  displayName: Scalars['String']['input'];
-  kind?: InputMaybe<Scalars['String']['input']>;
-  metadata?: InputMaybe<MetadataIn>;
-  spec?: InputMaybe<Github__Com___Kloudlite___Operator___Apis___Crds___V1__HelmChartSpecIn>;
 };
 
 export type NodePoolIn = {
@@ -1404,6 +1379,59 @@ export type Github__Com___Kloudlite___Operator___Pkg___Operator__CheckIn = {
   state?: InputMaybe<Github__Com___Kloudlite___Operator___Pkg___Operator__State>;
   status: Scalars['Boolean']['input'];
 };
+
+export type Github__Com___Kloudlite___Operator___Pkg___Operator__CheckMetaIn = {
+  debug?: InputMaybe<Scalars['Boolean']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  hide?: InputMaybe<Scalars['Boolean']['input']>;
+  name: Scalars['String']['input'];
+  title: Scalars['String']['input'];
+};
+
+export type Github__Com___Kloudlite___Operator___Pkg___Operator__ResourceRefIn =
+  {
+    apiVersion: Scalars['String']['input'];
+    kind: Scalars['String']['input'];
+    name: Scalars['String']['input'];
+    namespace: Scalars['String']['input'];
+  };
+
+export type Github__Com___Kloudlite___Operator___Pkg___Operator__StatusIn = {
+  checkList?: InputMaybe<
+    Array<Github__Com___Kloudlite___Operator___Pkg___Operator__CheckMetaIn>
+  >;
+  checks?: InputMaybe<Scalars['Map']['input']>;
+  isReady: Scalars['Boolean']['input'];
+  lastReadyGeneration?: InputMaybe<Scalars['Int']['input']>;
+  lastReconcileTime?: InputMaybe<Scalars['Date']['input']>;
+  message?: InputMaybe<Github__Com___Kloudlite___Operator___Pkg___Raw____Json__RawJsonIn>;
+  resources?: InputMaybe<
+    Array<Github__Com___Kloudlite___Operator___Pkg___Operator__ResourceRefIn>
+  >;
+};
+
+export type Github__Com___Kloudlite___Operator___Pkg___Raw____Json__RawJsonIn =
+  {
+    RawMessage?: InputMaybe<Scalars['Any']['input']>;
+  };
+
+export type Github__Com___Kloudlite___Operator___Toolkit___Reconciler__State =
+  | 'errored____during____reconcilation'
+  | 'finished____reconcilation'
+  | 'under____reconcilation'
+  | 'yet____to____be____reconciled';
+
+export type Github__Com___Kloudlite___Operator___Toolkit___Reconciler__CheckIn =
+  {
+    debug?: InputMaybe<Scalars['String']['input']>;
+    error?: InputMaybe<Scalars['String']['input']>;
+    generation?: InputMaybe<Scalars['Int']['input']>;
+    info?: InputMaybe<Scalars['String']['input']>;
+    message?: InputMaybe<Scalars['String']['input']>;
+    startedAt?: InputMaybe<Scalars['Date']['input']>;
+    state?: InputMaybe<Github__Com___Kloudlite___Operator___Toolkit___Reconciler__State>;
+    status: Scalars['Boolean']['input'];
+  };
 
 export type ImportedManagedResourceIn = {
   displayName: Scalars['String']['input'];
@@ -2137,7 +2165,6 @@ export type ConsoleListClustersQuery = {
             name: string;
             title: string;
           }>;
-          message?: { RawMessage?: any };
           resources?: Array<{
             apiVersion: string;
             kind: string;
@@ -2267,7 +2294,6 @@ export type ConsoleGetClusterQuery = {
         name: string;
         title: string;
       }>;
-      message?: { RawMessage?: any };
       resources?: Array<{
         apiVersion: string;
         kind: string;
@@ -2470,7 +2496,6 @@ export type ConsoleGetNodePoolQuery = {
       isReady: boolean;
       lastReadyGeneration?: number;
       lastReconcileTime?: any;
-      message?: { RawMessage?: any };
       resources?: Array<{
         apiVersion: string;
         kind: string;
@@ -2552,7 +2577,6 @@ export type ConsoleListNodePoolsQuery = {
           isReady: boolean;
           lastReadyGeneration?: number;
           lastReconcileTime?: any;
-          message?: { RawMessage?: any };
           resources?: Array<{
             apiVersion: string;
             kind: string;
@@ -2629,7 +2653,6 @@ export type ConsoleGetEnvironmentQuery = {
         name: string;
         title: string;
       }>;
-      message?: { RawMessage?: any };
       resources?: Array<{
         apiVersion: string;
         kind: string;
@@ -2713,7 +2736,6 @@ export type ConsoleListEnvironmentsQuery = {
             name: string;
             title: string;
           }>;
-          message?: { RawMessage?: any };
           resources?: Array<{
             apiVersion: string;
             kind: string;
@@ -2907,7 +2929,6 @@ export type ConsoleGetAppQuery = {
         title: string;
         name: string;
       }>;
-      message?: { RawMessage?: any };
       resources?: Array<{
         apiVersion: string;
         kind: string;
@@ -3112,7 +3133,6 @@ export type ConsoleListAppsQuery = {
             name: string;
             title: string;
           }>;
-          message?: { RawMessage?: any };
           resources?: Array<{
             apiVersion: string;
             kind: string;
@@ -3275,7 +3295,6 @@ export type ConsoleGetExternalAppQuery = {
         name: string;
         title: string;
       }>;
-      message?: { RawMessage?: any };
       resources?: Array<{
         apiVersion: string;
         kind: string;
@@ -3348,7 +3367,6 @@ export type ConsoleListExternalAppsQuery = {
             name: string;
             title: string;
           }>;
-          message?: { RawMessage?: any };
           resources?: Array<{
             apiVersion: string;
             kind: string;
@@ -4056,7 +4074,6 @@ export type ConsoleListBuildsQuery = {
               name: string;
               title: string;
             }>;
-            message?: { RawMessage?: any };
             resources?: Array<{
               apiVersion: string;
               kind: string;
@@ -4700,7 +4717,6 @@ export type ConsoleListBuildRunsQuery = {
             name: string;
             title: string;
           }>;
-          message?: { RawMessage?: any };
           resources?: Array<{
             apiVersion: string;
             kind: string;
@@ -4772,7 +4788,6 @@ export type ConsoleGetBuildRunQuery = {
         name: string;
         title: string;
       }>;
-      message?: { RawMessage?: any };
       resources?: Array<{
         apiVersion: string;
         kind: string;
@@ -4893,7 +4908,6 @@ export type ConsoleListClusterMSvsQuery = {
           checks?: any;
           isReady: boolean;
           lastReadyGeneration?: number;
-          lastReconcileTime?: any;
           checkList?: Array<{
             debug?: boolean;
             description?: string;
@@ -4901,7 +4915,6 @@ export type ConsoleListClusterMSvsQuery = {
             name: string;
             title: string;
           }>;
-          message?: { RawMessage?: any };
           resources?: Array<{
             apiVersion: string;
             kind: string;
@@ -5267,16 +5280,17 @@ export type ConsoleGetManagedResourceQuery = {
       namespace?: string;
     };
     spec: {
-      resourceNamePrefix?: string;
-      resourceTemplate: {
+      managedServiceRef: {
         apiVersion: string;
         kind: string;
-        msvcRef: {
-          apiVersion?: string;
-          kind?: string;
-          name: string;
-          namespace: string;
-        };
+        name: string;
+        namespace: string;
+      };
+      plugin: {
+        apiVersion: string;
+        kind: string;
+        spec?: any;
+        export?: { template?: string; viaSecret: string };
       };
     };
     status?: {
@@ -5291,7 +5305,6 @@ export type ConsoleGetManagedResourceQuery = {
         name: string;
         title: string;
       }>;
-      message?: { RawMessage?: any };
       resources?: Array<{
         apiVersion: string;
         kind: string;
@@ -5375,23 +5388,23 @@ export type ConsoleListManagedResourcesQuery = {
           namespace?: string;
         };
         spec: {
-          resourceNamePrefix?: string;
-          resourceTemplate: {
+          managedServiceRef: {
             apiVersion: string;
             kind: string;
-            msvcRef: {
-              apiVersion?: string;
-              kind?: string;
-              name: string;
-              namespace: string;
-            };
+            name: string;
+            namespace: string;
+          };
+          plugin: {
+            apiVersion: string;
+            kind: string;
+            spec?: any;
+            export?: { template?: string; viaSecret: string };
           };
         };
         status?: {
           checks?: any;
           isReady: boolean;
           lastReadyGeneration?: number;
-          lastReconcileTime?: any;
           checkList?: Array<{
             debug?: boolean;
             description?: string;
@@ -5399,7 +5412,6 @@ export type ConsoleListManagedResourcesQuery = {
             name: string;
             title: string;
           }>;
-          message?: { RawMessage?: any };
           resources?: Array<{
             apiVersion: string;
             kind: string;
@@ -5487,7 +5499,6 @@ export type ConsoleGetHelmChartQuery = {
         name: string;
         title: string;
       }>;
-      message?: { RawMessage?: any };
       resources?: Array<{
         apiVersion: string;
         kind: string;
@@ -5549,7 +5560,6 @@ export type ConsoleListHelmChartsQuery = {
             name: string;
             title: string;
           }>;
-          message?: { RawMessage?: any };
           resources?: Array<{
             apiVersion: string;
             kind: string;
@@ -6041,17 +6051,17 @@ export type ConsoleListImportedManagedResourcesQuery = {
             namespace?: string;
           };
           spec: {
-            resourceNamePrefix?: string;
-            resourceTemplate: {
+            managedServiceRef: {
+              apiVersion: string;
+              kind: string;
+              name: string;
+              namespace: string;
+            };
+            plugin: {
               apiVersion: string;
               kind: string;
               spec?: any;
-              msvcRef: {
-                apiVersion?: string;
-                kind?: string;
-                name: string;
-                namespace: string;
-              };
+              export?: { template?: string; viaSecret: string };
             };
           };
           status?: {
@@ -6066,7 +6076,6 @@ export type ConsoleListImportedManagedResourcesQuery = {
               name: string;
               title: string;
             }>;
-            message?: { RawMessage?: any };
             resources?: Array<{
               apiVersion: string;
               kind: string;
@@ -6314,7 +6323,6 @@ export type ConsoleListServiceBindingQuery = {
             name: string;
             title: string;
           }>;
-          message?: { RawMessage?: any };
           resources?: Array<{
             apiVersion: string;
             kind: string;
@@ -6562,7 +6570,7 @@ export type AuthCli_GetEnvironmentQuery = {
     isArchived?: boolean;
     displayName: string;
     clusterName: string;
-    status?: { isReady: boolean; message?: { RawMessage?: any } };
+    status?: { isReady: boolean };
     metadata?: { name: string };
     spec?: { suspend?: boolean; targetNamespace?: string };
   };
@@ -6590,7 +6598,7 @@ export type AuthCli_CloneEnvironmentMutation = {
     displayName: string;
     clusterName: string;
     metadata?: { name: string; namespace?: string };
-    status?: { isReady: boolean; message?: { RawMessage?: any } };
+    status?: { isReady: boolean };
     spec?: { targetNamespace?: string };
   };
 };
@@ -6682,7 +6690,6 @@ export type AuthCli_ListServicesQuery = {
             name: string;
             title: string;
           }>;
-          message?: { RawMessage?: any };
           resources?: Array<{
             apiVersion: string;
             kind: string;
@@ -6744,11 +6751,7 @@ export type AuthCli_ListAppsQuery = {
           };
         };
         metadata?: { name: string; annotations?: any; namespace?: string };
-        status?: {
-          checks?: any;
-          isReady: boolean;
-          message?: { RawMessage?: any };
-        };
+        status?: { checks?: any; isReady: boolean };
       };
     }>;
   };
@@ -6768,11 +6771,7 @@ export type AuthCli_ListAppsQuery = {
           };
           services?: Array<{ port: number }>;
         };
-        status?: {
-          checks?: any;
-          isReady: boolean;
-          message?: { RawMessage?: any };
-        };
+        status?: { checks?: any; isReady: boolean };
       };
     }>;
   };
@@ -6832,7 +6831,7 @@ export type AuthCli_ListEnvironmentsQuery = {
         isArchived?: boolean;
         metadata?: { name: string; namespace?: string };
         spec?: { suspend?: boolean; targetNamespace?: string };
-        status?: { isReady: boolean; message?: { RawMessage?: any } };
+        status?: { isReady: boolean };
       };
     }>;
     pageInfo: {
@@ -7076,17 +7075,17 @@ export type AuthCli_ListImportedManagedResourcesQuery = {
             namespace?: string;
           };
           spec: {
-            resourceNamePrefix?: string;
-            resourceTemplate: {
+            managedServiceRef: {
+              apiVersion: string;
+              kind: string;
+              name: string;
+              namespace: string;
+            };
+            plugin: {
               apiVersion: string;
               kind: string;
               spec?: any;
-              msvcRef: {
-                apiVersion?: string;
-                kind?: string;
-                name: string;
-                namespace: string;
-              };
+              export?: { template?: string; viaSecret: string };
             };
           };
           status?: {
@@ -7101,7 +7100,6 @@ export type AuthCli_ListImportedManagedResourcesQuery = {
               name: string;
               title: string;
             }>;
-            message?: { RawMessage?: any };
             resources?: Array<{
               apiVersion: string;
               kind: string;

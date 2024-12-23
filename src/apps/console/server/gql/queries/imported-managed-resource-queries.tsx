@@ -2,10 +2,10 @@ import gql from 'graphql-tag';
 import { IExecutor } from '~/root/lib/server/helpers/execute-query-with-context';
 import { NN } from '~/root/lib/types/common';
 import {
-  ConsoleImportManagedResourceMutation,
-  ConsoleImportManagedResourceMutationVariables,
   ConsoleDeleteImportedManagedResourceMutation,
   ConsoleDeleteImportedManagedResourceMutationVariables,
+  ConsoleImportManagedResourceMutation,
+  ConsoleImportManagedResourceMutationVariables,
   ConsoleListImportedManagedResourcesQuery,
   ConsoleListImportedManagedResourcesQueryVariables,
 } from '~/root/src/generated/gql/server';
@@ -132,17 +132,33 @@ export const importedManagedResourceQueries = (executor: IExecutor) => ({
                 }
                 mresRef
                 recordVersion
+                # spec {
+                #   resourceTemplate {
+                #     apiVersion
+                #     kind
+                #     msvcRef {
+                #       apiVersion
+                #       kind
+                #       name
+                #       namespace
+                #     }
+                #     spec
+                #   }
+                # }
                 spec {
-                  resourceNamePrefix
-                  resourceTemplate {
+                  managedServiceRef {
                     apiVersion
                     kind
-                    msvcRef {
-                      apiVersion
-                      kind
-                      name
-                      namespace
+                    name
+                    namespace
+                  }
+                  plugin {
+                    apiVersion
+                    export {
+                      template
+                      viaSecret
                     }
+                    kind
                     spec
                   }
                 }
@@ -158,9 +174,6 @@ export const importedManagedResourceQueries = (executor: IExecutor) => ({
                   isReady
                   lastReadyGeneration
                   lastReconcileTime
-                  message {
-                    RawMessage
-                  }
                   resources {
                     apiVersion
                     kind

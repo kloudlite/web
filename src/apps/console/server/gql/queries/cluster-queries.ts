@@ -355,9 +355,6 @@ export const clusterQueries = (executor: IExecutor) => ({
                 isReady
                 lastReadyGeneration
                 lastReconcileTime
-                message {
-                  RawMessage
-                }
                 resources {
                   apiVersion
                   kind
@@ -511,9 +508,6 @@ export const clusterQueries = (executor: IExecutor) => ({
             isReady
             lastReadyGeneration
             lastReconcileTime
-            message {
-              RawMessage
-            }
             resources {
               apiVersion
               kind

@@ -228,9 +228,6 @@ query consoleListClusters($search: SearchCluster, $pagination: CursorPaginationI
           isReady
           lastReadyGeneration
           lastReconcileTime
-          message {
-            RawMessage
-          }
           resources {
             apiVersion
             kind
@@ -375,9 +372,6 @@ query consoleGetCluster($name: String!) {
       isReady
       lastReadyGeneration
       lastReconcileTime
-      message {
-        RawMessage
-      }
       resources {
         apiVersion
         kind
@@ -594,9 +588,6 @@ query consoleGetNodePool($clusterName: String!, $poolName: String!) {
       isReady
       lastReadyGeneration
       lastReconcileTime
-      message {
-        RawMessage
-      }
       resources {
         apiVersion
         kind
@@ -692,9 +683,6 @@ query consoleListNodePools($clusterName: String!, $search: SearchNodepool, $pagi
           isReady
           lastReadyGeneration
           lastReconcileTime
-          message {
-            RawMessage
-          }
           resources {
             apiVersion
             kind
@@ -774,9 +762,6 @@ query consoleGetEnvironment($name: String!) {
       isReady
       lastReadyGeneration
       lastReconcileTime
-      message {
-        RawMessage
-      }
       resources {
         apiVersion
         kind
@@ -854,9 +839,6 @@ query consoleListEnvironments($search: SearchEnvironments, $pq: CursorPagination
           isReady
           lastReadyGeneration
           lastReconcileTime
-          message {
-            RawMessage
-          }
           resources {
             apiVersion
             kind
@@ -1062,9 +1044,6 @@ query consoleGetApp($envName: String!, $name: String!) {
       isReady
       lastReadyGeneration
       lastReconcileTime
-      message {
-        RawMessage
-      }
       resources {
         apiVersion
         kind
@@ -1298,9 +1277,6 @@ query consoleListApps($envName: String!, $pq: CursorPaginationIn, $search: Searc
           isReady
           lastReadyGeneration
           lastReconcileTime
-          message {
-            RawMessage
-          }
           resources {
             apiVersion
             kind
@@ -1470,9 +1446,6 @@ query consoleGetExternalApp($envName: String!, $name: String!) {
       isReady
       lastReadyGeneration
       lastReconcileTime
-      message {
-        RawMessage
-      }
       resources {
         apiVersion
         kind
@@ -1549,9 +1522,6 @@ query consoleListExternalApps($envName: String!, $search: SearchExternalApps, $p
           isReady
           lastReadyGeneration
           lastReconcileTime
-          message {
-            RawMessage
-          }
           resources {
             apiVersion
             kind
@@ -2190,9 +2160,6 @@ query consoleListBuilds($repoName: String!, $search: SearchBuilds, $pagination: 
             isReady
             lastReadyGeneration
             lastReconcileTime
-            message {
-              RawMessage
-            }
             resources {
               apiVersion
               kind
@@ -2915,9 +2882,6 @@ query consoleListBuildRuns($search: SearchBuildRuns, $pq: CursorPaginationIn) {
           isReady
           lastReadyGeneration
           lastReconcileTime
-          message {
-            RawMessage
-          }
           resources {
             apiVersion
             kind
@@ -2993,9 +2957,6 @@ query consoleGetBuildRun($buildId: ID!, $buildRunName: String!) {
       isReady
       lastReadyGeneration
       lastReconcileTime
-      message {
-        RawMessage
-      }
       resources {
         apiVersion
         kind
@@ -3129,10 +3090,6 @@ query consoleListClusterMSvs($pagination: CursorPaginationIn, $search: SearchClu
           checks
           isReady
           lastReadyGeneration
-          lastReconcileTime
-          message {
-            RawMessage
-          }
           resources {
             apiVersion
             kind
@@ -3493,16 +3450,20 @@ query consoleGetManagedResource($name: String!, $msvcName: String, $envName: Str
     mresRef
     recordVersion
     spec {
-      resourceNamePrefix
-      resourceTemplate {
+      managedServiceRef {
         apiVersion
         kind
-        msvcRef {
-          apiVersion
-          kind
-          name
-          namespace
+        name
+        namespace
+      }
+      plugin {
+        apiVersion
+        export {
+          template
+          viaSecret
         }
+        kind
+        spec
       }
     }
     status {
@@ -3517,9 +3478,6 @@ query consoleGetManagedResource($name: String!, $msvcName: String, $envName: Str
       isReady
       lastReadyGeneration
       lastReconcileTime
-      message {
-        RawMessage
-      }
       resources {
         apiVersion
         kind
@@ -3601,16 +3559,20 @@ query consoleListManagedResources($search: SearchManagedResources, $pq: CursorPa
         mresRef
         recordVersion
         spec {
-          resourceNamePrefix
-          resourceTemplate {
+          managedServiceRef {
             apiVersion
             kind
-            msvcRef {
-              apiVersion
-              kind
-              name
-              namespace
+            name
+            namespace
+          }
+          plugin {
+            apiVersion
+            export {
+              template
+              viaSecret
             }
+            kind
+            spec
           }
         }
         status {
@@ -3624,10 +3586,6 @@ query consoleListManagedResources($search: SearchManagedResources, $pq: CursorPa
           checks
           isReady
           lastReadyGeneration
-          lastReconcileTime
-          message {
-            RawMessage
-          }
           resources {
             apiVersion
             kind
@@ -3714,9 +3672,6 @@ query consoleGetHelmChart($envName: String!, $name: String!) {
       isReady
       lastReadyGeneration
       lastReconcileTime
-      message {
-        RawMessage
-      }
       releaseNotes
       releaseStatus
       resources {
@@ -3788,9 +3743,6 @@ query consoleListHelmCharts($envName: String!) {
           isReady
           lastReadyGeneration
           lastReconcileTime
-          message {
-            RawMessage
-          }
           resources {
             apiVersion
             kind
@@ -4294,16 +4246,19 @@ query consoleListImportedManagedResources($envName: String!, $search: SearchImpo
           mresRef
           recordVersion
           spec {
-            resourceNamePrefix
-            resourceTemplate {
+            managedServiceRef {
               apiVersion
               kind
-              msvcRef {
-                apiVersion
-                kind
-                name
-                namespace
+              name
+              namespace
+            }
+            plugin {
+              apiVersion
+              export {
+                template
+                viaSecret
               }
+              kind
               spec
             }
           }
@@ -4319,9 +4274,6 @@ query consoleListImportedManagedResources($envName: String!, $search: SearchImpo
             isReady
             lastReadyGeneration
             lastReconcileTime
-            message {
-              RawMessage
-            }
             resources {
               apiVersion
               kind
@@ -4555,9 +4507,6 @@ query consoleListServiceBinding($envName: String!, $pagination: CursorPagination
           isReady
           lastReadyGeneration
           lastReconcileTime
-          message {
-            RawMessage
-          }
           resources {
             apiVersion
             kind
@@ -4765,9 +4714,6 @@ query authCli_getEnvironment($name: String!) {
   core_getEnvironment(name: $name) {
     status {
       isReady
-      message {
-        RawMessage
-      }
     }
     isArchived
     metadata {
@@ -4805,9 +4751,6 @@ mutation authCli_cloneEnvironment($clusterName: String!, $sourceEnvName: String!
     }
     status {
       isReady
-      message {
-        RawMessage
-      }
     }
     spec {
       targetNamespace
@@ -4901,9 +4844,6 @@ query authCli_listServices($envName: String!, $pagination: CursorPaginationIn) {
           isReady
           lastReadyGeneration
           lastReconcileTime
-          message {
-            RawMessage
-          }
           resources {
             apiVersion
             kind
@@ -4962,9 +4902,6 @@ query authCli_listApps($pq: CursorPaginationIn, $envName: String!) {
         status {
           checks
           isReady
-          message {
-            RawMessage
-          }
         }
       }
     }
@@ -4997,9 +4934,6 @@ query authCli_listApps($pq: CursorPaginationIn, $envName: String!) {
         status {
           checks
           isReady
-          message {
-            RawMessage
-          }
         }
       }
     }
@@ -5059,9 +4993,6 @@ query authCli_listEnvironments($pq: CursorPaginationIn) {
         }
         status {
           isReady
-          message {
-            RawMessage
-          }
         }
       }
     }
@@ -5302,16 +5233,19 @@ query authCli_listImportedManagedResources($envName: String!, $search: SearchImp
           mresRef
           recordVersion
           spec {
-            resourceNamePrefix
-            resourceTemplate {
+            managedServiceRef {
               apiVersion
               kind
-              msvcRef {
-                apiVersion
-                kind
-                name
-                namespace
+              name
+              namespace
+            }
+            plugin {
+              apiVersion
+              export {
+                template
+                viaSecret
               }
+              kind
               spec
             }
           }
@@ -5327,9 +5261,6 @@ query authCli_listImportedManagedResources($envName: String!, $search: SearchImp
             isReady
             lastReadyGeneration
             lastReconcileTime
-            message {
-              RawMessage
-            }
             resources {
               apiVersion
               kind

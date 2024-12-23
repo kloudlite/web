@@ -4,12 +4,12 @@ import { NN } from '~/root/lib/types/common';
 import {
   ConsoleCreateNodePoolMutation,
   ConsoleCreateNodePoolMutationVariables,
-  ConsoleListNodePoolsQuery,
-  ConsoleGetNodePoolQuery,
-  ConsoleGetNodePoolQueryVariables,
-  ConsoleListNodePoolsQueryVariables,
   ConsoleDeleteNodePoolMutation,
   ConsoleDeleteNodePoolMutationVariables,
+  ConsoleGetNodePoolQuery,
+  ConsoleGetNodePoolQueryVariables,
+  ConsoleListNodePoolsQuery,
+  ConsoleListNodePoolsQueryVariables,
 } from '~/root/src/generated/gql/server';
 
 export type INodepool = NN<ConsoleGetNodePoolQuery['infra_getNodePool']>;
@@ -90,9 +90,6 @@ export const nodepoolQueries = (executor: IExecutor) => ({
             isReady
             lastReadyGeneration
             lastReconcileTime
-            message {
-              RawMessage
-            }
             resources {
               apiVersion
               kind
@@ -217,9 +214,6 @@ export const nodepoolQueries = (executor: IExecutor) => ({
                 isReady
                 lastReadyGeneration
                 lastReconcileTime
-                message {
-                  RawMessage
-                }
                 resources {
                   apiVersion
                   kind

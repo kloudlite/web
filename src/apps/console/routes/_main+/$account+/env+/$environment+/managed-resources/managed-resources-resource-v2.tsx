@@ -1,8 +1,8 @@
-import { useOutletContext, useParams } from '@remix-run/react';
-import { useState } from 'react';
 import { Badge } from '@kloudlite/design-system/atoms/badge';
 import { toast } from '@kloudlite/design-system/molecule/toast';
 import { generateKey, titleCase } from '@kloudlite/design-system/utils';
+import { useOutletContext, useParams } from '@remix-run/react';
+import { useState } from 'react';
 import {
   ListItem,
   ListItemV2,
@@ -38,7 +38,7 @@ type BaseType = ExtractNodeType<IImportedManagedResources>;
 const parseItem = (item: BaseType, templates: IMSvTemplates) => {
   const logoUrl = getManagedTemplateLogo(
     templates,
-    item.managedResource?.spec?.resourceTemplate.apiVersion || ''
+    item.managedResource?.spec?.plugin.apiVersion || ''
   );
   return {
     name: item?.displayName,
@@ -206,7 +206,7 @@ const ListView = ({ items = [], onAction, templates }: IResource) => {
               resource: {
                 render: () => (
                   <ListItemV2
-                    data={`${i.managedResource?.spec?.resourceTemplate?.kind}`}
+                    data={`${i.managedResource?.spec?.plugin?.kind}`}
                   />
                 ),
               },
@@ -217,14 +217,13 @@ const ListView = ({ items = [], onAction, templates }: IResource) => {
                       <div className="pulsable">
                         <img
                           src={logo}
-                          alt={`${i.managedResource?.spec?.resourceTemplate?.msvcRef?.name}`}
+                          alt={`${i.managedResource?.spec?.managedServiceRef?.name}`}
                           className="w-4xl h-4xl"
                         />
                       </div>
                     }
                     data={
-                      i.managedResource?.spec?.resourceTemplate?.msvcRef
-                        ?.name || ''
+                      i.managedResource?.spec?.managedServiceRef?.name || ''
                     }
                   />
                 ),

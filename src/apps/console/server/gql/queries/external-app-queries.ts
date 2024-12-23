@@ -2,18 +2,18 @@ import gql from 'graphql-tag';
 import { IExecutor } from '~/root/lib/server/helpers/execute-query-with-context';
 import { NN } from '~/root/lib/types/common';
 import {
-  ConsoleListExternalAppsQuery,
-  ConsoleListExternalAppsQueryVariables,
   ConsoleCreateExternalAppMutation,
+  ConsoleCreateExternalAppMutationVariables,
   ConsoleDeleteExternalAppMutation,
   ConsoleDeleteExternalAppMutationVariables,
-  ConsoleCreateExternalAppMutationVariables,
   ConsoleGetExternalAppQuery,
   ConsoleGetExternalAppQueryVariables,
-  ConsoleUpdateExternalAppMutation,
-  ConsoleUpdateExternalAppMutationVariables,
   ConsoleInterceptExternalAppMutation,
   ConsoleInterceptExternalAppMutationVariables,
+  ConsoleListExternalAppsQuery,
+  ConsoleListExternalAppsQueryVariables,
+  ConsoleUpdateExternalAppMutation,
+  ConsoleUpdateExternalAppMutationVariables,
 } from '~/root/src/generated/gql/server';
 
 export type IExternalApp = NN<
@@ -158,9 +158,6 @@ export const externalAppQueries = (executor: IExecutor) => ({
             isReady
             lastReadyGeneration
             lastReconcileTime
-            message {
-              RawMessage
-            }
             resources {
               apiVersion
               kind
@@ -250,9 +247,6 @@ export const externalAppQueries = (executor: IExecutor) => ({
                 isReady
                 lastReadyGeneration
                 lastReconcileTime
-                message {
-                  RawMessage
-                }
                 resources {
                   apiVersion
                   kind

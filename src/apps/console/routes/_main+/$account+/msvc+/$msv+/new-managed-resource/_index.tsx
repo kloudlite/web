@@ -657,29 +657,53 @@ const App = ({ services }: { services: ExtractNodeType<IClusterMSvs>[] }) => {
                 metadata: {
                   name: val.name,
                 },
-
                 spec: {
-                  resourceTemplate: {
-                    // apiVersion: selectedResource.resource.apiVersion || '',
-                    // kind: selectedResource.resource.kind || '',
+                  managedServiceRef: {
+                    name: parseName(managedService),
+                    namespace: managedService?.spec?.targetNamespace || '',
+                    apiVersion:
+                      managedService?.spec?.msvcSpec.serviceTemplate
+                        ?.apiVersion || '',
+                    kind:
+                      managedService?.spec?.msvcSpec.serviceTemplate?.kind ||
+                      '',
+                  },
+                  plugin: {
                     apiVersion: selectedResource.pluginService.apiVersion || '',
                     kind: selectedResource.pluginService.services[0].kind || '',
                     spec: {
                       ...val.res,
                     },
-                    msvcRef: {
-                      name: parseName(managedService),
-                      namespace: managedService?.spec?.targetNamespace || '',
-                      apiVersion:
-                        managedService?.spec?.msvcSpec.serviceTemplate
-                          ?.apiVersion || '',
-                      kind:
-                        managedService?.spec?.msvcSpec.serviceTemplate?.kind ||
-                        '',
-                      // clusterName: managedService.clusterName,
-                    },
+                    // export: {
+                    //   template:
+                    //     selectedResource.pluginService.services[0].export
+                    //       ?.template || '',
+                    //   viaSecret:
+                    //     selectedResource.pluginService.services[0].export
+                    //       ?.viaSecret || '',
+                    // },
                   },
                 },
+
+                // spec: {
+                //   resourceTemplate: {
+                //     apiVersion: selectedResource.pluginService.apiVersion || '',
+                //     kind: selectedResource.pluginService.services[0].kind || '',
+                //     spec: {
+                //       ...val.res,
+                //     },
+                //     msvcRef: {
+                //       name: parseName(managedService),
+                //       namespace: managedService?.spec?.targetNamespace || '',
+                //       apiVersion:
+                //         managedService?.spec?.msvcSpec.serviceTemplate
+                //           ?.apiVersion || '',
+                //       kind:
+                //         managedService?.spec?.msvcSpec.serviceTemplate?.kind ||
+                //         '',
+                //     },
+                //   },
+                // },
               },
             });
             if (e) {

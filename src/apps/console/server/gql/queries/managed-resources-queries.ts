@@ -2,16 +2,16 @@ import gql from 'graphql-tag';
 import { IExecutor } from '~/root/lib/server/helpers/execute-query-with-context';
 import { NN } from '~/root/lib/types/common';
 import {
+  ConsoleCreateManagedResourceMutation,
+  ConsoleCreateManagedResourceMutationVariables,
+  ConsoleDeleteManagedResourceMutation,
+  ConsoleDeleteManagedResourceMutationVariables,
   ConsoleGetManagedResourceQuery,
   ConsoleGetManagedResourceQueryVariables,
   ConsoleListManagedResourcesQuery,
   ConsoleListManagedResourcesQueryVariables,
-  ConsoleCreateManagedResourceMutation,
-  ConsoleCreateManagedResourceMutationVariables,
   ConsoleUpdateManagedResourceMutation,
   ConsoleUpdateManagedResourceMutationVariables,
-  ConsoleDeleteManagedResourceMutation,
-  ConsoleDeleteManagedResourceMutationVariables,
 } from '~/root/src/generated/gql/server';
 
 export type IManagedResource = NN<
@@ -67,17 +67,33 @@ export const managedResourceQueries = (executor: IExecutor) => ({
           }
           mresRef
           recordVersion
+          # spec {
+          #   resourceTemplate {
+          #     apiVersion
+          #     kind
+          #     msvcRef {
+          #       apiVersion
+          #       kind
+          #       name
+          #       namespace
+          #     }
+          #   }
+          # }
           spec {
-            resourceNamePrefix
-            resourceTemplate {
+            managedServiceRef {
               apiVersion
               kind
-              msvcRef {
-                apiVersion
-                kind
-                name
-                namespace
+              name
+              namespace
+            }
+            plugin {
+              apiVersion
+              export {
+                template
+                viaSecret
               }
+              kind
+              spec
             }
           }
           status {
@@ -92,9 +108,6 @@ export const managedResourceQueries = (executor: IExecutor) => ({
             isReady
             lastReadyGeneration
             lastReconcileTime
-            message {
-              RawMessage
-            }
             resources {
               apiVersion
               kind
@@ -209,17 +222,33 @@ export const managedResourceQueries = (executor: IExecutor) => ({
               }
               mresRef
               recordVersion
+              # spec {
+              #   resourceTemplate {
+              #     apiVersion
+              #     kind
+              #     msvcRef {
+              #       apiVersion
+              #       kind
+              #       name
+              #       namespace
+              #     }
+              #   }
+              # }
               spec {
-                resourceNamePrefix
-                resourceTemplate {
+                managedServiceRef {
                   apiVersion
                   kind
-                  msvcRef {
-                    apiVersion
-                    kind
-                    name
-                    namespace
+                  name
+                  namespace
+                }
+                plugin {
+                  apiVersion
+                  export {
+                    template
+                    viaSecret
                   }
+                  kind
+                  spec
                 }
               }
               status {
@@ -233,10 +262,6 @@ export const managedResourceQueries = (executor: IExecutor) => ({
                 checks
                 isReady
                 lastReadyGeneration
-                lastReconcileTime
-                message {
-                  RawMessage
-                }
                 resources {
                   apiVersion
                   kind

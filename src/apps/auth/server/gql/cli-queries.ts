@@ -50,7 +50,7 @@ export const cliQueries = (executor: IExecutor) => ({
         return data.infra_createGlobalVPNDevice;
       },
       vars(_: any) {},
-    },
+    }
   ),
 
   cli_getDNSHostSuffix: executor(
@@ -64,7 +64,7 @@ export const cliQueries = (executor: IExecutor) => ({
         return data.core_getDNSHostSuffix;
       },
       vars(_: any) {},
-    },
+    }
   ),
 
   cli_getMresOutputKeyValues: executor(
@@ -86,7 +86,7 @@ export const cliQueries = (executor: IExecutor) => ({
     {
       transformer: (data: any) => data.core_getManagedResouceOutputKeyValues,
       vars: (_: any) => {},
-    },
+    }
   ),
 
   cli_getGlobalVpnDevice: executor(
@@ -133,7 +133,7 @@ export const cliQueries = (executor: IExecutor) => ({
     {
       transformer: (data: any) => data.infra_getGlobalVPNDevice,
       vars: (_: any) => {},
-    },
+    }
   ),
 
   cli_coreCheckNameAvailability: executor(
@@ -151,7 +151,7 @@ export const cliQueries = (executor: IExecutor) => ({
     {
       transformer: (data: any) => data.core_checkNameAvailability,
       vars: (_: any) => {},
-    },
+    }
   ),
 
   cli_getMresKeys: executor(
@@ -166,7 +166,7 @@ export const cliQueries = (executor: IExecutor) => ({
     {
       transformer: (data: any) => data.core_getManagedResouceOutputKeys,
       vars: (_: any) => {},
-    },
+    }
   ),
 
   cli_listMreses: executor(
@@ -191,7 +191,7 @@ export const cliQueries = (executor: IExecutor) => ({
     {
       transformer: (data: any) => data.core_listManagedResources,
       vars: (_: any) => {},
-    },
+    }
   ),
 
   cli_getMresConfigsValues: executor(
@@ -213,7 +213,7 @@ export const cliQueries = (executor: IExecutor) => ({
     {
       transformer: (data: any) => data,
       vars: (_: any) => {},
-    },
+    }
   ),
 
   cli_infraCheckNameAvailability: executor(
@@ -236,7 +236,7 @@ export const cliQueries = (executor: IExecutor) => ({
     {
       transformer: (data: any) => data.infra_checkNameAvailability,
       vars: (_: any) => {},
-    },
+    }
   ),
 
   cli_getConfigSecretMap: executor(
@@ -279,7 +279,7 @@ export const cliQueries = (executor: IExecutor) => ({
         };
       },
       vars: (_: any) => {},
-    },
+    }
   ),
 
   cli_intercepExternalApp: executor(
@@ -303,7 +303,7 @@ export const cliQueries = (executor: IExecutor) => ({
     {
       transformer: (data: any) => data.core_interceptExternalApp,
       vars: (_: any) => {},
-    },
+    }
   ),
   // cli_interceptApp: executor(
   //   gql`
@@ -351,7 +351,7 @@ export const cliQueries = (executor: IExecutor) => ({
     {
       transformer: (data: any) => data.core_interceptApp,
       vars: (_: any) => {},
-    },
+    }
   ),
   cli_removeDeviceIntercepts: executor(
     gql`
@@ -365,7 +365,7 @@ export const cliQueries = (executor: IExecutor) => ({
     {
       transformer: (data: any) => data.core_removeDeviceIntercepts,
       vars(_: any) {},
-    },
+    }
   ),
   cli_getEnvironment: executor(
     gql`
@@ -373,9 +373,6 @@ export const cliQueries = (executor: IExecutor) => ({
         core_getEnvironment(name: $name) {
           status {
             isReady
-            message {
-              RawMessage
-            }
           }
           isArchived
           metadata {
@@ -393,7 +390,7 @@ export const cliQueries = (executor: IExecutor) => ({
     {
       transformer: (data: any) => data.core_getEnvironment,
       vars: (_: any) => {},
-    },
+    }
   ),
 
   cli_updateEnvironment: executor(
@@ -407,7 +404,7 @@ export const cliQueries = (executor: IExecutor) => ({
     {
       transformer: (data: any) => data.core_updateEnvironment,
       vars(_: any) {},
-    },
+    }
   ),
 
   cli_cloneEnvironment: executor(
@@ -435,9 +432,6 @@ export const cliQueries = (executor: IExecutor) => ({
           }
           status {
             isReady
-            message {
-              RawMessage
-            }
           }
           spec {
             targetNamespace
@@ -448,7 +442,7 @@ export const cliQueries = (executor: IExecutor) => ({
     {
       transformer: (data: any) => data.core_cloneEnvironment,
       vars(_: any) {},
-    },
+    }
   ),
   cli_getSecret: executor(
     gql`
@@ -466,7 +460,7 @@ export const cliQueries = (executor: IExecutor) => ({
     {
       transformer: (data: any) => data.core_getSecret,
       vars: (_: any) => {},
-    },
+    }
   ),
   cli_getConfig: executor(
     gql`
@@ -484,7 +478,7 @@ export const cliQueries = (executor: IExecutor) => ({
     {
       transformer: (data: any) => data.core_getConfig,
       vars: (_: any) => {},
-    },
+    }
   ),
 
   cli_listServices: executor(
@@ -556,9 +550,6 @@ export const cliQueries = (executor: IExecutor) => ({
                 isReady
                 lastReadyGeneration
                 lastReconcileTime
-                message {
-                  RawMessage
-                }
                 resources {
                   apiVersion
                   kind
@@ -582,7 +573,7 @@ export const cliQueries = (executor: IExecutor) => ({
     {
       transformer: (data: any) => data.core_listServiceBindings,
       vars: (_: any) => {},
-    },
+    }
   ),
 
   cli_createServiceIntercept: executor(
@@ -604,7 +595,7 @@ export const cliQueries = (executor: IExecutor) => ({
     {
       transformer: (data: any) => data.core_createServiceIntercept,
       vars: (_: any) => {},
-    },
+    }
   ),
 
   cli_deleteServiceIntercept: executor(
@@ -622,7 +613,7 @@ export const cliQueries = (executor: IExecutor) => ({
     {
       transformer: (data: any) => data.core_deleteServiceIntercept,
       vars: (_: any) => {},
-    },
+    }
   ),
 
   cli_listApps: executor(
@@ -652,9 +643,6 @@ export const cliQueries = (executor: IExecutor) => ({
               status {
                 checks
                 isReady
-                message {
-                  RawMessage
-                }
               }
             }
           }
@@ -687,9 +675,6 @@ export const cliQueries = (executor: IExecutor) => ({
               status {
                 checks
                 isReady
-                message {
-                  RawMessage
-                }
               }
             }
           }
@@ -719,7 +704,7 @@ export const cliQueries = (executor: IExecutor) => ({
         return data.apps;
       },
       vars: (_: any) => {},
-    },
+    }
   ),
   cli_listConfigs: executor(
     gql`
@@ -742,7 +727,7 @@ export const cliQueries = (executor: IExecutor) => ({
     {
       transformer: (data: any) => data.core_listConfigs,
       vars: (_: any) => {},
-    },
+    }
   ),
   cli_listSecrets: executor(
     gql`
@@ -767,7 +752,7 @@ export const cliQueries = (executor: IExecutor) => ({
     {
       transformer: (data: any) => data.core_listSecrets,
       vars: (_: any) => {},
-    },
+    }
   ),
 
   cli_listEnvironments: executor(
@@ -791,9 +776,6 @@ export const cliQueries = (executor: IExecutor) => ({
               }
               status {
                 isReady
-                message {
-                  RawMessage
-                }
               }
             }
           }
@@ -810,7 +792,7 @@ export const cliQueries = (executor: IExecutor) => ({
     {
       transformer: (data: any) => data.core_listEnvironments,
       vars: (_: any) => {},
-    },
+    }
   ),
 
   cli_getKubeConfig: executor(
@@ -830,7 +812,7 @@ export const cliQueries = (executor: IExecutor) => ({
     {
       transformer: (data: any) => data.infra_getCluster,
       vars: (_: any) => {},
-    },
+    }
   ),
   cli_listClusters: executor(
     gql`
@@ -853,7 +835,7 @@ export const cliQueries = (executor: IExecutor) => ({
     {
       transformer: (data: any) => data.infra_listClusters,
       vars: (_: any) => {},
-    },
+    }
   ),
   cli_listVPNDevices: executor(
     gql`
@@ -916,7 +898,7 @@ export const cliQueries = (executor: IExecutor) => ({
     {
       transformer: (data: any) => data.infra_listGlobalVPNDevices,
       vars: (_: any) => {},
-    },
+    }
   ),
   cli_listAccounts: executor(
     gql`
@@ -932,7 +914,7 @@ export const cliQueries = (executor: IExecutor) => ({
     {
       transformer: (data: any) => data.accounts_listAccounts,
       vars: (_: any) => {},
-    },
+    }
   ),
   cli_getCurrentUser: executor(
     gql`
@@ -947,7 +929,7 @@ export const cliQueries = (executor: IExecutor) => ({
     {
       transformer: (data: any) => data.auth_me,
       vars: (_: any) => {},
-    },
+    }
   ),
 
   cli_createRemoteLogin: executor(
@@ -959,7 +941,7 @@ export const cliQueries = (executor: IExecutor) => ({
     {
       transformer: (data: any) => data.auth_createRemoteLogin,
       vars: (_: any) => {},
-    },
+    }
   ),
 
   cli_getRemoteLogin: executor(
@@ -974,7 +956,7 @@ export const cliQueries = (executor: IExecutor) => ({
     {
       transformer: (data: any) => data.auth_getRemoteLogin,
       vars: (_: any) => {},
-    },
+    }
   ),
   cli_listAccountClusters: executor(
     gql`
@@ -998,7 +980,7 @@ export const cliQueries = (executor: IExecutor) => ({
     {
       transformer: (data: any) => data.infra_listBYOKClusters,
       vars(_: any) {},
-    },
+    }
   ),
   cli_getBYOKCluster: executor(
     gql`
@@ -1019,7 +1001,7 @@ export const cliQueries = (executor: IExecutor) => ({
     {
       transformer: (data: any) => data.infra_getBYOKCluster,
       vars(_: any) {},
-    },
+    }
   ),
   cli_createClusterReference: executor(
     gql`
@@ -1037,7 +1019,7 @@ export const cliQueries = (executor: IExecutor) => ({
     {
       transformer: (data: any) => data.infra_createBYOKCluster,
       vars(_: any) {},
-    },
+    }
   ),
   cli_deleteClusterReference: executor(
     gql`
@@ -1048,7 +1030,7 @@ export const cliQueries = (executor: IExecutor) => ({
     {
       transformer: (data: any) => data.infra_deleteBYOKCluster,
       vars(_: any) {},
-    },
+    }
   ),
   cli_clusterReferenceInstructions: executor(
     gql`
@@ -1065,12 +1047,12 @@ export const cliQueries = (executor: IExecutor) => ({
     {
       transformer: (data: any) => {
         const instructions = JSON.parse(
-          data.infrat_getBYOKClusterSetupInstructions[0].command,
+          data.infrat_getBYOKClusterSetupInstructions[0].command
         );
         return instructions;
       },
       vars(_: any) {},
-    },
+    }
   ),
   cli_listImportedManagedResources: executor(
     gql`
@@ -1146,17 +1128,33 @@ export const cliQueries = (executor: IExecutor) => ({
                 }
                 mresRef
                 recordVersion
+                # spec {
+                #   resourceTemplate {
+                #     apiVersion
+                #     kind
+                #     msvcRef {
+                #       apiVersion
+                #       kind
+                #       name
+                #       namespace
+                #     }
+                #     spec
+                #   }
+                # }
                 spec {
-                  resourceNamePrefix
-                  resourceTemplate {
+                  managedServiceRef {
                     apiVersion
                     kind
-                    msvcRef {
-                      apiVersion
-                      kind
-                      name
-                      namespace
+                    name
+                    namespace
+                  }
+                  plugin {
+                    apiVersion
+                    export {
+                      template
+                      viaSecret
                     }
+                    kind
                     spec
                   }
                 }
@@ -1172,9 +1170,6 @@ export const cliQueries = (executor: IExecutor) => ({
                   isReady
                   lastReadyGeneration
                   lastReconcileTime
-                  message {
-                    RawMessage
-                  }
                   resources {
                     apiVersion
                     kind
@@ -1207,6 +1202,6 @@ export const cliQueries = (executor: IExecutor) => ({
     {
       transformer: (data: any) => data.core_listImportedManagedResources,
       vars(_: any) {},
-    },
+    }
   ),
 });

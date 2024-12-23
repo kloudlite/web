@@ -98,9 +98,6 @@ export const buildQueries = (executor: IExecutor) => ({
                   isReady
                   lastReadyGeneration
                   lastReconcileTime
-                  message {
-                    RawMessage
-                  }
                   resources {
                     apiVersion
                     kind
