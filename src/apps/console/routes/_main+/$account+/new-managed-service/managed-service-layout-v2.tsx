@@ -45,6 +45,9 @@ import { IAccountContext } from '../_layout';
 import useFetchHelmCharts from '../env+/$environment+/workloads+/helm-charts/helm-utils/use-fetch-helmcharts';
 import useFetchHelmValue from '../env+/$environment+/workloads+/helm-charts/helm-utils/use-fetch-helmvalues';
 import useHelmRepoSearch from '../env+/$environment+/workloads+/helm-charts/helm-utils/use-helm-repo-search';
+import TolerationsKeyValuePair from '~/console/components/tolerations-fields';
+import KeyValuePair from '~/console/components/key-value-pair-node-selector';
+import { object } from 'yup';
 
 // type IDialog = IDialogBase<ExtractNodeType<IHelmCharts>>;
 
@@ -192,7 +195,13 @@ const RenderHelmFields = ({
                 }}
                 onSearch={(text) => {
                   setRepoSearchText(text);
-                  // resetHelmFields();
+                  onChange('res.chart.name')(dummyEvent(''));
+                  onChange('res.chart.version')(dummyEvent(''));
+                  setChartName(undefined);
+                  setChartVersion(undefined);
+                  setChartVersions([]);
+                  setSelectedRepo('');
+                  onChange(`res.${field.input}`)(dummyEvent(''));
                 }}
                 valueRender={repoRenderer}
                 loading={repoLoading}
@@ -376,19 +385,39 @@ const RenderField = ({
     );
   }
 
-  if (field.type === 'text/yaml') {
-    const v = typeof value === 'string' ? value : JSON.stringify(value);
+  if (field.type === 'text/yaml' && field.input === 'nodeSelector') {
     return (
       <div className="flex flex-col gap-2xl">
         <div className="bodyMd-medium text-text-default">{field.label}</div>
-        <CodeEditorClient
-          {...valueEditorProps}
-          value={v || ''}
-          lang="yaml"
+        <KeyValuePair
+          value={Object.entries(value || {}).map(([key, value]) => ({
+            key,
+            value,
+          }))}
+          onChange={(e) => {
+            onChange(`res.${field.input}`)(
+              dummyEvent(
+                e.reduce((prev, curr) => {
+                  prev[curr.key] = curr.value;
+                  return prev;
+                }, {}),
+              ),
+            );
+          }}
+        />
+      </div>
+    );
+  }
+
+  if (field.type === 'text/yaml' && field.input === 'tolerations') {
+    return (
+      <div className="flex flex-col gap-2xl">
+        <div className="bodyMd-medium text-text-default">{field.label}</div>
+        <TolerationsKeyValuePair
+          value={value}
           onChange={(e) => {
             onChange(`res.${field.input}`)(dummyEvent(e));
           }}
-          path={field.input}
         />
       </div>
     );
@@ -427,7 +456,12 @@ const RenderField = ({
                     );
                   }
                 }}
-                suffix={field.displayUnit}
+                suffix={
+                  <div className="flex items-center gap-md">
+                    <span className="text-sm text-text-soft">min</span>
+                    {field.displayUnit}
+                  </div>
+                }
               />
             </div>
 
@@ -447,7 +481,12 @@ const RenderField = ({
                     ),
                   );
                 }}
-                suffix={field.displayUnit}
+                suffix={
+                  <div className="flex items-center gap-md">
+                    <span className="text-sm text-text-soft">max</span>
+                    {field.displayUnit}
+                  </div>
+                }
               />
             </div>
           </div>
@@ -745,6 +784,7 @@ const ReviewView = ({
     const fields = Object.entries(values.res).filter(
       ([k, _v]) => !['resources'].includes(k),
     );
+    console.log('fields', fields);
     if (fields.length > 0) {
       return (
         <ReviewComponent
@@ -761,20 +801,36 @@ const ReviewView = ({
                 return null;
               }
               const getValueRenderer = () => {
+                if (Array.isArray(v)) {
+                  return (
+                    <div className="flex flex-col gap-lg bodySm text-text-soft">
+                      {v.map((vi) => (
+                        <div key={vi.key}>
+                          <span>{vi.key}</span>
+                          {' : '}
+                          {vi.value}
+                        </div>
+                      ))}
+                    </div>
+                  );
+                }
+                if (typeof v === 'object') {
+                  return (
+                    <div className="flex flex-col gap-lg bodySm text-text-soft">
+                      {Object.entries(v || {}).map(([pKey, pValue]) => (
+                        <div key={pKey}>
+                          <span>{pKey}</span>
+                          {' : '}
+                          {pValue}
+                        </div>
+                      ))}
+                    </div>
+                  );
+                }
                 if (typeof v === 'string') {
                   return <div className="bodySm text-text-soft">{v}</div>;
                 }
-                return (
-                  <div className="flex flex-col gap-lg bodySm text-text-soft">
-                    {Object.entries(v || {}).map(([pKey, pValue]) => (
-                      <div key={pKey}>
-                        <span>{titleCase(pKey)}</span>
-                        {' : '}
-                        {pValue}
-                      </div>
-                    ))}
-                  </div>
-                );
+                return null;
               };
               return (
                 <div
@@ -847,6 +903,20 @@ const ReviewView = ({
           >
             <div className="flex flex-col p-xl  gap-lg rounded border border-border-default flex-1 overflow-hidden">
               {Object.entries(values?.res?.resources).map(([key, value]) => {
+                console.log(value);
+                if (typeof value === 'string') {
+                  return (
+                    <div
+                      key={key}
+                      className="flex flex-col gap-md  [&:not(:last-child)]:pb-lg   [&:not(:last-child)]:border-b border-border-default"
+                    >
+                      <div className="bodyMd-medium text-text-default">
+                        {titleCase(key)}
+                      </div>
+                      <div className="bodySm text-text-soft">{value}</div>
+                    </div>
+                  );
+                }
                 return (
                   <div
                     key={key}
@@ -1043,9 +1113,12 @@ export const ManagedServiceLayoutV2 = () => {
                 clusterName: val.clusterName,
                 spec: {
                   msvcSpec: {
-                    serviceTemplate: {
+                    plugin: {
                       apiVersion: selectedPlugin.plugin.spec.apiVersion,
                       kind: selectedPlugin.plugin.spec.services[0].kind,
+                      export: {
+                        viaSecret: '',
+                      },
                       spec: {
                         ...val.res,
                       },
