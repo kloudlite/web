@@ -1,9 +1,11 @@
 FROM node:22.10.0-alpine AS remix
+
 WORKDIR  /app
 COPY ./package-production.json ./package.json
 RUN npm i --frozen-lockfile
 
 FROM node:22.10.0-alpine AS install
+RUN apk update && apk add python3 make g++
 RUN npm i -g pnpm@9.12.2
 WORKDIR  /app
 COPY ./package.json ./package.json

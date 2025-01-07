@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useMemo, useState } from 'react';
+import { ReactNode, useCallback, useMemo } from 'react';
 import AnimateHide from '@kloudlite/design-system/atoms/animate-hide';
 import { Button, IconButton } from '@kloudlite/design-system/atoms/button';
 import { TextInput } from '@kloudlite/design-system/atoms/input';
@@ -14,6 +14,8 @@ interface ITolerationsKeyValuePair {
   error?: boolean;
   size?: 'lg' | 'md';
   addText?: string;
+  ids: string[];
+  onIdChange: (ids: string[]) => void;
 }
 
 const effects = async () => [{ label: 'NoExecute', value: 'NoExecute' }];
@@ -22,18 +24,18 @@ const operators = async () => [{ label: 'Equal', value: 'Equal' }];
 const TolerationsKeyValuePair = ({
   onChange,
   value = [],
+  ids = [],
   label,
   message,
   error,
   size,
   addText,
+  onIdChange,
 }: ITolerationsKeyValuePair) => {
   const newItem = useMemo(
     () => [{ key: '', value: '', effect: 'NoExecute', operator: 'Equal' }],
     [],
   );
-  const [ids, setIDs] = useState<string[]>([uuid()]);
-
   const handleChange = useCallback(
     (_value: string | number, id: string | number, target: string = '') => {
       const tempItems = ids.map((_, index) => {
@@ -134,7 +136,7 @@ const TolerationsKeyValuePair = ({
                     disabled={value.length < 2}
                     onClick={() => {
                       onChange?.(value.filter((_, i) => i !== index));
-                      setIDs((prev) => prev.filter((_, i) => i !== index));
+                      onIdChange(ids.filter((_, i) => i !== index));
                     }}
                   />
                 </div>
@@ -164,7 +166,7 @@ const TolerationsKeyValuePair = ({
             prefix={<Plus />}
             onClick={() => {
               const id = uuid();
-              setIDs((prev) => [...prev, id]);
+              onIdChange([...ids, id]);
             }}
           />
         </div>

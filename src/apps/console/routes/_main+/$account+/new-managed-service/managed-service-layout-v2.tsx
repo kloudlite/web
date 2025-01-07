@@ -3,7 +3,7 @@
 import { NumberInput, TextInput } from '@kloudlite/design-system/atoms/input';
 import Select from '@kloudlite/design-system/atoms/select';
 import { Switch } from '@kloudlite/design-system/atoms/switch';
-import { titleCase } from '@kloudlite/design-system/utils';
+import { titleCase, uuid } from '@kloudlite/design-system/utils';
 import { useNavigate, useOutletContext, useParams } from '@remix-run/react';
 import yaml from 'js-yaml';
 import {
@@ -47,7 +47,6 @@ import useFetchHelmValue from '../env+/$environment+/workloads+/helm-charts/helm
 import useHelmRepoSearch from '../env+/$environment+/workloads+/helm-charts/helm-utils/use-helm-repo-search';
 import TolerationsKeyValuePair from '~/console/components/tolerations-fields';
 import KeyValuePair from '~/console/components/key-value-pair-node-selector';
-import { object } from 'yup';
 
 // type IDialog = IDialogBase<ExtractNodeType<IHelmCharts>>;
 
@@ -169,6 +168,14 @@ const RenderHelmFields = ({
     repoUrl: values.res.chart.url,
   });
 
+  const resetFields = () => {
+    onChange('res.chart.name')(dummyEvent(''));
+    onChange('res.chart.version')(dummyEvent(''));
+    setChartName(undefined);
+    setChartVersion(undefined);
+    setChartVersions([]);
+  };
+
   return (
     <div className="flex flex-col gap-3xl">
       {fields.map((field) => {
@@ -192,14 +199,11 @@ const RenderHelmFields = ({
                   setSelectedRepo(value.value);
                   onChange('helmPackageId')(dummyEvent(value.value));
                   /* setHelmCharts([]); */
+                  resetFields();
                 }}
                 onSearch={(text) => {
                   setRepoSearchText(text);
-                  onChange('res.chart.name')(dummyEvent(''));
-                  onChange('res.chart.version')(dummyEvent(''));
-                  setChartName(undefined);
-                  setChartVersion(undefined);
-                  setChartVersions([]);
+                  resetFields();
                   setSelectedRepo('');
                   onChange(`res.${field.input}`)(dummyEvent(''));
                 }}
@@ -225,6 +229,7 @@ const RenderHelmFields = ({
                   helmCharts.length === 0 || repoLoading || !selectedRepo
                 }
                 // @ts-ignore
+                disableWhileLoading
                 value={chartName?.value}
                 options={async () => helmCharts}
                 loading={!errors.chartVersion && helmChartsLoading}
@@ -247,6 +252,7 @@ const RenderHelmFields = ({
                 size="lg"
                 label="Chart version"
                 placeholder="Chart version"
+                disableWhileLoading
                 disabled={chartVersions.length === 0 || helmChartsLoading}
                 value={chartVersion?.value}
                 options={async () => [
@@ -329,6 +335,70 @@ const RenderHelmFields = ({
   );
 };
 
+const Tolerations = ({
+  label,
+  value,
+  input,
+  onChange,
+}: {
+  label: string;
+  value: Record<string, any>[];
+  input: string;
+  onChange: (e: string) => (e: { target: { value: any } }) => void;
+}) => {
+  const [ids, setIDs] = useState<string[]>([uuid()]);
+  return (
+    <div className="flex flex-col gap-2xl">
+      <div className="bodyMd-medium text-text-default">{label}</div>
+      <TolerationsKeyValuePair
+        ids={ids}
+        value={value}
+        onChange={(e) => {
+          onChange(`res.${input}`)(dummyEvent(e));
+        }}
+        onIdChange={(idss) => setIDs(idss)}
+      />
+    </div>
+  );
+};
+
+const NodeSelector = ({
+  label,
+  value,
+  input,
+  onChange,
+}: {
+  label: string;
+  value: Record<string, any>[];
+  input: string;
+  onChange: (e: string) => (e: { target: { value: any } }) => void;
+}) => {
+  const [ids, setIDs] = useState<string[]>([uuid()]);
+  return (
+    <div className="flex flex-col gap-2xl">
+      <div className="bodyMd-medium text-text-default">{label}</div>
+      <KeyValuePair
+        ids={ids}
+        value={Object.entries(value || {}).map(([key, value]) => ({
+          key,
+          value,
+        }))}
+        onChange={(e) => {
+          onChange(`res.${input}`)(
+            dummyEvent(
+              e.reduce((prev, curr) => {
+                prev[curr.key] = curr.value;
+                return prev;
+              }, {}),
+            ),
+          );
+        }}
+        onIdChange={(idss) => setIDs(idss)}
+      />
+    </div>
+  );
+};
+
 const RenderField = ({
   field,
   value,
@@ -387,39 +457,23 @@ const RenderField = ({
 
   if (field.type === 'text/yaml' && field.input === 'nodeSelector') {
     return (
-      <div className="flex flex-col gap-2xl">
-        <div className="bodyMd-medium text-text-default">{field.label}</div>
-        <KeyValuePair
-          value={Object.entries(value || {}).map(([key, value]) => ({
-            key,
-            value,
-          }))}
-          onChange={(e) => {
-            onChange(`res.${field.input}`)(
-              dummyEvent(
-                e.reduce((prev, curr) => {
-                  prev[curr.key] = curr.value;
-                  return prev;
-                }, {}),
-              ),
-            );
-          }}
-        />
-      </div>
+      <NodeSelector
+        label={field.label}
+        value={value}
+        input={field.input}
+        onChange={onChange}
+      />
     );
   }
 
   if (field.type === 'text/yaml' && field.input === 'tolerations') {
     return (
-      <div className="flex flex-col gap-2xl">
-        <div className="bodyMd-medium text-text-default">{field.label}</div>
-        <TolerationsKeyValuePair
-          value={value}
-          onChange={(e) => {
-            onChange(`res.${field.input}`)(dummyEvent(e));
-          }}
-        />
-      </div>
+      <Tolerations
+        label={field.label}
+        value={value}
+        input={field.input}
+        onChange={onChange}
+      />
     );
   }
 

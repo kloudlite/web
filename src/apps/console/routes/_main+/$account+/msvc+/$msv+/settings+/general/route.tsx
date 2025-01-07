@@ -44,18 +44,16 @@ const ClusterManagedServiceSettingGeneral = () => {
   const getService = () => {
     return getManagedTemplate({
       templates: msvtemplates,
-      apiVersion:
-        managedService.spec?.msvcSpec.serviceTemplate?.apiVersion || '',
-      kind: managedService.spec?.msvcSpec.serviceTemplate?.kind || '',
+      apiVersion: managedService.spec?.msvcSpec.plugin?.apiVersion || '',
+      kind: managedService.spec?.msvcSpec.plugin?.kind || '',
     });
   };
 
   const getServicePlugin = () => {
     return getManagedPlugin({
       plugins: msvPlugins,
-      apiVersion:
-        managedService.spec?.msvcSpec.serviceTemplate?.apiVersion || '',
-      kind: managedService.spec?.msvcSpec.serviceTemplate?.kind || '',
+      apiVersion: managedService.spec?.msvcSpec.plugin?.apiVersion || '',
+      kind: managedService.spec?.msvcSpec.plugin?.kind || '',
     });
   };
 
@@ -68,7 +66,7 @@ const ClusterManagedServiceSettingGeneral = () => {
         isNameError: false,
         annotations: managedService.metadata?.annotations,
         res: {
-          ...managedService.spec?.msvcSpec.serviceTemplate?.spec,
+          ...managedService.spec?.msvcSpec.plugin?.spec,
         },
       },
       validationSchema: Yup.object({}),
@@ -83,12 +81,11 @@ const ClusterManagedServiceSettingGeneral = () => {
             clusterName: val.clusterName,
             spec: {
               msvcSpec: {
-                serviceTemplate: {
+                plugin: {
+                  ...managedService.spec?.msvcSpec.plugin,
                   apiVersion:
-                    managedService.spec?.msvcSpec.serviceTemplate?.apiVersion ||
-                    '',
-                  kind:
-                    managedService.spec?.msvcSpec.serviceTemplate?.kind || '',
+                    managedService.spec?.msvcSpec.plugin?.apiVersion || '',
+                  kind: managedService.spec?.msvcSpec.plugin?.kind || '',
                   spec: {
                     ...val.res,
                   },
@@ -110,7 +107,7 @@ const ClusterManagedServiceSettingGeneral = () => {
     if (
       values.displayName !== managedService.displayName ||
       JSON.stringify(values.res) !==
-        JSON.stringify(managedService.spec?.msvcSpec.serviceTemplate?.spec)
+        JSON.stringify(managedService.spec?.msvcSpec.plugin?.spec)
     ) {
       return true;
     }
@@ -163,7 +160,7 @@ const ClusterManagedServiceSettingGeneral = () => {
               <TextInput
                 label="Integrated service URL"
                 value={`${consoleBaseUrl}/${parseName(account)}/${parseName(
-                  managedService
+                  managedService,
                 )}`}
                 message="This is your URL namespace within Kloudlite"
                 disabled
@@ -177,8 +174,8 @@ const ClusterManagedServiceSettingGeneral = () => {
                       onClick={() =>
                         copy(
                           `${consoleBaseUrl}/${parseName(account)}/${parseName(
-                            managedService
-                          )}`
+                            managedService,
+                          )}`,
                         )
                       }
                       className="outline-none hover:bg-surface-basic-hovered active:bg-surface-basic-active rounded text-text-default"

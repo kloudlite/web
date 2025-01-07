@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useMemo, useState } from 'react';
+import { ReactNode, useCallback, useMemo } from 'react';
 import AnimateHide from '@kloudlite/design-system/atoms/animate-hide';
 import { Button, IconButton } from '@kloudlite/design-system/atoms/button';
 import { NumberInput, TextInput } from '@kloudlite/design-system/atoms/input';
@@ -18,6 +18,8 @@ interface IKeyValuePair {
   keyPlaceholder?: string;
   valuePlaceholder?: string;
   type?: 'number' | 'text';
+  ids: string[];
+  onIdChange: (ids: string[]) => void;
 }
 const KeyValuePair = ({
   onChange,
@@ -32,10 +34,10 @@ const KeyValuePair = ({
   keyPlaceholder = 'key',
   valuePlaceholder = 'value',
   type = 'text',
+  ids,
+  onIdChange,
 }: IKeyValuePair) => {
   const newItem = useMemo(() => [{ [keyLabel]: '', [valueLabel]: '' }], []);
-
-  const [ids, setIDs] = useState<string[]>([uuid()]);
 
   const handleChange = useCallback(
     (_value: string | number, id: string | number, target: string = '') => {
@@ -137,7 +139,7 @@ const KeyValuePair = ({
                     disabled={value.length < 2}
                     onClick={() => {
                       onChange?.(value.filter((_, i) => i !== index));
-                      setIDs((prev) => prev.filter((_, i) => i !== index));
+                      onIdChange(ids.filter((_, i) => i !== index));
                     }}
                   />
                 </div>
@@ -167,7 +169,7 @@ const KeyValuePair = ({
             prefix={<Plus />}
             onClick={() => {
               const id = uuid();
-              setIDs((prev) => [...prev, id]);
+              onIdChange([...ids, id]);
             }}
           />
         </div>

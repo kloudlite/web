@@ -4833,6 +4833,12 @@ export type ConsoleGetClusterMSvQuery = {
     spec?: {
       targetNamespace: string;
       msvcSpec: {
+        plugin?: {
+          apiVersion: string;
+          kind: string;
+          spec?: any;
+          export?: { template?: string; viaSecret: string };
+        };
         serviceTemplate?: { apiVersion: string; kind: string; spec?: any };
       };
     };

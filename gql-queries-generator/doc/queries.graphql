@@ -3001,6 +3001,15 @@ query consoleGetClusterMSv($name: String!) {
     recordVersion
     spec {
       msvcSpec {
+        plugin {
+          apiVersion
+          export {
+            template
+            viaSecret
+          }
+          kind
+          spec
+        }
         serviceTemplate {
           apiVersion
           kind
