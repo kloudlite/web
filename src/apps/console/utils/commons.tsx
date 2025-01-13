@@ -48,12 +48,6 @@ export const getManagedPlugin = ({
             t.spec.apiVersion === apiVersion,
         )
     : undefined;
-  // return plugins
-  //   ?.flatMap((t) => t.items.flat())
-  //   .find(
-  //     (t) =>
-  //       t.spec.services[0].kind === kind && t.spec.apiVersion === apiVersion
-  //   );
 };
 
 export const getManagedTemplateLogo = (
