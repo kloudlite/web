@@ -18,8 +18,24 @@ interface ITolerationsKeyValuePair {
   onIdChange: (ids: string[]) => void;
 }
 
-const effects = async () => [{ label: 'NoExecute', value: 'NoExecute' }];
-const operators = async () => [{ label: 'Equal', value: 'Equal' }];
+const effects = async () => [
+  { label: 'NoExecute', value: 'NoExecute' },
+  {
+    label: 'PreferNoSchedule',
+    value: 'PreferNoSchedule',
+  },
+  {
+    label: 'NoSchedule',
+    value: 'NoSchedule',
+  },
+];
+const operators = async () => [
+  { label: 'Equal', value: 'Equal' },
+  {
+    label: 'Exists',
+    value: 'Exists',
+  },
+];
 
 const TolerationsKeyValuePair = ({
   onChange,
@@ -34,14 +50,14 @@ const TolerationsKeyValuePair = ({
 }: ITolerationsKeyValuePair) => {
   const newItem = useMemo(
     () => [{ key: '', value: '', effect: 'NoExecute', operator: 'Equal' }],
-    [],
+    []
   );
   const handleChange = useCallback(
     (_value: string | number, id: string | number, target: string = '') => {
       const tempItems = ids.map((_, index) => {
         let v = value[index];
         if (!v) {
-          v = newItem[0];
+          [v] = newItem;
         }
         if (index === id) {
           switch (target) {
@@ -61,7 +77,7 @@ const TolerationsKeyValuePair = ({
 
       if (onChange) onChange(Array.from(tempItems));
     },
-    [value, ids],
+    [value, ids]
   );
 
   return (
@@ -80,7 +96,7 @@ const TolerationsKeyValuePair = ({
           {ids.map((item, index) => {
             let v = value[index];
             if (!v) {
-              v = newItem[0];
+              [v] = newItem;
             }
             return (
               <div
@@ -101,7 +117,7 @@ const TolerationsKeyValuePair = ({
                   <TextInput
                     size={size || 'md'}
                     error={error}
-                    placeholder={'Key'}
+                    placeholder="Key"
                     value={v.key}
                     onChange={({ target }) =>
                       handleChange(target.value, index, 'key')
@@ -122,7 +138,7 @@ const TolerationsKeyValuePair = ({
                   <TextInput
                     size={size || 'md'}
                     error={error}
-                    placeholder={'Value'}
+                    placeholder="Value"
                     value={v.value}
                     onChange={({ target }) =>
                       handleChange(target.value, index, 'value')
@@ -152,7 +168,7 @@ const TolerationsKeyValuePair = ({
                 'text-text-critical': !!error,
                 'text-text-default': !error,
               },
-              'pt-md',
+              'pt-md'
             )}
           >
             {message}
