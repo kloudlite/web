@@ -426,9 +426,9 @@ const RenderField = ({
   if (field.type === 'int-range') {
     return (
       <div className="flex flex-col gap-md">
-        <div className="bodyMd-medium text-text-default">{`${field.label}${
-          field.required ? ' *' : ''
-        }`}</div>
+        <div className="bodyMd-medium text-text-default">
+          {`${field.label}${field.required ? ' *' : ''}`} ({field.displayUnit})
+        </div>
         <div className="flex flex-row gap-xl items-center">
           <div className="flex flex-row gap-xl items-end flex-1 ">
             <div className="flex-1">
@@ -467,7 +467,6 @@ const RenderField = ({
                 suffix={
                   <div className="flex items-center gap-md">
                     <span className="text-sm text-text-soft">min</span>
-                    {field.displayUnit}
                   </div>
                 }
               />
@@ -492,7 +491,6 @@ const RenderField = ({
                 suffix={
                   <div className="flex items-center gap-md">
                     <span className="text-sm text-text-soft">max</span>
-                    {field.displayUnit}
                   </div>
                 }
               />
