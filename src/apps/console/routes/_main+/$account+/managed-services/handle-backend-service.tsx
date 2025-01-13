@@ -568,6 +568,56 @@ const RenderField = ({
   return <div>unknown input type {field.type}</div>;
 };
 
+const RenderAdvanceFields = ({
+  values,
+  onChange,
+  errors,
+  fields,
+}: {
+  onChange: (e: string) => (e: { target: { value: any } }) => void;
+  values: any;
+  errors: {
+    [key: string]: string;
+  };
+  fields: IMSvPlugin['spec']['services'][0]['inputs'];
+}) => {
+  const [advance, setAdvance] = useState(false);
+  return (
+    <div className="flex flex-col gap-3xl items-start">
+      <button
+        className="text-text-primary"
+        onClick={() => setAdvance((p) => !p)}
+        type="button"
+      >
+        Advance options
+      </button>
+      {advance ? (
+        <div className="flex flex-col gap-3xl">
+          {fields.map((field) => {
+            const k = field.input;
+            const x = k.split('.').reduce((acc, curr) => {
+              if (!acc) {
+                return values.res?.[curr] || '';
+              }
+              return acc[curr];
+            }, null);
+            return (
+              <RenderField
+                field={field}
+                key={field.input}
+                onChange={onChange}
+                value={x}
+                errors={errors}
+                fieldKey={k}
+              />
+            );
+          })}
+        </div>
+      ) : null}
+    </div>
+  );
+};
+
 export const Fill = ({
   selectedService,
   selectedServicePlugins,
@@ -581,9 +631,7 @@ export const Fill = ({
   selectedServicePlugins?: ISelectedServicePlugins;
   values: { [key: string]: any };
   handleChange: (key: string) => (e: { target: { value: any } }) => void;
-  errors: {
-    [key: string]: string | undefined;
-  };
+  errors: Record<string, any>;
   size?: ITextInputBase['size'];
   annotations?: { [key: string]: string };
 }) => {
@@ -604,32 +652,45 @@ export const Fill = ({
             annotations={annotations}
           />
         );
-      default:
+      default: {
+        const inputs =
+          selectedServicePlugins?.service?.spec?.services[0].inputs || [];
+        const yamlInputs = inputs.filter((f) =>
+          ['tolerations', 'nodeSelector'].includes(f.input),
+        );
+        const otherInputs = inputs.filter(
+          (f) => !['tolerations', 'nodeSelector'].includes(f.input),
+        );
         return (
           <>
-            {selectedServicePlugins?.service?.spec?.services[0].inputs.map(
-              (field) => {
-                const k = field.input;
-                const x = k.split('.').reduce((acc, curr) => {
-                  if (!acc) {
-                    return values.res?.[curr] || {};
-                  }
-                  return acc[curr];
-                }, null);
-                return (
-                  <RenderField
-                    field={field}
-                    key={field.input}
-                    onChange={handleChange}
-                    value={x}
-                    errors={errors}
-                    fieldKey={k}
-                  />
-                );
-              },
-            )}
+            {otherInputs.map((field) => {
+              const k = field.input;
+              const x = k.split('.').reduce((acc, curr) => {
+                if (!acc) {
+                  return values.res?.[curr] || '';
+                }
+                return acc[curr];
+              }, null);
+              return (
+                <RenderField
+                  field={field}
+                  key={field.input}
+                  onChange={handleChange}
+                  value={x}
+                  errors={errors}
+                  fieldKey={k}
+                />
+              );
+            })}
+            <RenderAdvanceFields
+              values={values}
+              fields={yamlInputs}
+              onChange={handleChange}
+              errors={errors}
+            />
           </>
         );
+      }
     }
   };
 

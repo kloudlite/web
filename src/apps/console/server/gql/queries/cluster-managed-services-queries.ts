@@ -185,6 +185,15 @@ export const clusterManagedServicesQueries = (executor: IExecutor) => ({
                     kind
                     spec
                   }
+                  plugin {
+                    apiVersion
+                    export {
+                      template
+                      viaSecret
+                    }
+                    kind
+                    spec
+                  }
                 }
                 targetNamespace
               }

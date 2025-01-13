@@ -701,6 +701,56 @@ const TemplateView = ({
   );
 };
 
+const RenderAdvanceFields = ({
+  values,
+  onChange,
+  errors,
+  fields,
+}: {
+  onChange: (e: string) => (e: { target: { value: any } }) => void;
+  values: any;
+  errors: {
+    [key: string]: string;
+  };
+  fields: IMSvPlugin['spec']['services'][0]['inputs'];
+}) => {
+  const [advance, setAdvance] = useState(false);
+  return (
+    <div className="flex flex-col gap-3xl items-start">
+      <button
+        className="text-text-primary"
+        onClick={() => setAdvance((p) => !p)}
+        type="button"
+      >
+        Advance options
+      </button>
+      {advance ? (
+        <div className="flex flex-col gap-3xl">
+          {fields.map((field) => {
+            const k = field.input;
+            const x = k.split('.').reduce((acc, curr) => {
+              if (!acc) {
+                return values.res?.[curr] || '';
+              }
+              return acc[curr];
+            }, null);
+            return (
+              <RenderField
+                field={field}
+                key={field.input}
+                onChange={onChange}
+                value={x}
+                errors={errors}
+                fieldKey={k}
+              />
+            );
+          })}
+        </div>
+      ) : null}
+    </div>
+  );
+};
+
 const FieldView = ({
   selectedPlugin,
   clusters,
@@ -727,6 +777,7 @@ const FieldView = ({
   }, [nameRef.current]);
 
   const getRenderField = () => {
+    console.log(selectedPlugin);
     switch (selectedPlugin?.plugin?.plugin) {
       case 'HelmChart':
         return (
@@ -737,10 +788,17 @@ const FieldView = ({
             errors={errors}
           />
         );
-      default:
+      default: {
+        const inputs = selectedPlugin?.plugin?.spec?.services[0].inputs || [];
+        const yamlInputs = inputs.filter((f) =>
+          ['tolerations', 'nodeSelector'].includes(f.input),
+        );
+        const otherInputs = inputs.filter(
+          (f) => !['tolerations', 'nodeSelector'].includes(f.input),
+        );
         return (
           <>
-            {selectedPlugin?.plugin?.spec?.services[0].inputs.map((field) => {
+            {otherInputs.map((field) => {
               const k = field.input;
               const x = k.split('.').reduce((acc, curr) => {
                 if (!acc) {
@@ -759,8 +817,15 @@ const FieldView = ({
                 />
               );
             })}
+            <RenderAdvanceFields
+              values={values}
+              fields={yamlInputs}
+              onChange={handleChange}
+              errors={errors}
+            />
           </>
         );
+      }
     }
   };
 

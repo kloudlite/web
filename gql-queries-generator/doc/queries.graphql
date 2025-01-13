@@ -3085,6 +3085,15 @@ query consoleListClusterMSvs($pagination: CursorPaginationIn, $search: SearchClu
               kind
               spec
             }
+            plugin {
+              apiVersion
+              export {
+                template
+                viaSecret
+              }
+              kind
+              spec
+            }
           }
           targetNamespace
         }

@@ -4908,6 +4908,12 @@ export type ConsoleListClusterMSvsQuery = {
           targetNamespace: string;
           msvcSpec: {
             serviceTemplate?: { apiVersion: string; kind: string; spec?: any };
+            plugin?: {
+              apiVersion: string;
+              kind: string;
+              spec?: any;
+              export?: { template?: string; viaSecret: string };
+            };
           };
         };
         status?: {
