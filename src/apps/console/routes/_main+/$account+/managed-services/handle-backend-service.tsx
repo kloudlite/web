@@ -256,7 +256,6 @@ const Tolerations = ({
   input: string;
   onChange: (e: string) => (e: { target: { value: any } }) => void;
 }) => {
-  console.log(value);
   const { hasChanges } = useUnsavedChanges();
   const [ids, setIDs] = useState<string[]>([uuid()]);
   const [initial, setInitial] = useState(true);
@@ -271,7 +270,6 @@ const Tolerations = ({
   useEffect(() => {
     if (!hasChanges && Array.isArray(value)) {
       setIDs(value.map(() => uuid()));
-      console.log('here 2');
     }
   }, [hasChanges]);
 
@@ -439,14 +437,6 @@ const RenderField = ({
                 placeholder={`${field.label} min`}
                 value={parseFloat(value.min) / (field.multiplier || 1)}
                 onChange={({ target }) => {
-                  console.log(
-                    'target.value',
-                    value,
-                    target.value,
-                    `${parseFloat(target.value) * (field.multiplier || 1)}${
-                      field.unit
-                    }`,
-                  );
                   onChange(`res.${field.input}.min`)(
                     dummyEvent(
                       `${parseFloat(target.value) * (field.multiplier || 1)}${
@@ -601,8 +591,6 @@ export const Fill = ({
   useEffect(() => {
     nameRef.current?.focus();
   }, [nameRef.current]);
-
-  console.log(values);
 
   const getRenderField = () => {
     switch (selectedServicePlugins?.service?.plugin) {

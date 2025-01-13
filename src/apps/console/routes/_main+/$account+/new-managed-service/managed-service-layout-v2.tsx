@@ -836,7 +836,6 @@ const ReviewView = ({
     const fields = Object.entries(values.res).filter(
       ([k, _v]) => !['resources'].includes(k),
     );
-    console.log('fields', fields);
     if (fields.length > 0) {
       return (
         <ReviewComponent
@@ -955,7 +954,6 @@ const ReviewView = ({
           >
             <div className="flex flex-col p-xl  gap-lg rounded border border-border-default flex-1 overflow-hidden">
               {Object.entries(values?.res?.resources).map(([key, value]) => {
-                console.log(value);
                 if (typeof value === 'string') {
                   return (
                     <div
