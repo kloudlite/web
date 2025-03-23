@@ -3,7 +3,7 @@
 import { NumberInput, TextInput } from '@kloudlite/design-system/atoms/input';
 import Select from '@kloudlite/design-system/atoms/select';
 import { Switch } from '@kloudlite/design-system/atoms/switch';
-import { titleCase } from '@kloudlite/design-system/utils';
+import { titleCase, uuid } from '@kloudlite/design-system/utils';
 import { useNavigate, useOutletContext, useParams } from '@remix-run/react';
 import yaml from 'js-yaml';
 import {
@@ -45,6 +45,8 @@ import { IAccountContext } from '../_layout';
 import useFetchHelmCharts from '../env+/$environment+/workloads+/helm-charts/helm-utils/use-fetch-helmcharts';
 import useFetchHelmValue from '../env+/$environment+/workloads+/helm-charts/helm-utils/use-fetch-helmvalues';
 import useHelmRepoSearch from '../env+/$environment+/workloads+/helm-charts/helm-utils/use-helm-repo-search';
+import TolerationsKeyValuePair from '~/console/components/tolerations-fields';
+import KeyValuePair from '~/console/components/key-value-pair-node-selector';
 
 // type IDialog = IDialogBase<ExtractNodeType<IHelmCharts>>;
 
@@ -166,6 +168,14 @@ const RenderHelmFields = ({
     repoUrl: values.res.chart.url,
   });
 
+  const resetFields = () => {
+    onChange('res.chart.name')(dummyEvent(''));
+    onChange('res.chart.version')(dummyEvent(''));
+    setChartName(undefined);
+    setChartVersion(undefined);
+    setChartVersions([]);
+  };
+
   return (
     <div className="flex flex-col gap-3xl">
       {fields.map((field) => {
@@ -189,10 +199,13 @@ const RenderHelmFields = ({
                   setSelectedRepo(value.value);
                   onChange('helmPackageId')(dummyEvent(value.value));
                   /* setHelmCharts([]); */
+                  resetFields();
                 }}
                 onSearch={(text) => {
                   setRepoSearchText(text);
-                  // resetHelmFields();
+                  resetFields();
+                  setSelectedRepo('');
+                  onChange(`res.${field.input}`)(dummyEvent(''));
                 }}
                 valueRender={repoRenderer}
                 loading={repoLoading}
@@ -216,6 +229,7 @@ const RenderHelmFields = ({
                   helmCharts.length === 0 || repoLoading || !selectedRepo
                 }
                 // @ts-ignore
+                disableWhileLoading
                 value={chartName?.value}
                 options={async () => helmCharts}
                 loading={!errors.chartVersion && helmChartsLoading}
@@ -238,6 +252,7 @@ const RenderHelmFields = ({
                 size="lg"
                 label="Chart version"
                 placeholder="Chart version"
+                disableWhileLoading
                 disabled={chartVersions.length === 0 || helmChartsLoading}
                 value={chartVersion?.value}
                 options={async () => [
@@ -320,6 +335,70 @@ const RenderHelmFields = ({
   );
 };
 
+const Tolerations = ({
+  label,
+  value,
+  input,
+  onChange,
+}: {
+  label: string;
+  value: Record<string, any>[];
+  input: string;
+  onChange: (e: string) => (e: { target: { value: any } }) => void;
+}) => {
+  const [ids, setIDs] = useState<string[]>([uuid()]);
+  return (
+    <div className="flex flex-col gap-2xl">
+      <div className="bodyMd-medium text-text-default">{label}</div>
+      <TolerationsKeyValuePair
+        ids={ids}
+        value={value}
+        onChange={(e) => {
+          onChange(`res.${input}`)(dummyEvent(e));
+        }}
+        onIdChange={(idss) => setIDs(idss)}
+      />
+    </div>
+  );
+};
+
+const NodeSelector = ({
+  label,
+  value,
+  input,
+  onChange,
+}: {
+  label: string;
+  value: Record<string, any>[];
+  input: string;
+  onChange: (e: string) => (e: { target: { value: any } }) => void;
+}) => {
+  const [ids, setIDs] = useState<string[]>([uuid()]);
+  return (
+    <div className="flex flex-col gap-2xl">
+      <div className="bodyMd-medium text-text-default">{label}</div>
+      <KeyValuePair
+        ids={ids}
+        value={Object.entries(value || {}).map(([key, value]) => ({
+          key,
+          value,
+        }))}
+        onChange={(e) => {
+          onChange(`res.${input}`)(
+            dummyEvent(
+              e.reduce((prev, curr) => {
+                prev[curr.key] = curr.value;
+                return prev;
+              }, {}),
+            ),
+          );
+        }}
+        onIdChange={(idss) => setIDs(idss)}
+      />
+    </div>
+  );
+};
+
 const RenderField = ({
   field,
   value,
@@ -376,30 +455,34 @@ const RenderField = ({
     );
   }
 
-  if (field.type === 'text/yaml') {
-    const v = typeof value === 'string' ? value : JSON.stringify(value);
+  if (field.type === 'text/yaml' && field.input === 'nodeSelector') {
     return (
-      <div className="flex flex-col gap-2xl">
-        <div className="bodyMd-medium text-text-default">{field.label}</div>
-        <CodeEditorClient
-          {...valueEditorProps}
-          value={v || ''}
-          lang="yaml"
-          onChange={(e) => {
-            onChange(`res.${field.input}`)(dummyEvent(e));
-          }}
-          path={field.input}
-        />
-      </div>
+      <NodeSelector
+        label={field.label}
+        value={value}
+        input={field.input}
+        onChange={onChange}
+      />
+    );
+  }
+
+  if (field.type === 'text/yaml' && field.input === 'tolerations') {
+    return (
+      <Tolerations
+        label={field.label}
+        value={value}
+        input={field.input}
+        onChange={onChange}
+      />
     );
   }
 
   if (field.type === 'int-range') {
     return (
       <div className="flex flex-col gap-md">
-        <div className="bodyMd-medium text-text-default">{`${field.label}${
-          field.required ? ' *' : ''
-        }`}</div>
+        <div className="bodyMd-medium text-text-default">
+          {`${field.label}${field.required ? ' *' : ''}`} ({field.displayUnit})
+        </div>
         <div className="flex flex-row gap-xl items-center">
           <div className="flex flex-row gap-xl items-end flex-1 ">
             <div className="flex-1">
@@ -427,7 +510,11 @@ const RenderField = ({
                     );
                   }
                 }}
-                suffix={field.displayUnit}
+                suffix={
+                  <div className="flex items-center gap-md">
+                    <span className="text-sm text-text-soft">min</span>
+                  </div>
+                }
               />
             </div>
 
@@ -447,7 +534,11 @@ const RenderField = ({
                     ),
                   );
                 }}
-                suffix={field.displayUnit}
+                suffix={
+                  <div className="flex items-center gap-md">
+                    <span className="text-sm text-text-soft">max</span>
+                  </div>
+                }
               />
             </div>
           </div>
@@ -610,6 +701,56 @@ const TemplateView = ({
   );
 };
 
+const RenderAdvanceFields = ({
+  values,
+  onChange,
+  errors,
+  fields,
+}: {
+  onChange: (e: string) => (e: { target: { value: any } }) => void;
+  values: any;
+  errors: {
+    [key: string]: string;
+  };
+  fields: IMSvPlugin['spec']['services'][0]['inputs'];
+}) => {
+  const [advance, setAdvance] = useState(false);
+  return (
+    <div className="flex flex-col gap-3xl items-start">
+      <button
+        className="text-text-primary"
+        onClick={() => setAdvance((p) => !p)}
+        type="button"
+      >
+        Advance options
+      </button>
+      {advance ? (
+        <div className="flex flex-col gap-3xl">
+          {fields.map((field) => {
+            const k = field.input;
+            const x = k.split('.').reduce((acc, curr) => {
+              if (!acc) {
+                return values.res?.[curr] || '';
+              }
+              return acc[curr];
+            }, null);
+            return (
+              <RenderField
+                field={field}
+                key={field.input}
+                onChange={onChange}
+                value={x}
+                errors={errors}
+                fieldKey={k}
+              />
+            );
+          })}
+        </div>
+      ) : null}
+    </div>
+  );
+};
+
 const FieldView = ({
   selectedPlugin,
   clusters,
@@ -636,6 +777,7 @@ const FieldView = ({
   }, [nameRef.current]);
 
   const getRenderField = () => {
+    console.log(selectedPlugin);
     switch (selectedPlugin?.plugin?.plugin) {
       case 'HelmChart':
         return (
@@ -646,10 +788,17 @@ const FieldView = ({
             errors={errors}
           />
         );
-      default:
+      default: {
+        const inputs = selectedPlugin?.plugin?.spec?.services[0].inputs || [];
+        const yamlInputs = inputs.filter((f) =>
+          ['tolerations', 'nodeSelector'].includes(f.input),
+        );
+        const otherInputs = inputs.filter(
+          (f) => !['tolerations', 'nodeSelector'].includes(f.input),
+        );
         return (
           <>
-            {selectedPlugin?.plugin?.spec?.services[0].inputs.map((field) => {
+            {otherInputs.map((field) => {
               const k = field.input;
               const x = k.split('.').reduce((acc, curr) => {
                 if (!acc) {
@@ -668,8 +817,15 @@ const FieldView = ({
                 />
               );
             })}
+            <RenderAdvanceFields
+              values={values}
+              fields={yamlInputs}
+              onChange={handleChange}
+              errors={errors}
+            />
           </>
         );
+      }
     }
   };
 
@@ -761,20 +917,36 @@ const ReviewView = ({
                 return null;
               }
               const getValueRenderer = () => {
+                if (Array.isArray(v)) {
+                  return (
+                    <div className="flex flex-col gap-lg bodySm text-text-soft">
+                      {v.map((vi) => (
+                        <div key={vi.key}>
+                          <span>{vi.key}</span>
+                          {' : '}
+                          {vi.value}
+                        </div>
+                      ))}
+                    </div>
+                  );
+                }
+                if (typeof v === 'object') {
+                  return (
+                    <div className="flex flex-col gap-lg bodySm text-text-soft">
+                      {Object.entries(v || {}).map(([pKey, pValue]) => (
+                        <div key={pKey}>
+                          <span>{pKey}</span>
+                          {' : '}
+                          {pValue}
+                        </div>
+                      ))}
+                    </div>
+                  );
+                }
                 if (typeof v === 'string') {
                   return <div className="bodySm text-text-soft">{v}</div>;
                 }
-                return (
-                  <div className="flex flex-col gap-lg bodySm text-text-soft">
-                    {Object.entries(v || {}).map(([pKey, pValue]) => (
-                      <div key={pKey}>
-                        <span>{titleCase(pKey)}</span>
-                        {' : '}
-                        {pValue}
-                      </div>
-                    ))}
-                  </div>
-                );
+                return null;
               };
               return (
                 <div
@@ -847,6 +1019,19 @@ const ReviewView = ({
           >
             <div className="flex flex-col p-xl  gap-lg rounded border border-border-default flex-1 overflow-hidden">
               {Object.entries(values?.res?.resources).map(([key, value]) => {
+                if (typeof value === 'string') {
+                  return (
+                    <div
+                      key={key}
+                      className="flex flex-col gap-md  [&:not(:last-child)]:pb-lg   [&:not(:last-child)]:border-b border-border-default"
+                    >
+                      <div className="bodyMd-medium text-text-default">
+                        {titleCase(key)}
+                      </div>
+                      <div className="bodySm text-text-soft">{value}</div>
+                    </div>
+                  );
+                }
                 return (
                   <div
                     key={key}
@@ -1043,9 +1228,12 @@ export const ManagedServiceLayoutV2 = () => {
                 clusterName: val.clusterName,
                 spec: {
                   msvcSpec: {
-                    serviceTemplate: {
+                    plugin: {
                       apiVersion: selectedPlugin.plugin.spec.apiVersion,
                       kind: selectedPlugin.plugin.spec.services[0].kind,
+                      export: {
+                        viaSecret: '',
+                      },
                       spec: {
                         ...val.res,
                       },

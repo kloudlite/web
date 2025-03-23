@@ -46,7 +46,6 @@ const useFetchHelmCharts = (
   };
 
   useEffect(() => {
-    console.log('repoUrl', repoUrl);
     if (repoUrl) {
       fetchHelmCharts();
     }

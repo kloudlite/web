@@ -43,7 +43,7 @@ import { handleError } from '~/lib/utils/common';
 export const loader = (ctx: IRemixCtx) => {
   const promise = pWrapper(async () => {
     const { data: mData, errors: mErrors } = await GQLServerHandler(
-      ctx.request
+      ctx.request,
     ).listClusterMSvs({
       pagination: {
         orderBy: 'updateTime',
@@ -105,8 +105,8 @@ const RenderField = ({
             dummyEvent(
               `${parseFloat(target.value) * (field.multiplier || 1)}${
                 field.unit
-              }`
-            )
+              }`,
+            ),
           );
         }}
         suffix={field.displayUnit}
@@ -230,16 +230,16 @@ const RenderField = ({
                     dummyEvent(
                       `${parseFloat(target.value) * (field.multiplier || 1)}${
                         field.unit
-                      }`
-                    )
+                      }`,
+                    ),
                   );
                   if (qos) {
                     onChange(`res.${field.input}.max`)(
                       dummyEvent(
                         `${parseFloat(target.value) * (field.multiplier || 1)}${
                           field.unit
-                        }`
-                      )
+                        }`,
+                      ),
                     );
                   }
                 }}
@@ -260,8 +260,8 @@ const RenderField = ({
                       dummyEvent(
                         `${parseFloat(target.value) * (field.multiplier || 1)}${
                           field.unit
-                        }`
-                      )
+                        }`,
+                      ),
                     );
                   }}
                   suffix={field.displayUnit}
@@ -277,7 +277,7 @@ const RenderField = ({
                 setQos(_value);
                 if (_value) {
                   onChange(`res.${field.input}.max`)(
-                    dummyEvent(`${value.min}`)
+                    dummyEvent(`${value.min}`),
                   );
                 }
               }}
@@ -464,7 +464,7 @@ const ReviewView = ({
 }) => {
   const renderFieldView = () => {
     const fields = Object.entries(values.res).filter(
-      ([k, _v]) => !['resources'].includes(k)
+      ([k, _v]) => !['resources'].includes(k),
     );
     if (fields.length > 0) {
       return (
@@ -572,18 +572,16 @@ const App = ({ services }: { services: ExtractNodeType<IClusterMSvs>[] }) => {
   const commonTemplates = useCallback(() => {
     return getManagedTemplate({
       templates: msvtemplates || [],
-      kind: managedService?.spec?.msvcSpec.serviceTemplate?.kind || '',
-      apiVersion:
-        managedService?.spec?.msvcSpec.serviceTemplate?.apiVersion || '',
+      kind: managedService?.spec?.msvcSpec.plugin?.kind || '',
+      apiVersion: managedService?.spec?.msvcSpec.plugin?.apiVersion || '',
     });
   }, [managedService, msvtemplates]);
 
   const commonPlugin = useCallback(() => {
     return getManagedPlugin({
       plugins: msvPlugins || [],
-      kind: managedService?.spec?.msvcSpec.serviceTemplate?.kind || '',
-      apiVersion:
-        managedService?.spec?.msvcSpec.serviceTemplate?.apiVersion || '',
+      kind: managedService?.spec?.msvcSpec.plugin?.kind || '',
+      apiVersion: managedService?.spec?.msvcSpec.plugin?.apiVersion || '',
     });
   }, [managedService, msvPlugins]);
 
@@ -646,7 +644,7 @@ const App = ({ services }: { services: ExtractNodeType<IClusterMSvs>[] }) => {
             }
             if (
               !managedService ||
-              (managedService && !managedService.spec?.msvcSpec.serviceTemplate)
+              (managedService && !managedService.spec?.msvcSpec.plugin)
             ) {
               throw new Error('Service apiversion or kind error.');
             }
@@ -656,17 +654,15 @@ const App = ({ services }: { services: ExtractNodeType<IClusterMSvs>[] }) => {
                 displayName: val.displayName,
                 metadata: {
                   name: val.name,
+                  namespace: managedService?.spec?.targetNamespace || '',
                 },
                 spec: {
                   managedServiceRef: {
                     name: parseName(managedService),
                     namespace: managedService?.spec?.targetNamespace || '',
                     apiVersion:
-                      managedService?.spec?.msvcSpec.serviceTemplate
-                        ?.apiVersion || '',
-                    kind:
-                      managedService?.spec?.msvcSpec.serviceTemplate?.kind ||
-                      '',
+                      managedService?.spec?.msvcSpec.plugin?.apiVersion || '',
+                    kind: managedService?.spec?.msvcSpec.plugin?.kind || '',
                   },
                   plugin: {
                     apiVersion: selectedResource.pluginService.apiVersion || '',
@@ -742,22 +738,13 @@ const App = ({ services }: { services: ExtractNodeType<IClusterMSvs>[] }) => {
               (acc, curr) => {
                 return { ...acc, [curr.input]: curr.defaultValue };
               },
-              {}
-            )
+              {},
+            ),
           ),
         },
       });
     }
   }, [values.selectedResource]);
-
-  const resources1 = useMapper(
-    [...(commonTemplates()?.resources || [])],
-    (res) => ({
-      label: res.displayName,
-      value: res.name,
-      resource: res,
-    })
-  );
 
   const resources = useMapper(
     commonPlugin()?.spec?.services[0].resources || [],
@@ -765,7 +752,7 @@ const App = ({ services }: { services: ExtractNodeType<IClusterMSvs>[] }) => {
       label: res.kind,
       value: res.kind,
       pluginService: res,
-    })
+    }),
   );
 
   return (

@@ -32,6 +32,10 @@ import { NN } from '~/root/lib/types/common';
 import { handleError } from '~/root/lib/utils/common';
 import useFetchHelmCharts from '../env+/$environment+/workloads+/helm-charts/helm-utils/use-fetch-helmcharts';
 import useFetchHelmValue from '../env+/$environment+/workloads+/helm-charts/helm-utils/use-fetch-helmvalues';
+import KeyValuePair from '~/console/components/key-value-pair-node-selector';
+import { uuid } from '@kloudlite/design-system/utils';
+import TolerationsKeyValuePair from '~/console/components/tolerations-fields';
+import { useUnsavedChanges } from '~/root/lib/client/hooks/use-unsaved-changes';
 
 type IDialog = IDialogBase<ExtractNodeType<IClusterMSvs>> & {
   templates: IMSvTemplates;
@@ -63,7 +67,7 @@ const valueEditorProps = {
 const filterUniqueVersions = (versions: IHelmDoc['entries']['keys']) => {
   return versions.filter(
     (obj, index, self) =>
-      index === self.findIndex((t) => t.version === obj.version)
+      index === self.findIndex((t) => t.version === obj.version),
   );
 };
 
@@ -122,8 +126,8 @@ const RenderHelmFields = ({
     if (helmCharts && helmCharts.length > 0) {
       setChartVersions(
         filterUniqueVersions(
-          helmCharts.find((v) => v.value === values.res.chart.name)?.item || []
-        )
+          helmCharts.find((v) => v.value === values.res.chart.name)?.item || [],
+        ),
       );
     }
   }, [helmCharts]);
@@ -241,6 +245,99 @@ const RenderHelmFields = ({
   );
 };
 
+const Tolerations = ({
+  label,
+  value,
+  input,
+  onChange,
+}: {
+  label: string;
+  value: Record<string, any>[];
+  input: string;
+  onChange: (e: string) => (e: { target: { value: any } }) => void;
+}) => {
+  const { hasChanges } = useUnsavedChanges();
+  const [ids, setIDs] = useState<string[]>([uuid()]);
+  const [initial, setInitial] = useState(true);
+
+  useEffect(() => {
+    if (initial && Array.isArray(value)) {
+      setIDs(value.map(() => uuid()));
+    }
+    setInitial(false);
+  }, [value, initial]);
+
+  useEffect(() => {
+    if (!hasChanges && Array.isArray(value)) {
+      setIDs(value.map(() => uuid()));
+    }
+  }, [hasChanges]);
+
+  return (
+    <div className="flex flex-col gap-2xl">
+      <div className="bodyMd-medium text-text-default">{label}</div>
+      <TolerationsKeyValuePair
+        ids={ids}
+        value={value}
+        onChange={(e) => {
+          onChange(`res.${input}`)(dummyEvent(e));
+        }}
+        onIdChange={(idss) => setIDs(idss)}
+      />
+    </div>
+  );
+};
+
+const NodeSelector = ({
+  label,
+  value,
+  input,
+  onChange,
+}: {
+  label: string;
+  value: Record<string, any>[];
+  input: string;
+  onChange: (e: string) => (e: { target: { value: any } }) => void;
+}) => {
+  const { hasChanges } = useUnsavedChanges();
+  const [ids, setIDs] = useState<string[]>([uuid()]);
+  const [initial, setInitial] = useState(true);
+  useEffect(() => {
+    if (initial && typeof value === 'object') {
+      setIDs(Object.entries(value).map(() => uuid()));
+      setInitial(false);
+    }
+  }, [value, initial]);
+  useEffect(() => {
+    if (!hasChanges) {
+      setIDs(Object.entries(value).map(() => uuid()));
+    }
+  }, [hasChanges]);
+  return (
+    <div className="flex flex-col gap-2xl">
+      <div className="bodyMd-medium text-text-default">{label}</div>
+      <KeyValuePair
+        ids={ids}
+        value={Object.entries(value || {}).map(([key, value]) => ({
+          key,
+          value,
+        }))}
+        onChange={(e) => {
+          onChange(`res.${input}`)(
+            dummyEvent(
+              e.reduce((prev, curr) => {
+                prev[curr.key] = curr.value;
+                return prev;
+              }, {}),
+            ),
+          );
+        }}
+        onIdChange={(idss) => setIDs(idss)}
+      />
+    </div>
+  );
+};
+
 const RenderField = ({
   field,
   value,
@@ -280,8 +377,8 @@ const RenderField = ({
             dummyEvent(
               `${parseFloat(target.value) * (field.multiplier || 1)}${
                 field.unit
-              }`
-            )
+              }`,
+            ),
           );
         }}
         suffix={field.displayUnit}
@@ -302,30 +399,34 @@ const RenderField = ({
     );
   }
 
-  if (field.type === 'text/yaml') {
-    const v = typeof value === 'string' ? value : JSON.stringify(value);
+  if (field.type === 'text/yaml' && field.input === 'nodeSelector') {
     return (
-      <div className="flex flex-col gap-2xl">
-        <div className="bodyMd-medium text-text-default">{field.label}</div>
-        <CodeEditorClient
-          {...valueEditorProps}
-          value={v || ''}
-          lang="yaml"
-          onChange={(e) => {
-            onChange(`res.${field.input}`)(dummyEvent(e));
-          }}
-          path={field.input}
-        />
-      </div>
+      <NodeSelector
+        label={field.label}
+        value={value}
+        input={field.input}
+        onChange={onChange}
+      />
+    );
+  }
+
+  if (field.type === 'text/yaml' && field.input === 'tolerations') {
+    return (
+      <Tolerations
+        label={field.label}
+        value={value}
+        input={field.input}
+        onChange={onChange}
+      />
     );
   }
 
   if (field.type === 'int-range') {
     return (
       <div className="flex flex-col gap-md">
-        <div className="bodyMd-medium text-text-default">{`${field.label}${
-          field.required ? ' *' : ''
-        }`}</div>
+        <div className="bodyMd-medium text-text-default">
+          {`${field.label}${field.required ? ' *' : ''}`} ({field.displayUnit})
+        </div>
         <div className="flex flex-row gap-xl items-center">
           <div className="flex flex-row gap-xl items-end flex-1 ">
             <div className="flex-1">
@@ -336,32 +437,28 @@ const RenderField = ({
                 placeholder={`${field.label} min`}
                 value={parseFloat(value.min) / (field.multiplier || 1)}
                 onChange={({ target }) => {
-                  console.log(
-                    'target.value',
-                    value,
-                    target.value,
-                    `${parseFloat(target.value) * (field.multiplier || 1)}${
-                      field.unit
-                    }`
-                  );
                   onChange(`res.${field.input}.min`)(
                     dummyEvent(
                       `${parseFloat(target.value) * (field.multiplier || 1)}${
                         field.unit
-                      }`
-                    )
+                      }`,
+                    ),
                   );
                   if (qos) {
                     onChange(`res.${field.input}.max`)(
                       dummyEvent(
                         `${parseFloat(target.value) * (field.multiplier || 1)}${
                           field.unit
-                        }`
-                      )
+                        }`,
+                      ),
                     );
                   }
                 }}
-                suffix={field.displayUnit}
+                suffix={
+                  <div className="flex items-center gap-md">
+                    <span className="text-sm text-text-soft">min</span>
+                  </div>
+                }
               />
             </div>
 
@@ -377,11 +474,15 @@ const RenderField = ({
                     dummyEvent(
                       `${parseFloat(target.value) * (field.multiplier || 1)}${
                         field.unit
-                      }`
-                    )
+                      }`,
+                    ),
                   );
                 }}
-                suffix={field.displayUnit}
+                suffix={
+                  <div className="flex items-center gap-md">
+                    <span className="text-sm text-text-soft">max</span>
+                  </div>
+                }
               />
             </div>
           </div>
@@ -409,16 +510,16 @@ const RenderField = ({
                     dummyEvent(
                       `${parseFloat(target.value) * (field.multiplier || 1)}${
                         field.unit
-                      }`
-                    )
+                      }`,
+                    ),
                   );
                   if (qos) {
                     onChange(`res.${field.input}.max`)(
                       dummyEvent(
                         `${parseFloat(target.value) * (field.multiplier || 1)}${
                           field.unit
-                        }`
-                      )
+                        }`,
+                      ),
                     );
                   }
                 }}
@@ -437,8 +538,8 @@ const RenderField = ({
                       dummyEvent(
                         `${parseFloat(target.value) * (field.multiplier || 1)}${
                           field.unit
-                        }`
-                      )
+                        }`,
+                      ),
                     );
                   }}
                   suffix={field.displayUnit}
@@ -454,7 +555,7 @@ const RenderField = ({
                 setQos(_value);
                 if (_value) {
                   onChange(`res.${field.input}.max`)(
-                    dummyEvent(`${value.min}`)
+                    dummyEvent(`${value.min}`),
                   );
                 }
               }}
@@ -465,6 +566,56 @@ const RenderField = ({
     );
   }
   return <div>unknown input type {field.type}</div>;
+};
+
+const RenderAdvanceFields = ({
+  values,
+  onChange,
+  errors,
+  fields,
+}: {
+  onChange: (e: string) => (e: { target: { value: any } }) => void;
+  values: any;
+  errors: {
+    [key: string]: string;
+  };
+  fields: IMSvPlugin['spec']['services'][0]['inputs'];
+}) => {
+  const [advance, setAdvance] = useState(false);
+  return (
+    <div className="flex flex-col gap-3xl items-start">
+      <button
+        className="text-text-primary"
+        onClick={() => setAdvance((p) => !p)}
+        type="button"
+      >
+        Advance options
+      </button>
+      {advance ? (
+        <div className="flex flex-col gap-3xl">
+          {fields.map((field) => {
+            const k = field.input;
+            const x = k.split('.').reduce((acc, curr) => {
+              if (!acc) {
+                return values.res?.[curr] || '';
+              }
+              return acc[curr];
+            }, null);
+            return (
+              <RenderField
+                field={field}
+                key={field.input}
+                onChange={onChange}
+                value={x}
+                errors={errors}
+                fieldKey={k}
+              />
+            );
+          })}
+        </div>
+      ) : null}
+    </div>
+  );
 };
 
 export const Fill = ({
@@ -480,9 +631,7 @@ export const Fill = ({
   selectedServicePlugins?: ISelectedServicePlugins;
   values: { [key: string]: any };
   handleChange: (key: string) => (e: { target: { value: any } }) => void;
-  errors: {
-    [key: string]: string | undefined;
-  };
+  errors: Record<string, any>;
   size?: ITextInputBase['size'];
   annotations?: { [key: string]: string };
 }) => {
@@ -503,32 +652,45 @@ export const Fill = ({
             annotations={annotations}
           />
         );
-      default:
+      default: {
+        const inputs =
+          selectedServicePlugins?.service?.spec?.services[0].inputs || [];
+        const yamlInputs = inputs.filter((f) =>
+          ['tolerations', 'nodeSelector'].includes(f.input),
+        );
+        const otherInputs = inputs.filter(
+          (f) => !['tolerations', 'nodeSelector'].includes(f.input),
+        );
         return (
           <>
-            {selectedServicePlugins?.service?.spec?.services[0].inputs.map(
-              (field) => {
-                const k = field.input;
-                const x = k.split('.').reduce((acc, curr) => {
-                  if (!acc) {
-                    return values.res?.[curr] || {};
-                  }
-                  return acc[curr];
-                }, null);
-                return (
-                  <RenderField
-                    field={field}
-                    key={field.input}
-                    onChange={handleChange}
-                    value={x}
-                    errors={errors}
-                    fieldKey={k}
-                  />
-                );
-              }
-            )}
+            {otherInputs.map((field) => {
+              const k = field.input;
+              const x = k.split('.').reduce((acc, curr) => {
+                if (!acc) {
+                  return values.res?.[curr] || '';
+                }
+                return acc[curr];
+              }, null);
+              return (
+                <RenderField
+                  field={field}
+                  key={field.input}
+                  onChange={handleChange}
+                  value={x}
+                  errors={errors}
+                  fieldKey={k}
+                />
+              );
+            })}
+            <RenderAdvanceFields
+              values={values}
+              fields={yamlInputs}
+              onChange={handleChange}
+              errors={errors}
+            />
           </>
         );
+      }
     }
   };
 

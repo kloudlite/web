@@ -1,4 +1,3 @@
-import { toast } from '@kloudlite/design-system/molecule/toast';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
@@ -27,7 +26,7 @@ const useFetchHelmValue = ({
       });
       setValues(r.data);
     } catch (err) {
-      toast.error('Error fetching chart values');
+      setValues('### Default values are not provided by the provider.');
       setError(true);
     } finally {
       setIsLoading(false);

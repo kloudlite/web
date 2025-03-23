@@ -44,20 +44,15 @@ export const getManagedPlugin = ({
         .flatMap((t) => t.items.flat())
         .find(
           (t) =>
-            t.spec.services[0].kind === kind && t.spec.apiVersion === apiVersion
+            t.spec.services[0].kind === kind &&
+            t.spec.apiVersion === apiVersion,
         )
     : undefined;
-  // return plugins
-  //   ?.flatMap((t) => t.items.flat())
-  //   .find(
-  //     (t) =>
-  //       t.spec.services[0].kind === kind && t.spec.apiVersion === apiVersion
-  //   );
 };
 
 export const getManagedTemplateLogo = (
   templates: IMSvTemplates,
-  msvcApiVersion: string
+  msvcApiVersion: string,
 ) => {
   return templates
     ?.flatMap((t) => t.items.flat())
@@ -101,7 +96,7 @@ export const popupWindow = ({
     title,
     `toolbar=no,scrollbars=yes,resizable=no,top=${
       window.screen.height / 2 - height / 2
-    },left=${window.screen.width / 2 - width / 2},width=800,height=600`
+    },left=${window.screen.width / 2 - width / 2},width=800,height=600`,
   );
 
   const interval = setInterval(() => {
@@ -222,14 +217,15 @@ export const flatM = (
       defaultValue: number | string | boolean;
       type: string;
       multiplier?: number;
+      min?: number;
+      max?: number;
       unit?: string;
       input?: string;
     }
-  >
+  >,
 ) => {
   const flatJson = {};
   for (const key in obj) {
-    console.log('key', key);
     const parts = key.split('.');
 
     let temp: Record<string, any> = flatJson;
@@ -251,8 +247,7 @@ export const flatM = (
               Number(obj[key].defaultValue || 1) * (obj[key].multiplier || 1) +
               (obj[key].unit || '');
           }
-          if (obj[key].type === 'Resource' || obj[key].type === 'int-range') {
-            console.log('obj[key].defaultValue', obj[key].defaultValue);
+          if (obj[key].type === 'Resource') {
             temp[part] = {
               min:
                 Number(obj[key].defaultValue || 1) *
@@ -261,6 +256,16 @@ export const flatM = (
               max:
                 Number(obj[key].defaultValue || 1) *
                   (obj[key].multiplier || 1) +
+                (obj[key].unit || ''),
+            };
+          }
+          if (obj[key].type === 'int-range') {
+            temp[part] = {
+              min:
+                Number(obj[key].min || 1) * (obj[key].multiplier || 1) +
+                (obj[key].unit || ''),
+              max:
+                Number(obj[key].max || 1) * (obj[key].multiplier || 1) +
                 (obj[key].unit || ''),
             };
           }
@@ -337,12 +342,12 @@ export const flatMapValidations = (obj: Record<string, any>) => {
 
             if (obj[key].min)
               returnYup = customMinNumber(
-                obj[key].min * (obj[key].multiplier || 1)
+                obj[key].min * (obj[key].multiplier || 1),
               );
 
             if (obj[key].max)
               returnYup = customMaxNumber(
-                obj[key].max * (obj[key].multiplier || 1)
+                obj[key].max * (obj[key].multiplier || 1),
               );
             break;
 
@@ -371,7 +376,7 @@ export const flatMapValidations = (obj: Record<string, any>) => {
         let resp = yup.object(
           flatMapValidations({
             [parts.slice(1, parts.length).join('.')]: obj[key],
-          })
+          }),
         );
         if (temp[parts[0]]) {
           resp = resp.concat(temp[parts[0]]);
@@ -395,8 +400,6 @@ export const getClusterStatus = (item?: { lastOnlineAt?: string }): boolean => {
 
   const timeDifference =
     (currentTime.getTime() - lastTime.getTime()) / (1000 * 60);
-
-  console.log(timeDifference, window.location.href);
 
   switch (true) {
     case timeDifference <= 2:
