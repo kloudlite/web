@@ -29,7 +29,6 @@ import {
   IMSvTemplates,
 } from '~/console/server/gql/queries/managed-templates-queries';
 import { parseName } from '~/console/server/r-utils/common';
-import { keyconstants } from '~/console/server/r-utils/key-constants';
 import { ensureAccountClientSide } from '~/console/server/utils/auth-utils';
 import { flatM, flatMapValidations } from '~/console/utils/commons';
 import useForm, { dummyEvent } from '~/root/lib/client/hooks/use-form';
@@ -304,29 +303,6 @@ const FieldView = ({
         nameErrorLabel="isNameError"
       />
 
-      <Select
-        label="Select Cluster"
-        size="lg"
-        value={values.clusterName}
-        placeholder="Select a Cluster"
-        options={async () => clusters}
-        // options={async () => [
-        //   ...((clusters &&
-        //     clusters.filter((c) => {
-        //       return c.ready;
-        //     })) ||
-        //     []),
-        // ]}
-        onChange={({ value }) => {
-          handleChange('clusterName')(dummyEvent(value));
-          handleChange('nodepoolName')(dummyEvent(''));
-        }}
-        showclear
-        error={!!errors.clusterName}
-        message={errors.clusterName}
-        // loading={cIsLoading || byokCIsLoading}
-      />
-
       {/* <Select
         label="Nodepool Name"
         size="lg"
@@ -593,7 +569,6 @@ const ManagedServiceLayout = () => {
         res: {},
         selectedTemplate: null,
         isNameError: false,
-        clusterName: '',
         nodepoolName: '',
       },
       validationSchema: Yup.object().shape({
@@ -660,7 +635,7 @@ const ManagedServiceLayout = () => {
                 metadata: {
                   name: val.name,
                 },
-                clusterName: val.clusterName,
+                clusterName: `cls-${account.metadata?.name}`,
                 spec: {
                   msvcSpec: {
                     serviceTemplate: {

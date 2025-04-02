@@ -76,7 +76,7 @@ const tabs = [
     to: '/services',
     value: '/services',
   },
-  {
+  /* {
     label: (
       <span className="flex flex-row items-center gap-lg">
         <BackingServices size={tabIconSize} />
@@ -85,7 +85,7 @@ const tabs = [
     ),
     to: '/managed-resources',
     value: '/managed-resources',
-  },
+  }, */
   {
     label: (
       <span className="flex flex-row items-center gap-lg">

@@ -4,16 +4,9 @@ import { NumberInput, TextInput } from '@kloudlite/design-system/atoms/input';
 import Select from '@kloudlite/design-system/atoms/select';
 import { Switch } from '@kloudlite/design-system/atoms/switch';
 import { titleCase, uuid } from '@kloudlite/design-system/utils';
-import { useNavigate, useOutletContext, useParams } from '@remix-run/react';
+import { useNavigate, useOutletContext } from '@remix-run/react';
 import yaml from 'js-yaml';
-import {
-  FormEventHandler,
-  ReactNode,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { FormEventHandler, useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import {
   BottomNavigation,
@@ -26,16 +19,13 @@ import MultiStepProgress, {
 } from '~/console/components/multi-step-progress';
 import MultiStepProgressWrapper from '~/console/components/multi-step-progress-wrapper';
 import { NameIdView } from '~/console/components/name-id-view';
-import { useClusterStatusV3 } from '~/console/hooks/use-cluster-status-v3';
-import { ClusterSelectItem } from '~/console/page-components/handle-environment';
 import { useConsoleApi } from '~/console/server/gql/api-provider';
 import {
   IMSvPlugin,
   IMsvPlugins,
 } from '~/console/server/gql/queries/managed-templates-queries';
-import { parseName, parseNodes } from '~/console/server/r-utils/common';
+import { parseName } from '~/console/server/r-utils/common';
 import { keyconstants } from '~/console/server/r-utils/key-constants';
-import { ensureAccountClientSide } from '~/console/server/utils/auth-utils';
 import { flatM, flatMapValidations } from '~/console/utils/commons';
 import CodeEditorClient from '~/root/lib/client/components/editor-client';
 import useForm, { dummyEvent } from '~/root/lib/client/hooks/use-form';
@@ -60,21 +50,6 @@ type IHelmDoc = {
 
 const helmValueEditorProps = {
   height: '400px',
-  options: {
-    fontSize: 14,
-    padding: {
-      top: 20,
-      bottom: 20,
-    },
-    tabSize: 2,
-    minimap: {
-      enabled: false,
-    },
-  },
-};
-
-const valueEditorProps = {
-  height: '200px',
   options: {
     fontSize: 14,
     padding: {
@@ -753,7 +728,6 @@ const RenderAdvanceFields = ({
 
 const FieldView = ({
   selectedPlugin,
-  clusters,
   values,
   handleSubmit,
   handleChange,
@@ -764,12 +738,6 @@ const FieldView = ({
   values: Record<string, any>;
   errors: Record<string, any>;
   selectedPlugin: ISelectedPlugin | null;
-  clusters: {
-    label: string;
-    value: string;
-    ready?: boolean;
-    render: () => ReactNode;
-  }[];
 }) => {
   const nameRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
@@ -852,28 +820,6 @@ const FieldView = ({
         nameErrorLabel="isNameError"
       />
 
-      <Select
-        label="Select Cluster"
-        size="lg"
-        value={values.clusterName}
-        placeholder="Select a Cluster"
-        options={async () => clusters}
-        // options={async () => [
-        //   ...((clusters &&
-        //     clusters.filter((c) => {
-        //       return c.ready;
-        //     })) ||
-        //     []),
-        // ]}
-        onChange={({ value }) => {
-          handleChange('clusterName')(dummyEvent(value));
-          handleChange('nodepoolName')(dummyEvent(''));
-        }}
-        showclear
-        error={!!errors.clusterName}
-        message={errors.clusterName}
-        // loading={cIsLoading || byokCIsLoading}
-      />
       {getRenderField()}
 
       <BottomNavigation
@@ -1000,12 +946,6 @@ const ReviewView = ({
                 {values?.selectedPlugin?.categoryDisplayName}
               </div>
             </div>
-            <div className="flex flex-col gap-lg ">
-              <div className="flex-1 bodyMd-medium text-text-default">
-                Cluster Name
-              </div>
-              <div className="text-text-soft bodyMd">{values.clusterName}</div>
-            </div>
           </div>
         </ReviewComponent>
 
@@ -1067,23 +1007,6 @@ const ReviewView = ({
   );
 };
 
-// const ClusterSelectItem = ({
-//   label,
-//   value,
-// }: {
-//   label: string;
-//   value: string;
-// }) => {
-//   return (
-//     <div>
-//       <div className="flex flex-col">
-//         <div>{label}</div>
-//         <div className="bodySm text-text-soft">{value}</div>
-//       </div>
-//     </div>
-//   );
-// };
-
 export const ManagedServiceLayoutV2 = () => {
   const { account, msvPlugins } = useOutletContext<IAccountContext>();
   const navigate = useNavigate();
@@ -1100,47 +1023,6 @@ export const ManagedServiceLayoutV2 = () => {
     totalSteps: 3,
   });
 
-  const [clusterList, setClusterList] = useState<any[]>([]);
-  const params = useParams();
-
-  const { clustersMap } = useClusterStatusV3({});
-
-  const getClusters = useCallback(async () => {
-    ensureAccountClientSide(params);
-    try {
-      const { data: cl, errors } = await api.listAllClusters({});
-      if (errors) {
-        throw errors[0];
-      }
-
-      const data = parseNodes(cl).map((c) => {
-        const n = parseName(c);
-        let cs = clustersMap[n];
-        return {
-          label: c.displayName,
-          value: n,
-          ready: cs?.isOnline,
-          disabled: () => !cs?.isOnline,
-          render: ({ disabled }: { disabled: boolean }) => (
-            <ClusterSelectItem
-              label={c.displayName}
-              value={n}
-              disabled={disabled}
-            />
-          ),
-        };
-      });
-
-      setClusterList(data);
-    } catch (err) {
-      handleError(err);
-    }
-  }, []);
-
-  useEffect(() => {
-    getClusters();
-  }, []);
-
   const { values, errors, handleSubmit, handleChange, isLoading, setValues } =
     useForm({
       initialValues: {
@@ -1151,7 +1033,6 @@ export const ManagedServiceLayoutV2 = () => {
         // selectedTemplate: null,
         selectedPlugin: null,
         isNameError: false,
-        clusterName: '',
         nodepoolName: '',
       },
       validationSchema: Yup.object().shape({
@@ -1161,13 +1042,6 @@ export const ManagedServiceLayoutV2 = () => {
         displayName: Yup.string().test('required', 'Name is required', (v) => {
           return !(currentStep === 2 && !v);
         }),
-        clusterName: Yup.string().test(
-          'required',
-          'Cluster name is required',
-          (v) => {
-            return !(currentStep === 2 && !v);
-          },
-        ),
         selectedPlugin: Yup.object({}).required('Plugin is required.'),
         // @ts-ignore
         res: Yup.object({}).test({
@@ -1225,7 +1099,7 @@ export const ManagedServiceLayoutV2 = () => {
                     [keyconstants.helmChartRepoPackageId]: values.helmPackageId,
                   },
                 },
-                clusterName: val.clusterName,
+                clusterName: `cls-${account.metadata?.name}`,
                 spec: {
                   msvcSpec: {
                     plugin: {
@@ -1287,16 +1161,6 @@ export const ManagedServiceLayoutV2 = () => {
     }
   }, [values.selectedPlugin]);
 
-  useEffect(() => {
-    setValues((v) => ({
-      ...v,
-      clusterName:
-        clusterList.length > 0
-          ? clusterList.find((c) => c.ready)?.value || ''
-          : '',
-    }));
-  }, [clusterList]);
-
   return (
     <MultiStepProgressWrapper
       title="Let’s create new managed service."
@@ -1326,7 +1190,6 @@ export const ManagedServiceLayoutV2 = () => {
             handleSubmit={handleSubmit}
             // nodepools={statefulNodepools}
             // nodepoolIsLoading={nodepoolIsLoading}
-            clusters={clusterList}
           />
         </MultiStepProgress.Step>
         <MultiStepProgress.Step label="Review" step={3}>

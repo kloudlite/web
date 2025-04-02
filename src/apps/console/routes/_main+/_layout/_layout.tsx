@@ -88,7 +88,7 @@ const AccountTabs = () => {
           to: '/environments',
           value: '/environments',
         },
-        {
+        /* {
           label: (
             <span className="flex flex-row items-center gap-lg">
               <BackingServices size={iconSize} />
@@ -97,7 +97,7 @@ const AccountTabs = () => {
           ),
           to: '/managed-services',
           value: '/managed-services',
-        },
+        }, */
         /* {
           label: (
             <span className="flex flex-row items-center gap-lg">
