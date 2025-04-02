@@ -55,8 +55,9 @@ interface IHandleUpdateTrue<T> {
   data: T;
 }
 
-interface IHandleUpdateFalse {
+interface IHandleUpdateFalse<T> {
   isUpdate: false;
+  data: T;
 }
 export type IDialogBase<T> = BaseType &
-  (IHandleUpdateTrue<T> | IHandleUpdateFalse);
+  (IHandleUpdateTrue<T> | IHandleUpdateFalse<T>);

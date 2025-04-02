@@ -351,6 +351,12 @@ export type K8s__Io___Api___Core___V1__PersistentVolumeClaimPhase =
   | 'Lost'
   | 'Pending';
 
+export type Github__Com___Kloudlite___Operator___Apis___Crds___V1__WorkMachineState =
+  'OFF' | 'ON';
+
+export type Github__Com___Kloudlite___Operator___Apis___Crds___V1__WorkspaceState =
+  'OFF' | 'ON';
+
 export type SearchCluster = {
   allClusters?: InputMaybe<MatchFilterIn>;
   cloudProviderName?: InputMaybe<MatchFilterIn>;
@@ -400,6 +406,10 @@ export type SearchPersistentVolumes = {
 };
 
 export type SearchVolumeAttachments = {
+  text?: InputMaybe<MatchFilterIn>;
+};
+
+export type SearchWorkspaces = {
   text?: InputMaybe<MatchFilterIn>;
 };
 
@@ -1169,12 +1179,14 @@ export type Github__Com___Kloudlite___Operator___Apis___Clusters___V1__AwsNodePo
 
 export type Github__Com___Kloudlite___Operator___Apis___Clusters___V1__AwsEc2PoolConfigIn =
   {
+    ami: Scalars['String']['input'];
     instanceType: Scalars['String']['input'];
     nodes?: InputMaybe<Scalars['Map']['input']>;
   };
 
 export type Github__Com___Kloudlite___Operator___Apis___Clusters___V1__AwsSpotPoolConfigIn =
   {
+    ami: Scalars['String']['input'];
     cpuNode?: InputMaybe<Github__Com___Kloudlite___Operator___Apis___Clusters___V1__AwsSpotCpuNodeIn>;
     gpuNode?: InputMaybe<Github__Com___Kloudlite___Operator___Apis___Clusters___V1__AwsSpotGpuNodeIn>;
     nodes?: InputMaybe<Scalars['Map']['input']>;
@@ -1240,6 +1252,58 @@ export type Github__Com___Kloudlite___Api___Apps___Infra___Internal___Entities__
 export type Github__Com___Kloudlite___Api___Apps___Infra___Internal___Entities__GcpSecretCredentialsIn =
   {
     serviceAccountJSON: Scalars['String']['input'];
+  };
+
+export type WorkmachineIn = {
+  apiVersion?: InputMaybe<Scalars['String']['input']>;
+  displayName: Scalars['String']['input'];
+  kind?: InputMaybe<Scalars['String']['input']>;
+  metadata?: InputMaybe<MetadataIn>;
+  spec?: InputMaybe<Github__Com___Kloudlite___Operator___Apis___Crds___V1__WorkMachineSpecIn>;
+  status?: InputMaybe<Github__Com___Kloudlite___Operator___Apis___Crds___V1__WorkMachineStatusIn>;
+};
+
+export type Github__Com___Kloudlite___Operator___Apis___Crds___V1__WorkMachineSpecIn =
+  {
+    aws: Github__Com___Kloudlite___Operator___Apis___Crds___V1__AwsMachineConfigIn;
+    sshPublicKeys: Array<Scalars['String']['input']>;
+    state: Github__Com___Kloudlite___Operator___Apis___Crds___V1__WorkMachineState;
+  };
+
+export type Github__Com___Kloudlite___Operator___Apis___Crds___V1__AwsMachineConfigIn =
+  {
+    ami: Scalars['String']['input'];
+    availabilityZone: Scalars['String']['input'];
+    externalVolumeSize: Scalars['String']['input'];
+    instanceType: Scalars['String']['input'];
+  };
+
+export type Github__Com___Kloudlite___Operator___Apis___Crds___V1__WorkMachineStatusIn =
+  {
+    machineSSHKey?: InputMaybe<Scalars['String']['input']>;
+    status?: InputMaybe<Github__Com___Kloudlite___Operator___Toolkit___Reconciler__StatusIn>;
+  };
+
+export type WorkspaceIn = {
+  apiVersion?: InputMaybe<Scalars['String']['input']>;
+  displayName: Scalars['String']['input'];
+  kind?: InputMaybe<Scalars['String']['input']>;
+  metadata?: InputMaybe<MetadataIn>;
+  spec?: InputMaybe<Github__Com___Kloudlite___Operator___Apis___Crds___V1__WorkspaceSpecIn>;
+  status?: InputMaybe<Github__Com___Kloudlite___Operator___Toolkit___Reconciler__StatusIn>;
+};
+
+export type Github__Com___Kloudlite___Operator___Apis___Crds___V1__WorkspaceSpecIn =
+  {
+    enableCodeServer?: InputMaybe<Scalars['Boolean']['input']>;
+    enableJupyterNotebook?: InputMaybe<Scalars['Boolean']['input']>;
+    enableTTYD?: InputMaybe<Scalars['Boolean']['input']>;
+    enableVSCodeServer?: InputMaybe<Scalars['Boolean']['input']>;
+    imagePullPolicy: Scalars['String']['input'];
+    nodeName: Scalars['String']['input'];
+    router: Github__Com___Kloudlite___Operator___Apis___Crds___V1__RouterSpecIn;
+    serviceAccountName: Scalars['String']['input'];
+    state: Github__Com___Kloudlite___Operator___Apis___Crds___V1__WorkspaceState;
   };
 
 export type AccountMembershipIn = {
@@ -1883,6 +1947,10 @@ export type SearchProjects = {
 };
 
 export type SearchRegistryImages = {
+  text?: InputMaybe<MatchFilterIn>;
+};
+
+export type SearchWorkmachines = {
   text?: InputMaybe<MatchFilterIn>;
 };
 
@@ -6368,6 +6436,167 @@ export type ConsoleRemoveInterceptServiceMutationVariables = Exact<{
 
 export type ConsoleRemoveInterceptServiceMutation = {
   core_deleteServiceIntercept: boolean;
+};
+
+export type ConsoleListWorkspacesQueryVariables = Exact<{
+  workmachineName: Scalars['String']['input'];
+  clusterName: Scalars['String']['input'];
+  search?: InputMaybe<SearchWorkspaces>;
+  pagination?: InputMaybe<CursorPaginationIn>;
+}>;
+
+export type ConsoleListWorkspacesQuery = {
+  infra_listWorkspaces?: {
+    totalCount: number;
+    edges: Array<{
+      cursor: string;
+      node: {
+        clusterName: string;
+        creationTime: any;
+        displayName: string;
+        markedForDeletion?: boolean;
+        updateTime: any;
+        createdBy: { userEmail: string; userId: string; userName: string };
+        lastUpdatedBy: { userEmail: string; userId: string; userName: string };
+        metadata?: { annotations?: any; name: string; namespace?: string };
+        spec?: {
+          enableCodeServer?: boolean;
+          enableJupyterNotebook?: boolean;
+          enableTTYD?: boolean;
+          enableVSCodeServer?: boolean;
+          imagePullPolicy: string;
+          nodeName: string;
+          serviceAccountName: string;
+          state: Github__Com___Kloudlite___Operator___Apis___Crds___V1__WorkspaceState;
+          router: {
+            backendProtocol?: string;
+            domains: Array<string>;
+            ingressClass?: string;
+            maxBodySizeInMB?: number;
+            basicAuth?: {
+              enabled: boolean;
+              secretName?: string;
+              username?: string;
+            };
+            cors?: {
+              allowCredentials?: boolean;
+              enabled?: boolean;
+              origins?: Array<string>;
+            };
+            https?: {
+              clusterIssuer?: string;
+              enabled: boolean;
+              forceRedirect?: boolean;
+            };
+            rateLimit?: {
+              connections?: number;
+              enabled?: boolean;
+              rpm?: number;
+              rps?: number;
+            };
+            routes?: Array<{
+              app: string;
+              path: string;
+              port: number;
+              rewrite?: boolean;
+            }>;
+          };
+        };
+      };
+    }>;
+    pageInfo: {
+      endCursor?: string;
+      hasNextPage?: boolean;
+      hasPrevPage?: boolean;
+      startCursor?: string;
+    };
+  };
+};
+
+export type ConsoleCreateWorkspaceMutationVariables = Exact<{
+  workmachineName: Scalars['String']['input'];
+  clusterName: Scalars['String']['input'];
+  workspace: WorkspaceIn;
+}>;
+
+export type ConsoleCreateWorkspaceMutation = {
+  infra_createWorkspace?: { id: string };
+};
+
+export type ConsoleUpdateWorkspaceMutationVariables = Exact<{
+  workmachineName: Scalars['String']['input'];
+  clusterName: Scalars['String']['input'];
+  workspace: WorkspaceIn;
+}>;
+
+export type ConsoleUpdateWorkspaceMutation = {
+  infra_updateWorkspace?: { id: string };
+};
+
+export type ConsoleDeleteWorkspaceMutationVariables = Exact<{
+  workmachineName: Scalars['String']['input'];
+  clusterName: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+}>;
+
+export type ConsoleDeleteWorkspaceMutation = { infra_deleteWorkspace: boolean };
+
+export type ConsoleGetWorkmachineQueryVariables = Exact<{
+  clusterName: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+}>;
+
+export type ConsoleGetWorkmachineQuery = {
+  infra_getWorkmachine?: {
+    id: string;
+    clusterName: string;
+    metadata?: { name: string };
+    spec?: {
+      sshPublicKeys: Array<string>;
+      state: Github__Com___Kloudlite___Operator___Apis___Crds___V1__WorkMachineState;
+      aws: {
+        ami: string;
+        availabilityZone: string;
+        externalVolumeSize: string;
+        externalVolumeType: string;
+        iamInstanceProfileRole?: string;
+        instanceType: string;
+        publicSubnetId: string;
+        region: string;
+        rootVolumeSize: number;
+        rootVolumeType: string;
+        SecurityGroupID: string;
+      };
+    };
+  };
+};
+
+export type ConsoleCreateWorkmachineMutationVariables = Exact<{
+  clusterName: Scalars['String']['input'];
+  workmachine: WorkmachineIn;
+}>;
+
+export type ConsoleCreateWorkmachineMutation = {
+  infra_createWorkMachine?: { id: string };
+};
+
+export type ConsoleUpdateWorkmachineMutationVariables = Exact<{
+  clusterName: Scalars['String']['input'];
+  workmachine: WorkmachineIn;
+}>;
+
+export type ConsoleUpdateWorkmachineMutation = {
+  infra_updateWorkMachine?: { id: string };
+};
+
+export type ConsoleUpdateWorkmachineStatusMutationVariables = Exact<{
+  clusterName: Scalars['String']['input'];
+  status: Scalars['Boolean']['input'];
+  name: Scalars['String']['input'];
+}>;
+
+export type ConsoleUpdateWorkmachineStatusMutation = {
+  infra_updateWorkMachineStatus: boolean;
 };
 
 export type AuthCli_CreateGlobalVpnDeviceMutationVariables = Exact<{

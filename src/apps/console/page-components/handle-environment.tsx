@@ -63,16 +63,16 @@ const HandleEnvironment = ({ show, setShow }: IDialog<IEnvironment | null>) => {
 
   const getClusters = useCallback(async () => {
     try {
-      const { data: cl, errors } = await api.listAllClusters({})
+      const { data: cl, errors } = await api.listAllClusters({});
       if (errors) {
-        throw errors[0]
+        throw errors[0];
       }
 
       const data = parseNodes(cl).map((c) => {
-        const n = parseName(c)
-        let cs = clustersMap[n]
+        const n = parseName(c);
+        let cs = clustersMap[n];
 
-        return ({
+        return {
           label: c.displayName,
           value: n,
           ready: cs?.isOnline,
@@ -84,8 +84,8 @@ const HandleEnvironment = ({ show, setShow }: IDialog<IEnvironment | null>) => {
               disabled={disabled}
             />
           ),
-        })
-      })
+        };
+      });
 
       setClusterList(data);
     } catch (err) {
@@ -102,7 +102,7 @@ const HandleEnvironment = ({ show, setShow }: IDialog<IEnvironment | null>) => {
       displayName: Yup.string().required(),
       name: Yup.string().required(),
       // clusterName: Yup.string().required(),
-    })
+    }),
   );
 
   const {

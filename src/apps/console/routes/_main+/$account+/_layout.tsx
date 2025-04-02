@@ -67,21 +67,21 @@ export const loader = async (ctx: IExtRemixCtx) => {
     }
 
     const { data: msvTemplates, errors: msvError } = await GQLServerHandler(
-      ctx.request
+      ctx.request,
     ).listMSvTemplates({});
     if (msvError) {
       throw msvError[0];
     }
 
     const { data: msvPlugins, errors: msvPluginError } = await GQLServerHandler(
-      ctx.request
+      ctx.request,
     ).listMSvPlugins({});
     if (msvPluginError) {
       throw msvPluginError[0];
     }
 
     const { data: clusterList, errors: clusterError } = await GQLServerHandler(
-      ctx.request
+      ctx.request,
     ).listClusterStatus({
       pagination: {
         first: 100,
@@ -397,7 +397,7 @@ const CurrentBreadcrum = ({ account }: { account: IAccount }) => {
 
   const { data: accounts } = useCustomSwr(
     () => '/accounts',
-    async () => api.listAccounts({})
+    async () => api.listAccounts({}),
   );
 
   const [searchText, setSearchText] = useState('');
@@ -414,7 +414,7 @@ const CurrentBreadcrum = ({ account }: { account: IAccount }) => {
       searchText,
       keys: ['searchField'],
     },
-    [searchText, accounts]
+    [searchText, accounts],
   );
 
   const [open, setOpen] = useState(false);
@@ -449,7 +449,7 @@ const CurrentBreadcrum = ({ account }: { account: IAccount }) => {
             aria-label="accounts"
             className={cn(
               'outline-none rounded py-lg px-md mx-md bg-surface-basic-hovered',
-              open || isMouseOver ? 'bg-surface-basic-pressed' : ''
+              open || isMouseOver ? 'bg-surface-basic-pressed' : '',
             )}
             onMouseOver={() => {
               setIsMouseOver(true);
@@ -497,7 +497,7 @@ const CurrentBreadcrum = ({ account }: { account: IAccount }) => {
                   'flex flex-row items-center justify-between',
                   parseName(item) === parseName(account)
                     ? 'bg-surface-basic-pressed hover:!bg-surface-basic-pressed'
-                    : ''
+                    : '',
                 )}
               >
                 <span>{item.displayName}</span>

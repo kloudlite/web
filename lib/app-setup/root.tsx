@@ -240,7 +240,6 @@ const Root = ({
             __html: getClientEnv(env),
           }}
         />
-        <LiveReload port={443} />
         <ToastContainer position="bottom-left" />
         <ProgressContainer>
           <ReloadIndicator />

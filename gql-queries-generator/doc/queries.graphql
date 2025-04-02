@@ -4552,6 +4552,166 @@ mutation consoleRemoveInterceptService($envName: String!, $serviceName: String!)
   core_deleteServiceIntercept(envName: $envName, serviceName: $serviceName)
 }
 
+query consoleListWorkspaces($workmachineName: String!, $clusterName: String!, $search: SearchWorkspaces, $pagination: CursorPaginationIn) {
+  infra_listWorkspaces(
+    workmachineName: $workmachineName
+    clusterName: $clusterName
+    search: $search
+    pagination: $pagination
+  ) {
+    edges {
+      cursor
+      node {
+        createdBy {
+          userEmail
+          userId
+          userName
+        }
+        clusterName
+        creationTime
+        displayName
+        lastUpdatedBy {
+          userEmail
+          userId
+          userName
+        }
+        markedForDeletion
+        metadata {
+          annotations
+          name
+          namespace
+        }
+        spec {
+          enableCodeServer
+          enableJupyterNotebook
+          enableTTYD
+          enableVSCodeServer
+          imagePullPolicy
+          nodeName
+          router {
+            backendProtocol
+            basicAuth {
+              enabled
+              secretName
+              username
+            }
+            cors {
+              allowCredentials
+              enabled
+              origins
+            }
+            domains
+            https {
+              clusterIssuer
+              enabled
+              forceRedirect
+            }
+            ingressClass
+            maxBodySizeInMB
+            rateLimit {
+              connections
+              enabled
+              rpm
+              rps
+            }
+            routes {
+              app
+              path
+              port
+              rewrite
+            }
+          }
+          serviceAccountName
+          state
+        }
+        updateTime
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+      hasPrevPage
+      startCursor
+    }
+    totalCount
+  }
+}
+
+mutation consoleCreateWorkspace($workmachineName: String!, $clusterName: String!, $workspace: WorkspaceIn!) {
+  infra_createWorkspace(
+    workmachineName: $workmachineName
+    clusterName: $clusterName
+    workspace: $workspace
+  ) {
+    id
+  }
+}
+
+mutation consoleUpdateWorkspace($workmachineName: String!, $clusterName: String!, $workspace: WorkspaceIn!) {
+  infra_updateWorkspace(
+    workmachineName: $workmachineName
+    clusterName: $clusterName
+    workspace: $workspace
+  ) {
+    id
+  }
+}
+
+mutation consoleDeleteWorkspace($workmachineName: String!, $clusterName: String!, $name: String!) {
+  infra_deleteWorkspace(
+    workmachineName: $workmachineName
+    clusterName: $clusterName
+    name: $name
+  )
+}
+
+query consoleGetWorkmachine($clusterName: String!, $name: String!) {
+  infra_getWorkmachine(clusterName: $clusterName, name: $name) {
+    id
+    metadata {
+      name
+    }
+    clusterName
+    spec {
+      aws {
+        ami
+        availabilityZone
+        externalVolumeSize
+        externalVolumeType
+        iamInstanceProfileRole
+        instanceType
+        publicSubnetId
+        region
+        rootVolumeSize
+        rootVolumeType
+        SecurityGroupID
+      }
+      sshPublicKeys
+      state
+    }
+  }
+}
+
+mutation consoleCreateWorkmachine($clusterName: String!, $workmachine: WorkmachineIn!) {
+  infra_createWorkMachine(clusterName: $clusterName, workmachine: $workmachine) {
+    id
+  }
+}
+
+mutation consoleUpdateWorkmachine($clusterName: String!, $workmachine: WorkmachineIn!) {
+  infra_updateWorkMachine(clusterName: $clusterName, workmachine: $workmachine) {
+    id
+  }
+}
+
+mutation consoleUpdateWorkmachineStatus($clusterName: String!, $status: Boolean!, $name: String!) {
+  infra_updateWorkMachineStatus(
+    clusterName: $clusterName
+    status: $status
+    name: $name
+  )
+}
+
 mutation authCli_createGlobalVPNDevice($gvpnDevice: GlobalVPNDeviceIn!) {
   infra_createGlobalVPNDevice(gvpnDevice: $gvpnDevice) {
     accountName

@@ -1110,11 +1110,13 @@ input Github__com___kloudlite___operator___apis___clusters___v1__AwsCredentialsI
 }
 
 type Github__com___kloudlite___operator___apis___clusters___v1__AwsEC2PoolConfig {
+  ami: String!
   instanceType: String!
   nodes: Map
 }
 
 input Github__com___kloudlite___operator___apis___clusters___v1__AwsEC2PoolConfigIn {
+  ami: String!
   instanceType: String!
   nodes: Map
 }
@@ -1179,6 +1181,7 @@ input Github__com___kloudlite___operator___apis___clusters___v1__AwsSpotGpuNodeI
 }
 
 type Github__com___kloudlite___operator___apis___clusters___v1__AwsSpotPoolConfig {
+  ami: String!
   cpuNode: Github__com___kloudlite___operator___apis___clusters___v1__AwsSpotCpuNode
   gpuNode: Github__com___kloudlite___operator___apis___clusters___v1__AwsSpotGpuNode
   nodes: Map
@@ -1186,6 +1189,7 @@ type Github__com___kloudlite___operator___apis___clusters___v1__AwsSpotPoolConfi
 }
 
 input Github__com___kloudlite___operator___apis___clusters___v1__AwsSpotPoolConfigIn {
+  ami: String!
   cpuNode: Github__com___kloudlite___operator___apis___clusters___v1__AwsSpotCpuNodeIn
   gpuNode: Github__com___kloudlite___operator___apis___clusters___v1__AwsSpotGpuNodeIn
   nodes: Map
@@ -1491,6 +1495,27 @@ type Github__com___kloudlite___operator___apis___crds___v1__AppSvc {
 input Github__com___kloudlite___operator___apis___crds___v1__AppSvcIn {
   port: Int!
   protocol: String
+}
+
+type Github__com___kloudlite___operator___apis___crds___v1__AWSMachineConfig {
+  ami: String!
+  availabilityZone: String!
+  externalVolumeSize: String!
+  externalVolumeType: String!
+  iamInstanceProfileRole: String
+  instanceType: String!
+  publicSubnetId: String!
+  region: String!
+  rootVolumeSize: Int!
+  rootVolumeType: String!
+  SecurityGroupID: String!
+}
+
+input Github__com___kloudlite___operator___apis___crds___v1__AWSMachineConfigIn {
+  ami: String!
+  availabilityZone: String!
+  externalVolumeSize: String!
+  instanceType: String!
 }
 
 type Github__com___kloudlite___operator___apis___crds___v1__BasicAuth {
@@ -1877,6 +1902,62 @@ type Github__com___kloudlite___operator___apis___crds___v1__TcpProbe {
 
 input Github__com___kloudlite___operator___apis___crds___v1__TcpProbeIn {
   port: Int!
+}
+
+type Github__com___kloudlite___operator___apis___crds___v1__WorkMachineSpec {
+  aws: Github__com___kloudlite___operator___apis___crds___v1__AWSMachineConfig!
+  sshPublicKeys: [String!]!
+  state: Github__com___kloudlite___operator___apis___crds___v1__WorkMachineState!
+}
+
+input Github__com___kloudlite___operator___apis___crds___v1__WorkMachineSpecIn {
+  aws: Github__com___kloudlite___operator___apis___crds___v1__AWSMachineConfigIn!
+  sshPublicKeys: [String!]!
+  state: Github__com___kloudlite___operator___apis___crds___v1__WorkMachineState!
+}
+
+enum Github__com___kloudlite___operator___apis___crds___v1__WorkMachineState {
+  OFF
+  ON
+}
+
+type Github__com___kloudlite___operator___apis___crds___v1__WorkMachineStatus {
+  machineSSHKey: String
+  status: Github__com___kloudlite___operator___toolkit___reconciler__Status
+}
+
+input Github__com___kloudlite___operator___apis___crds___v1__WorkMachineStatusIn {
+  machineSSHKey: String
+  status: Github__com___kloudlite___operator___toolkit___reconciler__StatusIn
+}
+
+type Github__com___kloudlite___operator___apis___crds___v1__WorkspaceSpec {
+  enableCodeServer: Boolean
+  enableJupyterNotebook: Boolean
+  enableTTYD: Boolean
+  enableVSCodeServer: Boolean
+  imagePullPolicy: String!
+  nodeName: String!
+  router: Github__com___kloudlite___operator___apis___crds___v1__RouterSpec!
+  serviceAccountName: String!
+  state: Github__com___kloudlite___operator___apis___crds___v1__WorkspaceState!
+}
+
+input Github__com___kloudlite___operator___apis___crds___v1__WorkspaceSpecIn {
+  enableCodeServer: Boolean
+  enableJupyterNotebook: Boolean
+  enableTTYD: Boolean
+  enableVSCodeServer: Boolean
+  imagePullPolicy: String!
+  nodeName: String!
+  router: Github__com___kloudlite___operator___apis___crds___v1__RouterSpecIn!
+  serviceAccountName: String!
+  state: Github__com___kloudlite___operator___apis___crds___v1__WorkspaceState!
+}
+
+enum Github__com___kloudlite___operator___apis___crds___v1__WorkspaceState {
+  OFF
+  ON
 }
 
 type Github__com___kloudlite___operator___apis___distribution___v1__BuildOptions {
@@ -3727,6 +3808,8 @@ type Mutation {
   infra_createGlobalVPNDevice(gvpnDevice: GlobalVPNDeviceIn!): GlobalVPNDevice
   infra_createNodePool(clusterName: String!, pool: NodePoolIn!): NodePool
   infra_createProviderSecret(secret: CloudProviderSecretIn!): CloudProviderSecret
+  infra_createWorkMachine(clusterName: String!, workmachine: WorkmachineIn!): Workmachine
+  infra_createWorkspace(clusterName: String!, workmachineName: String!, workspace: WorkspaceIn!): Workspace
   infra_deleteBYOKCluster(name: String!): Boolean!
   infra_deleteCluster(name: String!): Boolean!
   infra_deleteClusterManagedService(name: String!): Boolean!
@@ -3736,6 +3819,7 @@ type Mutation {
   infra_deleteNodePool(clusterName: String!, poolName: String!): Boolean!
   infra_deleteProviderSecret(secretName: String!): Boolean!
   infra_deletePV(clusterName: String!, pvName: String!): Boolean!
+  infra_deleteWorkspace(clusterName: String!, name: String!, workmachineName: String!): Boolean!
   infra_updateBYOKCluster(clusterName: String!, displayName: String!): BYOKCluster
   infra_updateCluster(cluster: ClusterIn!): Cluster
   infra_updateClusterManagedService(service: ClusterManagedServiceIn!): ClusterManagedService
@@ -3744,6 +3828,9 @@ type Mutation {
   infra_updateGlobalVPNDevice(gvpnDevice: GlobalVPNDeviceIn!): GlobalVPNDevice
   infra_updateNodePool(clusterName: String!, pool: NodePoolIn!): NodePool
   infra_updateProviderSecret(secret: CloudProviderSecretIn!): CloudProviderSecret
+  infra_updateWorkMachine(clusterName: String!, workmachine: WorkmachineIn!): Workmachine
+  infra_updateWorkMachineStatus(clusterName: String!, name: String!, status: Boolean!): Boolean!
+  infra_updateWorkspace(clusterName: String!, workmachineName: String!, workspace: WorkspaceIn!): Workspace
   oAuth_addLogin(code: String!, provider: String!, state: String!): Boolean!
   oAuth_login(code: String!, provider: String!, state: String): Session!
 }
@@ -3797,7 +3884,7 @@ type Node {
   metadata: Metadata
   recordVersion: Int!
   spec: Github__com___kloudlite___operator___apis___clusters___v1__NodeSpec!
-  status: Github__com___kloudlite___operator___pkg___operator__Status
+  status: Github__com___kloudlite___operator___toolkit___reconciler__Status
   syncStatus: Github__com___kloudlite___api___pkg___types__SyncStatus!
   updateTime: Date!
 }
@@ -4108,6 +4195,8 @@ type Query {
   infra_getPV(clusterName: String!, name: String!): PersistentVolume
   infra_getPVC(clusterName: String!, name: String!): PersistentVolumeClaim
   infra_getVolumeAttachment(clusterName: String!, name: String!): VolumeAttachment
+  infra_getWorkmachine(clusterName: String!, name: String!): Workmachine
+  infra_getWorkspace(clusterName: String!, name: String!, workmachineName: String!): Workspace
   infra_listBYOKClusters(pagination: CursorPaginationIn, search: SearchCluster): BYOKClusterPaginatedRecords
   infra_listClusterManagedServices(pagination: CursorPaginationIn, search: SearchClusterManagedService): ClusterManagedServicePaginatedRecords
   infra_listClusters(pagination: CursorPaginationIn, search: SearchCluster): ClusterPaginatedRecords
@@ -4121,6 +4210,7 @@ type Query {
   infra_listPVCs(clusterName: String!, pq: CursorPaginationIn, search: SearchPersistentVolumeClaims): PersistentVolumeClaimPaginatedRecords
   infra_listPVs(clusterName: String!, pq: CursorPaginationIn, search: SearchPersistentVolumes): PersistentVolumePaginatedRecords
   infra_listVolumeAttachments(clusterName: String!, pq: CursorPaginationIn, search: SearchVolumeAttachments): VolumeAttachmentPaginatedRecords
+  infra_listWorkspaces(clusterName: String!, pagination: CursorPaginationIn, search: SearchWorkspaces, workmachineName: String!): WorkspacePaginatedRecords
   infrat_getBYOKClusterSetupInstructions(name: String!, onlyHelmValues: Boolean): [BYOKSetupInstruction!]
   oAuth_requestLogin(provider: String!, state: String): URL!
 }
@@ -4433,6 +4523,14 @@ input SearchVolumeAttachments {
   text: MatchFilterIn
 }
 
+input SearchWorkmachines {
+  text: MatchFilterIn
+}
+
+input SearchWorkspaces {
+  text: MatchFilterIn
+}
+
 type Secret {
   accountName: String!
   apiVersion: String
@@ -4679,6 +4777,87 @@ input VolumeAttachmentIn {
 
 type VolumeAttachmentPaginatedRecords {
   edges: [VolumeAttachmentEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type Workmachine {
+  accountName: String!
+  apiVersion: String
+  clusterName: String!
+  createdBy: Github__com___kloudlite___api___common__CreatedOrUpdatedBy!
+  creationTime: Date!
+  dispatchAddr: Github__com___kloudlite___api___apps___infra___internal___entities__DispatchAddr
+  displayName: String!
+  id: ID!
+  kind: String
+  lastUpdatedBy: Github__com___kloudlite___api___common__CreatedOrUpdatedBy!
+  markedForDeletion: Boolean
+  metadata: Metadata
+  recordVersion: Int!
+  spec: Github__com___kloudlite___operator___apis___crds___v1__WorkMachineSpec
+  status: Github__com___kloudlite___operator___apis___crds___v1__WorkMachineStatus
+  syncStatus: Github__com___kloudlite___api___pkg___types__SyncStatus!
+  updateTime: Date!
+}
+
+type WorkmachineEdge {
+  cursor: String!
+  node: Workmachine!
+}
+
+input WorkmachineIn {
+  apiVersion: String
+  displayName: String!
+  kind: String
+  metadata: MetadataIn
+  spec: Github__com___kloudlite___operator___apis___crds___v1__WorkMachineSpecIn
+  status: Github__com___kloudlite___operator___apis___crds___v1__WorkMachineStatusIn
+}
+
+type WorkmachinePaginatedRecords {
+  edges: [WorkmachineEdge!]!
+  pageInfo: PageInfo!
+  totalCount: Int!
+}
+
+type Workspace {
+  accountName: String!
+  apiVersion: String
+  clusterName: String!
+  createdBy: Github__com___kloudlite___api___common__CreatedOrUpdatedBy!
+  creationTime: Date!
+  dispatchAddr: Github__com___kloudlite___api___apps___infra___internal___entities__DispatchAddr
+  displayName: String!
+  id: ID!
+  kind: String
+  lastUpdatedBy: Github__com___kloudlite___api___common__CreatedOrUpdatedBy!
+  markedForDeletion: Boolean
+  metadata: Metadata
+  recordVersion: Int!
+  spec: Github__com___kloudlite___operator___apis___crds___v1__WorkspaceSpec
+  status: Github__com___kloudlite___operator___toolkit___reconciler__Status
+  syncStatus: Github__com___kloudlite___api___pkg___types__SyncStatus!
+  updateTime: Date!
+  workmachineName: String!
+}
+
+type WorkspaceEdge {
+  cursor: String!
+  node: Workspace!
+}
+
+input WorkspaceIn {
+  apiVersion: String
+  displayName: String!
+  kind: String
+  metadata: MetadataIn
+  spec: Github__com___kloudlite___operator___apis___crds___v1__WorkspaceSpecIn
+  status: Github__com___kloudlite___operator___toolkit___reconciler__StatusIn
+}
+
+type WorkspacePaginatedRecords {
+  edges: [WorkspaceEdge!]!
   pageInfo: PageInfo!
   totalCount: Int!
 }

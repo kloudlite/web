@@ -98,7 +98,7 @@ const AccountTabs = () => {
           to: '/managed-services',
           value: '/managed-services',
         },
-        {
+        /* {
           label: (
             <span className="flex flex-row items-center gap-lg">
               <InfraAsCode size={iconSize} />
@@ -107,6 +107,16 @@ const AccountTabs = () => {
           ),
           to: '/infra',
           value: '/infra',
+        }, */
+        {
+          label: (
+            <span className="flex flex-row items-center gap-lg">
+              <InfraAsCode size={iconSize} />
+              Workspaces
+            </span>
+          ),
+          to: '/workspaces',
+          value: '/workspaces',
         },
         // {
         //   label: (
