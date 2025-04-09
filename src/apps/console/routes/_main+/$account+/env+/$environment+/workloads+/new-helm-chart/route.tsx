@@ -23,9 +23,9 @@ import useForm, { dummyEvent } from '~/root/lib/client/hooks/use-form';
 import Yup from '~/root/lib/server/helpers/yup';
 import { handleError } from '~/root/lib/utils/common';
 import { IEnvironmentContext } from '../../_layout';
-import useFetchHelmCharts from '../helm-charts/helm-utils/use-fetch-helmcharts';
-import useFetchHelmValue from '../helm-charts/helm-utils/use-fetch-helmvalues';
-import useHelmRepoSearch from '../helm-charts/helm-utils/use-helm-repo-search';
+import useFetchHelmValue from '~/console/hooks/helm-utils/use-fetch-helmvalues';
+import useHelmRepoSearch from '~/console/hooks/helm-utils/use-helm-repo-search';
+import useFetchHelmCharts from '~/console/hooks/helm-utils/use-fetch-helmcharts';
 
 type IHelmDoc = {
   apiVersion: string;

@@ -1,10 +1,8 @@
 import { BoxPrimitive } from '~/console/components/common-console-components';
 import HelmChartLayout from '../helm-chart-layout';
 import useForm, { dummyEvent } from '~/root/lib/client/hooks/use-form';
-import { useHelmChartState } from '../../useHelmChartContext';
 import ExtendedFilledTab from '~/console/components/extended-filled-tab';
 import CodeEditorClient from '~/root/lib/client/components/editor-client';
-import useFetchHelmValue from '../../../../helm-charts/helm-utils/use-fetch-helmvalues';
 import { keyconstants } from '~/console/server/r-utils/key-constants';
 import yaml from 'js-yaml';
 import { useEffect, useRef } from 'react';
@@ -15,6 +13,8 @@ import {
   useUnsavedChanges,
 } from '~/root/lib/client/hooks/use-unsaved-changes';
 import { parseName } from '~/console/server/r-utils/common';
+import { useHelmChartState } from '~/console/hooks/helm-utils/useHelmChartContext';
+import useFetchHelmValue from '~/console/hooks/helm-utils/use-fetch-helmvalues';
 
 const SettingValues = () => {
   const { performAction } = useUnsavedChanges();

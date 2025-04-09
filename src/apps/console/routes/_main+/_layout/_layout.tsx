@@ -88,16 +88,16 @@ const AccountTabs = () => {
           to: '/environments',
           value: '/environments',
         },
-        /* {
+        {
           label: (
             <span className="flex flex-row items-center gap-lg">
               <BackingServices size={iconSize} />
-              Managed Services
+              Common Services
             </span>
           ),
-          to: '/managed-services',
-          value: '/managed-services',
-        }, */
+          to: '/common-services',
+          value: '/common-services',
+        },
         /* {
           label: (
             <span className="flex flex-row items-center gap-lg">

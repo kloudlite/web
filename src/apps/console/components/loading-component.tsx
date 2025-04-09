@@ -95,7 +95,7 @@ interface LoadingCompProps<T = any> {
   data:
     | Promise<SerializeFrom<AwaitRespProps & T>>
     | SerializeFrom<AwaitRespProps & T>;
-  children?: (value: NN<T>) => ReactNode;
+  children?: (value: NN<T>, skeleton?: boolean) => ReactNode;
   skeleton?: ReactNode;
   skeletonData?: NN<T>;
   errorComp?: (err: Error) => ReactNode;
@@ -107,7 +107,7 @@ export function parsePWData<T>(data: SerializeFrom<AwaitRespProps & T>) {
 
 export function LoadingComp<T>({
   data,
-  children = (_) => null,
+  children = (_, skeleton) => null,
   skeleton = null,
   skeletonData,
   errorComp = DefaultErrorComp,
@@ -130,10 +130,10 @@ export function LoadingComp<T>({
       setTimeout(() => {
         setSk(
           skeletonData ? (
-            <Pulsable isLoading>{children(skeletonData)}</Pulsable>
+            <Pulsable isLoading>{children(skeletonData, true)}</Pulsable>
           ) : (
             <GetSkeleton skeleton={skeleton} />
-          )
+          ),
         );
       }, 100);
 
@@ -185,10 +185,10 @@ export function LoadingComp<T>({
               return (
                 <>
                   <SetCookie _cookie={d.cookie} />
-                  <div className="">{children(d as any)}</div>
+                  <div className="">{children(d as any, false)}</div>
                 </>
               );
-            })(_d)
+            })(_d),
           );
 
           setSk(null);
@@ -203,7 +203,7 @@ export function LoadingComp<T>({
       })();
     },
     1,
-    [data]
+    [data],
   );
 
   return ch || sk;

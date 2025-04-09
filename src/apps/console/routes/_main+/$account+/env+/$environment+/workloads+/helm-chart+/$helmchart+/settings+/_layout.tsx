@@ -15,9 +15,11 @@ import {
 } from '~/lib/client/hooks/use-unsaved-changes';
 import Yup from '~/lib/server/helpers/yup';
 import { IHelmChartContext } from '../_layout';
-import HelmChartContextProvider, { useHelmChartState } from '../useHelmChartContext';
 import { parseName } from '~/console/server/r-utils/common';
 import { handleError } from '~/root/lib/utils/common';
+import HelmChartContextProvider, {
+  useHelmChartState,
+} from '~/console/hooks/helm-utils/useHelmChartContext';
 
 const navItems = [
   { label: 'General', value: 'general' },
@@ -27,15 +29,11 @@ const navItems = [
 
 const Layout = () => {
   const rootContext = useOutletContext<IHelmChartContext>();
-  const {
-    setHasChanges,
-    performAction,
-    setPerformAction,
-    loading,
-  } = useUnsavedChanges();
+  const { setHasChanges, performAction, setPerformAction, loading } =
+    useUnsavedChanges();
 
-  const { helmChart, setHelmChart, setReadOnlyHelmChart, readOnlyHelmChart } = useHelmChartState()
-
+  const { helmChart, setHelmChart, setReadOnlyHelmChart, readOnlyHelmChart } =
+    useHelmChartState();
 
   const { environment } = useOutletContext<IHelmChartContext>();
 
@@ -55,9 +53,9 @@ const Layout = () => {
             displayName: helmChart.displayName,
             metadata: {
               name: parseName(helmChart),
-              annotations: helmChart.metadata?.annotations
+              annotations: helmChart.metadata?.annotations,
             },
-            spec: helmChart.spec
+            spec: helmChart.spec,
           },
         });
 
@@ -69,15 +67,15 @@ const Layout = () => {
       } catch (error) {
         handleError(error);
       }
-
-    }
+    },
   });
 
   useEffect(() => {
     if (loading) {
       return;
     }
-    const isNotSame = JSON.stringify(helmChart) !== JSON.stringify(rootContext.helmchart);
+    const isNotSame =
+      JSON.stringify(helmChart) !== JSON.stringify(rootContext.helmchart);
 
     if (isNotSame) {
       setHasChanges(true);
@@ -86,26 +84,26 @@ const Layout = () => {
     }
   }, [helmChart, rootContext.helmchart]);
 
-
   const reset = () => {
-
     setHelmChart(rootContext.helmchart);
     setReadOnlyHelmChart(rootContext.helmchart);
     setPerformAction('');
-  }
+  };
 
   useEffect(() => {
     if (performAction === DISCARD_ACTIONS.DISCARD_CHANGES) {
-      reset()
+      reset();
     }
   }, [performAction]);
 
   useEffect(() => {
-    if (JSON.stringify(rootContext.helmchart) !== JSON.stringify(readOnlyHelmChart)) {
-      reset()
+    if (
+      JSON.stringify(rootContext.helmchart) !==
+      JSON.stringify(readOnlyHelmChart)
+    ) {
+      reset();
     }
-  }, [rootContext])
-
+  }, [rootContext]);
 
   return (
     <SidebarLayout navItems={navItems} parentPath="/settings">
@@ -172,7 +170,7 @@ const Settings = () => {
   const rootContext = useOutletContext<IHelmChartContext>();
   const { environment, account } = useOutletContext<IHelmChartContext>();
 
-  const helmChart = useMemo(() => rootContext.helmchart, [])
+  const helmChart = useMemo(() => rootContext.helmchart, []);
 
   return (
     <HelmChartContextProvider initialHelmChartState={helmChart}>
@@ -180,11 +178,10 @@ const Settings = () => {
         onProceed={({ setPerformAction }) => {
           setPerformAction?.(DISCARD_ACTIONS.DISCARD_CHANGES);
         }}
-        ignorePaths={
-          navItems.map(
-            (ni) =>
-              `/${parseName(account)}/env/${parseName(environment)}/workloads/helm-chart/${parseName(rootContext.helmchart)}/settings/${ni.value}`,
-          )}
+        ignorePaths={navItems.map(
+          (ni) =>
+            `/${parseName(account)}/env/${parseName(environment)}/workloads/helm-chart/${parseName(rootContext.helmchart)}/settings/${ni.value}`,
+        )}
       >
         <Layout />
       </UnsavedChangesProvider>

@@ -30,12 +30,12 @@ import useForm, { dummyEvent } from '~/root/lib/client/hooks/use-form';
 import Yup from '~/root/lib/server/helpers/yup';
 import { NN } from '~/root/lib/types/common';
 import { handleError } from '~/root/lib/utils/common';
-import useFetchHelmCharts from '../env+/$environment+/workloads+/helm-charts/helm-utils/use-fetch-helmcharts';
-import useFetchHelmValue from '../env+/$environment+/workloads+/helm-charts/helm-utils/use-fetch-helmvalues';
 import KeyValuePair from '~/console/components/key-value-pair-node-selector';
 import { uuid } from '@kloudlite/design-system/utils';
 import TolerationsKeyValuePair from '~/console/components/tolerations-fields';
 import { useUnsavedChanges } from '~/root/lib/client/hooks/use-unsaved-changes';
+import useFetchHelmValue from '~/console/hooks/helm-utils/use-fetch-helmvalues';
+import useFetchHelmCharts from '~/console/hooks/helm-utils/use-fetch-helmcharts';
 
 type IDialog = IDialogBase<ExtractNodeType<IClusterMSvs>> & {
   templates: IMSvTemplates;

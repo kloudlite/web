@@ -22,8 +22,8 @@ import { keyconstants } from '~/console/server/r-utils/key-constants';
 import { LoadingPlaceHolder } from '~/console/components/loading';
 import CodeEditorClient from '~/root/lib/client/components/editor-client';
 import { IEnvironmentContext } from '../../_layout';
-import useFetchHelmCharts from './helm-utils/use-fetch-helmcharts';
-import useFetchHelmValue from './helm-utils/use-fetch-helmvalues';
+import useFetchHelmValue from '~/console/hooks/helm-utils/use-fetch-helmvalues';
+import useFetchHelmCharts from '~/console/hooks/helm-utils/use-fetch-helmcharts';
 
 type IDialog = IDialogBase<ExtractNodeType<IHelmCharts>>;
 
@@ -38,7 +38,7 @@ type IHelmDoc = {
 const filterUniqueVersions = (versions: IHelmDoc['entries']['keys']) => {
   return versions.filter(
     (obj, index, self) =>
-      index === self.findIndex((t) => t.version === obj.version)
+      index === self.findIndex((t) => t.version === obj.version),
   );
 };
 
@@ -167,8 +167,8 @@ const Root = (props: IDialog) => {
         setChartVersions(
           filterUniqueVersions(
             helmCharts.find((v) => v.value === props.data.spec?.chartName)
-              ?.item || []
-          )
+              ?.item || [],
+          ),
         );
         setChartName({
           label: props.data.spec?.chartName || '',

@@ -1,13 +1,16 @@
-import { Box, BoxPrimitive } from '~/console/components/common-console-components';
+import { BoxPrimitive } from '~/console/components/common-console-components';
 import HelmChartLayout from '../helm-chart-layout';
 import useForm, { dummyEvent } from '~/root/lib/client/hooks/use-form';
 import { TextInput } from '@kloudlite/design-system/atoms/input';
-import { useHelmChartState } from '../../useHelmChartContext';
 import Select from '@kloudlite/design-system/atoms/select';
 import { useEffect, useState } from 'react';
-import useFetchHelmCharts from '../../../../helm-charts/helm-utils/use-fetch-helmcharts';
 import Yup from '~/root/lib/server/helpers/yup';
-import { DISCARD_ACTIONS, useUnsavedChanges } from '~/root/lib/client/hooks/use-unsaved-changes';
+import {
+  DISCARD_ACTIONS,
+  useUnsavedChanges,
+} from '~/root/lib/client/hooks/use-unsaved-changes';
+import { useHelmChartState } from '~/console/hooks/helm-utils/useHelmChartContext';
+import useFetchHelmCharts from '~/console/hooks/helm-utils/use-fetch-helmcharts';
 
 type IHelmDoc = {
   apiVersion: string;
@@ -24,42 +27,40 @@ const filterUniqueVersions = (versions: IHelmDoc['entries']['keys']) => {
   );
 };
 
-
 const SettingAdvance = () => {
   const { performAction } = useUnsavedChanges();
 
-  const { helmChart, setHelmChart, readOnlyHelmChart } = useHelmChartState()
+  const { helmChart, setHelmChart, readOnlyHelmChart } = useHelmChartState();
   const [chartVersions, setChartVersions] = useState<
     IHelmDoc['entries']['key']
   >([]);
-
 
   const { values, handleChange, submit, errors, resetValues } = useForm({
     initialValues: {
       chartName: helmChart.spec?.chartName,
       chartRepoURL: helmChart.spec?.chartRepoURL,
-      chartVersion: helmChart.spec?.chartVersion
+      chartVersion: helmChart.spec?.chartVersion,
     },
     validationSchema: Yup.object({
       chartRepoURL: Yup.string().required(),
       chartName: Yup.string().required(),
-      chartVersion: Yup.string().required()
+      chartVersion: Yup.string().required(),
     }),
     onSubmit(val) {
       setHelmChart({
         ...helmChart,
         spec: {
-          chartName: helmChart.spec?.chartName || "",
-          chartRepoURL: helmChart.spec?.chartRepoURL || "",
-          chartVersion: val.chartVersion || "",
-          values: helmChart.spec?.values
-        }
-      })
-    }
-  })
+          chartName: helmChart.spec?.chartName || '',
+          chartRepoURL: helmChart.spec?.chartRepoURL || '',
+          chartVersion: val.chartVersion || '',
+          values: helmChart.spec?.values,
+        },
+      });
+    },
+  });
 
   const { helmCharts, loading: helmChartsLoading } = useFetchHelmCharts({
-    repoUrl: helmChart?.spec?.chartRepoURL || ""
+    repoUrl: helmChart?.spec?.chartRepoURL || '',
   });
 
   useEffect(() => {
@@ -81,16 +82,15 @@ const SettingAdvance = () => {
     resetValues({
       chartName: readOnlyHelmChart.spec?.chartName,
       chartRepoURL: readOnlyHelmChart.spec?.chartRepoURL,
-      chartVersion: readOnlyHelmChart.spec?.chartVersion
+      chartVersion: readOnlyHelmChart.spec?.chartVersion,
     });
-  }
+  };
 
   useEffect(() => {
     if (performAction === DISCARD_ACTIONS.DISCARD_CHANGES) {
-      reset()
+      reset();
     }
   }, [performAction]);
-
 
   return (
     <HelmChartLayout title="Advance">
@@ -117,9 +117,7 @@ const SettingAdvance = () => {
           searchable
           label="Chart version"
           placeholder="Chart version"
-          disabled={
-            helmChartsLoading
-          }
+          disabled={helmChartsLoading}
           error={!!errors.chartVersion}
           message={errors.chartVersion}
           value={values.chartVersion}
@@ -131,11 +129,10 @@ const SettingAdvance = () => {
           ]}
           loading={helmChartsLoading}
           onChange={(val) => {
-            handleChange('chartVersion')(dummyEvent(val.value))
+            handleChange('chartVersion')(dummyEvent(val.value));
           }}
           onSearch={() => true}
         />
-
       </BoxPrimitive>
     </HelmChartLayout>
   );

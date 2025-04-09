@@ -45,7 +45,7 @@ type BaseType = ExtractNodeType<IClusterMSvs>;
 const parseItem = (
   item: BaseType,
   templates: IMSvTemplates,
-  plugins: IMsvPlugins
+  plugins: IMsvPlugins,
 ) => {
   const template = getManagedTemplate({
     templates,
@@ -128,7 +128,7 @@ const GridView = ({ items, templates, plugins, onAction }: IResource) => {
         const { name, id, logo, updateInfo } = parseItem(
           item,
           templates,
-          plugins
+          plugins,
         );
         const keyPrefix = `${RESOURCE_NAME}-${id}-${index}`;
         return (
@@ -196,16 +196,6 @@ const ListView = ({ items, templates, plugins, onAction }: IResource) => {
             className: listClass.title,
           },
           {
-            render: () => 'Cluster',
-            name: 'cluster',
-            className: listClass.item,
-          },
-          {
-            render: () => '',
-            name: 'flex-post',
-            className: listClass.flex,
-          },
-          {
             render: () => 'Status',
             name: 'status',
             className: listClass.status,
@@ -226,7 +216,7 @@ const ListView = ({ items, templates, plugins, onAction }: IResource) => {
           const { name, id, logo, updateInfo, logoUrl } = parseItem(
             i,
             templates,
-            plugins
+            plugins,
           );
           return {
             columns: {
@@ -249,11 +239,6 @@ const ListView = ({ items, templates, plugins, onAction }: IResource) => {
                       )
                     }
                   />
-                ),
-              },
-              cluster: {
-                render: () => (
-                  <ListItemV2 data={i.isArchived ? '' : i.clusterName} />
                 ),
               },
               status: {
@@ -310,11 +295,11 @@ const BackendServicesResourcesV2 = ({
       return `account:${parseName(account)}.cluster:${
         i.clusterName
       }.cluster_managed_service:${parseName(i)}`;
-    })
+    }),
   );
 
   const [showDeleteDialog, setShowDeleteDialog] = useState<BaseType | null>(
-    null
+    null,
   );
   const [visible, setVisible] = useState<BaseType | null>(null);
   const api = useConsoleApi();

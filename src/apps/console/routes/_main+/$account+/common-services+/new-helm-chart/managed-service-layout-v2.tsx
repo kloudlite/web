@@ -20,10 +20,7 @@ import MultiStepProgress, {
 import MultiStepProgressWrapper from '~/console/components/multi-step-progress-wrapper';
 import { NameIdView } from '~/console/components/name-id-view';
 import { useConsoleApi } from '~/console/server/gql/api-provider';
-import {
-  IMSvPlugin,
-  IMsvPlugins,
-} from '~/console/server/gql/queries/managed-templates-queries';
+import { IMSvPlugin } from '~/console/server/gql/queries/managed-templates-queries';
 import { parseName } from '~/console/server/r-utils/common';
 import { keyconstants } from '~/console/server/r-utils/key-constants';
 import { flatM, flatMapValidations } from '~/console/utils/commons';
@@ -31,12 +28,12 @@ import CodeEditorClient from '~/root/lib/client/components/editor-client';
 import useForm, { dummyEvent } from '~/root/lib/client/hooks/use-form';
 import Yup from '~/root/lib/server/helpers/yup';
 import { handleError } from '~/root/lib/utils/common';
-import { IAccountContext } from '../_layout';
 import TolerationsKeyValuePair from '~/console/components/tolerations-fields';
 import KeyValuePair from '~/console/components/key-value-pair-node-selector';
 import useFetchHelmValue from '~/console/hooks/helm-utils/use-fetch-helmvalues';
 import useHelmRepoSearch from '~/console/hooks/helm-utils/use-helm-repo-search';
 import useFetchHelmCharts from '~/console/hooks/helm-utils/use-fetch-helmcharts';
+import { IAccountContext } from '../../_layout';
 
 // type IDialog = IDialogBase<ExtractNodeType<IHelmCharts>>;
 
@@ -116,8 +113,6 @@ const RenderHelmFields = ({
     IHelmDoc['entries']['key']
   >([]);
 
-  const [selectedRepo, setSelectedRepo] = useState<string>('');
-
   const [repoSearchText, setRepoSearchText] = useState('');
 
   const [chartName, setChartName] = useState<
@@ -129,7 +124,7 @@ const RenderHelmFields = ({
 
   const { values: helmValues, isLoading: helmValuesLoading } =
     useFetchHelmValue({
-      packageId: selectedRepo,
+      packageId: values.helmPackageId,
       version: chartVersion?.value,
     });
 
@@ -163,24 +158,28 @@ const RenderHelmFields = ({
                 placeholder="Search for or enter the repo url"
                 searchable
                 creatable={isRepoCreatable}
-                options={async () => repos}
-                value={selectedRepo}
+                options={async () => [
+                  ...(values.helmPackageItem ? [values.helmPackageItem] : []),
+                  ...repos,
+                ]}
+                value={values.helmPackageId}
                 onChange={(value) => {
                   if (!repoSearchText.startsWith('https://')) {
                     onChange(`res.${field.input}`)(dummyEvent(value.repoUrl));
                   } else {
                     onChange(`res.${field.input}`)(dummyEvent(value.value));
                   }
-                  setSelectedRepo(value.value);
                   onChange('helmPackageId')(dummyEvent(value.value));
+                  onChange('helmPackageItem')(dummyEvent(value));
                   /* setHelmCharts([]); */
                   resetFields();
                 }}
                 onSearch={(text) => {
                   setRepoSearchText(text);
                   resetFields();
-                  setSelectedRepo('');
+                  onChange('helmPackageId')(dummyEvent(''));
                   onChange(`res.${field.input}`)(dummyEvent(''));
+                  onChange('helmPackageItem')(dummyEvent(null));
                 }}
                 valueRender={repoRenderer}
                 loading={repoLoading}
@@ -189,8 +188,8 @@ const RenderHelmFields = ({
                     Search for or enter the repo url
                   </div>
                 }
-                // error={!!errors[fieldKey]}
-                // message={errors[fieldKey]}
+                error={!!errors[field.input]}
+                message={errors[field.input] ? 'Chart url is required' : null}
               />
             );
           case 'chart.name':
@@ -201,7 +200,9 @@ const RenderHelmFields = ({
                 searchable
                 size="lg"
                 disabled={
-                  helmCharts.length === 0 || repoLoading || !selectedRepo
+                  helmCharts.length === 0 ||
+                  repoLoading ||
+                  !values.helmPackageId
                 }
                 // @ts-ignore
                 disableWhileLoading
@@ -216,8 +217,8 @@ const RenderHelmFields = ({
                   setChartVersions(filterUniqueVersions(val.item));
                 }}
                 onSearch={() => true}
-                error={!!errors.chartName}
-                message={errors.chartName}
+                error={!!errors[field.input]}
+                message={errors[field.input] ? 'Chart name is required' : null}
               />
             );
           case 'chart.version':
@@ -242,6 +243,10 @@ const RenderHelmFields = ({
                   setChartVersion(val);
                 }}
                 onSearch={() => true}
+                error={!!errors[field.input]}
+                message={
+                  errors[field.input] ? 'Chart version is required' : null
+                }
               />
             );
           case 'helmValues':
@@ -607,77 +612,6 @@ type ISelectedPlugin = {
   plugin: IMSvPlugin;
 };
 
-const TemplateView = ({
-  handleSubmit,
-  values,
-  handleChange,
-  errors,
-  plugins,
-  isLoading,
-}: {
-  handleSubmit: FormEventHandler<HTMLFormElement>;
-  values: Record<string, any>;
-  errors: Record<string, any>;
-  plugins: IMsvPlugins;
-  isLoading: boolean;
-  handleChange: (key: string) => (e: { target: { value: any } }) => void;
-}) => {
-  return (
-    <form className="flex flex-col gap-3xl" onSubmit={handleSubmit}>
-      <div className="bodyMd text-text-soft">Create your managed services.</div>
-      <Select
-        label="Managed service templates"
-        size="lg"
-        placeholder="Select templates"
-        value={values.selectedPlugin?.category}
-        valueRender={valueRender}
-        searchable
-        error={!!errors.selectedPlugin}
-        message={errors.selectedPlugin}
-        onChange={({ item }) => {
-          handleChange('selectedPlugin')(dummyEvent(item));
-        }}
-        options={async () =>
-          plugins
-            .filter((f) => !!f.category)
-            .map((mt) => ({
-              label: mt.category,
-              options: mt.items.map((mti) => ({
-                label: mti.plugin,
-                value: mti.plugin,
-                icon: mti.meta?.logo || '',
-                item: {
-                  categoryDisplayName: mti.plugin,
-                  category: mti.plugin,
-                  plugin: mti,
-                },
-                render: () => (
-                  <div className="flex flex-row items-center gap-xl">
-                    <span>
-                      <img
-                        alt={mti.plugin}
-                        src={mti.meta?.logo}
-                        className="w-2xl h-w-2xl"
-                      />
-                    </span>
-                    <div>{mti.plugin}</div>
-                  </div>
-                ),
-              })),
-            }))
-        }
-      />
-      <BottomNavigation
-        primaryButton={{
-          type: 'submit',
-          loading: isLoading,
-          content: 'Next',
-        }}
-      />
-    </form>
-  );
-};
-
 const RenderAdvanceFields = ({
   values,
   onChange,
@@ -812,7 +746,7 @@ const FieldView = ({
     >
       <NameIdView
         ref={nameRef}
-        placeholder="Enter managed service name"
+        placeholder="Enter helm chart name"
         label="Name"
         resType="cluster_managed_service"
         name={values.name}
@@ -933,24 +867,6 @@ const ReviewView = ({
           </div>
         </ReviewComponent>
 
-        <ReviewComponent
-          title="Service details"
-          onEdit={() => {
-            onEdit(1);
-          }}
-        >
-          <div className="flex flex-col gap-xl p-xl rounded border border-border-default">
-            <div className="flex flex-col gap-lg pb-xl border-b border-border-default">
-              <div className="flex-1 bodyMd-medium text-text-default">
-                {values?.selectedPlugin?.categoryDisplayName}
-              </div>
-              <div className="text-text-soft bodyMd">
-                {values?.selectedPlugin?.categoryDisplayName}
-              </div>
-            </div>
-          </div>
-        </ReviewComponent>
-
         {renderFieldView()}
         {values?.res?.resources && (
           <ReviewComponent
@@ -1009,16 +925,60 @@ const ReviewView = ({
   );
 };
 
+const Exports = ({
+  handleSubmit,
+  values,
+  handleChange,
+  errors,
+  isLoading,
+}: {
+  handleSubmit: FormEventHandler<HTMLFormElement>;
+  values: Record<string, any>;
+  errors: Record<string, any>;
+  isLoading: boolean;
+  handleChange: (key: string) => (e: { target: { value: any } }) => void;
+}) => {
+  const [ids, setIDs] = useState<string[]>([uuid()]);
+  console.log(ids);
+  return (
+    <form className="flex flex-col gap-3xl" onSubmit={handleSubmit}>
+      <div className="bodyMd text-text-soft">Exports</div>
+      <KeyValuePair
+        ids={ids}
+        error={errors.exports}
+        value={Object.entries(values.exports || {}).map(([key, value]) => ({
+          key,
+          value,
+        }))}
+        onChange={(e) => {
+          handleChange(`exports`)(
+            dummyEvent(
+              e.reduce((prev, curr) => {
+                prev[curr.key] = curr.value;
+                return prev;
+              }, {}),
+            ),
+          );
+        }}
+        onIdChange={(idss) => setIDs(idss)}
+      />
+      <BottomNavigation
+        primaryButton={{
+          type: 'submit',
+          loading: isLoading,
+          content: 'Next',
+        }}
+      />
+    </form>
+  );
+};
+
 export const ManagedServiceLayoutV2 = () => {
   const { account, msvPlugins } = useOutletContext<IAccountContext>();
   const navigate = useNavigate();
   const api = useConsoleApi();
 
-  // const rootUrl = `/${parseName(account)}/infra/${parseName(
-  //   account
-  // )}/managed-services`;
-
-  const rootUrl = `/${parseName(account)}/managed-services`;
+  const rootUrl = `/${parseName(account)}/common-services/helm-charts`;
 
   const { currentStep, jumpStep, nextStep } = useMultiStepProgress({
     defaultStep: 1,
@@ -1032,17 +992,18 @@ export const ManagedServiceLayoutV2 = () => {
         displayName: '',
         res: {},
         helmPackageId: '',
-        // selectedTemplate: null,
+        helmPackageItem: '',
         selectedPlugin: null,
+        exports: {},
         isNameError: false,
         nodepoolName: '',
       },
       validationSchema: Yup.object().shape({
         name: Yup.string().test('required', 'Name is required', (v) => {
-          return !(currentStep === 2 && !v);
+          return !(currentStep === 1 && !v);
         }),
         displayName: Yup.string().test('required', 'Name is required', (v) => {
-          return !(currentStep === 2 && !v);
+          return !(currentStep === 1 && !v);
         }),
         selectedPlugin: Yup.object({}).required('Plugin is required.'),
         // @ts-ignore
@@ -1055,17 +1016,17 @@ export const ManagedServiceLayoutV2 = () => {
 
             let vs = Yup.object({});
 
-            if (selfValue.selectedTemplate && currentStep === 2) {
-              vs = Yup.object(
-                flatMapValidations(
-                  selfValue.selectedTemplate?.template?.fields.reduce(
-                    (acc: any, curr: any) => {
-                      return { ...acc, [curr.name]: curr };
-                    },
-                    {},
-                  ),
+            if (selfValue.selectedPlugin && currentStep === 1) {
+              const v = flatMapValidations(
+                selfValue.selectedPlugin.plugin.spec?.services[0]?.inputs.reduce(
+                  (acc: any, curr: any) => {
+                    return { ...acc, [curr.input]: curr };
+                  },
+                  {},
                 ),
               );
+              console.log('v........', v);
+              vs = Yup.object(v);
             }
 
             const res = vs.validateSync(value, {
@@ -1078,6 +1039,7 @@ export const ManagedServiceLayoutV2 = () => {
         }),
       }),
       onSubmit: async (val) => {
+        console.log('exports....', val);
         const selectedPlugin = val.selectedPlugin as unknown as ISelectedPlugin;
         const submit = async () => {
           try {
@@ -1108,7 +1070,7 @@ export const ManagedServiceLayoutV2 = () => {
                       apiVersion: selectedPlugin.plugin.spec.apiVersion,
                       kind: selectedPlugin.plugin.spec.services[0].kind,
                       export: {
-                        viaSecret: '',
+                        viaSecret: JSON.stringify(val.exports),
                       },
                       spec: {
                         ...val.res,
@@ -1121,7 +1083,7 @@ export const ManagedServiceLayoutV2 = () => {
             if (e) {
               throw e[0];
             }
-            toast.success('Managed service created successfully');
+            toast.success('Helm chart created successfully');
             navigate(rootUrl);
           } catch (err) {
             handleError(err);
@@ -1145,53 +1107,53 @@ export const ManagedServiceLayoutV2 = () => {
     });
 
   useEffect(() => {
-    const selectedPlugin = values.selectedPlugin as unknown as ISelectedPlugin;
-    if (selectedPlugin?.plugin?.spec?.services[0]?.inputs) {
+    const helmPlugin = msvPlugins.filter((f) => !f.category)?.[0].items?.[0];
+    if (!helmPlugin) {
+      return;
+    }
+    handleChange('selectedPlugin')(
+      dummyEvent({ plugin: helmPlugin } as ISelectedPlugin),
+    );
+    if (helmPlugin.spec?.services[0]?.inputs) {
       setValues((v) => ({
         ...v,
         res: {
           ...flatM(
-            selectedPlugin.plugin?.spec.services[0].inputs.reduce(
-              (acc, curr) => {
-                return { ...acc, [curr.input]: curr };
-              },
-              {},
-            ),
+            helmPlugin.spec.services[0].inputs.reduce((acc, curr) => {
+              return { ...acc, [curr.input]: curr };
+            }, {}),
           ),
         },
       }));
     }
-  }, [values.selectedPlugin]);
+  }, [msvPlugins]);
 
   return (
     <MultiStepProgressWrapper
-      title="Let’s create new managed service."
+      title="Let’s create new helm chart."
       subTitle="Simplify Collaboration and Enhance Productivity with Kloudlite teams"
       backButton={{
-        content: 'Back to Managed services',
+        content: 'Back to helm charts',
         to: rootUrl,
       }}
     >
       <MultiStepProgress.Root currentStep={currentStep} jumpStep={jumpStep}>
-        <MultiStepProgress.Step label="Select Managed Service" step={1}>
-          <TemplateView
-            isLoading={isLoading}
-            plugins={msvPlugins}
-            handleChange={handleChange}
-            handleSubmit={handleSubmit}
-            errors={errors}
-            values={values}
-          />
-        </MultiStepProgress.Step>
-        <MultiStepProgress.Step label="Configure managed service" step={2}>
+        <MultiStepProgress.Step label="Configure helm chart" step={1}>
           <FieldView
             selectedPlugin={values.selectedPlugin}
             values={values}
             errors={errors}
             handleChange={handleChange}
             handleSubmit={handleSubmit}
-            // nodepools={statefulNodepools}
-            // nodepoolIsLoading={nodepoolIsLoading}
+          />
+        </MultiStepProgress.Step>
+        <MultiStepProgress.Step label="Manage helm exports" step={2}>
+          <Exports
+            errors={errors}
+            values={values}
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
+            isLoading={isLoading}
           />
         </MultiStepProgress.Step>
         <MultiStepProgress.Step label="Review" step={3}>

@@ -20,18 +20,18 @@ export const loader = (ctx: IRemixCtx) => {
   ensureAccountSet(ctx);
   const promise = pWrapper(async () => {
     const { data: mData, errors: mErrors } = await GQLServerHandler(
-      ctx.request
+      ctx.request,
     ).listClusterMSvs({
       pagination: getPagination(ctx),
       search: getSearch(ctx),
     });
 
     const { data: msvTemplates, errors: msvError } = await GQLServerHandler(
-      ctx.request
+      ctx.request,
     ).listMSvTemplates({});
 
     const { data: msvPlugins, errors: msvPluginError } = await GQLServerHandler(
-      ctx.request
+      ctx.request,
     ).listMSvPlugins({});
 
     if (msvPluginError) {
@@ -73,49 +73,55 @@ const KlOperatorServices = () => {
         plugins: fake.ConsoleListMSvPluginsQuery as any,
       }}
     >
-      {({
-        managedServices,
-        templates: templatesData,
-        plugins: pluginsData,
-      }) => {
+      {(
+        { managedServices, templates: templatesData, plugins: pluginsData },
+        skeleton,
+      ) => {
         const backendServices = parseNodes(managedServices);
-
+        const helmCharts = backendServices.filter(
+          (f) => f.spec?.msvcSpec.plugin?.kind === 'HelmChart',
+        );
+        console.log(
+          'fake',
+          skeleton ? backendServices.length : helmCharts.length,
+        );
         return (
           <Wrapper
-            header={{
-              title: 'Managed services',
-              action: backendServices.length > 0 && (
+            secondaryHeader={{
+              title: 'Helm Charts',
+              action: helmCharts.length > 0 && (
                 <Button
                   variant="primary"
-                  content="Create managed service"
+                  content="Create helm chart"
                   prefix={<Plus />}
-                  to="../new-managed-service"
+                  to="../new-helm-chart"
                   linkComponent={Link}
                 />
               ),
             }}
             empty={{
               image: <EmptyStorageImage />,
-              is: backendServices.length === 0,
-              title: 'This is where you’ll manage your managed services.',
+              is: skeleton
+                ? backendServices.length === 0
+                : helmCharts.length === 0,
+              title: 'This is where you’ll manage your helm chart.',
               content: (
                 <p>
-                  You can create a new managed service and manage the listed
-                  Managed service.
+                  You can create a new helm chart and manage the listed Helm
+                  chart.
                 </p>
               ),
               action: {
-                content: 'Create new Managed service',
+                content: 'Create new helm chart',
                 prefix: <Plus />,
-                to: '../new-managed-service',
+                to: '../new-helm-chart',
                 linkComponent: Link,
               },
             }}
             tools={<Tools />}
-            pagination={managedServices}
           >
             <BackendServicesResourcesV2
-              items={backendServices}
+              items={skeleton ? backendServices : helmCharts}
               templates={templatesData}
               plugins={pluginsData}
             />

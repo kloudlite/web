@@ -269,6 +269,9 @@ export const flatM = (
                 (obj[key].unit || ''),
             };
           }
+          if (obj[key].type === 'text') {
+            temp[part] = '';
+          }
         }
 
         temp = temp[part];
@@ -330,13 +333,14 @@ const customMaxNumber = (max: number) => {
 
 export const flatMapValidations = (obj: Record<string, any>) => {
   const flatJson = {};
+  console.log('here............................', obj);
   for (const key in obj) {
     const parts = key.split('.');
     const temp: Record<string, any> = flatJson;
     if (parts.length === 1) {
       temp[key] = (() => {
         let returnYup;
-        switch (obj[key].inputType) {
+        switch (obj[key].type) {
           case 'Number':
             returnYup = yup.number().required();
 
@@ -352,6 +356,12 @@ export const flatMapValidations = (obj: Record<string, any>) => {
             break;
 
           case 'String':
+            returnYup = yup.string();
+            break;
+          case 'text':
+            returnYup = yup.string();
+            break;
+          case 'text/yaml':
             returnYup = yup.string();
             break;
           case 'Resource':
