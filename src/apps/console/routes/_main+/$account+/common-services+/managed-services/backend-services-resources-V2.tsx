@@ -35,9 +35,9 @@ import { getManagedPlugin, getManagedTemplate } from '~/console/utils/commons';
 import { useReload } from '~/root/lib/client/helpers/reloader';
 import { useWatchReload } from '~/root/lib/client/helpers/socket/useWatch';
 import { handleError } from '~/root/lib/utils/common';
-import { IAccountContext } from '../_layout';
-import { IClusterContext } from '../infra+/$cluster+/_layout';
 import CloneManagedService from './clone-managed-service';
+import { IAccountContext } from '../../_layout';
+import { IClusterContext } from '../../infra+/$cluster+/_layout';
 
 const RESOURCE_NAME = 'managed service';
 type BaseType = ExtractNodeType<IClusterMSvs>;

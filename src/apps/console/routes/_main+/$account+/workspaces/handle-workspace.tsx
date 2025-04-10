@@ -6,7 +6,7 @@ import { IDialogBase } from '~/console/components/types.d';
 import { useConsoleApi } from '~/console/server/gql/api-provider';
 import { ExtractNodeType } from '~/console/server/r-utils/common';
 import { useReload } from '~/root/lib/client/helpers/reloader';
-import useForm, { dummyEvent } from '~/root/lib/client/hooks/use-form';
+import useForm from '~/root/lib/client/hooks/use-form';
 import Yup from '~/root/lib/server/helpers/yup';
 import { IAccountContext } from '../_layout';
 import {
@@ -37,7 +37,7 @@ const Root = (props: IDialog) => {
       },
       validationSchema: Yup.object({}),
       onSubmit: async (val) => {
-        if (!props.data.wm || !props.data.wm.metadata) {
+        if (!props?.data?.wm || !props.data.wm.metadata) {
           throw Error('Invalid workmachine.');
         }
 

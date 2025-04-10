@@ -14,7 +14,7 @@ import {
   Github__Com___Kloudlite___Operator___Apis___Clusters___V1__AwsPoolType as awsPoolType,
   Github__Com___Kloudlite___Operator___Apis___Clusters___V1__GcpPoolType as gcpPoolType,
 } from '~/root/src/generated/gql/server';
-import { Link, useOutletContext } from '@remix-run/react';
+import { useOutletContext } from '@remix-run/react';
 import { INodepools } from '~/console/server/gql/queries/nodepool-queries';
 import { awsRegions } from '~/console/dummy/consts';
 import { mapper } from '@kloudlite/design-system/utils';
@@ -24,7 +24,6 @@ import { NameIdView } from '~/console/components/name-id-view';
 import { keyconstants } from '~/console/server/r-utils/key-constants';
 import KeyValuePair from '~/console/components/key-value-pair';
 import { InfoLabel } from '~/console/components/commons';
-import { Button } from '@kloudlite/design-system/atoms/button';
 import { IClusterContext } from '../_layout';
 import {
   findNodePlan,
@@ -78,7 +77,7 @@ const Root = (props: IDialog) => {
 
             labels: filterLabels([keyconstants.nodepoolStateType]),
             labelsTemp: Object.entries(
-              filterLabels([keyconstants.nodepoolStateType]) || {}
+              filterLabels([keyconstants.nodepoolStateType]) || {},
             ).map(([key, value]) => ({
               key,
               value,
@@ -131,6 +130,7 @@ const Root = (props: IDialog) => {
                   ec2Pool: {
                     instanceType: val.instanceType,
                     nodes: {},
+                    ami: '',
                   },
                 };
               case 'spot':
@@ -139,6 +139,7 @@ const Root = (props: IDialog) => {
                   ? {
                       gpuNode: {
                         instanceTypes: [plan?.value],
+                        ami: '',
                       },
                     }
                   : {
@@ -152,7 +153,9 @@ const Root = (props: IDialog) => {
                             max: `${plan?.spotSpec.memMax}`,
                             min: `${plan?.spotSpec.memMin}`,
                           },
+                          ami: '',
                         },
+                        ami: '',
                         nodes: {},
                       },
                     };
@@ -221,6 +224,7 @@ const Root = (props: IDialog) => {
                 metadata: {
                   name: val.name,
                 },
+                //@ts-ignore
                 spec: {
                   ...props.data.spec,
                   nodeLabels: {
@@ -242,7 +246,7 @@ const Root = (props: IDialog) => {
           reloadPage();
           resetValues();
           toast.success(
-            `nodepool ${isUpdate ? 'updated' : 'created'} successfully`
+            `nodepool ${isUpdate ? 'updated' : 'created'} successfully`,
           );
           setVisible(false);
         } catch (err) {
@@ -297,7 +301,7 @@ const Root = (props: IDialog) => {
                     (v) => ({
                       value: v,
                       label: v,
-                    })
+                    }),
                   )
                 }
                 onChange={(_, v) => {
@@ -319,7 +323,7 @@ const Root = (props: IDialog) => {
                       onChange={(value) => {
                         handleChange('instanceType')(dummyEvent(value.value));
                         handleChange('nvidiaGpuEnabled')(
-                          dummyEvent(!!value.gpuEnabled)
+                          dummyEvent(!!value.gpuEnabled),
                         );
                       }}
                     />
@@ -367,7 +371,7 @@ const Root = (props: IDialog) => {
                               onClick={() => {
                                 window.open(
                                   'https://cloud.google.com/compute/docs/regions-zones',
-                                  '_blank'
+                                  '_blank',
                                 );
                               }}
                             >

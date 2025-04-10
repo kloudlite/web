@@ -23,7 +23,7 @@ export const loader = async (ctx: IRemixCtx) => {
 
   const promise = pWrapper(async () => {
     const { data, errors } = await GQLServerHandler(
-      ctx.request
+      ctx.request,
     ).listExternalApps({
       envName: environment,
       pq: getPagination(ctx),
