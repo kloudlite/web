@@ -35,6 +35,7 @@ import { secretVariableQueries } from './queries/secret-variables-queries';
 import { tagsQueries } from './queries/tags-queries';
 import { workspaceQueries } from './queries/workspace-queries';
 import { serviceBindingQueries } from './queries/service-binding-queries';
+import { helmManagedServicesQueries } from './queries/helm-msv-queries';
 
 export const GQLServerHandler = ({ headers, cookies }: IGQLServerProps) => {
   const executor = ExecuteQueryWithContext(headers, cookies);
@@ -74,6 +75,7 @@ export const GQLServerHandler = ({ headers, cookies }: IGQLServerProps) => {
     ...secretVariableQueries(executor),
     ...serviceBindingQueries(executor),
     ...workspaceQueries(executor),
+    ...helmManagedServicesQueries(executor),
   };
 };
 

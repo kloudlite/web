@@ -333,7 +333,6 @@ const customMaxNumber = (max: number) => {
 
 export const flatMapValidations = (obj: Record<string, any>) => {
   const flatJson = {};
-  console.log('here............................', obj);
   for (const key in obj) {
     const parts = key.split('.');
     const temp: Record<string, any> = flatJson;
@@ -341,6 +340,9 @@ export const flatMapValidations = (obj: Record<string, any>) => {
       temp[key] = (() => {
         let returnYup;
         switch (obj[key].type) {
+          case 'int-range':
+          case 'text/yaml':
+            return returnYup;
           case 'Number':
             returnYup = yup.number().required();
 

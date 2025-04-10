@@ -21,7 +21,7 @@ export const loader = (ctx: IRemixCtx) => {
   const promise = pWrapper(async () => {
     const { data: mData, errors: mErrors } = await GQLServerHandler(
       ctx.request,
-    ).listClusterMSvs({
+    ).listHelmMSVs({
       pagination: getPagination(ctx),
       search: getSearch(ctx),
     });
@@ -73,23 +73,17 @@ const KlOperatorServices = () => {
         plugins: fake.ConsoleListMSvPluginsQuery as any,
       }}
     >
-      {(
-        { managedServices, templates: templatesData, plugins: pluginsData },
-        skeleton,
-      ) => {
+      {({
+        managedServices,
+        templates: templatesData,
+        plugins: pluginsData,
+      }) => {
         const backendServices = parseNodes(managedServices);
-        const helmCharts = backendServices.filter(
-          (f) => f.spec?.msvcSpec.plugin?.kind === 'HelmChart',
-        );
-        console.log(
-          'fake',
-          skeleton ? backendServices.length : helmCharts.length,
-        );
         return (
           <Wrapper
             secondaryHeader={{
               title: 'Helm Charts',
-              action: helmCharts.length > 0 && (
+              action: backendServices.length > 0 && (
                 <Button
                   variant="primary"
                   content="Create helm chart"
@@ -101,9 +95,7 @@ const KlOperatorServices = () => {
             }}
             empty={{
               image: <EmptyStorageImage />,
-              is: skeleton
-                ? backendServices.length === 0
-                : helmCharts.length === 0,
+              is: backendServices.length === 0,
               title: 'This is where you’ll manage your helm chart.',
               content: (
                 <p>
@@ -121,7 +113,7 @@ const KlOperatorServices = () => {
             tools={<Tools />}
           >
             <BackendServicesResourcesV2
-              items={skeleton ? backendServices : helmCharts}
+              items={backendServices}
               templates={templatesData}
               plugins={pluginsData}
             />

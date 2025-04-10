@@ -2136,12 +2136,12 @@ input Github__com___kloudlite___operator___pkg___raw____json__RawJsonIn {
 
 type Github__com___kloudlite___operator___toolkit___plugin__Export {
   template: String
-  viaSecret: String!
+  viaSecret: String
 }
 
 input Github__com___kloudlite___operator___toolkit___plugin__ExportIn {
   template: String
-  viaSecret: String!
+  viaSecret: String
 }
 
 type Github__com___kloudlite___operator___toolkit___reconciler__Check {
@@ -3831,6 +3831,7 @@ type Mutation {
   infra_updateWorkMachine(clusterName: String!, workmachine: WorkmachineIn!): Workmachine
   infra_updateWorkMachineStatus(clusterName: String!, name: String!, status: Boolean!): Boolean!
   infra_updateWorkspace(clusterName: String!, workmachineName: String!, workspace: WorkspaceIn!): Workspace
+  infra_updateWorkspaceStatus(clusterName: String!, name: String!, status: Boolean!, workmachineName: String!): Boolean!
   oAuth_addLogin(code: String!, provider: String!, state: String!): Boolean!
   oAuth_login(code: String!, provider: String!, state: String): Session!
 }
@@ -4203,6 +4204,7 @@ type Query {
   infra_listDomainEntries(pagination: CursorPaginationIn, search: SearchDomainEntry): DomainEntryPaginatedRecords
   infra_listGlobalVPNDevices(gvpn: String!, pagination: CursorPaginationIn, search: SearchGlobalVPNDevices): GlobalVPNDevicePaginatedRecords
   infra_listGlobalVPNs(pagination: CursorPaginationIn, search: SearchGlobalVPNs): GlobalVPNPaginatedRecords
+  infra_listHelmTypeClusterManagedServices(pagination: CursorPaginationIn, search: SearchClusterManagedService): ClusterManagedServicePaginatedRecords
   infra_listManagedServiceTemplates: [MsvcTemplate!]
   infra_listNamespaces(clusterName: String!, pq: CursorPaginationIn, search: SearchNamespaces): NamespacePaginatedRecords
   infra_listNodePools(clusterName: String!, pagination: CursorPaginationIn, search: SearchNodepool): NodePoolPaginatedRecords

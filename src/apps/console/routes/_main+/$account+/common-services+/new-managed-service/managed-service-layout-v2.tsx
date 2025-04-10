@@ -5,7 +5,6 @@ import Select from '@kloudlite/design-system/atoms/select';
 import { Switch } from '@kloudlite/design-system/atoms/switch';
 import { titleCase, uuid } from '@kloudlite/design-system/utils';
 import { useNavigate, useOutletContext } from '@remix-run/react';
-import yaml from 'js-yaml';
 import { FormEventHandler, useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import {
@@ -31,14 +30,12 @@ import CodeEditorClient from '~/root/lib/client/components/editor-client';
 import useForm, { dummyEvent } from '~/root/lib/client/hooks/use-form';
 import Yup from '~/root/lib/server/helpers/yup';
 import { handleError } from '~/root/lib/utils/common';
-import { IAccountContext } from '../_layout';
 import TolerationsKeyValuePair from '~/console/components/tolerations-fields';
 import KeyValuePair from '~/console/components/key-value-pair-node-selector';
 import useFetchHelmValue from '~/console/hooks/helm-utils/use-fetch-helmvalues';
 import useHelmRepoSearch from '~/console/hooks/helm-utils/use-helm-repo-search';
 import useFetchHelmCharts from '~/console/hooks/helm-utils/use-fetch-helmcharts';
-
-// type IDialog = IDialogBase<ExtractNodeType<IHelmCharts>>;
+import { IAccountContext } from '../../_layout';
 
 type IHelmDoc = {
   apiVersion: string;
@@ -354,21 +351,21 @@ const NodeSelector = ({
       <div className="bodyMd-medium text-text-default">{label}</div>
       <KeyValuePair
         ids={ids}
-        value={Object.entries(value || {}).map(([key, value]) => ({
+        value={Object.entries(value?.[0] || {}).map(([key, val]) => ({
           key,
-          value,
+          value: val,
         }))}
-        onChange={(e) => {
-          onChange(`res.${input}`)(
-            dummyEvent(
-              e.reduce((prev, curr) => {
-                prev[curr.key] = curr.value;
-                return prev;
-              }, {}),
-            ),
+        onChange={(updatedPairs) => {
+          const valueObject = updatedPairs.reduce<Record<string, any>>(
+            (acc, pair) => {
+              acc[pair.key] = pair.value;
+              return acc;
+            },
+            {},
           );
+          onChange(`res.${input}`)(dummyEvent(valueObject));
         }}
-        onIdChange={(idss) => setIDs(idss)}
+        onIdChange={setIDs}
       />
     </div>
   );
@@ -940,8 +937,8 @@ const ReviewView = ({
           }}
         >
           <div className="flex flex-col gap-xl p-xl rounded border border-border-default">
-            <div className="flex flex-col gap-lg pb-xl border-b border-border-default">
-              <div className="flex-1 bodyMd-medium text-text-default">
+            <div className="flex flex-col">
+              <div className="bodyMd-medium text-text-default">
                 {values?.selectedPlugin?.categoryDisplayName}
               </div>
               <div className="text-text-soft bodyMd">
@@ -1018,7 +1015,7 @@ export const ManagedServiceLayoutV2 = () => {
   //   account
   // )}/managed-services`;
 
-  const rootUrl = `/${parseName(account)}/managed-services`;
+  const rootUrl = `/${parseName(account)}/common-services/managed-services`;
 
   const { currentStep, jumpStep, nextStep } = useMultiStepProgress({
     defaultStep: 1,
@@ -1055,17 +1052,16 @@ export const ManagedServiceLayoutV2 = () => {
 
             let vs = Yup.object({});
 
-            if (selfValue.selectedTemplate && currentStep === 2) {
-              vs = Yup.object(
-                flatMapValidations(
-                  selfValue.selectedTemplate?.template?.fields.reduce(
-                    (acc: any, curr: any) => {
-                      return { ...acc, [curr.name]: curr };
-                    },
-                    {},
-                  ),
+            if (selfValue.selectedPlugin && currentStep === 2) {
+              const v = flatMapValidations(
+                selfValue.selectedPlugin.plugin.spec?.services[0]?.inputs.reduce(
+                  (acc: any, curr: any) => {
+                    return { ...acc, [curr.input]: curr };
+                  },
+                  {},
                 ),
               );
+              vs = Yup.object(v);
             }
 
             const res = vs.validateSync(value, {
@@ -1086,11 +1082,6 @@ export const ManagedServiceLayoutV2 = () => {
               !selectedPlugin?.plugin?.spec.services[0].kind
             ) {
               throw new Error('Service apiversion or kind error.');
-            }
-            const res = { ...val.res };
-            if (selectedPlugin.plugin.plugin === 'HelmChart') {
-              // @ts-ignore
-              res.helmValues = res.helmValues ? yaml.dump(res.helmValues) : '';
             }
             const { errors: e } = await api.createClusterMSv({
               service: {
@@ -1146,17 +1137,15 @@ export const ManagedServiceLayoutV2 = () => {
 
   useEffect(() => {
     const selectedPlugin = values.selectedPlugin as unknown as ISelectedPlugin;
-    if (selectedPlugin?.plugin?.spec?.services[0]?.inputs) {
+    const inputs = selectedPlugin?.plugin?.spec?.services[0]?.inputs;
+    if (inputs) {
       setValues((v) => ({
         ...v,
         res: {
           ...flatM(
-            selectedPlugin.plugin?.spec.services[0].inputs.reduce(
-              (acc, curr) => {
-                return { ...acc, [curr.input]: curr };
-              },
-              {},
-            ),
+            inputs.reduce((acc, curr) => {
+              return { ...acc, [curr.input]: curr };
+            }, {}),
           ),
         },
       }));
@@ -1190,8 +1179,6 @@ export const ManagedServiceLayoutV2 = () => {
             errors={errors}
             handleChange={handleChange}
             handleSubmit={handleSubmit}
-            // nodepools={statefulNodepools}
-            // nodepoolIsLoading={nodepoolIsLoading}
           />
         </MultiStepProgress.Step>
         <MultiStepProgress.Step label="Review" step={3}>

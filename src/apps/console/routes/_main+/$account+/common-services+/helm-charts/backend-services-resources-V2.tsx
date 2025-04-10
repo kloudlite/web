@@ -20,7 +20,6 @@ import ResourceExtraAction from '~/console/components/resource-extra-action';
 import { SyncStatusV2 } from '~/console/components/sync-status';
 import { useClusterStatusV3 } from '~/console/hooks/use-cluster-status-v3';
 import { useConsoleApi } from '~/console/server/gql/api-provider';
-import { IClusterMSvs } from '~/console/server/gql/queries/cluster-managed-services-queries';
 import {
   IMsvPlugins,
   IMSvTemplates,
@@ -35,12 +34,13 @@ import { getManagedPlugin, getManagedTemplate } from '~/console/utils/commons';
 import { useReload } from '~/root/lib/client/helpers/reloader';
 import { useWatchReload } from '~/root/lib/client/helpers/socket/useWatch';
 import { handleError } from '~/root/lib/utils/common';
-import { IAccountContext } from '../_layout';
-import { IClusterContext } from '../infra+/$cluster+/_layout';
 import CloneManagedService from './clone-managed-service';
+import { IHelmMSvs } from '~/console/server/gql/queries/helm-msv-queries';
+import { IClusterContext } from '../../infra+/$cluster+/_layout';
+import { IAccountContext } from '../../_layout';
 
 const RESOURCE_NAME = 'managed service';
-type BaseType = ExtractNodeType<IClusterMSvs>;
+type BaseType = ExtractNodeType<IHelmMSvs>;
 
 const parseItem = (
   item: BaseType,

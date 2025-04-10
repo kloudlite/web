@@ -919,7 +919,7 @@ export type Github__Com___Kloudlite___Operator___Apis___Crds___V1__PluginTemplat
 
 export type Github__Com___Kloudlite___Operator___Toolkit___Plugin__ExportIn = {
   template?: InputMaybe<Scalars['String']['input']>;
-  viaSecret: Scalars['String']['input'];
+  viaSecret?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type RouterIn = {
@@ -4905,7 +4905,7 @@ export type ConsoleGetClusterMSvQuery = {
           apiVersion: string;
           kind: string;
           spec?: any;
-          export?: { template?: string; viaSecret: string };
+          export?: { template?: string; viaSecret?: string };
         };
         serviceTemplate?: { apiVersion: string; kind: string; spec?: any };
       };
@@ -4980,7 +4980,7 @@ export type ConsoleListClusterMSvsQuery = {
               apiVersion: string;
               kind: string;
               spec?: any;
-              export?: { template?: string; viaSecret: string };
+              export?: { template?: string; viaSecret?: string };
             };
           };
         };
@@ -5370,7 +5370,7 @@ export type ConsoleGetManagedResourceQuery = {
         apiVersion: string;
         kind: string;
         spec?: any;
-        export?: { template?: string; viaSecret: string };
+        export?: { template?: string; viaSecret?: string };
       };
     };
     status?: {
@@ -5478,7 +5478,7 @@ export type ConsoleListManagedResourcesQuery = {
             apiVersion: string;
             kind: string;
             spec?: any;
-            export?: { template?: string; viaSecret: string };
+            export?: { template?: string; viaSecret?: string };
           };
         };
         status?: {
@@ -6141,7 +6141,7 @@ export type ConsoleListImportedManagedResourcesQuery = {
               apiVersion: string;
               kind: string;
               spec?: any;
-              export?: { template?: string; viaSecret: string };
+              export?: { template?: string; viaSecret?: string };
             };
           };
           status?: {
@@ -6597,6 +6597,77 @@ export type ConsoleUpdateWorkmachineStatusMutationVariables = Exact<{
 
 export type ConsoleUpdateWorkmachineStatusMutation = {
   infra_updateWorkMachineStatus: boolean;
+};
+
+export type ConsoleListHelmMsVsQueryVariables = Exact<{
+  search?: InputMaybe<SearchClusterManagedService>;
+  pagination?: InputMaybe<CursorPaginationIn>;
+}>;
+
+export type ConsoleListHelmMsVsQuery = {
+  infra_listHelmTypeClusterManagedServices?: {
+    totalCount: number;
+    edges: Array<{
+      cursor: string;
+      node: {
+        clusterName: string;
+        creationTime: any;
+        displayName: string;
+        markedForDeletion?: boolean;
+        updateTime: any;
+        isArchived?: boolean;
+        recordVersion: number;
+        createdBy: { userEmail: string; userId: string; userName: string };
+        lastUpdatedBy: { userEmail: string; userId: string; userName: string };
+        metadata?: { name: string; namespace?: string };
+        spec?: {
+          targetNamespace: string;
+          msvcSpec: {
+            plugin?: {
+              apiVersion: string;
+              kind: string;
+              spec?: any;
+              export?: { template?: string; viaSecret?: string };
+            };
+            serviceTemplate?: { apiVersion: string; kind: string; spec?: any };
+          };
+        };
+        status?: {
+          checks?: any;
+          isReady: boolean;
+          lastReadyGeneration?: number;
+          lastReconcileTime?: any;
+          checkList?: Array<{
+            debug?: boolean;
+            description?: string;
+            hide?: boolean;
+            name: string;
+            title: string;
+          }>;
+          resources?: Array<{
+            apiVersion: string;
+            kind: string;
+            name: string;
+            namespace: string;
+          }>;
+        };
+        syncStatus: {
+          action: Github__Com___Kloudlite___Api___Pkg___Types__SyncAction;
+          error?: string;
+          lastSyncedAt?: any;
+          recordVersion: number;
+          state: Github__Com___Kloudlite___Api___Pkg___Types__SyncState;
+          syncScheduledAt?: any;
+        };
+      };
+    }>;
+    pageInfo: {
+      endCursor?: string;
+      hasNextPage?: boolean;
+      hasPrevPage?: boolean;
+      startCursor?: string;
+    };
+  };
 };
 
 export type AuthCli_CreateGlobalVpnDeviceMutationVariables = Exact<{
@@ -7326,7 +7397,7 @@ export type AuthCli_ListImportedManagedResourcesQuery = {
               apiVersion: string;
               kind: string;
               spec?: any;
-              export?: { template?: string; viaSecret: string };
+              export?: { template?: string; viaSecret?: string };
             };
           };
           status?: {

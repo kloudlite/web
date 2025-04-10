@@ -92,7 +92,7 @@ const KlOperatorServices = () => {
                   variant="primary"
                   content="Create managed service"
                   prefix={<Plus />}
-                  to="../../new-managed-service"
+                  to="../new-managed-service"
                   linkComponent={Link}
                 />
               ),
@@ -110,7 +110,7 @@ const KlOperatorServices = () => {
               action: {
                 content: 'Create new Managed service',
                 prefix: <Plus />,
-                to: '../../new-managed-service',
+                to: '../new-managed-service',
                 linkComponent: Link,
               },
             }}

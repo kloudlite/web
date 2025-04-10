@@ -18,8 +18,9 @@ import { handleError } from '~/root/lib/utils/common';
 import useCustomSwr from '~/root/lib/client/hooks/use-custom-swr';
 import Select from '@kloudlite/design-system/atoms/select';
 import { useAppend, useMapper } from '@kloudlite/design-system/utils';
+import { IHelmMSvs } from '~/console/server/gql/queries/helm-msv-queries';
 
-type IDialog = IDialogBase<ExtractNodeType<IClusterMSvs>>;
+type IDialog = IDialogBase<ExtractNodeType<IClusterMSvs | IHelmMSvs>>;
 
 const ClusterSelectItem = ({
   label,
@@ -51,7 +52,7 @@ const Root = (props: IDialog) => {
           first: 100,
         },
       }),
-    true
+    true,
   );
 
   const { data: byokClustersData, isLoading: byokCIsLoading } = useCustomSwr(
@@ -62,7 +63,7 @@ const Root = (props: IDialog) => {
           first: 100,
         },
       }),
-    true
+    true,
   );
 
   const cData = useMapper(parseNodes(clustersData), (item) => {

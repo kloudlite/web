@@ -4712,6 +4712,93 @@ mutation consoleUpdateWorkmachineStatus($clusterName: String!, $status: Boolean!
   )
 }
 
+query consoleListHelmMSVs($search: SearchClusterManagedService, $pagination: CursorPaginationIn) {
+  infra_listHelmTypeClusterManagedServices(
+    search: $search
+    pagination: $pagination
+  ) {
+    edges {
+      cursor
+      node {
+        clusterName
+        createdBy {
+          userEmail
+          userId
+          userName
+        }
+        creationTime
+        displayName
+        lastUpdatedBy {
+          userEmail
+          userId
+          userName
+        }
+        markedForDeletion
+        metadata {
+          name
+          namespace
+        }
+        spec {
+          msvcSpec {
+            plugin {
+              apiVersion
+              export {
+                template
+                viaSecret
+              }
+              kind
+              spec
+            }
+            serviceTemplate {
+              apiVersion
+              kind
+              spec
+            }
+          }
+          targetNamespace
+        }
+        status {
+          checkList {
+            debug
+            description
+            hide
+            name
+            title
+          }
+          checks
+          isReady
+          lastReadyGeneration
+          lastReconcileTime
+          resources {
+            apiVersion
+            kind
+            name
+            namespace
+          }
+        }
+        syncStatus {
+          action
+          error
+          lastSyncedAt
+          recordVersion
+          state
+          syncScheduledAt
+        }
+        updateTime
+        isArchived
+        recordVersion
+      }
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+      hasPrevPage
+      startCursor
+    }
+    totalCount
+  }
+}
+
 mutation authCli_createGlobalVPNDevice($gvpnDevice: GlobalVPNDeviceIn!) {
   infra_createGlobalVPNDevice(gvpnDevice: $gvpnDevice) {
     accountName

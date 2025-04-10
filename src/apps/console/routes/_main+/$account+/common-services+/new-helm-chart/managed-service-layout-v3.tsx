@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable no-nested-ternary */
 import { NumberInput, TextInput } from '@kloudlite/design-system/atoms/input';
-import Select from '@kloudlite/design-system/atoms/select';
 import { Switch } from '@kloudlite/design-system/atoms/switch';
 import { titleCase, uuid } from '@kloudlite/design-system/utils';
 import { useNavigate, useOutletContext } from '@remix-run/react';
@@ -12,8 +11,6 @@ import {
   BottomNavigation,
   ReviewComponent,
 } from '~/console/components/commons';
-import ExtendedFilledTab from '~/console/components/extended-filled-tab';
-import { LoadingPlaceHolder } from '~/console/components/loading';
 import MultiStepProgress, {
   useMultiStepProgress,
 } from '~/console/components/multi-step-progress';
@@ -30,9 +27,6 @@ import Yup from '~/root/lib/server/helpers/yup';
 import { handleError } from '~/root/lib/utils/common';
 import TolerationsKeyValuePair from '~/console/components/tolerations-fields';
 import KeyValuePair from '~/console/components/key-value-pair-node-selector';
-import useFetchHelmValue from '~/console/hooks/helm-utils/use-fetch-helmvalues';
-import useHelmRepoSearch from '~/console/hooks/helm-utils/use-helm-repo-search';
-import useFetchHelmCharts from '~/console/hooks/helm-utils/use-fetch-helmcharts';
 import { IAccountContext } from '../../_layout';
 
 // type IDialog = IDialogBase<ExtractNodeType<IHelmCharts>>;
@@ -815,8 +809,12 @@ const Exports = ({
   isLoading: boolean;
   handleChange: (key: string) => (e: { target: { value: any } }) => void;
 }) => {
-  const [ids, setIDs] = useState<string[]>([uuid()]);
-  console.log(ids);
+  const [ids, setIDs] = useState<string[]>(
+    Object.keys(values.exports || {}).length
+      ? Object.keys(values.exports).map(() => uuid())
+      : [uuid()],
+  );
+
   return (
     <form className="flex flex-col gap-3xl" onSubmit={handleSubmit}>
       <div className="bodyMd text-text-soft">Exports</div>

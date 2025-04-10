@@ -21,14 +21,14 @@ interface IKeyValuePair {
   ids: string[];
   onIdChange: (ids: string[]) => void;
 }
-const KeyValuePair = ({
+export const KeyValuePair = ({
   onChange,
   value = [],
   label,
   message,
   error,
-  size,
-  addText,
+  size = 'md',
+  addText = 'Add',
   keyLabel = 'key',
   valueLabel = 'value',
   keyPlaceholder = 'key',
@@ -37,134 +37,128 @@ const KeyValuePair = ({
   ids,
   onIdChange,
 }: IKeyValuePair) => {
-  const newItem = useMemo(() => [{ [keyLabel]: '', [valueLabel]: '' }], []);
+  const defaultItem = useMemo(
+    () => ({ [keyLabel]: '', [valueLabel]: '' }),
+    [keyLabel, valueLabel],
+  );
 
   const handleChange = useCallback(
-    (_value: string | number, id: string | number, target: string = '') => {
-      const tempItems = ids.map((_, index) => {
-        let v = value[index];
-        if (!v) {
-          v = newItem[0];
+    (updatedValue: string | number, index: number, target: string) => {
+      const newItems = ids.map((_, idx) => {
+        const currentItem = value[idx] || defaultItem;
+        if (idx === index) {
+          return {
+            ...currentItem,
+            [target === 'key' ? keyLabel : valueLabel]: updatedValue,
+          };
         }
-        if (index === id) {
-          switch (target) {
-            case 'key':
-              return { ...v, [keyLabel]: _value };
-            case 'value':
-            default:
-              return { ...v, [valueLabel]: _value };
-          }
-        }
-        return v;
+        return currentItem;
       });
 
-      if (onChange) onChange(Array.from(tempItems));
+      onChange?.(newItems);
     },
-    [value, ids],
+    [ids, value, onChange, keyLabel, valueLabel, defaultItem],
   );
+
+  const handleRemove = (index: number) => {
+    const newValues = value.filter((_, i) => i !== index);
+    const newIDs = ids.filter((_, i) => i !== index);
+    onChange?.(newValues);
+    onIdChange?.(newIDs);
+  };
 
   return (
     <div className="flex flex-col">
-      <div className="flex flex-col">
-        <div className="flex flex-col gap-md">
-          {label && (
-            <span className="text-text-default bodyMd-medium">{label}</span>
-          )}
-          <div className="grid grid-cols-[minmax(0,1fr),minmax(0,1fr),36px] gap-xl bodyXs w-full">
-            <span className="capitalize">{keyLabel}</span>
-            <span className="capitalize">{valueLabel}</span>
-          </div>
-          {ids.map((item, index) => {
-            let v = value[index];
-            if (!v) {
-              v = newItem[0];
-            }
-            return (
-              <div
-                key={item}
-                className="grid grid-cols-[minmax(0,1fr),minmax(0,1fr),36px] gap-xl items-start"
-              >
-                <div className="flex-1">
-                  {type === 'text' && (
-                    <TextInput
-                      size={size || 'md'}
-                      error={error}
-                      placeholder={keyPlaceholder}
-                      value={v[keyLabel]}
-                      onChange={({ target }) =>
-                        handleChange(target.value, index, 'key')
-                      }
-                    />
-                  )}
-                  {type === 'number' && (
-                    <NumberInput
-                      size={size || 'md'}
-                      error={error}
-                      placeholder={keyPlaceholder}
-                      value={v[keyLabel]}
-                      onChange={({ target }) =>
-                        handleChange(parseInt(target.value, 10), index, 'key')
-                      }
-                    />
-                  )}
-                </div>
-                <div className="flex-1">
-                  {type === 'text' && (
-                    <TextInput
-                      size={size || 'md'}
-                      error={error}
-                      placeholder={valuePlaceholder}
-                      value={v[valueLabel]}
-                      onChange={({ target }) =>
-                        handleChange(target.value, index, 'value')
-                      }
-                    />
-                  )}
-                  {type === 'number' && (
-                    <NumberInput
-                      size={size || 'md'}
-                      error={error}
-                      placeholder={valuePlaceholder}
-                      value={v[valueLabel]}
-                      onChange={({ target }) =>
-                        handleChange(parseInt(target.value, 10), index, 'value')
-                      }
-                    />
-                  )}
-                </div>
-                <div className="self-center">
-                  <IconButton
-                    icon={<MinusCircle />}
-                    variant="plain"
-                    disabled={value.length < 2}
-                    onClick={() => {
-                      onChange?.(value.filter((_, i) => i !== index));
-                      onIdChange(ids.filter((_, i) => i !== index));
-                    }}
-                  />
-                </div>
-              </div>
-            );
-          })}
+      <div className="flex flex-col gap-md">
+        {label && (
+          <span className="text-text-default bodyMd-medium">{label}</span>
+        )}
+        <div className="grid grid-cols-[1fr_1fr_36px] gap-xl bodyXs w-full">
+          <span className="capitalize">{keyLabel}</span>
+          <span className="capitalize">{valueLabel}</span>
         </div>
+
+        {ids.map((id, index) => {
+          const item = value[index] || defaultItem;
+
+          return (
+            <div
+              key={id}
+              className="grid grid-cols-[1fr_1fr_36px] gap-xl items-start"
+            >
+              <div className="flex-1">
+                {type === 'text' ? (
+                  <TextInput
+                    size={size}
+                    error={error}
+                    placeholder={keyPlaceholder}
+                    value={item[keyLabel]}
+                    onChange={({ target }) =>
+                      handleChange(target.value, index, 'key')
+                    }
+                  />
+                ) : (
+                  <NumberInput
+                    size={size}
+                    error={error}
+                    placeholder={keyPlaceholder}
+                    value={item[keyLabel]}
+                    onChange={({ target }) =>
+                      handleChange(parseInt(target.value, 10), index, 'key')
+                    }
+                  />
+                )}
+              </div>
+              <div className="flex-1">
+                {type === 'text' ? (
+                  <TextInput
+                    size={size}
+                    error={error}
+                    placeholder={valuePlaceholder}
+                    value={item[valueLabel]}
+                    onChange={({ target }) =>
+                      handleChange(target.value, index, 'value')
+                    }
+                  />
+                ) : (
+                  <NumberInput
+                    size={size}
+                    error={error}
+                    placeholder={valuePlaceholder}
+                    value={item[valueLabel]}
+                    onChange={({ target }) =>
+                      handleChange(parseInt(target.value, 10), index, 'value')
+                    }
+                  />
+                )}
+              </div>
+              <div className="self-center">
+                <IconButton
+                  icon={<MinusCircle />}
+                  variant="plain"
+                  disabled={ids.length < 2}
+                  onClick={() => handleRemove(index)}
+                />
+              </div>
+            </div>
+          );
+        })}
+
         <AnimateHide show={!!message}>
           <div
-            className={cn(
-              'bodySm pulsable',
-              {
-                'text-text-critical': !!error,
-                'text-text-default': !error,
-              },
-              'pt-md',
-            )}
+            className={cn('bodySm pulsable pt-md', {
+              'text-text-critical': !!error,
+              'text-text-default': !error,
+            })}
           >
             {message}
           </div>
         </AnimateHide>
+
         <div className="pt-xl">
           <Button
             variant="basic"
-            content={addText || 'Add'}
+            content={addText}
             size="sm"
             prefix={<Plus />}
             onClick={() => {
