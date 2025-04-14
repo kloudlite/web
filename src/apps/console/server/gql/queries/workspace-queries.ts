@@ -204,13 +204,11 @@ export const workspaceQueries = (executor: IExecutor) => ({
               availabilityZone
               externalVolumeSize
               externalVolumeType
+              rootVolumeType
               iamInstanceProfileRole
               instanceType
-              publicSubnetId
               region
               rootVolumeSize
-              rootVolumeType
-              SecurityGroupID
             }
             sshPublicKeys
             state
@@ -219,8 +217,9 @@ export const workspaceQueries = (executor: IExecutor) => ({
       }
     `,
     {
-      transformer: (data: ConsoleGetWorkmachineQuery) =>
-        data.infra_getWorkmachine,
+      transformer: (data: ConsoleGetWorkmachineQuery) =>{
+        return data.infra_getWorkmachine
+      },
       vars(_: ConsoleGetWorkmachineQueryVariables) {},
     },
   ),

@@ -44,7 +44,6 @@ export const loader = (ctx: IRemixCtx) => {
       name: `${me.id}-workmachine`.toUpperCase(),
       clusterName,
     });
-
     if (wmError) {
       throw wmError[0];
     }
