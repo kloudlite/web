@@ -12,19 +12,26 @@ import { CopySimple } from '~/console/components/icons';
 import Wrapper from '~/console/components/wrapper';
 import { useConsoleApi } from '~/console/server/gql/api-provider';
 import { parseName } from '~/console/server/r-utils/common';
-import { getManagedPlugin, getManagedTemplate } from '~/console/utils/commons';
+import { getManagedPlugin } from '~/console/utils/commons';
 import { useReload } from '~/root/lib/client/helpers/reloader';
 import useClipboard from '~/root/lib/client/hooks/use-clipboard';
 import useForm from '~/root/lib/client/hooks/use-form';
 import { useUnsavedChanges } from '~/root/lib/client/hooks/use-unsaved-changes';
-import { consoleBaseUrl } from '~/root/lib/configs/base-url.cjs';
 import Yup from '~/root/lib/server/helpers/yup';
 import { handleError } from '~/root/lib/utils/common';
 import { Fill } from '~/console/routes/_main+/$account+/common-services+/managed-services/handle-backend-service';
 import { IManagedServiceContext } from '../../_layout';
 
+const parseExports = (exports?: string) => {
+  try {
+    return JSON.parse(exports || '');
+  } catch {
+    return {};
+  }
+};
+
 const ClusterManagedServiceSettingGeneral = () => {
-  const { account, managedService, msvtemplates, msvPlugins } =
+  const { account, managedService, msvPlugins } =
     useOutletContext<IManagedServiceContext>();
 
   const { setHasChanges, resetAndReload } = useUnsavedChanges();
@@ -40,14 +47,6 @@ const ClusterManagedServiceSettingGeneral = () => {
       toast.success('Text copied to clipboard.');
     },
   });
-
-  const getService = () => {
-    return getManagedTemplate({
-      templates: msvtemplates,
-      apiVersion: managedService.spec?.msvcSpec.plugin?.apiVersion || '',
-      kind: managedService.spec?.msvcSpec.plugin?.kind || '',
-    });
-  };
 
   const getServicePlugin = () => {
     return getManagedPlugin({
@@ -65,6 +64,9 @@ const ClusterManagedServiceSettingGeneral = () => {
         clusterName: managedService.clusterName,
         isNameError: false,
         annotations: managedService.metadata?.annotations,
+        exports: parseExports(
+          managedService.spec?.msvcSpec.plugin?.export?.template,
+        ),
         res: {
           ...managedService.spec?.msvcSpec.plugin?.spec,
         },
@@ -107,7 +109,9 @@ const ClusterManagedServiceSettingGeneral = () => {
     if (
       values.displayName !== managedService.displayName ||
       JSON.stringify(values.res) !==
-        JSON.stringify(managedService.spec?.msvcSpec.plugin?.spec)
+        JSON.stringify(managedService.spec?.msvcSpec.plugin?.spec) ||
+      managedService.spec?.msvcSpec.plugin?.export?.template !==
+        JSON.stringify(values.exports)
     ) {
       return true;
     }
@@ -158,37 +162,6 @@ const ClusterManagedServiceSettingGeneral = () => {
           <div className="flex flex-row items-center gap-3xl">
             <div className="flex-1">
               <TextInput
-                label="Integrated service URL"
-                value={`${consoleBaseUrl}/${parseName(account)}/${parseName(
-                  managedService,
-                )}`}
-                message="This is your URL namespace within Kloudlite"
-                disabled
-                suffix={
-                  <div
-                    className="flex justify-center items-center"
-                    title="Copy"
-                  >
-                    <button
-                      aria-label="copy"
-                      onClick={() =>
-                        copy(
-                          `${consoleBaseUrl}/${parseName(account)}/${parseName(
-                            managedService,
-                          )}`,
-                        )
-                      }
-                      className="outline-none hover:bg-surface-basic-hovered active:bg-surface-basic-active rounded text-text-default"
-                      tabIndex={-1}
-                    >
-                      <CopySimple size={16} />
-                    </button>
-                  </div>
-                }
-              />
-            </div>
-            <div className="flex-1">
-              <TextInput
                 value={parseName(managedService)}
                 label="Integrated service ID"
                 message="Used when interacting with the Kloudlite API"
@@ -216,10 +189,6 @@ const ClusterManagedServiceSettingGeneral = () => {
         <Box title="">
           <Fill
             {...{
-              selectedService: {
-                category: { displayName: '', name: '' },
-                service: getService(),
-              },
               selectedServicePlugins: {
                 category: { displayName: '', name: '' },
                 service: getServicePlugin(),
@@ -229,7 +198,6 @@ const ClusterManagedServiceSettingGeneral = () => {
               handleChange,
             }}
             size="md"
-            annotations={managedService.metadata?.annotations}
           />
         </Box>
 
@@ -260,7 +228,14 @@ const ClusterManagedServiceSettingGeneral = () => {
               reload();
               toast.success(`Integrated service deleted successfully`);
               setDeleteClusterMsvc(false);
-              navigate(`/${parseName(account)}/managed-services`);
+              console.log('kind');
+              if (managedService.spec?.msvcSpec.plugin?.kind === 'HelmChart') {
+                navigate(`/${parseName(account)}/common-services/helm-charts`);
+              } else {
+                navigate(
+                  `/${parseName(account)}/common-services/managed-services`,
+                );
+              }
             } catch (err) {
               handleError(err);
             }

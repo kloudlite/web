@@ -71,15 +71,6 @@ const filterUniqueVersions = (versions: IHelmDoc['entries']['keys']) => {
   );
 };
 
-type ISelectedService = {
-  category: {
-    name: string;
-    displayName: string;
-  };
-
-  service?: NN<IMSvTemplates>[number]['items'][number];
-} | null;
-
 type ISelectedServicePlugins = {
   category: {
     name: string;
@@ -89,34 +80,41 @@ type ISelectedServicePlugins = {
   service?: NN<IMsvPlugins>[number]['items'][number];
 } | null;
 
+const helmValueEditorProps = {
+  height: '300px',
+  options: {
+    fontSize: 14,
+    padding: {
+      top: 20,
+      bottom: 20,
+    },
+    tabSize: 2,
+    minimap: {
+      enabled: false,
+    },
+  },
+};
+
 const RenderHelmFields = ({
   values,
   onChange,
   errors,
-  fields,
-  annotations,
 }: {
   onChange: (e: string) => (e: { target: { value: any } }) => void;
   values: any;
   errors: {
     [key: string]: string | undefined;
   };
-  fields: IMSvPlugin['spec']['services'][0]['inputs'];
-  annotations?: { [key: string]: string };
 }) => {
-  const [activeTab, setActiveTab] = useState('defaults');
-
-  const editorRef = useRef<any>();
+  const [ids, setIDs] = useState<string[]>(
+    Object.keys(values.exports || {}).length
+      ? Object.keys(values.exports).map(() => uuid())
+      : [uuid()],
+  );
 
   const [chartVersions, setChartVersions] = useState<
     IHelmDoc['entries']['key']
   >([]);
-
-  const { values: helmValues, isLoading: helmValuesLoading } =
-    useFetchHelmValue({
-      packageId: annotations?.[keyconstants.helmChartRepoPackageId],
-      version: values.res.chart.version,
-    });
 
   const { helmCharts, loading: helmChartsLoading } = useFetchHelmCharts({
     repoUrl: values.res.chart.url,
@@ -134,113 +132,93 @@ const RenderHelmFields = ({
 
   return (
     <div className="flex flex-col gap-3xl">
-      {fields.map((field) => {
-        switch (field.input) {
-          case 'chart.url':
-            return (
-              <TextInput
-                value={values.res.chart.url}
-                error={!!errors.chartName}
-                message={errors.chartName}
-                label="Chart name"
-                size="lg"
-                disabled
-              />
+      <TextInput
+        value={values.res.chart.url}
+        error={!!errors.chartName}
+        message={errors.chartName}
+        label="Chart repo url"
+        size="lg"
+        disabled
+      />
+      <div className="flex flex-row items-center gap-xl w-full">
+        <div className="flex-1">
+          <TextInput
+            value={values.res.chart.name}
+            error={!!errors.chartName}
+            message={errors.chartName}
+            label="Chart name"
+            size="lg"
+            disabled
+          />
+        </div>
+        <div className="flex-1">
+          <Select
+            searchable
+            size="lg"
+            label="Chart version"
+            placeholder="Chart version"
+            disabled={chartVersions.length === 0 || helmChartsLoading}
+            value={values.res.chart.version}
+            options={async () => [
+              ...chartVersions.map((cv) => ({
+                label: cv.version,
+                value: cv.version,
+              })),
+            ]}
+            loading={helmChartsLoading}
+            onChange={(val) => {
+              onChange(`res.chart.version`)(dummyEvent(val.value));
+            }}
+            onSearch={() => true}
+          />
+        </div>
+      </div>
+      <div className="flex flex-col gap-3xl">
+        <div className="basis-full flex flex-col gap-lg">
+          <div className="text-text-default bodyMd-medium h-4xl">
+            Helm values
+          </div>
+          <CodeEditorClient
+            {...helmValueEditorProps}
+            options={{
+              ...helmValueEditorProps.options,
+            }}
+            value={values.res.helmValues}
+            lang="yaml"
+            onChange={(e) => {
+              onChange('res.helmValues')(dummyEvent(e));
+            }}
+            path={'values.yaml'}
+          />
+          {!!errors['res.helmValues'] ? (
+            <div className="bodySm text-text-critical">
+              {errors['res.helmValues']}
+            </div>
+          ) : null}
+        </div>
+      </div>
+      <div className="flex flex-col gap-3xl">
+        <div className="text-text-default bodyMd-medium h-4xl">Exports</div>
+        <KeyValuePair
+          ids={ids}
+          error={!!errors.exports}
+          value={Object.entries(values.exports || {}).map(([key, value]) => ({
+            key,
+            value,
+          }))}
+          onChange={(e) => {
+            onChange(`exports`)(
+              dummyEvent(
+                e.reduce((prev, curr) => {
+                  prev[curr.key] = curr.value;
+                  return prev;
+                }, {}),
+              ),
             );
-          case 'chart.name':
-            return (
-              <TextInput
-                value={values.res.chart.name}
-                error={!!errors.chartName}
-                message={errors.chartName}
-                label="Chart name"
-                size="lg"
-                disabled
-              />
-            );
-          case 'chart.version':
-            return (
-              <Select
-                searchable
-                size="lg"
-                label="Chart version"
-                placeholder="Chart version"
-                disabled={chartVersions.length === 0 || helmChartsLoading}
-                value={values.res.chart.version}
-                options={async () => [
-                  ...chartVersions.map((cv) => ({
-                    label: cv.version,
-                    value: cv.version,
-                  })),
-                ]}
-                loading={helmChartsLoading}
-                onChange={(val) => {
-                  onChange(`res.${field.input}`)(dummyEvent(val.value));
-                }}
-                onSearch={() => true}
-              />
-            );
-          case 'helmValues':
-            return (
-              <div className="basis-full flex flex-col">
-                {helmValuesLoading ? (
-                  <LoadingPlaceHolder height={466} />
-                ) : (
-                  values.res.chart.version && (
-                    <div className="flex flex-col gap-3xl h-full">
-                      <ExtendedFilledTab
-                        value={activeTab || 'defaults'}
-                        onChange={(e) => {
-                          setActiveTab(e);
-                        }}
-                        items={[
-                          { label: 'Defaults', value: 'defaults' },
-                          {
-                            label: 'Values',
-                            value: 'values',
-                          },
-                        ]}
-                      />
-                      <CodeEditorClient
-                        {...valueEditorProps}
-                        options={{
-                          ...valueEditorProps.options,
-                          readOnly: activeTab === 'defaults',
-                        }}
-                        value={
-                          activeTab === 'defaults'
-                            ? helmValues
-                            : values.res.helmValues
-                        }
-                        lang="yaml"
-                        onChange={(e) => {
-                          const { path } = editorRef.current.getModel().uri;
-
-                          if (
-                            activeTab === 'values' &&
-                            path === '/values.yaml'
-                          ) {
-                            onChange('res.helmValues')(dummyEvent(e));
-                          }
-                        }}
-                        path={
-                          activeTab === 'defaults'
-                            ? 'defaults.yaml'
-                            : 'values.yaml'
-                        }
-                        onMount={(e) => {
-                          editorRef.current = e;
-                        }}
-                      />
-                    </div>
-                  )
-                )}
-              </div>
-            );
-          default:
-            return null;
-        }
-      })}
+          }}
+          onIdChange={(idss) => setIDs(idss)}
+        />
+      </div>
     </div>
   );
 };
@@ -619,21 +597,17 @@ const RenderAdvanceFields = ({
 };
 
 export const Fill = ({
-  selectedService,
   selectedServicePlugins,
   values,
   handleChange,
   errors,
   size = 'lg',
-  annotations,
 }: {
-  selectedService: ISelectedService;
   selectedServicePlugins?: ISelectedServicePlugins;
   values: { [key: string]: any };
   handleChange: (key: string) => (e: { target: { value: any } }) => void;
   errors: Record<string, any>;
   size?: ITextInputBase['size'];
-  annotations?: { [key: string]: string };
 }) => {
   const nameRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
@@ -646,10 +620,8 @@ export const Fill = ({
         return (
           <RenderHelmFields
             values={values}
-            fields={selectedServicePlugins?.service?.spec?.services[0].inputs}
             onChange={handleChange}
             errors={errors}
-            annotations={annotations}
           />
         );
       default: {
@@ -729,6 +701,10 @@ const Root = (props: IDialog) => {
           displayName: props.data.displayName,
           clusterName: props.data.clusterName,
           isNameError: false,
+          exports:
+            JSON.parse(
+              props.data.spec?.msvcSpec.plugin?.export?.template || '',
+            ) || {},
           res: {
             ...props.data.spec?.msvcSpec.serviceTemplate?.spec,
           },
@@ -739,6 +715,7 @@ const Root = (props: IDialog) => {
           clusterName: '',
           res: {},
           isNameError: false,
+          exports: {},
         },
     validationSchema: Yup.object({}),
     onSubmit: async (val) => {
@@ -791,6 +768,8 @@ const Root = (props: IDialog) => {
   if (!isUpdate) {
     return null;
   }
+
+  console.log(props.data.spec?.msvcSpec.plugin?.export);
   return (
     <Popup.Form
       onSubmit={(e) => {

@@ -13,7 +13,7 @@ import {
 } from '~/console/components/console-list-components';
 import DeleteDialog from '~/console/components/delete-dialog';
 import Grid from '~/console/components/grid';
-import { GearSix, Trash } from '~/console/components/icons';
+import { GearSix, LockSimple, Trash } from '~/console/components/icons';
 import ListGridView from '~/console/components/list-grid-view';
 import ListV2 from '~/console/components/listV2';
 import ResourceExtraAction from '~/console/components/resource-extra-action';
@@ -38,6 +38,7 @@ import CloneManagedService from './clone-managed-service';
 import { IHelmMSvs } from '~/console/server/gql/queries/helm-msv-queries';
 import { IClusterContext } from '../../infra+/$cluster+/_layout';
 import { IAccountContext } from '../../_layout';
+import { ViewExports } from './handle-view-exports';
 
 const RESOURCE_NAME = 'managed service';
 type BaseType = ExtractNodeType<IHelmMSvs>;
@@ -73,7 +74,7 @@ type OnAction = ({
   action,
   item,
 }: {
-  action: 'clone' | 'delete';
+  action: 'clone' | 'delete' | 'view_exports';
   item: BaseType;
 }) => void;
 
@@ -101,11 +102,18 @@ const ExtraButton = ({ item, onAction }: IExtraButton) => {
     <ResourceExtraAction
       options={[
         {
+          label: 'View exports',
+          icon: <LockSimple size={16} />,
+          type: 'item',
+          onClick: () => onAction({ action: 'view_exports', item }),
+          key: 'view_secret',
+        },
+        {
           label: 'Settings',
           icon: <GearSix size={16} />,
           type: 'item',
 
-          to: `/${account}/msvc/${parseName(item)}/settings`,
+          to: `/${account}/common-services/msvc/${parseName(item)}/settings`,
           key: 'settings',
         },
       ]}
@@ -134,7 +142,7 @@ const GridView = ({ items, templates, plugins, onAction }: IResource) => {
         return (
           <Grid.Column
             key={id}
-            to={`/${account}/${project}/msvc/${id}/logs-n-metrics`}
+            to={`/${account}/${project}/common-services/msvc/${id}/logs-n-metrics`}
             rows={[
               {
                 key: generateKey(keyPrefix, name + id),
@@ -272,7 +280,9 @@ const ListView = ({ items, templates, plugins, onAction }: IResource) => {
             },
             ...(i.isArchived
               ? {}
-              : { to: `/${parseName(account)}/msvc/${id}/managed-resources` }),
+              : {
+                  to: `/${parseName(account)}/common-services/msvc/${id}/managed-resources`,
+                }),
           };
         }),
       }}
@@ -298,6 +308,7 @@ const BackendServicesResourcesV2 = ({
     }),
   );
 
+  const [showExports, setShowExports] = useState<{ name: string } | null>(null);
   const [showDeleteDialog, setShowDeleteDialog] = useState<BaseType | null>(
     null,
   );
@@ -316,6 +327,9 @@ const BackendServicesResourcesV2 = ({
           break;
         case 'delete':
           setShowDeleteDialog(item);
+          break;
+        case 'view_exports':
+          setShowExports({ name: `${parseName(item)}-export` });
           break;
         default:
           break;
@@ -361,6 +375,15 @@ const BackendServicesResourcesV2 = ({
           data: visible!,
         }}
       />
+      {showExports && (
+        <ViewExports
+          show={!!showExports}
+          setShow={() => {
+            setShowExports(null);
+          }}
+          item={showExports!}
+        />
+      )}
     </>
   );
 };

@@ -22,17 +22,17 @@ import { BreadcrumSlash, tabIconSize } from '~/console/utils/commons';
 import logger from '~/lib/client/helpers/log';
 import { IRemixCtx } from '~/lib/types/common';
 import fake from '~/root/fake-data-generator/fake';
-import { IAccountContext } from '../../_layout';
+import { IAccountContext } from '../../../_layout';
 
 const ManagedServiceTabs = () => {
   const { account, msv } = useParams();
   const iconSize = tabIconSize;
   return (
     <CommonTabs
-      baseurl={`/${account}/msvc/${msv}`}
+      baseurl={`/${account}/common-services/msvc/${msv}`}
       backButton={{
-        to: `/${account}/managed-services`,
-        label: 'Managed Services',
+        to: `/${account}/common-services`,
+        label: 'Common Services',
       }}
       tabs={[
         {
@@ -73,16 +73,16 @@ const LocalBreadcrum = ({ data }: { data: IClusterMSv }) => {
       <BreadcrumSlash />
       <span className="mx-md" />
       <Breadcrum.Button
-        to={`/${account}/managed-services`}
+        to={`/${account}/common-services`}
         linkComponent={Link}
         content={
           <div className="flex flex-row gap-md items-center">
-            Managed Services <ChevronRight size={14} />{' '}
+            Common Services <ChevronRight size={14} />{' '}
           </div>
         }
       />
       <Breadcrum.Button
-        to={`/${account}/msvc/${parseName(data)}/logs-n-metrics`}
+        to={`/${account}/common-services/msvc/${parseName(data)}/logs-n-metrics`}
         linkComponent={Link}
         content={<span>{displayName}</span>}
       />
@@ -90,6 +90,9 @@ const LocalBreadcrum = ({ data }: { data: IClusterMSv }) => {
   );
 };
 
+/* export const handle = {
+  noMainLayout: true,
+}; */
 export const handle = ({
   promise: { managedService, error },
 }: {
@@ -102,6 +105,7 @@ export const handle = ({
   return {
     navbar: <ManagedServiceTabs />,
     breadcrum: () => <LocalBreadcrum data={managedService} />,
+    noLayout: true,
   };
 };
 
@@ -125,7 +129,7 @@ export const loader = async (ctx: IRemixCtx) => {
     const { msv } = ctx.params;
     try {
       const { data, errors } = await GQLServerHandler(
-        ctx.request
+        ctx.request,
       ).getClusterMSv({
         name: msv,
       });
@@ -141,7 +145,7 @@ export const loader = async (ctx: IRemixCtx) => {
 
       return {
         managedService: {} as IClusterMSv,
-        redirect: `../managed-services`,
+        redirect: `../common-services`,
       };
     }
   });

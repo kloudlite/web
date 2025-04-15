@@ -11,5 +11,5 @@ export const loader = async (ctx: IRemixCtx) => {
     return redirect('/teams');
   }
 
-  return redirect(`/${account}/infra/clusters`);
+  return redirect(`/${account}/environments`);
 };

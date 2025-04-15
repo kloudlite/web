@@ -69,7 +69,7 @@ export const KeyValuePair = ({
 
   return (
     <div className="flex flex-col">
-      <div className="flex flex-col gap-md">
+      <div className="flex flex-col gap-xl">
         {label && (
           <span className="text-text-default bodyMd-medium">{label}</span>
         )}

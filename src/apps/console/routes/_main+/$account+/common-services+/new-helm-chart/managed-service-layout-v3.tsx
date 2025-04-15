@@ -28,8 +28,8 @@ import { handleError } from '~/root/lib/utils/common';
 import TolerationsKeyValuePair from '~/console/components/tolerations-fields';
 import KeyValuePair from '~/console/components/key-value-pair-node-selector';
 import { IAccountContext } from '../../_layout';
-
-// type IDialog = IDialogBase<ExtractNodeType<IHelmCharts>>;
+import Select from '@kloudlite/design-system/atoms/select';
+import useFetchHelmCharts from '~/console/hooks/helm-utils/use-fetch-helmcharts';
 
 type IHelmDoc = {
   apiVersion: string;
@@ -54,20 +54,6 @@ const helmValueEditorProps = {
   },
 };
 
-const repoRenderer = ({
-  value,
-  repoUrl,
-}: {
-  value: string;
-  repoUrl: string;
-}) => {
-  return (
-    <div className="flex flex-row gap-xl items-center bodyMd text-text-default">
-      <span>{!repoUrl ? value : repoUrl}</span>
-    </div>
-  );
-};
-
 const filterUniqueVersions = (versions: IHelmDoc['entries']['keys']) => {
   return versions.filter(
     (obj, index, self) =>
@@ -75,22 +61,10 @@ const filterUniqueVersions = (versions: IHelmDoc['entries']['keys']) => {
   );
 };
 
-const valueRender = ({ label, icon }: { label: string; icon: string }) => {
-  return (
-    <div className="flex flex-row gap-lg items-center">
-      <span>
-        <img alt={label} src={icon} className="w-2xl h-w-2xl" />
-      </span>
-      <div>{label}</div>
-    </div>
-  );
-};
-
 const RenderHelmFields = ({
   values,
   onChange,
   errors,
-  fields,
 }: {
   onChange: (e: string) => (e: { target: { value: any } }) => void;
   values: any;
@@ -99,69 +73,63 @@ const RenderHelmFields = ({
   };
   fields: IMSvPlugin['spec']['services'][0]['inputs'];
 }) => {
+  const { helmCharts, loading: helmChartsLoading } = useFetchHelmCharts({
+    repoUrl: values.res.chart.url,
+  });
+
+  const [chartVersions, setChartVersions] = useState<
+    IHelmDoc['entries']['key']
+  >([]);
+
   return (
     <div className="flex flex-col gap-3xl">
-      {fields.map((field) => {
-        switch (field.input) {
-          case 'chart.url':
-            return (
-              <TextInput
-                label={field.label}
-                error={!!errors[field.input]}
-                message={errors[field.input]}
-                value={values.res.chart.url}
-                onChange={onChange('res.chart.url')}
-              />
-            );
-          case 'chart.name':
-            return (
-              <TextInput
-                label={field.label}
-                error={!!errors[field.input]}
-                message={errors[field.input]}
-                value={values.res.chart.name}
-                onChange={onChange('res.chart.name')}
-              />
-            );
-          case 'chart.version':
-            return (
-              <TextInput
-                label={field.label}
-                error={!!errors[field.input]}
-                message={errors[field.input]}
-                value={values.res.chart.version}
-                onChange={onChange('res.chart.version')}
-              />
-            );
-          case 'helmValues':
-            return (
-              <div className="basis-full flex flex-col gap-lg">
-                <div className="text-text-default bodyMd-medium h-4xl">
-                  {field.label}
-                </div>
-                <CodeEditorClient
-                  {...helmValueEditorProps}
-                  options={{
-                    ...helmValueEditorProps.options,
-                  }}
-                  value={values.res.helmValues}
-                  lang="yaml"
-                  onChange={(e) => {
-                    onChange('res.helmValues')(dummyEvent(e));
-                  }}
-                  path={'values.yaml'}
-                />
-                {!!errors[field.input] ? (
-                  <div className="bodySm text-text-critical">
-                    {errors[field.input]}
-                  </div>
-                ) : null}
-              </div>
-            );
-          default:
-            return null;
-        }
-      })}
+      <TextInput
+        label={'Chart Repo URL'}
+        placeholder="Chart Repo URL"
+        error={!!errors['res.chart.url']}
+        message={errors['res.chart.url']}
+        value={values.res.chart.url}
+        onChange={onChange('res.chart.url')}
+      />
+      <div className="flex flex-row items-center gap-xl w-full">
+        <div className="flex-1">
+          <Select
+            label={'Chart name'}
+            placeholder="Chart name"
+            searchable
+            size="lg"
+            disableWhileLoading
+            loading={helmChartsLoading}
+            value={values.res.chart.name}
+            options={async () => helmCharts}
+            onChange={(val) => {
+              onChange(`res.chart.name`)(dummyEvent(val.value));
+              onChange(`res.chart.version`)(dummyEvent(''));
+              setChartVersions(filterUniqueVersions(val.item));
+            }}
+          />
+        </div>
+        <div className="flex-1">
+          <Select
+            searchable
+            size="lg"
+            label="Chart version"
+            placeholder="Chart version"
+            disableWhileLoading
+            loading={helmChartsLoading}
+            value={values.res.chart.version}
+            options={async () => [
+              ...chartVersions.map((cv) => ({
+                label: cv.version,
+                value: cv.version,
+              })),
+            ]}
+            onChange={(val) => {
+              onChange(`res.chart.version`)(dummyEvent(val.value));
+            }}
+          />
+        </div>
+      </div>
     </div>
   );
 };
@@ -817,26 +785,53 @@ const Exports = ({
 
   return (
     <form className="flex flex-col gap-3xl" onSubmit={handleSubmit}>
-      <div className="bodyMd text-text-soft">Exports</div>
-      <KeyValuePair
-        ids={ids}
-        error={errors.exports}
-        value={Object.entries(values.exports || {}).map(([key, value]) => ({
-          key,
-          value,
-        }))}
-        onChange={(e) => {
-          handleChange(`exports`)(
-            dummyEvent(
-              e.reduce((prev, curr) => {
-                prev[curr.key] = curr.value;
-                return prev;
-              }, {}),
-            ),
-          );
-        }}
-        onIdChange={(idss) => setIDs(idss)}
-      />
+      <div className="flex flex-col gap-3xl">
+        <div className="bodyMd text-text-soft">Helm values</div>
+        <div className="basis-full flex flex-col gap-lg">
+          <div className="text-text-default bodyMd-medium h-4xl">
+            Helm values
+          </div>
+          <CodeEditorClient
+            {...helmValueEditorProps}
+            options={{
+              ...helmValueEditorProps.options,
+            }}
+            value={values.res.helmValues}
+            lang="yaml"
+            onChange={(e) => {
+              handleChange('res.helmValues')(dummyEvent(e));
+            }}
+            path={'values.yaml'}
+          />
+          {!!errors['res.helmValues'] ? (
+            <div className="bodySm text-text-critical">
+              {errors['res.helmValues']}
+            </div>
+          ) : null}
+        </div>
+      </div>
+      <div className="flex flex-col gap-3xl">
+        <div className="bodyMd text-text-soft">Exports</div>
+        <KeyValuePair
+          ids={ids}
+          error={!!errors.exports}
+          value={Object.entries(values.exports || {}).map(([key, value]) => ({
+            key,
+            value,
+          }))}
+          onChange={(e) => {
+            handleChange(`exports`)(
+              dummyEvent(
+                e.reduce((prev, curr) => {
+                  prev[curr.key] = curr.value;
+                  return prev;
+                }, {}),
+              ),
+            );
+          }}
+          onIdChange={(idss) => setIDs(idss)}
+        />
+      </div>
       <BottomNavigation
         primaryButton={{
           type: 'submit',
@@ -914,7 +909,6 @@ export const ManagedServiceLayoutV3 = () => {
         }),
       }),
       onSubmit: async (val) => {
-        console.log('exports....', val);
         const selectedPlugin = val.selectedPlugin as unknown as ISelectedPlugin;
         const submit = async () => {
           try {
@@ -927,7 +921,10 @@ export const ManagedServiceLayoutV3 = () => {
             const res = { ...val.res };
             if (selectedPlugin.plugin.plugin === 'HelmChart') {
               // @ts-ignore
-              res.helmValues = res.helmValues ? yaml.dump(res.helmValues) : '';
+              res.helmValues = res.helmValues
+                ? // @ts-ignore
+                  yaml.load(res.helmValues, { json: true })
+                : {};
             }
             const { errors: e } = await api.createClusterMSv({
               service: {
@@ -945,10 +942,10 @@ export const ManagedServiceLayoutV3 = () => {
                       apiVersion: selectedPlugin.plugin.spec.apiVersion,
                       kind: selectedPlugin.plugin.spec.services[0].kind,
                       export: {
-                        viaSecret: JSON.stringify(val.exports),
+                        template: JSON.stringify(val.exports),
                       },
                       spec: {
-                        ...val.res,
+                        ...res,
                       },
                     },
                   },

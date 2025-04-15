@@ -105,7 +105,7 @@ const ExtraButton = ({ item, onAction }: IExtraButton) => {
           icon: <GearSix size={16} />,
           type: 'item',
 
-          to: `/${account}/msvc/${parseName(item)}/settings`,
+          to: `/${account}/common-services/msvc/${parseName(item)}/settings`,
           key: 'settings',
         },
       ]}
@@ -134,7 +134,7 @@ const GridView = ({ items, templates, plugins, onAction }: IResource) => {
         return (
           <Grid.Column
             key={id}
-            to={`/${account}/${project}/msvc/${id}/logs-n-metrics`}
+            to={`/${account}/${project}/common-services/msvc/${id}/logs-n-metrics`}
             rows={[
               {
                 key: generateKey(keyPrefix, name + id),
@@ -272,7 +272,9 @@ const ListView = ({ items, templates, plugins, onAction }: IResource) => {
             },
             ...(i.isArchived
               ? {}
-              : { to: `/${parseName(account)}/msvc/${id}/managed-resources` }),
+              : {
+                  to: `/${parseName(account)}/common-services/msvc/${id}/managed-resources`,
+                }),
           };
         }),
       }}
