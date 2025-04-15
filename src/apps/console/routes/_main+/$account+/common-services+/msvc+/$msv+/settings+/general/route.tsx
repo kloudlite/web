@@ -107,11 +107,16 @@ const ClusterManagedServiceSettingGeneral = () => {
 
   const checkChanges = () => {
     if (
-      values.displayName !== managedService.displayName ||
-      JSON.stringify(values.res) !==
-        JSON.stringify(managedService.spec?.msvcSpec.plugin?.spec) ||
+      managedService.spec?.msvcSpec.plugin?.kind === 'HelmChart' &&
       managedService.spec?.msvcSpec.plugin?.export?.template !==
         JSON.stringify(values.exports)
+    ) {
+      return true;
+    }
+    if (
+      values.displayName !== managedService.displayName ||
+      JSON.stringify(values.res) !==
+        JSON.stringify(managedService.spec?.msvcSpec.plugin?.spec)
     ) {
       return true;
     }
